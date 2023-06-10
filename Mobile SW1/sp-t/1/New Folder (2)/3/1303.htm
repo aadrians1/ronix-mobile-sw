@@ -1,0 +1,120 @@
+<HTML>
+
+<HEAD>
+<TITLE>AOH</TITLE>
+</HEAD>
+
+<BODY BACKGROUND="" BGCOLOR="#ffffff" TEXT="#000000" LINK="#0000ff" VLINK="#800080" ALINK="#ff0000">
+<font face="Times New Roman">
+<CENTER><FONT COLOR=ff0000 SIZE="7"><B>BEPCTAK</B></FONT><BR>
+<b><FONT COLOR=#0000ff SIZE="+1">AOH</FONT></b><BR></CENTER>
+<CENTER>(C) Master A. Pixel (SLY FOX)</CENTER><BR>
+<CENTER><FONT COLOR=#ff0000><BLINK>HIT!</BLINK> Входящий на анти-АОН с таксофона - бесплатно! Звоните таксофоном на анти-АОНы! :)</FONT></CENTER><P>
+
+<TABLE BGCOLOR="#80ff80" WIDTH=40%><TR><TD>&nbsp;<img src="internal-gopher-text" tppabs="http://www.chat.ru/~sly_fox/internal-gopher-text"> AOH</TD></TR></TABLE>
+<OL>
+<LI><img src="internal-gopher-index" tppabs="http://www.chat.ru/~sly_fox/internal-gopher-index"> <a href="#1303_1">ПАРАМЕТРЫ</a> <I> типовых сигналов АТС</I>
+<LI><img src="internal-gopher-index" tppabs="http://www.chat.ru/~sly_fox/internal-gopher-index"> <a href="#1303_2">ПАРАМЕТРЫ</a> <I> сигнала запроса информации АОН</I>
+<LI><img src="internal-gopher-index" tppabs="http://www.chat.ru/~sly_fox/internal-gopher-index"> <a href="#1303_3">ОБРАБОТКА</a> <I> запроса</I>
+</OL>
+<TABLE BGCOLOR="#55aaff" WIDTH=40%><TR><TD>&nbsp;Прочее</TD></TR></TABLE>
+<OL>
+<LI><img src="internal-gopher-index" tppabs="http://www.chat.ru/~sly_fox/internal-gopher-index"> <a href="#1303_4">SB ака АОН</a> <I> возможности использования</I><P>
+</OL>
+<HR>
+<A NAME="1303_1"></A>
+<TABLE BGCOLOR="#c0c0c0" WIDTH=40%><TR><TD>&nbsp;<FONT COLOR=#ffffff> 1. Параметры сигналов АТС</FONT></TD></TR></TABLE>
+<li>Напряжение холостого хода линии (трубка опущена) 60 В
+<li>Амплитуда сигнала индукторного вызова при входящей связи 50...110 В, форма импульса - колоколообразная, частота 25 Гц
+<li>Разговорное напряжение (трубка снята) 5...8 В
+<li>Скорость набора 9...11 имп/сек, импульсный коэффициент набора 1.3...1.9
+<li>Сигнал "ответ станции" - непрерывный тон частотой 425 Гц (а у меня 428.3)
+<li>Сигнал занято - 425 Гц, длительность и пауза по 0.35 сек.
+<li>Сигнал КПВ (контроль посылки вызова) 450 Гц, длительность импульса 1 сек, паузы - 4 сек.
+<li>Cигнал "отбой" - удержание трубки на рычаге аппарта более 1.2 сек.<P>
+<A NAME="1303_2"></A>
+<TABLE BGCOLOR="#c0c0c0" WIDTH=40%><TR><TD>&nbsp;<FONT COLOR=#ffffff> 2. Параметры сигнала запроса АОН</FONT></TD></TR></TABLE>
+<li>Время подключения АОН к линии до выдачи запроса (т.е. станция готова принять запрос) - 250...270 мс
+<li>Длительность запроса 100 мс
+<li>Уровень сигнала запроса (действ. напряжение) 4.3 дБ
+<li>Частота запроса 495...505 Гц<BR>
+Происходящие в линии процессы иллюстрирует рисунок 1303_1:<P>
+<img src="1303_1.gif" tppabs="http://www.chat.ru/~sly_fox/1303_1.gif" alt="рис. 1303_1"><P>
+Ответ АТС приходит в виде многочастотного безынтервального пакета, содержащего номер
+звонящего абонента и категорию его аппарата. Код состоит из последовательности частотных
+посылок кодом "2 из 6". При этом частоты совпадают с рекомендованными CCITT R1, однако,
+так как передаются без промежутков, кодировка цифр не совпадает, и введена "цифра" ПОВТОР.<P>
+<table border=1 cellpadding=3>
+<tr><td align=center>Част/Код</td><td align=center>1</td><td align=center>2</td><td align=center>3</td><td align=center>4</td><td align=center>5</td><td align=center>6</td><td align=center>7</td><td align=center>8</td><td align=center>9</td><td align=center>0</td><td align=center>H</td><td align=center>П</td></tr>
+<tr><td align=center>700</td><td align=center bgcolor=000000>1</td><td align=center bgcolor=000000>2</td><td align=center>-</td><td align=center bgcolor=000000>4</td><td align=center>-</td><td align=center>-</td><td align=center bgcolor=000000>7</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td></tr>
+<tr><td align=center>900</td><td align=center bgcolor=000000>1</td><td align=center>-</td><td align=center bgcolor=000000>3</td><td align=center>-</td><td align=center bgcolor=000000>5</td><td align=center>-</td><td align=center>-</td><td align=center bgcolor=000000>8</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td></tr>
+<tr><td align=center>1100</td><td align=center>-</td>-<td align=center bgcolor=000000>2</td><td align=center bgcolor=000000>3</td><td align=center>-</td><td align=center>-</td><td align=center bgcolor=000000>6</td><td align=center>-</td><td align=center>-</td><td align=center bgcolor=000000>9</td><td align=center>-</td><td align=center bgcolor=000000>H</td><td align=center>-</td></tr>
+<tr><td align=center>1300</td><td align=center>-</td>-<td align=center>-</td><td align=center>-</td><td align=center bgcolor=000000>4</td><td align=center bgcolor=000000>5</td><td align=center bgcolor=000000>6</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center bgcolor=000000>0</td><td align=center>-</td><td align=center bgcolor=000000>П</td></tr>
+<tr><td align=center>1500</td><td align=center>-</td>-<td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center bgcolor=000000>7</td><td align=center bgcolor=000000>8</td><td align=center bgcolor=000000>9</td><td align=center bgcolor=000000>0</td><td align=center>-</td><td align=center>-</td></tr>
+<tr><td align=center>1700</td><td align=center>-</td>-<td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center>-</td><td align=center bgcolor=000000>H</td><td align=center bgcolor=000000>P</td></tr>
+</table><P>
+Сигнал "повтор" означает, что очередная цифра дублирует предыдущую. При отсутсвии этой
+комбинации дешифровка двух последовательно идущих цифр была бы крайне затруднительна.
+Пакет информации содержит 10 посылок длительностью 38...42 мс:<P>
+<table border=1>
+<tr>
+<td align=center>нача-<BR>ло</td>
+<td align=center>кате-<BR>гория</td>
+<td align=center>7<SUP>ая</SUP><BR>цифра</td>
+<td align=center>6<SUP>ая</SUP><BR>цифра</td>
+<td align=center>5<SUP>ая</SUP><BR>цифра</td>
+<td align=center>4<SUP>ая</SUP><BR>цифра</td>
+<td align=center>3<SUP>ая</SUP><BR>цифра</td>
+<td align=center>2<SUP>ая</SUP><BR>цифра</td>
+<td align=center>1<SUP>ая</SUP><BR>цифра</td>
+<td align=center>нача-<BR>ло</td>
+</tr>
+</table><P>
+Например, номер 253-31-98 категории 1 представлен так:<BR>
+НАЧАЛО . 1 . 8 . 9 . 1 . 3 . ПОВТОР . 5 . 2 . НАЧАЛО<BR>
+<P>
+<A NAME="1303_3"></A>
+<TABLE BGCOLOR="#c0c0c0" WIDTH=40%><TR><TD>&nbsp;<FONT COLOR=#ffffff> 3. Обработка запроса</FONT></TD></TR></TABLE>
+В АОНах поступающий из линии сигнал ответа АТС проходит компаратор, формирующий
+двоичный выход при превышении напряжением сигнала порогового уровня (примерно 0.2 В).
+При этом комплексный двухчастотный сигнал со всеми гармониками преобразуется в последовательность
+прямоугольных импульсов разной ширины. Во время действия высокого уровня схема формирует остчеты,
+кот. записываются в ОЗУ аппарата. Далее процессор сравнивает
+записанную информацию с таблицами из ПЗУ, и на основании некорого совпадения
+принимает то или иное решение о закодированной цифре. За время прохождения одной посылки (40 мс)
+процессор успевает провести до 5 анализов, что повышает достоверность этого способа, а так
+как набор комбинаций частот фиксирован, вероятность ошибки при правильной настройке компаратора
+довольно мала.<P>
+
+<a name="1303_4"></a>
+<TABLE BGCOLOR="#55aaff" WIDTH=40%><TR><TD><FONT COLOR="ffffff">&nbsp;SB ака АОН</font></TD></TR></TABLE>
+ПРОЕКТ<BR>
+Существует возмость использовать в качестве АОНа компьютерную звуковую карту.
+Для этого она должна быть встроена в модем (VOX) или иметь подключение к схеме формирования
+звука модема (зависит от конкретной модели модема).<BR>
+Модем должен использовать "молчаливый" ответ, поднимая трубку (так делают факсы, т.е в режиме
+эмуляции факса или по команде ответа голосом).<BR>
+Для обеспечения согласованной работы SB с модемом и дешифровки ответа АТС используется
+специально разработанный софт.<BR>
+Получив от модема сигнал RING (поступает звонок), софт должен дать модему команду снять
+трубку в режиме ответа голосом, SB должен выдать в линию сигнал запроса, переключиться
+в режим ADC (запись) и принять ответ АТС. Анализ сигналов можно делать как в реальном времени,
+что экономит ресурсы компьютера, но требует более изощренного програмирования), так и записывать
+звук в память (ОЗУ или ХДД) и анализировать через определенные промежутки времени (ок 1 сек).
+Последий вариант скорее более приемлем, так как  ресурсы РС куда больше, чем обычного АОН,
+и есть возможность легко отладить софт.<BR>
+Анализ двухчастотных посылок средствами РС лучше проводить методм FFT (Fast Fourie Transform).
+Он дает наибольшую заданную наперед точность результата, и даже на 286 машинах, в реальном
+времени, алгоритмы дают высокую точность. Также можно анализировать и 100% распознавать сигнал
+занято, с чем зачастую не справляются многие модемы (у них за бугром стандарт другой), что дает
+возможность четкого автодозвона. Ну и автоответчик.<BR>
+Сейчас рассмативаю способы соединения SB и модема...Это даст возможность проверить
+и кой-какие прочие сигналы, которые может "кушать" АТС ;) , см. СОРМ на факах С. Протасова.
+
+<P>
+<CENTER><a href="1000.html" tppabs="http://www.chat.ru/~sly_fox/1000.html">Назад</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<!--<a href="mailto:sipsik@chat.ru">sipsik@chat.ru</a></CENTER>-->
+</font>
+</BODY>
+
+</HTML>

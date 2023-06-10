@@ -1,0 +1,614 @@
+ALPHABETIZED LIST OF PRODUCT FILES
+----------------------------------
+
+ADDRESS   PAK (Disk4) - Contains the following compressed files:
+   ADDRESS   DEF - Address sample application file
+   ADDRESS   EXE - Address sample application file
+   ADDRESS     H - Address sample application file
+   ADDRESS   ICO - Address sample application file
+   ADDRESS   IDE - Address sample application file
+   ADDRESS    RC - Address sample application file
+   ADRCMDLG    C - Address sample application file
+   ADR_DATA    C - Address sample application file
+   ADR_DLGS    C - Address sample application file
+   ADR_MAIN    C - Address sample application file
+   ADR_UTIL    C - Address sample application file
+   ENGINE      C - Address sample application file
+   ID_DEFS     H - Address sample application file
+   MACRO       C - Address sample application file
+   MACRO       H - Address sample application file
+   MAKEFILE      - Address sample application file
+   MAKEMSC   MAK - Address sample application file
+
+BAMGR16   DL_ (Disk1) - Used by setup.exe only
+
+BLROMLD   PAK (Disk1) - Contains the following compressed files:
+   BLROM800   LD - Language driver
+
+CTL3DV2   PAK (Disk5) - Contains the following compressed files:
+   CTL3DV2   DLL - CTL3D for BDECFG.EXE
+
+DBD51     PAK (Disk3) - Contains the following compressed files:
+   DBCOEDIT  DLL - Database Desktop file
+   DBD       EXE - Database Desktop file
+   DBD       HLP - Database Desktop file
+   DBDCREAT  DLL - Database Desktop file
+   DBDLOCAL  EXE - Database Desktop file
+   DBDLOCAL  HLP - Database Desktop file
+   DBDQBE    DLL - Database Desktop file
+   DBDSQL    DLL - Database Desktop file
+   DBDUTILS  DLL - Database Desktop file
+   DBDVIEW   DLL - Database Desktop file
+   DBSRV     DLL - Database Desktop file
+   READDBD   TXT - Database Desktop file
+
+DBPING    PAK (Disk5) - Contains the following compressed files:
+   DBPING      C - DBPing sample application file
+   DBPING    DEF - DBPing sample application file
+   DBPING    EXE - DBPing sample application file
+   DBPING      H - DBPing sample application file
+   DBPING    ICO - DBPing sample application file
+   DBPING    IDE - DBPing sample application file
+   DBPING     RC - DBPing sample application file
+   MAKEFILE      - DBPing sample application file
+   MAKEMSC   MAK - DBPing sample application file
+
+DEBLAY    PAK (Disk2) - Contains the following compressed files:
+   dbg       dll - IDAPI Debug Layer DLL
+
+EMPLOYEE  PAK (Disk5) - Contains the following compressed files:
+   EMPCONST  PAS - Employee sample application file
+   EMPLOYEE  EXE - Employee sample application file
+   EMPLOYEE  PAS - Employee sample application file
+   EMPLOYEE   RC - Employee sample application file
+   ENGINE    PAS - Employee sample application file
+
+FILELIST  TXT (Disk1) - 
+
+IB        PAK (Disk3) - Contains the following compressed files:
+   CONNECT   EXE - Utility for InterBase SQL Link
+   CONNECT   HLP - Utility help for InterBase SQL Link
+   SQLD_IB   DLL - 
+   SQLD_IB   HLP - 
+
+IBCFG     PAK (Disk5) - Contains the following compressed files:
+   SQL_IB    CNF - 
+
+IBIPX     PAK (Disk5) - Contains the following compressed files:
+   NWIPXSPX  DLL - 
+
+IBSQL     PAK (Disk3) - Contains the following compressed files:
+   DSQL      DLL - Vendor file for InterBase SQL Link
+   GDS       DLL - 
+   IUTLS     DLL - 
+   REMOTE    DLL - 
+
+IBSQLMSG  PAK (Disk5) - Contains the following compressed files:
+   INTERBAS  MSG - 
+
+IDACFG    PAK (Disk3) - Contains the following compressed files:
+   idapi     cnf - 
+
+IDAPI     PAK (Disk2) - Contains the following compressed files:
+   BDECFG    EXE - Borland Database Engine Configuration Utility
+   BDECFG    HLP - Borland Database Engine Configuration Utility Help
+   IDAPI01   DLL - 
+   IDASCI01  DLL - 
+   IDBAT01   DLL - 
+   IDDBAS01  DLL - 
+   IDODBC01  DLL - 
+   IDPDX01   DLL - 
+   IDQRY01   DLL - 
+   IDR10009  DLL - 
+   ILD01     DLL - 
+
+INCFG     PAK (Disk5) - Contains the following compressed files:
+   SQL_INF   CNF - 
+
+INCFG5    PAK (Disk5) - Contains the following compressed files:
+   SQL_IN5   CNF - 
+
+INF       PAK (Disk4) - Contains the following compressed files:
+   SQLD_INF  DLL - 
+   SQLD_INF  HLP - 
+
+INF2      PAK (Disk5) - Contains the following compressed files:
+   LDLLSQLW  DLL - 
+
+INF5      PAK (Disk4) - Contains the following compressed files:
+   SQLD_IN5  DLL - 
+   SQLD_IN5  HLP - 
+
+INMSG     PAK (Disk5) - Contains the following compressed files:
+   ISAM      IEM - 
+   OS        IEM - 
+   RDS       IEM - 
+   SECURITY  IEM - 
+   SQL       IEM - 
+   ZRDSTERM  IEM - 
+
+INSTRUN   EX_ (Disk1) - 
+
+INSTXTRA  PAK (Disk1) - Contains the following compressed files:
+   BAENG16   DLL - Used by setup.exe only
+   BSCOB16   DLL - Used by setup.exe only
+   DBTINST   HLP - Used by setup.exe only
+   IBCLIENT  HLP - 
+   IDAPINST  DLL - 
+   IDAPINST  HLP - 
+   INSTBOR   DLL - 
+   INSTCUI   DLL - 
+   INSTDEL   LST - 
+   INSTRRF   DLL - 
+   LINKINST  HLP - 
+
+INVENTRY  PAK (Disk4) - Contains the following compressed files:
+   ENGINE      C - Inventry sample application file
+   ID_DEFS     H - Inventry sample application file
+   INVENTRY  DEF - Inventry sample application file
+   INVENTRY  EXE - Inventry sample application file
+   INVENTRY    H - Inventry sample application file
+   INVENTRY  ICO - Inventry sample application file
+   INVENTRY  IDE - Inventry sample application file
+   INVENTRY   RC - Inventry sample application file
+   INV_DATA    C - Inventry sample application file
+   INV_MAIN    C - Inventry sample application file
+   INV_UTIL    C - Inventry sample application file
+   MACRO       C - Inventry sample application file
+   MACRO       H - Inventry sample application file
+   MAKEFILE      - Inventry sample application file
+   MAKEMSC   MAK - Inventry sample application file
+
+JSBHOST   PAK (Disk5) - Contains the following compressed files:
+   MVWASYNC  EXE - 
+   VSL       INI - 
+   WINSOCK   DLL - 
+
+JSBSOCK   PAK (Disk5) - Contains the following compressed files:
+   MSOCKLIB  DLL - 
+
+LANGDRV   PAK (Disk5) - Contains the following compressed files:
+   ANCHINA    LD - Language driver
+   ANCYRR     LD - Language driver
+   ANCZECH    LD - Language driver
+   ANGREEK1   LD - Language driver
+   ANHUNDC    LD - Language driver
+   ANKOREA    LD - Language driver
+   ANPOLISH   LD - Language driver
+   ANSII850   LD - Language driver
+   ANSIINTL   LD - Language driver
+   ANSINOR4   LD - Language driver
+   ANSISLOV   LD - Language driver
+   ANSISPAN   LD - Language driver
+   ANSISWFN   LD - Language driver
+   ANTAIWAN   LD - Language driver
+   ANTHAI     LD - Language driver
+   ANTURK     LD - Language driver
+   BLLT1CA0   LD - Language driver
+   BLLT1DA0   LD - Language driver
+   BLLT1DE0   LD - Language driver
+   BLLT1ES0   LD - Language driver
+   BLLT1FI0   LD - Language driver
+   BLLT1FR0   LD - Language driver
+   BLLT1IS0   LD - Language driver
+   BLLT1IT0   LD - Language driver
+   BLLT1NL0   LD - Language driver
+   BLLT1NO0   LD - Language driver
+   BLLT1PT0   LD - Language driver
+   BLLT1SV0   LD - Language driver
+   BLLT1UK0   LD - Language driver
+   BLLT1US0   LD - Language driver
+   CHINA      LD - Language driver
+   CSKAMEN    LD - Language driver
+   CYRR       LD - Language driver
+   CZECH      LD - Language driver
+   DB437DE0   LD - Language driver
+   DB437ES1   LD - Language driver
+   DB437FI0   LD - Language driver
+   DB437FR0   LD - Language driver
+   DB437GR0   LD - Language driver
+   DB437IT0   LD - Language driver
+   DB437NL0   LD - Language driver
+   DB437SV0   LD - Language driver
+   DB437TH0   LD - Language driver
+   DB437UK0   LD - Language driver
+   DB850CF0   LD - Language driver
+   DB850DE0   LD - Language driver
+   DB850ES0   LD - Language driver
+   DB850FR0   LD - Language driver
+   DB850IT1   LD - Language driver
+   DB850NL0   LD - Language driver
+   DB850PT0   LD - Language driver
+   DB850SV1   LD - Language driver
+   DB850UK0   LD - Language driver
+   DB850US0   LD - Language driver
+   DB852CZ0   LD - Language driver
+   DB852HDC   LD - Language driver
+   DB852PO0   LD - Language driver
+   DB852SL0   LD - Language driver
+   DB857TR0   LD - Language driver
+   DB860PT0   LD - Language driver
+   DB863CF1   LD - Language driver
+   DB865DA0   LD - Language driver
+   DB865NO0   LD - Language driver
+   DB866RU0   LD - Language driver
+   DB867CZ0   LD - Language driver
+   DB936CN0   LD - Language driver
+   DB949KO0   LD - Language driver
+   DB950TW0   LD - Language driver
+   DBWINES0   LD - Language driver
+   DBWINWE0   LD - Language driver
+   GRCP437    LD - 
+   HUN852DC   LD - 
+   ICELAND    LD - 
+   INTL       LD - 
+   INTL850    LD - 
+   KOREA      LD - 
+   NORDAN     LD - 
+   NORDAN40   LD - 
+   POLISH     LD - 
+   SLOVENE    LD - 
+   SPANISH    LD - 
+   SWEDFIN    LD - 
+   TAIWAN     LD - 
+   THAI       LD - 
+   TURK       LD - 
+
+M3OPEN    PAK (Disk5) - Contains the following compressed files:
+   M3OPEN    EXE - 
+
+M3OPEND   PAK (Disk5) - Contains the following compressed files:
+   M3OPEN    DLL - 
+
+MBW       PAK (Disk5) - Contains the following compressed files:
+   MBW       EXE - 
+
+MFTP      PAK (Disk5) - Contains the following compressed files:
+   MFTP      EXE - 
+
+MHPARPA   PAK (Disk5) - Contains the following compressed files:
+   MHPARPA   DLL - 
+
+MNETONE   PAK (Disk5) - Contains the following compressed files:
+   MNETONE   EXE - 
+
+MNOVLWP   PAK (Disk5) - Contains the following compressed files:
+   MNOVLWP   DLL - 
+
+MPATHWAY  PAK (Disk5) - Contains the following compressed files:
+   MPATHWAY  DLL - 
+
+MPCNFS    PAK (Disk5) - Contains the following compressed files:
+   MPCNFS    EXE - 
+
+MPCNFS2   PAK (Disk1) - Contains the following compressed files:
+   MPCNFS2   EXE - 
+
+MPCNFS4   PAK (Disk5) - Contains the following compressed files:
+   MPCNFS4   DLL - 
+
+MWINTCP   PAK (Disk5) - Contains the following compressed files:
+   MWINTCP   EXE - 
+
+NWCALLS   PAK (Disk5) - Contains the following compressed files:
+   NWCALLS   DLL - 
+
+NWNETAPI  PAK (Disk5) - Contains the following compressed files:
+   NWNETAPI  DLL - 
+
+ODBCMGR   PAK (Disk4) - Contains the following compressed files:
+   ODBC      DLL - 
+   ODBCINST  DLL - 
+   ODBCINST  HLP - 
+
+ORA       PAK (Disk4) - Contains the following compressed files:
+   SQLD_ORA  DLL - 
+   SQLD_ORA  HLP - 
+
+ORA2      PAK (Disk1) - Contains the following compressed files:
+   ORA6WIN   DLL - 
+
+ORA3      PAK (Disk4) - Contains the following compressed files:
+   ORA7WIN   DLL - 
+
+ORA6      PAK (Disk2) - Contains the following compressed files:
+   COREWIN   DLL - Vendor file for Oracle SQL Link
+
+ORALD     PAK (Disk5) - Contains the following compressed files:
+   ORAWE850   LD - 
+
+ORCFG     PAK (Disk5) - Contains the following compressed files:
+   SQL_ORA   CNF - 
+
+READLINK  PAK (Disk1) - Contains the following compressed files:
+   PDOXSQL   TXT - 
+   READLINK  TXT - 
+   SQLLNKHP  HLP - SQL Links On-line Reference Help
+
+SDKBIN    PAK (Disk5) - Contains the following compressed files:
+   DLLSWAP   EXE - Swaps debug layer DLLs Utility
+
+SDKDOC    PAK (Disk1) - Contains the following compressed files:
+   BDE       HLP - Online help - includes complete functional reference
+   IDAPI     TOK - Colorized token file for BC4
+   IDAPITOK  TXT - Readme description for TOK file
+   LOCALSQL  HLP - 
+   READSDK   TXT - Borland Database Engine README information
+
+SDKFILT   PAK (Disk4) - Contains the following compressed files:
+   FILTER    PAS - Filter sample file
+   FILTEREX  DPR - Filter sample file
+   FILTEREX  EXE - Filter sample file
+   FILTEREX  RES - Filter sample file
+   MAIN      DFM - Filter sample file
+   MAIN      PAS - Filter sample file
+
+SDKINC    PAK (Disk5) - Contains the following compressed files:
+   CTL3D       H - CTL3DV2.DLL header file
+   IDAPI       H - IDAPI header file
+
+SDKLIB    PAK (Disk5) - Contains the following compressed files:
+   CTL3DMSC  LIB - loader library for CTL3DV2.DLL - microsoft compilers
+   CTL3DV2   LIB - loader library for CTL3DV2.DLL - Borland compilers
+   IDAPI     LIB - IDAPI library
+
+SDKQRY    PAK (Disk3) - Contains the following compressed files:
+   BIG_ORDR  QBE - Query sample application file
+   CUST      QBE - Query sample application file
+   CUST      SQL - Query sample application file
+   DISPLAY     C - Query sample application file
+   ENGINE      C - Query sample application file
+   HI_ORDRS  QBE - Query sample application file
+   IBCAT     SQL - Query sample application file
+   IBPX      SQL - Query sample application file
+   JOIN      SQL - Query sample application file
+   MACRO       C - Query sample application file
+   MACRO       H - Query sample application file
+   MAKEFILE      - Query sample application file
+   MAKEMSC   MAK - Query sample application file
+   ORACAT    SQL - Query sample application file
+   ORDERS    SQL - Query sample application file
+   PRICEY    QBE - Query sample application file
+   QRY_DATA    C - Query sample application file
+   QUERY       C - Query sample application file
+   QUERY     DEF - Query sample application file
+   QUERY     EXE - Query sample application file
+   QUERY       H - Query sample application file
+   QUERY     ICO - Query sample application file
+   QUERY     IDE - Query sample application file
+   QUERY      RC - Query sample application file
+   QUERY      RH - Query sample application file
+   QUERY     TXT - Query sample application file
+   TWO_WORD  SQL - Query sample application file
+
+SDKRED    PAK (Disk4) - Contains the following compressed files:
+   BDECFG    EXE - Borland Database Engine Configuration Utility
+   BDECFG    HLP - Borland Database Engine Configuration Utility Help
+
+SDKREST   PAK (Disk5) - Contains the following compressed files:
+   4F         DB - Restruct sample file
+   4F        DBF - Restruct sample file
+   4FBAK      DB - Restruct sample file
+   4FBAK     DBF - Restruct sample file
+   MACRO       H - Restruct sample file
+   MAKEFILE      - Restruct sample file
+   STRUCTER    C - Restruct sample file
+   STRUCTER  DEF - Restruct sample file
+   STRUCTER  DLL - Restruct sample file
+   STRUCTER  FSL - Restruct sample file
+   STRUCTER    H - Restruct sample file
+   STRUCTER  IDE - Restruct sample file
+   STRUCTER   RC - Restruct sample file
+
+SDKSEEK   PAK (Disk5) - Contains the following compressed files:
+   DBFSEEK     C - Seek sample file
+   DBFSEEK   DEF - Seek sample file
+   DBFSEEK   DLL - Seek sample file
+   DBFSEEK     H - Seek sample file
+   DBFSEEK   IDE - Seek sample file
+   DBFSEEK    RC - Seek sample file
+   MACRO       H - Seek sample file
+   MAKEFILE      - Seek sample file
+   SEEK      DBF - Seek sample file
+   SEEK      FSL - Seek sample file
+   SEEK      MDX - Seek sample file
+
+SDKSRC    PAK (Disk5) - Contains the following compressed files:
+   ALIASES   PAS - Pascal sample code
+   BATMOVE   PAS - Pascal sample code
+   BLOBIO    PAS - Pascal sample code
+   BLOBSMPL  PAS - Pascal sample code
+   BLOCK     PAS - Pascal sample code
+   BOOKMARK  PAS - Pascal sample code
+   CONFIG    PAS - Pascal sample code
+   CR8DBTBL  PAS - Pascal sample code
+   CR8PXTBL  PAS - Pascal sample code
+   DBIO      PAS - Pascal sample code
+   DRVCAPS   PAS - Pascal sample code
+   ERRVAL    PAS - Pascal sample code
+   FIELDMAP  PAS - Pascal sample code
+   FILTER    PAS - Pascal sample code
+   FORMAT    PAS - Pascal sample code
+   IDXDBASE  PAS - Pascal sample code
+   IDXEXPR   PAS - Pascal sample code
+   IDXPDOX   PAS - Pascal sample code
+   INITENG   PAS - Pascal sample code
+   LNKCRSR   PAS - Pascal sample code
+   LSQL      PAS - Pascal sample code
+   LSQLJOIN  PAS - Pascal sample code
+   LSQLLIVE  PAS - Pascal sample code
+   NAVIGATE  PAS - Pascal sample code
+   OPTPARAM  PAS - Pascal sample code
+   PASCAL    TXT - Pascal sample code
+   PASSWORD  PAS - Pascal sample code
+   PRDXSORT  PAS - Pascal sample code
+   QBE       PAS - Pascal sample code
+   QBE2      PAS - Pascal sample code
+   RANGE     PAS - Pascal sample code
+   RDOLOCK   PAS - Pascal sample code
+   RECLOCK   PAS - Pascal sample code
+   RECUPDAT  PAS - Pascal sample code
+   REFINTEG  PAS - Pascal sample code
+   SEARCH    PAS - Pascal sample code
+   SECD      PAS - Pascal sample code
+   SESSION   PAS - Pascal sample code
+   SNIPDATA  PAS - Pascal sample code
+   SNIPTOOL  PAS - Pascal sample code
+   SOFTDEL   PAS - Pascal sample code
+   SYSINFO   PAS - Pascal sample code
+   TBLINFO   PAS - Pascal sample code
+   TBLLIST   PAS - Pascal sample code
+   TBLLOCK   PAS - Pascal sample code
+   TBLOPEN   PAS - Pascal sample code
+   TEST      PAS - Pascal sample code
+
+SDKTAB    PAK (Disk3) - Contains the following compressed files:
+   ENHTABLE  TXT - Tableenh sample file
+   MAIN      DFM - Tableenh sample file
+   MAIN      PAS - Tableenh sample file
+   SHOWNEW   DFM - Tableenh sample file
+   SHOWNEW   PAS - Tableenh sample file
+   TABLENHD  DPR - Tableenh sample file
+   TABLENHD  DSK - Tableenh sample file
+   TABLENHD  EXE - Tableenh sample file
+   TABLENHD  RES - Tableenh sample file
+
+SDKTABVC  PAK (Disk4) - Contains the following compressed files:
+   TABLEENH  DCR - Tableenh sample file
+   TABLEENH  HLP - Tableenh sample file
+   TABLEENH  PAS - Tableenh sample file
+
+SDKTBL    PAK (Disk5) - Contains the following compressed files:
+   CONTACTS   DB - Sample Table
+   CONTACTS   PX - Sample Table
+   CUST      DBF - Sample Table
+   CUST      MDX - Sample Table
+   CUST2     DBF - Sample Table
+   CUSTOMER   DB - Sample Table
+   CUSTOMER   PX - Sample Table
+   CUSTOMER  VAL - Sample Table
+   CUSTOMER  XG0 - Sample Table
+   CUSTOMER  YG0 - Sample Table
+   DBSYSTEM   DB - Sample Table
+   ORDERS     DB - Sample Table
+   ORDERS     PX - Sample Table
+   ORDERS    VAL - Sample Table
+   ORDERS    X02 - Sample Table
+   ORDERS    XG0 - Sample Table
+   ORDERS    Y02 - Sample Table
+   ORDERS    YG0 - Sample Table
+   SECURITY  DBF - Sample Table
+   SECURITY  DBK - Sample Table
+   STOCK      DB - Sample Table
+   STOCK      MB - Sample Table
+   STOCK      PX - Sample Table
+   STOCK     X02 - Sample Table
+   STOCK     Y02 - Sample Table
+   VENDORS    DB - Sample Table
+   VENDORS    PX - Sample Table
+
+SDKUNIT   PAK (Disk4) - Contains the following compressed files:
+   DBI       OBJ - Pascal Unit
+   DBIERRS   PAS - Pascal Unit
+   DBIPROCS  PAS - Pascal Unit
+   DBITYPES  PAS - Pascal Unit
+   IDPAS01   OBJ - Pascal Unit
+   INTFPAS   OBJ - Pascal Unit
+
+SETUP     EXE (Disk1) - 
+
+SNIPIT    PAK (Disk1) - Contains the following compressed files:
+   ADDALIAS    C - SnipIt sample application file
+   ALIASES     C - SnipIt sample application file
+   BATMOVE     C - SnipIt sample application file
+   BLOBIO      C - SnipIt sample application file
+   BLOBSMPL    C - SnipIt sample application file
+   BLOCK       C - SnipIt sample application file
+   BOOKMARK    C - SnipIt sample application file
+   CALLBACK    C - SnipIt sample application file
+   CONFIG      C - SnipIt sample application file
+   CR8DBTBL    C - SnipIt sample application file
+   CR8PXTBL    C - SnipIt sample application file
+   CR8TXTBL    C - SnipIt sample application file
+   DBIO        C - SnipIt sample application file
+   DBLOGIN     C - SnipIt sample application file
+   DRVCAPS     C - SnipIt sample application file
+   ERRVAL      C - SnipIt sample application file
+   FIELDMAP    C - SnipIt sample application file
+   FILTCOMP    C - SnipIt sample application file
+   FILTCONT    C - SnipIt sample application file
+   FILTER      C - SnipIt sample application file
+   FORMAT      C - SnipIt sample application file
+   IDXDBASE    C - SnipIt sample application file
+   IDXEXPR     C - SnipIt sample application file
+   IDXPDOX     C - SnipIt sample application file
+   ID_DEFS     H - SnipIt sample application file
+   INITENG     C - SnipIt sample application file
+   INMEMTBL    C - SnipIt sample application file
+   INPUT       C - SnipIt sample application file
+   INPUTREQ    C - SnipIt sample application file
+   KEYUPDT     C - SnipIt sample application file
+   LANGDRV     C - SnipIt sample application file
+   LNKCRSR     C - SnipIt sample application file
+   LSQL        C - SnipIt sample application file
+   LSQLJOIN    C - SnipIt sample application file
+   LSQLLIVE    C - SnipIt sample application file
+   MAKEFILE      - SnipIt sample application file
+   MAKEMSC   MAK - SnipIt sample application file
+   NAVIGATE    C - SnipIt sample application file
+   OPTPARAM    C - SnipIt sample application file
+   PASSWORD    C - SnipIt sample application file
+   PRDXSORT    C - SnipIt sample application file
+   QBE         C - SnipIt sample application file
+   QBE2        C - SnipIt sample application file
+   RANGE       C - SnipIt sample application file
+   RDOLOCK     C - SnipIt sample application file
+   RECLOCK     C - SnipIt sample application file
+   RECUPDAT    C - SnipIt sample application file
+   REFINTEG    C - SnipIt sample application file
+   SEARCH      C - SnipIt sample application file
+   SECDESC     C - SnipIt sample application file
+   SESSION     C - SnipIt sample application file
+   SNIPDATA    C - SnipIt sample application file
+   SNIPIT    DEF - SnipIt sample application file
+   SNIPIT    EXE - SnipIt sample application file
+   SNIPIT      H - SnipIt sample application file
+   SNIPIT    ICO - SnipIt sample application file
+   SNIPIT    IDE - SnipIt sample application file
+   SNIPIT     RC - SnipIt sample application file
+   SNIPIT    TXT - SnipIt sample application file
+   SNIPMAIN    C - SnipIt sample application file
+   SNIPTOOL    C - SnipIt sample application file
+   SOFTDEL     C - SnipIt sample application file
+   SQLBIND     C - SnipIt sample application file
+   STORPROC    C - SnipIt sample application file
+   SYSINFO     C - SnipIt sample application file
+   TBLINFO     C - SnipIt sample application file
+   TBLLIST     C - SnipIt sample application file
+   TBLLOCK     C - SnipIt sample application file
+   TBLOPEN     C - SnipIt sample application file
+   TBRSTRCT    C - SnipIt sample application file
+   TEST        C - SnipIt sample application file
+   TEXTEXP     C - SnipIt sample application file
+   TEXTIMP     C - SnipIt sample application file
+   TRANSACT    C - SnipIt sample application file
+   UPDTCRNT    C - SnipIt sample application file
+   UPSIZE      C - SnipIt sample application file
+   VALCHECK    C - SnipIt sample application file
+
+SY2       PAK (Disk5) - Contains the following compressed files:
+   DBNMP3    DLL - Vendor file for Sybase / MSS SQL Link
+
+SY3       PAK (Disk2) - Contains the following compressed files:
+   W3DBLIB   DLL - 
+
+SYB       PAK (Disk4) - Contains the following compressed files:
+   SQLD_SS   DLL - 
+   SQLD_SS   HLP - 
+
+SYBLD     PAK (Disk5) - Contains the following compressed files:
+   SYDC437    LD - 
+   SYDC850    LD - 
+
+SYCFG     PAK (Disk5) - Contains the following compressed files:
+   SQL_SS    CNF - 

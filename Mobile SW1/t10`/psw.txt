@@ -1,0 +1,2 @@
+supervisor psw:  bibis have bibis
+psw: 00000000

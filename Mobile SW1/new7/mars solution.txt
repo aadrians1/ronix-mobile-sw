@@ -1,0 +1,18 @@
+solution for mitsubishi trium mars mt050 by dup
+
+1 read the eeprom (95256 or 25256) from phone
+2 save as backup
+3 copy block from #0006 (to end) to #0000
+4 save it as second file
+5 unlock this second 'dump' by free2000 by lovelas as old trium (maybe 
+you can use another unlocker, but me don't test it)
+6 copy block (in unlocked file) from #0000 to #0006
+7 copy first 6 bytes from first backup here
+8 write it back to phone.
+
+
+that's all.
+
+dup
+
+ 

@@ -1,0 +1,90 @@
+               Stealth 3D 4000, Windows 9x, README File  
+    
+                              Rel. 0798
+                                                
+This README file contains important information. Be sure to read
+this file BEFORE you continue with the installation. Diamond 
+Multimedia will not accept responsibility for any possible damages 
+that could result from failure to read the information in this 
+file.
+
+        1.      Version Notes
+        2.      General System Requirements
+        3.      New Driver Characteristics
+        4.      Problems Solved with this Driver
+        5.      Known Restrictions for this Driver
+        6.      Additional Requirements
+        7.      Notes about Monitor Selection
+        8.      Support / Service / Latest Software
+
+1.     Version Notes
+-------------------------------------------------------------------
+  Driver for Windows 9x:       4.10.01.3306
+  InControl Tools 95:          4.03.160
+  
+ This driver has earned the Microsoft "Windows Hardware Quality
+ Lab" (WHQL) certification, ensuring compatibility and stability.
+ It is compatible with Windows 95 and Windows 98.
+
+2.      General System Requirements
+-------------------------------------------------------------------
+  This driver requires DirectX5
+  
+3.      New Driver Characteristics
+-------------------------------------------------------------------
+  None
+  
+4.      Problems Solved with this Driver
+-------------------------------------------------------------------
+  None
+
+5.      Known Restrictions for this Driver
+-------------------------------------------------------------------
+  None
+    
+6.      Additional Requirements
+-------------------------------------------------------------------
+  None
+  
+7.      Notes about Monitor Selection
+-------------------------------------------------------------------
+  In order for you to get the most out of your graphics card, the 
+  monitor that you use should have performance specifications that 
+  match those of your graphics card. 
+  NOTE: Please adjust your monitor settings in the Display 
+  Properties dialog.
+  
+                  ----  I M P O R T A N T  ----
+
+  Use only settings for resolution and refresh rate that are 
+  supported by your monitor. Permanent damage to your monitor 
+  can result if you operate it for extended periods with settings 
+  outside its specifications. 
+  If you change monitors, be sure to compare monitor parameters 
+  and, if necessary, make appropriate changes!
+
+8.     Support / Service / Latest Software
+-------------------------------------------------------------------
+  To find out how to reach DIAMOND Multimedia, please consult the 
+  documentation that came with your product.
+  Current information is available on our Web sites.
+   
+  EUROPE
+  http://www.diamondmm.de
+  http://www.diamondmm.co.uk
+  http://www.diamondmm.fr
+  http://www.diamondmm.ru
+
+  USA
+  http://www.diamondmm.com
+
+  JAPAN
+  http://www.diamondmm.co.jp
+
+All product names listed are trademarks or copyrights of their
+respective owners.
+-------------------------------------------------------------------
+Diamond Multimedia Systems, Inc.   (c) 1993-98, All Rights Reserved
+European Division (http://www.diamondmm.de)
+-------------------------------------------------------------------
+

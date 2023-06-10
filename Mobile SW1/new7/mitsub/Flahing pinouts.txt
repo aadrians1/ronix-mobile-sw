@@ -1,0 +1,112 @@
+                    Pinout for GALAXY and ASTRAL
+                    
+                            keyboard 
+                    __________________________ 
+                    |    1             8     | 
+                    |    o o o o o o o o     | 
+                    |    o o o o o o o o     | 
+                    |    16             9    | 
+                    __________________________ 
+
+1      +5v external power
+3      tx (max10 max11)
+14     rx (max9 max12)
+11     connect via 1k resistor to GND
+10,15  gnd
+
+
+By 
+
+   QIDO     < ICQ: 71265684 >
+
+
+
+
+---------------------------------------------------------------
+
+Pinout for flashing Trium ARIA by gsm5ko 
+ 
+<gsm5ko@inmail.sk, ICQ 54721790> 
+ 
+ 
+ 
+ 
+                             keyboard 
+                    __________________________ 
+                    |    1             8     | 
+                    |    o o o o o o o o     | 
+                    |    o o o o o o o o     | 
+                    |    9             16    | 
+                    __________________________ 
+ 
+ 1  - GND 
+ 3  - via 1k resistor to GND (data enable) 
+ 6  - Tx 
+ 7  - Rx 
+ 10 - via 1k resistor to GND (flash enable) 
+ 
+
+
+
+
+
+---------------------------------------------------------------
+
+Flashing pinout for Trium MARS
+
+    
+                       
+                          DISPLAY
+
+            1 2    3 4 5 6 7 8 910 11  12 13
+            | | [] | | | | | | | | | [] | |
+
+
+
+5 -  Data enable (connect to GND via resistor 1k)
+6 -  not use
+7 -  Flash enable (connect to GND via resistor 1k)
+8 -  Rx
+9 -  Tx
+11 - Gnd
+12 - +5v
+
+-------------------------------------------------------------
+By
+
+QIDO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

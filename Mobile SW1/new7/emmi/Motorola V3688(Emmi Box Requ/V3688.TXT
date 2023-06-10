@@ -1,0 +1,8 @@
+1. you turn on asim
+2. write file SIM.DAT
+3. read pin how is (functial in asim)
+4. Enter RUN EMULATE
+5. Phone ask for pin and write hem and hold hem 3 secunds
+6. In LCD appear  instription Test
+7. #58 - phone code
+   #59 - securite code
