@@ -1,0 +1,342 @@
+
+                   -===================================-
+                     Sagem Doctor Version 1.4b Read-me
+                    Deutsche Übersetzung von SonicSpace
+                   -===================================-
+
+    Inhalt
+    ------
+
+    - Vorwort
+    - Was ist neu
+    - Reparatur von Telefonen mit "PB3 EEPROM" Fehler
+    - Befehlszeilenparameter
+    - Die verschiedenen Sicherungsbereiche
+    - (nicht!) Sicherung eines anderem Handy aufspielen
+    - Bekannte Probleme
+
+
+    Vorwort
+    -------
+
+    Dieses Programm erlaubt, Speicherfelder im Eeprom eines Sagem-Telefons der Serie
+    900, zulesen und zu schreiben. Da wichtige Einstellungen im eeprom gespeichert
+    sind, können Änderungen an den falschen Feldern das Handy beschädigen.
+    Bitte ändert keine Felder ohne Grund, nur um zu sehen was danach passiert.
+
+    Eine Sicherungs- und Wiederherstellungsfunktion ist intregriert, aber dies kann
+    nicht bei allen Probleme helfen weil das Ändern einiger Felder die Datenkommunikation
+    mit dem Telefon unmöglich machen könnte.
+
+    Dennoch: Sie sind gewarnt worden und bitte machen Sie mich nicht verantwortlich wenn
+    Ihr Handy nicht mehr funktioniert, nachdem Sie es mit diesem Programm bearbeitet haben.
+
+    Wenn Sie irgendwelche Probleme mit der Handhabung des ´SagemDoctor´ haben, lesen
+    Sie sich bitte zuerst diesen Text durch; viele Fragen werden schon hier beantwortet.
+
+    Für Kommentare oder Fragen, welche hier nicht beantwortet werden, können
+    Sie mich via eMail unter der Adresse <SagemDoctor@web.de> erreichen.
+
+    Die aktuellste Version des SagemDoctor, sowie weiteres Material über Sagem-Handys,
+    finden Sie auf meiner Website unter:
+
+    http://SagemDoctor.de.vu/
+
+
+    Was gibt es neues?
+    ------------------
+    Ich habe es nun endlich geschafft eine Funktion einzubauen, welche es ermöglicht
+    die Eeprom Prüfsummen zu errechnen. Dies ist eine Funktion welche ich schon lange
+    implementieren wollte, aber nun endlich möglich wurde. Vielen Dank an ´Ths9´ welcher
+    mir alle Information dazu lieferte was ich über den Algorithmus wissen wollte.
+    Großen Dank für die Zusammenarbeit!
+
+    Man kann jetzt auch falsch gesetzte Simlock-Daten auf mehrere Arten reparieren:
+
+    - man kann die Daten aus einem funktionierenden Telefon auslesen,
+    - man kann Standard-Werte eintragen lassen (Dadurch wird der Simlock
+      im Telefon aktiviert),
+    - man kann per Hand Lock-Daten eintragen
+
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    ! Bevor Sie irgendwelche Felder oder Prüfsummen ändern, sollten Sie ein     !
+    ! Backup des Eeprom Ihres Handy erstellen, damit Sie diese wiederherstellen !
+    ! können falls etwas schief läuft.                                          !
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    Diese Funktion kann benutzt werden um Handys zu reparieren, welche "SIMLOCKED"
+    auch ohne eingelegte SIM-Karte zeigen. Wenn das Programm eine fehlerhafte Prüfsumme
+    findet, wählen Sie eines der folgenden Möglichkeiten:
+
+    - Wenn Sie meinen die Daten im Prom/Flash-Feld sind korrekt, aber die Prüfsumme
+      ist falsch, wählen Sie ´1´ um die Prüfsumme des Feldes wiederherzustellen.
+
+    - Wenn Sie meinen, daß die Feld-Daten falsch sind, dann wählen Sie '2' um die
+      Daten mit Hilfe der Checksumme wiederherzustellen.
+
+    Bitte beachten Sie, das diese Funktion bei Telefonen mit der Firmware 4.1M
+    etwas anders funktioniert: Man kann bei diesen Telefonen die sogenannte
+    "Phone ID" nicht auslesen.
+
+    Der neue Sagem Doctor kann versuchen, diese Phone ID mit einem "Brute Force"-
+    Verfahren zu berechnen; dabei gibt es aber einige Probleme:
+
+    - es dauert ein paar Minuten (hängt von der Geschwindigkeit des Computers
+      ab)
+    - es funktioniert nur, wenn die Checksummen-Felder intakt sind.
+    - es funktioniert im Moment nur bei MC922 Telefonen mit Firmware
+      FT4.1M.
+
+    Man kann aber eine einmal berechnete "Phone ID" aufschreiben und
+    diese dann später wieder manuell eingeben. Dadurch spart man sich
+    eine erneute Berechnung per Brute-Force.
+
+
+    Reparatur von Telefonen mit "PB3 EEPROM" Fehler
+    -----------------------------------------------
+    Dies ist ein häufiges Problem von Sagem Telefonen; das Telefon wird
+    dadurch unbenutzbar.
+
+    Man kann solche Telefone reparieren, aber es ist nicht einfach:
+    Wenn das Telefon dieses Problem hat, ist manchmal die Kommunikation
+    per Datenkabel nicht mehr möglich. In solchen Fällen muß das EEPROM
+    mit einem eeprom-Programmer (zum Beispiel "PonyProgrammer") gelesen
+    und geschrieben werden.
+
+    Wer Hilfe dabei braucht, melde sich bitte bei mir.
+
+    Schrittweise Reparatur-Anleitung:
+
+    o Versuche, ein intaktes Telefon vom gleichen Modell und mit der
+      gleichen Firmware-Version zu finden. Von diesem Telefon muss ein
+      Backup erstellt werden.
+
+    o Vom defekten Telefon ebenfalls ein Backup erstellen.
+
+    o Den Inhalt von Feld 0 des defekten Telefones aufschreiben.
+
+    o Falls das defekte Telefon die Firmware FT4.1M hat, benötigt man
+      auch die Phone ID davon, hoffentlich hast du diese :-) 
+
+    o Das Backup vom intakten Telefon auf das defekte Telefon aufspielen
+
+    o Feld 0 zurücksetzen auf den Original-Wert, den wir aufgeschrieben
+      hatten
+
+    o Die Funktion '9' von Sagem Doctor benutzen, um die Checksummen und
+      die Simlock-Felder zu reparieren. (Hier muss man bei FT4.1M die
+      Phone ID manuell eingeben)
+
+    o Wenn alles geklappt hat, hast du gerade dein defektes Sagem Telefon
+      repariert!
+
+    [Achtung: Das ist alles nur Theorie, ich habe leider (zum Glück?) kein
+     kaputtes Telefon, um das zu testen...]
+
+
+    Befehlszeilenparameter:
+    -----------------------
+    Sagem Doktor kann mit den folgenden Befehlszeilenparametern angerufen werden:
+
+
+    -P [num]: Der Comport com[num] an dem das Handy angeschlossen ist.
+
+    -B [Geschwindigkeit]: Die im Handy eingestellte Baudrate in [Geschwindigkeit] bps.
+       Erlaubte Werte sind 2400/4800/9600/19200/38400
+
+    -e: Das "etna" flag: unterdrückt die Ausgabe von transferierten Daten
+        im Handy I/O Fenster. Dies kann bei einigen Computer helfen, auf denen
+        die Textausgabe sehr langsam ist.
+
+    -? : zeigt den Hilfebildschirm für die Befehlszeilenparameter an.
+
+
+    Die verschiedenen Sicherungsbereiche:
+    -------------------------------------
+    Die Software im Handy speichert Information in "Feldern", nummeriert von
+    0 bis 16383. Bei aktuellen Handys werden jedoch die meisten Felder nicht verwendet.
+    Wenn Sie eine Sicherung erstellen, können Sie die Feldbereiche auswählen, die Sie
+    sichern wollen.
+
+    Wenn Sie "all other fields" auswählen, versucht Sagem Doktor alle möglichen Felder
+    zu lesen, selbst wenn sie leer sind. Eine komplette Sicherung dauert sehr lange,
+    eine schnelle Sicherung liest nur die Felder, welche wahrscheinlich Daten enthalten.
+
+    Dies ist die bevorzugte Variante für ältere Firmwarerevisionen, aber neue
+    Firmwarerevisionen können Daten in Feldern enthalten welche vorher leer waren.
+    Diese Felder werden nicht mit der schnellen Sicherung gelesen, wählen Sie
+    "full backup" wenn Sie meinen, daß dies bei Ihrem Handy der Fall ist.
+
+    Hinweis: Sie können ein großes und ein kleines Backup erstellen und danach
+    die Größe der Dateien vergleichen. Wenn diese gleich ist, können Sie in Zukunft
+    die schnelle Sicherung verwenden.
+
+    Beachten Sie, daß bei Verwendung der Wiederherstellungsfunktion keine Felder
+    überschrieben werden welche zur Zeit der Sicherung leer waren, diese aber nach
+    der Sicherung geändert worden sind.
+    Soweit ich weiß betrifft dies unter anderem die Highscores, die SMS Meldungen und
+    die Telefonbuch Einträge.
+
+
+    Wiederherstellung mit einer Sicherung von einem anderen Handy:
+    --------------------------------------------------------------
+    Im allgemeinen ist es keine gute Idee, den Speicherinhalt eines Handys auf ein
+    anderes zu übertragen. Dies löst keine bestehenden Probleme, es kann aber neue
+    hinzufügen!
+
+    o Sie können NICHT ihre Firmware Updaten/Downdaten wenn Sie ein Backup von
+      einem anderem Handy auf Ihres schreiben. Die Firmware befindet sich in einem
+      Speicherbereich welcher nicht mit dem SagemDoctor geschrieben werden kann!
+
+    o Sie können nicht den Simlock entfernen indem Sie ein Backup eines frei-
+      geschaltenem Handy auf Ihres aufspielen!
+
+    Wenn Sie dennoch eine andere Sicherung auf ein Handy schreiben wollen (Beispielweise
+    funktioniert Ihr Handy auch nach einem Reparatur Versuch nicht mehr), dann lesen
+    sie bitte den Abschnitt "Reparieren von Telefonen mit PB3 EEPROM Fehler"
+
+
+    Häufige Probleme:
+    -----------------
+    - Viele "timeout" Fehlermeldungen wenn Befehle gesendet werden.
+    + Die Sagem Handys haben eine eingebaute Energiesparfunktion, welche die
+      Kommunikation unterbricht wenn für eine gewisse Zeit das Handy nicht benutzt wird.
+      Das drücken auf 'C' am Handy weckt das Telefon auf, versuchen Sie dies wenn
+      Sie "timeout" Probleme haben.
+
+    - Sie haben eine Sicherung eines Handy auf ein anderes Handy geschrieben und.
+      nun funktioniert dieses nicht mehr.
+    + Bitte Lesen Sie den Abschnitt über die Sicherungsfunktion. Wenn Feld 0 geändert wird,
+      zeigt das Handy-Display eine Fehlermeldung (normalerweise "SIM fehlt"). Es gibt eine
+      (verschlüsselte) Kopie von Feld 0 in einem Bereich, der nicht mit dem Datenkabel
+      gelesen oder geschrieben werden kann.
+      Feld 0 und seine Kopie müssen zueinander passende Werte enthalten. Versuchen sie
+      in so einem Fall den alten Wert von Feld 0 wieder einzutragen.
+
+    - Einige Funktionen funktionieren nicht bei der Firmware Version 4.1M oder höher.
+    + Sagem hat die Firmware geändert, um einige Daten für "Hack-Programme" nicht sicht-
+      bar zu machen. SagemDoctor soll kein Hack-Programm darstellen. Es versucht aber,
+      mit denselben Methoden die Informationen aus dem Handy herauszuholen. Da dies
+      bei den neuen Firmwares nicht geht, kann SagemDoctor mit diesen Telefonen leider
+      nicht arbeiten.
+
+
+    Versions History:
+    =================
+
+    Änderungen in Version 1.4b:
+    ---------------------------
+    + Fehler, der das Überspringen von ungültigen Simlock-Feldern
+      verhinderte, behoben
+    + Fehler behoben, der bei manueller Eingabe der Phone ID den
+      falschen Hash-Block auswählte
+    + Kosmetischer Fehler beim Editieren der Felder behoben
+    + Kosmetischer Fehler in Funktion 9 ('Program phone from text file')
+      behoben
+    + Überprüfung der Checksummen korrigiert jetzt auch die Länge
+      der Simlock-Felder
+
+
+    Änderungen in Version 1.4a:
+    ---------------------------
+    + Ein Fehler in der Brute-Force Routine behoben
+    + Die Brute-Force Routine verwendet jetzt Feld 227 und nicht
+      Feld 185 (viele Leute wollen Feld 185 verändern, das gab dann
+      Probleme)
+
+
+    Änderungen in Version 1.4:
+    --------------------------
+    + Berechnung der Checksummen funktioniert jetzt auch bei Telefonen
+      mit Firmware FT4.1M! Ich bin ein bißchen spät dran damit, aber
+      es war ziemlich schwierig, verläßliche Infos über diese Telefone
+      zu bekommen.
+      Ein großes *Dankeschön* an Dejan und Overfloh für wichtige Hinweise!
+    + Berechnung der Checksummen überprüft jetzt auch die Simlock Checksummen.
+      Noch ein großes *Dankeschön* an Ths9!
+    + Viele interne Änderungen
+    + ein paar alte Fehler behoben
+
+
+    Änderungen in Version 1.3b:
+    ---------------------------
+    + Und nochmal eine Änderung bei der Erkennung von Telefonen mit
+      abgeschaltetem Kommando 0x78 (FT4.1M, FW4.1M, FF3.3T etc.)
+
+
+    Änderungen in Version 1.3a:
+    ---------------------------
+    + Menü für Backup und Prom Dump vereinheitlicht
+    + Erkennung der Anzahl von SMS- und Telefonbuch-Speicherplätzen
+    + Erkennung der mit Prüfsumme geschützten Felder, bessere Erkennung
+      der Firmware-Versionen, bei denen Prüfsummen nicht berechnet werden
+      können (FW4.1M / FT4.1M).
+      [Dieser Punkt macht den Punkt "Prüfsummen-Berechnung für neue Sagem-Modelle..."
+       überflüssig :-)]
+    + Menü zur Auswahl der Sicherungsbereiche repariert (In der letzten Version
+      funktionierte der Menüpunkt "full backup" nicht richtig)
+    + Funktion zum Schreiben des eeproms aus einem Textfile repariert; Jetzt kann man
+      auch aus einem File mit nur einer Zeile schreiben.
+    + Prüfsummen-Berechnung für neue Sagem-Modelle hinzugefügt (MW932, MC959)
+
+    Änderungen in Version 1.3:
+    ----------------------------
+    + Zugefügte Funktion zur Überprüfung und Berechnung der Eeprom Prüfsumme.
+    + Entfernung eines Bugs der manchmal,in Backups, Feldnummer falsch setzte.
+    + Eine geringfügige Säuberung in alten Routinen
+    + Eine Änderungen in der "sagemdr.txt" Datei. [Liest die überhaupt noch jemand?]
+
+
+    Änderungen in Version 1.2c:
+    ---------------------------
+    + Unterstützung für Kommunikation mit 38400 Baud.
+    + Zugefügte Menüelemente für den Com-Anschluß und Aktivieren/Deaktivieren der
+      Ein- / Ausgabe aller gesendeten und empfangen Daten des Handys auf dem Bildschirm.
+    + Zugefügte Option um den Telefonspeicher (Backup) aus einer Textdatei zu laden.
+      Verwenden Sie dies mit Vorsicht, es wird keine große Fehlerüberprüfung vorgenommen.
+    + Einige kleinere Änderungen.
+
+    Änderungen in Version 1.2b:
+    ---------------------------
+    + Zugefügte Befehlszeilenparameter. Lesen Sie die Anleitung für Details.
+    + Zugefügte Funktionalität, um Prom-Felder zu Redimensionieren.
+    + Beim Backup können nun selbst definierte Bereiche eingegeben werden.
+    + Einige kleinere Änderungen.
+
+    Änderungen in Version 1.2a:
+    ---------------------------
+    + Im Feld-Editor kann man jetzt Flash-Felder löschen oder verkürzen. Vieler Dank
+      dafür an 'Jack' das es mir den Befehl erklärte, Flash-Felder zu löschen!
+
+    Änderungen in Version 1.2:
+    --------------------------
+    + Läuft nun unter Windows. Jetzt erfordert dieses Programm eine Windows DOS-Box
+      um zu laufen, dafür sind einige Probleme mit dem Com-Port behoben.
+      Dies verlangsamte die Text-Ausgabe ein wenig ...
+    + Benutzer kann Anfangs- und Endadresse für den RAM-Dump setzen.
+    + Zugefügte Funktion um den RAM-Speicher zu editieren.
+    + Entfernte einige alte Funktionen die nicht nützlich waren.
+    + Auslassen von Feldern in Sicherung und Wiederherstellung, so daß Sie nach
+      einem Fehler weitermachen können.
+    + Einige kosmetische Änderungen, Funktionen gruppiert nach Thema.
+    + Auswahl des zu sichernden Eeprom-Bereichs.
+
+    Änderungen in Version 1.1b:
+    ---------------------------
+    + Brachte Anzeige in Ordnung, wenn leere Eeprom-Felder editiert wurden.
+    + Kleine Änderung der RAM-Dump Funktion.
+
+    Änderungen in Version 1.1:
+    --------------------------
+    + Liest nun volle 2 Megabytes RAM, Version 1,1 vergaß das letzte Byte.
+    + Brachte Adreßanzeige in Ordnung beim kontinuierlichen RAM-Dump.
+
+    Änderungen in Version 1.1:
+    --------------------------
+    + Unterstützung für 19200 Baud.
+    + RAM-Dump Funktion.
+    + Bugfix: Kein Absturz mehr wenn das zu editierende Feld, war leer.
+    + Bugfix: Sicherung hörte bei Feld 16183 anstatt bei 16383 auf, so daß zwei Felder
+      fehlten.
+    + Verbessern Handhabung der seriellen Kommunikation > kein "Answer was broken" mehr.
+    + ...

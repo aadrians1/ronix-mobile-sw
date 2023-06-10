@@ -1,0 +1,41 @@
+Softwarenutzungsbedingungen
+
+Die vorliegende Software und die dazugehörige Dokumentation sind geistiges Eigentum 
+der Siemens AG Deutschland (Siemens). Der Käufer erwirbt keinerlei Urheberrechte an 
+Software und Dokumentation.
+Der Käufer erhält mit den Erwerb des Datenträgers ein zeitlich nicht beschränktes nicht-
+ausschließliches, nicht-übertragbares Recht, die Software im Rahmen der 
+nachstehenden Regelungen zu nutzen. 
+Die Software darf nur auf einer einzigen datenverarbeitenden Einrichtung installiert 
+werden. Falls die Software auf mehreren PC oder auf einem Server installiert wird, muß 
+für jeden zusätzlichen Arbeitsplatz, auf dem die Software installiert oder für den sie 
+benutzt wird, von Siemens eine zusätzliche Gebrauchslizenz erworben werden.
+Die Software darf nicht verändert werden , d.h. insbesondere nicht übersetzt, 
+entassembliert, dekompiliert, rückprogrammiert oder auf sonstige Art und Weise 
+zurückentwickelt werden. Ferner dürfen einzelne Programmteile nicht herausgelöst 
+werden.
+Der Käufer ist berechtigt, zur Datensicherung eine Sicherungskopie der Software 
+anzufertigen. Er hat dabei alphanummerische Kennungen, Marken, 
+Urheberrechtsvermerke und sonstige Hinweise auf Siemens unverändert mit zu 
+vervielfältigen. Dokumentation darf nicht vervielfältigt werden.
+Der Käufer darf die Software ohne Zustimmung von Siemens Dritten nicht zugänglich 
+machen, d.h. insbesondere nicht vermieten, verkaufen, ausleihen oder unterlizensieren.
+
+Alle Programme und die Dokumentation wurden mit größter Sorgfalt erstellt und nach 
+dem Stand der Technik auf Korrektheit überprüft. Für die Qualität, Leistungsfähigkeit 
+sowie Marktgängigkeit des Produkts zu einem bestimmten Zweck, der von dem durch 
+die Produktbeschreibung abgedeckten Leistungsumfang abweicht, übernimmt die 
+Siemens AG weder ausdrücklich noch implizit die Gewähr oder Verantwortung. Für 
+Schäden, die sich direkt oder indirekt aus dem Gebrauch der Dokumentation oder der 
+übrigen Programme ergeben, sowie für beiläufige Schäden oder Folgeschäden ist die 
+Siemens AG nur im Falle des Vorsatzes oder der groben Fahrlässigkeit verantwortlich 
+zu machen. Für den Verlust oder die Beschädigung von Hardware oder Software oder 
+Daten infolge direkter oder indirekter Fehler oder Zerstörungen, sowie für Kosten, 
+einschließlich Kosten für Telefonverbindungen, die im Zusammenhang mit den 
+gelieferten Programmen und der Dokumentation stehen und auf fehlerhafte 
+Installationen, die von der Siemens AG nicht vorgenommen wurden, zurückzuführen 
+sind, sind alle Haftungsansprüche ausdrücklich ausgeschlossen. Die in dieser 
+Dokumentation enthaltenen Informationen und die zugehörigen Programme können 
+ohne besondere Ankündigung zum Zwecke des technischen Fortschritts geändert 
+werden.
+

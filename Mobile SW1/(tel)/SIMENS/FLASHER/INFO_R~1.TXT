@@ -1,0 +1,15 @@
+1. Download flash from working C25V51 using TotalFlasher by Pro and
+   upload to dead C25V53. - Phone shows now "wrong software"
+2. Repair phone using Andomeda6.1 repair function
+
+100% working solution!
+
+
+
+
+
+
+
+
+
+p1

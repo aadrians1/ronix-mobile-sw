@@ -1,0 +1,21 @@
+[MapFileInfo]
+Product = 27
+Provider = 0x01
+MapVer = 0x01
+SWVersion = 5
+Time = 170558
+Date = 000404
+
+[0072]              ; Bearbeiter: F. Goldhofer
+Offset =       0    ; Offset
+Memory =       2    ; EELiteBlock
+PStufe =      16    ; KT
+Service =      4    ; Block mit 0xFF füllen
+Version =      1    ; Version
+DataSize =      6   ; Anzahl der Datenbytes
+Data     {
+0xFF 0xFF 0x0A 0x14 0x00 0xFF
+         }
+
+[CheckSum]
+Key = 170764    ; CheckByte: 0x0C

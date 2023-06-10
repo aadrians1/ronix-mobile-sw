@@ -1,0 +1,59 @@
+Diga.exe works with SPRG hardware.
+Don't need of external power suply.
+Vcc is about 3v (Don't damage phone).
+Don't need to desolder EEPROM chip.
+
+*************************************************************************
+* THIS IS BETA VERSION , TEST IT ON CHIP's , NOT ON WORKING PHONES !!!! *
+*             If O.K. use it with phone on OWN RISK !                   *
+*   THIS PROGRAM DON'T SAVES or VERIFIES INFORMATION AUTOMATICALY !!!   *
+*************************************************************************
+
+Open     - Open file in current directory.
+Save     - Saves data buffer to file in current directory.
+Backup   - Not implemented.
+All      - Read all chip to data buffer.                 (NO VERIFICATION !)
+Read     - Read current chip page (256 bytes) to buffer. (NO VERIFICATION !)
+Program  - Writes current page (256 bytes) to chip.      (NO VERIFICATION !)
+Verify   - Verify current page with chip. (Not matched bytes - displayed in RED)
+Lockswap - Swaps SIMLOCK info and recalculates checksum.(Changed bytes in GREEN)
+Info     - Edits text info about phone (800 - 8FF).
+Edit     - Edits data in current page.           (Edited bytes displayed in RED)
+eXit     - Exits program.(Data will be lost , if not SAVED !!!!).
+F10      - Changes LPT port : (LPT1 - 378,LPT2 - 278,LPT3 - 3BC,LPT4 - 268).
+PgUp     - Up one page.
+PgDwn    - Down one page.
+Home     - Back to 0 page (000 - 0FF).
+End      - to Last page (800 - 8FF , Info page).
+Arrows   - Moves cursor (Only in Edit or Info Edit mode).
+ESC      - Returns from Edit or Info Edit to command mode.
+
+I test this on phones with firmware versions : 08002400 , 08001200.
+Under Win3.11 and DOS6.22
+
+NCK are valid only for Firmware 08001510.
+
+Procedure of SIM-Unlocking :
+
+* A - read all memory.
+* S - save it to file.
+* Home - back to 0 page.
+* V - verify info.
+  L - modify info.
+  P - write to EEPROM.
+  V - verify.
+  Turn on phone and test.(Don't need to disconnect phone from programmer).
+
+* You can read only 0 page , don't save info ,  but who knows ...
+
+If repeat this for unlocked phone - Phone will be Locked again.
+
+With this hardware and software You can read,program,edit all
+I2C EEPROMS from 24c01 to 24c16.
+
+If don't work under Windows , specify other LPT port or
+disconnect printer in Control Panel or run in DOS session.
+
+This program will not work under Windows NT !
+
+Write results and ideas about modification to saras@kaunas.aiva.lt

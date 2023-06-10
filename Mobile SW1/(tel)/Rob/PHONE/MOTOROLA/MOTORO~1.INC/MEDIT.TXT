@@ -1,0 +1,154 @@
+
+MEDIT v3.03                                                 (c) TST 1997,1998
+-----------------------------------------------------------------------------
+
+This is Version 3.03 of my "MotEditor" now with full bitmap-support
+AND editable phonebook!
+
+It's pure ANSI C and should be compileable with almost all C-Compilers.
+
+Thanks to Janus, because he's doing it!
+Thanks to ANDROID for his wonderfull work with ASIM!
+
+First of all: You can probably DAMAGE YOUR PHONE with this program! But that
+is in your hands, so don't blame me if something happens. Don't say I didn't
+warn you!
+I have tested it ONLY on a M8700 at the moment (although people around the
+world are using it), so be careful on other phones.
+
+This package consists of:
+-------------------------
+	-) MEDIT.C	Source
+	-) MEDIT.EXE	Executable for DOS
+	-) MEDIT.MNU	Menudefinitions file
+	-) ENGF_ON.MNU	Import this to frame 1 to get "Eng Field Options"
+	-) EXAMPLE.BMP	Example wake-up graphic
+	-) PB_EXAMP.TXT	Example phonebook file
+	-) MEDIT.TXT	This file
+
+What does this program?
+-----------------------
+MEDIT is only useful, if you have:
+	-) a Motorola GSM phone, e.g. 7x00, 8x00, StarTac, SlimLite,...
+	-) the SIM CARD EMULATOR hardware as introduced by Android
+	-) ASIM, the program for the SIM CARD EMULATOR by Android
+	-) enough nerves to do it.
+
+With MEDIT you can:
+	-) enable/disable ALL menus on your phone, even hidden ones.
+	-) put your own startup-graphic in the phone/export the existing one.
+	-) export and import the phonebook in a textfile.
+
+How to use
+----------
+* First, download all frames (1 to 5) from your phone with ASIM and keep them
+* safe somewhere (as a backup...).
+* Then ALWAYS download your frames before you start MEDITing them, because
+* you probably have changed some phone settings inbetween.
+
+MEDIT is (at this time) only a command-line program. Usage is always the same:
+Start MEDIT with a binary framefile as argument and infos are printed,
+depending on the frame number.
+Or you start MEDIT with framefile and a textfile as arguments and framefile is
+changed. If you give a filename as last argument, the changed data is written
+there instead. Same with bitmap.
+
+	MEDIT [-v] framefile [textfile [outframe]]
+or
+	MEDIT [-v] framefile -br bitmap [outframe]
+
+where framefile is a binary frame saved in ASIM, either number 1, 2, 3 or 4.
+Depending on the number of the frame, textfile has to be either a
+menu-definitions file (for frame 1 or 4) or a phonebook file (for frame 2 and 3).
+
+Outframe is the binary file where the result is written. If omitted, framefile
+IS OVERWRITTEN!
+
+Export of the greeting-bitmap is a bit different:
+
+	MEDIT [-v] framefile -bw bitmap
+
+The file "framefile" is not changed, but the file "bitmap" is created/overwritten
+with the existing startup-bitmap of framefile.
+
+Option "-v" always displays verbose messages of what MEDIT is doing.
+
+
+Enabling/disabling Menus
+------------------------
+Download frame 1 with ASIM and try
+	MEDIT frame1.bin > mymenu.txt
+then edit mymenu.txt, you'll see which menus are enabled. Set the appropriate
+zeros to 1 if you want to enable a menu. Then store the info back to your
+frame:
+	MEDIT frame1.bin mymenu.txt
+and reload frame1.bin to your phone. That's it!
+The same information is stored in frame #4, but I have not tried on #4,
+just #1!
+
+Descriptions of menus are kept in medit.mnu, the format of this file is just
+like the exported. You can make additional description-entries there. Be sure
+that medit.mnu is in the same dir as medit.exe or no descriptions will be
+available in output.
+File format is simple, have a look at medit.mnu for example. You can safely
+delete lines (-> no change), and only 0 and 1 are valid characters for
+switching off/on menus, all other are ignored (->don't cares)
+
+
+Exporting greeting-bitmap
+-------------------------
+Use MEDIT like this
+	MEDIT frame1.bin -bw bitmap.bmp
+to get the existing greeting-bitmap as Windows-bitmap. It can be edited with
+almost any bitmap editor and then stored back to your phone.
+MEDIT tries to export the bitmap even if your phone hasn't a graphical display,
+so you might get only scrambled bits.
+
+
+Changing greeting-bitmap
+------------------------
+* Keep a backup of your orginial frame 1, I haven't tried yet if the original
+* bitmap can be restored with a "master reset"!
+
+Make a Windows-bitmap, width=96 and height=32 in 1-bit color (monochrome).
+With
+	MEDIT frame1.bin bitmap.bmp outframe.bin
+the startup graphics in frame1 is replaced by your bitmap and written in
+outframe.bin. Reload outframe.bin to phone, and that's it!
+
+
+Import/export of phonebook
+--------------------------
+Start MEDIT like this: (to export your phonebook to a text file):
+	MEDIT frame2.bin > names.txt
+	MEDIT frame3.bin >> names.txt
+Afterwards have a look at names.txt
+The format of each line in that file is always
+	NUM NUMBER TEXT
+where NUM=location(1-100), NUMBER=telephone number (including of "+*#p" is
+possible; max. 32 chars, "+" not included) and TEXT=name of entry (max
+16 chars). If a line consists only of NUM, the corresponding phonebook entry
+is deleted. Non existing entry numbers are not changed.
+Edit the file or create a new one in the same format and import it again to
+your frames with
+	MEDIT frame2.bin names.txt
+	MEDIT frame3.bin names.txt
+(Frame2 holds numbers from 1 to 74 and frame3 from 75 to 100.)
+Don't forget to reload it to your phone!
+
+
+-----------------------------------------------------------------------------
+
+AGAIN:
+DISCAIMER: I WILL NOT claim ANY responsibility if you damage your phone with this
+program! Be carefull!
+
+Please send bug-reports, enhancements, "yes it works with my type-XXXX phone",
+new menu descriptions, nice startup-bitmaps or greetings to tst@iname.com
+Thanks!
+
+All registered trademarks appearing in this package are registered trademarks of
+the company which registered them. No offence meant.
+
+(c) TST 1997,1998
+

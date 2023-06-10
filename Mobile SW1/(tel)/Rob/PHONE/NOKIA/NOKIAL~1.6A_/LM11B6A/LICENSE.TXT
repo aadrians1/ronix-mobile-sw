@@ -1,0 +1,163 @@
+Product name:
+
+LOGOMANAGER, VERSION 1.1 for Windows 95/98/NT 4.0/2000.
+
+
+END-USER LICENCE AGREEMENT for v1.1, LogoManager for Nokia Phones
+
+IMPORTANT-READ CAREFULLY:  This End-User Licence Agreement ("EULA") is a 
+legal agreement between you (either an individual or a single entity) and
+W.M.D. Bradley ("AUTHOR") for the software product identified above which 
+may include associated software components, media, printed materials, and 
+"online" or electronic documentation ("SOFTWARE PRODUCT"). By installing, 
+copying, or otherwise using the SOFTWARE PRODUCT, you agree to be bound by 
+the terms of this EULA. If you do not agree to the terms of this EULA, do 
+not install or use the SOFTWARE PRODUCT.
+
+The SOFTWARE PRODUCT is protected by copyright laws and international 
+copyright treaties, as well as other intellectual property laws and 
+treaties. The SOFTWARE PRODUCT is licenced, not sold.
+
+1.      GRANT OF LICENCE.  The SOFTWARE PRODUCT is licenced as follows:
+
+* The licence is granted only upon payment of the list value of the
+  licence to THE AUTHOR, either directly, or via an AUTHOR approved
+  supplier.
+
+* Installation and Use. THE AUTHOR grants you the right to install and use 
+  copies of the SOFTWARE PRODUCT on your computers running validly licenced 
+  copies of the operating system for which the SOFTWARE PRODUCT was designed 
+  [e.g., Windows(r) 95; Windows NT(r), Windows 3.x, Macintosh, etc.].  
+
+* The STANDARD LICENCE allows personal non-commercial use on a single machine 
+  only.
+
+* The BUSINESS LICENCE permits you to use the SOFTWARE PRODUCT within a
+  commercial organisation, where profit is not made from the use of the 
+  SOFTWARE PRODUCT.
+
+* The DEALER LICENCE permits you to use the SOFTWARE PRODUCT on up to two
+  machines within a high street mobile phone dealership.  No fee can be 
+  charged for this service and the fact that the SOFTWARE PRODUCT is being 
+  used must be advertised to the customer.  If you wish to charge for the
+  service, then a full commercial licence must be purchased.
+
+* The COMMERCIAL LICENCE permits you to use the SOFTWARE PRODUCT on a single 
+  machine within a commercial organisation.  This includes for-profit use of 
+  the SOFTWARE PRODUCT
+
+* If you purchased a SINGLE LICENCE then you may install and use the SOFTWARE 
+  PRODUCT on one machine only.  If you purchased a DEALER LICENCE, then you are 
+  restricted to installation on up to two machines.  If you purchased a 
+  MULTI-USER, or SITE LICENCE, then you are restricted to the installation and 
+  use of the agreed number of copies on machines within your organisation;  
+  this includes laptop computers taken off-site that are provided for the 
+  purposes of business in your organisation, but excludes machines privately 
+  owned by your employees.
+
+* The UNLICENCED EVALUATION EDITION may be freely distributed in its
+  original form, and may be used for a period of 30 days.  After this 
+  period, you must either remove the SOFTWARE PRODUCT from your system,
+  or purchase a LICENCE.
+
+* Licence files, full versions and licence keys must not be made public 
+  or otherwise distributed.  Keys or full versions which become public may 
+  be immobilised.  The use of such files without having purchased a licence is 
+  expressly prohibited.
+
+* Backup Copies.  You may also make copies of the SOFTWARE PRODUCT 
+  as may be necessary for backup and archival purposes.  
+
+2.      DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS.
+
+* Maintenance of Copyright Notices.  You must not remove or alter any
+  copyright notices on all copies of the SOFTWARE PRODUCT.
+* Distribution.  You may not distribute copies of the SOFTWARE PRODUCT 
+  to third parties.
+* Prohibition on Reverse Engineering, Decompilation, and Disassembly. 
+  You may not reverse engineer, decompile, or disassemble the SOFTWARE 
+  PRODUCT, except and only to the extent that such activity is expressly 
+  permitted by applicable law notwithstanding this limitation.  Modification
+  of distributed files is also expressly forbidden.
+* Rental and transfer.  You may not rent, lease, grant a security interest 
+  in, or otherwise transfer rights to the SOFTWARE PRODUCT.
+* Support Services.  THE AUTHOR may at his discression provide you with 
+  support services related to the SOFTWARE PRODUCT ("Support Services").  Use 
+  of Support Services is governed by the AUTHOR's polices and programs 
+  described in the user manual, in "on line" documentation and/or other 
+  AUTHOR-provided materials. Any supplemental software code provided to you 
+  as part of the Support Services shall be considered part of the SOFTWARE 
+  PRODUCT and subject to the terms and conditions of this EULA.  With respect 
+  to technical information you provide to THE AUTHOR as part of the Support 
+  Services, THE AUTHOR may use such information for his business purposes, 
+  including for product support and development.  THE AUTHOR will not utilize 
+  such technical information in a form that personally identifies you.
+* Compliance with Applicable Laws.  You must comply with all applicable laws 
+  regarding use of the SOFTWARE PRODUCT.
+
+3.      TERMINATION.  Without prejudice to any other rights, THE AUTHOR may 
+        terminate this EULA if you fail to comply with the terms and conditions 
+        of this EULA. In such event, you must destroy all copies of the 
+        SOFTWARE PRODUCT.
+
+4.      COPYRIGHT.  All title, including but not limited to copyrights, in 
+        and to the SOFTWARE PRODUCT and any copies thereof are owned by THE
+        AUTHOR or its suppliers. All title and intellectual property rights 
+        in and to the content which may be accessed through use of the SOFTWARE 
+        PRODUCT is the property of the respective content owner and may be 
+        protected by applicable copyright or other intellectual property laws 
+        and treaties.  This EULA grants you no rights to use such content.  All 
+        rights not expressly granted are reserved by THE AUTHOR.
+
+5.      U.S. GOVERNMENT RESTRICTED RIGHTS.  The SOFTWARE PRODUCT 
+        is provided with RESTRICTED RIGHTS. Use, duplication, or disclosure 
+        by the Government is subject to restrictions as set forth in 
+        subparagraph (c)(1)(ii) of the Rights in Technical Data and Computer 
+        Software clause at DFARS 252.227-7013 or subparagraphs (c)(1) and (2) 
+        of the Commercial Computer Software Restricted Rights at 48 CFR 52.227-19, 
+        as applicable. Manufacturer is W M D Bradley, 19 Fairfax Road, Cambridge, 
+        CB1 3AZ, UNITED KINGDOM. 
+
+6.      EXPORT RESTRICTIONS.  You agree that you will not export or re-export the
+        SOFTWARE PRODUCT to any country, person, entity or end user subject to 
+        U.S.A. export restrictions.  Restricted countries currently include, but 
+        are not necessarily limited to Cuba, Iran, Iraq, Libya, North Korea, Sudan, 
+        and Syria.  You warrant and represent that neither the U.S.A. Bureau of 
+        Export Administration nor any other federal agency has suspended, revoked 
+        or denied your export privileges.
+
+7.      NO WARRANTIES.  THE AUTHOR expressly disclaims any warranty for the 
+        SOFTWARE PRODUCT.  THE SOFTWARE PRODUCT AND ANY RELATED 
+        DOCUMENTATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+        KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, WITHOUT LIMITATION, 
+        THE IMPLIED WARRANTIES OR MERCHANTABILITY, FITNESS FOR A 
+        PARTICULAR PURPOSE, OR NONINFRINGEMENT.  THE ENTIRE RISK 
+        ARISING OUT OF USE OR PERFORMANCE OF THE SOFTWARE PRODUCT 
+        REMAINS WITH YOU.
+
+8.      LIMITATION OF LIABILITY.  To the maximum extent permitted by applicable 
+        law, in no event shall THE AUTHOR or his suppliers be liable for any 
+        special, incidental, indirect, or consequential damages whatsoever 
+        (including, without limitation, damages for loss of business profits, 
+        business interruption, loss of business information, or any other pecuniary 
+        loss) arising out of the use of or inability to use the SOFTWARE PRODUCT or 
+        the provision of or failure to provide Support Services, even if THE AUTHOR 
+        has been advised of the possibility of such damages.  In any case, THE AUTHOR's 
+        entire liability under any provision of this EULA shall be limited to the 
+        greater of the amount actually paid by you for the SOFTWARE PRODUCT or 
+        GB£5.00.  Furthermore, some countries do not allow the exclusion or limitation 
+        of incidental or consequential damages, so this limitation and exclusion may 
+        not apply to you.
+
+9.      MISCELLANEOUS.
+
+        This EULA is governed by the laws of the United Kingdom of Great Britain 
+        and Northern Ireland.
+
+        If this product was acquired outside the United Kingdom, then local law may apply.
+
+        Should you have any questions concerning this EULA, or if you desire to contact 
+        THE AUTHOR for any reason, please write to: W M D Bradley, 19 Fairfax Road, 
+        Cambridge, CB1 3AZ, UNITED KINGDOM.
+
+

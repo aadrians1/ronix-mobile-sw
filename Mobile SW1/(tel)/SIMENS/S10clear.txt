@@ -1,0 +1,10 @@
+S10
+
+Clear in dump 00A1-00B8 fill with FF  and 00B9-0112  fill with 00
+
+Phonecode:00000000
+
+
+
+
+If A1 start with: FF FF then that version CAN'T be cleared on this way!!!

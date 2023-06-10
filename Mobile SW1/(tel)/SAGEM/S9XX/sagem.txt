@@ -1,0 +1,8 @@
+(for ALLSG.HEX)
+connect clk of sim card connector to pin 2 of pic
+connect i/o of sim card connector through 1K Om R to pin 6 of pic
+get gnd for pic from somewhere and Vcc for pic from battery of phone
+tested for 8xx and 9xx series including new soft releases
+warning : there is 10 Om R connected to i/o of sim card connector - must be replaced with 1K Om
+
+for different phones (I mean 8xx and 9xx) mounting scheme is slightly different but who care...

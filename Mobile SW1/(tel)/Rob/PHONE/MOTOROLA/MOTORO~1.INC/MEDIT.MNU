@@ -1,0 +1,208 @@
+000  0
+001  1  
+002  0  Keylock (press # & * together)
+003  0  MENU-PhoneBook (add to top level)
+004  1  MENU-Messages
+005  0  Mute On/Off (MENU, during call)
+006  1  Show complete menu of Call Related Features and Messages
+007  0  MENU-"Arrows"
+008  0  Select Phone Line
+009  0  Last Ten Calls (Call Related Features)
+010  1  Restrict My Phone Number
+011  1  Call Diverting
+012  1  Divert When Unavailable
+013  1  Detailed Diverting
+014  1  Divert Voice Calls
+015  1  Divert All Voice Calls
+016  1  If Busy
+017  1  If No Answer
+018  1  If Not Reachable
+019  1  Divert Fax Calls
+020  1  Divert Data Calls
+021  1  Cancel All Diverting
+022  1  Call Waiting
+023  1  Call Barring
+024  1  Bar Outgoing Calls
+025  1  Bar Incoming Calls
+026  1  Change Bar Password
+027  0  Call Restrictions
+028  0  Restrict Incomming Calls
+029  0  Phone Number Length
+030  0  Keypad Dialing
+031  1  Call Voicemail
+032  1  Received Messages
+033  1  Cell Broadcast
+034  1  Message Settings
+035  1  Message Alert Tone
+036  1  Voicemail Number
+037  1  Incoming Call Alert
+038  0  No Alert
+039  1  Vibrate Only
+040  1  Adjust Ring Volume
+041  1  Lock Now
+042  1  Automatic Lock
+043  1  Change Unlock Code
+044  1  Require SIM Card PIN
+045  1  Change SIM PIN Code
+046  1  New Security Code
+047  1  Extended Menus
+048  1  Language Selection
+049  1  Automatic (Language Selection)
+050  0  Change Greeting
+051  1  Battery Saving Mode
+052  1  Select Keypad Tones
+053  1  Phone Status
+054  1  Status Review
+055  1  Master Reset
+056  1  Master Clear
+057  1  Available Networks
+058  1  Network Search
+059  1  Registration Preferences
+060  1  Frequency Of Search
+061  1  Preferred Networks
+062  1  Add Network To List
+063  1  Show List Of Networks
+064  1  Find New Network
+065  1  Show Last Call
+066  1  Resettable Call Meters
+067  1  Set Audible Call Timers
+068  1  Single Alert Timer
+069  1  Repetitive Timer
+070  1  ** 1 = Register write lock !!!! (no effect on newer phones)
+071  1  Show Meter During Calls
+072  1  Set Meter Format
+073  1  Set Call Cost Rates
+074  1  Lifetime Meter
+075  1  ?Mute Car Radio
+076  0  ?Mute Car Radio
+077  1  ?Auto Answer
+078  1  ?Mute Car Radio
+079  1  ?Safety Timer
+080  0  ?Aus Alert
+081  1  Find Entry By Name
+082  1  Find Entry By Location
+083  0  Show Services
+084  0  Enter My Phone Number
+085  0  Show My Phone Number
+086  1  Add Entry
+087  1  Check Phone Capacity
+088  1  Check SIM Capacity
+089  1  Prevent Access
+090  1  Edit Name (My Phone #)
+091  1  Edit Number (My Phone #)
+092  1  MENU-Call Related Features
+093  1  MENU-Phone Setup
+094  1  MENU-Network Selection
+095  1  MENU-Call Meters
+096  1  
+097  0  
+098  0  
+099  0  Periodic Search
+100  1  Continuous Search
+101  1  Slow Search
+102  1  Medium Search
+103  1  Fast Search
+104  0  MENU-PhoneBook
+105  0  MENU-PhoneBook (add to bottom level)
+106  0  MENU-Messages (add to bottom level)
+107  1  Divert All Calls
+108  0  Copy SIM Memory
+109  0  
+110  0  Edit Number (Direct Dial Key)
+111  0  Edit Name (Direct Dial Key)
+112  0  Direct Dial Key (Phone Setup)
+113  0  MENU-Eng Field Options
+114  1  Ring Or Vibrate
+115  1  Set Ringer Tone
+116  1  Vibrate Then Ring
+117  0  
+118  0  
+119  0  
+120  0  
+121  0  
+122  1  
+123  0  Enable Clock / Show Time and Date / Set Time and Date / Set Time Format
+124  1  Talk and Fax
+125  0  Talk And Fax Next Call
+126  1  Erase All Numbers (Last Ten Calls)
+127  0  MENU-PhoneBook
+128  1  Personal Numbers   
+129  1  
+130  1  Last Ten Calls
+131  0  NOP?
+132  1  Fixed Dialling
+133  1  One-Touch Dial Setting
+134  0  Closed User Group
+135  1  Outgoing Message
+136  1  Message Editor
+137  1  Message Settings
+138  1  Change SIM PIN2 Code
+139  1  Show Call Charges
+140  1  Show Call Timers
+141  1  Set In-Call Display
+142  1  Call Charge Settings
+143  1  
+144  1  
+145  1  
+146  0  
+147  0  
+148  0  
+149  1  
+150  0  
+151  0  
+152  1  
+153  1  
+154  1  
+155  1  
+156  1  
+157  1  
+158  1  
+159  1  
+160  1  
+161  1  
+162  1  
+163  1  
+164  1  
+165  1  
+166  1  
+167  1  
+168  1  
+169  0  
+170  0  
+171  0  
+172  0  
+173  0  
+174  0  
+175  0  
+176  0  
+177  1  
+178  1  
+179  0  Keypad Guard
+180  0  
+181  1  
+182  0  
+183  0  
+184  0  
+185  1  
+186  0  
+187  0  Key Answer Only
+188  1  
+189  1  
+190  1  
+191  0  If set to 1, outgoing calls are not possible!
+192  0  If set to 1, outgoing calls are not possible!
+193  0  If set to 1, outgoing calls are not possible!
+194  0  If set to 1, outgoing calls are not possible!
+195  1  
+196  1  
+197  1  
+198  1  
+199  1  
+200  1  
+201  0  NOP?
+202  1  
+203  0  
+204  0  
+205  0  
+206  0  
+207  0  

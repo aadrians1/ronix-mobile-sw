@@ -1,0 +1,33 @@
+
+			  RS232 <-> SGH-600 I2C BUS
+			 ===========================
+
+           CTS
+        8 дддддддддддддддддддддддддддддддддддддд©
+           DTR          R1                       Ё           SDA
+	4 ддддддддддд/\/\/\дддддддддддддддoдддддoддддддддддддд 11
+                                  D1       Ё
+                         зддддддддцддддддды                 GND
+           GND           Ё                               зддддддo 6
+        5 oддддддддддддддoдддддддддддддддддддддддддддддддo   GND     SAMSUNG
+  RS232                  Ё        D2                     юддддддo 7  SGH-600
+  9 PIN                  юддддддддцддддддд©                        CONNECTOR
+CONNECTOR                                  Ё
+           RTS          R2                 Ё                 SCL
+        7 ддддддддддд/\/\/\дддддддддддддддoдддддoддддддддддддд 10
+           DSR                                   Ё
+        6 дддддддддддддддддддддддддддддддддддддды
+
+
+     R1,R2 = 10K
+     D1,D2 = Zener 5V
+
+		 SGH600UL - Removes Samsung SGH-600 SP-LOCK
+                   CHGIMEI - Changes Samsung SGH-600 IMEI
+                      david@jet.es - Barcelona - Spain
+
+1.- Make the cable
+2.- Connect to PC serial port (not to phone)
+3.- Run the program
+4.- Follow instructions
+

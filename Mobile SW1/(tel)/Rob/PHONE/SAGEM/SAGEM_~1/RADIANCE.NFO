@@ -1,0 +1,161 @@
+     r           a         d      i      a        n          c          e
+БВлмммм        мммммлллммммм    ллВл   мммммллллммммм   лллммммм   мллммммм
+Влл пллВВмм мВллллп ллВ плллВВммпВллмВВлллп ВллВ плллВВммпВ плллВВммпВ плллВВм
+ллВ А ллВВВлолллп А лВВ А пллВВВлолВВВллп А ВлВВ А пллВВВло А пллВВВло А пллВВн
+БлВ ААолБВВлоллн АА ВВБ АА оллВВВнлАВллн АА БВВБ АА оллВВВн АА ммммммлппппппппп
+Блл  мллБВВнВллн АА лВБ АА олВВВлнВАВВлн АА БлВБ АА олВВВло АА ллВВВло АА ллВВн
+БВллллВБпппоВллл  А лВБ А  ллВВВлоВБВВлл  А БлВБ А  ллВВВло А  ллВВВло А  ллВВн
+ВВВ пВВВлм пВВлллм  ллВ  мллВВппмБВАпВВллм  ВллВ  мллВВппмБ  мллВВппмл  мллВВп
+ББВ   ппБмп мм ппппплллппппп мм лВВВ м ппппплллл пппп м ллВппппп м пмпппппп
+    мммлл мллллллммммммлллллллммммммллллллммммммллллллмммммллллллллм ллмм
+  пплллл мммммммммм пппппппппппппппппппппппппппппппппппппп мммммммммм ллллпп
+  млп л     ппппппплВллллллллллллллллллллллллллллллллллллВлппппппп     л плм
+ лп Б  мл                                                            лм  Б пл
+ол  А ллл    Sagem MC9xx SimLock Code Calculator v0.0.5 (c) Mr. I    ллл А  лн
+ плмм ллл                                                            ллл ммлп
+    п ллл      supplier ў CaMoCaS  А  release date ў 16/10/2000      ллл п
+      лллом    cracker  ў RADiANCE Б  # of disk(s) ў 01 * 134kB    мнллл
+      ллл Вн   packager ў RADiANCE А  Os           ў Win9x,me,2k  оВ ллл
+      ллнолн                                                      олнолл
+      п млп                                                        плм п
+     млпп               * THE LEADER GROUP ON GSM SCENE*             пплм
+    олп л      мммммммммммммммммммммммммммммммммммммммммммммммм       л плн
+    Вл ллмммлВлллппппппппппппппппппппппппппппппппппппппппппппплллВлмммлл лВ
+    он Вп                                                             пВ он
+     пм                                                                 мп
+                      кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП               
+  кФФФФФФФФФФФФФФФФФФФДВБААА А TYPES.REQUiREMENTS А АААБВУФФФФФФФФФФФФФФФФФФФП 
+  Г                   РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй                   Г
+  Г                                                                          Г
+  Г   GSM TYPE:                    GSM REQUIREMENTS:                         Г
+  Г            [   ]:... Unlocker                   [ x ]:... Cable          Г
+  Г            [   ]:... Flasher                    [   ]:... EEprom Reader  Г
+  Г            [   ]:... EEprom Dump                [   ]:... BDM / ASIM     Г
+  Г            [   ]:... Solution                   [   ]:... Other.         Г
+  Г            [ x ]:... Service Software                                    Г
+  Г            [   ]:... Other                                               Г
+  Г                                                                          Г
+  Г   SHEMATICS INCLUDED: [ x ]                                              Г
+  Г                                                                          Г
+  Г                                                                          Г
+  Г                   кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП                   Г
+  РФФФФФФФФФФФФФФФФФФФ ВБААААА А RELEASE NOTES А ААААААБВУФФФФФФФФФФФФФФФФФФФй
+                      РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
+
+SYNOPSIS
+       sagem_simlock [option]...
+
+
+DESCRIPTION
+       sagem_simlock will calculate the  simlock-code  for  SAGEM
+       mobile  phones  MC9xx  (possibly other series as well, but
+       this has not been tested yet).
+
+       To be able to do this,  you'll  need  a  data-cable  which
+       allows this program to read the phone's EEProm fields 0x00
+       (IMEI) and 0xFB (lock) and execute phone-command  0x78  in
+       order to get the phone's ID. These values are used to cal-
+       culate the 10-digit simlock-code, but most  phones  ignore
+       the  last  two digits (e.g. MC922, MC930 and MC939). Thus,
+       sagem_simlock  will  report   the   code   in   the   form
+       "12345678-90"  and  you  have  to enter only "12345678" in
+       this case into the phone as the simlock code. This program
+       also  checks  EEProm  field  0xFC (lock data) and issues a
+       warning if the phone is unlocked.  Please,  stop  in  this
+       case  and  don't  try  to unlock the phone by entering the
+       simlock-code!
+
+       In case you do not own a data-cable sagem_simlock provides
+       you  the  possibility to type in the values instead. Don't
+       worry, sagem_simlock will guide you step by  step  through
+       the  process  of  getting the desired data manually! To be
+       fair, we have to say that this procedure is a  little  bit
+       error prone and simlock-code calculation may fail. This is
+       because we will read the phone ID directly  from  RAM  and
+       its address may change in newer firmware revisions.
+
+       BE  WARNED:  you  are using this program on your own risk!
+       This program may be used for educational purposes only  or
+       to  recalculate  a  previously  bought  simlock code!! The
+       authors are in no way responsible for any direct or  indi-
+       rect damage which may arise out of the use or inability to
+       use this software!!! See the warnings at  program  startup
+       and the file COPYING, too!
+
+       SAGEM is a registered(?) trademark of SAGEM SA.
+
+
+OPTIONS
+       -c     Get  values  from  EEProm  fields 0x00 and 0xFB via
+              datacable. Also, issue phone-command  0x78  to  get
+              the  encrypted  phone ID, decrypt it afterwards and
+              read EEProm field 0xFC to see if the phone has been
+              unlocked before. Default is to ask the user at run-
+              time.
+
+       -m     Let the user type in the values from EEProm  fields
+              0x00  (decimal  0)  and  0xFB (decimal 251) and let
+              him/her also enter  the  phone  ID  stored  at  RAM
+              adress  0x219-0x21E.  Please  notice  that this may
+              fail due to  changed/reorganized  RAM  contents  in
+              future  firmware  versions.  Default  is to ask the
+              user at run-time.
+
+       -b baud
+              Selects baud as  the  baudrate.  Legal  values  are
+              4800,  9600  and  19200  (under *DOS, only 4800 and
+              9600 are supported), which of course must match the
+              baudrate  set in your mobile phone. Default is 4800
+              baud.
+
+       -d device
+              Selects device as the communication port.
+
+       -h     Display a short help screen with  selected  parame-
+              ters.
+ 
+                      кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
+                       ВБААААА А INSTALL NOTES А ААААААБВ
+                      РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
+
+            Unzip and run it.
+
+
+ пмм          *Another Great Release Brought to you by RADiANCE*          ммп
+  плллмм                 ммммммммммммммммммммммммммммм                ммлллп
+   плпм  мллллллллллллллллппппппппппппппппппппппппппплллллллллллллллм  мплп
+    п  пм                                                            мп  п
+      лм лм  А news А                                              мл мл
+      ллм лВ                                                      Вл млл
+      пп млп     The new domain is ready, (www.teamradiance.com)  плм пп
+     ммлпп   its under construction, new mail address to            пплмм
+   млп мм    <apply@teamradiance.com>.                               мм плм
+  олн ллл                                                            ллл олн
+  оВ  ллл                                                            ллл  Вн
+  олн Влл    А applying А                                            ллВ олн
+   пл ВВВ                                                            ВВВ лп
+      лВВом   We are always looking for new talented members, if   мнВВл
+      ллл Вн youre interested in one (or more :) of the following оВ ллл
+      ллнолн positions,  do not hesitate to get in touch with us. олнолл
+      п млп                                                        плм п
+     млпп      RADiANCE IS LOOKiNG FOR:                              пплм
+    лп мл            * SOFTWARE SUPPLIERS (GSM and OTHER STUFF)      лм пл
+   он ллл            * EXPERIENCED CRACKERS (Dongle Capabiliti)      ллл он
+   Вн ллл            * SHELL BOX OWNERS                              ллл оВ
+   лн ллл            * SITEOPS WITH DECENT SPEED AND AFFILS          ллл ол
+   ол Влл                                                            ллВ лн
+    пнВВВ       NOTE: we don't need any couriers/prehunters.         ВВВоп
+      ллВом                                                        мнВлл
+      ллл лВ А contactz А                                         Вл ллл
+      пп млп                                                      плм пп
+     ммлпп        WEBPAGE.......: www.teamradiance.com              пплмм
+   млп мм         EMAIL.........: apply@teamradiance.com             мм плм
+  олн ллл         IRC (EFnet)...: #RDE                               ллл олн
+  оВ  ллл                                                            ллл  Вн
+  олн Влл    А greets А                                              ллВ олн
+   пл ВВВ                                                            ВВВ лп
+      ллл                          TFE - IMG                         ллл
+      ллл пплВммммммммм                                мммммммммВлпп ллл
+      ллп         пппппппппппппппппппппппппппппппппппппппп           плл
+      п           HEADER AND LAYOUT BY fnuk OF [i]MAGE (IMG)           п
+

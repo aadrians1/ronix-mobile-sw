@@ -1,0 +1,110 @@
+:Base sdlpro.hlp
+:Title SoftDataLink PRO Hilfe
+:Index SQS Hilfe=sqshelpd.hlp
+1 Inhalt der Hilfe von SoftDataLink PRO
+2 Einleitung
+3 Funktionale Kurzbeschreibung=HID_EINL_FUNKTION
+3 Hardwareanforderungen
+4 Mindestausrüstung=HID_EINL_HWNEED
+4 Nützliche Zusätze=HID_EINL_HWOPTIONS
+3 Softwareanforderungen
+4 Betriebsysteme=HID_EINL_SWBTS
+4 Notwendige Standardsoftware=HID_EINL_SWSTANDARD
+2 Installationshinweise
+3 Allgemein=HID_INST_ALLG
+3 Nachrichten per SMS senden und empfangen=HID_INST_EMAIL
+3 FAX und Daten senden und empfangen=HID_INST_FAX_DATA
+3 Einstellungen der Soundkarte=HID_INST_SOUND
+3 Deinstallation=HID_INST_DEINST
+2 Hauptprogramm
+3 Starten der verschiedenen Funktionen von SoftDataLink PRO=HID_BEDI_START
+3 Versionsabfrage im SoftDataLink PRO ab=HID_BEDI_VERSION
+3 Statusanzeige über die Verbindung zum Telefon=HID_BEDI_STATUS
+3 Beenden von SoftDataLink PRO=HID_BEDI_END
+2 Termindatenabgleich=HID_TME_MAIN
+2 Telefonbuchverwaltung
+3 Allgemeines=HID_TBE_ALLG
+3 Konfigurationsmöglichkeiten=HID_TBE_CONFIG
+3 Öffnen von Telefonbüchern oder persönlichen Verteilerlisten
+4 Öffnen von Telefonbüchern=HID_TBE_OPEN_PHONE
+4 Öffnen von persönlichen Verteilerlisten=HID_TBE_OPEN_PAB
+3 Anlegen von persönlichen Verteilerlisten=HID_TBE_NEW_PAB
+3 Kopieren von Einträgen
+4 Kopieren einzelner Einträge=HID_TBE_COPY_SINGLE
+4 Kopieren ganzer Telefonbücher oder persönlicher Verteilerlisten=HID_TBE_COPY_ALL
+3 Bearbeiten von Einträgen
+4 Editieren von Einträgen im Vorschaufenster=HID_TBE_PREVIEW
+4 Editieren von Einträgen im Telefonbuch oder in persönlichen Verteilerlisten=HID_TBE_EDIT
+3 Anlegen von neuen Einträgen=HID_TBE_NEW
+3 Speichern von Telefonbüchern oder persönlichen Verteilerlisten
+4 Speichern von Telefonbüchern=HID_TBE_SAVE_PHONE
+4 Speichern von persönlichen Verteilerlisten=HID_TBE_SAVE_PAB
+3 Einrichten des Fensters
+4 Symbolleiste einblenden oder ausblenden=HID_TBE_TOOLBAR
+4 Statusleiste einblenden oder ausblenden=HID_TBE_STATUSBAR
+3 Bearbeitung von persönlichen Verteilerlisten mit anderen Programmen
+4 Besonderheiten im Zusammenspiel mit SoftDataLink PRO=HID_TBE_PAB_BES
+2 Rufton-Editor
+3 Öffnen von Melodien
+4 Öffnen von Melodien=HID_RTE_OPEN
+3 Erstellen von Melodien
+4 Erstellen neuer Melodien=HID_RTE_NEW
+4 Setzen einzelner Noten bzw. Pausen=HID_RTE_SETNOTE
+4 Einstellen der Notenlänge=HID_RTE_SETDURATION
+4 Halbtonerhöhung=HID_RTE_SETCROSS
+4 Punktierung von Noten=HID_RTE_SETPOINT
+3 Speichern und Schliessen von Melodien
+4 Speichern von Änderungen in Melodien=HID_RTE_SAVE
+4 Schließen von Melodien=HID_RTE_CLOSE
+3 Bearbeiten von Melodien
+4 Steuern der Einfügemarke=HID_RTE_CARET
+4 Markieren der Noten=HID_RTE_SELECT
+4 Löschen, Ausschneiden, Kopieren und Einfügen von Noten=HID_RTE_EDIT
+4 Veränderung des Notenwertes=HID_RTE_CHANGE
+4 Alle Noten löschen=HID_RTE_DELALL
+3 Bearbeiten des Ruftons auf dem Telefon
+4 Den aktuellen benutzerdefinierten Rufton abspielen=HID_RTE_HANDY_PLAY
+4 Die Wiedergabe des Ruftons beenden=HID_RTE_HANDY_STOP
+4 Die aktuelle Melodie auf dem Telefon speichern=HID_RTE_HANDY
+3 Die Wiedergabe der Melodie auf einem MIDI-fähigem Ausgabegerät
+4 Einstellungen bzgl. der Soundkarte=HID_RTE_SETTINGS
+4 Tempo-Einstellungen=HID_RTE_TEMPO
+4 Abspielen der Melodie=HID_RTE_PLAY
+4 Wiedergabe beenden=HID_RTE_STOP
+3 Das "Smart-Message"-Format importieren
+4 Das "Smart-Message"-Format importieren=HID_RTE_SM
+3 Einrichten des Fensters
+4 Symbolleiste einblenden oder ausblenden=HID_RTE_TOOLBAR
+4 Statusleiste einblenden oder ausblenden=HID_RTE_STATUSBAR
+2 Rufumleitungen
+3 Allgemeines=HID_RUL_ALLG
+3 Einstellmöglichkeiten=HID_RUL_EINST
+3 Abfragemöglichkeiten=HID_RUL_ABFR
+2 Rufsperren
+3 Allgemeines=HID_RUS_ALLG
+3 Einstellmöglichkeiten=HID_RUS_EINST
+3 Abfragemöglichkeiten=HID_RUS_ABFR
+2 Konfiguration von SoftDataLink PRO
+3 Allgemeines=HID_KONF_CONTENTS
+3 Übernehmen von geänderten Einstellungen=HID_KONF_SETCHANGES
+3 Speichern von übernommenen Einstellungen=HID_KONF_SAVECHANGES
+3 Verwerfen von übernommenen Einstellungen =HID_KONF_REJECT
+3 SMS konfigurieren =HID_KONF_SMS
+3 Telefonbuch konfigurieren=HID_TBE_CONFIG
+3 Anschluß konfigurieren =HID_KONF_INTERFACE
+2 Nachrichten per SMS senden und empfangen
+3 Versenden von Nachrichten
+4 Versenden aus einem Standard-Programm=HID_SMS_STAN
+4 Einstellungen im Bedienprogramm =HID_KONF_SMS
+4 Installation des Dienstes =HID_INST_EMAIL
+4 Eingabe des Empfängers =HID_SMS_ENTRY
+4 Erstellen neuer Nachrichten=HID_SMS_EDIT
+4 Weiterleiten von Nachrichten an das Telefon =HID_SMS_SEND
+4 Prüfung von Übereinstimmungen zwischen Betreffzeile und Text =HID_SMS_CUT
+2 Empfangen von Nachrichten =HID_SMS_RECEIVE
+2 FAX senden und empfangen=HID_FAX_CONTENTS
+2 Daten senden und empfangen=HID_DATA_CONTENTS
+2 Unterstützung beim Aufbau von Sprachverbindungen=HID_TAPI_CONTENTS
+1 Terminplaner=!JumpContents(`Sqshelpd.hlp')
+1 Gesamtinhalt der Hilfe von SoftDataLink PRO=HID_SDL_ALLHELP
+1 Support-Telefon / Hotline=HID_SDL_HOTLINE

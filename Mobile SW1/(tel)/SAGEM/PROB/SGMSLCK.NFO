@@ -1,0 +1,103 @@
+Finally... it has been done... a lot of sweat went down on our head... nights
+turned into days... days abused for sleeping... chefs moaning... we began to
+hate the sun... our girlfriends felt unattended... a lot of coffee and coke...
+but now it is ready... free... working... no bullshit... and you don't even
+need a datacable... 
+
+WE ARE PROUD TO PRESENT YOU THE FIRST EVER FREELY AVAILABLE PROGRAM
+FOR CALCULATING THE SIMLOCK-CODE OF GSM SAGEM MC9XX CELLULAR PHONES!!
+
+Use it, but don't abuse it! We are releasing it free and absolutely without
+any warranty!! You are using it on your own risk! For details see the
+following manual page and the file COPYING, too!
+
+Have phun (we've had some, you can be sure :)),
+Mr. O, Mr. T and Mr. F
+
+
+
+--------------------------------<*>-man-page-<*>--------------------------------
+
+SAGEM-SIMLOCK(1)            GSM Tools            SAGEM-SIMLOCK(1)
+
+
+NAME
+       sagem_simlock  -  calculate  simlock-code for SAGEM mobile
+       phones MC9xx
+
+
+SYNOPSIS
+       sagem_simlock [option]...
+
+
+DESCRIPTION
+       sagem_simlock will calculate the  simlock-code  for  SAGEM
+       mobile  phones  MC9xx  (possibly other series as well, but
+       this has not been tested yet).
+
+       To be able to do this,  you'll  need  a  data-cable  which
+       allows this program to read the phone's EEProm fields 0x00
+       (IMEI) and 0xFB (lock) and execute phone-command  0x78  in
+       order to get the phone's ID. These values are used to cal-
+       culate the 10-digit simlock-code, but most  phones  ignore
+       the  last  two digits (e.g. MC922, MC930 and MC939). Thus,
+       sagem_simlock  will  report   the   code   in   the   form
+       "12345678-90"  and  you  have  to enter only "12345678" in
+       this case into the phone as the simlock code. This program
+       also  checks  EEProm  field  0xFC (lock data) and issues a
+       warning if the phone is unlocked.  Please,  stop  in  this
+       case  and  don't  try  to unlock the phone by entering the
+       simlock-code!
+
+       In case you do not own a data-cable sagem_simlock provides
+       you  the  possibility to type in the values instead. Don't
+       worry, sagem_simlock will guide you step by  step  through
+       the  process  of  getting the desired data manually! To be
+       fair, we have to say that this procedure is a  little  bit
+       error prone and simlock-code calculation may fail. This is
+       because we will read the phone ID directly  from  RAM  and
+       its address may change in newer firmware revisions.
+
+       BE  WARNED:  you  are using this program on your own risk!
+       This program may be used for educational purposes only  or
+       to  recalculate  a  previously  bought  simlock code!! The
+       authors are in no way responsible for any direct or  indi-
+       rect damage which may arise out of the use or inability to
+       use this software!!! See the warnings at  program  startup
+       and the file COPYING, too!
+
+       SAGEM is a registered(?) trademark of SAGEM SA.
+
+
+OPTIONS
+       -c     Get  values  from  EEProm  fields 0x00 and 0xFB via
+              datacable. Also, issue phone-command  0x78  to  get
+              the  encrypted  phone ID, decrypt it afterwards and
+              read EEProm field 0xFC to see if the phone has been
+              unlocked before. Default is to ask the user at run-
+              time.
+
+       -m     Let the user type in the values from EEProm  fields
+              0x00  (decimal  0)  and  0xFB (decimal 251) and let
+              him/her also enter  the  phone  ID  stored  at  RAM
+              adress  0x219-0x21E.  Please  notice  that this may
+              fail due to  changed/reorganized  RAM  contents  in
+              future  firmware  versions.  Default  is to ask the
+              user at run-time.
+
+       -b baud
+              Selects baud as  the  baudrate.  Legal  values  are
+              4800,  9600  and  19200  (under *DOS, only 4800 and
+              9600 are supported), which of course must match the
+              baudrate  set in your mobile phone. Default is 4800
+              baud.
+
+       -d device
+              Selects device as the communication port.
+
+       -h     Display a short help screen with  selected  parame-
+              ters.
+
+
+SEE ALSO
+       The in-depth analysis of the simlock-code written by Mr O.

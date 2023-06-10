@@ -1,0 +1,16 @@
+====================================================
+        EEPROM unlocking for Ericsson T18s New
+====================================================
+1. Solder the EEprom out of the phone (Don't remove it!).
+2. Turn the phone ON, with SIM card (EEprom in the phone).
+3. Disconnect EEprom from the phone (Phone still ON!).
+4. Connect the EEprom to an EEprom Programmer.
+5. Make an backup copy of the EEprom.
+6. Now you edit the EEprom: 
+    -----------------------
+    new versions
+    #3DA5 = F0 (With the phone still ON!)
+7. Put it back in to the phone (Phone still ON!).
+8. Turn OFF the phone.
+9. Solder on the EEprom.
+====================================================

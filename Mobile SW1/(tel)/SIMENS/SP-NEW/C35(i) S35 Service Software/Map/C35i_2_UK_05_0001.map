@@ -1,0 +1,21 @@
+[MapFileInfo]
+Product = 28
+Provider = 0x02
+MapVer = 0x01
+SWVersion = 5
+Time = 170620
+Date = 000404
+
+[0074]              ; Bearbeiter: T. Kressler
+Offset =       0    ; Offset
+Memory =       2    ; EELiteBlock
+PStufe =      16    ; KT
+Service =      2    ; Block neu initialisieren
+Version =      1    ; Version
+DataSize =      4   ; Anzahl der Datenbytes
+Data     {
+0x99 0xF9 0xFF 0xFF
+         }
+
+[CheckSum]
+Key = 170957    ; CheckByte: 0xCD
