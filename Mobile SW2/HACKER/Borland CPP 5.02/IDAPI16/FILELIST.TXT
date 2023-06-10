@@ -1,0 +1,125 @@
+ALPHABETIZED LIST OF PRODUCT FILES
+----------------------------------
+
+BAMGR16   DL_ (Disk1) - 
+
+IDAPI     PAK (Disk2) - Contains the following compressed files:
+   BDECFG    EXE - 
+   BDECFG    HLP - 
+   IDAPI01   DLL - 
+   IDASCI01  DLL - 
+   IDBAT01   DLL - 
+   IDDBAS01  DLL - 
+   IDODBC01  DLL - 
+   IDPDX01   DLL - 
+   IDQRY01   DLL - 
+   IDR10009  DLL - 
+   ILD01     DLL - 
+   odbc      new - 
+   odbcinst  new - 
+
+IDAPICFG  PAK (Disk1) - Contains the following compressed files:
+   IDAPI     CNF - 
+
+INSTRUN   EX_ (Disk1) - EXECUTED BY INSTALL.EXE
+
+INSTXTRA  PAK (Disk1) - Contains the following compressed files:
+   BAENG16   DLL - 
+   BSCOB16   DLL - 
+   IDAPINST  DLL - 
+   IDAPINST  HLP - 
+   INSTCUI   DLL - DLL USED DURING INSTALLATION
+   INSTDEL   LST - 
+   INSTRRF   DLL - DLL USED DURING INSTALLATION
+
+LANGDRV   PAK (Disk1) - Contains the following compressed files:
+   ANCHINA    LD - Paradox Windows Chinese language driver
+   ANCYRR     LD - Paradox Windows Cyrillic language driver
+   ANCZECH    LD - Paradox Windows Czech language driver
+   ANGREEK1   LD - Paradox Windows Greek language driver
+   ANHUNDC    LD - Paradox Windows Hungarian language driver
+   ANKOREA    LD - Paradox Windows Korean language driver
+   ANPOLISH   LD - Paradox Windows Polish language driver
+   ANSII850   LD - Paradox Windows Western European language driver
+   ANSIINTL   LD - Paradox Windows Western European language driver
+   ANSINOR4   LD - Paradox Windows Norwegian/Danish language driver
+   ANSISLOV   LD - Paradox Windows Slovene language driver
+   ANSISPAN   LD - Paradox Windows Spanish language driver
+   ANSISWFN   LD - Paradox Windows Swedish/Finnish language driver
+   ANTAIWAN   LD - Paradox Windows Taiwanese language driver
+   ANTHAI     LD - Paradox Windows Thai language driver
+   ANTURK     LD - Paradox Windows Turkish language driver
+   BLLT1CA0   LD - InterBase Latin-1 Canadian language driver
+   BLLT1DA0   LD - InterBase Latin-1 Danish language driver
+   BLLT1DE0   LD - InterBase Latin-1 German language driver
+   BLLT1ES0   LD - InterBase Latin-1 Spanish language driver
+   BLLT1FI0   LD - InterBase Latin-1 Finnish language driver
+   BLLT1FR0   LD - InterBase Latin-1 French language driver
+   BLLT1IS0   LD - InterBase Latin-1 Icelandic language driver
+   BLLT1IT0   LD - InterBase Latin-1 Italian language driver
+   BLLT1NL0   LD - InterBase Latin-1 Dutch language driver
+   BLLT1NO0   LD - InterBase Latin-1 Norwegian language driver
+   BLLT1PT0   LD - InterBase Latin-1 Portuguese language driver
+   BLLT1SV0   LD - InterBase Latin-1 Swedish language driver
+   BLLT1UK0   LD - InterBase Latin-1 English (International) language driver
+   BLLT1US0   LD - InterBase Latin-1 English (US) language driver
+   CHINA      LD - Paradox Chinese language driver
+   CSKAMEN    LD - Paradox Czech cp867 language driver
+   CYRR       LD - Paradox Cyrillic language driver
+   CZECH      LD - Paradox Czech cp852 language driver
+   DB437DE0   LD - dBASE German cp437 language driver
+   DB437ES1   LD - dBASE Spanish cp437 language driver
+   DB437FI0   LD - dBASE Finnish cp437 language driver
+   DB437FR0   LD - dBASE French cp437 language driver
+   DB437GR0   LD - dBASE Greek cp437 language driver
+   DB437IT0   LD - dBASE Italian cp437 language driver
+   DB437NL0   LD - dBASE Dutch cp437 language driver
+   DB437SV0   LD - dBASE Swedish cp437 language driver
+   DB437TH0   LD - dBASE Thai language driver
+   DB437UK0   LD - dBASE English cp437 language driver
+   DB850CF0   LD - dBASE Canadian cp850 language driver
+   DB850DE0   LD - dBASE German cp850 language driver
+   DB850ES0   LD - dBASE Spanish cp850 language driver
+   DB850FR0   LD - dBASE French cp850 language driver
+   DB850IT1   LD - dBASE Italian cp850 language driver
+   DB850NL0   LD - dBASE Dutch cp850 language driver
+   DB850PT0   LD - dBASE Portuguese cp850 language driver
+   DB850SV1   LD - dBASE Swedish cp850 language driver
+   DB850UK0   LD - dBASE English(International) cp850 language driver
+   DB850US0   LD - dBASE English(US) cp850 language driver
+   DB852CZ0   LD - dBASE Czech cp852 language driver
+   DB852HDC   LD - dBASE Hungarian cp852 language driver
+   DB852PO0   LD - dBASE Polish cp852 language driver
+   DB852SL0   LD - dBASE Slovene cp852 language driver
+   DB857TR0   LD - dBASE Turkish cp857 language driver
+   DB860PT0   LD - dBASE Portuguese cp860 language driver
+   DB863CF1   LD - dBASE Canadian cp863 language driver
+   DB865DA0   LD - dBASE Danish cp865 language driver
+   DB865NO0   LD - dBASE Norwegian cp865 language driver
+   DB866RU0   LD - dBASE Cyrillic cp866 language driver
+   DB867CZ0   LD - dBASE Czech cp867 language driver
+   DB936CN0   LD - dBASE Chinese language driver
+   DB949KO0   LD - dBASE Korean language driver
+   DB950TW0   LD - dBASE Taiwanese language driver
+   DBWINES0   LD - dBASE Windows Spanish language driver
+   DBWINWE0   LD - dBASE Windows Western European language driver
+   GRCP437    LD - Paradox Greek language driver
+   HUN852DC   LD - Paradox Hungarian language driver
+   ICELAND    LD - Paradox Icelandic language driver
+   INTL       LD - Paradox Western European cp437 language driver
+   INTL850    LD - Paradox Western European cp850 language driver
+   KOREA      LD - Paradox Korean language driver
+   NORDAN     LD - Paradox Norwegian/Danish language driver
+   NORDAN40   LD - Paradox Norwegian/Danish language driver
+   POLISH     LD - Paradox Polish language driver
+   SLOVENE    LD - Paradox Slovene language driver
+   SPANISH    LD - Paradox Spanish language driver
+   SWEDFIN    LD - Paradox Swedish/Finnish language driver
+   TAIWAN     LD - Paradox Taiwanese language driver
+   THAI       LD - Paradox Thai language driver
+   TURK       LD - Paradox Turkish language driver
+
+SETUP     EXE (Disk1) - INSTALLATION EXECUTABLE
+
+WINSYS    PAK (Disk1) - Contains the following compressed files:
+   CTL3DV2   DLL - 

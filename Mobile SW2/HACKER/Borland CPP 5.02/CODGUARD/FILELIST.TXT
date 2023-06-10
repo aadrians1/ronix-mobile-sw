@@ -1,0 +1,87 @@
+ALPHABETIZED LIST OF PRODUCT FILES
+----------------------------------
+
+BAMGR32   DL_ (Disk1) - Codeguard install file
+
+
+CG16      PAK (Disk1) - Compression file containing the following:
+   CG16      DLL - 16 bit Codeguard library
+
+CG16LIBS  PAK (Disk1) - Compression file containing the following:
+   CG16      LIB - 16 bit Codeguard Library
+
+CG32      PAK (Disk1) - Compression file containing the following:
+   CG32      DLL - 32 bit Codeguard library
+
+CG32LIBS  PAK (Disk1) - Compression file containing the following:
+   CG32      LIB - 32 bit Codeguard Library
+
+CG5RMV    PAK (Disk1) - Compression file containing the following:
+   CG5RMV    EXE - CodeGuard for BC5 Uninstall
+
+CGCLEAN   PAK (Disk1) - Compression file containing the following:
+   CGCLEAN   EXE - Codeguard removal-assist file
+
+CGCOMMON  PAK (Disk1) - Compression file containing the following:
+   BCWCG     DLL - Codeguard dll
+
+CGCONFIG  PAK (Disk1) - Compression file containing the following:
+   CGCONFIG  EXE - CodeGuard Configuration file
+
+CGHELP    PAK (Disk1) - Compression file containing the following:
+   CG5       CNT - CodeGuard Help
+   CG5       HLP - CodeGuard Help
+   CG5       TOC - CodeGuard Help
+
+CGHLPDLL  PAK (Disk1) - Compression file containing the following:
+   CG32HELP  DLL - 32 bit Codeguard Help
+   CGHELP    DLL - Codeguard Dynamic library
+
+CGHLPICO  PAK (Disk1) - Compression file containing the following:
+   HELP      ICO - 
+
+CGLANG    PAK (Disk1) - Compression file containing the following:
+   GPFAULT     C - Codeguard example file
+   LANG      CPP - Codeguard example file
+   LANG      IDE - Codeguard example file
+   MAKEFILE      - Codeguard example file
+   ZERODIV     C - Codeguard example file
+
+CGREADME  TXT (Disk1) - readme file for codeguard
+
+
+CGWINAPI  PAK (Disk1) - Compression file containing the following:
+   EXCEPTCG  CPP - Codeguard example file
+   EXCEPTCG    H - Codeguard example file
+   FILESCG   CPP - Codeguard example file
+   FILESCG     H - Codeguard example file
+   MAKEFILE      - Codeguard example file
+   MEMCG     CPP - Codeguard example file
+   MEMCG       H - Codeguard example file
+   POINTCG   CPP - Codeguard example file
+   POINTCG     H - Codeguard example file
+   TESTDLL   CPP - Codeguard example file
+   TESTDLL     H - Codeguard example file
+   WINAPI    CPP - Codeguard example file
+   WINAPI    IDE - Codeguard example file
+   WINAPI     RC - Codeguard example file
+   WINAPI     RH - Codeguard example file
+
+DECOMP16  EX_ (Disk1) - Codeguard install file
+
+
+INSTRUN   EX_ (Disk1) - Codeguard install file
+
+
+INSTXTRA  PAK (Disk1) - Compression file containing the following:
+   BAENG32   DLL - Codeguard install file
+   BSCOB32   DLL - Codeguard install file
+   CGINSTAL  HLP - CG50 Intall Help
+   INSTBOR   DLL - CodeGuard Install file
+   INSTCUI   DLL - Codeguard install file
+   INSTDEL   LST - Codeguard install file
+   INSTRRF   DLL - Codeguard install file
+
+SETUP     EXE (Disk1) - Codeguard install file
+
+

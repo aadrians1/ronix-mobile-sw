@@ -1,0 +1,389 @@
+                               INSTCG.TXT
+                               ==========
+
+To jump to a specific section, search for "SECTION -#-", replacing
+the # with the appropriate section number.
+
+                               CONTENTS
+
+SECTION 0.     System Requirements
+
+SECTION 1.     Installation note
+                A. Installing under Windows NT or Windows 95
+                B. Installing under Windows 3.1
+                    or Windows for Workgroups
+
+SECTION 2.     Troubleshooting installation problems
+                A. Internal error, unable to start install
+                B. Data integrity or bad sector on disk errors
+                C. Install program terminates prematurely
+                D. "Unable to write to destination file"
+                E. "386 or Greater Required"
+                F. Hard Drive installation
+                 
+SECTION 3.     How to get help
+
+SECTION 4.     Updating Borland C++ 4.50
+                A. Patching Borland C++ 4.50
+                B. Precautions for modified files
+                C. Strange Behavior using Borland C++
+                D. Long patch time
+                E. Pipeline product registration software
+                F. Errors and warnings
+                 
+
+                SECTION -0- SYSTEM REQUIREMENTS
+                ===============================
+
+CodeGuard must be installed into a working hard disk installation of 
+Borland C++ 4.51 or 4.52 to function properly.  Do not delete Borland C++
+4.5x before installing CodeGuard.  Running Borland C++ from the CD-ROM
+drive is not supported if you are using CodeGuard.
+
+If you are running Borland C++ 4.50, see Section 4 "Updating Borland C++
+4.50."  
+
+CodeGuard requires 9 megabytes of available hard disk in addition to that
+required by Borland C++.  See also the system requirements section of the
+INSTALL.TXT file which shipped with Borland C++.
+
+
+                SECTION -1- INSTALLATION NOTES
+                ==============================
+
+A) Installing under Windows NT or Windows 95
+
+        The install will fail if you enter any paths which make use
+        of long file names (more than 8 letters in the name,
+        more than 3 letters in the extension, or a total path name
+        which exceeds 128 characters).
+
+B) Installing Under Windows 3.1 or Windows for Workgroups
+
+        Our installation program performs a complicated series of actions
+        including large amounts of file copying, decompression of files, and
+        joining together pieces of split files. As a result of this, it is
+        extremely sensitive to device drivers or resident programs which may
+        interfere with operation.
+
+        In order to guarantee that installation proceeds smoothly under
+        16-bit Windows, we recommend that you perform a "clean boot" prior
+        to installing. In order to perform a clean boot, do the following:
+
+        1. Backup your win.ini, system.ini, autoexec.bat, and config.sys.
+        2. Edit your config.sys so that it consists of only the following
+           lines: (insert any "required drivers" that are needed for
+           reading a CD-ROM or for network connections, at the end of
+           the file. Examples of drivers which are _not_ required are
+           EMM386.EXE, QDMI.SYS, and SMARTDRV.EXE. If you are unsure
+           whether a device driver is required, assume it is not.)
+
+                device=c:\windows\himem.sys
+                files=40
+                buffers=30
+                stacks=9,256
+                <insert required drivers here>.
+
+        3. Edit your autoexec.bat so that it consists only of the
+           following lines:
+
+                path=c:\;c:\dos;c:\windows
+                prompt $p$g
+                SET TEMP=C:\WINDOWS\TEMP
+                <insert required drivers here>
+
+        4. Edit your system.ini so that the line which starts with 
+           "shell=" says "shell=progman.exe". This will ensure that
+           you load program manager and not a program manager 
+           replacement (such as Dashboard).
+
+        5. Edit your win.ini so that all lines which start with "load="
+           or "run=" have a space after the equals sign.
+
+        6. Be sure to restore the original files after installation.
+
+        
+        If you are running a high resolution video driver on a high 
+        resolution video card, it is recommended that you switch 
+        display drivers so that you are using the standard VGA or 
+        SVGA display drivers. 
+
+
+                SECTION -2- TROUBLESHOOTING INSTALL PROBLEMS
+                ============================================
+
+A) Internal Error, Unable to Start Install
+        
+        1) Error -2: the install utility was unable to create a 
+           temporary directory needed for the installation. Please
+           check your autoexec.bat to see if there is a TMP or
+           TEMP environment variable. If there is one, verify that
+           it points to a valid directory on a drive with at least
+           ten megabytes of free space (fifteen if you are using
+           disk compression). If you do not have a variable set,
+           the install program will place its files in the directory
+           \WINDOWS\BORLAND.TMP. If there is not enough space on
+           the drive which contains Windows, be sure to set this
+           variable.
+
+        2) Error -3: there was an error while copying and decompressing
+           INSTRUN.EXE, which is used to launch phase two of the
+           installation. Check to be sure there is sufficient space
+           in your temp directory, boot clean (if you are running
+           Windows 3.1), and attempt to install from the hard drive.
+           (see section 2F) If the error persists, see section 2E for
+           an explanation of corrupted .pak files.
+
+        3) Error -69: INSTRUN.EXE failed to execute. This is probably
+           due to either file corruption or memory corruption. If
+           you are running Windows 3.1, perform a clean boot (see
+           section 1B); otherwise, perform a hard drive install
+           (see section 2F), or check section 2E.
+
+B) Data Integrity or Bad Sector on Disk Errors
+
+        If you receive one of these errors, you may need to get a
+        replacement disk set. If running a disk checking utility
+        reports a bad sector or data integrity problems, contact
+        Borland's Disk Replacement Line at 1-800-621-3132.
+
+C) Install Program Terminates Prematurely
+
+        If the install program stops for no apparent reason without
+        error messages, it is possible that certain support files
+        are write protected. To check this, switch to your WINDOWS
+        directory, type "attrib *.*", and check the resulting
+        output for the "r" attribute. If any file has this flag
+        set, you need to clear it by typing "attrib -r <filename>".
+        Repeat this process for the WINDOWS\SYSTEM directory.
+
+        (If attempting this procedure under NT or Windows 95,
+        remember that the WINDOWS directory is called WINNT and WIN95
+        by default under those two operating systems).
+
+D) "Unable to write to destination file" error.
+
+        If the install program stops and returns an "unable to write
+        to destination file: filename.pak" error, it means that
+        the install program is not able to create certain files
+        which are contained in the .pak file. This problem typically
+        happens because the files are already in use, but can
+        also be a result of incorrect file permissions.
+
+        To correct this problem, you need to do two things:
+        1. If running 16-bit Windows, perform a "clean boot".
+        2. Follow the directions in section 2C for making sure that
+           files are not write protected.
+
+        If neither of these solves the problem, you can change the
+        names of the files which the install program is attempting
+        to overwrite, restart windows, and try again.
+
+E) "Error: 386 or Greater required"
+
+        Prior to unpacking most of the .pak files, the installation
+        program copies them onto the hard drive and then decompresses
+        them. Under certain circumstances, these files can become
+        corrupted while being copied onto the hard drive. "386 or
+        Greater required" is one of several error messages which
+        are displayed when this type of problem occurs.
+
+        In the event that you receive an error message like this one,
+        or which indicates that you have corrupted .pak files,
+        you need to _slow down_ the speed of your microprocessor.
+        This will reduce the difference in rates of activity between
+        the floppy drive, the processor, and the hard drive, and will
+        reduce the likelihood of corruption.
+
+F) Hard Drive installation
+
+        If you have 40 megabytes of additional hard drive space,
+        you may be interested in installing the product from the
+        hard drive. The primary advantage of this would be to
+        increase the speed of the installation. In order to install
+        from the hard drive, copy the install disks or the install
+        directory of the CD into a temporary directory on the hard
+        drive, and run INSTALL.EXE from that directory.
+
+
+                SECTION -3- HOW TO GET HELP
+                ===========================
+
+Borland offers many technical documents, which are available from our
+FAX service, 1-800-822-4269. To obtain a list of these documents,
+you can connect to the fax service and request document #3, which is
+a listing of available documents.
+
+These documents are also available from the Borland forums on CompuServe,
+or from our Download BBS (408-431-5096), and from our ftp site 
+(ftp.borland.com, 143.186.15.10).
+
+You can also seek assistance with installation-related problems by
+contacting Borland Technical Support at 408-461-9133.
+
+See the file READMECG.TXT for more information on Technical Support
+options.
+
+
+                SECTION -4- UPDATING BORLAND C++ 4.50
+                =====================================
+
+CodeGuard must be installed into a working hard disk installation of 
+Borland C++ 4.51 or 4.52 to function properly.  If you own version 4.50
+of Borland C++, you are eligible for a free update which can be obtained
+by calling the Borland order desk at 1-800-645-4559.  Outside of North
+America, contact your local Borland office for pricing and availability
+of the update.
+
+A) Patching Borland C++ 4.50
+
+        The CodeGuard installation program will not install unless version
+        4.51 or 4.52 of Borland C++ is detected.  For your convenience, a
+        patch has been provided on the CodeGuard CD-ROM which will update
+        your copy of Borland C++ 4.50 to version 4.51 to allow CodeGuard to
+        be installed.  To apply the patch:
+
+        1. Change into the \PATCH directory on the CodeGuard CD-ROM
+        2. Run the batch file PATCH.BAT
+        3. Follow the instructions on the usage screen to specify the exact
+           parameters required for proper application of the patch
+
+        When running PATCH.BAT, it is critical that accurate information be
+        passed as parameters or you will run the risk of getting an
+        incomplete application of the patch.  For this reason, Borland
+        strongly recommends that 4.50 users obtain your free update of
+        Borland C++ by calling the Borland Order Desk at 1-800-645-4559 and
+        reinstall at your earliest possible convenience.  Outside of North
+        America, contact your local Borland representative for pricing and
+        availability of the update.  The patched version of Borland C++ 4.51
+        should be considered A TEMPORARY MEASURE ONLY to allow you to use
+        CodeGuard while waiting for your update to arrive.
+
+B) Precautions for modified files
+
+        If you have made any changes to files in your Borland C++ 4.50
+        installation, the patch program will not be able to update those
+        files. A typical instance of this is the case where you have
+        modified OWL, BIDS, or OCF source code.  Applying the patch to
+        modified source will result in a mix of patched and unpatched files,
+        which will likely render the source unbuildable.  If you have
+        modified these source files, make a backup of your work before
+        applying the patch.  After running the patch followed by the
+        CodeGuard installation program you will once again have a usable
+        version of the source into which you can reintroduce your
+        modifications if desired.
+
+C) Strange Behavior using Borland C++
+
+        If you experience any anomalous behavior after applying this patch,
+        the likely cause is that the patch did not get completely applied
+        and your installation has a mix of 4.50 and 4.51 components.  In
+        this case, the simplest and safest course of action would be to:
+
+        1. Delete \BC45 entirely
+        2. Reinstall Borland C++ 4.50 for the time being
+        3. Order an update for Borland C++ from Borland
+        4. Reinstall from your new updated CD-ROM before installing
+           CodeGuard
+
+        A more difficult but quicker course of action would be to try and
+        diagnose the cause of the incomplete patch application.  PATCH.BAT
+        redirects information to the file PATCH.LOG at runtime which can aid
+        you in figuring out if and why the patch may have failed.  See also
+        section 4F below for information on warnings and errors.
+
+D) Long patch time
+
+        Depending on your CPU, hard disk speed, and how many features of
+        Borland C++ 4.5 you have installed, this patch will take between
+        20 minutes and 2 hours to apply.
+
+        PATCH.BAT should not be run under Windows NT.
+
+E) Pipeline product registration software
+
+        PATCH.BAT will add a directory \BC45\PIPELINE to your installation
+        of Borland C++. This directory contains electronic product
+        registration software.  If you would like to register your copy of
+        Borland C++ electronically using a modem from within North America,
+        run \BC45\PIPELINE\REGISTER.EXE.  Note that this program is entirely
+        different from \BC45\BIN\REGISTER.EXE which is an OLE 2 registration
+        utility. By registering your copy of Borland C++, you will be
+        notified of new versions and be eligible for special upgrade prices.
+
+F) Errors and warnings
+
+        The Borland C++ 4.50 installation program will have installed
+        different sets of files depending on the options you chose when
+        installing.  Also, you may have chosen to copy diagnostic libraries
+        to your hard drive, or have installed patches obtained from
+        Borland's FTP site or CompuServe. PATCH.BAT has been designed to
+        update all valid combinations of Borland C++ 4.50 files.  However,
+        because of this flexibility you are very likely to see several
+        harmless warnings while applying the patch.
+
+        If the patch program is unable to locate the correct files to patch,
+        you will see the message:
+
+                Warning wpt0015: Old File does not exist
+
+        This may indicate one of the following cases:
+
+        1. You have previously deleted or have not installed a file
+           which PATCH.BAT has attempted to patch.  In this case the file
+           will be skipped, which is usually the right action.  If you
+           wish to replace a missing file, you must reinstall from your
+           Borland C++ CD-ROM and then reapply the patch.
+
+        2. You have specified incorrect parameters to PATCH.BAT.  If you
+           seem to get many errors quickly, this is likely the case.
+           Use control-break to stop the batch file and restart it using
+           the correct parameters.
+
+        The patch program will report the following message if it determines
+        that a file does not need to be patched:
+
+                New Version of File 'FILENAME' already exists.
+
+        This may indicate one of the following cases:
+
+        1. You already have Borland C++ 4.51 installed.
+
+        2. You have already applied the patch.
+
+        In either case, the patch program has verified that your software
+        is up to date and you need not take further action.
+
+        The patch program will report the following message if it determines
+        that a file was skipped because its contents did not match the
+        version which shipped in Borland C++ 4.50.
+
+    Warning wpt0036: Old File not found. However, a file of the same name
+               was found. No update done since file contents do not match.
+
+        This may indicate one of the following cases:
+
+        1. You have already applied patches to Borland C++ 4.50.
+           In this case the warning can safely be ignored.
+
+        2. You have modified source to OWL, BIDS, OCF, or Examples.
+           In this case, see section 4B above.
+
+        3. You are applying PATCH.BAT to a version of Borland C++
+           previous to version 4.50.  In this case, you will not be able
+           to install CodeGuard until you upgrade.  Do not attempt
+           to apply the PATCH.BAT to versions of Borland C++ other than
+           4.50.
+
+        4. You have installed another product which has updated a file which
+           was to be updated.  This is likely in the case of BWCC.DLL and
+           other DLLs which reside in the WINDOWS\SYSTEM directory.  This
+           case will require you to compare time and date stamps of the
+           versions you have installed against the versions on your BC++
+           CD-ROM to determine the correct course of action.
+
+       There are a variety of more serious errors which the patch program
+       is capable of emitting, and none of which are expected to occur.
+       See the file PTERROR.TXT for a complete listing of error messages
+       and their likely causes.
+

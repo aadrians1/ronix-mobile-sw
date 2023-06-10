@@ -1,0 +1,255 @@
+The errors listed below are not expected to occur while running
+PATCH.BAT and may indicate a serious problem.  For some of
+them, however, it may just be an indication that incorrect
+parameters have been passed to PATCH.BAT.  Check the parameters
+used and run PATCH.BAT again.  If you still encounter one of these
+errors and are not able to correct the problem, the simplest and
+safest course of action would be to:
+
+1. Delete \BC45 entirely
+
+2. Reinstall Borland C++ 4.50 for the time being
+
+3. Order a update for Borland C++ from Borland
+
+4. Reinstall from your new updated CD-ROM before installing CodeGuard
+
+error ept0001: Illegal Input Option '<Option>'
+---------------------------------------------
+The specified option is either an invalid option or the PATCH user
+does not have the user level to allow the use of the option.
+
+error ept0002: Insufficient Memory
+---------------------------------
+PATCH needs a certain amount of memory free for its internal tables.
+There was insufficient memory available when PATCH was run.
+
+error ept0003: Valid Password not entered. Patch File can not be applied
+-----------------------------------------------------------------------
+The PATCH user did not enter the valid password for this patch file.
+Remember that passwords are case sensitive. 
+
+error ept0004: Specified Update Directory '<DirName>' does not exist
+-------------------------------------------------------------------
+The PATCH user specified a directory to update but that directory
+does not exist.
+
+error ept0005: Specified [Update|Backup] Directory '<DirName>' is
+               not a valid directory.
+----------------------------------------------------------------
+The user specified a directory name either for the Update or the
+Backup directory that is not a valid directory name. An existing file
+with the same name as the specified directory could cause this message.
+
+error ept0006: Can Not Find Patch File '<FileName>'
+--------------------------------------------------
+PATCH was not able to locate the specified PATCH file.
+
+
+error ept0007: Error Opening Patch File
+--------------------------------------
+PATCH was able to locate the patch file but could not open the file
+to read from it. This could be a DOS error or a corrupted disk.
+
+
+error ept0008: PATCH.EXE and Patch File incompatible - Need to
+               update PATCH.EXE
+--------------------------------------------------------------------------------
+PATCH.EXE and the patch file are incompatible versions. PATCH.EXE can
+update any old versions of patch files but not ones created with a
+newer version of the data file format. You need to get a newer version
+of the PATCH program to apply this patch.
+
+
+error ept0009: Invalid Patch File '<Name>'
+-------------------------------------
+PATCH.EXE was unable to read correct information from the patch file.
+The specified file is either not a patch file or has been corrupted.
+Get a new copy of the file and rerun PATCH.
+
+
+error ept0010: Failure Creating Backup Directory '<DirName>'
+-----------------------------------------------------------
+PATCH was unable to create the specified Backup Directory.
+
+
+error ept0011: Failure Creating Backup Log File '<FileName>'
+-----------------------------------------------------------
+PATCH was unable to create the file containing information about what
+files were backed up.
+
+
+error ept0012: Failure Opening Backup Source File '<FileName>'
+-------------------------------------------------------------
+PATCH was unable to open the file to be backed up. 
+
+
+error ept0013: Failure Opening Backup Destination File '<FileName>'
+------------------------------------------------------------------
+PATCH was unable to open the new file to copy the original file to.
+
+
+error ept0014: Failure Writing Backup File '<FileName>'
+------------------------------------------------------
+PATCH was unable to write the original file to the backup version.
+
+
+error ept0015: Old File does not exist
+-------------------------------------
+PATCH needs bytes from the existing version of a  file in order to
+build the new file. However, it was unable to locate the old file.
+
+
+error ept0016: New File already exists.
+--------------------------------------
+There already exists a file by the same name as the new file being
+built. The existing file will be copied to the backup directory if
+the BACKUP option is on.
+
+
+error ept0017: Failure Opening Old File: 'filename'
+---------------------------------------------------
+PATCH was able to locate the old version of a file but the open
+failed. This is probably caused by a DOS error. Try rerunning PATCH.
+
+
+error ept0018: Failure Opening New File: '<FileName>'
+-----------------------------------------------------
+PATCH was unable to open the named file. It was attempting to open
+this file to create a file for the updated version of the system.
+This can be caused by a disk or network error or if a directory exists
+by the same name as the file that PATCH is trying to open.
+
+
+error ept0019: Failure Writing to File
+-------------------------------------
+An error occurred while PATCH was trying to write bytes to a new
+file.
+
+
+error ept0020: Failure Reading from File
+---------------------------------------
+An error occurred while PATCH was trying to read bytes from an old
+file.
+
+
+error ept0021: Failure Seeking to Position in File
+-------------------------------------------------
+PATCH was unable to seek to a position within a file. This is probably
+caused by a DOS error or corrupted disk.  Retry running the patch.
+
+
+error ept0022: Failure Renaming File
+-----------------------------------
+PATCH was unable to rename a file. This is probably caused by a DOS
+error or corrupted disk. Try rerunning PATCH.
+
+
+error ept0023: Patch for '<FileName>' not found in Patch File
+------------------------------------------------------------
+PATCH was unable to find an entry in the patch file matching
+the entry name specified by the user on the FILE option. Try using
+the LIST option to get a list of the entries in the patch file.
+
+
+error ept0024: New File already exists.
+---------------------------------------
+The specified file has already been patched. PATCH does not need
+to patch this file.
+
+
+error ept0025: Verify of New File Failed. Possible Internal Error.
+-----------------------------------------------------------------
+The file PATCH built is not valid. Users should never see this
+message.
+
+
+error ept0026: Failure Creating Overflow File: 'FileName'
+---------------------------------------------------------
+PATCH was unable to open a file for its overflow information. This is
+probably cause by a DOS error or by a full disk drive.
+
+
+error ept0027: Overflow File Write Failure
+----------------------------------------------------------------------
+PATCH was unable to read from the overflow table it created to hold
+data that did not fit in its internal tables. This was probably
+caused by some sort of DOS error or a corrupted disk or there was
+insufficient room on the disk for the file.
+
+
+error ept0028: Overflow File Read Failure
+----------------------------------------
+PATCH was unable to read from the overflow table it created to hold
+data that did not fit in its internal tables. This was probably
+caused by some sort of DOS error or a corrupted disk.
+
+
+error ept0029: Insufficient Disk Space to Apply Patch - You need
+               at least <Size> bytes free on drive <DriveLetter>
+               for <Feature>.
+----------------------------------------------------------------
+PATCH needs at least the specified number of bytes to perform the 
+patch process. If UNDO or BACKUP is ON, PATCH needs room to backup
+all of the file making up the original system and also the room 
+needed to build the new system. If both BACKUP and UNDO are OFF,
+PATCH only needs room to backup the biggest of the files being
+patched.
+
+
+error ept0030: Error opening serialization file '<FileName>'
+-----------------------------------------------------------
+PATCH either could not find the serialization file or the open
+failed. If the open failed, the probable cause is some kind of DOS
+error, retry the operation.
+
+
+error ept0031: Error reading serialization file '<FileName>'
+-------------------------------------------------------------
+PATCH cannot seek to the correct position in the serialization file
+or read the correct number of bytes from the file. Possible causes
+are invalid positions and lengths specified while running PATCHBLD.
+
+error ept0032: Failure Setting File's Time/Date Stamp
+-------------------------------------------------------------
+PATCH was unable to set the time/date stamp for the updated
+file or for a file freshly backed up. This error should never 
+occur but if it does would probably be caused by some kind of
+disk failure or network file sharing problem.
+
+error ept0033: Failure creating temporary file.
+-----------------------------------------------
+PATCH was unable to create a temporary file to hold the new file
+or to hold overflow information. Try rerunning PATCH and if it still
+does not work reduce the number of temporary files required by
+disabling BACKUP and UNDO.
+
+error ept0034: Neither command line parameter specifed is an existing directory
+-------------------------------------------------------------------------------
+Multiple parameters were given on the PATCH command line that were neither
+valid PATCH options or existing directories. If the user specifies multiple
+parameters, at least one must be a valid existing update directory.
+
+
+error ept0035: Only one file and one directory may be specified on command line
+-------------------------------------------------------------------------------
+The user specified more than one patch file and one update directory on the
+PATCH command line.
+
+
+error ept0036: Old file not found. However, a file of the same name was
+               found. No update done since file contents do not match.
+-----------------------------------------------------------------------------
+PATCH was unable to locate an exact match for the original file to 
+be updated. However, PATCH was able to locate a file with the same
+name as the original file. However, the file found did not have either
+the same size or checksum as the actual original file that PATCH is
+seeking in order to perform the update.
+
+
+error ept0037: Error opening error message file.
+-----------------------------------------------------------------------------
+PATCH was unable to open the file PATCH.ERR for storing error messages.
+The probable cause is some kind of DOS error, retry the operation or specify
+the NOERRORFILE option on the PATCH command line.
+
