@@ -1,0 +1,893 @@
+; $REvision: 0.1.1.21 $
+; $Date: 09/10
+ProgName=5X
+
+Options= -S
+
+OptFileExt=OPT
+SerFileExt=SER
+ShowFileExtInfo=ON
+ShowCmdLineInfo=ON
+ShowClockInfo=ON
+LoadID&FusesFromHex=OFF
+DefOverwriteOption=OFF
+CheckFileToSave=ON
+QuickCheckBlank=ON
+CheckConnectionAtStart=ON
+CheckFileSize=ON
+;Com1Addr=2e8h
+;Com1Irq=3
+
+BackgroundBlink=OFF
+TitleAttr=70h
+WindowsAttr=70h
+MenuAttr=30h
+MenuSelAttr=0Fh
+MenuSelectedAttr=07h
+HexViewAttr=17h
+HexViewHighAttr=1Fh
+HexScrollAttr=06h
+HelpKeyAttr=07h
+HelpAttr=30h
+ButtonAttr=60h
+ButtonSelAttr=F0h
+ButtonHiAttr=0Ch
+InfoAttr=4Fh
+FileSaveAttr=6Fh
+FileLoadAttr=2Fh
+ProgAttr=4Fh
+ReadAttr=2Fh
+VerifyAttr=3Fh
+BlankAttr=5Fh
+ExitAttr=47h
+ErrorAttr=4Fh
+OkAttr=2Fh
+ClockAttr=80h
+
+;; 16C5X Family
+[16C52] ----------------------------------------------------------------------
+Description=8 bit CMOS EPROM MC
+Family=16C5X
+BitMask=FFFh
+ProgSize=384
+
+
+ProgPulse=100
+ProgTime=25,3,1
+
+IdAddr=180h
+IdMask=00Fh
+CnfAddr=FFFh
+CnfScrembled=ON
+
+F_00 - xxxxxxxxxxxxxx11 = Osc  - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc  - XT
+
+F_01 - xxxxxxxxxxxxx0xx = WDT  - Off
+
+F_02 - xxxxxxxxxxxx1xxx = CP   - Off
+F_02 - xxxxxxxxxxxx0xxx = CP   - On
+
+CP_Warning=ON
+
+[16C54] ----------------------------------------------------------------------
+Parent=16C52
+Progsize=512
+
+
+IdAddr=200h
+IdMask=00Fh
+CnfAddr=FFFh
+CnfScrembled=ON
+
+F_00 - xxxxxxxxxxxxxx11 = Osc  - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc  - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc  - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc  - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT  - On
+F_01 - xxxxxxxxxxxxx0xx = WDT  - Off
+
+F_02 - xxxxxxxxxxxx1xxx = CP   - Off
+F_02 - xxxxxxxxxxxx0xxx = CP   - On
+
+CP_Warning=Off
+
+[16C54-XT] -------------------------------------------------------------------
+Parent=16C54
+
+F_00 - xxxxxxxxxxxxxx01 = Osc  - XT
+
+F_01 - xxxxxxxxxxxxx1xx = WDT  - On
+F_01 - xxxxxxxxxxxxx0xx = WDT  - Off
+
+F_02 - xxxxxxxxxxxx1xxx = CP   - Off
+F_02 - xxxxxxxxxxxx0xxx = CP   - On
+
+[16C54-HS] -------------------------------------------------------------------
+Parent=16C54
+
+
+F_00 - xxxxxxxxxxxxxx10 = Osc  - HS
+
+F_01 - xxxxxxxxxxxxx1xx = WDT  - On
+F_01 - xxxxxxxxxxxxx0xx = WDT  - Off
+
+F_02 - xxxxxxxxxxxx1xxx = CP   - Off
+F_02 - xxxxxxxxxxxx0xxx = CP   - On
+
+
+[16C54-LP] -------------------------------------------------------------------
+Parent=16C54
+
+
+F_00 - xxxxxxxxxxxxxx00 = Osc  - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT  - On
+F_01 - xxxxxxxxxxxxx0xx = WDT  - Off
+
+F_02 - xxxxxxxxxxxx1xxx = CP   - Off
+F_02 - xxxxxxxxxxxx0xxx = CP   - On
+
+[16C54-RC] -------------------------------------------------------------------
+Parent=16C54
+
+F_00 - xxxxxxxxxxxxxx11 = Osc  - RC
+
+F_01 - xxxxxxxxxxxxx1xx = WDT  - On
+F_01 - xxxxxxxxxxxxx0xx = WDT  - Off
+
+F_02 - xxxxxxxxxxxx1xxx = CP   - Off
+F_02 - xxxxxxxxxxxx0xxx = CP   - On
+
+[16C55] ----------------------------------------------------------------------
+Parent=16C54
+
+
+[16C55-XT] -------------------------------------------------------------------
+Parent=16C54-XT
+
+
+[16C55-HS] -------------------------------------------------------------------
+Parent=16C54-HS
+
+
+[16C55-LP] -------------------------------------------------------------------
+Parent=16C54-LP
+
+
+[16C55-RC] -------------------------------------------------------------------
+Parent=16C54-RC
+
+
+[16C56] ----------------------------------------------------------------------
+Parent=16C54
+ProgSize=1024
+IdAddr=400h
+
+[16C56-XT] -------------------------------------------------------------------
+Parent=16C54-XT
+ProgSize=1024
+IdAddr=400h
+
+[16C56-HS] -------------------------------------------------------------------
+Parent=16C54-HS
+ProgSize=1024
+IdAddr=400h
+
+[16C56-LP] -------------------------------------------------------------------
+Parent=16C54-LP
+ProgSize=1024
+IdAddr=400h
+
+[16C56-RC] -------------------------------------------------------------------
+Parent=16C54-RC
+ProgSize=1024
+IdAddr=400h
+
+[16C57] ----------------------------------------------------------------------
+Parent=16C55
+ProgSize=2048
+IdAddr=800h
+
+[16C57-XT] -------------------------------------------------------------------
+Parent=16C55-XT
+ProgSize=2048
+IdAddr=800h
+
+[16C57-HS] -------------------------------------------------------------------
+Parent=16C55-HS
+ProgSize=2048
+IdAddr=800h
+
+[16C57-LP] -------------------------------------------------------------------
+Parent=16C55-LP
+ProgSize=2048
+IdAddr=800h
+
+[16C57-RC] -------------------------------------------------------------------
+Parent=16C55-RC
+ProgSize=2048
+IdAddr=800h
+
+[16C58] ----------------------------------------------------------------------
+Parent=16C57
+
+
+[16C58-XT] -------------------------------------------------------------------
+Parent=16C57-XT
+
+
+[16C58-HS] -------------------------------------------------------------------
+Parent=16C57-HS
+
+
+[16C58-LP] -------------------------------------------------------------------
+Parent=16C57-LP
+
+
+[16C58-RC] -------------------------------------------------------------------
+Parent=16C57-RC
+
+
+;; 16C55X Family
+[16C554] ---------------------------------------------------------------------
+Description=8 bit CMOS EPROM MC
+Family=16CXX
+BitMask=3FFFh
+ProgSize=512
+
+
+ProgPulse=100
+ProgTime=25,3,1
+
+IdAddr=2000h
+IdMask=3f80h
+CnfAddr=2007h
+CnfScrembled=OFF
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xx111111xx11xxxx = CP    - Off
+F_03 - xx000000xx00xxxx = CP    - On
+
+CP_Warning=ON
+
+[16C556] ---------------------------------------------------------------------
+Parent=16C554
+ProgSize=1024
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xx111111xx11xxxx = CP    - Off
+F_03 - xx010101xx01xxxx = CP    - Up 1/2 (On)
+F_03 - xx000000xx00xxxx = CP    - On
+
+[16C558] ---------------------------------------------------------------------
+Parent=16C554
+ProgSize=2048
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xx111111xx11xxxx = CP    - Off
+F_03 - xx010101xx01xxxx = CP    - Up 1/2 (On)
+F_03 - xx101010xx10xxxx = CP    - Up 3/4 (On)
+F_03 - xx000000xx00xxxx = CP    - On
+
+;; 16C6X Family
+[16C61] ----------------------------------------------------------------------
+Description=8 bit CMOS EPROM MC
+Family=16CXX
+BitMask=3FFFh
+ProgSize=1024
+
+
+ProgPulse=100
+ProgTime=25,3,1
+
+IdAddr=2000h
+IdMask=3f80h
+CnfAddr=2007h
+CnfScrembled=ON
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - On
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - Off
+
+F_03 - xxxxxxxxxxx1xxxx = CP    - Off
+F_03 - xxxxxxxxxxx0xxxx = CP    - On
+
+CP_Warning=OFF
+
+[16C62] ----------------------------------------------------------------------
+Description=8 bit CMOS EPROM MC
+Family=16CXX
+BitMask=3FFFh
+ProgSize=2048
+
+
+ProgPulse=100
+ProgTime=25,3,1
+
+IdAddr=2000h
+IdMask=3f80h
+CnfAddr=2007h
+CnfScrembled=OFF
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - On
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - Off
+
+F_03 - xxxxxxxxx011xxxx = CP    - Off
+F_03 - xxxxxxxxx010xxxx = CP    - Up 1/2  (On)
+F_03 - xxxxxxxxx001xxxx = CP    - Up 3/4  (On)
+F_03 - xxxxxxxxx000xxxx = CP    - All mem (On)
+
+CP_Warning=ON
+
+[16C62A] ---------------------------------------------------------------------
+Description=8 bit CMOS EPROM MC
+Family=16CXX
+BitMask=3FFFh
+ProgSize=2048
+
+
+ProgPulse=100
+ProgTime=25,3,1
+
+IdAddr=2000h
+IdMask=3f80h
+CnfAddr=2007h
+CnfScrembled=OFF
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xxxxxxxxx1xxxxxx = BODEN - On
+F_03 - xxxxxxxxx0xxxxxx = BODEN - Off
+
+F_04 - xx111111xx11xxxx = CP    - Off
+F_04 - xx101010xx10xxxx = CP    - Up 1/2  (On)
+F_04 - xx010101xx01xxxx = CP    - Up 3/4  (On)
+F_04 - xx000000xx00xxxx = CP    - All mem (On)
+
+CP_Warning=ON
+
+[16C63] ----------------------------------------------------------------------
+Parent=16C62A
+ProgSize=4096
+
+[16C64] ----------------------------------------------------------------------
+Parent=16C62
+
+
+CP_Warning=OFF
+
+[16C64A] ----------------------------------------------------------------------
+Parent=16C62A
+
+
+[16C65] ----------------------------------------------------------------------
+Parent=16C62
+Progsize=4096
+
+
+CP_Warning=OFF
+[16C65A] ----------------------------------------------------------------------
+Parent=16C62A
+Progsize=4096
+
+
+;; 16C7X Family
+[16C710] ----------------------------------------------------------------------
+Parent=16C61
+ProgSize=512
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xxxxxxxxx1xxxxxx = BODEN - On
+F_03 - xxxxxxxxx0xxxxxx = BODEN - Off
+
+F_04 - xx1111111x11xxxx = CP    - Off
+F_04 - xx0000000x00xxxx = CP    - On
+
+CP_Warning=ON
+
+[16C71] ----------------------------------------------------------------------
+Parent=16C61
+ProgSize=1024
+
+CP_Warning=OFF
+
+[16C711] ---------------------------------------------------------------------
+Parent=16C710
+ProgSize=1024
+
+CP_Warning=ON
+
+[16C72] ----------------------------------------------------------------------
+Parent=16C62A
+
+[16C73] ----------------------------------------------------------------------
+Parent=16C62
+ProgSize=4096
+
+CP_Warning=ON
+
+[16C73A] ---------------------------------------------------------------------
+Parent=16C62A
+ProgSize=4096
+
+[16C74] ----------------------------------------------------------------------
+Parent=16C62
+Progsize=4096
+
+
+CP_Warning=OFF
+
+[16C74A] ---------------------------------------------------------------------
+Parent=16C62A
+Progsize=4096
+
+
+;; 16C62X Family
+[16C620] ---------------------------------------------------------------------
+Description=8 bit CMOS EPROM MC
+Family=16CXX
+BitMask=3FFFh
+ProgSize=512
+
+
+ProgPulse=100
+ProgTime=25,3,1
+
+IdAddr=2000h
+IdMask=3f80h
+CnfAddr=2007h
+CnfScrembled=OFF
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xxxxxxxxx1xxxxxx = BODEN - On
+F_03 - xxxxxxxxx0xxxxxx = BODEN - Off
+
+F_04 - xx111111xx11xxxx = CP    - Off
+F_04 - xx000000xx00xxxx = CP    - All mem (On)
+
+CP_Warning=ON
+
+[16C621] ---------------------------------------------------------------------
+Parent=16C620
+ProgSize=1024
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xxxxxxxxx1xxxxxx = BODEN - On
+F_03 - xxxxxxxxx0xxxxxx = BODEN - Off
+
+F_04 - xx111111xx11xxxx = CP    - Off
+F_04 - xx010101xx01xxxx = CP    - Up 1/2  (On)
+F_04 - xx000000xx00xxxx = CP    - All mem (On)
+
+[16C622] ---------------------------------------------------------------------
+Parent=16C620
+ProgSize=2048
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+ 
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xxxxxxxxx1xxxxxx = BODEN - On
+F_03 - xxxxxxxxx0xxxxxx = BODEN - Off
+
+F_04 - xx111111xx11xxxx = CP    - Off
+F_04 - xx010101xx01xxxx = CP    - Up 3/4  (On)
+F_04 - xx101010xx10xxxx = CP    - Up 1/2  (On)
+F_04 - xx000000xx00xxxx = CP    - All mem (On)
+
+;; 16C8X Family
+[16F83] ----------------------------------------------------------------------
+Description=8 bit CMOS EEPROM MC
+Family=16C8X
+BitMask=3FFFh
+ProgSize=512
+DataAddr=2100h
+DataSize=64
+
+
+ProgPulse=10
+ProgTime=25,3,1
+
+IdAddr=2000h
+IdMask=3f80h
+CnfAddr=2007h
+CnfScrembled=OFF
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xx1111111111xxxx = CP    - Off
+F_03 - xx0000000000xxxx = CP    - On
+
+CP_Warning=OFf
+
+[16F84] ---------------------------------------------------------------------
+Parent=16F83
+ProgSize=1024
+
+[16C84] ----------------------------------------------------------------------
+Parent=16F84
+CnfScrembled=ON
+ProgSize=1024
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - On
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - Off
+
+F_03 - xxxxxxxxxxx1xxxx = CP    - Off
+F_03 - xxxxxxxxxxx0xxxx = CP    - On
+
+;; 16C9XX Family
+[16C923] ---------------------------------------------------------------------
+Description=8 bit CMOS EPROM MC
+Family=16CXX
+BitMask=3FFFh
+ProgSize=4096
+
+
+ProgPulse=100
+ProgTime=25,3,1
+
+IdAddr=2000h
+IdMask=3f80h
+CnfAddr=2007h
+CnfScrembled=OFF
+
+F_00 - xxxxxxxxxxxxxx11 = Osc   - RC
+F_00 - xxxxxxxxxxxxxx01 = Osc   - XT
+F_00 - xxxxxxxxxxxxxx10 = Osc   - HS
+F_00 - xxxxxxxxxxxxxx00 = Osc   - LP
+
+F_01 - xxxxxxxxxxxxx1xx = WDT   - On
+F_01 - xxxxxxxxxxxxx0xx = WDT   - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - On
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - Off
+
+F_03 - xx111111xx11xxxx = CP    - Off
+F_03 - xx010101xx01xxxx = CP    - Up 1/2  (On)
+F_03 - xx101010xx10xxxx = CP    - Up 3/4  (On)
+F_03 - xx000000xx00xxxx = CP    - All mem (On)
+
+CP_Warning=ON
+
+[16C924] ---------------------------------------------------------------------
+Parent=16C923
+
+;; PIC14XXX
+[PIC14000] -------------------------------------------------------------------
+Description=28-Pin Mixed Signal Controller
+Family=16CXX
+BitMask=3FFFh
+ProgSize=4096
+
+
+ProgPulse=100
+ProgTime=25,3,1
+
+CnfAddr=2007h
+CnfScrembled=OFF
+
+F_00 - xxxxxxxxxxxxxxx1 = Osc   - In 4Mhz
+F_00 - xxxxxxxxxxxxxxx0 = Osc   - HS
+
+F_01 - xxxxxxxxxxxxx1xx = WDTE  - On
+F_01 - xxxxxxxxxxxxx0xx = WDTE  - Off
+
+F_02 - xxxxxxxxxxxx1xxx = PWRTE - Off
+F_02 - xxxxxxxxxxxx0xxx = PWRTE - On
+
+F_03 - xxx1111xxx11xxxx = CP    - CPP Off
+F_03 - xxx0000xxx00xxxx = CP    - CPP On
+
+F_04 - xx1xxxx11xxxxxxx = CP    - CPC Off
+F_04 - xx0xxxx00xxxxxxx = CP    - CPC On
+
+CP_Warning=ON
+
+;; 24CXX
+[24C01A] ---------------------------------------------------------------------
+Description=Serial EEProm 1K (128x8)
+Family=24CXX
+BitMask=FFh
+
+
+ProgPulse=10
+
+DataSize=128
+BlockSize=2
+
+[24C02A] ---------------------------------------------------------------------
+Parent=24C01A
+Description=Serial EEProm 2K (256x8)
+DataSize=256
+BlockSize=2
+
+[24C04A] ---------------------------------------------------------------------
+Parent=24C01A
+Description=Serial EEProm 4K (512x8)
+DataSize=512
+BlockSize=8
+
+[24C08B] ---------------------------------------------------------------------
+Parent=24C01A
+Description=Serial EEProm 8K (1Kx8)
+DataSize=1024
+BlockSize=16
+
+[24C16B] ---------------------------------------------------------------------
+Parent=24C01A
+Description=Serial EEProm 16K (2Kx8)
+DataSize=2048
+BlockSize=16
+
+[24C32] ----------------------------------------------------------------------
+Parent=24C01A
+Description=Serial EEProm 32K (4Kx8)
+DataSize=4096
+BlockSize=64
+LongAddress=ON
+
+[24C65] ----------------------------------------------------------------------
+Parent=24C32
+DataSize=8192
+Description=Serial EEProm 64K
+
+[24C64-atmel] ----------------------------------------------------------------------
+Parent=24C65
+Description=Serial EEProm 64K "ATMEL"
+BlockSize=16
+ProgPulse=5
+
+;; 24LCXX
+[24LC01B] --------------------------------------------------------------------
+Parent=24C01A
+BlockSize=8
+
+
+[24LC02B] --------------------------------------------------------------------
+Parent=24C02A
+BlockSize=8
+ProgPulse=15
+
+
+[24LC04B] --------------------------------------------------------------------
+Parent=24C04A
+BlockSize=16
+
+
+[24LC08B] --------------------------------------------------------------------
+Parent=24C08B
+BlockSize=16
+
+
+[24LC16B] --------------------------------------------------------------------
+Parent=24C16B
+BlockSize=16
+
+
+[24LC32] ---------------------------------------------------------------------
+Parent=24C32
+BlockSize=16
+ProgPulse=5
+
+
+[24LC65] ---------------------------------------------------------------------
+Parent=24C65
+BlockSize=64
+
+
+[24LC164] --------------------------------------------------------------------
+Parent=24LC16B
+
+;; 24AAXX
+[24AA01] ---------------------------------------------------------------------
+Parent=24LC01B
+
+
+[24AA02] ---------------------------------------------------------------------
+Parent=24LC02B
+
+
+[24AA04] ---------------------------------------------------------------------
+Parent=24LC04B
+
+
+[24AA08] ---------------------------------------------------------------------
+Parent=24LC08B
+
+
+[24AA16] ---------------------------------------------------------------------
+Parent=24LC16B
+
+
+[24AA32] ---------------------------------------------------------------------
+Parent=24C32
+
+
+[24AA65] ---------------------------------------------------------------------
+Parent=24C65
+
+
+[24AA164] --------------------------------------------------------------------
+Parent=24AA16
+
+;; 85CXX
+[85C72] ----------------------------------------------------------------------
+Parent=24C01A
+
+[85C82] ----------------------------------------------------------------------
+Parent=24C02A
+
+[85C92] ----------------------------------------------------------------------
+Parent=24C04A
+
+;; 93CXX
+[93C06] ----------------------------------------------------------------------
+Description=CMOS Serial EEProm 256 (16x16)
+Family=93CXX
+BitMask=FFh
+AddrBitLength=6
+
+
+ProgPulse=1
+
+DataSize=32
+
+[93C46] ----------------------------------------------------------------------
+Parent=93C06
+Description=CMOS Serial EEProm 1K (64x16)
+DataSize=128
+
+[93C56] ----------------------------------------------------------------------
+Parent=93C06
+Description=CMOS Serial EEProm 2K (128x16)
+DataSize=256
+AddrBitLength=8
+
+[93C66] ----------------------------------------------------------------------
+Parent=93C56
+Description=CMOS Serial EEProm 4K (256x16)
+DataSize=512
+
+;; 93LCXX
+[93LC46] ---------------------------------------------------------------------
+Parent=93C46
+
+[93LC46B] --------------------------------------------------------------------
+Parent=93LC46
+
+[93LC56] ---------------------------------------------------------------------
+Parent=93C56
+
+[93LC56B] --------------------------------------------------------------------
+Parent=93LC56
+
+[93LC66] ---------------------------------------------------------------------
+Parent=93C66
+
+[93LC66B] --------------------------------------------------------------------
+Parent=93LC66
+
+;; 93AAXX
+[93AA46] ---------------------------------------------------------------------
+Parent=93C46
+
+[93AA56] ---------------------------------------------------------------------
+Parent=93C56
+
+[93AA66] ---------------------------------------------------------------------
+Parent=93C66
+
+;; 59CXX
+[59C11] ----------------------------------------------------------------------
+Parent=93C46
+
+END_OF_FILE ------------------------------------------------------------------

@@ -1,0 +1,151 @@
+1018R3A1.SBN - Europe1 CXC125119
+    Contains the following languages:
+    Bulgarian(BG) Croatian(HR) Czech(CS) English(EN) Estonian(ET) 
+    Latvian(LV) Lithuanian(LT) Romanian(RO) Russian(RU) Serbian(SR) 
+    Slovenian(SL) Slovakian(SK)
+
+
+1018R3A2.SBN - Europe2 CXC125121
+    Contains the following language:
+    Danish(DA) English(EN) Finnish(FI) French(FR) Hungarian(HU) 
+    Norwegian(NO) Portuguese(PT) Polish(PL) Swedish(SV)
+
+1018R3A3.SBN - Europe3 CXC125144
+    Contains the following languages:
+    Dutch(NL), English(EN) French(FR) German(DE), Greek(EL), Italian(IT)
+    Portuguese(PT) Turkish(TR), Russian(RU) Spanish(ES)
+
+1018R2AC - Asia1 CXC125145
+    Contains the following languages:
+    Chinese simplified(ZS) Chinese traditional Hong Kong(ZH) 
+    Chinese traditional Taiwan(ZT) English(EN) Indonesian(IN) Thai(TH),
+    Malay(MS) Vietnamese(VI) Philippine-Tagalog(TL)
+    
+Through EEPROM settings 2 versions will available.
+    One version will include Chinese traditional Taiwanese (ZT) 
+    and leave the Chinese traditional Hong Kong (ZH) out. 
+    One version will include Chinese traditional Hong Kong (ZH)
+    and leave Chinese traditional Taiwanese (ZT) out.
+
+1018R8A2.SBN - CXC125121  Date: 000925  Time: 1144 
+    Contains the following language: 
+    Danish(DA) English(EN) Finnish(FI) French(FR) Hungarian(HU) 
+    Norwegian(NO) Portuguese(PT) Polish(PL) Swedish(SV) 
+
+
+1018R7A5.SBN - CXC125263  Date: 000415  Time: 0956 
+    Contains the following languages: 
+    German(DE) English(EN) Hungarian(HU) Polish(PL) Romanian(RO) 
+    Slovakian(SK) Czech(CS) 
+    - Have TETRIS game !!   
+
+1018R8A1.SBN - CXC125119  Date: 000925  Time: 1144 
+    Contains the following languages: 
+    Bulgarian(BG) Croatian(HR) Czech(CS) English(EN) Estonian(ET) 
+    Latvian(LV) Lithuanian(LT) Romanian(RO) Russian(RU) Serbian(SR) 
+    Slovenian(SL) Slovakian(SK) 
+
+1018R8A3.SBN - CXC125144  Date: 000925  Time: 1144 
+    Contains the following languages: 
+    Dutch(NL) English(EN) French(FR) German(DE) Greek(EL) Italian(IT) 
+    Portuguese(PT) Turkish(TR) Russian(RU) Spanish(ES) 
+
+1018R8A4.SBN - CXC125238  Date: 000925  Time: 1144 
+    Contains the following languages: 
+    Arabic(AR) Hebrew(IW) French(FR) English(EN) Russian(RU) Portuguese(PT) 
+
+1018R8AC.SBN - CXC125145  Date: 000925  Time: 1144 
+    Contains the following languages: 
+    Chinese simplified(ZS) Chinese traditional Hong Kong(ZH) 
+    Chinese traditional Taiwan(ZT) English(EN) Indonesian(IN) Thai(TH) 
+    Malay(MS) Vietnamese(VI) Philippine-Tagalog(TL) 
+
+T18R4AEU.SBN - Europe CXC125112
+    Contains the following languages:
+    (All languages except Asia)
+    Bulgarian(BG) Croatian(HR) Czech(CS) Danish(DA) Dutch(NL) English(EN) 
+    Estonian(ET) German(DE) Greek(EL) Finnish(FI) French(FR) Hungarian(HU) 
+    Italian(IT) Latvian(LV) Lithuanian(LT) Norwegian(NO) Portuguese(PT) 
+    Polish(PL) Romanian(RO) Russian(RU) Serbian(SR) Slovenian(SL) 
+    Slovakian(SK) Swedish(SV) Spanish(ES) Turkish(TR) Arabic(AR) Hebrew(IW) 
+
+T18R5AEU.SBN - CXC125112  Date: 000414  Time: 1727 
+    Contains the following languages: 
+    (All languages except Asia) 
+    Bulgarian(BG) Croatian(HR) Czech(CS) Danish(DA) Dutch(NL) English(EN) 
+    Estonian(ET) German(DE) Greek(EL) Finnish(FI) French(FR) Hungarian(HU) 
+    Italian(IT) Latvian(LV) Lithuanian(LT) Norwegian(NO) Portuguese(PT) 
+    Polish(PL) Romanian(RO) Russian(RU) Serbian(SR) Slovenian(SL) 
+    Slovakian(SK) Swedish(SV) Spanish(ES) Turkish(TR) Arabic(AR) Hebrew(IW) 
+
+T18R3BCH.SBN - Asia CXC125170
+    Contains the following languages:
+    English (EN)  Chinese simplified (ZS)  Chinese traditional Hong Kong (ZH)
+    Chinese traditional Taiwan (ZT)  Indonesian (IN)  Malay (MS)  Thai (TH)
+    Vietnamese (VI)  Philippine-Tagalog (TL)
+
+T18R5ACH.SBN - CXC125170  Date: 000414  Time: 1727 
+    Contains the following languages: 
+    English (EN)  Chinese simplified (ZS)  Chinese traditional Hong Kong (ZH) 
+    Chinese traditional Taiwan (ZT)  Indonesian (IN)  Malay (MS)  Thai (TH) 
+    Vietnamese (VI)  Philippine-Tagalog (TL) 
+
+T28R4AE1.SBN - Europe1 CXC125115
+    Contains the following languages:
+    (All languages except Asia)
+    Bulgarian(BG) Croatian(HR) Czech(CS) Danish(DA) Dutch(NL) English(EN) 
+    Estonian(ET) German(DE) Greek(EL) Finnish(FI) French(FR) Hungarian(HU) 
+    Italian(IT) Latvian(LV) Lithuanian(LT) Norwegian(NO) Portuguese(PT) 
+    Polish(PL) Romanian(RO) Russian(RU) Serbian(SR) Slovenian(SL) 
+    Slovakian(SK) Swedish(SV) Spanish(ES) Turkish(TR) Arabic(AR) Hebrew(IW) 
+
+T28R4BE1.SBN - CXC125115 Date: 000615 Time: 0014 
+    Contains the following languages: 
+    (All languages except Asia) 
+    Bulgarian(BG) Croatian(HR) Czech(CS) Danish(DA) Dutch(NL) English(EN) 
+    Estonian(ET) German(DE) Greek(EL) Finnish(FI) French(FR) Hungarian(HU) 
+    Italian(IT) Latvian(LV) Lithuanian(LT) Norwegian(NO) Portuguese(PT) 
+    Polish(PL) Romanian(RO) Russian(RU) Serbian(SR) Slovenian(SL) 
+    Slovakian(SK) Swedish(SV) Spanish(ES) Turkish(TR) Arabic(AR) Hebrew(IW)
+
+T28R3ACH.SBN - Asia CXC125223
+    Contains the following languages:
+    English (EN)  Chinese simplified (ZS)  Chinese traditional Hong Kong (ZH)
+    Chinese traditional Taiwan (ZT)  Indonesian (IN)  Malay (MS)  Thai (TH)
+    Vietnamese (VI)  Philippine-Tagalog (TL)
+
+T28R4BA1.SBN - CXC125223  Date: 000615 Time: 1059 
+    Contains the following languages: 
+    Chinese(1) Chinese(2) English (EN) Indonesian (IN) Malay (MS) 
+    Thai (TH) Vietnamese (VI) Philippine-Tagalog (TL) 
+
+R310R5A1.SBN - CXC112175  Date: 000516  Time: 0825 
+    Contains the following languages: 
+    (All languages except Asia) 
+    Bulgarian(BG) Croatian(HR) Czech(CS) Danish(DA) Dutch(NL) English(EN) 
+    Estonian(ET) German(DE) Greek(EL) Finnish(FI) French(FR) Hungarian(HU) 
+    Italian(IT) Latvian(LV) Lithuanian(LT) Norwegian(NO) Portuguese(PT) 
+    Polish(PL) Romanian(RO) Russian(RU) Serbian(SR) Slovenian(SL) 
+    Slovakian(SK) Swedish(SV) Spanish(ES) Turkish(TR) Arabic(AR) Hebrew(IW) 
+
+320R4AA1.SBN - CXC125230  Date: 000512  Time: 1617 
+    Contains the following languages: 
+    English(EN) Indonesian(IN) Thai(TH) Malay(MS) 
+    Vietnamese(VI) Philippine-Tagalog(TL) 
+
+320R4BE1.SBN - CXC125193  Date: 000628  Time: 1507 
+    Contains the following languages: 
+    Arabic(AR) Bulgarian(BG) Croatian(HR) English(EN) 
+    Estonian(ET) Hebrew(IW) Latvian(LV) Lithuanian(LT) Romanian(RO) 
+    Russian(RU) Serbian(SR) Slovenian(SL) 
+
+320R4BE2.SBN - CXC125229  Date: 000628  Time: 1507 
+    Contains the following languages: 
+    Dutch(NL) English(EN) French(FR) German(DE) Greek(EL) Italian(IT) 
+    Portuguese(PT) Turkish(TR) Russian(RU) Spanish(ES) 
+
+320R4BE3.SBN - CXC125235  Date: 000628  Time: 1507 
+    Contains the following language: 
+    Arabic(AR) Czech(CS) Dutch(NL) English(EN) French(FR) German(DE) 
+    Hungarian (HU) Greek(EL) Italian(IT) Portuguese(PT) Polish (PL) 
+    Russian(RU) Slovakian(SK) Spanish(ES) Turkish(TR) (RU) Spanish(ES) 

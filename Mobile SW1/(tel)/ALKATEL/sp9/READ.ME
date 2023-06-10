@@ -1,0 +1,27 @@
+To unlock alcatel make this:
+-read the phones eeprom with an eeprom programmer
+if you not have programmer make it you.
+the schematic is in the directory jdm84.gif the program is pic24c98.exe
+select com port ,device 24c04 and interface ludipipo
+Read the eeprom,save the dump in bin format,leave the program.
+you can edit the bin file with DN,NC,VC editor.
+
+Go to this addres: and put the FF FF like i writed.
+
+00000170 -- -- -- -- -- -- FF FF   (176-177)
+-load in programator the modified content
+-rewrite the modified content in phones eeprom.
+Now the phones is ready to work any simcards.
+
+
+****************************************************************************
+
+
+I you lou lose the original eeprom content you can use the dumps from this
+directori named by soft versions (check versions on phones *#06#:the phones
+will display the IMEI and versions "IMEI V13;v14;V16 or other)
+Run the szamol10.exe load a bin files from your version,change the IMEI what
+dislpayed with imei writed to outside of phones.
+Clear the simlock(put FF FF)with editor.and write the procesed content
+in phones eeprom.
+**********!!!!!!!!!!!!not work in latest version "201,202,203,"!!!!!!!!!!

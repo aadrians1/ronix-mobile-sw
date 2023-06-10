@@ -1,0 +1,101 @@
+                       Ede 10/july/98 0.98
+
+24Cxx PIC 16C84 Combiprogrammer for the Henk Schaer,David Tait and
+LudiPipo interface
+----------------------------------------------------------------------------
+
+interface connections
+----------------------
+you can use the HS or DT printerport interface without any modifycations.
+the only thing you have to do is to connect a 8 pin DIL socket.
+you have to make the following connections:
+
+for the 24CXX:
+
+1 ,2 ,3 ,4 and 7 to ground.
+5 to 16C84 pin 13(RB7), 6 to 16C84 pin 12(RB6) and 8 to 16C84 14(VDD)
+
+for the 12C508:
+
+508 pin 7 =GP0 -> Clock input 16C84 RB6
+508 pin 6 =GP1 -> Data  input/output 16C84 RB7
+508 pin 4 =GP3 -> Vpp 16C84 Vpp
+508 pin 1 =VDD -> Power 
+508 pin 8 =Vss -> ground
+
+it's easiest to use the 16C84 socket pin 1..4 and 15..18.Vpp is already connected
+that way.
+
+Remember Vpp must be able to deliver enough current (up to 30 mA) and keep 12 Volt.
+
+ 
+
+
+Use
+---
+command line arguments:
+H2:Henk Schaer lpt2
+D61/D62:David Tait lpt1/lpt2
+D1/D2:David Tait 07 lpt1/lpt2
+L1..L4:LudiPipo COM1..COM4
+
+most of the program should be obvious (I hope).
+HEX files can only be of the Intel HEX8M type.To load a HEX file first
+select the device type ,then load the file.
+HEX files must have the *.hex extension,binairy files must have the
+*.bin extension.These files should be in the same directory as the
+programmer.
+the buffer can be saved as a binairy or HEX file,the *.bin or *.hex
+extension is added automatically.
+
+LudiPipo
+--------
+support for the LudiPipo interface has been added since version 0.7.
+this interface is very simple and works without an external power
+supply.so it's easy and cheap to build.
+but this system won't work on all machines:in some cases the
+programming voltage becomes too low.
+it's a pity we don't hear much from 'Der Ludi' any more!
+
+16F84
+-----
+the 16F84 is almost exactly the same as the 16c84 but the Code protect
+is much improved and the PowerupTimer bit is inverted.When reading a
+16C84 HEX file this bit will have to be set.
+
+error messages
+--------------
+'error' during reading or programming:wrong device,device not properly
+connected,program interface not connected,power supply not connected,
+HEX file with illegal data(16C84).
+'reload HEX file':HEX file loaded in wrong mode,first
+select the device type ,then load the file.
+
+comments,bugs
+------------
+willem kloosterhuis
+31-(0)-318653068
+e-mail: waklos@bos.nl
+HomePage: www.bos.nl/homes/waklos/
+
+rev. history
+------------
+0.5       first release
+0.6       reading is done slower for fast machines
+          Compare for EEproms added
+          PIC buffer save works correct now
+          error messages for HEX file load added
+          everything should work under Windows now
+0.7       LudiPipo support added,command line arguments
+0.71      Bugfix update:hardware test
+0.72      bugfix:24Cxx binload
+0.73      bugfix:LudiPipo 24Cxx reading/programming
+0.8       Hex file save added
+0.81      some minor bugs
+0.90      16F84 support added,PicBust option added,
+          bugfix:error message configuration.
+0.91      16F84 programming bugfix
+0.92      Ludipipo under Windows improved,some cosmetic changes.
+0.93      Slowed down to work with fast 200+ Mhz machines
+0.95      PIC 12C508 support added
+0.98      programming delay adapted for Windows 98
