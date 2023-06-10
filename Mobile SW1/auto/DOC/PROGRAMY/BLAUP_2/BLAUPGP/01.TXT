@@ -1,0 +1,24 @@
+02 BLAUPUNKT "Lubeck CC20" ( CR... )
+"KOD 1234"
+EEPROM: XLS 93C46P ( MicroWire 9346 64x16)
+
+0000
+0010
+0020
+0030
+0040
+0050
+0060 
+0070
+
+ADRES:
+
+0066 44  ( 44 : 29 = kod wylaczony )
+         (      2C = kod wlaczony  )
+
+0067 34  ( 3 = trzecia cyfra kodu )
+         ( 4 = czwarta cyfra kodu )
+
+0068 12  ( 1 = pierwsza cyfra kodu )
+         ( 2 = druga cyfra kodu )
+

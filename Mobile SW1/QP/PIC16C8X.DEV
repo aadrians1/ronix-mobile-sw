@@ -1,0 +1,1190 @@
+Group=Microchip Mid-range PIC
+[Device]=PIC16CR83
+Socket=2 18
+AddrDivider=2
+CmdMask=0x07
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 8
+BlankData=0x3FFF
+EditRect=0 0 57 17
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 64 8
+BlankData=0xFF
+EditRect=0 17 57 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=10 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111111xxxx P/D off
+BitMapItem  = 1111110111xxxx Poff/Don
+BitMapItem  = 0000001000xxxx Pon/Doff
+BitMapItem  = 0000000000xxxx P/D On
+
+EndDevice
+[Device]=PIC16F83
+Socket=2 18
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 8
+BlankData=0x3FFF
+EditRect=0 0 57 17
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 64 8
+BlankData=0xFF
+EditRect=0 17 57 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=10 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111111xxxx Off
+BitMapItem  = 0000000000xxxx On
+
+EndDevice
+[Device]=PIC16F83A
+Socket=2 18
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 8
+BlankData=0x3FFF
+EditRect=0 0 57 17
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 64 8
+BlankData=0xFF
+EditRect=0 17 57 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=10 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111111xxxx Off
+BitMapItem  = 0000000000xxxx On
+
+EndDevice
+[Device]=PIC16C84
+Socket=2 18
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 8
+BlankData=0x3FFF
+EditRect=0 0 57 17
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 64 8
+BlankData=0xFF
+EditRect=0 17 57 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=10 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx On
+BitMapItem  = xxxxxxxxxx0xxx Off
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111111xxxx Off
+BitMapItem  = 1111111110xxxx On *
+
+EndDevice
+[Device]=PIC16CR84
+Socket=2 18
+AddrDivider=2
+CmdMask=0x07
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 8
+BlankData=0x3FFF
+EditRect=0 0 57 17
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 64 8
+BlankData=0xFF
+EditRect=0 17 57 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=10 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111111xxxx P/D off
+BitMapItem  = 1111110111xxxx Poff/Don
+BitMapItem  = 0000001000xxxx Pon/Doff
+BitMapItem  = 0000000000xxxx P/D On
+
+EndDevice
+[Device]=PIC16F84
+Socket=2 18
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 8
+BlankData=0x3FFF
+EditRect=0 0 57 17
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 64 8
+BlankData=0xFF
+EditRect=0 17 57 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=10 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111111xxxx Off
+BitMapItem  = 0000000000xxxx On
+
+EndDevice
+[Device]=PIC16F84A
+Socket=2 18
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 8
+BlankData=0x3FFF
+EditRect=0 0 57 17
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 64 8
+BlankData=0xFF
+EditRect=0 17 57 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=10 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111111xxxx Off
+BitMapItem  = 0000000000xxxx On
+
+EndDevice
+[Device]=PIC16F873
+Socket=4 28 0
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5.0 5.0 3.0 5.5
+Vpp= 13.0 13.0 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4K 8
+BlankData=0x3FFF
+EditRect= 0  0 57 17
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+;-----------------
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 128 8
+BlankData=0xFF
+EditRect= 0 17 57 23
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19000A
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+;-----------------
+[Part]=Device
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=8198 1 1
+BlankData=0x3FFF
+EditRect=57 13 80 19
+BlockLen=1
+ProgTimes=0.00 0 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19
+BitMapGroup = 00111111100000 Dev
+BitMapItem  = xx1000010xxxxx 16F873
+
+BitMapGroup = 00000000011111 Rev
+BitMapItem  = xxxxxxxxx00000 0
+BitMapItem  = xxxxxxxxx00001 1
+BitMapItem  = xxxxxxxxx00010 2
+BitMapItem  = xxxxxxxxx00011 3
+BitMapItem  = xxxxxxxxx00100 4
+BitMapItem  = xxxxxxxxx00101 5
+BitMapItem  = xxxxxxxxx00110 6
+BitMapItem  = xxxxxxxxx00111 7
+BitMapItem  = xxxxxxxxx01000 8
+BitMapItem  = xxxxxxxxx01001 9
+BitMapItem  = xxxxxxxxx01010 10
+BitMapItem  = xxxxxxxxx01011 11
+BitMapItem  = xxxxxxxxx01100 12
+BitMapItem  = xxxxxxxxx01101 13
+BitMapItem  = xxxxxxxxx01110 14
+BitMapItem  = xxxxxxxxx01111 15
+BitMapItem  = xxxxxxxxx10000 16
+BitMapItem  = xxxxxxxxx10001 17
+BitMapItem  = xxxxxxxxx10010 18
+BitMapItem  = xxxxxxxxx10011 19
+BitMapItem  = xxxxxxxxx10100 20
+BitMapItem  = xxxxxxxxx10101 21
+BitMapItem  = xxxxxxxxx10110 22
+BitMapItem  = xxxxxxxxx10111 23
+BitMapItem  = xxxxxxxxx11000 24
+BitMapItem  = xxxxxxxxx11001 25
+BitMapItem  = xxxxxxxxx11010 26
+BitMapItem  = xxxxxxxxx11011 27
+BitMapItem  = xxxxxxxxx11100 28
+BitMapItem  = xxxxxxxxx11101 29
+BitMapItem  = xxxxxxxxx11110 30
+BitMapItem  = xxxxxxxxx11111 31
+
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57  0 80 13
+BlockLen=1
+ProgTimes=10.00 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11010000110000 CP
+BitMapItem  = 11x1xxxx11xxxx Off
+BitMapItem  = 10x1xxxx10xxxx Up1/16
+BitMapItem  = 01x1xxxx01xxxx Up1/2
+BitMapItem  = 00x1xxxx00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+BitMapGroup = 00000010000000 LVProg
+BitMapItem  = xxxxxx1xxxxxxx Enabled
+BitMapItem  = xxxxxx0xxxxxxx Disabled
+
+BitMapGroup = 00000100000000 CPData
+BitMapItem  = xxxxx1xxxxxxxx Off
+BitMapItem  = xxxxx0xxxxxxxx On
+
+BitMapGroup = 00001000000000 WRT_EN
+BitMapItem  = xxxx1xxxxxxxxx Enabled
+BitMapItem  = xxxx0xxxxxxxxx Disabled
+
+BitMapGroup = 00100000000000 Debug
+BitMapItem  = xx1xxxxxxxxxxx Disabled
+BitMapItem  = xx0xxxxxxxxxxx Enabled
+
+EndDevice ;================ << PIC16F873 >> ================
+[Device]=PIC16F874
+Socket=4 40 0
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5.0 5.0 3.0 5.5
+Vpp= 13.0 13.0 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4K 8
+BlankData=0x3FFF
+EditRect= 0  0 57 17
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 128 8
+BlankData=0xFF
+EditRect= 0 17 57 23
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19000A
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Device
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=8198 1 1
+BlankData=0x3FFF
+EditRect=57 13 80 19
+BlockLen=1
+ProgTimes=0.00 0 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19
+BitMapGroup = 00111111100000 Dev
+BitMapItem  = xx1000001xxxxx 16F874
+
+BitMapGroup = 00000000011111 Rev
+BitMapItem  = xxxxxxxxx00000 0
+BitMapItem  = xxxxxxxxx00001 1
+BitMapItem  = xxxxxxxxx00010 2
+BitMapItem  = xxxxxxxxx00011 3
+BitMapItem  = xxxxxxxxx00100 4
+BitMapItem  = xxxxxxxxx00101 5
+BitMapItem  = xxxxxxxxx00110 6
+BitMapItem  = xxxxxxxxx00111 7
+BitMapItem  = xxxxxxxxx01000 8
+BitMapItem  = xxxxxxxxx01001 9
+BitMapItem  = xxxxxxxxx01010 10
+BitMapItem  = xxxxxxxxx01011 11
+BitMapItem  = xxxxxxxxx01100 12
+BitMapItem  = xxxxxxxxx01101 13
+BitMapItem  = xxxxxxxxx01110 14
+BitMapItem  = xxxxxxxxx01111 15
+BitMapItem  = xxxxxxxxx10000 16
+BitMapItem  = xxxxxxxxx10001 17
+BitMapItem  = xxxxxxxxx10010 18
+BitMapItem  = xxxxxxxxx10011 19
+BitMapItem  = xxxxxxxxx10100 20
+BitMapItem  = xxxxxxxxx10101 21
+BitMapItem  = xxxxxxxxx10110 22
+BitMapItem  = xxxxxxxxx10111 23
+BitMapItem  = xxxxxxxxx11000 24
+BitMapItem  = xxxxxxxxx11001 25
+BitMapItem  = xxxxxxxxx11010 26
+BitMapItem  = xxxxxxxxx11011 27
+BitMapItem  = xxxxxxxxx11100 28
+BitMapItem  = xxxxxxxxx11101 29
+BitMapItem  = xxxxxxxxx11110 30
+BitMapItem  = xxxxxxxxx11111 31
+
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57  0 80 13
+BlockLen=1
+ProgTimes=10.00 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+BitMapGroup = 00000010000000 LVProg
+BitMapItem  = xxxxxx1xxxxxxx Enabled
+BitMapItem  = xxxxxx0xxxxxxx Disabled
+
+BitMapGroup = 00000100000000 CPData
+BitMapItem  = xxxxx1xxxxxxxx Off
+BitMapItem  = xxxxx0xxxxxxxx On
+
+BitMapGroup = 00001000000000 WRT_EN
+BitMapItem  = xxxx1xxxxxxxxx Enabled
+BitMapItem  = xxxx0xxxxxxxxx Disabled
+
+BitMapGroup = 00100000000000 Debug
+BitMapItem  = xx1xxxxxxxxxxx Disabled
+BitMapItem  = xx0xxxxxxxxxxx Enabled
+
+EndDevice 
+[Device]=PIC16F876
+Socket=4 28 0
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5.0 5.0 3.0 5.5
+Vpp= 13.0 13.0 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 8
+BlankData=0x3FFF
+EditRect= 0  0 57 17
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 256 8
+BlankData=0xFF
+EditRect= 0 17 57 23
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19000A
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Device
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=8198 1 1
+BlankData=0x3FFF
+EditRect=57 13 80 19
+BlockLen=1
+ProgTimes=0.00 0 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19
+BitMapGroup = 00111111100000 Dev
+BitMapItem  = xx1001111xxxxx 16F876
+
+BitMapGroup = 00000000011111 Rev
+BitMapItem  = xxxxxxxxx00000 0
+BitMapItem  = xxxxxxxxx00001 1
+BitMapItem  = xxxxxxxxx00010 2
+BitMapItem  = xxxxxxxxx00011 3
+BitMapItem  = xxxxxxxxx00100 4
+BitMapItem  = xxxxxxxxx00101 5
+BitMapItem  = xxxxxxxxx00110 6
+BitMapItem  = xxxxxxxxx00111 7
+BitMapItem  = xxxxxxxxx01000 8
+BitMapItem  = xxxxxxxxx01001 9
+BitMapItem  = xxxxxxxxx01010 10
+BitMapItem  = xxxxxxxxx01011 11
+BitMapItem  = xxxxxxxxx01100 12
+BitMapItem  = xxxxxxxxx01101 13
+BitMapItem  = xxxxxxxxx01110 14
+BitMapItem  = xxxxxxxxx01111 15
+BitMapItem  = xxxxxxxxx10000 16
+BitMapItem  = xxxxxxxxx10001 17
+BitMapItem  = xxxxxxxxx10010 18
+BitMapItem  = xxxxxxxxx10011 19
+BitMapItem  = xxxxxxxxx10100 20
+BitMapItem  = xxxxxxxxx10101 21
+BitMapItem  = xxxxxxxxx10110 22
+BitMapItem  = xxxxxxxxx10111 23
+BitMapItem  = xxxxxxxxx11000 24
+BitMapItem  = xxxxxxxxx11001 25
+BitMapItem  = xxxxxxxxx11010 26
+BitMapItem  = xxxxxxxxx11011 27
+BitMapItem  = xxxxxxxxx11100 28
+BitMapItem  = xxxxxxxxx11101 29
+BitMapItem  = xxxxxxxxx11110 30
+BitMapItem  = xxxxxxxxx11111 31
+
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57  0 80 13
+BlockLen=1
+ProgTimes=10.00 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11010000110000 CP
+BitMapItem  = 11x1xxxx11xxxx Off
+BitMapItem  = 10x1xxxx10xxxx Up1/32
+BitMapItem  = 01x1xxxx01xxxx Up1/2
+BitMapItem  = 00x1xxxx00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+BitMapGroup = 00000010000000 LVProg
+BitMapItem  = xxxxxx1xxxxxxx Enabled
+BitMapItem  = xxxxxx0xxxxxxx Disabled
+
+BitMapGroup = 00000100000000 CPData
+BitMapItem  = xxxxx1xxxxxxxx Off
+BitMapItem  = xxxxx0xxxxxxxx On
+
+BitMapGroup = 00001000000000 WRT_EN
+BitMapItem  = xxxx1xxxxxxxxx Enabled
+BitMapItem  = xxxx0xxxxxxxxx Disabled
+
+BitMapGroup = 00100000000000 Debug
+BitMapItem  = xx1xxxxxxxxxxx Disabled
+BitMapItem  = xx0xxxxxxxxxxx Enabled
+
+EndDevice 
+[Device]=PIC16F877
+Socket=4 40 0
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5.0 5.0 3.0 5.5
+Vpp= 13.0 13.0 12.5 13.5
+
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 8
+BlankData=0x3FFF
+EditRect= 0  0 57 17
+BlockLen=1
+ProgTimes=5.00 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181B191703
+
+[Part]=DataMem
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8448 256 8
+BlankData=0xFF
+EditRect= 0 17 57 23
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=181A19181B19000A
+
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=10.00 1 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+
+[Part]=Device
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=8198 1 1
+BlankData=0x3FFF
+EditRect=57 13 80 19
+BlockLen=1
+ProgTimes=0.00 0 0 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19
+BitMapGroup = 00111111100000 Dev
+BitMapItem  = xx1001101xxxxx 16F877
+
+BitMapGroup = 00000000011111 Rev
+BitMapItem  = xxxxxxxxx00000 0
+BitMapItem  = xxxxxxxxx00001 1
+BitMapItem  = xxxxxxxxx00010 2
+BitMapItem  = xxxxxxxxx00011 3
+BitMapItem  = xxxxxxxxx00100 4
+BitMapItem  = xxxxxxxxx00101 5
+BitMapItem  = xxxxxxxxx00110 6
+BitMapItem  = xxxxxxxxx00111 7
+BitMapItem  = xxxxxxxxx01000 8
+BitMapItem  = xxxxxxxxx01001 9
+BitMapItem  = xxxxxxxxx01010 10
+BitMapItem  = xxxxxxxxx01011 11
+BitMapItem  = xxxxxxxxx01100 12
+BitMapItem  = xxxxxxxxx01101 13
+BitMapItem  = xxxxxxxxx01110 14
+BitMapItem  = xxxxxxxxx01111 15
+BitMapItem  = xxxxxxxxx10000 16
+BitMapItem  = xxxxxxxxx10001 17
+BitMapItem  = xxxxxxxxx10010 18
+BitMapItem  = xxxxxxxxx10011 19
+BitMapItem  = xxxxxxxxx10100 20
+BitMapItem  = xxxxxxxxx10101 21
+BitMapItem  = xxxxxxxxx10110 22
+BitMapItem  = xxxxxxxxx10111 23
+BitMapItem  = xxxxxxxxx11000 24
+BitMapItem  = xxxxxxxxx11001 25
+BitMapItem  = xxxxxxxxx11010 26
+BitMapItem  = xxxxxxxxx11011 27
+BitMapItem  = xxxxxxxxx11100 28
+BitMapItem  = xxxxxxxxx11101 29
+BitMapItem  = xxxxxxxxx11110 30
+BitMapItem  = xxxxxxxxx11111 31
+
+
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57  0 80 13
+BlockLen=1
+ProgTimes=10.00 0 0 1
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181B191703
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11010000110000 CP
+BitMapItem  = 11x1xxxx11xxxx Off
+BitMapItem  = 10x1xxxx10xxxx Up1/32
+BitMapItem  = 01x1xxxx01xxxx Up1/2
+BitMapItem  = 00x1xxxx00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+BitMapGroup = 00000010000000 LVProg
+BitMapItem  = xxxxxx1xxxxxxx Enabled
+BitMapItem  = xxxxxx0xxxxxxx Disabled
+
+BitMapGroup = 00000100000000 CPData
+BitMapItem  = xxxxx1xxxxxxxx Off
+BitMapItem  = xxxxx0xxxxxxxx On
+
+BitMapGroup = 00001000000000 WRT_EN
+BitMapItem  = xxxx1xxxxxxxxx Enabled
+BitMapItem  = xxxx0xxxxxxxxx Disabled
+
+BitMapGroup = 00100000000000 Debug
+BitMapItem  = xx1xxxxxxxxxxx Disabled
+BitMapItem  = xx0xxxxxxxxxxx Enabled
+
+EndDevice 

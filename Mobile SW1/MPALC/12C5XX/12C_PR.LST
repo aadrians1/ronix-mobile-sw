@@ -1,0 +1,51 @@
+16c5x/xx Cross-Assembler V4.14 Released  Sun Mar 14 04:08:45 1999  Page 1
+
+Line   PC    Opcode
+
+0001               LIST P=16C54
+0002               
+0003         0000  INDF		EQU	00h
+0004         0001  TMR0		EQU	01h
+0005         0002  PCL		EQU	02h
+0006         0003  STATUS		EQU	03h
+0007         0004  FSR		EQU	04h
+0008         0005  OSCCAL		EQU	05h
+0009         0006  GPIO		EQU	06h
+0010               
+0011         0007  D1		EQU	07h
+0012         0008  TIME		EQU	08h
+0013         0009  TIME2		EQU	09h
+0014         001F  D24		EQU	1Fh
+0015               
+0016         0000  	ORG	0
+0017   0000  0000  	NOP
+0018         0000  	ORG	20H
+0019   0020  0C00  	MOVLW	0h
+0020   0021  0006  	TRIS	GPIO
+0021   0022  0CFF  CIKL1	MOVLW	0FFh
+0022   0023  0026  	MOVWF	GPIO
+0023   0024  0000  	NOP
+0024   0025  0000  	NOP
+0025   0026  0C00  	MOVLW	0
+0026   0027  0026  	MOVWF	GPIO
+0027   0028  0A22  	GOTO	CIKL1
+0028         0000  END
+16c5x/xx Cross-Assembler V4.14 Released  Sun Mar 14 04:08:45 1999  Page 2
+
+
+
+Cross-Reference Listing
+LABEL        VALUE        DEFN        REFERENCES
+CIKL1        34           21          21     27     
+D1           7            11          11     
+D24          31           14          14     
+FSR          4            7           7      
+GPIO         6            9           9      20     22     26     
+INDF         0            3           3      
+OSCCAL       5            8           8      
+PCL          2            5           5      
+STATUS       3            6           6      
+TIME         8            12          12     
+TIME2        9            13          13     
+TMR0         1            4           4      
+

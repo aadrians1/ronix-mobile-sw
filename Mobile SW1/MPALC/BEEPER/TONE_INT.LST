@@ -1,0 +1,134 @@
+16c5x/xx Cross-Assembler V4.14 Released  Sun May 16 03:05:55 1999  Page 1
+
+Line   PC    Opcode
+
+0001               LIST P=16C84		;tone generator for freking
+0002         003C  TIME_1		EQU	3CH
+0003         003C  TIME_2		EQU	3CH
+0004               
+0005         0001  RTCC		EQU	01h
+0006               ;OPTION		EQU	01h	;(81h)	10001111
+0007         0003  STATUS		EQU	03h
+0008         0005  PORTA		EQU	05h
+0009         0005  TRISA		EQU	05h
+0010         0006  PORTB		EQU	06h
+0011         0006  TRISB		EQU	06h
+0012         000B  INTCON		EQU	0Bh	;	10100000
+0013               
+0014         000C  WRB		EQU	0Ch
+0015         000D  REB		EQU	0Dh
+0016         000E  CNTCIKL		EQU	0Eh
+0017         000F  TIME		EQU	0Fh
+0018         0010  FRE_T		EQU	10H	;SET RTCC
+0019         0011  FRE_1		EQU	11H	;SET 1st DIVISOR
+0020         0012  FRE_2		EQU	12H	;SET 2st DIVISOR
+0021         0013  FRE_M		EQU	13H	;SET MASK FOR 2st CLOCK (IF 1 THEN DISABLE
+                       D)
+0022         0014  FRE_1A		EQU	14H	;TMP FOR 1st CLOCK
+0023         0015  FRE_2A		EQU	15H	;TMP FOR 2st CLOCK
+0024         0016  MASK1		EQU	16H
+0025         0017  MASK2		EQU	17H
+0026               
+0027         0000  	ORG	0
+0028   0000  281E  	GOTO	INI_P
+0029               
+0030   0001  0000  	NOP
+0031   0002  0000  	NOP
+0032   0003  0000  	NOP
+0033   0004  0000  	NOP
+0034   0005  0810  	MOVFW	FRE_T
+0035   0006  0081  	MOVWF	RTCC
+0036   0007  30A0  	MOVLW	B'10100000'
+0037   0008  008B  	MOVWF	INTCON	
+0038               
+0039   0009  0B94  	DECFSZ	FRE_1A,1
+0040   000A  2812  	GOTO	CON_
+0041   000B  0811  	MOVFW	FRE_1
+0042   000C  0094  	MOVWF	FRE_1A
+0043               
+0044   000D  1986  	BTFSC	PORTB,3
+0045   000E  2811  	GOTO	P_CLR1
+0046   000F  1586  	BSF	PORTB,3
+0047   0010  2812  	GOTO	CON_
+0048   0011  1186  P_CLR1	BCF	PORTB,3
+0049               
+0050   0012  1813  CON_	BTFSC	FRE_M,0	;IF =0 THEN CLOCK ON
+0051   0013  281D  	GOTO	CON_2
+16c5x/xx Cross-Assembler V4.14 Released  Sun May 16 03:05:55 1999  Page 2
+
+Line   PC    Opcode
+
+0052   0014  0B95  	DECFSZ	FRE_2A,1
+0053   0015  281D  	GOTO	CON_2
+0054   0016  0812  	MOVFW	FRE_2
+0055   0017  0095  	MOVWF	FRE_2A
+0056               
+0057   0018  1A06  	BTFSC	PORTB,4
+0058   0019  281C  	GOTO	P_CLR2
+0059   001A  1606  	BSF	PORTB,4
+0060   001B  281D  	GOTO	CON_2
+0061   001C  1206  P_CLR2	BCF	PORTB,4
+0062               
+0063   001D  0009  CON_2	RETFIE
+0064               
+0065               
+0066               
+0067               ;	MOVLW	32
+0068               ;	MOVWF	STATUS
+0069               ;	MOVLW	0
+0070               ;	MOVWF	TRISB
+0071               ;	MOVWF	STATUS
+0072               
+0073               
+0074   001E  0064  INI_P	CLRWDT
+0075   001F  308F  	MOVLW	B'10001111'
+0076   0020  0062  	OPTION
+0077   0021  3000  	MOVLW	0
+0078   0022  0085  	MOVWF	PORTA
+0079   0023  0086  	MOVWF	PORTB
+0080   0024  0065  	TRIS	TRISA
+0081   0025  0066  	TRIS	TRISB
+0082   0026  30A0  	MOVLW	B'10100000'
+0083   0027  008B  	MOVWF	INTCON
+0084   0028  0064  SLP_	CLRWDT
+0085   0029  2828  	GOTO	SLP_
+0086               
+0087               
+0088               
+0089               
+0090         0000  end
+16c5x/xx Cross-Assembler V4.14 Released  Sun May 16 03:05:55 1999  Page 3
+
+
+
+Cross-Reference Listing
+LABEL        VALUE        DEFN        REFERENCES
+CNTCIKL      14           16          16     
+CON_         18           50          40     47     50     
+CON_2        29           63          51     53     60     63     
+FRE_1        17           19          19     41     
+FRE_1A       20           22          22     39     42     
+FRE_2        18           20          20     54     
+FRE_2A       21           23          23     52     55     
+FRE_M        19           21          21     50     
+FRE_T        16           18          18     34     
+INI_P        30           74          28     74     
+INTCON       11           12          12     37     83     
+MASK1        22           24          24     
+MASK2        23           25          25     
+PORTA        5            8           8      78     
+PORTB        6            10          10     44     46     48     57     59     
+                                      61     79     
+P_CLR1       17           48          45     48     
+P_CLR2       28           61          58     61     
+REB          13           15          15     
+RTCC         1            5           5      35     
+SLP_         40           84          84     85     
+STATUS       3            7           7      
+TIME         15           17          17     
+TIME_1       60           2           2      
+TIME_2       60           3           3      
+TRISA        5            9           9      80     
+TRISB        6            11          11     81     
+WRB          12           14          14     
+

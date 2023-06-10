@@ -1,0 +1,32 @@
+
+
+	     ***********************************       
+	     *********   FORD   2005   *********
+	     ***********************************       
+                                           
+
+
+CPU:    NEC JAPAN
+	6008 JC013
+	17087858919 ; PA004
+MEMORY: NATIONAL 7002 (MN 7002)
+FILE:   ?
+CODE:   128 W PRZYK£ADZIE
+INFO:   WPISYWANIE NUMERU KODU KLAWISZAMI 1,2,3
+	ZATWIERDZENIE 4
+TECH:   
+	1 CYFRA $00 a
+	2 CYFRA $00 b
+	3 CYFRA $01 a
+
+LICZNIK B£ÊDÓW :$08=00 
+		$09=00    
+RADIO Z KODEM:	$01 b=1
+RADIO BEZ KODU:	$01 b=0
+PRZYK£AD:
+
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+00000  12 81 00 00 ¦ 00 00 00 00 ¦ 00 00 00 00 ¦ 00 00 00 00
+00010  45 43 55 2D ¦ 32 44 20 31 ¦ 39 33 33 30 ¦ 37 33 31 00
+
+

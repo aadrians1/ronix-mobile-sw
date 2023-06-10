@@ -1,0 +1,24 @@
+Group=SGS-Thomson Serial I2C EEPROMs
+
+
+;******************************************************************
+Device=ST24C16
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1K 16
+BlankData=0xFF
+EditRect= 0  0 73 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108280408
+EndDevice ;================ << ST24C16 >> ================

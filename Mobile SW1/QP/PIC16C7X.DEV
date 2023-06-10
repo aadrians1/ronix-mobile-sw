@@ -1,0 +1,1234 @@
+Group=Microchip Mid-range PIC
+[Device]=PIC16C71; ***************************************
+Socket=2 18
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx On
+BitMapItem  = xxxxxxxxxx0xxx Off
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111111xxxx Off
+BitMapItem  = 1111111110xxxx On
+
+EndDevice
+[Device]=PIC16C710; ***************************************
+Socket=2 18
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 0000000x00xxxx On
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C711; ***************************************
+Socket=2 18
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 0000000x00xxxx On
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C715; ***************************************
+Socket=2 18
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2048 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111100110000 CP
+BitMapItem  = 111111xx11xxxx Off
+BitMapItem  = 101010xx10xxxx 400:7FF
+BitMapItem  = 010101xx01xxxx 200:7FF
+BitMapItem  = 000000xx00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+BitMapGroup = 00000010000000 MPEEN
+BitMapItem  = xxxxxx1xxxxxxx On
+BitMapItem  = xxxxxx0xxxxxxx Off
+
+EndDevice
+[Device]=PIC16C72; ***************************************
+Socket=4 28
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2048 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx 400:7FF
+BitMapItem  = 0101011x01xxxx 200:7FF
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16CR72; ***************************************
+Socket=4 28
+AddrDivider=2
+CmdMask=0x07
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2048 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx 400:7FF
+BitMapItem  = 0101011x01xxxx 200:7FF
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C72A; ***************************************
+Socket=4 28
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2048 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx 400:7FF
+BitMapItem  = 0101011x01xxxx 200:7FF
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C73; ***************************************
+Socket=4 28
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FBF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx On
+BitMapItem  = xxxxxxxxxx0xxx Off
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111011xxxx Off
+BitMapItem  = 1111111010xxxx 800:FFF
+BitMapItem  = 1111111001xxxx 400:FFF
+BitMapItem  = 1111111000xxxx All
+
+EndDevice
+[Device]=PIC16C73A; ***************************************
+Socket=4 28
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx 800:FFF
+BitMapItem  = 0101011x01xxxx 400:FFF
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C73B; ***************************************
+Socket=4 28
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 5.5
+Vpp= 13 13 12.75 13.25
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx 800:FFF
+BitMapItem  = 0101011x01xxxx 400:FFF
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C74; ***************************************
+Socket=4 40
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FBF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx On
+BitMapItem  = xxxxxxxxxx0xxx Off
+
+BitMapGroup = 11111111110000 CP
+BitMapItem  = 1111111011xxxx Off
+BitMapItem  = 1111111010xxxx 800:FFF
+BitMapItem  = 1111111001xxxx 400:FFF
+BitMapItem  = 1111111000xxxx All
+
+EndDevice
+[Device]=PIC16C74A; ***************************************
+Socket=4 40
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx 800:FFF
+BitMapItem  = 0101011x01xxxx 400:FFF
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C74B; ***************************************
+Socket=4 40
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 5.5
+Vpp= 13 13 12.75 13.25
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx 800:FFF
+BitMapItem  = 0101011x01xxxx 400:FFF
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C76; ***************************************
+Socket=4 28
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx Up1/2
+BitMapItem  = 0101011x01xxxx Up3/4
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C77; ***************************************
+Socket=4 40
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11111110110000 CP
+BitMapItem  = 1111111x11xxxx Off
+BitMapItem  = 1010101x10xxxx Up1/2
+BitMapItem  = 0101011x01xxxx Up3/4
+BitMapItem  = 0000001x00xxxx All
+
+BitMapGroup = 00000001000000 BODEN
+BitMapItem  = xxxxxxx1xxxxxx On
+BitMapItem  = xxxxxxx0xxxxxx Off
+
+EndDevice
+[Device]=PIC16C773; ***************************************
+Socket=4 28
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 5.5
+Vpp= 13 13 12.75 13.25
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11000110110000 CP
+BitMapItem  = 11xxx11x11xxxx Off
+BitMapItem  = 10xxx11x10xxxx 800:FFF
+BitMapItem  = 01xxx01x01xxxx 400:FFF
+BitMapItem  = 00xxx01x00xxxx All
+
+BitMapGroup = 00110001000000 BODEN
+BitMapItem  = xx11xxx1xxxxxx BOD 2.5V
+BitMapItem  = xx01xxx1xxxxxx BOD 2.7V
+BitMapItem  = xx10xxx1xxxxxx BOD 4.2V
+BitMapItem  = xx00xxx1xxxxxx BOD 4.5V
+BitMapItem  = xx00xxx0xxxxxx Disabled
+
+EndDevice
+[Device]=PIC16C774; ***************************************
+Socket=4 40
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 5.5
+Vpp= 13 13 12.75 13.25
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000011 OSC
+BitMapItem  = xxxxxxxxxxxx11 RC
+BitMapItem  = xxxxxxxxxxxx00 LP
+BitMapItem  = xxxxxxxxxxxx01 XT
+BitMapItem  = xxxxxxxxxxxx10 HS
+
+BitMapGroup = 00000000000100 WDT
+BitMapItem  = xxxxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxxxx0xx Off
+
+BitMapGroup = 00000000001000 PWRT
+BitMapItem  = xxxxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxxxx0xxx On
+
+BitMapGroup = 11001110110000 CP
+BitMapItem  = 11xx111x11xxxx Off
+BitMapItem  = 10xx101x10xxxx 800:FFF
+BitMapItem  = 01xx011x01xxxx 400:FFF
+BitMapItem  = 00xx001x00xxxx All
+
+BitMapGroup = 00110001000000 BODEN
+BitMapItem  = xx11xxx1xxxxxx BOD 2.5V
+BitMapItem  = xx01xxx1xxxxxx BOD 2.7V
+BitMapItem  = xx10xxx1xxxxxx BOD 4.2V
+BitMapItem  = xx00xxx1xxxxxx BOD 4.5V
+BitMapItem  = xx00xxx0xxxxxx Disabled
+
+EndDevice

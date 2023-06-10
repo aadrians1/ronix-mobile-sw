@@ -1,0 +1,259 @@
+16c5x/xx Cross-Assembler V4.14 Released  Thu Mar 27 00:32:31 1997  Page 1
+
+Line   PC    Opcode
+
+0001               
+0002               	LIST    P=16C84, R=HEX
+0003               	INCLUDE "PICREG.EQU"
+0004               ; PIC16Cxx Microcontroller Include File
+0005               
+0006         01FF  PIC54           equ     0x1ff   ; PIC16C54 Reset Vector
+0007         01FF  PIC55           equ     0x1ff   ; PIC16C55 Reset Vector
+0008         03FF  PIC56           equ     0x3ff   ; PIC16C56 Reset Vector
+0009         07FF  PIC57           equ     0x7ff   ; PIC16C57 Reset Vector
+0010         0000  PIC71           equ     0x000   ; PIC16C71 Reset Vector
+0011         0000  PIC84           equ     0x000   ; PIC16C84 Reset Vector
+0012         0004  INTVEC          equ     0x004   ; PIC16C71/84 Interupt Ve
+                       ctor
+0013               
+0014         0000  INDIR           equ     0x000   ; Indirect File Reg Addre
+                       ss Register
+0015         0001  RTCC            equ     0x001   ; Real Time Clock Counter
+                       
+0016         0002  PCL             equ     0x002   ; Program Counter Low Byt
+                       e
+0017         0003  STATUS          equ     0x003   ; Status Register
+0018         0004  FSR             equ     0x004   ; File Select Register
+0019         0005  PORTA           equ     0x005   ; Port A I/O Register
+0020         0006  PORTB           equ     0x006   ; Port B I/O Register
+0021         0007  PORTC           equ     0x007   ; Port C I/O Register
+0022         0008  ADCON0          equ     0x008   ; PIC16C71 A/D Control Re
+                       g 0
+0023         0009  ADRES           equ     0x009   ; PIC16C71 A/D Converter 
+                       Result Register
+0024         0008  EEDATA          equ     0x008   ; PIC16C84 EEPROM Data Re
+                       gister
+0025         0009  EEADR           equ     0x009   ; PIC16C84 EEPROM Address
+                        Register
+0026         000A  PCLATH          equ     0x00a   ; Program Counter High Bi
+                       ts
+0027         000B  INTCON          equ     0x00b   ; Interrupt Control Regis
+                       ter
+0028         0005  TRISA           equ     0x005   ; Port A I/O Direction Re
+                       gister
+0029         0006  TRISB           equ     0x006   ; Port B I/O Direction Re
+                       gister
+0030         0007  TRISC           equ     0x007   ; Port C I/O Direction Re
+                       gister
+0031         0008  ADCON1          equ     0x008   ; PIC16C71 A/D Control Re
+                       g 1
+0032         0008  EECON1          equ     0x008   ; PIC16C84 EEPROM Control
+                        Reg. 1
+0033         0009  EECON2          equ     0x009   ; PIC16C84 EEPROM Control
+                        Reg. 2
+0034               ;OPTION          equ     0x001   ; Option Register
+0035               
+0036         0007  MSB             equ     0x007   ; Most-Significant Bit
+0037         0000  LSB             equ     0x000   ; Least-Significant Bit
+0038         0001  TRUE            equ     1
+0039         0001  YES             equ     1
+0040         0000  FALSE           equ     0
+0041         0000  NO              equ     0
+0042               
+0043               ; Status Register (f03) Bits
+0044               
+0045         0000  CARRY           equ     0x000   ; Carry Bit
+0046         0000  C               equ     0x000   ; Carry Bit
+0047         0001  DCARRY          equ     0x001   ; Digit Carry Bit
+0048         0001  DC              equ     0x001   ; Digit Carry Bit
+0049         0002  Z_BIT           equ     0x002   ; Zero Bit
+0050         0002  Z               equ     0x002   ; Zero Bit
+16c5x/xx Cross-Assembler V4.14 Released  Thu Mar 27 00:32:31 1997  Page 2
+ISO 7816 Synchronous Memory Card Emulator
+
+Line   PC    Opcode
+
+0051         0003  P_DOWN          equ     0x003   ; Power Down Bit
+0052         0003  PD              equ     0x003   ; Power Down Bit
+0053         0004  T_OUT           equ     0x004   ; Watchdog Time-Out Bit
+0054         0004  TO              equ     0x004   ; Watchdog Time-Out Bit
+0055         0005  RP0             equ     0x005   ; Register Page Select 0
+0056         0006  RP1             equ     0x006   ; Register Page Select 1
+0057         0007  IRP             equ     0x007   ; Indirect Addressing Reg
+                       . Page Sel.
+0058               
+0059               ; INTCON Register (f0b) Bits
+0060               
+0061         0000  RBIF            equ     0x000   ; RB Port change interrup
+                       t flag
+0062         0001  INTF            equ     0x001   ; INT Interrupt Flag
+0063         0002  RTIF            equ     0x002   ; RTCC Overflow Interupt 
+                       Flag
+0064         0003  RBIE            equ     0x003   ; RB Port Ch. Interupt En
+                       able
+0065         0004  INTE            equ     0x004   ; INT Interupt Enable
+0066         0005  RTIE            equ     0x005   ; RTCC Overflow Int. Enab
+                       le
+0067         0006  ADIE            equ     0x006   ; PIC16C71 A/D Int. Enabl
+                       e
+0068         0006  EEIE            equ     0x006   ; PIC16C84 EEPROM Write I
+                       nt. Enable
+0069         0007  GIE             equ     0x007   ; Global Interupt Enable
+0070               
+0071               ; OPTION Register (f81) Bits
+0072               
+0073         0000  PS0             equ     0x000   ; Prescaler Bit 0
+0074         0001  PS1             equ     0x001   ; Prescaler Bit 1
+0075         0002  PS2             equ     0x002   ; Prescaler Bit 2
+0076         0003  PSA             equ     0x003   ; Prescaler Assignment Bi
+                       t
+0077         0004  RTE             equ     0x004   ; RTCC Signal Edge Select
+                       
+0078         0005  RTS             equ     0x005   ; RTCC Signal Source Sele
+                       ct
+0079         0006  INTEDG          equ     0x006   ; Interupt Edge Select
+0080         0007  RBPU            equ     0x007   ; Port B Pull-up Enable
+0081               
+0082               ; ADCON0 Register (f08) Bits
+0083               
+0084         0000  ADON            equ     0x000   ; A/D Converter Power Swi
+                       tch
+0085         0001  ADIF            equ     0x001   ; A/D Conversion Interupt
+                        Flag
+0086         0002  ADGO            equ     0x002   ; A/D Conversion Start Fl
+                       ag
+0087         0003  CHS0            equ     0x003   ; A/D Converter Channel S
+                       elect 0
+0088         0004  CHS1            equ     0x004   ; A/D Converter Channel S
+                       elect 1
+0089         0006  ADCS0           equ     0x006   ; A/D Conversion Clock Se
+                       lect 0
+0090         0007  ADCS1           equ     0x007   ; A/D Conversion Clock Se
+                       lect 0
+0091               
+0092               ; ADCON1 Register (f88) Bits
+0093               
+0094         0000  PCFG0           equ     0x000   ; RA0-RA3 Configuration B
+                       it 0
+0095         0001  PCFG1           equ     0x001   ; RA0-RA3 Configuration B
+                       it 0
+0096               
+0097               ; EECON1 Register (f88) Bits
+0098               
+0099         0000  RD              equ     0x000   ; PIC16C84 EEPROM Read Da
+                       ta Flag
+0100         0001  WR              equ     0x001   ; PIC16C84 EEPROM Write D
+                       ata Flag
+16c5x/xx Cross-Assembler V4.14 Released  Thu Mar 27 00:32:31 1997  Page 3
+
+Line   PC    Opcode
+
+0101         0002  WREN            equ     0x002   ; PIC16C84 EEPROM Write E
+                       nable Flag
+0102         0003  WRERR           equ     0x003   ; PIC16C84 EEPROM Write E
+                       rror Flag
+0103         0004  EEIF            equ     0x004   ; PIC16C84 EEPROM Interup
+                       t Flag
+0104               
+0105               ; Some useful macros...
+0106               
+0107               PUSH    macro
+0108               	movwf   TEMP_W
+0109               	swapf   STATUS,W
+0110               	movwf   TEMP_S
+0111               	endm
+0112               
+0113               POP     macro
+0114               	swapf   TEMP_S,W
+0115               	movwf   STATUS
+0116               	swapf   TEMP_W
+0117               	swapf   TEMP_W,W
+0118               	endm
+0119               
+0120         0000  	END
+16c5x/xx Cross-Assembler V4.14 Released  Thu Mar 27 00:32:31 1997  Page 4
+
+
+
+Cross-Reference Listing
+LABEL        VALUE        DEFN        REFERENCES
+ADCON0       8            22          22     
+ADCON1       8            31          31     
+ADCS0        6            89          89     
+ADCS1        7            90          90     
+ADGO         2            86          86     
+ADIE         6            67          67     
+ADIF         1            85          85     
+ADON         0            84          84     
+ADRES        9            23          23     
+C            0            46          46     
+CARRY        0            45          45     
+CHS0         3            87          87     
+CHS1         4            88          88     
+DC           1            48          48     
+DCARRY       1            47          47     
+EEADR        9            25          25     
+EECON1       8            32          32     
+EECON2       9            33          33     
+EEDATA       8            24          24     
+EEIE         6            68          68     
+EEIF         4            103         103    
+FALSE        0            40          40     
+FSR          4            18          18     
+GIE          7            69          69     
+INDIR        0            14          14     
+INTCON       11           27          27     
+INTE         4            65          65     
+INTEDG       6            79          79     
+INTF         1            62          62     
+INTVEC       4            12          12     
+IRP          7            57          57     
+LSB          0            37          37     
+MSB          7            36          36     
+NO           0            41          41     
+PCFG0        0            94          94     
+PCFG1        1            95          95     
+PCL          2            16          16     
+PCLATH       10           26          26     
+PD           3            52          52     
+PIC54        511          6           6      
+PIC55        511          7           7      
+PIC56        1023         8           8      
+PIC57        2047         9           9      
+PIC71        0            10          10     
+PIC84        0            11          11     
+POP          112          113         113    
+PORTA        5            19          19     
+PORTB        6            20          20     
+PORTC        7            21          21     
+PS0          0            73          73     
+PS1          1            74          74     
+PS2          2            75          75     
+PSA          3            76          76     
+PUSH         106          107         107    
+P_DOWN       3            51          51     
+RBIE         3            64          64     
+RBIF         0            61          61     
+RBPU         7            80          80     
+RD           0            99          99     
+RP0          5            55          55     
+RP1          6            56          56     
+RTCC         1            15          15     
+RTE          4            77          77     
+RTIE         5            66          66     
+RTIF         2            63          63     
+RTS          5            78          78     
+STATUS       3            17          17     109    115    
+TO           4            54          54     
+TRISA        5            28          28     
+TRISB        6            29          29     
+TRISC        7            30          30     
+TRUE         1            38          38     
+T_OUT        4            53          53     
+WR           1            100         100    
+WREN         2            101         101    
+WRERR        3            102         102    
+YES          1            39          39     
+Z            2            50          50     
+Z_BIT        2            49          49     
+

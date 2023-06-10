@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   :24c01 
+
+Wprowadzanie : klawisze kodu np.3954
+Wywol./Zatw. : BD+BD
+
+UWAGI : 

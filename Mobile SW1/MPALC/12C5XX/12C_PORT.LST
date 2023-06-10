@@ -1,0 +1,137 @@
+16c5x/xx Cross-Assembler V4.14 Released  Sun Mar 14 09:00:06 1999  Page 1
+
+Line   PC    Opcode
+
+0001               LIST P=16C54
+0002               ;LIST P=12C509		;exempl
+0003               
+0004         0000  INDF		EQU	00h
+0005         0001  TMR0		EQU	01h
+0006         0002  PCL		EQU	02h
+0007         0003  STATUS		EQU	03h
+0008         0004  FSR		EQU	04h
+0009         0005  OSCCAL		EQU	05h
+0010         0006  GPIO		EQU	06h
+0011               
+0012         0007  D1		EQU	07h
+0013         0008  TIME		EQU	08h
+0014         0009  TIME2		EQU	09h
+0015         001F  D24		EQU	1Fh
+0016               
+0017         0000  	ORG	0
+0018   0000  0000  	NOP
+0019   0001  06E3  	BTFSC	STATUS,7
+0020   0002  0A11  	GOTO	WAKEUP
+0021   0003  0783  	BTFSS	STATUS,4
+0022   0004  0A19  	GOTO	OVERW
+0023               
+0024   0005  0921  	CALL	INIP
+0025   0006  0C04  SLEEP_	MOVLW	4h
+0026   0007  0026  	MOVWF	GPIO
+0027   0008  0206  	MOVFW	GPIO
+0028   0009  0003  	SLEEP
+0029               
+0030   000A  0CFF  CIKL1	MOVLW	0FFh
+0031   000B  0026  	MOVWF	GPIO
+0032   000C  092E  	CALL	TML
+0033   000D  0C00  	MOVLW	0
+0034   000E  0026  	MOVWF	GPIO
+0035   000F  092E  	CALL	TML
+0036   0010  0A0A  	GOTO	CIKL1
+0037               
+0038   0011  0921  WAKEUP	CALL	INIP
+0039   0012  0C01  	MOVLW	01h
+0040   0013  0026  	MOVWF	GPIO
+0041   0014  0938  	CALL	TML2
+0042   0015  0C00  	MOVLW	0
+0043   0016  0026  	MOVWF	GPIO
+0044   0017  092E  	CALL	TML
+0045   0018  0A06  	GOTO	SLEEP_
+0046               
+0047   0019  0921  OVERW	CALL	INIP
+0048   001A  0C02  	MOVLW	02h
+0049   001B  0026  	MOVWF	GPIO
+0050   001C  092E  	CALL	TML
+0051   001D  0C00  	MOVLW	0
+16c5x/xx Cross-Assembler V4.14 Released  Sun Mar 14 09:00:06 1999  Page 2
+
+Line   PC    Opcode
+
+0052   001E  0026  	MOVWF	GPIO
+0053   001F  092E  	CALL	TML
+0054   0020  0A06  	GOTO	SLEEP_
+0055               
+0056   0021  0004  INIP	CLRWDT
+0057   0022  0C0F  	MOVLW	0Fh
+0058   0023  0002  	OPTION
+0059   0024  0063  	CLRF	STATUS
+0060   0025  0CF8  	MOVLW	0F8h
+0061   0026  0006  	TRIS	GPIO
+0062   0027  0800  	RETLW	0
+0063               
+0064               ;----------------------TM--------------------------------
+                       --------------------
+0065                      
+0066   0028  0CFF  TM	MOVLW	0FFh
+0067   0029  0028  	MOVWF	TIME
+0068   002A  0004  LL3	CLRWDT
+0069   002B  02E8  	DECFSZ	TIME,1
+0070   002C  0A2A  	GOTO	LL3
+0071   002D  0800  	RETLW 	0
+0072               
+0073   002E  0C20  TML	MOVLW	20h
+0074   002F  0028  	MOVWF	TIME
+0075   0030  0CFF  LL1	MOVLW	0FFh
+0076   0031  0029  	MOVWF	TIME2
+0077   0032  0004  LL2	CLRWDT
+0078   0033  02E9  	DECFSZ	TIME2,1
+0079   0034  0A32  	GOTO	LL2	
+0080               
+0081   0035  02E8  	DECFSZ	TIME,1
+0082   0036  0A30  	GOTO	LL1
+0083   0037  0800  	RETLW	0
+0084               
+0085   0038  0CFE  TML2	MOVLW	0FEh
+0086   0039  0028  	MOVWF	TIME
+0087   003A  0CFF  AL1	MOVLW	0FFh
+0088   003B  0029  	MOVWF	TIME2
+0089   003C  0004  AL2	CLRWDT
+0090   003D  02E9  	DECFSZ	TIME2,1
+0091   003E  0A3C  	GOTO	AL2	
+0092   003F  02E8  	DECFSZ	TIME,1
+0093   0040  0A3A  	GOTO	AL1
+0094   0041  0800  	RETLW	0
+0095               
+16c5x/xx Cross-Assembler V4.14 Released  Sun Mar 14 09:00:06 1999  Page 3
+
+
+
+Cross-Reference Listing
+LABEL        VALUE        DEFN        REFERENCES
+AL1          58           87          87     93     
+AL2          60           89          89     91     
+CIKL1        10           30          30     36     
+D1           7            12          12     
+D24          31           15          15     
+FSR          4            8           8      
+GPIO         6            10          10     26     27     31     34     40     
+                                      43     49     52     61     
+INDF         0            4           4      
+INIP         33           56          24     38     47     56     
+LL1          48           75          75     82     
+LL2          50           77          77     79     
+LL3          42           68          68     70     
+OSCCAL       5            9           9      
+OVERW        25           47          22     47     
+PCL          2            6           6      
+SLEEP_       6            25          25     45     54     
+STATUS       3            7           7      19     21     59     
+TIME         8            13          13     67     69     74     81     86     
+                                      92     
+TIME2        9            14          14     76     78     88     90     
+TM           40           66          66     
+TML          46           73          32     35     44     50     53     73     
+TML2         56           85          41     85     
+TMR0         1            5           5      
+WAKEUP       17           38          20     38     
+

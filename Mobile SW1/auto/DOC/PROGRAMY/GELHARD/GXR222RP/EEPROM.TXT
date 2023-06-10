@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 24C04
+
+Wprowadzanie : <,>
+Wywol./Zatw. : BAND
+
+UWAGI : 

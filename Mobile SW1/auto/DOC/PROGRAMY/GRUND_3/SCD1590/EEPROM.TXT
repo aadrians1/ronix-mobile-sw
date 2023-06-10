@@ -1,0 +1,5 @@
+PROCESSOR : UPD17003AGF-E11
+EEPROM    : 24C01 (SMD)
+
+wprowadzenie kodu  : 1,2,3,4
+zatwierdzenie kodu : >

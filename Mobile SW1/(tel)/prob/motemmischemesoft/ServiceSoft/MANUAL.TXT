@@ -1,0 +1,139 @@
+Using Emaster with RoEmmi
+-------------------------
+
+Emaster version 1.0
+Link Protocol Version 0.9
+
+
+
+0. What you need.
+1. Installing RoEmmi.
+2. Using Emaster.
+3. Connecting phone.
+4. Unlocking phone.
+5. Locking phone.
+6. Disconnecting phone.
+7. Troubles
+
+App
+---
+1.Cables and power Supply
+
+0. What you need.
+-----------------
+You need a RoEmmi box and a version of Emaster to work with it.
+It is recommanded to use a Pentium II 300 Mhz PC with emasterh.exe.
+For a slow computer is recommanded emaster.exe.
+
+1. Installing RoEmmi.
+---------------------
+Connect to the box the power supply. 
+Connect to the box the cable you need for the phone type you want to operate.
+Connect a LPT extension cable to your computer printer connector (LPT).
+Start Emaster.
+WARNING: be shure your LPT port is free and it is assigned to I/O address 0x378.
+It must be configured as an EPP port. 
+
+
+2. Using Emaster.
+-----------------
+From Windows start Emaster. If the programm ask for a password type it.
+If the box is right conected to your PC you must see:
+
+RoEmmi Controler v1.0.
+r - read lock from slave phone
+u - unlock slave phone
+l - lock slave phone
+f - flash slave phone
+i - imei change on slave phone
+q - quit EMaster
+
+Emmi Host connected
+Phone disconected
+Wait connection to emmi host
+Emmi Host connected
+Wait connection to slave phone
+
+At the point you can operate mot phones.
+
+WARNING: At this moment commands i and f are desactivated. Ask for upgrades
+
+
+3. Connecting phone.
+--------------------
+
+With the box installed and the programm started on the PC plug the cable from box to the phone. If the phone 
+does not turn on push the phone power button. The phone must turn on in about 1 sec and you will see on the PC screen:
+
+Phone connected
+MASTER?>
+
+Now you can operate phone.
+WARNING: for the best results is recommanded you connect the phone without a simcard
+and operate with the phone turned on.
+
+
+4. Unlocking phone.
+-------------------
+With the phone connected to box/PC type 'u'.
+You will see:
+
+MASTER?>u
+Send unlock request to phone
+MASTER?>
+
+5. Locking phone.
+-----------------
+With the phone connected to box/PC type 'r' and after that 'l'.
+You will see:
+
+MASTER?>r
+Lock Value stored in RAM
+MASTER?>l
+Send lock request to phone
+MASTER?>
+
+6. Disconnecting phone.
+-----------------------
+Plug off the phone from the cable. You will see:
+
+MASTER?>Wait connection to emmi host
+Emmi Host connected
+Wait connection to slave phone
+
+That means the box is ready for other connection.
+
+7. Troubles
+-----------
+A very few number of phones 'refuse' to be directly unlocked. Thats becouse a new mot security schema.
+At this moment they can be done by relocking first the phone ('r' and 'l') and after that unlocking or
+by ('r' and 'u').
+
+ 
+App
+---
+1.Cables and power Supply
+
+The 8 pins JACK cable has this confihuration:
+
+|AI|AO|GND|TX|RX|DCSE|GND|GND|
+
+Where:
+AI - audio input
+AO - audio output
+TX - Bus UPLINK
+RX - Bus DOWNLINK
+DCSE - DCS Enable
+
+
+The power supply must have 12V - 1A min. The black wire is connected to ground and the red and green wires to 12V.
+
+
+
+
+
+
+
+
+
+

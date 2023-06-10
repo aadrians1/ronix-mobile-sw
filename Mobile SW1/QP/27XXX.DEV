@@ -1,0 +1,235 @@
+Group=Microchip CMOS Parallel EPROM
+
+
+Device=27C16
+Socket=7
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 4.5 5.5
+Vpp= 0.0 12.5 0.0 0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=363A39363B39
+EndDevice 
+Device=27C32
+Socket=7
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 4.5 5.5
+Vpp= -0.0 12.5 -0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=363A39363B39
+EndDevice 
+Device=27C64
+Socket=7
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= -0.0 12.5 -0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=373A39373B39
+EndDevice 
+Device=27C128
+Socket=7
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= -0.0 12.5 -0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=373A39373B39
+EndDevice 
+Device=27C256
+Socket=7
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= -0.0 12.5 -0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=373A39373B39
+EndDevice 
+Device=27C512
+Socket=7 0 0
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= -0.0 12.5 0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 64K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=373A39373B39
+EndDevice 
+Device=27C010
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= -0.0 12.5 -0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.00 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=383A39383B39
+EndDevice 
+Device=27C020
+Socket=8
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= -0.0 12.5 -0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=383A39383B39
+EndDevice 
+Device=27C040
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= -0.0 12.5 -0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=383A39383B39
+EndDevice 
+
+Device=27C080
+Socket=8 32 0
+AddrDivider=1
+CmdMask=0x0F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= -0.0 12.5 -0.0 -0.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1M 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=1.0 10 1 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=383A39383B39
+EndDevice 
+[Device]=27HC1616
+Socket=9 40 0
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5.0 6.5 4.5 5.5
+Vpp= 5.0 13.5 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16K 8
+BlankData=0xFFFF
+EditRect= 0  0 67 23
+BlockLen=1
+ProgTimes=0.2 10 1 0
+Iden=0x0
+DataWidth=16
+DisplayASCII=1
+Algo=A4A539A4A639
+EndDevice 

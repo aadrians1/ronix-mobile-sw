@@ -1,0 +1,1215 @@
+Group=Scenix high-performance 8-bit microcontroller
+
+
+[Device]=SX18AC
+Socket=2 18 0
+AddrDivider=2
+CmdMask=0x3F
+Vcc= 5.0 5.0 3.3 6.2
+Vpp= 12.5 12.5 12.0 12.5
+
+[Part]=PROGMEM
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 8
+BlankData=0xFFF
+EditRect= 0  0 40 23
+BlockLen=1
+ProgTimes=10.0 10 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=3C201F3F211F3E09
+
+[Part]=IDEN
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4096 16 4
+BlankData=0xFFF
+EditRect=40 17 80 23
+BlockLen=1
+ProgTimes=10.0 10 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=3C201F3F211F3E09
+
+[Part]=FUSE
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=4112 1 8
+BlankData=0xFFF
+EditRect=40  0 60 17
+BlockLen=1
+ProgTimes=200.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=3C201F3F211F3E09
+BitMapGroup = 000010000011 extOSC
+BitMapItem  = xxxx1xxxxx11 RC
+BitMapItem  = xxxx1xxxxx10 XT
+BitMapItem  = xxxx1xxxxx01 HS
+BitMapItem  = xxxx1xxxxx00 LP
+BitMapItem  = xxxx0xxxxx11 Off
+BitMapItem  = xxxx0xxxxx10 Off
+BitMapItem  = xxxx0xxxxx01 Off
+BitMapItem  = xxxx0xxxxx00 Off
+
+BitMapGroup = 000011110000 intOSC
+BitMapItem  = xxxx0111xxxx 31 kHz
+BitMapItem  = xxxx0110xxxx 62 kHz
+BitMapItem  = xxxx0101xxxx 125 kHz
+BitMapItem  = xxxx0100xxxx 250 kHz
+BitMapItem  = xxxx0011xxxx 500 kHz
+BitMapItem  = xxxx0010xxxx 1 MHz
+BitMapItem  = xxxx0001xxxx 2 MHz
+BitMapItem  = xxxx0000xxxx 4 MHz
+BitMapItem  = xxxx1111xxxx Off
+BitMapItem  = xxxx1110xxxx Off
+BitMapItem  = xxxx1101xxxx Off
+BitMapItem  = xxxx1100xxxx Off
+BitMapItem  = xxxx1011xxxx Off
+BitMapItem  = xxxx1010xxxx Off
+BitMapItem  = xxxx1001xxxx Off
+BitMapItem  = xxxx1000xxxx Off
+
+BitMapGroup = 000000000100 WDT
+BitMapItem  = xxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxx0xx Off
+
+BitMapGroup = 000000001000 CP
+BitMapItem  = xxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxx0xxx On *
+
+BitMapGroup = 000100000000 StackX
+BitMapItem  = xxx1xxxxxxxx 2
+BitMapItem  = xxx0xxxxxxxx 8
+
+BitMapGroup = 001000000000 OptX
+BitMapItem  = xx1xxxxxxxxx Disable
+BitMapItem  = xx0xxxxxxxxx Enable
+
+BitMapGroup = 010000000000 SYNC
+BitMapItem  = x1xxxxxxxxxx Disable
+BitMapItem  = x0xxxxxxxxxx Enable
+
+BitMapGroup = 100000000000 TURBO
+BitMapItem  = 1xxxxxxxxxxx Disable
+BitMapItem  = 0xxxxxxxxxxx Enable
+
+
+[Part]=DEVWORD
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=4114 1 1
+BlankData=0xFEE
+EditRect=60 11 80 17
+BlockLen=1
+ProgTimes=0.0 0 0 0
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=3C201F00001F0009
+BitMapGroup = 111111111111 DEV
+BitMapItem  = 111111101110 Vers2
+BitMapItem  = 111111011110 Vers4
+
+
+[Part]=FUSEX
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4113 1 1
+BlankData=0xFFF
+EditRect=60  0 80 11
+BlockLen=1
+ProgTimes=200.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=3C201F3F211F3E09
+BitMapGroup = 000000000011 ROM
+BitMapItem  = xxxxxxxxxx11 4096
+BitMapItem  = xxxxxxxxxx10 2048
+BitMapItem  = xxxxxxxxxx01 1024
+BitMapItem  = xxxxxxxxxx00 512
+
+BitMapGroup = 000000001100 RAM
+BitMapItem  = xxxxxxxx11xx 128
+BitMapItem  = xxxxxxxx10xx 64
+BitMapItem  = xxxxxxxx01xx 32
+BitMapItem  = xxxxxxxx00xx 16
+
+BitMapGroup = 000000110000 BOR
+BitMapItem  = xxxxxx11xxxx Disable
+BitMapItem  = xxxxxx00xxxx 4.2 V
+BitMapItem  = xxxxxx01xxxx 3.6 V
+BitMapItem  = xxxxxx10xxxx 3.0 V
+
+BitMapGroup = 000001000000 Carry
+BitMapItem  = xxxxx1xxxxxx Normal
+BitMapItem  = xxxxx0xxxxxx +ADD-SUB
+
+BitMapGroup = 000010000000 Sleep
+BitMapItem  = xxxx1xxxxxxx Normal
+BitMapItem  = xxxx0xxxxxxx Not_Stop
+
+BitMapGroup = 101100000000 RCTRIM
+BitMapItem  = 0x00xxxxxxxx 4.71 MHz
+BitMapItem  = 0x01xxxxxxxx 4.55 MHz 
+BitMapItem  = 0x10xxxxxxxx 4.37 MHz 
+BitMapItem  = 0x11xxxxxxxx 4.24 MHz 
+BitMapItem  = 1x00xxxxxxxx 4.06 MHz 
+BitMapItem  = 1x01xxxxxxxx 3.95 MHz 
+BitMapItem  = 1x10xxxxxxxx 3.82 MHz 
+BitMapItem  = 1x11xxxxxxxx 3.72 MHz 
+
+BitMapGroup = 010000000000 Pack
+BitMapItem  = x0xxxxxxxxxx 18-pin
+BitMapItem  = x1xxxxxxxxxx 28-pin
+
+EndDevice 
+[Device]=SX28AC
+Socket=3 28 0
+AddrDivider=2
+CmdMask=0x3F
+Vcc= 5.0 5.0 3.3 6.2
+Vpp= 12.5 12.5 12.0 12.5
+
+[Part]=PROGMEM
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 8
+BlankData=0xFFF
+EditRect= 0  0 40 23
+BlockLen=1
+ProgTimes=10.0 10 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=3C201F3D211F3E09
+
+[Part]=IDEN
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4096 16 4
+BlankData=0xFFF
+EditRect=40 17 80 23
+BlockLen=1
+ProgTimes=10.0 10 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=3C201F3D211F3E09
+
+[Part]=FUSE
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=4112 1 8
+BlankData=0xFFF
+EditRect=40  0 60 17
+BlockLen=1
+ProgTimes=200.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=3C201F3D211F3E09
+BitMapGroup = 000010000011 extOSC
+BitMapItem  = xxxx1xxxxx11 RC
+BitMapItem  = xxxx1xxxxx10 XT
+BitMapItem  = xxxx1xxxxx01 HS
+BitMapItem  = xxxx1xxxxx00 LP
+BitMapItem  = xxxx0xxxxx11 Off
+BitMapItem  = xxxx0xxxxx10 Off
+BitMapItem  = xxxx0xxxxx01 Off
+BitMapItem  = xxxx0xxxxx00 Off
+
+BitMapGroup = 000011110000 intOSC
+BitMapItem  = xxxx0111xxxx 31 kHz
+BitMapItem  = xxxx0110xxxx 62 kHz
+BitMapItem  = xxxx0101xxxx 125 kHz
+BitMapItem  = xxxx0100xxxx 250 kHz
+BitMapItem  = xxxx0011xxxx 500 kHz
+BitMapItem  = xxxx0010xxxx 1 MHz
+BitMapItem  = xxxx0001xxxx 2 MHz
+BitMapItem  = xxxx0000xxxx 4 MHz
+BitMapItem  = xxxx1111xxxx Off
+BitMapItem  = xxxx1110xxxx Off
+BitMapItem  = xxxx1101xxxx Off
+BitMapItem  = xxxx1100xxxx Off
+BitMapItem  = xxxx1011xxxx Off
+BitMapItem  = xxxx1010xxxx Off
+BitMapItem  = xxxx1001xxxx Off
+BitMapItem  = xxxx1000xxxx Off
+
+BitMapGroup = 000000000100 WDT
+BitMapItem  = xxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxx0xx Off
+
+BitMapGroup = 000000001000 CP
+BitMapItem  = xxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxx0xxx On *
+
+BitMapGroup = 000100000000 StackX
+BitMapItem  = xxx1xxxxxxxx 2
+BitMapItem  = xxx0xxxxxxxx 8
+
+BitMapGroup = 001000000000 OptX
+BitMapItem  = xx1xxxxxxxxx Disable
+BitMapItem  = xx0xxxxxxxxx Enable
+
+BitMapGroup = 010000000000 SYNC
+BitMapItem  = x1xxxxxxxxxx Disable
+BitMapItem  = x0xxxxxxxxxx Enable
+
+BitMapGroup = 100000000000 TURBO
+BitMapItem  = 1xxxxxxxxxxx Disable
+BitMapItem  = 0xxxxxxxxxxx Enable
+
+
+[Part]=DEVWORD
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=4114 1 1
+BlankData=0xFEE
+EditRect=60 11 80 17
+BlockLen=1
+ProgTimes=0.0 0 0 0
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=3C201F00001F0009
+BitMapGroup = 111111111111 DEV
+BitMapItem  = 111111101110 Vers2
+BitMapItem  = 111111011110 Vers4
+
+
+[Part]=FUSEX
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4113 1 1
+BlankData=0xFFF
+EditRect=60  0 80 11
+BlockLen=1
+ProgTimes=200.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=3C201F3D211F3E09
+BitMapGroup = 000000000011 ROM
+BitMapItem  = xxxxxxxxxx11 4096
+BitMapItem  = xxxxxxxxxx10 2048
+BitMapItem  = xxxxxxxxxx01 1024
+BitMapItem  = xxxxxxxxxx00 512
+
+BitMapGroup = 000000001100 RAM
+BitMapItem  = xxxxxxxx11xx 128
+BitMapItem  = xxxxxxxx10xx 64
+BitMapItem  = xxxxxxxx01xx 32
+BitMapItem  = xxxxxxxx00xx 16
+
+BitMapGroup = 000000110000 BOR
+BitMapItem  = xxxxxx11xxxx Disable
+BitMapItem  = xxxxxx00xxxx 4.2 V
+BitMapItem  = xxxxxx01xxxx 3.6 V
+BitMapItem  = xxxxxx10xxxx 3.0 V
+
+BitMapGroup = 000001000000 Carry
+BitMapItem  = xxxxx1xxxxxx Normal
+BitMapItem  = xxxxx0xxxxxx +ADD-SUB
+
+BitMapGroup = 000010000000 Sleep
+BitMapItem  = xxxx1xxxxxxx Normal
+BitMapItem  = xxxx0xxxxxxx Not_Stop
+
+BitMapGroup = 101100000000 RCTRIM
+BitMapItem  = 0x00xxxxxxxx 4.71 MHz
+BitMapItem  = 0x01xxxxxxxx 4.55 MHz 
+BitMapItem  = 0x10xxxxxxxx 4.37 MHz 
+BitMapItem  = 0x11xxxxxxxx 4.24 MHz 
+BitMapItem  = 1x00xxxxxxxx 4.06 MHz 
+BitMapItem  = 1x01xxxxxxxx 3.95 MHz 
+BitMapItem  = 1x10xxxxxxxx 3.82 MHz 
+BitMapItem  = 1x11xxxxxxxx 3.72 MHz 
+
+BitMapGroup = 010000000000 Pack
+BitMapItem  = x0xxxxxxxxxx 18-pin
+BitMapItem  = x1xxxxxxxxxx 28-pin
+
+EndDevice 
+
+[Device]=SX18AC-ISP;================ << SX18AC-ISP >> =================
+Socket=13 5 0
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5.0 5.0 3.3 6.2
+Vpp= 12.5 12.5 12.0 12.5
+;-----------------
+[Part]=PROGMEM
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 8
+BlankData=0xFFF
+EditRect= 0  0 40 23
+BlockLen=1
+ProgTimes=20.00 5 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=A7A883A7A983AA08
+;-----------------
+[Part]=IDEN
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4096 16 4
+BlankData=0xFFF
+EditRect=40 17 80 23
+BlockLen=1
+ProgTimes=20.00 5 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=A7A883A7A983AA08
+;-----------------
+[Part]=FUSE
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=4112 1 8
+BlankData=0xFFF
+EditRect=40  0 60 17
+BlockLen=1
+ProgTimes=400.00 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A883A7A983AA08
+BitMapGroup = 000010000011 extOSC
+BitMapItem  = xxxx1xxxxx11 RC
+BitMapItem  = xxxx1xxxxx10 XT
+BitMapItem  = xxxx1xxxxx01 HS
+BitMapItem  = xxxx1xxxxx00 LP
+BitMapItem  = xxxx0xxxxx11 Off
+BitMapItem  = xxxx0xxxxx10 Off
+BitMapItem  = xxxx0xxxxx01 Off
+BitMapItem  = xxxx0xxxxx00 Off
+
+BitMapGroup = 000011110000 intOSC
+BitMapItem  = xxxx0111xxxx 31 kHz
+BitMapItem  = xxxx0110xxxx 62 kHz
+BitMapItem  = xxxx0101xxxx 125 kHz
+BitMapItem  = xxxx0100xxxx 250 kHz
+BitMapItem  = xxxx0011xxxx 500 kHz
+BitMapItem  = xxxx0010xxxx 1 MHz
+BitMapItem  = xxxx0001xxxx 2 MHz
+BitMapItem  = xxxx0000xxxx 4 MHz
+BitMapItem  = xxxx1111xxxx Off
+BitMapItem  = xxxx1110xxxx Off
+BitMapItem  = xxxx1101xxxx Off
+BitMapItem  = xxxx1100xxxx Off
+BitMapItem  = xxxx1011xxxx Off
+BitMapItem  = xxxx1010xxxx Off
+BitMapItem  = xxxx1001xxxx Off
+BitMapItem  = xxxx1000xxxx Off
+
+BitMapGroup = 000000000100 WDT
+BitMapItem  = xxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxx0xx Off
+
+BitMapGroup = 000000001000 CP
+BitMapItem  = xxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxx0xxx On *
+
+BitMapGroup = 000100000000 StackX
+BitMapItem  = xxx1xxxxxxxx 2
+BitMapItem  = xxx0xxxxxxxx 8
+
+BitMapGroup = 001000000000 OptX
+BitMapItem  = xx1xxxxxxxxx Disable
+BitMapItem  = xx0xxxxxxxxx Enable
+
+BitMapGroup = 010000000000 SYNC
+BitMapItem  = x1xxxxxxxxxx Disable
+BitMapItem  = x0xxxxxxxxxx Enable
+
+BitMapGroup = 100000000000 TURBO
+BitMapItem  = 1xxxxxxxxxxx Disable
+BitMapItem  = 0xxxxxxxxxxx Enable
+
+;-----------------
+[Part]=DEVWORD
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=4114 1 1
+BlankData=0xFEE
+EditRect=60 11 80 17
+BlockLen=1
+ProgTimes=0.00 0 0 0
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A8830000830008
+BitMapGroup = 111111111111 DEV
+BitMapItem  = 111111101110 Vers2
+BitMapItem  = 111111011110 Vers4
+
+;-----------------
+[Part]=FUSEX
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4113 1 1
+BlankData=0xFFF
+EditRect=60  0 80 11
+BlockLen=1
+ProgTimes=400.00 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A883A7A983AA08
+BitMapGroup = 000000000011 ROM
+BitMapItem  = xxxxxxxxxx11 4096
+BitMapItem  = xxxxxxxxxx10 2048
+BitMapItem  = xxxxxxxxxx01 1024
+BitMapItem  = xxxxxxxxxx00 512
+
+BitMapGroup = 000000001100 RAM
+BitMapItem  = xxxxxxxx11xx 128
+BitMapItem  = xxxxxxxx10xx 64
+BitMapItem  = xxxxxxxx01xx 32
+BitMapItem  = xxxxxxxx00xx 16
+
+BitMapGroup = 000000110000 BOR
+BitMapItem  = xxxxxx11xxxx Disable
+BitMapItem  = xxxxxx00xxxx 4.2 V
+BitMapItem  = xxxxxx01xxxx 3.6 V
+BitMapItem  = xxxxxx10xxxx 3.0 V
+
+BitMapGroup = 000001000000 Carry
+BitMapItem  = xxxxx1xxxxxx Normal
+BitMapItem  = xxxxx0xxxxxx +ADD-SUB
+
+BitMapGroup = 000010000000 Sleep
+BitMapItem  = xxxx1xxxxxxx Normal
+BitMapItem  = xxxx0xxxxxxx Not_Stop
+
+BitMapGroup = 101100000000 RCTRIM
+BitMapItem  = 0x00xxxxxxxx 4.71 MHz
+BitMapItem  = 0x01xxxxxxxx 4.55 MHz 
+BitMapItem  = 0x10xxxxxxxx 4.37 MHz 
+BitMapItem  = 0x11xxxxxxxx 4.24 MHz 
+BitMapItem  = 1x00xxxxxxxx 4.06 MHz 
+BitMapItem  = 1x01xxxxxxxx 3.95 MHz 
+BitMapItem  = 1x10xxxxxxxx 3.82 MHz 
+BitMapItem  = 1x11xxxxxxxx 3.72 MHz 
+
+BitMapGroup = 010000000000 Pack
+BitMapItem  = x0xxxxxxxxxx 18-pin
+BitMapItem  = x1xxxxxxxxxx 28-pin
+
+EndDevice ;================ << SX18AC-ISP >> ================
+[Device]=SX20AC-ISP
+Socket=13 5 0
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5.0 5.0 3.3 6.2
+Vpp= 12.5 12.5 12.0 12.5
+
+[Part]=PROGMEM
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 8
+BlankData=0xFFF
+EditRect= 0  0 40 23
+BlockLen=1
+ProgTimes=20.0 5 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=A7A883A7A983AA08
+
+[Part]=IDEN
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4096 16 4
+BlankData=0xFFF
+EditRect=40 17 80 23
+BlockLen=1
+ProgTimes=20.0 5 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=A7A883A7A983AA08
+
+[Part]=FUSE
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=4112 1 8
+BlankData=0xFFF
+EditRect=40  0 60 17
+BlockLen=1
+ProgTimes=400.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A883A7A983AA08
+BitMapGroup = 000010000011 extOSC
+BitMapItem  = xxxx1xxxxx11 RC
+BitMapItem  = xxxx1xxxxx10 XT
+BitMapItem  = xxxx1xxxxx01 HS
+BitMapItem  = xxxx1xxxxx00 LP
+BitMapItem  = xxxx0xxxxx11 Off
+BitMapItem  = xxxx0xxxxx10 Off
+BitMapItem  = xxxx0xxxxx01 Off
+BitMapItem  = xxxx0xxxxx00 Off
+
+BitMapGroup = 000011110000 intOSC
+BitMapItem  = xxxx0111xxxx 31 kHz
+BitMapItem  = xxxx0110xxxx 62 kHz
+BitMapItem  = xxxx0101xxxx 125 kHz
+BitMapItem  = xxxx0100xxxx 250 kHz
+BitMapItem  = xxxx0011xxxx 500 kHz
+BitMapItem  = xxxx0010xxxx 1 MHz
+BitMapItem  = xxxx0001xxxx 2 MHz
+BitMapItem  = xxxx0000xxxx 4 MHz
+BitMapItem  = xxxx1111xxxx Off
+BitMapItem  = xxxx1110xxxx Off
+BitMapItem  = xxxx1101xxxx Off
+BitMapItem  = xxxx1100xxxx Off
+BitMapItem  = xxxx1011xxxx Off
+BitMapItem  = xxxx1010xxxx Off
+BitMapItem  = xxxx1001xxxx Off
+BitMapItem  = xxxx1000xxxx Off
+
+BitMapGroup = 000000000100 WDT
+BitMapItem  = xxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxx0xx Off
+
+BitMapGroup = 000000001000 CP
+BitMapItem  = xxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxx0xxx On *
+
+BitMapGroup = 000100000000 StackX
+BitMapItem  = xxx1xxxxxxxx 2
+BitMapItem  = xxx0xxxxxxxx 8
+
+BitMapGroup = 001000000000 OptX
+BitMapItem  = xx1xxxxxxxxx Disable
+BitMapItem  = xx0xxxxxxxxx Enable
+
+BitMapGroup = 010000000000 SYNC
+BitMapItem  = x1xxxxxxxxxx Disable
+BitMapItem  = x0xxxxxxxxxx Enable
+
+BitMapGroup = 100000000000 TURBO
+BitMapItem  = 1xxxxxxxxxxx Disable
+BitMapItem  = 0xxxxxxxxxxx Enable
+
+
+[Part]=DEVWORD
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=4114 1 1
+BlankData=0xFEE
+EditRect=60 11 80 17
+BlockLen=1
+ProgTimes=0.0 0 0 0
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A8830000830008
+BitMapGroup = 111111111111 DEV
+BitMapItem  = 111111101110 Vers2
+BitMapItem  = 111111011110 Vers4
+
+[Part]=FUSEX
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4113 1 1
+BlankData=0xFFF
+EditRect=60  0 80 11
+BlockLen=1
+ProgTimes=400.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A883A7A983AA08
+BitMapGroup = 000000000011 ROM
+BitMapItem  = xxxxxxxxxx11 4096
+BitMapItem  = xxxxxxxxxx10 2048
+BitMapItem  = xxxxxxxxxx01 1024
+BitMapItem  = xxxxxxxxxx00 512
+
+BitMapGroup = 000000001100 RAM
+BitMapItem  = xxxxxxxx11xx 128
+BitMapItem  = xxxxxxxx10xx 64
+BitMapItem  = xxxxxxxx01xx 32
+BitMapItem  = xxxxxxxx00xx 16
+
+BitMapGroup = 000000110000 BOR
+BitMapItem  = xxxxxx11xxxx Disable
+BitMapItem  = xxxxxx00xxxx 4.2 V
+BitMapItem  = xxxxxx01xxxx 3.6 V
+BitMapItem  = xxxxxx10xxxx 3.0 V
+
+BitMapGroup = 000001000000 Carry
+BitMapItem  = xxxxx1xxxxxx Normal
+BitMapItem  = xxxxx0xxxxxx +ADD-SUB
+
+BitMapGroup = 000010000000 Sleep
+BitMapItem  = xxxx1xxxxxxx Normal
+BitMapItem  = xxxx0xxxxxxx Not_Stop
+
+BitMapGroup = 101100000000 RCTRIM
+BitMapItem  = 0x00xxxxxxxx 4.71 MHz
+BitMapItem  = 0x01xxxxxxxx 4.55 MHz 
+BitMapItem  = 0x10xxxxxxxx 4.37 MHz 
+BitMapItem  = 0x11xxxxxxxx 4.24 MHz 
+BitMapItem  = 1x00xxxxxxxx 4.06 MHz 
+BitMapItem  = 1x01xxxxxxxx 3.95 MHz 
+BitMapItem  = 1x10xxxxxxxx 3.82 MHz 
+BitMapItem  = 1x11xxxxxxxx 3.72 MHz 
+
+BitMapGroup = 010000000000 Pack
+BitMapItem  = x0xxxxxxxxxx 18-pin
+BitMapItem  = x1xxxxxxxxxx 28-pin
+
+EndDevice 
+[Device]=SX28AC-ISP
+Socket=13 5 0
+AddrDivider=2
+CmdMask=0x3F
+Vcc= 5.0 5.0 3.3 6.2
+Vpp= 12.5 12.5 12.0 12.5
+
+[Part]=PROGMEM
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 8
+BlankData=0xFFF
+EditRect= 0  0 40 23
+BlockLen=1
+ProgTimes=10.0 10 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=A7A883A7A983AA08
+
+[Part]=IDEN
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4096 16 4
+BlankData=0xFFF
+EditRect=40 17 80 23
+BlockLen=1
+ProgTimes=10.0 10 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=A7A883A7A983AA08
+
+[Part]=FUSE
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=4112 1 8
+BlankData=0xFFF
+EditRect=40  0 60 17
+BlockLen=1
+ProgTimes=200.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A883A7A983AA08
+BitMapGroup = 000010000011 extOSC
+BitMapItem  = xxxx1xxxxx11 RC
+BitMapItem  = xxxx1xxxxx10 XT
+BitMapItem  = xxxx1xxxxx01 HS
+BitMapItem  = xxxx1xxxxx00 LP
+BitMapItem  = xxxx0xxxxx11 Off
+BitMapItem  = xxxx0xxxxx10 Off
+BitMapItem  = xxxx0xxxxx01 Off
+BitMapItem  = xxxx0xxxxx00 Off
+
+BitMapGroup = 000011110000 intOSC
+BitMapItem  = xxxx0111xxxx 31 kHz
+BitMapItem  = xxxx0110xxxx 62 kHz
+BitMapItem  = xxxx0101xxxx 125 kHz
+BitMapItem  = xxxx0100xxxx 250 kHz
+BitMapItem  = xxxx0011xxxx 500 kHz
+BitMapItem  = xxxx0010xxxx 1 MHz
+BitMapItem  = xxxx0001xxxx 2 MHz
+BitMapItem  = xxxx0000xxxx 4 MHz
+BitMapItem  = xxxx1111xxxx Off
+BitMapItem  = xxxx1110xxxx Off
+BitMapItem  = xxxx1101xxxx Off
+BitMapItem  = xxxx1100xxxx Off
+BitMapItem  = xxxx1011xxxx Off
+BitMapItem  = xxxx1010xxxx Off
+BitMapItem  = xxxx1001xxxx Off
+BitMapItem  = xxxx1000xxxx Off
+
+BitMapGroup = 000000000100 WDT
+BitMapItem  = xxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxx0xx Off
+
+BitMapGroup = 000000001000 CP
+BitMapItem  = xxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxx0xxx On *
+
+BitMapGroup = 000100000000 StackX
+BitMapItem  = xxx1xxxxxxxx 2
+BitMapItem  = xxx0xxxxxxxx 8
+
+BitMapGroup = 001000000000 OptX
+BitMapItem  = xx1xxxxxxxxx Disable
+BitMapItem  = xx0xxxxxxxxx Enable
+
+BitMapGroup = 010000000000 SYNC
+BitMapItem  = x1xxxxxxxxxx Disable
+BitMapItem  = x0xxxxxxxxxx Enable
+
+BitMapGroup = 100000000000 TURBO
+BitMapItem  = 1xxxxxxxxxxx Disable
+BitMapItem  = 0xxxxxxxxxxx Enable
+
+
+[Part]=DEVWORD
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=4114 1 1
+BlankData=0xFEE
+EditRect=60 11 80 17
+BlockLen=1
+ProgTimes=0.0 0 0 0
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A8830000830008
+BitMapGroup = 111111111111 DEV
+BitMapItem  = 111111101110 Vers2
+BitMapItem  = 111111011110 Vers4
+
+
+[Part]=FUSEX
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4113 1 1
+BlankData=0xFFF
+EditRect=60  0 80 11
+BlockLen=1
+ProgTimes=200.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=A7A883A7A983AA08
+BitMapGroup = 000000000011 ROM
+BitMapItem  = xxxxxxxxxx11 4096
+BitMapItem  = xxxxxxxxxx10 2048
+BitMapItem  = xxxxxxxxxx01 1024
+BitMapItem  = xxxxxxxxxx00 512
+
+BitMapGroup = 000000001100 RAM
+BitMapItem  = xxxxxxxx11xx 128
+BitMapItem  = xxxxxxxx10xx 64
+BitMapItem  = xxxxxxxx01xx 32
+BitMapItem  = xxxxxxxx00xx 16
+
+BitMapGroup = 000000110000 BOR
+BitMapItem  = xxxxxx11xxxx Disable
+BitMapItem  = xxxxxx00xxxx 4.2 V
+BitMapItem  = xxxxxx01xxxx 3.6 V
+BitMapItem  = xxxxxx10xxxx 3.0 V
+
+BitMapGroup = 000001000000 Carry
+BitMapItem  = xxxxx1xxxxxx Normal
+BitMapItem  = xxxxx0xxxxxx +ADD-SUB
+
+BitMapGroup = 000010000000 Sleep
+BitMapItem  = xxxx1xxxxxxx Normal
+BitMapItem  = xxxx0xxxxxxx Not_Stop
+
+BitMapGroup = 101100000000 RCTRIM
+BitMapItem  = 0x00xxxxxxxx 4.71 MHz
+BitMapItem  = 0x01xxxxxxxx 4.55 MHz 
+BitMapItem  = 0x10xxxxxxxx 4.37 MHz 
+BitMapItem  = 0x11xxxxxxxx 4.24 MHz 
+BitMapItem  = 1x00xxxxxxxx 4.06 MHz 
+BitMapItem  = 1x01xxxxxxxx 3.95 MHz 
+BitMapItem  = 1x10xxxxxxxx 3.82 MHz 
+BitMapItem  = 1x11xxxxxxxx 3.72 MHz 
+
+BitMapGroup = 010000000000 Pack
+BitMapItem  = x0xxxxxxxxxx 18-pin
+BitMapItem  = x1xxxxxxxxxx 28-pin
+
+EndDevice 
+[Device]=SX48BD-ISP
+Socket=13 5 0
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5.0 5.0 3.3 6.2
+Vpp= 12.5 12.5 12.0 12.5
+
+[Part]=PROGMEM
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4K 8
+BlankData=0xFFF
+EditRect= 0  0 40 23
+BlockLen=1
+ProgTimes=20.0 5 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=ABA883ABA983AA08
+
+[Part]=IDEN
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4096 16 4
+BlankData=0xFFF
+EditRect=40 17 80 23
+BlockLen=1
+ProgTimes=20.0 5 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=ABA883ABA983AA08
+
+[Part]=FUSE
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=4112 1 8
+BlankData=0xFFF
+EditRect=40  0 60 17
+BlockLen=1
+ProgTimes=400.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=ABA883ABA983AA08
+BitMapGroup = 000010000011 extOSC
+BitMapItem  = xxxx1xxxxx11 RC
+BitMapItem  = xxxx1xxxxx10 XT
+BitMapItem  = xxxx1xxxxx01 HS
+BitMapItem  = xxxx1xxxxx00 LP
+BitMapItem  = xxxx0xxxxx11 Off
+BitMapItem  = xxxx0xxxxx10 Off
+BitMapItem  = xxxx0xxxxx01 Off
+BitMapItem  = xxxx0xxxxx00 Off
+
+BitMapGroup = 000011110000 intOSC
+BitMapItem  = xxxx0111xxxx 31 kHz
+BitMapItem  = xxxx0110xxxx 62 kHz
+BitMapItem  = xxxx0101xxxx 125 kHz
+BitMapItem  = xxxx0100xxxx 250 kHz
+BitMapItem  = xxxx0011xxxx 500 kHz
+BitMapItem  = xxxx0010xxxx 1 MHz
+BitMapItem  = xxxx0001xxxx 2 MHz
+BitMapItem  = xxxx0000xxxx 4 MHz
+BitMapItem  = xxxx1111xxxx Off
+BitMapItem  = xxxx1110xxxx Off
+BitMapItem  = xxxx1101xxxx Off
+BitMapItem  = xxxx1100xxxx Off
+BitMapItem  = xxxx1011xxxx Off
+BitMapItem  = xxxx1010xxxx Off
+BitMapItem  = xxxx1001xxxx Off
+BitMapItem  = xxxx1000xxxx Off
+
+BitMapGroup = 000000000100 WDT
+BitMapItem  = xxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxx0xx Off
+
+BitMapGroup = 000000001000 CP
+BitMapItem  = xxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxx0xxx On *
+
+BitMapGroup = 000100000000 StackX
+BitMapItem  = xxx1xxxxxxxx 2
+BitMapItem  = xxx0xxxxxxxx 8
+
+BitMapGroup = 001000000000 OptX
+BitMapItem  = xx1xxxxxxxxx Disable
+BitMapItem  = xx0xxxxxxxxx Enable
+
+BitMapGroup = 010000000000 SYNC
+BitMapItem  = x1xxxxxxxxxx Disable
+BitMapItem  = x0xxxxxxxxxx Enable
+
+BitMapGroup = 100000000000 TURBO
+BitMapItem  = 1xxxxxxxxxxx Disable
+BitMapItem  = 0xxxxxxxxxxx Enable
+
+
+[Part]=DEVWORD
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=4114 1 1
+BlankData=0x1
+EditRect=60 11 80 17
+BlockLen=1
+ProgTimes=0.0 0 0 0
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=ABA8830000830008
+BitMapGroup = 111111111111 DEV
+BitMapItem  = 000000000001 SX48/52
+
+
+[Part]=FUSEX
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4113 1 1
+BlankData=0xFFF
+EditRect=60  0 80 11
+BlockLen=1
+ProgTimes=400.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=ABA883ABA983AA08
+BitMapGroup = 000000000011 BOR
+BitMapItem  = xxxxxxxxxx11 OFF
+BitMapItem  = xxxxxxxxxx10 reserved
+BitMapItem  = xxxxxxxxxx01 reserved
+BitMapItem  = xxxxxxxxxx00 ON
+
+BitMapGroup = 000001110000 RCTRIM
+BitMapItem  = xxxxx000xxxx -9 %%
+BitMapItem  = xxxxx001xxxx -6 %%
+BitMapItem  = xxxxx010xxxx -3 %%
+BitMapItem  = xxxxx011xxxx +- 0 %%
+BitMapItem  = xxxxx100xxxx +3 %%
+BitMapItem  = xxxxx101xxxx +6 %%
+BitMapItem  = xxxxx110xxxx +9 %%
+BitMapItem  = xxxxx111xxxx +12 %%
+
+BitMapGroup = 000010000000 Carry
+BitMapItem  = xxxx1xxxxxxx Normal
+BitMapItem  = xxxx0xxxxxxx +ADD-SUB
+
+BitMapGroup = 011100000000 WDRT
+BitMapItem  = x111xxxxxxxx 18.4 ms
+BitMapItem  = x110xxxxxxxx 7.68 ms
+BitMapItem  = x101xxxxxxxx 0.06 ms
+BitMapItem  = x100xxxxxxxx 0
+BitMapItem  = x011xxxxxxxx 1920 ms
+BitMapItem  = x010xxxxxxxx 960 ms
+BitMapItem  = x001xxxxxxxx 480 ms
+BitMapItem  = x000xxxxxxxx 60 ms
+
+BitMapGroup = 100000000000 SLEEP
+BitMapItem  = 1xxxxxxxxxxx Normal
+BitMapItem  = 0xxxxxxxxxxx Not_Stop
+
+EndDevice 
+[Device]=SX52BD-ISP
+Socket=13 5 0
+AddrDivider=2
+CmdMask=0x1F
+Vcc= 5.0 5.0 3.3 6.2
+Vpp= 12.5 12.5 12.0 12.5
+
+[Part]=PROGMEM
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4K 8
+BlankData=0xFFF
+EditRect= 0  0 40 23
+BlockLen=1
+ProgTimes=20.0 5 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=ABA883ABA983AA08
+
+[Part]=IDEN
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4096 16 4
+BlankData=0xFFF
+EditRect=40 17 80 23
+BlockLen=1
+ProgTimes=20.0 5 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=1
+Algo=ABA883ABA983AA08
+
+[Part]=FUSE
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=4112 1 8
+BlankData=0xFFF
+EditRect=40  0 60 17
+BlockLen=1
+ProgTimes=400.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=ABA883ABA983AA08
+BitMapGroup = 000010000011 extOSC
+BitMapItem  = xxxx1xxxxx11 RC
+BitMapItem  = xxxx1xxxxx10 XT
+BitMapItem  = xxxx1xxxxx01 HS
+BitMapItem  = xxxx1xxxxx00 LP
+BitMapItem  = xxxx0xxxxx11 Off
+BitMapItem  = xxxx0xxxxx10 Off
+BitMapItem  = xxxx0xxxxx01 Off
+BitMapItem  = xxxx0xxxxx00 Off
+
+BitMapGroup = 000011110000 intOSC
+BitMapItem  = xxxx0111xxxx 31 kHz
+BitMapItem  = xxxx0110xxxx 62 kHz
+BitMapItem  = xxxx0101xxxx 125 kHz
+BitMapItem  = xxxx0100xxxx 250 kHz
+BitMapItem  = xxxx0011xxxx 500 kHz
+BitMapItem  = xxxx0010xxxx 1 MHz
+BitMapItem  = xxxx0001xxxx 2 MHz
+BitMapItem  = xxxx0000xxxx 4 MHz
+BitMapItem  = xxxx1111xxxx Off
+BitMapItem  = xxxx1110xxxx Off
+BitMapItem  = xxxx1101xxxx Off
+BitMapItem  = xxxx1100xxxx Off
+BitMapItem  = xxxx1011xxxx Off
+BitMapItem  = xxxx1010xxxx Off
+BitMapItem  = xxxx1001xxxx Off
+BitMapItem  = xxxx1000xxxx Off
+
+BitMapGroup = 000000000100 WDT
+BitMapItem  = xxxxxxxxx1xx On
+BitMapItem  = xxxxxxxxx0xx Off
+
+BitMapGroup = 000000001000 CP
+BitMapItem  = xxxxxxxx1xxx Off
+BitMapItem  = xxxxxxxx0xxx On *
+
+BitMapGroup = 000100000000 StackX
+BitMapItem  = xxx1xxxxxxxx 2
+BitMapItem  = xxx0xxxxxxxx 8
+
+BitMapGroup = 001000000000 OptX
+BitMapItem  = xx1xxxxxxxxx Disable
+BitMapItem  = xx0xxxxxxxxx Enable
+
+BitMapGroup = 010000000000 SYNC
+BitMapItem  = x1xxxxxxxxxx Disable
+BitMapItem  = x0xxxxxxxxxx Enable
+
+BitMapGroup = 100000000000 TURBO
+BitMapItem  = 1xxxxxxxxxxx Disable
+BitMapItem  = 0xxxxxxxxxxx Enable
+
+
+[Part]=DEVWORD
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+ProgDis=1
+AddrSize=4114 1 1
+BlankData=0x1
+EditRect=60 11 80 17
+BlockLen=1
+ProgTimes=0.0 0 0 0
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=ABA8830000830008
+BitMapGroup = 111111111111 DEV
+BitMapItem  = 000000000001 SX48/52
+
+
+[Part]=FUSEX
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4113 1 1
+BlankData=0xFFF
+EditRect=60  0 80 11
+BlockLen=1
+ProgTimes=400.0 0 0 1
+Iden=0x0
+DataWidth=12
+DisplayASCII=0
+Algo=ABA883ABA983AA08
+BitMapGroup = 000000000011 BOR
+BitMapItem  = xxxxxxxxxx11 OFF
+BitMapItem  = xxxxxxxxxx10 reserved
+BitMapItem  = xxxxxxxxxx01 reserved
+BitMapItem  = xxxxxxxxxx00 ON
+
+BitMapGroup = 000001110000 RCTRIM
+BitMapItem  = xxxxx000xxxx -9 %%
+BitMapItem  = xxxxx001xxxx -6 %%
+BitMapItem  = xxxxx010xxxx -3 %%
+BitMapItem  = xxxxx011xxxx +- 0 %%
+BitMapItem  = xxxxx100xxxx +3 %%
+BitMapItem  = xxxxx101xxxx +6 %%
+BitMapItem  = xxxxx110xxxx +9 %%
+BitMapItem  = xxxxx111xxxx +12 %%
+
+BitMapGroup = 000010000000 Carry
+BitMapItem  = xxxx1xxxxxxx Normal
+BitMapItem  = xxxx0xxxxxxx +ADD-SUB
+
+BitMapGroup = 011100000000 WDRT
+BitMapItem  = x111xxxxxxxx 18.4 ms
+BitMapItem  = x110xxxxxxxx 7.68 ms
+BitMapItem  = x101xxxxxxxx 0.06 ms
+BitMapItem  = x100xxxxxxxx 0
+BitMapItem  = x011xxxxxxxx 1920 ms
+BitMapItem  = x010xxxxxxxx 960 ms
+BitMapItem  = x001xxxxxxxx 480 ms
+BitMapItem  = x000xxxxxxxx 60 ms
+
+BitMapGroup = 100000000000 SLEEP
+BitMapItem  = 1xxxxxxxxxxx Normal
+BitMapItem  = 0xxxxxxxxxxx Not_Stop
+
+EndDevice 
+

@@ -1,0 +1,494 @@
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 1
+
+Line   PC    Opcode
+
+0001               LIST P=16C84		;load\save with reset(SIS 16F84)  {Correcte
+                       d !}
+0002               
+0003         00A0  COMWRIN		EQU 	B'10100000'
+0004         00A1  COMRDIN		EQU	B'10100001'
+0005         00B0  ADDRIN		EQU	B'10110000'
+0006               
+0007         00AC  COMWROUT	EQU	B'10101100'
+0008         00CD  ADDR1		EQU	B'11001101'
+0009         00CE  ADDR2		EQU	B'11001110'
+0010         00CF  ADDR3		EQU	B'11001111'
+0011         00D0  ADDR4		EQU	B'11010000'
+0012         00D1  ADDR5		EQU	B'11010001'
+0013         00D2  ADDR6		EQU	B'11010010'
+0014               
+0015         0003  STATUS		EQU	03h
+0016         0006  PORTB		EQU	06h
+0017         0006  TRISB		EQU	06h
+0018               
+0019         000C  WRB		EQU	0Ch
+0020         000D  REB		EQU	0Dh
+0021         000E  CNTCIKL		EQU	0Eh
+0022         000F  TIME		EQU	0Fh
+0023         0010  TIME2		EQU	10h
+0024               
+0025         0011  DATA1		EQU	11h
+0026         0012  DATA2		EQU	12h
+0027         0013  DATA3		EQU	13h
+0028         0014  DATA4		EQU	14h
+0029         0015  DATA5		EQU	15h
+0030               
+0031         0000  	ORG	0
+0032   0000  0186  	CLRF	PORTB
+0033   0001  210A  	CALL	CLDRESE
+0034   0002  2123  	CALL	TM5
+0035               
+0036   0003  2110  	CALL	START
+0037   0004  30A0  	MOVLW	COMWRIN
+0038   0005  008C  	MOVWF	WRB
+0039   0006  20C1  	CALL	OUTI2C
+0040   0007  30B0  	MOVLW	ADDRIN
+0041   0008  008C  	MOVWF	WRB
+0042   0009  20C1  	CALL	OUTI2C
+0043   000A  2110  	CALL	START
+0044   000B  211E  	CALL	TM
+0045   000C  2119  	CALL	STOP
+0046   000D  2123  	CALL	TM5
+0047   000E  2110  	CALL	START
+0048   000F  30A0  	MOVLW	COMWRIN
+0049   0010  008C  	MOVWF	WRB
+0050   0011  20C1  	CALL	OUTI2C
+0051   0012  30B0  	MOVLW	ADDRIN
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 2
+
+Line   PC    Opcode
+
+0052   0013  008C  	MOVWF	WRB
+0053   0014  20C1  	CALL	OUTI2C
+0054   0015  2110  	CALL	START
+0055   0016  211E  	CALL	TM
+0056   0017  30A1  	MOVLW	COMRDIN
+0057   0018  008C  	MOVWF	WRB
+0058   0019  20C1  	CALL	OUTI2C
+0059   001A  20D7  	CALL	INI2C
+0060   001B  080D  	MOVF	REB,0
+0061   001C  0091  	MOVWF	DATA1
+0062   001D  20D7  	CALL	INI2C
+0063   001E  080D  	MOVF	REB,0
+0064   001F  0092  	MOVWF	DATA2
+0065   0020  20D7  	CALL	INI2C
+0066   0021  080D  	MOVF	REB,0
+0067   0022  0093  	MOVWF	DATA3
+0068   0023  20D7  	CALL	INI2C
+0069   0024  080D  	MOVF	REB,0
+0070   0025  0094  	MOVWF	DATA4
+0071   0026  20D7  	CALL	INI2C
+0072   0027  080D  	MOVF	REB,0
+0073   0028  0095  	MOVWF	DATA5
+0074   0029  2119  	CALL	STOP
+0075   002A  2123  	CALL	TM5
+0076               
+0077   002B  2110  	CALL	START
+0078   002C  30AC  	MOVLW	COMWROUT		
+0079   002D  008C  	MOVWF	WRB
+0080   002E  20C1  	CALL	OUTI2C
+0081   002F  30CD  	MOVLW	ADDR1
+0082   0030  008C  	MOVWF	WRB
+0083   0031  20C1  	CALL	OUTI2C
+0084   0032  0811  	MOVF	DATA1,0
+0085   0033  008C  	MOVWF	WRB
+0086   0034  20C1  	CALL	OUTI2C
+0087   0035  2119  	CALL	STOP
+0088               
+0089   0036  2123  	CALL	TM5
+0090               
+0091   0037  2110  	CALL	START
+0092   0038  30AC  	MOVLW	COMWROUT		
+0093   0039  008C  	MOVWF	WRB
+0094   003A  20C1  	CALL	OUTI2C
+0095   003B  30CE  	MOVLW	ADDR2
+0096   003C  008C  	MOVWF	WRB
+0097   003D  20C1  	CALL	OUTI2C
+0098   003E  0812  	MOVF	DATA2,0
+0099   003F  008C  	MOVWF	WRB
+0100   0040  20C1  	CALL	OUTI2C
+0101   0041  2119  	CALL	STOP
+0102               
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 3
+
+Line   PC    Opcode
+
+0103   0042  2123  	CALL	TM5
+0104               
+0105   0043  2110  	CALL	START
+0106   0044  30AC  	MOVLW	COMWROUT		
+0107   0045  008C  	MOVWF	WRB
+0108   0046  20C1  	CALL	OUTI2C
+0109   0047  30CF  	MOVLW	ADDR3
+0110   0048  008C  	MOVWF	WRB
+0111   0049  20C1  	CALL	OUTI2C
+0112   004A  0813  	MOVF	DATA3,0
+0113   004B  008C  	MOVWF	WRB
+0114   004C  20C1  	CALL	OUTI2C
+0115   004D  2119  	CALL	STOP
+0116               	
+0117   004E  2123  	CALL	TM5
+0118               
+0119   004F  2110  	CALL	START
+0120   0050  30AC  	MOVLW	COMWROUT		
+0121   0051  008C  	MOVWF	WRB
+0122   0052  20C1  	CALL	OUTI2C
+0123   0053  30D0  	MOVLW	ADDR4
+0124   0054  008C  	MOVWF	WRB
+0125   0055  20C1  	CALL	OUTI2C
+0126   0056  0814  	MOVF	DATA4,0
+0127   0057  39F0  	ANDLW	B'11110000'
+0128   0058  008C  	MOVWF	WRB
+0129   0059  20C1  	CALL	OUTI2C
+0130   005A  2119  	CALL	STOP
+0131               
+0132   005B  2123  	CALL	TM5
+0133               	
+0134   005C  2110  	CALL	START
+0135   005D  30AC  	MOVLW	COMWROUT		
+0136   005E  008C  	MOVWF	WRB
+0137   005F  20C1  	CALL	OUTI2C
+0138   0060  30D1  	MOVLW	ADDR5
+0139   0061  008C  	MOVWF	WRB
+0140   0062  20C1  	CALL	OUTI2C
+0141   0063  0814  	MOVF	DATA4,0
+0142   0064  390F  	ANDLW	B'00001111'
+0143   0065  008C  	MOVWF	WRB
+0144   0066  20C1  	CALL	OUTI2C
+0145   0067  2119  	CALL	STOP
+0146               
+0147   0068  2123  	CALL	TM5
+0148               
+0149   0069  2110  	CALL	START
+0150   006A  30AC  	MOVLW	COMWROUT		
+0151   006B  008C  	MOVWF	WRB
+0152   006C  20C1  	CALL	OUTI2C
+0153   006D  30D2  	MOVLW	ADDR6
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 4
+
+Line   PC    Opcode
+
+0154   006E  008C  	MOVWF	WRB
+0155   006F  20C1  	CALL	OUTI2C
+0156   0070  0815  	MOVF	DATA5,0
+0157   0071  008C  	MOVWF	WRB
+0158   0072  20C1  	CALL	OUTI2C
+0159   0073  2119  	CALL	STOP
+0160               
+0161   0074  2123  	CALL	TM5
+0162               
+0163   0075  2110  	CALL	START
+0164   0076  30AC  	MOVLW	COMWROUT		
+0165   0077  008C  	MOVWF	WRB
+0166   0078  20C1  	CALL	OUTI2C
+0167   0079  30CD  	MOVLW	ADDR1
+0168   007A  008C  	MOVWF	WRB
+0169   007B  20C1  	CALL	OUTI2C
+0170   007C  0811  	MOVF	DATA1,0
+0171   007D  008C  	MOVWF	WRB
+0172   007E  20C1  	CALL	OUTI2C
+0173   007F  2119  	CALL	STOP
+0174               
+0175   0080  2123  	CALL	TM5
+0176               
+0177   0081  2110  	CALL	START
+0178   0082  30AC  	MOVLW	COMWROUT		
+0179   0083  008C  	MOVWF	WRB
+0180   0084  20C1  	CALL	OUTI2C
+0181   0085  30CE  	MOVLW	ADDR2
+0182   0086  008C  	MOVWF	WRB
+0183   0087  20C1  	CALL	OUTI2C
+0184   0088  0812  	MOVF	DATA2,0
+0185   0089  008C  	MOVWF	WRB
+0186   008A  20C1  	CALL	OUTI2C
+0187   008B  2119  	CALL	STOP
+0188               
+0189   008C  2123  	CALL	TM5
+0190               
+0191   008D  2110  	CALL	START
+0192   008E  30AC  	MOVLW	COMWROUT		
+0193   008F  008C  	MOVWF	WRB
+0194   0090  20C1  	CALL	OUTI2C
+0195   0091  30CF  	MOVLW	ADDR3
+0196   0092  008C  	MOVWF	WRB
+0197   0093  20C1  	CALL	OUTI2C
+0198   0094  0813  	MOVF	DATA3,0
+0199   0095  008C  	MOVWF	WRB
+0200   0096  20C1  	CALL	OUTI2C
+0201   0097  2119  	CALL	STOP
+0202               	
+0203   0098  2123  	CALL	TM5
+0204               
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 5
+
+Line   PC    Opcode
+
+0205   0099  2110  	CALL	START
+0206   009A  30AC  	MOVLW	COMWROUT		
+0207   009B  008C  	MOVWF	WRB
+0208   009C  20C1  	CALL	OUTI2C
+0209   009D  30D0  	MOVLW	ADDR4
+0210   009E  008C  	MOVWF	WRB
+0211   009F  20C1  	CALL	OUTI2C
+0212   00A0  0814  	MOVF	DATA4,0
+0213   00A1  39F0  	ANDLW	B'11110000'
+0214   00A2  008C  	MOVWF	WRB
+0215   00A3  20C1  	CALL	OUTI2C
+0216   00A4  2119  	CALL	STOP
+0217               
+0218   00A5  2123  	CALL	TM5
+0219               
+0220   00A6  2110  	CALL	START
+0221   00A7  30AC  	MOVLW	COMWROUT		
+0222   00A8  008C  	MOVWF	WRB
+0223   00A9  20C1  	CALL	OUTI2C
+0224   00AA  30D1  	MOVLW	ADDR5
+0225   00AB  008C  	MOVWF	WRB
+0226   00AC  20C1  	CALL	OUTI2C
+0227   00AD  0814  	MOVF	DATA4,0
+0228   00AE  390F  	ANDLW	B'00001111'
+0229   00AF  008C  	MOVWF	WRB
+0230   00B0  20C1  	CALL	OUTI2C
+0231   00B1  2119  	CALL	STOP
+0232               
+0233   00B2  2123  	CALL	TM5
+0234               
+0235   00B3  2110  	CALL	START
+0236   00B4  30AC  	MOVLW	COMWROUT		
+0237   00B5  008C  	MOVWF	WRB
+0238   00B6  20C1  	CALL	OUTI2C
+0239   00B7  30D2  	MOVLW	ADDR6
+0240   00B8  008C  	MOVWF	WRB
+0241   00B9  20C1  	CALL	OUTI2C
+0242   00BA  0815  	MOVF	DATA5,0
+0243   00BB  008C  	MOVWF	WRB
+0244   00BC  20C1  	CALL	OUTI2C
+0245   00BD  2119  	CALL	STOP
+0246               
+0247   00BE  211E  	CALL	TM
+0248               
+0249   00BF  2104  	CALL	SETRESE
+0250   00C0  28C0  	GOTO	$
+0251               ;--------------------------------------------------------
+                       ------MAIN
+0252               
+0253   00C1  3008  OUTI2C	MOVLW	8
+0254   00C2  008E  	MOVWF	CNTCIKL
+0255   00C3  1B8C  CONOUT	BTFSC	WRB,7
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 6
+
+Line   PC    Opcode
+
+0256   00C4  20F8  	CALL	SETDAT
+0257   00C5  211E  	CALL	TM
+0258   00C6  20EC  	CALL	SETSTR
+0259   00C7  211E  	CALL	TM	
+0260   00C8  20F2  	CALL	CLDSTR
+0261   00C9  211E  	CALL	TM
+0262   00CA  20FE  	CALL	CLDDAT
+0263   00CB  0D8C  	RLF	WRB,1
+0264   00CC  0B8E  	DECFSZ	CNTCIKL,1
+0265   00CD  28C3  	GOTO	CONOUT
+0266               	
+0267   00CE  20F8  	CALL	SETDAT
+0268   00CF  211E  	CALL	TM
+0269   00D0  20EC  	CALL	SETSTR
+0270   00D1  211E  	CALL	TM	
+0271   00D2  20F2  	CALL	CLDSTR
+0272   00D3  211E  	CALL	TM
+0273   00D4  20FE  	CALL	CLDDAT
+0274   00D5  211E  	CALL	TM
+0275   00D6  0008  	RETURN
+0276               ;--------OUT---------------------------------------------
+                       ----OUT----------
+0277   00D7  018D  INI2C	CLRF	REB
+0278   00D8  3008  	MOVLW	8
+0279   00D9  008E  	MOVWF	CNTCIKL
+0280   00DA  20F8  	CALL	SETDAT
+0281   00DB  211E  	CALL	TM
+0282               	
+0283   00DC  0D8D  CONIN	RLF	REB,1
+0284   00DD  20EC  	CALL	SETSTR
+0285   00DE  211E  	CALL	TM
+0286   00DF  1906  	BTFSC	PORTB,2
+0287   00E0  140D  	BSF	REB,0		;WRITE LOW BIT TO REB
+0288   00E1  20F2  	CALL	CLDSTR
+0289   00E2  211E  	CALL	TM
+0290   00E3  0B8E  	DECFSZ	CNTCIKL,1
+0291   00E4  28DC  	GOTO	CONIN
+0292   00E5  20FE  	CALL	CLDDAT
+0293   00E6  211E  	CALL	TM
+0294   00E7  20EC  	CALL	SETSTR	
+0295   00E8  211E  	CALL	TM
+0296   00E9  20F2  	CALL	CLDSTR
+0297   00EA  211E  	CALL	TM
+0298   00EB  0008  	RETURN
+0299               ;----------------IN--------------------------------------
+                       ----------IN-------
+0300   00EC  3032  SETSTR	MOVLW	32
+0301   00ED  0083  	MOVWF	STATUS
+0302   00EE  1486  	BSF	TRISB,1
+0303   00EF  3000  	MOVLW	0
+0304   00F0  0083  	MOVWF	STATUS
+0305   00F1  0008  	RETURN
+0306               
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 7
+
+Line   PC    Opcode
+
+0307   00F2  3032  CLDSTR	MOVLW	32
+0308   00F3  0083  	MOVWF	STATUS
+0309   00F4  1086  	BCF	TRISB,1
+0310   00F5  3000  	MOVLW	0
+0311   00F6  0083  	MOVWF	STATUS
+0312   00F7  0008  	RETURN
+0313               
+0314   00F8  3032  SETDAT	MOVLW	32
+0315   00F9  0083  	MOVWF	STATUS
+0316   00FA  1506  	BSF	TRISB,2
+0317   00FB  3000  	MOVLW	0
+0318   00FC  0083  	MOVWF	STATUS
+0319   00FD  0008  	RETURN
+0320               
+0321   00FE  3032  CLDDAT	MOVLW	32
+0322   00FF  0083  	MOVWF	STATUS
+0323   0100  1106  	BCF	TRISB,2
+0324   0101  3000  	MOVLW	0
+0325   0102  0083  	MOVWF	STATUS
+0326   0103  0008  	RETURN
+0327               
+0328   0104  3032  SETRESE	MOVLW	32
+0329   0105  0083  	MOVWF	STATUS
+0330   0106  1586  	BSF	TRISB,3
+0331   0107  3000  	MOVLW	0
+0332   0108  0083  	MOVWF	STATUS
+0333   0109  0008  	RETURN
+0334               
+0335   010A  3032  CLDRESE	MOVLW	32
+0336   010B  0083  	MOVWF	STATUS
+0337   010C  1186  	BCF	TRISB,3
+0338   010D  3000  	MOVLW	0
+0339   010E  0083  	MOVWF	STATUS
+0340   010F  0008  	RETURN
+0341               
+0342               
+0343   0110  20F8  START	CALL	SETDAT
+0344   0111  211E  	CALL	TM
+0345   0112  20EC  	CALL	SETSTR
+0346   0113  211E  	CALL	TM
+0347   0114  20FE  	CALL	CLDDAT
+0348   0115  211E  	CALL	TM
+0349   0116  20F2  	CALL	CLDSTR
+0350   0117  211E  	CALL	TM
+0351   0118  0008  	RETURN
+0352               ;-------------------START--------------------------------
+                       -------------------
+0353   0119  20EC  STOP	CALL	SETSTR
+0354   011A  211E  	CALL	TM
+0355   011B  20F8  	CALL	SETDAT
+0356   011C  211E  	CALL	TM
+0357   011D  0008  	RETURN
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 8
+
+Line   PC    Opcode
+
+0358               ;---------------------STOP-------------------------------
+                       --------------------	
+0359   011E  309F  TM	MOVLW	9Fh
+0360   011F  008F  	MOVWF	TIME
+0361   0120  0B8F  LL3	DECFSZ	TIME,1
+0362   0121  2920  	GOTO	LL3
+0363   0122  0008  	RETURN
+0364               ;----------------------TM--------------------------------
+                       --------------------
+0365               
+0366               
+0367   0123  3007  TM5	MOVLW	07h
+0368   0124  008F  	MOVWF	TIME
+0369   0125  30FF  LL1	MOVLW	0FFh
+0370   0126  0090  	MOVWF	TIME2
+0371   0127  0B90  LL2	DECFSZ	TIME2,1
+0372   0128  2927  	GOTO	LL2	
+0373               
+0374   0129  0B8F  	DECFSZ	TIME,1
+0375   012A  2925  	GOTO	LL1
+0376   012B  0008  	RETURN	
+0377               ;----------------------TMLONG----------------------------
+                       -------------------
+0378         0000  end
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jan 04 05:54:48 2002  Page 9
+
+
+
+Cross-Reference Listing
+LABEL        VALUE        DEFN        REFERENCES
+ADDR1        205          8           8      81     167    
+ADDR2        206          9           9      95     181    
+ADDR3        207          10          10     109    195    
+ADDR4        208          11          11     123    209    
+ADDR5        209          12          12     138    224    
+ADDR6        210          13          13     153    239    
+ADDRIN       176          5           5      40     51     
+CLDDAT       254          321         262    273    292    321    347    
+CLDRESE      266          335         33     335    
+CLDSTR       242          307         260    271    288    296    307    349    
+CNTCIKL      14           21          21     254    264    279    290    
+COMRDIN      161          4           4      56     
+COMWRIN      160          3           3      37     48     
+COMWROUT     172          7           7      78     92     106    120    135    
+                                      150    164    178    192    206    221    
+                                      236    
+CONIN        220          283         283    291    
+CONOUT       195          255         255    265    
+DATA1        17           25          25     61     84     170    
+DATA2        18           26          26     64     98     184    
+DATA3        19           27          27     67     112    198    
+DATA4        20           28          28     70     126    141    212    227    
+DATA5        21           29          29     73     156    242    
+INI2C        215          277         59     62     65     68     71     277    
+LL1          293          369         369    375    
+LL2          295          371         371    372    
+LL3          288          361         361    362    
+OUTI2C       193          253         39     42     50     53     58     80     
+                                      83     86     94     97     100    108    
+                                      111    114    122    125    129    137    
+                                      140    144    152    155    158    166    
+                                      169    172    180    183    186    194    
+                                      197    200    208    211    215    223    
+                                      226    230    238    241    244    253    
+PORTB        6            16          16     32     286    
+REB          13           20          20     60     63     66     69     72     
+                                      277    283    287    
+SETDAT       248          314         256    267    280    314    343    355    
+SETRESE      260          328         249    328    
+SETSTR       236          300         258    269    284    294    300    345    
+                                      353    
+START        272          343         36     43     47     54     77     91     
+                                      105    119    134    149    163    177    
+                                      191    205    220    235    343    
+STATUS       3            15          15     301    304    308    311    315    
+                                      318    322    325    329    332    336    
+                                      339    
+STOP         281          353         45     74     87     101    115    130    
+                                      145    159    173    187    201    216    
+                                      231    245    353    
+TIME         15           22          22     360    361    368    374    
+TIME2        16           23          23     370    371    
+TM           286          359         44     55     247    257    259    261    
+                                      268    270    272    274    281    285    
+                                      289    293    295    297    344    346    
+                                      348    350    354    356    359    
+TM5          291          367         34     46     75     89     103    117    
+                                      132    147    161    175    189    203    
+                                      218    233    367    
+TRISB        6            17          17     302    309    316    323    330    
+                                      337    
+WRB          12           19          19     38     41     49     52     57     
+                                      79     82     85     93     96     99     
+                                      107    110    113    121    124    128    
+                                      136    139    143    151    154    157    
+                                      165    168    171    179    182    185    
+                                      193    196    199    207    210    214    
+                                      222    225    229    237    240    243    
+                                      255    263    
+

@@ -1,0 +1,14 @@
+pozor pracuje s m2bus kablom
+
+1. nainstaluj : wt603.exe
+2. nainstaluj : nse13
+3. skopiruj subory s crack603 do adresara wintesly
+4. skopiruj subory s nse13crk do adresara wintesly
+5. skopiruj subory s winsys do c:\windows\system
+6. edituj subor system.ini podla system.txt
+7. restartuj PC
+8. nainstaluj NCDS2
+9. restartuj
+10.spust winteslu (login NN1)
+
+pri praci s m2bus kablom treba dost casto rebootnut MT Nokia

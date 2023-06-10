@@ -1,0 +1,82 @@
+Group=  4-wire Serial EEPROM
+
+Device=7002MN010
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32 8
+BlankData=0xFF
+EditRect= 0  0 42  7
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0xC6
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+Device=GRN-001
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 41 19
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x86
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+[Device]=GRN-002
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 41 19
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x86
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+Device=NMC9346EN
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 41 19
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x86
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 

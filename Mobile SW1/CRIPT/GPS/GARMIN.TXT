@@ -1,0 +1,796 @@
+
+
+OBSERVATIONS OF THE GARMIN-GARMIN PROTOCOL
+
+
+last update:	March 6, 1998
+author:		william.soley@sun.com, werme@zk3.dec.com
+URL:		http://playground.sun.com/pub/soley/garmin.txt
+		(this work has nothing to do with Sun Microsystems)
+		(nor Digital Equipment Corp.)
+
+# Remarks by A. Helm November 29, 1997
+# tony@nt.tuwien.ac.at
+# 
+# All REMARK-lines are preceeded by a '#'.		
+
+= more Remarks by D. Zuppinger March 06, 1998
+= softtoys@webshuttle.ch
+= 
+= All REMARK-lines are preceeded by a '='.		
+
+This is a description of the GARMIN-GARMIN protocol as spoken by the
+Garmin GPS-75 GPS receiver and the Garmin PCX5 MS-DOS software.  The
+information here has been determined by observing the communication
+between the two units while sending "chosen plaintext".  This spec is
+at best, incomplete, and at worst, incorrect.  Lots of assumptions
+were made based on the observed behavior of the protocol.  It is also
+unknown how much of this protocol is common to other Garmin products.
+But, unless Garmin decides to be cooperative, this is about the best
+we can do.  Use it at your own risk!
+
+All references to GPS-75 behavior came from William Soley.  A major
+update to this was made in July, 1996 by Eric Werme, studying the
+behavior of his GPS-45.  There is much in common between the protocols
+used by the two models, but there are differences.  Much of Werme's study
+focused on protocol commands not used by PCX5, all of which are subject
+to change, even between revisions of firmware within a model!  If you
+must rely on some part of the protocol, it should be part that is used
+by Garmin's PCX5 software.
+
+Layer 1
+-------
+
+Data is standard Async.
+9600 bits per second.
+8 data bits.
+no parity.
+1 stop bit.
+
+
+Layer 2
+-------
+
+The data stream consists of frames each having the following format:
+
+	DataLinkEscape (0x10)
+	RecordType (one byte) $$
+	Length (one byte)  ** $$
+	DataField ("length" bytes) ** $$
+	CheckSum (one byte) **
+	DataLinkEscape (0x10)
+	EndTransmission (0x03)
+
+** - fields indicated by "**" are subject to escape.  Any occurrence of
+a DataLinkEscape character (0x10) in these fields is preceded by
+another DataLinkEscape (0x10) resulting in a pair.  Escape bytes added
+in this way are not counted in the record length (i.e. bytes are counted
+before the escapes are added).
+
+$$ - the bytes comprising fields indicated by "$$" are summed and the
+low-order 8 bits are then negated (2's complement) to form the
+CheckSum.  Any added DataLinkEscapes are not included in the sum.
+
+Software processing this protocol layer on input can discard the initial
+DataLinkEscape, the checksum and later bytes, and compress the double
+DataLinkEscapes into one.  The remaining bytes constitute Layer 3 protocol
+frames.
+
+Layer 3
+-------
+
+When a non-ACK/NAK or asynchronous frame is received an ACK or NAK is sent
+depending on the checksum validity of the received frame.  ACK/NAK frames are
+the same format as a regular frame:
+
+	RecordType = 0x06 (ACK) or 0x15 (NAK)
+	Length = 2
+	DataField = RecordType of record being acknowledged, 0x00
+
+When a non-ACK/NAK frame is sent, the sender waits for an ACK/NAK.  If
+a NAK is received, or if no ACK is received after about 1 second, the
+sender retransmits the frame.
+
+
+Power Up
+--------
+
+When the GPS-75 is powered on, it transmits an 0x5A character.
+When the GPS-45 is powered on, it transmits 0xFE and 0X5A characters.
+
+Holding the <CLR> button while pressing <PWR> to turn the unit on
+will erase the unit's memory and result in the messages:
+	Stored Data Lost
+	Searching the Sky
+
+Holding the <ENT> button while pressing <PWR> to turn the unit on will put the
+unit in TEST mode.  The GPS-75 a will display a series of concentric
+rectangles will be displayed and animated to give the illusion of passing
+through a tunnel.  Pressing <ENT> will toggle between the tunnel display and a
+display showing:
+	Testing ...
+	Sgnl Amplitude  2168
+	TCX0 Drift   -19.978
+While in TEST mode, a continuous stream of RecordType=0x00, 0x01,
+and 0x0d messages will be sent to the serial port.
+Also, while in TEST mode the "<" and ">" may be used to adjust
+display contrast, but the adjustment does not appear to be saved.
+
+The GPS-45 behaves somewhat differently.  The status screen is the first to
+be displayed and includes a keypad test test feature.  In addition to the
+box display is an all black display.  The GPS will send a stream of
+RecordTypes 0x00, 0x27, 0x28.
+
+Data Presentation
+-----------------
+
+Numeric data within the Garmin protocol is in binary, and several formats
+are used.  Those are described here.  Skimming this section now will make it
+easier to understand the protocol's commands.
+
+short integer	- length = 2 bytes, in order of increasing significance.
+		  Negative numbers are expressed as 2's complement.
+		  Examples:
+			00 00 = 0x0 = 0
+			01 00 = 0x1 = 1
+			10 00 = 0x10 = 16
+			00 01 = 0x100 = 256
+			00 10 = 0x1000 = 4096
+			ff ff = 0xffff = -1
+			f0 ff = 0xfff0 = -16
+
+long integer	- length = 4 bytes, in order of increasing significance.
+		  Negative numbers are expressed as 2's complement.
+		  Examples:
+			00 00 00 00 = 0x0 = 0
+			01 00 00 00 = 0x1 = 1
+			00 01 00 00 = 0x100 = 256
+			00 00 01 00 = 0x10000 = 65536
+			00 00 00 01 = 0x1000000 = 16777216
+			ff ff ff ff = 0xffffffff = -1
+			f0 ff ff ff = 0xfffffff0 = -16
+
+float		- length = 4 bytes, IEEE single precision floating point.
+		  Least significant byte first.  This format consists of:
+			1 bit - sign
+			8 bits - exponent, excess 127
+			23 bits - mantissa, implied high-order 1
+
+double		- length = 8 bytes, IEEE double precision floating point.
+		  Least significant byte first.  This format consists of:
+			1 bit - sign
+			11 bits - exponent, excess 1023
+			52 bits - mantissa, implied high-order 1
+
+ASCII string	- series of ASCII bytes, usually padded with blanks.
+		  Example:
+			47 50 53 20 37 35 20 20 32 2e 32 31 20 = "GPS 75 2.21"
+
+date/time	- length = 4 bytes, long unsigned integer encoded as 
+		  86400 + number of seconds since midnight, Jan 1 1990.
+		  Note:  unix_time = garmin_time + 631065600
+		  Examples:
+			00 00 00 00 = 0x0 = undefined
+			80 51 01 00 = 0x15180 = Jan 1 1990 00:00:00
+			7d f0 ef 2d = 0x2deff07d = Jun 4 1994 03:09:49
+			
+#
+# date/time information is ignored when uploading to garmin.
+# When downloading, the only records that have a nonzero time
+# field are trackpoints. (tested with GPS45 and  GPS II+)
+#			
+
+long lat/lon	- length = 4 bytes, long signed integer encoded as
+		  11930464.7111111111 * lat/lon in degrees, or
+		  683565275.576431632 * lat/lon in radians.
+		  The former factor as a ratio is 2**30/90.  As a C
+		  expression, it is ((1L << 30) / 90.0).
+		  All values are in map datum WGS 84.
+		  Examples:
+			00 00 00 00 = 0x0 = 0.0 deg
+			61 0b b6 00 = 0xb60b61 = 1.0 deg
+			00 00 00 40 = 0x40000000 = 90.0 deg
+			00 00 00 c0 = 0xc0000000 = -90.0 deg
+			00 00 00 80 = 0x80000000 = -180.0 deg
+
+#
+# For some garmin models the 6 least significant bits are ignored.
+# This doesn't make much precision problems as the resulting error
+# is below 1.2m but you have to be careful when rounding numbers.
+# You might get some "pentium-results", e.g 4.9999345 instead of 5.0
+# For a DMS output the least significant number is 0.1s. Anything
+# smaller is garbage due to the numerical representation in the
+# garmin protocol.
+# 
+
+
+double lat/lon	- length = 8 bytes, IEEE double precision floating point
+		  encoded as lat/lon in radians.  All values are in map datum
+		  WGS 84.
+
+		  Examples:
+			00 00 00 00 00 00 00 00 = 0.0 rad
+			00 00 00 00 00 00 f0 3f = 1.0 rad
+			00 00 00 00 00 00 f8 3f = 1.5 rad
+			00 00 00 00 00 00 00 40 = 2.0 rad
+			00 00 00 00 00 00 08 40 = 3.0 rad
+			00 00 00 00 00 00 f0 bf = -1.0 rad
+			00 00 00 00 00 00 00 c0 = -2.0 rad
+
+
+Record Types and Formats
+------------------------
+
+The following table describes the observed RecordTypes.
+
+----------------------------------------------------------------
+RecordType = 0x00	
+Length = 4
+Description:
+	Sent asynchronously while in TEST mode or when enabled
+	by the RecordType=0x1C command, with mask 0x01.
+----------------------------------------------------------------
+RecordType = 0x01	SignalAmplitude
+Length = 4
+DataField =
+	2 bytes	- unsigned short - Signal Amplitude
+	2 bytes - ? 00 fe
+Description:
+	Sent every 4 seconds while in TEST mode or when enabled
+	by the RecordType=0x1C command, with mask 0x01.  The
+	exact meaning of the last 2 bytes is unknown.
+----------------------------------------------------------------
+RecordType = 0x06	ACK
+Length = 2
+DataField =
+	1 byte	- copy of RecordType from record being ACK'd
+	1 byte	- always zero
+Description:
+	The recipient is expected to retransmit the last record
+	if an ACK is not received within about 1 second.  ACK is
+	not sent in response to ACK or NAK.
+----------------------------------------------------------------
+RecordType = 0x09	Unknown
+Length = 2
+DataField =
+	2 bytes	- ? 02 00
+Description:
+	Sent in response to 1c command.
+----------------------------------------------------------------
+RecordType = 0x0a	Request
+Length = 2
+DataField =
+	2 bytes - unsigned short - operation code
+		01 00 = 0x1	= download almanac (RecordType 1f)
+		02 00 = 0x2	= query position (RecordType 11)
+		03 00 = 0x3	= download proximity waypoints (RecType 13)
+		04 00 = 0x4	= download rottd Vè ˆ’C 9œ  BÜœ€ !                                                                                                                                                 €ÞÞÞÞ^ÞÀ =½‚{öòåä$È '§§—““0 0‡pP‡0F2“±“·`             H   ÙÛÛÚ     "        “›ËÛÛÛ[Û›ËÛÛ›ÛÉ’Ó“š  €!íìåíéííÈBvôà    	y;r€€€¼½‰ @.@“¤IÀèà ;`@Þ' ¤K )Á982‹†¤J˜n I À¬D’dD L¤ ’!Bl7ä€@Bi¥ ^h¼ÎØ €÷ˆ:a}Ù½ ™°@E•­‰„øà †ø„£C!³ À ~¶`ð€p -¼¤LŠníÌ„m`0y&Ve=0x1B (Begin-
+	Transfer), followed by some number of data records, followed
+	by RecordType=0x0C (EndTransfer).  For requests 2 and 5,
+	the recipient should respond with a single data record.
+	The 2nd DataField byte appears to be ignored.
+
+#
+# I have observed some situations where a "power off" command
+# is executed too fast(!). That means the garmin goes down
+# before the software handshake is complete. 
+#
+
+----------------------------------------------------------------
+RecordType = 0x0c	EndTransfer
+Length = 2
+DataField =
+	2 bytes - unsigned short - type of transfer being ended
+		01 00 = 0x1	= almanac
+		03 00 = 0x3	= proximity waypoints
+		04 00 = 0x4	= routes
+		06 00 = 0x6	= tracks
+		07 00 = 0x7	= waypoints
+Description:
+	This record is sent following the last data record of
+	an upload or download to denote the end of the transfer.
+	When the GPS receives this, it removes the "<num>
+	of <num> packets" message.
+
+----------------------------------------------------------------
+RecordType = 0x0d	Event
+Length = 4
+DataField =
+	2 bytes - EventType
+		05 00	Satellite acquired
+		07 00	Navigation quality
+		0c 00	Keyboard event (TEST mode only)
+		10 00	Screen message displayed
+		14 00	Power on sequence message
+	
+	2 bytes - SubType
+		This is a function of the EventType.  Each known EventType
+		is described below with a list of the SubTypes.
+
+	4 bytes - GPS clock time
+		This is a time that is initialized to 0 at startup and
+		incremented 255750 per second.  This is 1/4 of the
+		1.023 Mhz bit rate of the CA code transmitted by GPS
+		satellites.  (Rumors that GPS satellites are powered by
+		Apple ][ computers are totally untrue!)  Some events may
+		use the low one or two bytes for additional data.
+
+Description:
+	Sent asynchronously while in TEST mode or when enabled
+	by the RecordType=0x1C command, with mask 0x02.  There
+	are other possible values of EventType but we haven't
+	figured them out, yet.  Those seen from the GPS-45 but
+	not understood are listed at the end of this document.
+
+	SubType list:
+	EventType 05 00	Satellite acquired
+		This is sent when a satellite is acquired.  In diagnostic
+		mode (Enter held down while powered on) or on the GPS-38
+		This coincides with the satellite signal strength bar changing
+		from white to black.  The SubType field is the satellite ID
+		number - 1.
+
+	EventType 07 00	Navigation quality
+		The subtype is either 2 or 3 for 2D or 3D navigation.
+
+	EventType 0c 00	Keyboard event (TEST mode only)
+		GPS-75 codes:
+		01 00	<PWR/STAT> down
+		02 00	<PWR/STAT> down + 1 sec
+		03 00	<PWR/STAT> down + 2 sec
+		04 00	<AUTO/STO>
+		05 00	<GOTO/MOB>
+		08 00	<NAV>
+		09 00	<RTE>
+		0a 00	<PWR/STAT> released
+		0b 00	<WPT>
+		0c 00	<0>
+		0d 00	<ABC/1>
+		0e 00	<DEF/2>
+		0f 00	<GHI/3>
+		10 00	<JKL/4>
+		11 00	<MNO/5>
+		12 00	<PQR/6>
+		13 00	<STU/7>
+		14 00	<VWX/8>
+		15 00	<YZ-/9>
+		16 00	<CLR>
+		17 00	<ENT>
+		18 00	<"<">
+		1a 00	<">">
+
+		GPS-45 messages:
+		02 00	<power> down
+		03 00	<power> down + 1 sec
+		05 00	<goto/mob>
+		06 00	<power> up released
+		07 00	<quit>
+		08 00	<"^">
+		09 00	<"<">
+		0a 00	<">">
+		0b 00	<"v">
+		0d 00	<page>
+		0e 00	<mark>
+		0f 00	<enter>
+
+	EventType 10 00	Screen message displayed
+		The subtype is a message code.  This list is from the GPS-45,
+		but not all messages can be generated.  This message coincides
+		with the message being posted on the GPS.
+
+		00 00	Can't Change Active WPT
+		02 00	Start Altitude Change
+		03 00	Final Altitude Alert
+		05 00	Approaching <waypoint>
+		07 00	Arrival at <waypoint>
+		08 00	Cannot Navigate Locked Route
+		0a 00	Stored Data was Lost
+		0b 00	Database Memory Failed
+		0c 00	No Position 
+		16 00	Route is Full
+		17 00	Route is not Empty
+		18 00	Route Waypoint Can't be Deletd
+		19 00	Route Waypoint was Deleted
+		1a 00	Received an Invalid WPT
+		1b 00	Timer Has Expired
+		1c 00	Transfer has been Completed
+		1d 00	Vertical Nav Cancelled
+		1e 00	WPT Memory is Full
+		1f 00	Already Exists 
+		21 00	Accuracy has been Degraded
+		22 00	Anchor Drag Alarm
+		23 00	Battery Power is Low
+		24 00	CDI Alarm 
+		25 00	Leg not Smoothed
+		26 00	Memory Battery is Low
+		27 00	Need 2D Altitude
+		28 00	No DGPS Position
+		29 00	Oscillator Needs Adjustment
+		2a 00	Poor GPS Coverage
+		2c 00	Receiver has Failed
+		2d 00	Power Down and Re-init
+		2e 00	Read Only Mem has Failed
+		2f 00	RTCM Input has Failed
+		30 00	No RTCM Input
+		31 00	Searching the Sky
+		32 00	Steep Turn Ahead
+		33 00	Inside SUA
+		34 00	SUA Near & Ahead
+		35 00	SUA Ahead < 10 min
+		36 00	Near SUA < 2 nm
+
+	EventType 14 00	Power on sequence message
+		The GPS receivers progress through several steps between
+		power up and when the unit is ready.  This message tracks
+		the progress.
+		00 00	Power on
+		02 00	Power on initialization done
+			Initialization includes clearing the 255750 Hz
+			clock and sorting the visible satellite table by
+			altitude.
+		03 00	Power on acquisition complete
+			This happens after three satellites are acquired
+			and marks the start of normal operation.
+----------------------------------------------------------------
+RecordType = 0x0e	ClockData
+Length = 8
+DataField =
+	1 byte	- month (1=Jan, 2=Feb, etc.)
+	1 byte	- day of month
+	2 bytes - unsigned short - year
+	1 byte	- hour
+	1 byte	- unknown (always zero)
+	1 byte	- minute
+	1 byte	- second
+Description:
+	This record is sent in response to a RecordType=0x0a
+	(Request) DataField=0x5 (ClockTime) request.  It contains
+	the UTC clock time.
+----------------------------------------------------------------
+RecordType = 0x11	PositionData
+Length = 0x10
+DataField =
+	8 bytes - IEEE double - double latitude
+	8 bytes - IEEE double - double longitude
+Description:
+	This record is sent in response to a RecordType=0x0a
+	(Request) DataField=0x2 (Position) request.  It contains
+	the current double precision floating point 2D position
+	in radians.
+----------------------------------------------------------------
+RecordType = 0x13	ProximityData
+Length = 0x3A
+DataField =
+	6 bytes - ASCII waypoint name - blank padded
+	4 bytes - long latitude
+	4 bytes - long longitude
+	4 bytes - date/time created
+	40 bytes - ASCII comment - blank padded
+	4 bytes - IEEE float - alarm radius in meters
+Description:
+	This record is used when uploading or downloading
+	proximity waypoints.  A RecordType=0x1B (BeginTransfer)
+	is sent specifying the number of waypoints, followed by
+	the specified number of ProximityData records, followed
+	by a RecordType=0x0C (EndTransfer) record.
+----------------------------------------------------------------
+RecordType = 0x15	NAK
+Length = 2
+DataField =
+	1 byte	- copy of RecordType from record being NAK'd
+	1 byte	- always zero
+Description:
+	The recipient is expected to retransmit the last record
+	immediately when it receives an NAK.  NAK is not sent in
+	response to ACK or NAK.
+----------------------------------------------------------------
+RecordType = 0x1A	SatelliteStatus
+Length = 0x38
+DataField =
+	8 instances of ...
+	1 byte	- satellite ID number - 1
+	1 byte	- elevation, degrees
+	2 bytes - signal quality
+	1 byte	- 1 if being tracked, else 0
+	1 byte	- status bits
+	1 byte	- ? 00
+Description:
+	Sent every 6 seconds when enabled by the RecordType=0x1C
+	command, with mask 0x80.
+----------------------------------------------------------------
+RecordType = 0x1B	BeginTransfer
+Length = 2
+DataField =
+	2 bytes - unsigned short - number of data records to follow
+Description:
+	This record is sent before the first data record of an
+	upload or download to denote the beginning of transfer.
+	It causes the GPS IO setup display to display "<num>
+	of <num> packets".  If you send waypoint, route, track, or
+	almanac data with prefacing them with this, the GPS will
+	display "<num> of 0 packets".
+----------------------------------------------------------------
+RecordType = 0x1C	EnableAsyncEvents
+Length = 2
+DataField =
+	2 bytes	- unsigned short - enable bit mask, logical-or ...
+		00 00 = 0x0	= disable all (no bits set)
+		01 00 = 0x1	= enables RecordType=00,01,02
+		02 00 = 0x2	= enables RecordType=0d
+		04 00 = 0x4	= enables RecordType=14,27,28
+		08 00 = 0x8	= enables RecordType=16
+		10 00 = 0x10	= enables RecordType=17
+		20 00 = 0x20	= enables RecordType=07,12,19
+		40 00 = 0x40	= enables RecordType=07,12
+		80 00 = 0x80	= enables RecordType=1a
+		00 01 = 0x100	= enables RecordType=29,2a
+		ff ff = 0xffff	= enables all (all bits set)
+Description:
+	GPS responds to this request with RecordType=0x20 then
+	0x09.  If no DataField is present, appears to have same
+	effect as a mask of 0xffff.  This command enables
+	asynchronous reporting of the selected events.  Not much
+	is known about the enabled RecordTypes because this is not
+	used by the PCX5 software.
+	WARNING: AsyncEvents appear to stay enabled across power
+	cycles and can confuse host software if it is not expecting
+	to receive them.
+----------------------------------------------------------------
+RecordType = 0x1D	RouteData
+Length = 0x15
+DataField =
+	1 bytes	- route number
+	20 bytes - comment - blank padded
+Description:
+	This record is used when uploading or downloading routes.
+	A RecordType=0x1B (BeginTransfer) is sent specifying the
+	number of records, followed by RecordType=0x1D (RouteData)
+	RecordType=0x1E (RouteWaypointData) records, then a
+	RecordType=0x0C (EndTransfer) record.
+	
+#
+# Some garmin models create an automatic comment when entering a 
+# new route (from the first and the last waypoint).
+# This comment cannot be downloaded.
+#
+
+= The comment (name) is blank, when nothing has been entered by
+= the user	
+
+----------------------------------------------------------------
+RecordType = 0x1E	RouteWaypointData
+Length = 0x3A
+DataField =
+	6 bytes - ASCII waypoint name - blank padded
+	4 bytes - long latitude
+	4 bytes - long longitude
+	4 bytes - date/time created
+	40 bytes - ASCII comment - blank padded
+Description:
+	This record is used when uploading or downloading routes.
+	A RecordType=0x1B (BeginTransfer) is sent specifying the
+	number of records, followed by RecordType=0x1D (RouteData)
+	RecordType=0x1E (RouteWaypointData) records, then a
+	RecordType=0x0C (EndTransfer) record.
+
+#
+# On newer garmin models the length of the 0x1E record is 0x3C.
+# The 2 additional characters contain:
+#
+# 1) 0x00...0x0F corresponding to the icons on the map display.
+# Looking at the icon selector of the garmin you see 16 icons
+# arranged in 4 rows and 4 columns.
+# The icons are nubered as:
+#
+# 0x00 0x01 0x02 0x03
+# 0x04 0x05 0x06 0x07
+# 0x08 0x09 0x0A 0x0B
+# 0x0C 0x0D 0x0E 0x0F
+#
+# 2) The second character may contain 0x00 0x01 or 0x02
+# corresponding to the display mode:
+# 0x00 name and symbol
+# 0x01 symbol only
+# 0x02 comment and symbol
+#
+#
+
+= The GPS III series has more symbols than the GPS II series
+= and uses new two bytes for the symbol
+= Also after the comment there are 4 more bytes (set to 0)
+= The length of the 0x1E record is 0x41
+
+
+= The 'normal' waypoint record is exactly the same with the 
+= exception of the id (second byte) 0x23 instead of 0x1E.
+
+----------------------------------------------------------------
+RecordType = 0x1F	AlmanacData
+Length = 0x2A
+DataField =
+	2 bytes - unsigned short - week (or 0xffff if poor health)
+	4 bytes - IEEE float - Time of Applicability(s)
+	4 bytes - IEEE float - Af0(s)
+	4 bytes - IEEE float - Af1(s/s)
+	4 bytes - IEEE float - Eccentricity
+	4 bytes - IEEE float - SQRT(A) (m^1/2)
+	4 bytes - IEEE float - Mean Anom(rad)
+	4 bytes - IEEE float - Argument of Perigee(rad)
+	4 bytes - IEEE float - Right Ascen at TOA(rad)
+	4 bytes - IEEE float - Rate of Right Ascen(r/s)
+	4 bytes - IEEE float - Orbital Inclination(rad)
+Description:
+	This record is used when uploading or downloading almanac
+	data.  A RecordType=0x1B (BeginTransfer) is sent specifying
+	the number of satellites, followed by the specified number
+	of AlmanacData records, followed by a RecordType=0x0C
+	(EndTransfer) record.
+----------------------------------------------------------------
+RecordType = 0x20	SoftwareVersionData
+Length = 7
+DataField =
+	7 bytes - ASCIZ string - software version (e.g. " 2.21 ")
+Description:
+	GPS sends this in response to RecordType=0x1C.
+----------------------------------------------------------------
+RecordType = 0x22	TrackData
+Length = 0xD
+DataField =
+	4 bytes - long latitude
+	4 bytes - long longitude
+	4 bytes - date/time recorded
+	1 byte - 01 if first record in session, else 00
+Description:
+	This record is used when uploading or downloading track.
+	A RecordType=0x1B (BeginTransfer) is sent specifying the
+	number of track data records, followed by the specified
+	number of TrackData records, followed by a RecordType=0x0C
+	(EndTransfer) record.
+----------------------------------------------------------------
+RecordType = 0x23	WaypointData
+Length = 0x3A
+DataField =
+	6 bytes - ASCII waypoint name - blank padded
+	4 bytes - long latitude
+	4 bytes - long longitude
+	4 bytes - date/time created
+	40 bytes - ASCII comment - blank padded
+Description:
+	This record is used when uploading or downloading way-
+	points.  A RecordType=0x1B (BeginTransfer) is sent
+	specifying the number of waypoints, followed by the
+	specified number of Waypoint records, followed by a
+	RecordType=0x0C (EndTransfer) record.
+
+#
+# On newer garmin models the length of the 0x23 record is 0x3C.
+# The 2 additional characters contain:
+#
+# 1) 0x00...0x0F corresponding to the icons on the map display.
+# Looking at the icon selector of the garmin you see 16 icons
+# arranged in 4 rows and 4 columns.
+# The icons are nubered as:
+#
+# 0x00 0x01 0x02 0x03
+# 0x04 0x05 0x06 0x07
+# 0x08 0x09 0x0A 0x0B
+# 0x0C 0x0D 0x0E 0x0F
+#
+# 2) The second character may contain 0x00 0x01 or 0x02
+# corresponding to the display mode:
+# 0x00 name and symbol
+# 0x01 symbol only
+# 0x02 comment and symbol
+#
+
+= The GPS III series has more symbols than the GPS II series
+= and uses new two bytes for the symbol
+= Also after the comment there are 4 more bytes (set to 0)
+= The length of the 0x23 record is 0x41
+
+= The route waypoint record is exactly the same with the 
+= exception of the id (second byte) 0x1E instead of 0x23.
+
+ ----------------------------------------------------------------
+RecordType = 0x2A	SatelliteSelect
+Length = 0x02
+DataField =
+	2 bytes - Satellite index
+Description:
+	The GPS-45 has a sequential receiver, meaning that it looks at one
+	satellite at a time.  The eight satellites that can be processed are
+	in a table (see RecordType 0x1A).  As the firmware switches from one
+	satellite to another, this message marks the event.  The data field
+	is the index (0 to 7) into the satellite table for the satellite.
+----------------------------------------------------------------
+RecordType = 0xFE	IdentificationReq
+Length = 0
+DataField =
+Description:
+	The recipient, presumably a GPS, is expected to transmit
+	its Identification and Software Version as RecordType=0xFF
+	(IdentificationData).  GPS-75 appears to ignore the DataField
+	if one is supplied, but the PCX-5 software always transmits
+	a DataField of one byte always containing 0x20.
+----------------------------------------------------------------
+RecordType = 0xFF	IdentificationData
+Length = 0x12
+DataField =
+	2 bytes	- unknown - 17 00
+	2 bytes - unsigned short - SoftwareVersion * 100
+		(e.g. dd 00 = version 2.21)
+	14 bytes - ASCIZ Identification string
+Description:
+	This record is sent in response to RecordType=0xFE
+	(IdentificationReq).
+	
+#
+# Newer garmin models have a 0xFF record with different length.
+# The ID string is longer than 14 bytes. For correct processing
+# of 0xFF records read the record length and subtract 4 to get
+# the actual length of the ID string.
+#	
+
+----------------------------------------------------------------
+
+
+Example: Identification Request
+-------------------------------
+
+-> 10 fe 00 02 10 03
+<- 10 06 02 fe 00 fa 10 03
+<- 10 ff 12 17 00 dd 00 47 50 53 20 37 35 20 20 32 2e 32 31 20 00 62 10 03
+-> 10 06 02 ff 00 f9 10 03
+
+The first message, 10 fe ... is a command to the GPS to identify
+itself.  The second message, 10 06 ... is the GPS acknowledging the
+command.  The third message, 10 ff ... is the GPS sending the response
+containing its identification (the ASCIZ string "GPS 75 2.21" begins
+in the 4th byte of DataField).  The fourth message, 10 06 ... is the
+acknowledgment to the GPS of the response message.
+
+The GPS-75 appears to ignore the DataField of the 0xFE command, however,
+the PCX5 software appears to always send a DataField of 0x20.  (The
+example above is shown with a null DataField.)
+
+----------------------------------------------------------------
+
+Unknown messages
+----------------
+Much remains to be understood.  This section summarizes messages we
+don't know.  These messages are generated asynchronously in response
+to various bits in the data field (mask) of the RecordType=0x1C command.
+
+Record	0x1C
+Type	mask	length	Comments
+--------------------------------
+0x00	0x0001	0x04	Mentioned above, but the data are unknown
+0x01	0x0001	0x04	Signal Amplitude, units unknown
+0x02	0x0001	0x04
+0x07	0x0020	0x14	data[0] is 0
+0x07	0x0040	0x14	data[0] is 1
+0x12	0x0020	0x26	data[0] is 1, data[3] appears to be a satellite number
+0x12	0x0040	0x26	data[0] is 2, data[3] appears to be a satellite number
+0x14	0x0004	0x64
+0x16	0x0008	0x1b	data[24] appears to be a satellite number.  These
+			messages come in groups, one for each satellite
+			being tracked.
+0x17	0x0010	0x31
+0x19	0x0020	0x1e
+0x27	0x0004	0x02
+0x28	0x0004	0x04
+0x29	0x0100	0x07	Seems to come with RecordType 0x2a, SatelliteSelect
+
+Unknown events
+--------------
+
+Event
+Type	Subtype	Comments
+------------------------
+0x00	0x0e
+0x00	0x12
+0x00	0x14
+0x00	0x18
+0x03	0x00
+0x12	0x00
+0x18	0x0b

@@ -1,0 +1,28 @@
+
+
+	     ***********************************       
+	     *****     ZURICH AS 0700      *****        
+	     ***********************************       
+                                           
+
+
+CPU:    MB88551H
+MEMORY: ER5911 ORGANIZACJA 64*16
+FILE:   ?
+CODE:  	?
+INFO:   1=>1	1=>2	3=>3	4=>4	5=>5
+	6=>6	?=>7	?=>8	AMS=>9	BAND=>0
+	POTWIERDZENIE=>MODE
+TECH:   
+	1 CYFRA $00 a
+	2 CYFRA $06 a
+	3 CYFRA $0C a
+	4 CYFRA $12 a
+
+LICZNIK B£ÊDÓW :$0D ab=FF RADIO Z KODEM
+		  
+PRZYK£AD:
+
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+
+

@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 24C02 
+
+Wprowadzanie : 1,2,3,4
+Wywol./Zatw. : U
+
+UWAGI : 

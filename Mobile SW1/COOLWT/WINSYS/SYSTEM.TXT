@@ -1,0 +1,4 @@
+[386enh]
+device=dk2.386
+com1buffer=1024
+com2buffer=1024

@@ -1,0 +1,12 @@
+
+   CLARION CRH 81R    RDS
+                            NC  5  4  3    
+   PAMIEC   93C46 X          I  I  I  I
+                                            <WYPROWADZENIA W STOSUNKU
+                                             DO ZWYKLEJ 93C46 
+                             *  8  1  2      
+                             I  I  I  I   
+ÿÿÿKOD  5311 
+   
+ÿÿÿAA AA 11 53  00 00 FF
+ÿÿÿÿÿÿÿÿÿÿKOD      KOMORKA BLEDUÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ

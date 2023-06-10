@@ -1,0 +1,185 @@
+
+ €€€€€€ª   €€€€€ª  €€€€€€ª
+ €€…ÕÕ€€ª €€…ÕÕ€€ª €€…ÕÕ€€ª     RAR version 1.55
+ €€€€€€…º €€€€€€€∫ €€€€€€…º     ~~~~~~~~~~~~~~~~
+ €€…ÕÕ€€ª €€…ÕÕ€€∫ €€…ÕÕ€€ª     Commands and switches overview
+ €€∫  €€∫ €€∫  €€∫ €€∫  €€∫     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ »Õº  »Õº »Õº  »Õº »Õº  »Õº
+
+  More detailed information may be found in the user manual, RAR.DOC
+
+
+   Command line options
+
+
+  Usage:     RAR <command> -<switches> <archive>
+                 <@listfiles...> <files...>
+
+   Commands:
+
+  a             Add files to archive
+  c             add Comment to archive
+  cf            add Comment to Files
+  cw            Write Comment from archive to file
+  d             Delete files from archive
+  e             Extract files to current directory
+  en            ENter to archive
+  f             Freshen files in archive
+  k             locK archive
+  l             List contents of archive
+  m[f]          Move to archive [Files only]
+  p             Print file to stdout
+  r             Repair archive
+  s[file.sfx]   Convert archive to SFX [alternate SFX module may be used]
+  t             Test archive files
+  u             Update files in archive
+  v             Verbosely list contents of archive
+  x             eXtract files with full path
+
+   Switches:
+
+  -$[drive]     provides volume label support
+  -av           add Authenticity Verification (registered versions only)
+  -av-          disable checking or adding authenticity information
+  -b            enable Backup archives
+  -bw           Black & White (monochrome) mode
+  -c-           disable Comments display
+  -cfg-         disable read ConFiGuration
+  -col          COLor mode
+  -dh           disable sharing files
+  -ds           do not sort files while adding to solid
+  -e<s,h,a,r>   set file Exclude attributes
+  -ed           do not add Empty Directories
+  -ems-         disable EMS usage
+  -ep           Exclude Paths from names
+  -ep1          Exclude base dir from names
+  -f            Freshen files
+  -ialt         only right <Alt> key changes help info in bottom line
+  -m<0..5>      set compression level (0-store...3-default...5-maximal)
+  -o-           do not Overwrite existing files
+  -o+           Overwrite existing files
+  -p<password>  set Password
+  -r            Recurse subdirectories
+  -s            create Solid archive
+  -sfx[fil.sfx] create SFX archives (alternate SFX may be created)
+  -std          STDout mode
+  -tk           do not modify archive date
+  -tl           set archive date as the date of newest file
+  -u            Update files
+  -v            create Volumes with size autodetection
+  -v<size>      create Volumes:           Size=<size>*1000 bytes
+  -v<size>b     create Volumes:           Size=<size> bytes
+  -v<size>k     create Volumes:           Size=<size> kilobytes
+  -vd           erase disk contents before creating volume
+  -w<path>      assign Work directory
+  -x<file>      eXclude specified File
+  -x@<list>     eXclude files in specified List file
+  -y            assume Yes on all queries
+  -z<file>      add comment to archive from the file
+
+
+    The SFX archive module recognizes the following switches:
+
+  -e            Extract from the SFX archive (default)
+  -t            Test the SFX archive
+  -v            View archive contents
+
+
+   Interactive mode
+
+
+  Usage:
+
+         RAR
+
+  Options:
+
+   Alt-C  Toggle between Color and monochrome mode
+   Alt-D  Select Drive
+   Alt-J  DOS shell
+   Alt-M  Select compression Method
+   Alt-P  Set Password
+   Alt-S  Save Setup
+   Alt-W  Set Work directory for temporary files
+      
+
+  Directory functions:
+
+
+   F1       Help information
+
+   F2       Add file(s) to archive, if the archive does not exist
+            it will be created
+
+   F3       View a file (if external viewer is not set, the
+            internal viewer will be used)
+
+   F4       Freshen files in archive - only recently changed files
+            will be added and will replace older files existing in
+            the archive
+
+   F5       Create archive volumes
+
+   F6       Add files not already in the archive and update those
+            files changed since they were packed to the archive
+
+   F7       Move file(s) to archive
+
+   F8       Delete file or directory
+
+   F9       Set up / Save options
+
+   F10      Quit RAR. ESC can also be used to perform the same
+            function. 
+
+   Alt-F2   Create a solid archive.
+
+   Alt-F3   View file (with internal viewer).
+
+   Alt-F4   Create a SFX archive.
+
+   Alt-F5   Create a SFX-volume.
+
+   Alt-F6   Create a solid archive volumes.
+
+   Alt-F7   Create a solid SFX-volume.
+
+   Alt-F8   Try to repair broken archive.
+
+   Alt-F9   Create a solid SFX archive.
+
+
+  Archive functions:
+
+
+   F1       Help information
+
+   F2       Test archive
+
+   F3       View a file (if an external viewer is not set,
+            the internal viewer will be used)
+
+   F4       Extract files from archive with directory
+            structure
+
+   F5       Add comment to archive
+
+   F6       Extract file(s) to current directory
+
+   F7       Make SFX-archive
+
+   F8       Delete file(s) from archive
+
+   F9       Set up / Save options
+
+   F10      Return from archive. ESC can also be used to
+            perform the same function.
+
+   Alt-F3   View a file (with internal viewer)
+
+   Alt-F4   Extract file(s) to alternate path
+
+   Alt-F5   Add file comment(s)
+
+   Alt-F7   Lock archive to prevent modifications
+

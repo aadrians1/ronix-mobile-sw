@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 85C82
+
+Wprowadzanie : 1,2,3,4
+Wywol./Zatw. : ^
+
+UWAGI : 

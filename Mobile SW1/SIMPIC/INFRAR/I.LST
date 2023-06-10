@@ -1,0 +1,97 @@
+0000: 2805      jmp     0005h
+0001: 3fff     ;add     W,#0FF;('\xff',255)
+0002: 3fff     ;add     W,#0FF;('\xff',255)
+0003: 3fff     ;add     W,#0FF;('\xff',255)
+0004: 2805      jmp     0005h
+0005: 0085      mov     PORTA,W
+0006: 018b      clr     INTCON
+0007: 3009      mov     W,#009;('\t',9)
+0008: 0066     ;mov     !TRISB,W
+0009: 30c2      mov     W,#0C2;('\xc2',194)
+000a: 0062     ;mov     !OPTION,W
+000b: 1506      setb    PORTB.2
+000c: 1e03 28e2 jnb     STATUS.4,00E2h
+000e: 0064      clr     WDT
+000f: 3058      mov     W,#058;('X',88)
+0010: 20b6      call    00B6h
+0011: 209f      call    009Fh
+0012: 0812      mov     W,T2CON
+0013: 1103      clrb    STATUS.2
+0014: 1003      clrb    STATUS.0
+0015: 3a49      xor     W,#049;('I',73)
+0016: 1d03 2805 jnb     STATUS.2,0005h
+0018: 209f      call    009Fh
+0019: 0812      mov     W,T2CON
+001a: 1103      clrb    STATUS.2
+001b: 1003      clrb    STATUS.0
+001c: 3a52      xor     W,#052;('R',82)
+001d: 1d03 2805 jnb     STATUS.2,0005h
+001f: 304f      mov     W,#04F;('O',79)
+0020: 20b6      call    00B6h
+0021: 304b      mov     W,#04B;('K',75)
+0022: 20b6      call    00B6h
+0023: 2091      call    0091h
+0024: 0064      clr     WDT
+0025: 1986 2824 jb      PORTB.3,0024h
+0027: 0181      clr     TMR0
+0028: 1d86 282d jnb     PORTB.3,002Dh
+002a: 0801      mov     W,TMR0
+002b: 0095      mov     CCPR1L,W
+002c: 286f      jmp     006Fh
+002d: 0064      clr     WDT
+002e: 1f81 2828 jnb     TMR0.7,0028h
+0030: 1f01 2828 jnb     TMR0.6,0028h
+0032: 0064      clr     WDT
+0033: 1d86 2833 jnb     PORTB.3,0033h
+0035: 0181      clr     TMR0
+0036: 0064      clr     WDT
+0037: 1986 283d jb      PORTB.3,003Dh
+0039: 0801      mov     W,TMR0
+003a: 0181      clr     TMR0
+003b: 0095      mov     CCPR1L,W
+003c: 291c      jmp     011Ch
+003d: 1f81 2837 jnb     TMR0.7,0037h
+003f: 0064      clr     WDT
+0040: 1986 2840 jb      PORTB.3,0040h
+0042: 0181      clr     TMR0
+0043: 1d86 2843 jnb     PORTB.3,0043h
+0045: 0801      mov     W,TMR0
+0046: 0181      clr     TMR0
+0047: 0095      mov     CCPR1L,W
+0048: 1003      clrb    STATUS.0
+0049: 0c15      mov     W,>>CCPR1L
+004a: 0795      add     CCPR1L,w
+004b: 0064      clr     WDT
+004c: 019b      clr     {01Bh}
+004d: 019a      clr     {01Ah}
+004e: 0199      clr     {019h}
+004f: 0198      clr     {018h}
+0050: 0197      clr     CCP1CON
+0051: 0196      clr     CCPR1H
+0052: 3030      mov     W,#030;('0',48)
+0053: 0094      mov     SSPCON,W
+0054: 2859      jmp     0059h
+0055: 1d86 2855 jnb     PORTB.3,0055h
+0057: 0181      clr     TMR0
+0058: 0064      clr     WDT
+0059: 1003      clrb    STATUS.0
+005a: 0801      mov     W,TMR0
+005b: 0215      mov     W,CCPR1L-W
+005c: 1d03 2859 jnb     STATUS.2,0059h
+005e: 1003      clrb    STATUS.0
+005f: 1d86 2865 jnb     PORTB.3,0065h
+0061: 0181      clr     TMR0
+0062: 1986 2862 jb      PORTB.3,0062h
+0064: 1403      setb    STATUS.0
+0065: 0064      clr     WDT
+0066: 0d96      rl      CCPR1H
+0067: 0d97      rl      CCP1CON
+0068: 0d98      rl      {018h}
+0069: 0d99      rl      {019h}
+006a: 0d9a      rl      {01Ah}
+006b: 0d9b      rl      {01Bh}
+006c: 0b94 2855 djnz    SSPCON,0055h
+006e: 28d4      jmp     00D4h
+006f: 0064      clr     WDT
+0070: 1b95 28f1 jb      CCPR1L.7,00F1h
+0072: 1b15 28f1 jb      CCPR1L.6,00F1h

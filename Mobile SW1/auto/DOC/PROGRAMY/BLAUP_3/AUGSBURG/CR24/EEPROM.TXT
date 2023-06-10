@@ -1,0 +1,7 @@
+PROCESOR :ST6154Q8G/LR
+EEPROM   : 24C01 SMD
+
+Wprowadzanie : 1,2,3,4
+Wywol./Zatw. : ^
+
+UWAGI : 

@@ -1,0 +1,7 @@
+PROCESOR :M37610MDD-101FP
+EEPROM   : 93C46 SMD (2)
+
+Wprowadzanie : 1,2,3,4
+Wywol./Zatw. : DISP 5s
+
+UWAGI : Uwaga na wyprowadzenia pamieci

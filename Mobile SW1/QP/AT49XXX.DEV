@@ -1,0 +1,83 @@
+Group=ATMEL Flash Parallel EEPROM
+
+Device=AT49F512;================ << AT49F512 >> ================
+Socket=8
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 65536 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E128F04
+EndDevice ;================ << AT49F512 >> ================
+;******************************************************************
+Device=AT49F010
+Socket=8
+AddrDivider=1
+CmdMask=0x5F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 76 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x1F17
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E128F04
+EndDevice ;================ << AT49F010 >> ================
+Device=AT49F020;================ << AT49F020 >> ================
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 262144 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E128F04
+EndDevice ;================ << AT49F020 >> ================
+Device=AT49F040;================ << AT49F040 >> ================
+Socket=8
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 524288 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=269312268E128F04
+EndDevice ;================ << AT49F040 >> ================

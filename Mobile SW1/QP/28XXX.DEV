@@ -1,0 +1,85 @@
+Group=Microchip CMOS Parallel EEPROM
+
+;******************************************************************
+[Device]=28C04A;================ << 28C04A >> ================
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 16
+BlankData=0xFF
+EditRect= 0  0 73 23
+BlockLen=1
+ProgTimes=1.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=101312101412
+EndDevice ;================ << 28C04A >> ================
+Device=28C16A
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 73 23
+BlockLen=1
+ProgTimes=1.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=101312101412
+EndDevice ;================ << 28C16A >> ================
+;******************************************************************
+Device=28C17A
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=1.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=111312111412
+EndDevice ;================ << 28C17A >> ================
+;******************************************************************
+Device=28C64A
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=1.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=111312111412000011
+EndDevice ;================ << 28C64A >> ================

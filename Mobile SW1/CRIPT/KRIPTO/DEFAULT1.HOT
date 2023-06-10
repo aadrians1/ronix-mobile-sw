@@ -1,0 +1,79 @@
+[User Menu0]
+Menu_Name=Starting Points
+Menu_Type=TOPLEVEL
+Item0=Starting Points Document,http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/StartingPoints/NetworkStartingPoints.html
+Item1=NCSA Mosaic Demo Document,http://www.ncsa.uiuc.edu/demoweb/demo.html
+Item2=NCSA Mosaic's 'What's New' Page,http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/Docs/whats-new.html
+Item3=NCSA Mosaic Home Page,http://www.ncsa.uiuc.edu/SDG/Software/Mosaic/NCSAMosaicHome.html
+Item4=Windows Mosaic home page,http://www.ncsa.uiuc.edu/SDG/Software/WinMosaic/HomePage.html
+Item5=MENU,UserMenu1
+Item6=MENU,UserMenu2
+Item7=MENU,UserMenu3
+Item8=Finger Gateway,http://cs.indiana.edu/finger/gateway
+Item9=Whois Gateway,gopher://sipb.mit.edu:70/1B%3aInternet%20whois%20servers
+Item10=MENU,UserMenu4
+Item11=Archie Request Form,http://hoohoo.ncsa.uiuc.edu/archie.html
+
+[User Menu1]
+Menu_Name=World Wide Web Info
+Item0=Web Overview,http://www.w3.org/hypertext/WWW/LineMode/Defaults/default.html
+Item1=Web Project,http://www.w3.org/hypertext/WWW/TheProject.html
+Item2=Data Sources By Service,http://www.w3.org/hypertext/DataSources/ByAccess.html
+Item3=Information By Subject,http://www.w3.org/hypertext/DataSources/bySubject/Overview.html
+Item4=Web Servers Directory,http://www.w3.org/hypertext/DataSources/WWW/Servers.html
+Item5=HTML Quick Reference,http://www.ncsa.uiuc.edu/General/Internet/WWW/HTMLQuickRef.html
+Item6=Internet RFCs,http://www.cis.ohio-state.edu:80/hypertext/information/rfc.html
+
+[User Menu2]
+Menu_Name=Home Pages
+Item0=The University of Illinois at Urbana-Champaign,http://www.uiuc.edu
+Item1=NCSA Home Page,http://www.ncsa.uiuc.edu/General/NCSAHome.html
+Item2=CERN Home Page,http://info.cern.ch/
+Item3=UNC-Chapel Hill home page,http://sunsite.unc.edu
+Item4=ANU Bioinformatics,http://life.anu.edu.au:80/
+Item5=Data Research Home Page,http://dranet.dra.com/
+Item6=British Columbia,http://www.cs.ubc.ca/
+Item7=BSDI Home Page,http://www.bsdi.com/
+Item8=Carnegie Mellon,http://www.cs.cmu.edu:8001/Web/FrontDoor.html
+Item9=Cornell Law School,http://www.law.cornell.edu/lii.table.html
+Item10=Cornell Theory Center,http://www.tc.cornell.edu:80/ctc.html
+Item11=DESY Home Page,http://info.desy.de:80/
+Item12=ECE WWW Page,http://www.ece.uiuc.edu
+Item13=Honolulu Home Page,http://www.hcc.hawaii.edu/
+Item14=Indiana Home Page,http://cs.indiana.edu/home-page.html
+Item15=Lysator ACS Sweden,http://www.lysator.liu.se:80/
+Item16=National Center for Atmospheric Research,http://http.ucar.edu/metapage.html
+Item17=Northwestern Home Page,http://www.acns.nwu.edu/
+Item18=CICA's WWW Server ,http://www.cica.indiana.edu
+Item19=Ohio State Home Page,http://www.cis.ohio-state.edu:80/hypertext/information/information.html
+Item20=SSC Home Page,http://www.ssc.gov/SSC.html
+
+[User Menu3]
+Menu_Name=Gopher Servers
+Item0=Gopherspace Overview,gopher://gopher.micro.umn.edu:70/11/Other%20Gopher%20and%20Information%20Servers
+Item1=Veronica Search,gopher://veronica.scs.unr.edu:70/11/veronica
+Item2=NCSA Gopher,gopher://gopher.ncsa.uiuc.edu:70/1
+Item3=PSC Gopher,gopher://gopher.psc.edu:70/1
+Item4=SDSC Gopher,gopher://gopher.sdsc.edu:70/1
+Item5=Original (UMN) Gopher,gopher://gopher.micro.umn.edu:70/1
+Item6=UIUC Gopher,gopher://gopher.uiuc.edu:70/1
+Item7=UIUC Weather Machine,gopher://wx.atmos.uiuc.edu:70/1
+Item8=SDSU Sounds,gopher://athena.sdsu.edu:71/11/sounds
+
+[User Menu4]
+Menu_Name=Other Documents
+Item0=Beginner's Guide to HTML,http://www.ncsa.uiuc.edu/demoweb/html-primer.html
+Item1=InterNIC Info Source,gopher://is.internic.net:70/11/infosource
+Item2=Internet Services List,http://slacvx.slac.stanford.edu:80/misc/internet-services.html
+Item3=Internet Talk Radio,http://www.ncsa.uiuc.edu/radio/radio.html
+Item4=Library of Congress Vatican Exhibit,http://www.ncsa.uiuc.edu/SDG/Experimental/vatican.exhibit/Vatican.exhibit.html
+Item5=NCSA Access Magazine,http://www.ncsa.uiuc.edu/Pubs/access/accessDir.html
+Item6=Doctor Fun,http://sunsite.unc.edu/Dave/drfun.html
+Item7=Postmodern Culture,http://jefferson.village.virginia.edu/pmc/contents.all.html
+Item8=Zippy The Pinhead,http://www.cis.ohio-state.edu:84/
+Item9=Britannica Online,http://www.eb.com/
+Item10=ANU Art History Exhibit,http://www.ncsa.uiuc.edu/SDG/Experimental/anu-art-history/home.html
+Item11=Web/Net T-Shirts,http://sashimi.wwa.com/~notime/mdd/www_shirt.html
+Item12=Census Information,gopher://bigcat.missouri.edu/11/reference/census/us/basictables/
+Item13=FTP Sites,http://hoohoo.ncsa.uiuc.edu:80/ftp-interface.html
+

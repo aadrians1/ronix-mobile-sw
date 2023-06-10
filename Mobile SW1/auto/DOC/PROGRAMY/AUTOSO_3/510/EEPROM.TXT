@@ -1,0 +1,7 @@
+PROCESOR : LC7230
+EEPROM   : 93C46 
+
+Wprowadzanie : 1,2,3,4,5,6,AMS,-,+,BAND
+Wywol./Zatw. : MODE
+
+UWAGI : 

@@ -1,0 +1,16 @@
+
+This package contains source code in C to programs that read information
+from a GSM SIM. They work with Linux. Programs are as follows:
+
+a8crack       resolve the secret number on a SIM using COMP128
+a8cracktest   a test program to verify that the secret recovery algorithm works
+phonebook     dump the phonebook entries on a SIM
+cardtest      dump the ATR and reader version string
+
+With the exception of a8cracktest, these programs will only work
+with an AMC151 reader. The AMC151 will be accessed thru /dev/amc151
+which should be a symbolic link to the serial port the device is
+connected to.
+
+Mike
+

@@ -1,0 +1,49 @@
+
+                  ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+                      SOURCER DEFINITION FILE - TESTYN
+                  ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+
+  
+ ±±±±±±±±±±±±±±±±±± Section 1: CONTROL INFORMATION   ±±±±±±±±±±±±±±±±±±
+  
+uP                 = 8088
+Input filename     = testyn.exe
+Header             = TESTYN with definition file
+Xref               = ON
+  
+  
+ ±±±±±±±±±±±±±±±±±± Section 2: RANGE DEFINITION      ±±±±±±±±±±±±±±±±±±
+
+ ±±±± Segments ±±±±±±±±±±±±±±±±±±±±±±±±±±
+  
+  begin      end      default      seg   seg  
+ seg:off     off     ds     es     type  size  
+ -------     ----    ----   ----   ----- -----
+none                                           ; comments in this area ignored
+
+
+
+   ±±±±±±±±±±±±±±±±±± Section 3  REFERENCE DEFINITIONS ±±±±±±±±±±±±±±±±±±
+
+
+ ÍÍÍÍ Subroutines ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+  seg:off   type & options     label           comments
+  -------   --------------     --------------  --------------
+seg_c:0000  sub, far, c 02     beeper          ; beep subroutine (3rd segment)
+        
+
+ ÍÍÍÍ Locations        ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+  seg:off   type & options     label           comments
+  -------   --------------     --------------  --------------
+seg_a:0028  loc, c 04          begin_program
+seg_a:0043  loc                exit
+
+
+ ÍÍÍÍ Data Items ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+  seg:off   type & options     label           comments
+  -------   --------------     --------------  --------------
+seg_c:002C  da, r 0C           yes_no_message
+seg_c:0038  dw, c 6            speaker_port
+seg_c:003A  dw, c 7            on_off_time
+seg_c:003C  dw, c 8            beep_cycles
+

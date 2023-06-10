@@ -1,0 +1,3 @@
+radio od renault19
+kod w lini 0040
+7189-5

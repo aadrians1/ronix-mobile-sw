@@ -1,0 +1,302 @@
+Group=ROTH CO.,LTD. serial EEPROM
+
+Device=93C06
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32 8
+BlankData=0xFF
+EditRect= 0  0 44  8
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x6
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+Device=93AA46
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 16
+BlankData=0xFF
+EditRect= 0  0 73 10
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x6
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+Device=93C46
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 41 19
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x6
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+
+Device=93LC46
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 6.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 16
+BlankData=0xFF
+EditRect= 0  0 72 10
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x6
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+
+Device=93LC46B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.0 6.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 16
+BlankData=0xFF
+EditRect= 0  0 73 10
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x6
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+
+Device=93AA56
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 1.8 5.5
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 256 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=8
+ProgTimes=10
+EndDevice
+
+Device=93LC56B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.0 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 8
+BlankData=0xFF
+EditRect= 0  0 41 23
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0x8
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice 
+
+Device=93AA66
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 1.8 5.5
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 512 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=8
+ProgTimes=10
+EndDevice
+
+Device=93LC66
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 2.50 5.50
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 512 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=8
+ProgTimes=10
+EndDevice
+
+Device=93LC66B
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 2.5 5.5
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 512 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=8
+ProgTimes=10
+EndDevice
+
+Device=93AA76
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 1.8 5.5
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 1024 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=10
+ProgTimes=10
+EndDevice
+
+
+Device=93LC76
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 2.5 5.5
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 1024 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=10
+ProgTimes=10
+EndDevice
+
+
+Device=93C76
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.5 5.5
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 1024 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=10
+ProgTimes=10
+EndDevice
+
+
+Device=93AA86
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 1.8 5.5
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 2048 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=10
+ProgTimes=10
+EndDevice
+
+Device=93LC86
+Socket=1
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 2.5 5.5
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 2048 8
+DataWidth 8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C0000
+BlockLen=2
+Iden=10
+ProgTimes=10
+EndDevice
+
+Device=93C86
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 77 23
+BlockLen=2
+ProgTimes=10.00 0 0 0
+Iden=0xA
+DataWidth=8
+DisplayASCII=1
+Algo=0B0D0C0F0E0C
+EndDevice ;================ << 93C86 >> ================

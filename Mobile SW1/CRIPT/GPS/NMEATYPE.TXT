@@ -1,0 +1,329 @@
+The full NMEA-0183 standard is available from:
+        Cindy Ensley
+        National Marine Electronics Association
+        P.O. Box 3435
+        New Bern, North Carolina
+        28564-3435
+        Phone (919)637-7759
+        Fax   (919)637-8136
+The current version, as of Nov. 94, is 2.1, and the cost is $75.00
+The above address is new as of Oct. 94.
+
+
+                    TABLE 4 - TALKER IDENTIFIER MNEMONICS
+                            (Address Characters 1 and 2)
+
+        TALKER DEVICE                                        IDENTIFIER
+
+        AUTOPILOT:              General                         *AG
+                                Magnetic                         AP
+        COMMUNICATIONS:         Digital Selective Calling (DSC) *CD
+                                Satellite                       *CS
+                                Radio-Telephone (MF/HF)         *CT
+                                Radio-Telephone (VHF)           *CV
+                                Scanning Receiver               *CX
+        DECCA Navigation                                         DE
+        Direction Finder                                        *DF
+        Electronic Chart Display & Information System (ECDIS)    EC
+        Emergancy Position Indicating Beacon (EPIRB)            *EP
+        Engineroom Monitoring Systems                            ER
+        Global Positioning System (GPS)                          GP
+        HEADING SENSORS:        Compass, Magnetic               *HC
+                                Gyro, North Seeking             *HE
+                                Gyro, Non-North Seeking          HN
+        Integrated Instrumentation                               II
+        Integrated Navigation                                    IN
+        LORAN:                  Loran-A                          LA
+                                Loran-C                          LC
+        OMEGA Navigation System                                  OM
+        Proprietary Code                                         P
+        Radar and/or ARPA                                       *RA
+        Sounder, depth                                          *SD
+        Electronic positioning system, other/general             TR
+        Sounder, scanning                                        SS
+        Turn Rate Indicator                                     *TI
+        TRANSIT Navigation System                                TR
+        VELOCITY SENSORS:       Doppler, other/general          *VD
+                                Speed Log, Water, Magnetic       VM
+                                Speed Log, Water, Mechanical     VW
+        TRANSDUCER                                               YX
+        TIMEKEEPERS, TIME/DATE: Atomic Clock                     ZA
+                                Chronometer                      ZC
+                                Quartz                           ZQ
+                                Radio Update, WWV or WWVH        ZV
+        Weather Instruments                                      WI
+
+
+*
+ Designated by I.E.C. for use with I.M.O. marine electronic
+ devices. This is the minimum requirement for equipment that is
+ specified by I.M.O. to meet S.O.L.A.S. regulations.
+
+                                    Page 17
+6.2 Field Definitions
+       (continued)
+
+                    TABLE 5 - APPROVED SENTENCE FORMATTERS
+
+        AAM - Waypoint Arrival Alarm............................... 22
+        ALM - GPS Almanac Data..................................... 22
+        APB - Autopilot Sentence "B"............................... 23
+       *ASD - Autopilot System Data................................ 23
+        BEC - Bearing & Distance to Waypoint, Dead Reckoning....... 23
+        BOD - Bearing, Origin to Destination....................... 24
+        BWC - Bearing & Distance to Waypoint, Great Circle......... 24
+        BWR - Bearing & Distance to Waypoint, Rhumb Line........... 24
+        BWW - Bearing, Waypoint to Waypoint........................ 24
+        DBT - Depth Below Transducer............................... 24
+        DCN - Decca Position....................................... 25
+       *DPT - Depth................................................ 25
+       *FSI - Frequency Set Information............................ 25
+        GGA - Global Positioning System Fix Data................... 26
+        GLC - Geographic Position, Loran-C......................... 26
+        GLL - Geographic Position, Latitude/Longitude.............. 27
+        GSA - GPS DOP and Active Satellites........................ 27
+        GSV - GPS Satellites in View............................... 27
+        GXA - TRANSIT Position..................................... 28
+       *HDG - Heading, Deviation & Variation....................... 28
+       *HDT - Heading, True........................................ 28
+        HSC - Heading Steering Command............................. 28
+        LCD - Loran-C Signal Data.................................. 29
+        MTW - Water Temperature.................................... 29
+       *MWV - Wind Speed and Angle................................. 29
+        OLN - Omega Lane Numbers................................... 29
+       *OSD - Own Ship Data........................................ 30
+        RMA - Recommend Minimum Specific Loran-C Data.............. 30
+        RMB - Recommend Minimum Navigation Information............. 31
+        RMC - Recommend Minimum Specific GPS/TRANSIT Data.......... 31
+       *ROT - Rate of Turn......................................... 32
+       *RPM - Revolutions.......................................... 32
+       *RSA - Rudder Sensor Angle.................................. 32
+       *RSD - RADAR System Data.................................... 32
+        RTE - Routes............................................... 33
+       *SFI - Scanning Frequency Information....................... 33
+        STN - Multiple Data ID..................................... 34
+        TRF - TRANSIT Fix Data..................................... 34
+       *TTM - Tracked Target Message............................... 35
+       *VBW - Dual Ground/Water Speed.............................. 35
+        VDR - Set and Drift........................................ 35
+        VHW - Water Speed and Heading.............................. 35
+        VLW - Distance Traveled through the Water.................. 36
+        VPW - Speed, Measured Parallel to Wind..................... 36
+        VTG - Track Made Good and Ground Speed..................... 36
+        WCV - Waypoint Closure Velocity............................ 36
+        WNC - Distance, Waypoint to Waypoint....................... 36
+        WPL - Waypoint Loacation................................... 36
+        XDR - Transducer Measurements.............................. 37
+        XTE - Cross-Track Error, Measured.......................... 37
+        XTR - Cross-Track Error, Dead Reckoning.................... 38
+        ZDA - Time & Date.......................................... 38
+        ZFO - UTC & Time from Origin Waypoint...................... 38
+        ZTG - UTC & Time to Destination Waypoint................... 38
+
+
+
+ AAM - Waypoint Arrival Alarm
+
+        Status of arrival (entering the arrival circle, or passing the
+        perpendicular of the course line) at waypoint c--c.
+
+     $--AAM,A,A,x.x,N,c--c*hh<CR><LF>
+            | |  |  |  |
+            | |  |  |  +---------------Waypoint ID
+            | |  |  +------------------Units of radius, nautical miles
+            | |  +---------------------Arrival circle radius
+            | +------------------------Status: A = perpendicular passed at waypoint
+            +--------------------------Status: A = arrival circled entered
+
+
+
+ ALM - GPS Almanac Data
+
+        Contains GPS week number, satellite health and the complete almanac
+        data for one satellite. Multiple messages may be transmitted, one
+        for each satellite in the GPS constellation, up to maximum of 32
+        messages.
+
+     $--ALM,x.x,x.x,xx,x.x,hh,hhhh,...
+             |   |  |   |  |   |
+             |   |  |   |  |   +-------e, eccentricity [3]
+             |   |  |   |  +-----------SV health, bits 17-24 of each almanac page [2]
+             |   |  |   +--------------GPS week number [1]
+             |   |  +------------------Satellite PRN number, 01 to 32
+             |   +---------------------Message number
+             +-------------------------Total number of messages
+
+
+        hh,hhhh,hhhh,hhhhhh,hhhhhh,...
+        |   |    |     |      |
+        |   |    |     |      +--------Omega, argument of perigee [3]
+        |   |    |     +---------------SQRT(A), root of semi-major axis [3]
+        |   |    +---------------------OMEGADOT, rate of right ascension [3]
+        |   +--------------------------(sigma) index i, inclination angle [3]
+        +------------------------------t index OA, almanac reference time [3]
+
+
+        hhhhhh,hhhhhh,hhh,hhh*hh<CR><LF>
+          |      |     |   |
+          |      |     |   +-----------a index f1, clock parameter [3]
+          |      |     +---------------a index f0, clock parameter [3]
+          |      +---------------------M index O , mean anomaly [3]
+          +----------------------------(OMEGA) index O, longitude of ascension node[3]
+
+    [1] Variable lengh integer, 4-digits maximum. Converted from (10) most
+        significant binary bits of Subframe 1, Word 3. Reference Table 20-I,
+        ICD-GPS-200, Rev. B.
+ 
+    [2] Reference paragraph 20.3.3.5.1.3, Table 20-VII and Table 20-VIII, ICD-
+        GPS-200, Rev. B.
+
+    [3] Reference Table 20-VI, ICD-GPS-200, Rev. B for scaling factors and
+        units.
+
+
+
+ APB - Autopilot Sentence "B"
+
+        Commonly used by autopilots this sentence contains navigation
+        receiver warning flag status, cross-track-error, waypoint arriv-
+        al status, initial bearing from origin waypoint to the destina-
+        tion, continuous bearing from present position to destination
+        and recommended heading-to-steer to destination waypoint for the
+        active navigation leg of the journey.
+
+     $--APB,A,A,x.x,a,N,A,A,x.x,a,c--c,...
+            | |  |  | | | |  |  |  |
+            | |  |  | | | |  |  |  +---Destination waypoint ID
+            | |  |  | | | |  |  +-----\M/T Magnetic or True
+            | |  |  | | | |  +--------/Bearing origin to destination
+            | |  |  | | | +------------Status: A = perpendicular passed at waypoint
+            | |  |  | | +--------------Status: A = arrival circle entered
+            | |  |  | +----------------XTE units, nautical miles
+            | |  |  +------------------L/R Direction to steer
+            | |  +---------------------Magnitude of XTE (cross-track-error)
+            | +------------------------Status: V = Loran-C Cycle Lock warning flag
+            |                                  A = OK or not used
+            +--------------------------Status: V = Loran-C Blink or SNR warning
+                                               V = general warning flag for other navigation
+                                                   systems when a reliable fix is not available
+
+
+        x.x,a,x.x,a*hh<CR><LF>
+         |  |  |  |
+         |  |  |  +-------------------\M/T Magnetic or True
+         |  |  +----------------------/Heading-to-steer to destination waypoint
+         |  +-------------------------\M/T Magnetic or True
+         +----------------------------/Bearing, Present position to destination
+
+
+*ASD - Autopilot System Data
+
+        I.M.O. Ref. A342 (IX). Autopilot operating parameters, alarm status
+        commanded course and vessel heading.
+
+        (TO BE DETERMINED)
+
+
+
+ BEC - Bearing & Distance to Waypoint - Dead Reckoning
+
+        Time (UTC) and distance & bearing to, and loacation of, a speci-
+        fied waypoint from the dead-reckoned present position.
+
+     $--BEC,hhmmss.ss,llll.ll,a,...
+              |        |      |
+              |        |      +-------\N/S North or South
+              |        +--------------/Waypoint Latitude
+              +------------------------UTC of observation
+
+
+        yyyyy.yy,a,x.x,T,x.x,M,x.x,N,...
+          |      |  |  |  |  |  |  |
+          |      |  |  |  |  |  |  +--\nautical miles
+          |      |  |  |  |  |  +-----/Distance
+          |      |  |  |  |  +--------\degrees Magnetic
+          |      |  |  |  +-----------/Bearing
+          |      |  |  +--------------\E/W East or West
+          |      |  +-----------------/Waypoint longitude
+          |      +--------------------\N/S North or South
+          +---------------------------/Waypoint latitude
+
+
+        c--c*hh<CR><LF>
+         |
+         +-----------------------------Waypoint ID
+
+
+ BOD - Bearing - Origin to Destination
+
+        Bearing angle of the line, calculated at the origin waypoint, extend-
+        ing to the destination waypoint from the origin waypoint for the
+        active navigation leg of the journey.
+
+     $--BOD,x.x,T,x.x,M,c--c,c--c*hh<CR><LF>
+             |  |  |  |  |    |
+             |  |  |  |  |    +--------Origin waypoint ID
+             |  |  |  |  +-------------Destination waypoint ID
+             |  |  |  +---------------\degrees Magnetic
+             |  |  +------------------/Bearing
+             |  +---------------------\degrees True
+             +------------------------/Bearing
+
+
+
+ BWC - Bearing & Distance to Waypoint - Great Circle
+ BWR - Bearing & Distance to Waypoint - Rhumb Line
+
+        Time (UTC) and distance & bearing to, and location of, a specified
+        waypoint from present position. '$--BWR' data is calculated along the
+        rhumb line from present position rather than along the great circle
+        path.
+
+     $--BWC,hhmmss.ss,llll.ll,a,...
+              |        |      |
+              |        |      +-------\N/S North or South
+              |        +--------------/Waypoint latitude
+              +------------------------UTC of observation
+
+
+        yyyyy.yy,a,x.x,T,x.x,M,x.x,N,...
+          |      |  |  |  |  |  |  |
+          |      |  |  |  |  |  |  +--\nautical miles
+          |      |  |  |  |  |  +-----/Distance
+          |      |  |  |  |  +--------\degrees Magnetic
+          |      |  |  |  +-----------/Bearing
+          |      |  |  +--------------\degrees True
+          |      |  +-----------------/Bearing
+          |      +--------------------\E/W East or West
+          +---------------------------/longitude
+
+        c--c*hh<CR><LF>
+         |
+         +-----------------------------Waypoint ID
+
+
+
+     $--BWR,hhmmss.ss,llll.ll,a,...
+              |        |      |
+              |        |      +-------\N/S North or South
+              |        +--------------/Waypoint latitude
+              +------------------------UTC of observation
+
+
+        yyyyy.yy,a,x.x,T,x.x,M,x.x,N,...
+          |      |  |  |  |  |  |  |
+          |      |  |  |  |  |  |  +--\nautical miles
+          |      |  |  |  |  |  +-----/Distance
+          |      |  |  |  |  +--------\degrees Magnetic
+          |      |  |  |  +-----------/Bearing
+          |      |  |  +--------------\degrees True
+          |      |  +-----------------/Bearing
+          |      +--------------------\E/W East or West
+          +---------------------------/longitude
+
+        c--c*hh<CR><LF>
+         |
+         +-----------------------------Waypoint ID
+
+
+

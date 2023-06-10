@@ -1,0 +1,26 @@
+
+
+	     ************************************       
+	     *****   BMW REVERSE BLAUPUNKT  *****        
+	     ************************************       
+                                           
+
+
+CPU:    ?
+MEMORY: 93C46
+FILE:   BMWREVER.BIN
+CODE:   1714
+INFO:   POTWIERDZENIE < >
+TECH:   
+	1 CYFRA $73 b
+	2 CYFRA $73 a
+	3 CYFRA $72 b
+	4 CYFRA $72 a
+
+LICZNIK B£ÊDÓW 	:$6E a,b = C0 / NOMINALNIE /
+
+PRZYK£AD:
+
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+
+

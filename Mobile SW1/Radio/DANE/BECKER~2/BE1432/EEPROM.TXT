@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 85C81 
+
+Wprowadzanie : 
+Wywol./Zatw. : 
+
+UWAGI : 

@@ -1,0 +1,166 @@
+Group=ATMEL CMOS Parallel EEPROM
+
+
+[Device]=CAT28C16AP
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+SaveDis=1
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=10A212101412A1
+EndDevice 
+[Device]=M28C16
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=10A212101412A1
+EndDevice 
+Device=AT28C64B
+Socket=7 0 0
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=64
+ProgTimes=10.00 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=1113121114121602
+EndDevice ;================ << AT28C64B >> ================
+Device=AT28C64E
+Socket=7
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=5.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=1113121114121602
+EndDevice 
+[Device]=M28C64
+Socket=7 0 0
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=5.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=1113121114121602
+EndDevice 
+Device=AT28C128E
+Socket=7
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=5.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=1113121114121602
+EndDevice 
+Device=AT28C128B
+Socket=7
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=64
+ProgTimes=5.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=1113121114121602
+EndDevice 
+Device=AT28C256
+Socket=7
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=64
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=1113121114121602
+EndDevice 

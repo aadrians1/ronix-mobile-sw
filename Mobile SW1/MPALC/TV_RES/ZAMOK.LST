@@ -1,0 +1,630 @@
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 1
+
+Line   PC    Opcode
+
+0001                       LIST P=16C84,E=2
+0002               ;CONST
+0003         000B  INTCON		EQU	0Bh
+0004         0003  STATUS		EQU	03h
+0005         0001  OPTN		EQU	01h	;(81h)
+0006         0005  TRISA		EQU	05h	;(85h)
+0007         0006  TRISB		EQU	06h	;(86h)
+0008         0008  EECON1		EQU	08h	;(88h)
+0009         0009  EECON2		EQU	09h	;(89h)
+0010         0009  EEADR		EQU	09h
+0011         0008  EEDATA		EQU	08h
+0012               
+0013         0005  PORTA		EQU	05h
+0014         0006  PORTB		EQU	06h
+0015               
+0016               ;RAM
+0017         000E  FLAGS	        EQU     0Eh
+0018         0000  KEYFL		EQU	0	;BITS
+0019         0001  KEYFL1		EQU	1	;
+0020         0002  ALERT		EQU	2	;IF ALERT=1 THEN SIGNALIZATION ACTIVAITED
+0021         0003  EEPROG		EQU	3	;MODE OF WRITE NEW COD
+0022         0004  KEYERR		EQU	4	;IF 1 THEN PRESS ERROR KEY
+0023         0005  ALERTF		EQU	5	;WAIT FOR ACTIVAITED ALERT (FIRST WDT)
+0024               
+0025         000F  SCAN	        EQU     0Fh
+0026         0010  SCAN1	        EQU     10h
+0027         0011  SCANCNT         EQU     11h
+0028         0012  TIME		EQU	12h     ;FOR TM
+0029         0013  TIME1		EQU	13h	;FOR TMLONG
+0030               
+0031         0014  KEYTMR		EQU	14h
+0032         0015  KEYTMR1		EQU	15h
+0033         0016  KEYCNT		EQU	16h	;QWANTITI OF PRESS KEY
+0034         0017  DAT		EQU	17h	;DATA FOR EEPROM
+0035         0018  ADDR		EQU	18h	;ADRESS	FOR EEPROM
+0036               ;Delayreg1       equ     18h
+0037               ;Delayreg2       equ     19h
+0038               ;Doorf           equ     20h
+0039               ; ячейки ПЗУ
+0040               ;EE_Nkey         equ     00h
+0041               ; биты порта А
+0042               ;DOORD           equ     0       ; датчик двери
+0043               ;TRANZ           equ     1       ; силовой транзистор
+0044               ;RED_LED         equ     2       ; светодиод
+0045               ;RELE            equ     3       ; реле направления
+0046               ;ALERT           equ     4       ; сигнализация взлома
+0047               ; биты Doorf
+0048               ;ZAMOK           equ     1
+0049               ;DVER            equ     0
+0050               ; Рабочая секция : начало исполняемого кода
+0051               
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 2
+
+Line   PC    Opcode
+
+0052         0000          ORG     0
+0053   0000  018E  	CLRF	FLAGS
+0054   0001  2830          goto    MAIN
+0055               
+0056         0000          ORG     30h
+0057   0030  208D  MAIN	CALL	INIP
+0058   0031  1585  	BSF	PORTA,3
+0059   0032  20A8  	CALL	TM
+0060   0033  1D0E  	BTFSS	FLAGS,ALERT
+0061   0034  1185  	BCF	PORTA,3
+0062               
+0063               
+0064               
+0065               BEGIN				;CLRF	PORTA
+0066   0035  300E  	MOVLW	B'00001110'
+0067   0036  0086  	MOVWF	PORTB
+0068   0037  20B4  	CALL	KEYPRESS
+0069   0038  180E  	BTFSC	FLAGS,KEYFL
+0070   0039  2864  	GOTO	PRESS
+0071   003A  300D  	MOVLW	B'00001101'
+0072   003B  0086  	MOVWF	PORTB
+0073   003C  20B4  	CALL	KEYPRESS
+0074   003D  180E  	BTFSC	FLAGS,KEYFL
+0075   003E  2864  	GOTO	PRESS
+0076   003F  300B  	MOVLW	B'00001011'
+0077   0040  0086  	MOVWF	PORTB
+0078   0041  20B4  	CALL	KEYPRESS
+0079   0042  180E  	BTFSC	FLAGS,KEYFL
+0080   0043  2864  	GOTO	PRESS
+0081   0044  3007  	MOVLW	B'00000111'
+0082   0045  0086  	MOVWF	PORTB
+0083   0046  20B4  	CALL	KEYPRESS
+0084   0047  180E  	BTFSC	FLAGS,KEYFL
+0085   0048  2864  	GOTO	PRESS
+0086               
+0087   0049  2171  	CALL	ALERTC
+0088   004A  0186  	CLRF	PORTB
+0089               
+0090   004B  3001  	MOVLW	1		;IF EE_PROG THEN NO SLEEP
+0091   004C  198E  	BTFSC	FLAGS,EEPROG
+0092   004D  0095  	MOVWF	KEYTMR1
+0093   004E  0064  	CLRWDT
+0094               
+0095               
+0096   004F  30FF  	MOVLW	B'11111111'
+0097   0050  0514  	ANDWF	KEYTMR,0
+0098   0051  1903  	BZ	TMR3
+0099   0052  2854 m
+0100               0101   0053  285C  	GOTO	TMR4
+0102   0054  30FF  TMR3	MOVLW	B'11111111'
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 3
+
+Line   PC    Opcode
+
+0103   0055  0515  	ANDWF	KEYTMR1,0
+0104   0056  1903  	BZ	SL1
+0105   0057  285E m
+0106               0107   0058  0395  	DECF	KEYTMR1,1
+0108   0059  30FF  	MOVLW	0FFH
+0109   005A  0094  	MOVWF	KEYTMR
+0110   005B  2835  	GOTO	BEGIN
+0111   005C  0394  TMR4	DECF	KEYTMR,1
+0112   005D  2835  	GOTO	BEGIN
+0113               
+0114   005E  3010  SL1	MOVLW	B'00010000'
+0115   005F  0085  	MOVWF	PORTA
+0116               
+0117   0060  0063  	SLEEP
+0118   0061  158B  	BSF	INTCON,3
+0119   0062  100B  	BCF	INTCON,0
+0120   0063  2830  	GOTO	MAIN		
+0121               
+0122   0064  2171  PRESS	CALL	ALERTC
+0123   0065  30FF  	MOVLW	0ffh
+0124   0066  0094  	MOVWF	KEYTMR
+0125   0067  3001  	MOVLW	1h
+0126   0068  0095  	MOVWF	KEYTMR1
+0127   0069  188E  	BTFSC	FLAGS,KEYFL1
+0128   006A  2871  	GOTO	CON1
+0129   006B  3001  	MOVLW	01h
+0130   006C  0091  	MOVWF	SCANCNT
+0131   006D  148E  	BSF	FLAGS,KEYFL1
+0132   006E  080F  	MOVFW	SCAN
+0133   006F  0090  	MOVWF	SCAN1
+0134   0070  2835  	GOTO	BEGIN
+0135               
+0136   0071  0810  CON1	MOVFW	SCAN1
+0137   0072  060F  	XORWF	SCAN,0
+0138   0073  1903  	BZ	CON2
+0139   0074  2877 m
+0140               0141   0075  108E  	BCF	FLAGS,KEYFL1
+0142   0076  2835  	GOTO	BEGIN
+0143   0077  0B91  CON2	DECFSZ	SCANCNT,1
+0144   0078  2835  	GOTO	BEGIN
+0145   0079  20BF  	CALL	DECOD
+0146   007A  0064  	CLRWDT
+0147   007B  0186  	CLRF	PORTB
+0148   007C  108E  	BCF	FLAGS,KEYFL1
+0149   007D  0064  	CLRWDT
+0150   007E  30FF  	MOVLW	0FFH
+0151   007F  0094  	MOVWF	KEYTMR
+0152   0080  3001  	MOVLW	1h
+0153   0081  0095  	MOVWF	KEYTMR1
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 4
+
+Line   PC    Opcode
+
+0154   0082  2171  CON3	CALL	ALERTC
+0155   0083  0064  	CLRWDT
+0156   0084  20B4  	CALL	KEYPRESS
+0157   0085  180E  	BTFSC	FLAGS,KEYFL
+0158   0086  288A  	GOTO	CON4		
+0159   0087  0B91  	DECFSZ	SCANCNT,1
+0160   0088  2882  	GOTO	CON3
+0161   0089  2835  	GOTO	BEGIN
+0162   008A  300F  CON4	MOVLW	0fh
+0163   008B  0091  	MOVWF	SCANCNT
+0164   008C  2882  	GOTO	CON3
+0165               
+0166               
+0167               
+0168   008D  0064  INIP    CLRWDT
+0169   008E  120E  	BCF	FLAGS,KEYERR
+0170   008F  1A05  	BTFSC	PORTA,4
+0171   0090  128E  	BCF	FLAGS,ALERTF
+0172   0091  300C  	MOVLW	0Ch
+0173   0092  0094  	MOVWF	KEYTMR
+0174   0093  0195  	CLRF	KEYTMR1
+0175   0094  0196  	CLRF	KEYCNT
+0176   0095  0185  	CLRF	PORTA
+0177   0096  0186          CLRF    PORTB
+0178   0097  018B  	CLRF	INTCON
+0179   0098  158B  	BSF	INTCON,3    
+0180   0099  170B  	BSF	INTCON,6
+0181   009A  1683  	BSF     STATUS,5
+0182   009B  3010          MOVLW   B'00010000'
+0183   009C  0085          MOVWF   TRISA
+0184   009D  30F0          MOVLW   B'11110000'
+0185   009E  0086          MOVWF   TRISB
+0186   009F  1401          BSF     OPTN,0
+0187   00A0  1481          BSF     OPTN,1
+0188   00A1  1501          BSF     OPTN,2
+0189   00A2  1181          BCF     OPTN,3
+0190   00A3  1281          BCF     OPTN,5         ;INTERNAL GENERATOR
+0191   00A4  1381          BCF     OPTN,7         ;RESISTORS WITH Vdd
+0192   00A5  1283          BCF	STATUS,5
+0193   00A6  0064  	CLRWDT
+0194   00A7  0008  	RETURN
+0195               
+0196   00A8  300F  TM      MOVLW   0fh
+0197   00A9  0092          MOVWF	TIME
+0198   00AA  0064  TMCON	CLRWDT
+0199   00AB  0B92  	DECFSZ	TIME,1
+0200   00AC  28AA  	GOTO	TMCON
+0201   00AD  0008  	RETURN
+0202               
+0203   00AE  30EF  TML	MOVLW   0EFh
+0204   00AF  0093          MOVWF	TIME1
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 5
+
+Line   PC    Opcode
+
+0205   00B0  20A8  TMLCON	CALL	TM
+0206   00B1  0B93  	DECFSZ	TIME1,1
+0207   00B2  28B0  	GOTO	TMLCON
+0208   00B3  0008  	RETURN
+0209               
+0210               KEYPRESS
+0211   00B4  0064  	CLRWDT
+0212   00B5  0806  	MOVFW	PORTB
+0213   00B6  008F  	MOVWF	SCAN
+0214   00B7  39F0  	ANDLW	B'11110000'
+0215   00B8  3AF0  	XORLW	B'11110000'
+0216   00B9  1903  	BZ	NOTP
+0217   00BA  28BD m
+0218               0219   00BB  140E  	BSF	FLAGS,KEYFL
+0220   00BC  0008  	RETURN
+0221   00BD  100E  NOTP	BCF	FLAGS,KEYFL
+0222   00BE  0008  	RETURN
+0223               
+0224   00BF  3008  DECOD	MOVLW	B'00001000'
+0225   00C0  0085  	MOVWF	PORTA
+0226   00C1  20A8  	CALL	TM
+0227   00C2  0185  	CLRF	PORTA
+0228               
+0229   00C3  080F  	MOVFW	SCAN
+0230   00C4  3AEE  	XORLW	B'11101110'
+0231   00C5  1903  	BZ	PROG1
+0232   00C6  2902 m
+0233               0234               
+0235   00C7  080F  	MOVFW	SCAN
+0236   00C8  3AED  	XORLW	B'11101101'
+0237   00C9  1903  	BZ	ALERT1
+0238   00CA  2916 m
+0239               0240               
+0241   00CB  080F  	MOVFW	SCAN
+0242   00CC  3AEB  	XORLW	B'11101011'
+0243   00CD  1903  	BZ	OPEN
+0244   00CE  2967 m
+0245               0246               
+0247   00CF  080F  	MOVFW	SCAN
+0248   00D0  3AE7  	XORLW	B'11100111'
+0249               ;	BZ	CLOSE
+0250               
+0251   00D1  080F  	MOVFW	SCAN
+0252   00D2  3ADE  	XORLW	B'11011110'
+0253   00D3  1903  	BZ	DIG1
+0254   00D4  291D m
+0255               16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 6
+
+Line   PC    Opcode
+
+0256               
+0257   00D5  080F  	MOVFW	SCAN
+0258   00D6  3ADD  	XORLW	B'11011101'
+0259   00D7  1903  	BZ	DIG2
+0260   00D8  2920 m
+0261               0262               
+0263   00D9  080F  	MOVFW	SCAN
+0264   00DA  3ADB  	XORLW	B'11011011'
+0265   00DB  1903  	BZ	DIG3
+0266   00DC  2923 m
+0267               0268               
+0269   00DD  080F  	MOVFW	SCAN
+0270   00DE  3AD7  	XORLW	B'11010111'
+0271   00DF  1903  	BZ	DIG4
+0272   00E0  2926 m
+0273               0274               
+0275   00E1  080F  	MOVFW	SCAN
+0276   00E2  3ABE  	XORLW	B'10111110'
+0277   00E3  1903  	BZ	DIG5
+0278   00E4  2929 m
+0279               0280               
+0281   00E5  080F  	MOVFW	SCAN
+0282   00E6  3ABD  	XORLW	B'10111101'
+0283   00E7  1903  	BZ	DIG6
+0284   00E8  292C m
+0285               0286               
+0287   00E9  080F  	MOVFW	SCAN
+0288   00EA  3ABB  	XORLW	B'10111011'
+0289   00EB  1903  	BZ	DIG7
+0290   00EC  292F m
+0291               0292               
+0293   00ED  080F  	MOVFW	SCAN
+0294   00EE  3AB7  	XORLW	B'10110111'
+0295   00EF  1903  	BZ	DIG8
+0296   00F0  2932 m
+0297               0298               
+0299   00F1  080F  	MOVFW	SCAN
+0300   00F2  3A7E  	XORLW	B'01111110'
+0301   00F3  1903  	BZ	DIG9
+0302   00F4  2935 m
+0303               0304               
+0305   00F5  080F  	MOVFW	SCAN
+0306   00F6  3A7D  	XORLW	B'01111101'
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 7
+
+Line   PC    Opcode
+
+0307   00F7  1903  	BZ	DIG0
+0308   00F8  2938 m
+0309               0310               
+0311   00F9  080F  	MOVFW	SCAN
+0312   00FA  3A7B  	XORLW	B'01111011'
+0313   00FB  1903  	BZ	DIGA
+0314   00FC  293B m
+0315               0316               
+0317   00FD  080F  	MOVFW	SCAN
+0318   00FE  3A77  	XORLW	B'01110111'
+0319   00FF  1903  	BZ	DIGB
+0320   0100  293E m
+0321               0322   0101  0008  	RETURN
+0323               
+0324   0102  198E  PROG1	BTFSC	FLAGS,EEPROG
+0325   0103  2909  	GOTO	PROG2
+0326   0104  158E  	BSF	FLAGS,EEPROG
+0327   0105  110E  	BCF	FLAGS,ALERT
+0328   0106  120E  	BCF	FLAGS,KEYERR	
+0329   0107  0196  	CLRF	KEYCNT
+0330   0108  0008  	RETURN	
+0331   0109  118E  PROG2	BCF	FLAGS,EEPROG
+0332   010A  303F  	MOVLW	3Fh
+0333   010B  0089  	MOVWF	EEADR
+0334   010C  0100  	CLRW
+0335   010D  0616  	XORWF	KEYCNT,0
+0336   010E  1903  	BZ	EXITPR
+0337   010F  2915 m
+0338               0339   0110  0396  	DECF	KEYCNT,1
+0340   0111  0816  	MOVFW	KEYCNT
+0341   0112  0088  	MOVWF	EEDATA
+0342   0113  2182  	CALL	EEWRITE	
+0343   0114  0196  	CLRF	KEYCNT
+0344   0115  0008  EXITPR	RETURN
+0345               
+0346   0116  190E  ALERT1	BTFSC	FLAGS,ALERT
+0347   0117  291B  	GOTO	RALERT
+0348   0118  150E  	BSF	FLAGS,ALERT
+0349   0119  168E  	BSF	FLAGS,ALERTF
+0350   011A  0008  	RETURN
+0351   011B  110E  RALERT	BCF	FLAGS,ALERT
+0352   011C  0008  	RETURN
+0353               
+0354   011D  3001  DIG1	MOVLW	1
+0355   011E  0097  	MOVWF	DAT
+0356   011F  2941  	GOTO	DIGCON
+0357   0120  3002  DIG2	MOVLW	2
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 8
+
+Line   PC    Opcode
+
+0358   0121  0097  	MOVWF	DAT
+0359   0122  2941  	GOTO	DIGCON
+0360   0123  3003  DIG3	MOVLW	3
+0361   0124  0097  	MOVWF	DAT
+0362   0125  2941  	GOTO	DIGCON
+0363   0126  3004  DIG4	MOVLW	4
+0364   0127  0097  	MOVWF	DAT
+0365   0128  2941  	GOTO	DIGCON
+0366   0129  3005  DIG5	MOVLW	5
+0367   012A  0097  	MOVWF	DAT
+0368   012B  2941  	GOTO	DIGCON
+0369   012C  3006  DIG6	MOVLW	6
+0370   012D  0097  	MOVWF	DAT
+0371   012E  2941  	GOTO	DIGCON
+0372   012F  3007  DIG7	MOVLW	7
+0373   0130  0097  	MOVWF	DAT
+0374   0131  2941  	GOTO	DIGCON
+0375   0132  3008  DIG8	MOVLW	8
+0376   0133  0097  	MOVWF	DAT
+0377   0134  2941  	GOTO	DIGCON
+0378   0135  3009  DIG9	MOVLW	9
+0379   0136  0097  	MOVWF	DAT
+0380   0137  2941  	GOTO	DIGCON
+0381   0138  3000  DIG0	MOVLW	0
+0382   0139  0097  	MOVWF	DAT
+0383   013A  2941  	GOTO	DIGCON
+0384   013B  300A  DIGA	MOVLW	0Ah
+0385   013C  0097  	MOVWF	DAT
+0386   013D  2941  	GOTO	DIGCON
+0387   013E  300B  DIGB	MOVLW	0Bh
+0388   013F  0097  	MOVWF	DAT
+0389   0140  2941  	GOTO	DIGCON
+0390               
+0391               
+0392   0141  1E0E  DIGCON	BTFSS	FLAGS,KEYERR	;!
+0393   0142  2945  	GOTO	DIGCON1
+0394   0143  0196  	CLRF	KEYCNT
+0395               ;	MOVLW	8
+0396               ;	MOVWF	TIME
+0397               ;	CALL	TMCON
+0398   0144  0008  	RETURN	
+0399               
+0400   0145  198E  DIGCON1	BTFSC	FLAGS,EEPROG
+0401   0146  2960  	GOTO	PROGKEY
+0402               	
+0403   0147  0816  	MOVFW	KEYCNT
+0404   0148  0089  	MOVWF	EEADR
+0405   0149  218F  	CALL	EEREAD
+0406   014A  0808  	MOVFW	EEDATA
+0407   014B  0617  	XORWF	DAT,0
+0408   014C  1903  	BZ	KEY_OK
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 9
+
+Line   PC    Opcode
+
+0409   014D  2951 m
+0410               0411   014E  160E  	BSF	FLAGS,KEYERR
+0412               ;	CALL	BEEP
+0413   014F  0196  	CLRF	KEYCNT
+0414   0150  0008  	RETURN
+0415   0151  0064  KEY_OK	CLRWDT
+0416   0152  303F  	MOVLW	3Fh
+0417   0153  0089  	MOVWF	EEADR	
+0418   0154  218F  	CALL	EEREAD
+0419   0155  0808  	MOVFW	EEDATA
+0420   0156  0616  	XORWF	KEYCNT,0
+0421   0157  1903  	BZ	COD_OK
+0422   0158  295B m
+0423               0424   0159  0A96  	INCF	KEYCNT
+0425   015A  0008  	RETURN
+0426   015B  1A0E  COD_OK	BTFSC	FLAGS,KEYERR
+0427   015C  0008  	RETURN
+0428   015D  110E  	BCF	FLAGS,ALERT
+0429   015E  0196  	CLRF	KEYCNT
+0430   015F  2967  	GOTO	OPEN
+0431               
+0432   0160  0816  PROGKEY	MOVFW	KEYCNT
+0433   0161  0089  	MOVWF	EEADR
+0434   0162  0817  	MOVFW	DAT
+0435   0163  0088  	MOVWF	EEDATA
+0436   0164  2182  	CALL	EEWRITE
+0437   0165  0A96  	INCF	KEYCNT
+0438   0166  0008  	RETURN
+0439               
+0440   0167  1485  OPEN	BSF	PORTA,1
+0441   0168  20AE  	CALL	TML
+0442   0169  1085  	BCF	PORTA,1
+0443   016A  0008  	RETURN
+0444               
+0445   016B  1405  BEEP	BSF	PORTA,0
+0446   016C  30FF  	MOVLW	0FFh
+0447   016D  0092  	MOVWF	TIME
+0448   016E  20AA  	CALL	TMCON
+0449   016F  1005  	BCF	PORTA,0
+0450   0170  0008  	RETURN
+0451               
+0452               
+0453   0171  1D0E  ALERTC	BTFSS	FLAGS,ALERT
+0454   0172  0008  	RETURN
+0455   0173  1A8E  	BTFSC	FLAGS,ALERTF
+0456   0174  0008  	RETURN
+0457   0175  1A05  	BTFSC	PORTA,4
+0458   0176  0008  	RETURN
+0459   0177  1505  	BSF	PORTA,2
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 10
+
+Line   PC    Opcode
+
+0460   0178  20AE  	CALL	TML
+0461   0179  20AE  	CALL	TML
+0462   017A  20AE  	CALL	TML
+0463   017B  20AE  	CALL	TML
+0464   017C  20AE  	CALL	TML
+0465   017D  20AE  	CALL	TML
+0466               
+0467               
+0468   017E  20AE  	CALL	TML
+0469   017F  1105  	BCF	PORTA,2
+0470   0180  110E  	BCF	FLAGS,ALERT
+0471   0181  0008  	RETURN
+0472               
+0473               
+0474               ; Эта подпpогpамма записывает в EEPROM
+0475               ;
+0476   0182  1683  EEWRITE	BSF	STATUS,5
+0477   0183  1508          BSF	EECON1,2
+0478   0184  3055          MOVLW	055h
+0479   0185  0089  	MOVWF	EECON2
+0480   0186  30AA  	MOVLW	0AAh
+0481   0187  0089  	MOVWF	EECON2
+0482   0188  1488  	BSF	EECON1,1
+0483   0189  1E08  _EEWRI	BTFSS	EECON1,4
+0484   018A  2989  	GOTO	_EEWRI
+0485               
+0486   018B  1108  	BCF	EECON1,2
+0487   018C  1208  	BCF	EECON1,4
+0488   018D  1283  	BCF	STATUS,5
+0489               ;	MOVFW	EEDATA
+0490               ;	MOVWF	DAT
+0491               ;	CALL	EEREAD
+0492               ;	MOVFW	EEDATA
+0493               ;	XORWF	DAT,0
+0494               ;	BZ	PR1
+0495               ;	CALL	OPEN
+0496   018E  0008  PR1	RETURN
+0497               
+0498               ; Эта подпpогpамма считывает из EEPROM
+0499               
+0500   018F  1683  EEREAD	BSF	STATUS,5h
+0501   0190  1408  	BSF	EECON1,0
+0502   0191  1283          BCF	STATUS,5h
+0503   0192  0008  	RETURN
+0504               
+16c5x/xx Cross-Assembler V4.14 Released  Sun Apr 02 23:21:43 2000  Page 11
+
+
+
+Cross-Reference Listing
+LABEL        VALUE        DEFN        REFERENCES
+ADDR         24           35          35     
+ALERT        2            20          20     60     327    346    348    351    
+                                      428    453    470    
+ALERT1       278          346         237    346    
+ALERTC       369          453         87     122    154    453    
+ALERTF       5            23          23     171    349    455    
+BEEP         363          445         445    
+BEGIN        53           65          65     110    112    134    142    144    
+                                      161    
+COD_OK       347          426         421    426    
+CON1         113          136         128    136    
+CON2         119          143         138    143    
+CON3         130          154         154    160    164    
+CON4         138          162         158    162    
+DAT          23           34          34     355    358    361    364    367    
+                                      370    373    376    379    382    385    
+                                      388    407    434    
+DECOD        191          224         145    224    
+DIG0         312          381         307    381    
+DIG1         285          354         253    354    
+DIG2         288          357         259    357    
+DIG3         291          360         265    360    
+DIG4         294          363         271    363    
+DIG5         297          366         277    366    
+DIG6         300          369         283    369    
+DIG7         303          372         289    372    
+DIG8         306          375         295    375    
+DIG9         309          378         301    378    
+DIGA         315          384         313    384    
+DIGB         318          387         319    387    
+DIGCON       321          392         356    359    362    365    368    371    
+                                      374    377    380    383    386    389    
+                                      392    
+DIGCON1      325          400         393    400    
+EEADR        9            10          10     333    404    417    433    
+EECON1       8            8           8      477    482    483    486    487    
+                                      501    
+EECON2       9            9           9      479    481    
+EEDATA       8            11          11     341    406    419    435    
+EEPROG       3            21          21     91     324    326    331    400    
+EEREAD       399          500         405    418    500    
+EEWRITE      386          476         342    436    476    
+EXITPR       277          344         336    344    
+FLAGS        14           17          17     53     60     69     74     79     
+                                      84     91     127    131    141    148    
+                                      157    169    171    219    221    324    
+                                      326    327    328    331    346    348    
+                                      349    351    392    400    411    426    
+                                      428    453    455    470    
+INIP         141          168         57     168    
+INTCON       11           3           3      118    119    178    179    180    
+KEYCNT       22           33          33     175    329    335    339    340    
+                                      343    394    403    413    420    424    
+                                      429    432    437    
+KEYERR       4            22          22     169    328    392    411    426    
+KEYFL        0            18          18     69     74     79     84     157    
+                                      219    221    
+KEYFL1       1            19          19     127    131    141    148    
+KEYPRESS     180          210         68     73     78     83     156    210    
+KEYTMR       20           31          31     97     109    111    124    151    
+                                      173    
+KEYTMR1      21           32          32     92     103    107    126    153    
+                                      174    
+KEY_OK       337          415         408    415    
+MAIN         48           57          54     57     120    
+NOTP         189          221         216    221    
+OPEN         359          440         243    430    440    
+OPTN         1            5           5      186    187    188    189    190    
+                                      191    
+PORTA        5            13          13     58     61     115    170    176    
+                                      225    227    440    442    445    449    
+                                      457    459    469    
+PORTB        6            14          14     67     72     77     82     88     
+                                      147    177    212    
+PR1          398          496         496    
+PRESS        100          122         70     75     80     85     122    
+PROG1        258          324         231    324    
+PROG2        265          331         325    331    
+PROGKEY      352          432         401    432    
+RALERT       283          351         347    351    
+SCAN         15           25          25     132    137    213    229    235    
+                                      241    247    251    257    263    269    
+                                      275    281    287    293    299    305    
+                                      311    317    
+SCAN1        16           26          26     133    136    
+SCANCNT      17           27          27     130    143    159    163    
+SL1          94           114         104    114    
+STATUS       3            4           4      181    192    476    488    500    
+                                      502    
+TIME         18           28          28     197    199    447    
+TIME1        19           29          29     204    206    
+TM           168          196         59     196    205    226    
+TMCON        170          198         198    200    448    
+TML          174          203         203    441    460    461    462    463    
+                                      464    465    468    
+TMLCON       176          205         205    207    
+TMR3         84           102         98     102    
+TMR4         92           111         101    111    
+TRISA        5            6           6      183    
+TRISB        6            7           7      185    
+_EEWRI       393          483         483    484    
+

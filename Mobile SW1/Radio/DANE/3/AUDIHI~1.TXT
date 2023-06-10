@@ -1,0 +1,37 @@
+
+
+	     ***********************************       
+	     *****   AUDI HITACHI GAMMA    *****        
+	     ***********************************       
+
+
+CPU:    ?
+MEMORY: C2444 /ORGANIZACJA:32X8/
+FILE:   GAMHIT.BIN /BRAK/
+CODE:   1069
+INFO:   
+TECH:   
+	1 CYFRA $08 ab
+	2 CYFRA $06 ab
+	3 CYFRA $04 ab
+	4 CYFRA $02 ab
+
+LICZNIK B£ÊDÓW :$0A=LICZBA W/G TABELI PRAWDY
+		$0C=00 MO¯NA WPROWADZAÆ KOD
+		$0C=F0 RADIO Z KODEM
+		    30 RADIO BEZ KODU
+TABELA PRAWDY:
+ 0=00
+ 1=80
+ 2=40
+ 3=C0
+ 4=20
+ 5=A0
+ 6=60
+ 7=E0
+ 8=10
+ 9=90
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F  
+00000  AA AA 90 00 ¦ 60 00 00 00 ¦ 80 00 00 00 ¦ F0 00 00 00
+00010  00 00 00 00 ¦ 00 00 00 00 ¦ 00 00 00 00 ¦ 00 00 00 00
+

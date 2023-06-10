@@ -1,0 +1,119 @@
+XTIDE
+
+by Scott A. Christensen  (scottchristensen@hotmail.com)
+
+
+This interface takes advantage of the fact that the IDE drive does not
+use the register at address 0 with CS3FX enabled.  It uses this location
+for reading and writing the phantom latches.  The following assumes the
+DIP switch is set to select the IDE board at 300H:
+
+#define CS1FX          0x300     /* 300..307 */
+#define CS3FX          0x308     /* 308..30F */
+
+To read a 16 bit word:
+
+  loByte = inportb ( CS1FX );           /* read lo & trigger hi latch */
+  hiByte = inportb ( CS3FX );           /* now get contents of latch  */
+  word   = ( hiByte << 8 ) | loByte;
+
+To write a 16 bit word:
+
+  outportb ( CS3FX, ( word >> 8 ) );    /* write hi byte to latch */
+  outportb ( CS1FX, ( word & 0xFF) );   /* write lo & trigger hi  */
+
+Other than changing the port i/o addresses, irq, and using the
+above code snippet to do the 16 bit i/o, the standard Linux hd
+device driver (made 16 bit friendly) should work with the interface.
+
+                                                          IDE
+                                                        ---------
+                                      +---------------->|D8-D15 |
+ISA BUS         U1             U2     |     U3          |       |
+--------      -------        -------  |   -------       |       |
+| D0-D7|<---->|A   B|<-+---->|D   Q|<-+-->|D   Q|<--+-->|D0-D7  |
+|  *IOR|----->|DIR  |  |  2->|*OC  |   4->|*OC  |   |   |       |
+|      |   1->|*G   |  |  3->|C    |   5->|C    |   |   |       |
+|      |      -------  |     -------      -------   |   |       |
+|      |               +----------------------------+   |       |
+|      |                         +--------------------->|*DASP  |
+|      |                   |\ |  |          U4          |       |
+|      |   VCC---/\/\/\/---| >|--+        -------       |       |
+|      |         151 OHM   |/ |        6->|1D 1Q|------>|*CS3FX |
+|      |                   LED         7->|2D 2Q|------>|*CS1FX |
+|    A2|--------------------------------->|3D 3Q|------>|A2     |
+|    A0|--------------------------------->|4D 4Q|------>|A0     |
+|    A1|--------------------------------->|5D 5Q|------>|A1     |
+|  *IOR|--------------------------------->|6D 6Q|------>|*IOR   |
+|  *IOW|--------------------------------->|7D 7Q|------>|*IOW   |
+|      |       U5:B     +---------------->|8D 8Q|------>|*RESET |
+|      |        |\      |            GND->|*OC  |       |       |
+|RESDRV|--------| >O----+            VCC->|C    |       |       |
+|      |        |/                        -------       |       |
+|  IRQ5|<-----------------------------------------------|INTRQ  |
+|      |                  U6                            ---------
+|      |                --------
+|   AEN|--------------->|*G    |    +--1          U5:A     U8:A
+| A4-A9|--------------->|P0-P5 |    |              |\     ------
+|      |           GND->|P6    |    |         +----| >O---|    |
+|      |           GND->|P7    |    |         |    |/     | OR |---6
+|      |   GND->8DIPSW->|Q0-Q7 |    +---------|-----------|    |
+|      |                |      |    |         |           ------
+|      |                |  *P=Q|----+         |            U8:B
+|      |                --------    |         |           ------
+|    A3|----------------------------|---------+-----------|    |
+|      |                            |                     | OR |---7
+|      |                            +---------------------|    |
+|      |                            |        U7           ------
+|      |                            |    ----------    U5:C
+|  *IOW|----------------------------|--->|A       |     |\
+|  *IOR|----------------------------|--->|B     Y1|-----| >O---5
+|    A3|----------------------------|--->|C       |     |/
+|      |                            |    |      Y2|------------2
+|      |     U8:C                   |    |      Y5|------------4
+|      |    ------  U5:E   +--------|--->|G1      |    U5:D
+|    A2|--->|    |   |\    |        +--->|*G2A    |     |\
+|      |    | OR |---| >O--+    +------->|*G2B  Y6|-----| >O---3
+|    A1|--->|    |   |/         |        ----------     |/
+|      |    ------              |
+|    A0|------------------------+
+|      |
+--------
+
+IDE CONNECTOR
+-------------------------
+ 1   *RESET       2   GND
+ 3   D7           4   D8
+ 5   D6           6   D9
+ 7   D5           8   D10
+ 9   D4          10   D11
+11   D3          12   D12
+13   D2          14   D13
+15   D1          16   D14
+17   D0          18   D15
+19   GND         20   (keypin)
+21   DMARQ       22   GND
+23   *IOW        24   GND
+25   *IOR        26   GND
+27   IORDY       28   CSEL
+29   DMACK       30   GND
+31   INTRQ       32   IOCS16
+33   A1          34   PDIAG
+35   A0          36   A2
+37   *CS1FX      38   *CS3FX
+39   *DASP       40   GND
+
+Pins 3, 21, and 27 each need a 10K pulldown to GND.
+Pin 28 needs a 10K pullup to VCC.         
+Pins 20, 29, 32, and 34 are no connection.
+
+ICs Used
+------------------
+U1           74245
+U2, U3, U4   74573
+U5           7404
+U6           74520
+U7           74138
+U8           7432
+
+

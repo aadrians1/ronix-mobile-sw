@@ -1,0 +1,6 @@
+PROCESSOR : UPD1719C 574
+EEPROM    : GRN-001 (93C46)
+
+Na LCD "SAFE" ok 4s nastepnie "1000"
+wprowadzenie kodu  : 1,2,3,4
+zatwierdzenie kodu : UM

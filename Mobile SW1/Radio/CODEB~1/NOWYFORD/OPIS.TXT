@@ -1,0 +1,27 @@
+Opis readera pamieci z fordow 2006, 2014 itp.  (uk³ady 77007, 77005)
+
+Schemat urzadzenia przedstawiony jest w formacie gif.
+Przy odrobinie cierpliwosci caly uklad da sie zmiescic we wtyczce
+DB25. Uklad zasilany jest z portu CENTRONICS. Prad pobierany przez uklad jest
+na tyle maly, ze mo¿na zrezygnowac z zewnetrznego zasilania.
+
+Nalezy wykonac polaczenia pamieci z interface-m zgodnie ze schematem. Jako
+rezystory podciagajace nalezy zastosowac potencjometry.Na poczatku ustawic je
+w polozeniu srodkowym. Po sprawdzeniu poprawnosci polaczen i podlaczeniu
+zasilania +5V do pamieci nalezy odpalic program 2006.exe.
+6 noge pamieci mozna podlaczyc do masy lub do nogi 4 DO.
+Lepiej jest podlaczyc do masy, lecz wowczas nie wszystkie egzemplarze pamieci moga dac sie
+odczytac. Po uruchomieniu programu pojawi sie po chwili zawartosc tej pamieci
+( lub nie pojawi jesli nie sa prawidlowo ustawione potencjometry).
+Teraz wcisnac dowolny klawisz np. P,L itp i wcisnac ENTER. Program bedzie
+cyklicznie odczytywal pamiec. Teraz nalezy tak ustawic potencjometry aby w
+komorkach od 12h : pojawily sie liczby 55 2D 32 44.Oznacza to prawidlowe
+ustawienie  potencjometrow. Dzialanie programu trzeba przerwac klawiszami
+Ctrl-Break. Wowczas nalezy spisac zawartosc 8 komorek pamieci od komorki 16 :
+i podac te liczby programowi kalkulat.exe.
+Aby wyzerowac licznik bledow nalezy wpisac do komorek 10h liczbe 75AB lub AB75.
+Robi sie to w nastepujacy sposob : nalezy odpalic program 2006.exe. Program
+po  wyswietleniu zawartosci pamieci zatrzyma sie. Teraz nalezy wpisac 8 75AB
+- czyli adres 16 bitowej komorki oraz 16 bit dana. Pamiec ta programuje sie
+jako 16 bitowa. 
+

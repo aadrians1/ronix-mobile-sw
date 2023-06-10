@@ -1,0 +1,85 @@
+Group=Sony CXK101X SPI Serial EEPROM
+
+;******************************************************************
+Device=CXK1011
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 64 8
+BlankData=0xFF
+EditRect= 0  0 42 11
+BlockLen=1
+ProgTimes=20.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=88898B888A8B
+EndDevice ;================ << CXK1011 >> ================
+;******************************************************************
+Device=PDG6011;================ << PDG6011 >> ================
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 64 8
+BlankData=0xFF
+EditRect= 0  0 42 11
+BlockLen=1
+ProgTimes=20.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=88898B888A8B
+EndDevice ;================ << PDG6011 >> ================
+Device=CXK1012
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 41 19
+BlockLen=1
+ProgTimes=20.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=88898B888A8B
+EndDevice ;================ << CXK1012 >> ================
+;******************************************************************
+Device=CXK1013
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+BlankData=0xFF
+EditRect= 0  0 73 19
+BlockLen=1
+ProgTimes=20.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=88898B888A8B
+EndDevice ;================ << CXK1013 >> ================

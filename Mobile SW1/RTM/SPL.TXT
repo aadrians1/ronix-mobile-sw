@@ -1,0 +1,42 @@
+SPL.EXE
+260-01 PLUS
+260-02 ERA
+
+SP-Lock :Servce Provider lock-jest to blokada dostawcy uslug,czyli 
+         operatora konkretnej sieci GSM.Wiekszosc telefonow Noki
+         mozna zablokowac do czterech operatorow.
+
+Ogolna postac kodu jest nastepujaca:
+
+             #pw+(master code)+Y#
+
+master code - jest to 10-cio cyfrowy kod,wygenerowany przez specjalny
+              program na podstawie numeru IMEI aparatu. (Jest to 
+              ogolny kod zabezpieczajacy aparatu -nie moze on byc
+              zmieniony przez uzytkownika.)
+Y           - jest to numer blokady -tzn.1,2,3 lub 4.
+p           - pause - uzyskuje sie przez przycisniecie klawisza 
+              " * " (gwiazdka) trzy razy.
+w           - wait - uzyskuje sie przez przycisniecie klawisza
+              " * " (gwiazdka) cztery razy.
++           - jest znakiem ktory nalezy wpisac.
+
+Przyklad:aby usunac blokade nr 1 wpisz:
+
+             #pw+(master code)+1#
+
+Aby sprawdzic czy aparat ma blokade,jako master code wpisac 10  
+przypadkowych cyfr.
+
+*****************************************************************************
+
+Kod *#746025625#  (*#SIM0CLOCK#) w niektorych aparatach sluzy do sprawdzenia
+                  czy nasza karta SIM moze miec zatrzymany zegar - dla
+                  oszczednosci baterii,kiedy nie jest uzywana.Napis ALLOWED
+                  oznacza ze mozna.
+
+*****************************************************************************
+
+Kod ##591463275 Sel 9  -wyswietla security code na wyswietlaczu. ???
+
+*****************************************************************************

@@ -1,0 +1,35 @@
+; Эта подпpогpамма разрешает запись
+;
+WriteEn
+        bsf     EECON1,WREN
+        return
+;
+; Эта подпpогpамма записывает в EEPROM
+;
+WriteEEPROM
+        clrwdt
+        MPAGE   1
+        call    WriteEn
+        movlw   055h
+        movwf   EECON2
+        movlw   0AAh
+        movwf   EECON2
+        bsf     EECON1,WR
+_write1
+        btfss   EECON1,EEIF
+        goto    _write1
+        bcf     EECON1,WREN
+        bcf     EECON1,EEIF
+        MPAGE   0
+        return
+;
+; Эта подпpогpамма считывает из EEPROM
+;
+ReadEEPROM
+        MPAGE   1
+        bsf     EECON1,RD
+        MPAGE   0
+        return
+;
+END
+

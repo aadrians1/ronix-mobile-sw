@@ -1,0 +1,9 @@
+PROCESOR :
+EEPROM   : 24C02
+
+Wprowadzanie : 1,2,3,4
+Wywol./Zatw. : 5
+
+UWAGI : Magistrala I2C wyprowadzona od spodu,od frontu 4p-IC
+        Stan nieaktywny - radio-OFF nacisnac/trzymac klawisz 5
+        radio-ON,wprowadzic kod przyciski 1,2,3,4  zatw. 5.

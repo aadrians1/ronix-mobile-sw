@@ -1,0 +1,5 @@
+                                                                                                                               
+FORD 2014
+
+KOD 142     ADRES 00 I 01      [PION 1 I 2]
+PAMIEC     9306

@@ -1,0 +1,14 @@
+
+1. Run eric_old.exe or eric_new.exe (depending on your phone version)
+2. Push the "NO" button and follow the instructions
+3. Click the "Expert Menu" butten (right from the "NO")
+4. Uncheck "Ask IMEI"
+5. Check "AutoErasing FLASH"
+6. Uncheck "Use Ini File Settings"
+7. Click the SMALL "Unlock" button (down on the left)
+8. Click "Flash Phone Phase 1"
+9. Click "Flash Phone Phase 2"
+10. When asked for a .bin file, choose "txxwest.bin"
+11. Wait until flashing is done.
+
+READY!!!!!

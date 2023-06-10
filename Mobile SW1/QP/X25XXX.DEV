@@ -1,0 +1,696 @@
+Group=Xicor SPI Bus serial EEPROMs
+
+
+Device=X25C02
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+BlankData=0xFF
+EditRect= 0  0 40  7
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=
+EndDevice 
+Device=2506
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+EditRect= 0  0 41 19
+BlockLen=1
+ProgTimes=16.2 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=323433323533
+EndDevice
+
+Device=X25020
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 8
+EditRect= 0  0 41 23
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=256 1 1
+EditRect=54  1 75  9
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 11111100 BP
+BitMapItem  = 111100xx None
+BitMapItem  = 111101xx Up1/4
+BitMapItem  = 111110xx Up1/2
+BitMapItem  = 111111xx All
+
+EndDevice
+Device=X25021
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 8
+EditRect= 0  0 41 23
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=256 1 1
+EditRect=54  1 75  9
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 11111100 BP
+BitMapItem  = 111100xx None
+BitMapItem  = 111101xx Up1/4
+BitMapItem  = 111110xx Up1/2
+BitMapItem  = 111111xx All
+
+EndDevice
+Device=X25040
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 8
+EditRect= 0  0 41 23
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=512 1 1
+EditRect=54  1 75  9
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 11111100 BP
+BitMapItem  = 111100xx None
+BitMapItem  = 111101xx Up1/4
+BitMapItem  = 111110xx Up1/2
+BitMapItem  = 111111xx All
+
+EndDevice
+Device=X25041
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 8
+EditRect= 0  0 41 23
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=512 1 1
+EditRect=54  1 75  9
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 11111100 BP
+BitMapItem  = 111100xx None
+BitMapItem  = 111101xx Up1/4
+BitMapItem  = 111110xx Up1/2
+BitMapItem  = 111111xx All
+
+EndDevice
+Device=X25057
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 8
+EditRect= 0  0 41 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=IDLock
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=512 1 1
+EditRect=54  1 75  9
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 11111111 IDL
+BitMapItem  = 00000000 No
+BitMapItem  = 00000001 0-7F
+BitMapItem  = 00000010 80-7F
+BitMapItem  = 00000011 100-17F
+BitMapItem  = 00000100 180-1FF
+BitMapItem  = 00000101 0-FF
+BitMapItem  = 00000110 0-F
+BitMapItem  = 00000111 1F0-1FF
+
+EndDevice
+
+Device=X25080
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 8
+EditRect= 0  0 41 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=1024 1 1
+EditRect=54  1 75  9
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 11111100 BP
+BitMapItem  = 111100xx None
+BitMapItem  = 111101xx Up1/4
+BitMapItem  = 111110xx Up1/2
+BitMapItem  = 111111xx All
+
+EndDevice
+Socket=1
+Device=X25097
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 8
+EditRect= 0  0 41 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=IDLock
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=1024 1 1
+EditRect=54  1 75  9
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 11111111 IDL
+BitMapItem  = 00000000 No
+BitMapItem  = 00000001 0-FF
+BitMapItem  = 00000010 100-1FF
+BitMapItem  = 00000011 200-2FF
+BitMapItem  = 00000100 300-3FF
+BitMapItem  = 00000101 0-1FF
+BitMapItem  = 00000110 0-F
+BitMapItem  = 00000111 3F0-3FF
+EndDevice
+
+Device=X25160
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2048 8
+EditRect= 0  0 41 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=2048 1 1
+EditRect=54  1 75 10
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 00001100 BP
+BitMapItem  = xxxx00xx None
+BitMapItem  = xxxx01xx Up1/4
+BitMapItem  = xxxx10xx Up1/2
+BitMapItem  = xxxx11xx All
+
+BitMapGroup = 10000000 WPEN
+BitMapItem  = 0xxxxxxx On
+BitMapItem  = 1xxxxxxx Off
+
+EndDevice
+Device=X25320
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+EditRect= 0  0 41 23
+BlockLen=32
+ProgTimes=5.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=4096 1 1
+EditRect=54  1 75 10
+BlockLen=1
+ProgTimes=5.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 00001100 BP
+BitMapItem  = xxxx00xx None
+BitMapItem  = xxxx01xx Up1/4
+BitMapItem  = xxxx10xx Up1/2
+BitMapItem  = xxxx11xx All
+
+BitMapGroup = 10000000 WPEN
+BitMapItem  = 0xxxxxxx On
+BitMapItem  = 1xxxxxxx Off
+
+EndDevice
+Device=X25330
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 8
+EditRect= 0  0 41 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=4096 1 1
+EditRect=54  1 75 10
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 00001100 BP
+BitMapItem  = xxxx00xx None
+BitMapItem  = xxxx01xx Up1/4
+BitMapItem  = xxxx10xx Up1/2
+BitMapItem  = xxxx11xx All
+
+BitMapGroup = 10000000 WPEN
+BitMapItem  = 0xxxxxxx On
+BitMapItem  = 1xxxxxxx Off
+
+EndDevice
+Device=X25640
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 8
+EditRect= 0  0 41 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=8192 1 1
+EditRect=54  1 75 10
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 00001100 BP
+BitMapItem  = xxxx00xx None
+BitMapItem  = xxxx01xx Up1/4
+BitMapItem  = xxxx10xx Up1/2
+BitMapItem  = xxxx11xx All
+
+BitMapGroup = 10000000 WPEN
+BitMapItem  = 0xxxxxxx On
+BitMapItem  = 1xxxxxxx Off
+
+EndDevice
+Device=X25642
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 0.0 0.0 0.0 0.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 8
+BlankData=0xFF
+EditRect= 0  0 43 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+;-----------------
+[Part]=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=8192 1 1
+BlankData=0xFF
+EditRect=54  1 75 10
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 00001100 BP
+BitMapItem  = xxxx00xx None
+BitMapItem  = xxxx01xx Up1/4
+BitMapItem  = xxxx10xx Up1/2
+BitMapItem  = xxxx11xx All
+
+BitMapGroup = 10000000 WPEN
+BitMapItem  = 0xxxxxxx On
+BitMapItem  = 1xxxxxxx Off
+
+EndDevice ;================ << X25642 >> ================
+Device=X25650
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 8
+EditRect= 0  0 41 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=8192 1 1
+EditRect=54  1 75 10
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 00001100 BP
+BitMapItem  = xxxx00xx None
+BitMapItem  = xxxx01xx Up1/4
+BitMapItem  = xxxx10xx Up1/2
+BitMapItem  = xxxx11xx All
+
+BitMapGroup = 10000000 WPEN
+BitMapItem  = 0xxxxxxx On
+BitMapItem  = 1xxxxxxx Off
+
+EndDevice
+Device=X25128
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16384 8
+EditRect= 0  0 41 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+
+Part=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=16384 1 1
+EditRect=54  1 75 10
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 WIP
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 00001100 BP
+BitMapItem  = xxxx00xx None
+BitMapItem  = xxxx01xx Up1/4
+BitMapItem  = xxxx10xx Up1/2
+BitMapItem  = xxxx11xx All
+
+BitMapGroup = 10000000 WPEN
+BitMapItem  = 0xxxxxxx On
+BitMapItem  = 1xxxxxxx Off
+
+EndDevice

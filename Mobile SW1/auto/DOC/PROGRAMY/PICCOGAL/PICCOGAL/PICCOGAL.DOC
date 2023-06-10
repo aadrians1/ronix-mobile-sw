@@ -1,0 +1,122 @@
+
+            ========      PICCOGAL.EXE     ===========
+
+Najaktualniejsze informacje o programie piccogal.exe.
+
+Spis tre˜ci:
+------------
+ 1. Wywoˆanie programu
+ 2. Programowane GALe
+ 3. Kolejne wersje programu
+
+
+1. Wywoˆanie programu
+======================
+
+PICCOGAL [/m]
+
+/m - praca w trybie 'mono'.
+
+
+2. Programowane GALe: (* - planowane, jeszcze nie uaktywnione)
+=====================
+
+AMD		PALCE16V8	PALCE20V8	*PALCE22V10
+
+LATTICE		GAL16V8		GAL20V8		GAL22V10	*GAL6001
+		GAL16V8A	GAL20V8A
+		GAL16V8B	GAL20V8B	GAL22V10B
+
+National S.	GAL16V8		GAL20V8		GAL22V10	*GAL6001
+
+SGS Thomson	GAL16V8		GAL20V8				*GAL6001
+		GAL16V8A	GAL20V8A
+
+
+3. Kolejne wersje programu piccogal.exe
+========================================
+
+Data,wersja	Opis
+=========================================================================
+lipiec 93	Robocza wersja programu. Cz©sto zmieniana i
+v 0.9		uzupeˆniana bez zmiany numeru wersji. Dostarczona
+		kilku u¾ytkownikom do testowania.
+
+listopad 93	Pierwsza wersja dopuszczona do dystrybucji.
+v 1.0		Programuje GAL16V8, GAL20V8, PALCE16V8.
+
+styczeä 94	Uzupeˆnienie programu o algorytmy programowania
+v 1.1		ukˆadu GAL22V10 Nationala.
+
+09.03.94	Modyfikacja procedur komunikacji z Picco-GALem.
+v 1.11		Przy niekt¢rych (szybkich) komputerach wyst©powaˆy
+		problemy.
+		
+14.04.94	Zmiana ustawienia wszystkich fuse przed ˆadowaniem 
+v 1.12		zbioru JEDEC. S¥ one ustawiane na '0' (poˆ¥czone)
+		(do tej wersji byˆy ustawiane na '1'- brak poˆ¥czenia).
+		Niekt¢re kompilatory GALi (np: CUPL) pomijaj¥ w zbiorze
+		JEDEC nieu¾ywane linie. Linie te musz¥ by† wyzerowane
+		aby nie miaˆy wpˆywu na dziaˆanie GALa.
+
+20.04.94	Poprawienie funkcji <File|Load> tak, aby widoczne byˆy
+v 1.13		kartoteki o nazwach zawieraj¥cych rozszerzenia.
+
+28.05.94	Rozszerzenie mo¾liwo˜ci programu o wektory testowe.
+v 1.20		Umo¾liwienie wymuszenia pracy programu w trybie mono.
+
+		1. Wektory testowe:
+		
+		Wewn©trzny bufor programu pozwala na zapami©tanie
+		256 wektor¢w testowych. 
+
+		Wprowadzono nast©puj¥ce zmiany:
+		  - w menu 'Buffer' dodano pozycj© 'Vector Edit',
+		  - w menu 'Chip' dodano pozycj© 'Test Vector',
+		  - funkcje <Chip|Auto> i <Chip|Program> uzupeˆniono
+		    o testowanie GALa wektorami testowymi.
+		  - zmodyfikowano funkcje czytania i pisania zbior¢w
+		    JEDEC tak aby uwzgl©dniaˆy wektory testowe.
+		  - wprowadzono okno por¢wnania wektor¢w testowych
+		    z wynikiem testu. Okno to pojawia si© gdy test
+		    stwierdza jakie˜ bˆ©dy.
+
+		Przy edycji wektor¢w testowych stosowane s¥ nast©puj¥ce
+		symbole:
+		  N - Piny zasilania - nie testowane, nie mo¾na ich
+		      te¾ edytowa†,
+		  H - Sprawdzi† czy jest to wyj˜cie w stanie wysokim,
+		  L - Sprawdzi† czy jest to wyj˜cie w stanie niskim,
+		  Z - Sprawdzi† czy jest wysoka impedancja,
+		  C - Wygenerowa† impuls zegarowy (Low,High,Low)
+		  0 - Ustawi† stan niski ( 0 ),
+		  1 - Ustawi† stan wysoki ( 1 ),
+		  X - Nie testowa†, stan niewa¾ny.
+
+		Liczba wektor¢w stosowanych do testu wynika z liczby
+		wektor¢w zaˆadowanych ze zbioru JEDEC i z tego, kt¢re
+		wektory byˆy potem edytowane.
+		Je¾eli liczba wektor¢w do testowania jest r¢wna 0 to
+		program ka¾d¥ pr¢b© wykonania testu uznaje za udan¥.
+
+		2. Praca w trybie mono:
+		
+		Sˆu¾y do tego celu opcja /m przy wywoˆaniu programu.
+		Na razie jest to jedyna opcja rozpoznawana przez program.
+
+03.06.94	Uzupeˆnienie listy programowanych element¢w o GAL22V10
+v 1.21		produkcji LATTICE. 
+
+20.08.94	Uzupeˆnienie listy programowanych element¢w o PALCE20V8
+v 1.22		produkcji AMD.
+
+09.09.94	Modyfikacja algorytm¢w programowania GALi (pojawiˆa
+v 1.23		si© nowa seria GALi Nationala, z kt¢rymi byˆy pewne
+		problemy).
+
+6.06.95		Zmiana zbior¢w *.doc i *.hlp towarzysz¥cych programom ze
+v 1.24		standardu mazowii na dos852.
+
+8.12.95		Uzupeˆnienie listy programowanych element¢w o GAL20V8B
+v 1.25		i GAL22V10B produkcji LATTICE.
+

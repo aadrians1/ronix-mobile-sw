@@ -1,0 +1,10 @@
+RENAULT = PHILIPS 22DC 677/62S (elektroniczne regulacje)
+
+0050   FF FF FF FF  FF FF FF FF  FF 22 3E 16  12 FF FF FF
+                                    ³³³    ³  ³
+				    b12	   3  4			
+b -bledy (2- 0 bledow  1- 1 blad)
+1-pierwsza cyfra
+2-druga cyfra
+3-trzecia cyfra
+4-czwarta cyfra

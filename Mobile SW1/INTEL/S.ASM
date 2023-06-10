@@ -1,0 +1,29 @@
+        org 0
+L0075	NOP
+	CLR     P1.0
+	CLR	P1.2
+	CLR     P1.4
+	CLR     P1.6
+	CLR	P3.1
+	CLR     P3.3
+	CLR	P3.5
+	CLR	P3.7
+	NOP
+	NOP
+	NOP
+	NOP
+	NOP
+	SETB    P1.0
+	SETB	P1.2
+	SETB    P1.4
+	SETB	P1.6
+	SETB    P3.1
+	SETB	P3.3
+	SETB    P3.5
+	SETB	P3.7
+	NOP
+	NOP
+	NOP
+	NOP
+	NOP
+	JMP	L0075

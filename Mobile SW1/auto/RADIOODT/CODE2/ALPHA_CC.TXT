@@ -1,0 +1,42 @@
+
+	    ***********************************       
+	    *****   ALPHA-CC BLAUPUNKT    *****        
+	    ***********************************       
+                                           
+
+
+
+ KONIECZNIE SPRAWDZIÆ
+
+CPU:    47C446AFP831
+MEMORY: 4C01A6 / ODCZYT JAKO SIEMENS 2516 / - BEZ WYLUTOWYWANIA 
+	I ODCINANIA ŒCIE¯EK
+FILE:   ALPHA_CC.BIN
+CODE:   1523
+INFO:   POTWIERDZENIE  TP I TA RAZEM PRZED WPROWADZENIEM KODU
+	I PO WPROWADZENIU KODU
+TECH:   
+	1 CYFRA $37 b
+	2 CYFRA $37 a
+	3 CYFRA $36 b
+	4 CYFRA $36 a
+
+LICZNIK B£ÊDÓW :$35=77 RADIO Z KODEM
+		    00 RADIO BEZ KODU
+
+
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+00000  27 42 2D F1 ¦ A4 F1 A9 02 ¦ A0 32 2D F1 ¦ 2D E1 6C B8
+00010  AA 12 AD E1 ¦ AB 22 2D F1 ¦ A0 32 24 42 ¦ 26 42 FD 08
+00020  21 32 28 32 ¦ A9 12 A5 12 ¦ A4 22 29 22 ¦ 26 F1 2E E8
+00030  8E FF E0 37 ¦ 37 77 32 51 ¦ 84 B4 E4 75 ¦ 58 88 B8 59
+00040  00 00 FF FF ¦ FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF
+00050  FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF
+00060  FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF
+00070  FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF
+
+
+********************************************************************
+************      TEED'EX LUBAWA DZIA£ TEED'CODE        ************
+************             lubawa@kki.net.pl              ************
+********************************************************************

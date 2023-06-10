@@ -1,0 +1,3 @@
+PHILIPS  SC804 D { C }    ( RDS , DOLBY )
+PAMIÊÆ   X24C04
+bez   kodu

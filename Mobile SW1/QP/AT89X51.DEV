@@ -1,0 +1,185 @@
+Group=ATMEL Flash 8051 microcontroller
+
+[Device]=AT89C2051;================ << AT89C2051 >> ================
+Socket=12
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 4.0 6.0
+Vpp= 12.0 12.0 12.0 12.0
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 73 17
+BlockLen=1
+ProgTimes=2.0 5 0 0
+Iden=0x1289
+DataWidth=8
+DisplayASCII=1
+Algo=979C12999B129D06
+;-----------------
+[Part]=Protect
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=65568 1 16
+BlankData=0x0
+EditRect=52 17 73 23
+BlockLen=1
+ProgTimes=2.0 25 0 0
+Iden=0x0
+DataWidth=3
+DisplayASCII=0
+Algo=97001299A0120007
+BitMapGroup = 011 CP
+BitMapItem  = x00 Off
+BitMapItem  = x01 CP1
+BitMapItem  = x11 CP2
+
+EndDevice ;================ << AT89C2051 >> ================
+[Device]=AT89C51
+Socket=10
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 4.0 6.0
+Vpp= 5.0 5.0 4.0 6.0
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4K 16
+BlankData=0xFF
+EditRect= 0  0 73 18
+BlockLen=1
+ProgTimes=2.0 5 0 0
+Iden=0x1289
+DataWidth=8
+DisplayASCII=1
+Algo=9A9C129A9B129D06
+;-----------------
+[Part]=Protect
+InitActivity=0
+InitFill=0
+SecondPass=1
+SaveDis=1
+ReadDis=1
+AddrSize=4097 1 16
+BlankData=0x0
+EditRect=52 18 73 23
+BlockLen=1
+ProgTimes=2.0 25 0 0
+Iden=0x0
+DataWidth=3
+DisplayASCII=0
+Algo=9A00129AA0120007
+BitMapGroup = 111 CP
+BitMapItem  = 000 Off
+BitMapItem  = 001 CP1
+BitMapItem  = 011 CP2
+BitMapItem  = 111 CP3
+
+EndDevice ;================ << AT89C51 >> ================
+[Device]=AT89C52;================ << AT89C52 >> ================
+Socket=10
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 4.0 6.0
+Vpp= 5.0 5.0 4.0 6.0
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 16
+BlankData=0xFF
+EditRect= 0  0 73 18
+BlockLen=1
+ProgTimes=2.0 5 0 0
+Iden=0x1289
+DataWidth=8
+DisplayASCII=1
+Algo=9A9C129A9B129D06
+;-----------------
+[Part]=Protect
+InitActivity=0
+InitFill=0
+SecondPass=1
+SaveDis=1
+ReadDis=1
+AddrSize=8193 1 16
+BlankData=0x0
+EditRect=52 18 73 23
+BlockLen=1
+ProgTimes=2.0 25 0 0
+Iden=0x0
+DataWidth=3
+DisplayASCII=0
+Algo=9A00129AA0120007
+BitMapGroup = 111 CP
+BitMapItem  = 000 Off
+BitMapItem  = 001 CP1
+BitMapItem  = 011 CP2
+BitMapItem  = 111 CP3
+
+EndDevice ;================ << AT89C52 >> ================
+[Device]=AT89C55;================ << AT89C55 >> ================
+Socket=10
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 4.0 6.0
+Vpp= 5.0 5.0 4.0 6.0
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 20480 16
+BlankData=0xFF
+EditRect= 0  0 73 18
+BlockLen=1
+ProgTimes=2.0 5 0 0
+Iden=0x1289
+DataWidth=8
+DisplayASCII=1
+Algo=9A9C129A9B129D06
+;-----------------
+[Part]=Protect
+InitActivity=0
+InitFill=0
+SecondPass=1
+SaveDis=1
+ReadDis=1
+AddrSize=32769 1 16
+BlankData=0x0
+EditRect=52 18 73 23
+BlockLen=1
+ProgTimes=2.0 25 0 0
+Iden=0x0
+DataWidth=3
+DisplayASCII=0
+Algo=9A00129AA0120007
+BitMapGroup = 111 CP
+BitMapItem  = 000 Off
+BitMapItem  = 001 CP1
+BitMapItem  = 011 CP2
+BitMapItem  = 111 CP3
+
+EndDevice ;================ << AT89C55 >> ================
+;-----------------
+;[Part]=Encrypt
+;InitActivity=0
+;InitFill=1
+;SecondPass=0
+;AddrSize=65536 32 16
+;BlankData=0xFF
+;EditRect= 0 18 57 23
+;BlockLen=1
+;ProgTimes=2.0 25 0 0
+;Iden=0x0
+;DataWidth=8
+;DisplayASCII=0
+;Algo=9A00129A9F12

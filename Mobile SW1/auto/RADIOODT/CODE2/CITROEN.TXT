@@ -1,0 +1,35 @@
+
+
+	     **********************************       
+	     ***** CITROEN BLAUPUNKT PF 1 *****        
+	     **********************************       
+                                           
+
+
+CPU:    ST 6154Q8
+MEMORY: 93C46 /64x16/ LUB 93C14 /64x16/ LUB93C14BN MIKROCHIP
+FILE:   ?
+CODE:   ?
+INFO:   WPISYWANIE KODU KLAWISZAMI 1, 2, 3, 4 
+	POTWIERDZENIE  STRZA£KA W GÓRÊ
+UWAGA	:1+4 na w³¹czonym , wy³¹czyæ i trzymaæ  w³¹czyæ kod skasowany
+TECH: 
+	1 CYFRA $69 b
+	2 CYFRA $69 a
+	3 CYFRA $68 b
+	4 CYFRA $68 a 
+
+RADIO Z KODEM	:$6A = C2 
+RADIO BEZ KODU	:$6A = 92 
+			
+$69 b = 1,3,5,7,9 OZNACZA AKTYWN¥ PIERWSZ¥ CYFRÊ  "1" KOD CZTEROCYFROWY
+$69 b = 0,2,4,6,8 OZNACZA NIEAKTYWN¥ PIERWSZ¥ CYFRÊ KOD TRZYCYFROWY
+
+PRZYK£AD:
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+
+
+********************************************************************
+************      TEED'EX LUBAWA DZIA£ TEED'CODE        ************
+************             lubawa@kki.net.pl              ************
+********************************************************************              

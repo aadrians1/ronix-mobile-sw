@@ -1,0 +1,2 @@
+philips 22DC759 - otwarty kod zablokowany
+f01 - zamkniety kod nieznany (orginal z radia)

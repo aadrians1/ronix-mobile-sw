@@ -1,0 +1,24 @@
+02 BLAUPUNKT "Heilbronn SQM39" ( CR... )
+"KOD 1234"
+EEPROM: SDA 2506 ( Other 2506 )
+
+0000 26 DF 27 C5 28 33 28 8D 28 B5 2A 95 2B 49 FC FF 
+0010
+0020
+0030
+0040
+0050
+0060 
+0070
+
+ADRES:
+
+0066 44  ( 44 : 29 = kod wylaczony )
+         (      2C = kod wlaczony  )
+
+0067 34  ( 3 = trzecia cyfra kodu )
+         ( 4 = czwarta cyfra kodu )
+
+0068 12  ( 1 = pierwsza cyfra kodu )
+         ( 2 = druga cyfra kodu )
+

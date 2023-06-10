@@ -1,0 +1,117 @@
+; PIC16Cxx Microcontroller Include File
+
+PIC54           equ     0x1ff   ; PIC16C54 Reset Vector
+PIC55           equ     0x1ff   ; PIC16C55 Reset Vector
+PIC56           equ     0x3ff   ; PIC16C56 Reset Vector
+PIC57           equ     0x7ff   ; PIC16C57 Reset Vector
+PIC71           equ     0x000   ; PIC16C71 Reset Vector
+PIC84           equ     0x000   ; PIC16C84 Reset Vector
+INTVEC          equ     0x004   ; PIC16C71/84 Interupt Vector
+
+INDIR           equ     0x000   ; Indirect File Reg Address Register
+RTCC            equ     0x001   ; Real Time Clock Counter
+PCL             equ     0x002   ; Program Counter Low Byte
+STATUS          equ     0x003   ; Status Register
+FSR             equ     0x004   ; File Select Register
+PORTA           equ     0x005   ; Port A I/O Register
+PORTB           equ     0x006   ; Port B I/O Register
+PORTC           equ     0x007   ; Port C I/O Register
+ADCON0          equ     0x008   ; PIC16C71 A/D Control Reg 0
+ADRES           equ     0x009   ; PIC16C71 A/D Converter Result Register
+EEDATA          equ     0x008   ; PIC16C84 EEPROM Data Register
+EEADR           equ     0x009   ; PIC16C84 EEPROM Address Register
+PCLATH          equ     0x00a   ; Program Counter High Bits
+INTCON          equ     0x00b   ; Interrupt Control Register
+TRISA           equ     0x005   ; Port A I/O Direction Register
+TRISB           equ     0x006   ; Port B I/O Direction Register
+TRISC           equ     0x007   ; Port C I/O Direction Register
+ADCON1          equ     0x008   ; PIC16C71 A/D Control Reg 1
+EECON1          equ     0x008   ; PIC16C84 EEPROM Control Reg. 1
+EECON2          equ     0x009   ; PIC16C84 EEPROM Control Reg. 2
+;OPTION          equ     0x001   ; Option Register
+
+MSB             equ     0x007   ; Most-Significant Bit
+LSB             equ     0x000   ; Least-Significant Bit
+TRUE            equ     1
+YES             equ     1
+FALSE           equ     0
+NO              equ     0
+
+; Status Register (f03) Bits
+
+CARRY           equ     0x000   ; Carry Bit
+C               equ     0x000   ; Carry Bit
+DCARRY          equ     0x001   ; Digit Carry Bit
+DC              equ     0x001   ; Digit Carry Bit
+Z_BIT           equ     0x002   ; Zero Bit
+Z               equ     0x002   ; Zero Bit
+P_DOWN          equ     0x003   ; Power Down Bit
+PD              equ     0x003   ; Power Down Bit
+T_OUT           equ     0x004   ; Watchdog Time-Out Bit
+TO              equ     0x004   ; Watchdog Time-Out Bit
+RP0             equ     0x005   ; Register Page Select 0
+RP1             equ     0x006   ; Register Page Select 1
+IRP             equ     0x007   ; Indirect Addressing Reg. Page Sel.
+
+; INTCON Register (f0b) Bits
+
+RBIF            equ     0x000   ; RB Port change interrupt flag
+INTF            equ     0x001   ; INT Interrupt Flag
+RTIF            equ     0x002   ; RTCC Overflow Interupt Flag
+RBIE            equ     0x003   ; RB Port Ch. Interupt Enable
+INTE            equ     0x004   ; INT Interupt Enable
+RTIE            equ     0x005   ; RTCC Overflow Int. Enable
+ADIE            equ     0x006   ; PIC16C71 A/D Int. Enable
+EEIE            equ     0x006   ; PIC16C84 EEPROM Write Int. Enable
+GIE             equ     0x007   ; Global Interupt Enable
+
+; OPTION Register (f81) Bits
+
+PS0             equ     0x000   ; Prescaler Bit 0
+PS1             equ     0x001   ; Prescaler Bit 1
+PS2             equ     0x002   ; Prescaler Bit 2
+PSA             equ     0x003   ; Prescaler Assignment Bit
+RTE             equ     0x004   ; RTCC Signal Edge Select
+RTS             equ     0x005   ; RTCC Signal Source Select
+INTEDG          equ     0x006   ; Interupt Edge Select
+RBPU            equ     0x007   ; Port B Pull-up Enable
+
+; ADCON0 Register (f08) Bits
+
+ADON            equ     0x000   ; A/D Converter Power Switch
+ADIF            equ     0x001   ; A/D Conversion Interupt Flag
+ADGO            equ     0x002   ; A/D Conversion Start Flag
+CHS0            equ     0x003   ; A/D Converter Channel Select 0
+CHS1            equ     0x004   ; A/D Converter Channel Select 1
+ADCS0           equ     0x006   ; A/D Conversion Clock Select 0
+ADCS1           equ     0x007   ; A/D Conversion Clock Select 0
+
+; ADCON1 Register (f88) Bits
+
+PCFG0           equ     0x000   ; RA0-RA3 Configuration Bit 0
+PCFG1           equ     0x001   ; RA0-RA3 Configuration Bit 0
+
+; EECON1 Register (f88) Bits
+
+RD              equ     0x000   ; PIC16C84 EEPROM Read Data Flag
+WR              equ     0x001   ; PIC16C84 EEPROM Write Data Flag
+WREN            equ     0x002   ; PIC16C84 EEPROM Write Enable Flag
+WRERR           equ     0x003   ; PIC16C84 EEPROM Write Error Flag
+EEIF            equ     0x004   ; PIC16C84 EEPROM Interupt Flag
+
+; Some useful macros...
+
+PUSH    macro
+	movwf   TEMP_W
+	swapf   STATUS,W
+	movwf   TEMP_S
+	endm
+
+POP     macro
+	swapf   TEMP_S,W
+	movwf   STATUS
+	swapf   TEMP_W
+	swapf   TEMP_W,W
+	endm
+
+	END

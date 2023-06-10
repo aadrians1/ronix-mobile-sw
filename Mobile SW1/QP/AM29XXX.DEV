@@ -1,0 +1,83 @@
+Group=AMD CMOS Parallel EEPROM
+
+Device=AM29F512;================ << AM29F512 >> ================
+Socket=8
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 64K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E128F04
+EndDevice ;================ << AM29F512 >> ================
+;******************************************************************
+Device=AM29F010
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E128F04
+EndDevice ;================ << AM29F010 >> ================
+Device=AM29F020;================ << AM29F020 >> ================
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E128F04
+EndDevice ;================ << AM29F020 >> ================
+Device=AM29F040;================ << AM29F040 >> ================
+Socket=8
+AddrDivider=1
+CmdMask=0x3F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=269312268E128F04
+EndDevice ;================ << AM29F040 >> ================

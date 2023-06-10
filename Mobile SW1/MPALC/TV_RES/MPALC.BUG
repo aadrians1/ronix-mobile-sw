@@ -1,0 +1,27 @@
+Bug list for:
+		PICALC 16c5x assembler Version 3.03
+
+This file contains all known bugs for PICALC versions 3.03 Released
+throgh version 4.00 Released.
+
+Last file update:  Thursday  21 Jan 94
+-----------------------------------------------------------------------
+
+Priority:       1
+
+Date:           1/20/94
+
+Version:        4.12
+
+Description:    Can't select 16c58 as processor using the LIST directive
+
+Fixed:          4.14
+
+Modification:   who:    why:
+05/20/93        fn      Added original
+		
+
+-----------------------------------------------------------------------
+
+End of file.
+

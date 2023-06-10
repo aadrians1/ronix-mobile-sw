@@ -1,0 +1,25 @@
+        org 0
+        mov dptr,#6fc4
+        mov r5,dph
+        mov r4,dpl
+        mov r6,#<text
+        mov r7,#>text
+        mov r2,#25h
+c1
+        mov dph,r7
+        mov dpl,r6
+        movx a,@dptr
+        inc r6
+        mov dph,r5
+        mov dpl,r4
+        movx @dptr,a
+        djnz r2,c1
+c2
+        jmp c2
+
+
+
+
+text:
+       db 0,'* FOOR * AIS   '
+       DB '   ',0,0,0,0,0,0,'052 savaksaM'

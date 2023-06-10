@@ -1,0 +1,151 @@
+Group=National SPI Bus serial EEPROMs
+
+;******************************************************************
+Device=NM25C020
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+BlankData=0xFF
+EditRect= 0  0 80 16
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+;-----------------
+[Part]=StatReg
+InitActivity=0
+InitFill=1
+SecondPass=1
+SaveDis=1
+AddrSize=256 1 1
+BlankData=0xFF
+EditRect=59 16 80 23
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 RDY
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEN
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 11111100 BP
+BitMapItem  = 111100xx None
+BitMapItem  = 111101xx Up1/4
+BitMapItem  = 111110xx Up1/2
+BitMapItem  = 111111xx All
+
+EndDevice ;================ << NM25C020 >> ================
+Device=NM25C040
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 16
+BlankData=0xFF
+EditRect= 0  0 80 16
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+;-----------------
+[Part]=StatReg
+InitActivity=0
+InitFill=1
+SecondPass=1
+SaveDis=1
+AddrSize=512 1 1
+BlankData=0xFF
+EditRect=59 16 80 23
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 RDY
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEN
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 11111100 BP
+BitMapItem  = 111100xx None
+BitMapItem  = 111101xx Up1/4
+BitMapItem  = 111110xx Up1/2
+BitMapItem  = 111111xx All
+
+EndDevice ;================ << NM25C040 >> ================
+Device=NM25C160
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 80 16
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2B2E2D2C302D
+;-----------------
+[Part]=StatReg
+InitActivity=0
+InitFill=1
+SecondPass=1
+SaveDis=1
+AddrSize=2048 1 1
+BlankData=0xFF
+EditRect=59 16 80 23
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=0
+Algo=2B2F2D2C312D
+BitMapGroup = 00000001 RDY
+BitMapItem  = xxxxxxx0 ready
+BitMapItem  = xxxxxxx1 busy
+
+BitMapGroup = 00000010 WEN
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 11111100 BP
+BitMapItem  = 111100xx None
+BitMapItem  = 111101xx Up1/4
+BitMapItem  = 111110xx Up1/2
+BitMapItem  = 111111xx All
+
+EndDevice ;================ << NM25C160 >> ================
+

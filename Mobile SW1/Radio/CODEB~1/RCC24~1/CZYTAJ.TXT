@@ -1,0 +1,8 @@
+
+        Przesyˆam Ci program do odczytu transmisji pomi©dzy
+        Texas Instruments a Toshib¥,wystarczy podˆ¥czy† mase
+        i RDX(to co podlaczasz do 52p motoroli) od interfejsu Motoroli
+        uruchomi† program a b©dzie wy˜wietlana trnsmisja.Opis doˆ¥czony
+        plus dwa pliki schemat.gif i rcc24.jpg zapoznaj si©
+        dokˆadnie z zawarto˜ci¥ tych plik¢w.
+      

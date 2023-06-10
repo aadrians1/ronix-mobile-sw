@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   :8582 
+
+Wprowadzanie : 
+Wywol./Zatw. : 
+
+UWAGI : 

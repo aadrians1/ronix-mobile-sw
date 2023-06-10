@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 24C16 
+
+Wprowadzanie : 
+Wywol./Zatw. : 
+
+UWAGI : 

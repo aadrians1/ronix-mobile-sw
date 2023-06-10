@@ -1,0 +1,89 @@
+Group=Microchip Mid-range microcontroller
+
+Device=PIC14000
+Socket=11 0 0
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5.0 5.0 4.0 6.0
+Vpp= 13.0 13.0 11.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 3584 8
+BlankData=0x3FFF
+EditRect= 0  0 57 13
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=User
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=3584 448 4
+BlankData=0x3FFF
+EditRect= 0 13 29 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Calibr
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=4032 64 8
+BlankData=0x3FFF
+EditRect=31 13 79 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=1
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=58  0 79 11
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000001 Osc
+BitMapItem  = xxxxxxxxxxxxx0 HS
+BitMapItem  = xxxxxxxxxxxxx1 intRC
+
+BitMapGroup = 00000000000100 WDTE
+BitMapItem  = xxxxxxxxxxx1xx Enable
+BitMapItem  = xxxxxxxxxxx0xx Disable
+
+BitMapGroup = 00000000001000 PWRTE
+BitMapItem  = xxxxxxxxxx0xxx Enable
+BitMapItem  = xxxxxxxxxx1xxx Disable
+
+BitMapGroup = 11111101010010 CPprog
+BitMapItem  = 111111x1x0xx1x Protect
+BitMapItem  = 111111x1x1xx1x Off
+
+BitMapGroup = 00000000100000 CPuser
+BitMapItem  = xxxxxxxx0xxxxx Protect
+BitMapItem  = xxxxxxxx1xxxxx Off
+
+BitMapGroup = 00000010000000 CPcal
+BitMapItem  = xxxxxx0xxxxxxx Protect
+BitMapItem  = xxxxxx1xxxxxxx Off
+
+EndDevice ;================ << PIC14000 >> ================

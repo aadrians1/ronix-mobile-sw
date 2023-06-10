@@ -1,0 +1,51 @@
+  Sat Apr 29 2000 16:06                                                                                                  Page    1
+
+
+
+
+
+
+
+               2500 A.D. 8051 Macro Assembler  -  Version 4.02a
+               ------------------------------------------------
+
+                       Input  Filename : s.asm
+                       Output Filename : s.obj
+
+
+    1   0000                   	        org 0
+    2   0000   00              	L0075	NOP
+    3   0001   C2 90           		CLR     P1.0
+    4   0003   C2 92           		CLR	P1.2
+    5   0005   C2 94           		CLR     P1.4
+    6   0007   C2 96           		CLR     P1.6
+    7   0009   C2 B1           		CLR	P3.1
+    8   000B   C2 B3           		CLR     P3.3
+    9   000D   C2 B5           		CLR	P3.5
+   10   000F   C2 B7           		CLR	P3.7
+   11   0011   00              		NOP
+   12   0012   00              		NOP
+   13   0013   00              		NOP
+   14   0014   00              		NOP
+   15   0015   00              		NOP
+   16   0016   D2 90           		SETB    P1.0
+   17   0018   D2 92           		SETB	P1.2
+   18   001A   D2 94           		SETB    P1.4
+   19   001C   D2 96           		SETB	P1.6
+   20   001E   D2 B1           		SETB    P3.1
+   21   0020   D2 B3           		SETB	P3.3
+   22   0022   D2 B5           		SETB    P3.5
+   23   0024   D2 B7           		SETB	P3.7
+   24   0026   00              		NOP
+   25   0027   00              		NOP
+   26   0028   00              		NOP
+   27   0029   00              		NOP
+   28   002A   00              		NOP
+   29   002B   01 00           		JMP	L0075
+
+
+
+           Lines Assembled :  29             Assembly Errors :  0
+
+
+

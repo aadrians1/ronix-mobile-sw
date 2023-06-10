@@ -1,0 +1,3 @@
+radio od RENAULT 
+kod 1624-5
+pamiec 24c16

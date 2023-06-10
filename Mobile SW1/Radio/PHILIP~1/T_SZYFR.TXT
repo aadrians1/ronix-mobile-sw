@@ -1,0 +1,23 @@
+ |----------------------------------------------------------------------------|
+ |  TABELA SZYFROWA DO ODCZYTANIA KODU W NOWSZYCH WERSJACH RADIOODTWARZACZY   |
+ |           SAMOCHODOWYCH PHILIPS VW ALPHA IV, VW GAMMA IV                   |
+ |----------------------------------------------------------------------------|
+ |        OPIS MAPY:         0000 - 000D   numer fabryczny radia              |
+ |                           000E - 000F   zaszyfrowany kod                   |
+ |                           0010 - 0011   licznik bledow                     |
+ |----------------------------------------------------------------------------|
+ |   | 1 | 2 | 3 | 4 |                                                        |
+ |---|---------------|       Przykladowy numer fabryczny radia                |
+ | 0 | 7 | E | 9 | C |                     VWZ6Z1S1353964                     |
+ | 1 | 6 | F | 8 | D |                                                        |
+ | 2 | 5 | C | B | E |       Przyklad zaszyfrowanego kodu radia               |
+ | 3 | 4 | D | A | F |                     3C E5  =>  4279                    |
+ | 4 | 3 | A | D | 8 |                     6B CA  =>  1556                    |
+ | 5 | 2 | B | C | 9 |                                                        |
+ | 6 | 1 | 8 | F | A |       Licznik blednych prob wpisu kodu                 |
+ | 7 | 0 | 9 | E | B |                     FC 00  -  SAFE                     |
+ | 8 | F | 6 | 1 | 4 |                     FF 00  -  BEZ KODU                 |
+ | 9 | E | 7 | 0 | 5 |                                                        |
+ |----------------------------------------------------------------------------|
+ | (C) 1999 AutoSC Electronics, e-mail: autosc@kki.net.pl, tel. 0-603 185-657 |
+ |----------------------------------------------------------------------------|

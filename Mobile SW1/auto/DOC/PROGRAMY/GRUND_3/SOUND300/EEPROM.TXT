@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   :24C04 
+
+Wprowadzanie : 1,2,3,4
+Wywol./Zatw. : AS
+
+UWAGI : 

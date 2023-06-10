@@ -1,0 +1,7 @@
+PROCESOR : UPD 1719G 556
+EEPROM   : CXK1012P SONY
+
+Wprowadzanie : 1,2,3,4,5,6,UP,DOWN,AMS,BAND
+Wywol./Zatw. : MODE
+
+UWAGI : 

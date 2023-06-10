@@ -1,0 +1,66 @@
+Group=Intel Flash Parallel EEPROM
+
+
+[Device]=CAT28F010P;================ << CAT28F010P >> =================
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x5F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= 12.5 12.5 12.5 12.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.10 25 0 0
+Iden=0x89B4
+DataWidth=8
+DisplayASCII=1
+Algo=269312269412950511
+EndDevice ;================ << CAT28F010P >> ================
+[Device]=P28F010
+Socket=8
+AddrDivider=1
+CmdMask=0x5F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= 12.5 12.5 12.5 12.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 25 0 0
+Iden=0x89B4
+DataWidth=8
+DisplayASCII=1
+Algo=269312269412950511
+EndDevice 
+Device=P28F020
+Socket=8
+AddrDivider=1
+CmdMask=0x5F
+Vcc= 5.0 5.0 5.0 5.0
+Vpp= 12.5 12.5 12.5 12.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256K 16
+BlankData=0xFF
+EditRect= 0  0 76 23
+BlockLen=1
+ProgTimes=0.1 25 0 0
+Iden=0x89BD
+DataWidth=8
+DisplayASCII=1
+Algo=269312269412950511
+EndDevice 

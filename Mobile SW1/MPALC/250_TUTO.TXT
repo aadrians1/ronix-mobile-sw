@@ -1,0 +1,7 @@
+HD 6475368F6		PIC16c84
+74			data			(p0)
+25			strob			(p1)
+69			clk
+10			reset			(p3)
+motorola ZC98302fu	
+50			off reference code	(p2)

@@ -1,0 +1,22 @@
+BLAUPUNKT HEILBRONN RCC 24
+
+GLOWNY PROCESOR 8 925 901 001 /47C660F-P387/
+
+DANE SA PRZECHOWYWANE W PROCESORZE TI PR
+
+
+W poblizu front panelu na wysokosci klawiszy TS I 2 ok 4 cm sa widoczne
+dwie plaze z dolaczonymi rezystorami smd 473 do podlaczenia rs323
+blizej front panelu przewod zielony rxd
+dalej  front panelu przewod bialy txd
+
+
+za pomoca transmisi kasujacej z programu rcr44.exe mozna skasowac liczbe 
+zle wprowadzonych kodow /radio powinno uruchomic sie !!!/
+
+nastepnie wlaczyc radio przytrzymujac 1 i 4  /musi byc napiecie podtrzymujace/
+i wprowadzic zle kod , radio zablokuje sie a w momencie kiedy przejdzie do 
+ponownego sprawdzenia kodu dwa przedostanie bajty transmisji beda kodem
+
+kod tworza dwa ostatnie bajty nastepujace po transmisji C0 62 ab cd xx
+gdzie abcd jest kodem

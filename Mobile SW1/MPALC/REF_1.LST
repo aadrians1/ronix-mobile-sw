@@ -1,0 +1,232 @@
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jul 17 07:53:51 1998  Page 1
+
+Line   PC    Opcode
+
+0001               LIST P=16C84		;surogat ZC 98302 FU
+0002               ;
+0003         00E0  DATA1		EQU 		B'11100000'	;
+0004         0003  DATA2		EQU		B'00000011'	;
+0005         00E1  DATA3		EQU		B'11100001'	;
+0006               
+0007         0007  DATA4		EQU	B'00000111'	;00000100		
+0008         00FB  DATA5		EQU	B'11111011'	;B'10001100'	;10ЧислоМ
+0009         0077  DATA6		EQU	B'01110111'	;B'00110111'	;есяГод__	
+0010         00B5  DATA7		EQU	B'10110101'	;B'10001011'	;__######	
+0011         00CA  DATA8		EQU	B'11001010'	;B'11111001'	;########	
+0012         00F8  DATA9		EQU	B'11111000'	;B'01001011'	;????????	
+0013               
+0014         0003  STATUS		EQU	03h
+0015         0006  PORTB		EQU	06h
+0016         0006  TRISB		EQU	06h
+0017               
+0018         000C  PARM		EQU	0Ch
+0019         000D  CNTB		EQU	0Dh
+0020         000E  FLAG		EQU	0Eh
+0021               
+0022         0000  BEGIN	ORG	0
+0023   0000  0186  	CLRF	PORTB
+0024   0001  2065  	CALL	SETS
+0025   0002  206B  	CALL	SETD
+0026   0003  2057  	CALL	WSTART
+0027   0004  30E0  	MOVLW	DATA1
+0028   0005  008C  	MOVWF	PARM
+0029   0006  202E  	CALL	SOUT
+0030   0007  3003  	MOVLW	DATA2
+0031   0008  008C  	MOVWF	PARM
+0032   0009  202E  	CALL	SOUT
+0033   000A  2057  	CALL	WSTART
+0034   000B  30E1  	MOVLW	DATA3
+0035   000C  008C  	MOVWF	PARM
+0036   000D  202E  	CALL	SOUT
+0037               
+0038   000E  206B  	CALL	SETD
+0039   000F  206B  	CALL	SETD
+0040   0010  206B  	CALL	SETD
+0041   0011  206B  	CALL	SETD
+0042   0012  206B  	CALL	SETD
+0043   0013  206B  	CALL	SETD
+0044   0014  206B  	CALL	SETD
+0045   0015  206B  	CALL	SETD
+0046               
+0047   0016  2071  	CALL	RESD
+0048               
+0049   0017  3007  	MOVLW	DATA4
+0050   0018  008C  	MOVWF	PARM
+0051   0019  202E  	CALL	SOUT
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jul 17 07:53:51 1998  Page 2
+
+Line   PC    Opcode
+
+0052   001A  30FB  	MOVLW	DATA5
+0053   001B  008C  	MOVWF	PARM
+0054   001C  202E  	CALL	SOUT
+0055   001D  3077  	MOVLW	DATA6
+0056   001E  008C  	MOVWF	PARM
+0057   001F  202E  	CALL	SOUT
+0058   0020  30B5  	MOVLW	DATA7
+0059   0021  008C  	MOVWF	PARM
+0060   0022  202E  	CALL	SOUT
+0061   0023  30CA  	MOVLW	DATA8
+0062   0024  008C  	MOVWF	PARM
+0063   0025  202E  	CALL	SOUT
+0064   0026  30F8  	MOVLW	DATA9
+0065   0027  008C  	MOVWF	PARM
+0066   0028  2044  	CALL	LAST
+0067   0029  2065  PEND	CALL	SETS
+0068   002A  206B  	CALL	SETD
+0069   002B  0063  	SLEEP
+0070   002C  1686  	BSF	PORTB,5
+0071   002D  2829  	GOTO	PEND
+0072               
+0073   002E  3008  SOUT	MOVLW	8
+0074   002F  008D  	MOVWF	CNTB
+0075   0030  1B8C  SO1	BTFSC	PARM,7		
+0076   0031  206B  	CALL	SETD
+0077   0032  1F8C  	BTFSS	PARM,7
+0078   0033  2071  	CALL	RESD
+0079   0034  0D8C  	RLF	PARM,1
+0080               
+0081   0035  1E06  SO2	BTFSS	PORTB,4
+0082   0036  2835  	GOTO	SO2
+0083   0037  1A06  SO3	BTFSC	PORTB,4
+0084   0038  2837  	GOTO	SO3
+0085   0039  0B8D  	DECFSZ	CNTB,1
+0086   003A  2830  	GOTO	SO1
+0087               
+0088   003B  206B  	CALL	SETD
+0089   003C  206B  	CALL	SETD
+0090   003D  206B  	CALL	SETD
+0091   003E  2071  	CALL	RESD
+0092               
+0093   003F  1E06  SO4	BTFSS	PORTB,4
+0094   0040  283F  	GOTO	SO4
+0095   0041  1A06  SO5	BTFSC	PORTB,4
+0096   0042  2841  	GOTO	SO5
+0097               
+0098   0043  0008  	RETURN	
+0099               
+0100   0044  3008  LAST	MOVLW	8
+0101   0045  008D  	MOVWF	CNTB
+0102   0046  1B8C  LA1	BTFSC	PARM,7		
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jul 17 07:53:51 1998  Page 3
+
+Line   PC    Opcode
+
+0103   0047  206B  	CALL	SETD
+0104   0048  1F8C  	BTFSS	PARM,7
+0105   0049  2071  	CALL	RESD
+0106   004A  0D8C  	RLF	PARM,1
+0107               
+0108   004B  1E06  LA2	BTFSS	PORTB,4
+0109   004C  284B  	GOTO	LA2
+0110   004D  1A06  LA3	BTFSC	PORTB,4
+0111   004E  284D  	GOTO	LA3
+0112   004F  0B8D  	DECFSZ	CNTB,1
+0113   0050  2846  	GOTO	LA1
+0114               	
+0115               ;	CALL	RESD
+0116   0051  206B  	CALL	SETD
+0117               
+0118   0052  1E06  LAA2	BTFSS	PORTB,4
+0119   0053  2852  	GOTO	LAA2
+0120   0054  1A06  LAA3	BTFSC	PORTB,4
+0121   0055  2854  	GOTO	LAA3
+0122   0056  0008  	RETURN
+0123               
+0124               
+0125               	
+0126               
+0127               
+0128               ;------------------------WAIT START CONDITION---------
+0129   0057  018E  WSTART	CLRF	FLAG
+0130   0058  30FF  	MOVLW	0FFh	
+0131   0059  0066  	TRIS	TRISB
+0132   005A  1A86  ST1	BTFSC	PORTB,5		;analiz DATA
+0133   005B  285A  	GOTO	ST1
+0134   005C  1A06  	BTFSC	PORTB,4		;analiz STROB
+0135   005D  2862  	GOTO	ST2
+0136   005E  1C8E  	BTFSS	FLAG,1		;analiz START CONDITION
+0137   005F  285A  	GOTO	ST1
+0138   0060  2071  	CALL	RESD
+0139   0061  0008  	RETURN
+0140               
+0141   0062  30FF  ST2	MOVLW	0FFh
+0142   0063  008E  	MOVWF	FLAG
+0143   0064  285A  	GOTO	ST1
+0144               
+0145               ;----------------OUT------------------
+0146   0065  3032  SETS	MOVLW	32
+0147   0066  0083  	MOVWF	STATUS
+0148   0067  1606  	BSF	TRISB,4
+0149   0068  3000  	MOVLW	0
+0150   0069  0083  	MOVWF	STATUS
+0151   006A  0008  	RETURN
+0152               
+0153   006B  3032  SETD	MOVLW	32
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jul 17 07:53:51 1998  Page 4
+
+Line   PC    Opcode
+
+0154   006C  0083  	MOVWF	STATUS
+0155   006D  1686  	BSF	TRISB,5
+0156   006E  3000  	MOVLW	0
+0157   006F  0083  	MOVWF	STATUS
+0158   0070  0008  	RETURN
+0159               
+0160   0071  3032  RESD	MOVLW	32
+0161   0072  0083  	MOVWF	STATUS
+0162   0073  1286  	BCF	TRISB,5
+0163   0074  3000  	MOVLW	0
+0164   0075  0083  	MOVWF	STATUS
+0165   0076  0008  	RETURN
+0166               
+16c5x/xx Cross-Assembler V4.14 Released  Fri Jul 17 07:53:51 1998  Page 5
+
+
+
+Cross-Reference Listing
+LABEL        VALUE        DEFN        REFERENCES
+BEGIN        0            22          22     
+CNTB         13           19          19     74     85     101    112    
+DATA1        224          3           3      27     
+DATA2        3            4           4      30     
+DATA3        225          5           5      34     
+DATA4        7            7           7      49     
+DATA5        251          8           8      52     
+DATA6        119          9           9      55     
+DATA7        181          10          10     58     
+DATA8        202          11          11     61     
+DATA9        248          12          12     64     
+FLAG         14           20          20     129    136    142    
+LA1          70           102         102    113    
+LA2          75           108         108    109    
+LA3          77           110         110    111    
+LAA2         82           118         118    119    
+LAA3         84           120         120    121    
+LAST         68           100         66     100    
+PARM         12           18          18     28     31     35     50     53     
+                                      56     59     62     65     75     77     
+                                      79     102    104    106    
+PEND         41           67          67     71     
+PORTB        6            15          15     23     70     81     83     93     
+                                      95     108    110    118    120    132    
+                                      134    
+RESD         113          160         47     78     91     105    138    160    
+SETD         107          153         25     38     39     40     41     42     
+                                      43     44     45     68     76     88     
+                                      89     90     103    116    153    
+SETS         101          146         24     67     146    
+SO1          48           75          75     86     
+SO2          53           81          81     82     
+SO3          55           83          83     84     
+SO4          63           93          93     94     
+SO5          65           95          95     96     
+SOUT         46           73          29     32     36     51     54     57     
+                                      60     63     73     
+ST1          90           132         132    133    137    143    
+ST2          98           141         135    141    
+STATUS       3            14          14     147    150    154    157    161    
+                                      164    
+TRISB        6            16          16     131    148    155    162    
+WSTART       87           129         26     33     129    
+

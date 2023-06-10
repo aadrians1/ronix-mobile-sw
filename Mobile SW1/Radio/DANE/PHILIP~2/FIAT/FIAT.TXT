@@ -1,0 +1,22 @@
+	RADIO FABRYCZNIE MONTOWANE W SAMOCHODZIE FIAT
+
+PHILIPS 22DC 710/64 S
+NO:FD 08 96 41 8044956
+PAMIEC 24C08
+(RDS;ZDEJMOWANY PANEL;ELEKTRONICZNE REGULACJE)
+
+KOLEJNE CYFRY KODU ZATWIERDZANE "1", CYFRY WYBIERANE "DOWN" "UP" 
+ZATWIERDZENIE KODU "1"
+
+
+		KOD  9 1 7 1
+
+
+0050   FF FF FF FF  FF FF FF FF  FF 29 16 17  12 FF FF FF
+                                    ³³ ³   ³  ³
+				    b1 2   3  4			
+b -bledy (2- 0 bledow  1- 1 blad)
+1-pierwsza cyfra
+2-druga cyfra
+3-trzecia cyfra
+4-czwarta cyfra

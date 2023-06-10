@@ -1,0 +1,244 @@
+Group=ATMEL & SST CMOS Parallel EEPROM
+
+
+Device=AT29C257
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32768 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=64
+ProgTimes=10.0 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122691128F04
+EndDevice 
+Device=AT29C256
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32768 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=64
+ProgTimes=10.0 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=1113123791128F04
+EndDevice 
+Device=AT29C512
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 64K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=128
+ProgTimes=10.00 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122690128F04
+EndDevice 
+[Device]=AE29F1008-15
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=128
+ProgTimes=10.00 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122690128F04
+EndDevice 
+[Device]=W29C020-90
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=128
+ProgTimes=10.00 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122690128F04
+EndDevice 
+[Device]=AT29C040A
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=128
+ProgTimes=10.00 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122690128F04
+EndDevice 
+[Device]=W29EE011;================ << W29EE011 >> =================
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=128
+ProgTimes=10.00 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122690128F04
+EndDevice ;================ << W29EE011 >> ================
+Device=AT29C010
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=128
+ProgTimes=10.00 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122690128F04
+EndDevice 
+
+Device=PH29LE257
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32768 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=64
+ProgTimes=10.0 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122691128F04
+EndDevice
+Device=PH29LE256
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32768 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=64
+ProgTimes=10.0 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=1113121191128F04
+EndDevice 
+Device=PH29LE512
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 64K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=128
+ProgTimes=10.00 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122690128F04
+EndDevice 
+Device=PH29LE010
+Socket=8 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=128
+ProgTimes=10.00 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=2613122690128F04
+EndDevice 

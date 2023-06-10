@@ -1,0 +1,22 @@
+BLAUPUNKT MEMPHIS DJ 7 643 391 010
+
+GLOWNY PROCESOR 8 925 901 402 /47C860F-G217/ TOSHIBA
+
+DANE SA PRZECHOWYWANE W PROCESORZE TI PR
+
+
+W poblizu front panelu na wysokosci klawiszy 4 i 5 jest uklad smd TDA 7332
+ponad sa widoczne dwie nogi quartza a wyzej dwie plaze do podlaczenia rs323
+blizej front panelu i prawej strony przewod zielony rxd
+dalej  front panelu i po lewej stronie przewod bialy txd
+
+
+za pomoca transmisi kasujacej z programu rcr44.exe mozna skasowac liczbe 
+zle wprowadzonych kodow /radio powinno uruchomic sie !!!/
+
+nastepnie wlaczyc radio przytrzymujac 1 i 4  /musi byc napiecie podtrzymujace/
+i wprowadzic zle kod , radio zablokuje sie a w momencie kiedy przejdzie do 
+ponownego sprawdzenia kodu dwa ostanie bajty transmisji beda kodem
+
+kod tworza dwa ostatnie bajty nastepujace po transmisji C0 61 ab cd
+gdzie abcd jest kodem

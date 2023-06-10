@@ -1,0 +1,421 @@
+Group=Xicor I2C Serial EEPROM
+
+Device=X24C00
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16 8
+EditRect= 0  0 40 18
+BlockLen=1
+ProgTimes=10.5 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=070308070608
+EndDevice
+Device=X24C01
+AddrDivider=1
+CmdMask=0x1F
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+EditRect= 0  0 40 18
+BlockLen=1
+ProgTimes=10.5 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=070908070A08
+EndDevice
+Device=X24C01P
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 0.0 0.0 0.0 0.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 43 19
+BlockLen=1
+ProgTimes=10.5 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=070908070A08
+EndDevice
+
+Device=X24C01A
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (40, 18)
+AddrSize = 0 128 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080000
+BlockLen=1
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X2402P
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+EditRect= 0  0 72 18
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=X24C02
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+EditRect= 0  0 72 18
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+
+Device=X24022
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+EditRect= 0  0 73 19
+BlockLen=4
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=X24026
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 256 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080000
+BlockLen=4
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+Device=X24C04
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 512 16
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080000
+BlockLen=16
+Iden=0xA0
+ProgTimes=10	
+EndDevice
+
+
+Device=X24042
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 512 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080000
+BlockLen=16
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X24C08
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 1024 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080000
+BlockLen=16
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+Device=X24C16
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (42, 23)
+AddrSize = 0 2048 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080000
+BlockLen=16
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X24164
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (42, 23)
+AddrSize = 0 2048 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080000
+BlockLen=16
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X24165
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (42, 23)
+AddrSize = 0 2048 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080001
+BlockLen=32
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X24F016
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (42, 23)
+AddrSize = 0 2048 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080001
+BlockLen=32
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X24320
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 4096 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080000
+BlockLen=32
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X24325
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 4096 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080001
+BlockLen=32
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X24F032
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 4096 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080001
+BlockLen=32
+Iden=0xA0
+ProgTimes=10
+EndDevice
+
+
+Device=X24640
+Socket=0 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 8
+BlankData=0xFF
+EditRect= 0  0 43 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=0702080705080001
+;-----------------
+[Part]=StatReg
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=65535 1 1
+BlankData=0xFF
+EditRect=54  1 75 10
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=0
+Algo=070208070508
+BitMapGroup = 00000010 WEL
+BitMapItem  = xxxxxx1x Enable
+BitMapItem  = xxxxxx0x Disable
+
+BitMapGroup = 00000100 RWEL
+BitMapItem  = xxxxx1xx Enable
+BitMapItem  = xxxxx0xx Disable
+
+BitMapGroup = 00011000 BP
+BitMapItem  = xxx00xxx None
+BitMapItem  = xxx01xxx Up 1/4
+BitMapItem  = xxx10xxx Up 1/2
+BitMapItem  = xxx11xxx All
+
+BitMapGroup = 11100001 WPEN
+BitMapItem  = 000xxxx0 On
+BitMapItem  = 100xxxx0 Off
+
+EndDevice ;================ << X24640 >> ================
+[Device]=X24641
+Socket=1 8 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 8
+BlankData=0xFF
+EditRect= 0  0 43 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 
+Device=X24645
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.0 6.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 8
+EditRect= 0  0 43 23
+BlockLen=32
+ProgTimes=10.0 0 0 0
+Iden=0x80
+DataWidth=8
+DisplayASCII=1
+Algo=0701080704080001
+EndDevice 
+
+
+Device=X24F064
+AddrDivider=1
+CmdMask = 0x01F
+Vcc= 5 5 4.00 6.00
+
+Part=Data
+EditRect  = (0, 0), (41, 23)
+AddrSize = 0 8192 8
+DataWidth 8
+DisplayASCII=1
+Algo=0701080704080001
+BlockLen=32
+Iden=0x80
+ProgTimes=10
+EndDevice

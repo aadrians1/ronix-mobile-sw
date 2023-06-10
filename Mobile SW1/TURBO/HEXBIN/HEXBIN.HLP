@@ -1,0 +1,71 @@
+       This documentation describe how to use HEXBIN.EXE under your
+computer DOS command prompt.
+
+       There are some functions to be added in this version(V2.2).
+
+       1.Three types of HEX format file can be converted to BIN file
+
+         I : INTEL HEX format(BYTE oriented)
+         M : MOTOROLA S HEX format(BYTE oriented)
+         T : TEKTRONICS HEX format(BYTE oriented)
+
+         Max. converted size is 64 K bytes
+
+         New converter file HEXBIN2.EXE can convert INTEL,MOTOROLA
+         extended hex format file. Maximum convertion size 256K bytes.
+         4th parameter for starting address can be specified on
+         HEXBIN2, and the leading garbage will be skip out to maintain
+         a small size of output binary file
+
+       2.The parameter to be answered in prompt mode can be directly
+         typed in one DOS command line as follow.
+
+        A>HEXBIN [HEX FILE NAME] [BIN FILE NAME] [HEX FORMAT] <CR>
+          EX.:
+              HEXBIN DEMO.HEX DEMO.BIN I <CR>
+         [] : means option
+
+       3.This program still can be used in prompt mode as follow.
+
+         HEX FILE NAME :DEMO.HEX
+         BIN FILE NAME :DEMO.BIN
+         HEX FORMAT (<I>INTEL <M>MOTOROLA <T>TEKTRONICS) :I
+
+       4.Two DOS command utility can be used as follow.
+
+         A>HEXBIN < KEY.IN<CR>
+           or
+         A>TYPE KEY.IN | HEXBIN<CR>
+
+          KEY.IN is a text file edited by any text editer(EDLIN,WS).
+
+         for ex.:
+
+           DEMO.HEX<CR>
+           DEMO.BIN<CR>
+           I<CR>
+
+         <CR> : cariage return key
+
+REVISION BOARD :
+     1. The program name of HEX TO BIN converter had beed changed from
+        HEXOBJ to HEXBIN. We want to distinguish the deference between
+        ROM BASE BINARY FILE from any other RELOCATABLE OBJ FILE.
+
+        HEX file : This file is an ASCII character type file which
+                   describe BYTE COUNT,ADDRESS,DATA,CHECK SUM.
+                   and can be displayed by TYPE command.
+                   Almost every assembler or linker can produce this
+                   kind of file.
+
+        BIN file : The HEX file will be converted to ROM BASE BINARY file 
+                   BY HEXBIN.EXE.
+                   This file is a binary type file which describe
+                   only DATA byte by byte. Address of 1st byte begin
+                   from 0000H. and can be displayed by DUMP.EXE(supported by
+                   us).
+                   Some assembler or linker can produce this kind of file.
+
+        NOTE : The file (.obj or .exe) produced by MASM or LINK can not
+               be used as an ROM BASE BINARY file.
+

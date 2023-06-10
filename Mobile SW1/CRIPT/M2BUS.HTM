@@ -1,0 +1,180 @@
+<HTML>
+<HEAD>
+  <META NAME="GENERATOR" CONTENT="Adobe PageMill 2.0 Win">
+  <TITLE>Miniature 3 V FBUS/M2BUS to V.24 adapter using MAX 232</TITLE>
+</HEAD>
+<BODY BACKGROUND="../../img/piiritau.gif" BGCOLOR="#00ff00" LINK="#800000"
+VLINK="#404040" ALINK="#ffffff">
+
+<H1><CENTER><IMG SRC="finished.gif" WIDTH="415" HEIGHT="253" ALIGN="RIGHT"
+NATURALSIZEFLAG="3">PanuWorld project:</CENTER></H1>
+
+<H1><CENTER><TT>Miniature 3 V FBUS/M2BUS to V.24 adapter using MAX232</TT></CENTER></H1>
+
+<BLOCKQUOTE>
+  <P><HR ALIGN=LEFT NOSHADE><B>WARNING!</B> Although the author has tested
+  these circuits, no guarantee can be given for the operation or compatibility.
+  No damages from long-term use have been tested. Building and connecting
+  [homemade] devices to electronic appliances contains always a risk to damage
+  the equipment seriously. Electrostatic discharge can damage the devices
+  without any visible [handling] mistake. If you do not understand the purpose
+  of a single component in these circuits, do not build these devices. You
+  are doing everything at your own risk.<B><HR ALIGN=LEFT NOSHADE></B></P>
+</BLOCKQUOTE>
+
+<UL>
+  <LI><B>About M2BUS Transmission</B>
+</UL>
+
+<BLOCKQUOTE>
+  <P>The normal FBUS interface uses the pins 7 and 8 of the phone (the pins
+  nearest to the ejected rightmost pin 9). The FBUS interface is used for
+  example by Nokia Data Suite<SUP>TM</SUP>.</P>
+  <P>There is another way to communicate with the phones, called M2BUS. The
+  M2BUS is located on a single pin, pin 6 (the fourth pin from the right
+  keyboard facing up).</P>
+  <P>There is no clear reason to build an M2BUS cable, because the applications
+  sold for phones (Nokia Data Suite<SUP>TM</SUP>, Nokia PCComposer) operate
+  via FBUS. Only the Nokia Service Locals require the M2BUS interface for
+  tuning and testing the phone.<HR ALIGN=LEFT NOSHADE><B><I>Note</I>:</B>
+  The Nokia Data Suite<SUP>TM</SUP> application uses only the FBUS transmission
+  method. If you are building an extra cable for your NDS, please prefer
+  the <A HREF="fbus.htm">FBUS-only circuit</A>.<HR ALIGN=LEFT NOSHADE></P>
+</BLOCKQUOTE>
+
+<UL>
+  <LI><B>Dual-mode (FBUS &amp; M2BUS) Circuit Theory</B>
+</UL>
+
+<BLOCKQUOTE>
+  <P>This solution uses a soft-switch to switch between the FBUS and M2BUS
+  modes. The FBUS mode is selected by leaving the RTS (Ready To Send) unasserted
+  and M2BUS is selected by asserting the RTS. Wrong setting on the RTS line
+  does not damage the devices but prevents the communications. It seems to
+  be that the RTS circuit is used to indicate the use of the M2BUS in Nokia
+  software.</P>
+  <P>Because the adapter output will be connected to the M2BUS pin of the
+  phone, there will be one new problem: The internal 5 kohm pull-up resistor
+  of the phone M2BUS pin creates a voltage divider with the 1 kohm limiter
+  resistor of the adapter. This problem occurs when the MAX232 R2OUT pin
+  is low, i.e. the adapter tries to pull the M2BUS to zero volts. It would
+  be better to have as small resistance as possible on the R2OUT pin, but
+  lowering the resistance would increase the current through the 2V7 zener
+  diode and through the phone &quot;pull-down open collector style&quot;
+  M2BUS driver, which is not a good thing. - When the phone wants to pull
+  the M2BUS to the ground, the communications protocol ensures that the R2OUT
+  pin of the MAX232 is always at high level simultaenously and the current
+  flows also from the MAX232 (in addition to the normal current from the
+  internal pull-up of the phone).</P>
+  <P>In my tests the M2BUS idle voltage with the adapter connected was 2.30
+  volts. When the computer wanted to pull the bus to zero, the result was
+  0.66 volts and when the phone pulled the bus down, the voltage was 0.20
+  volts. The critical thing is that the phone must understand 0.66 volts
+  as &quot;0&quot;.</P>
+</BLOCKQUOTE>
+
+<UL>
+  <LI><B>The Circuit</B>
+</UL>
+
+<BLOCKQUOTE>
+  <P>This document describes mainly differences of the dual-mode adapter
+  versus the FBUS-only adapter. Please read the <A HREF="fbus.htm">FBUS-adapter
+  documentation</A> carefully before studying the following paragraphs.</P>
+  <P><CENTER><IMG SRC="dualmode.gif" WIDTH="629" HEIGHT="403" ALIGN="BOTTOM"
+  NATURALSIZEFLAG="3"> <BR>
+  <B><FONT SIZE=-1>Figure 3. Miniature 3 V FBUS &amp; M2BUS to V.24 adapter
+  using MAX 232 (dual-mode).</FONT></B></CENTER></P>
+</BLOCKQUOTE>
+
+<UL>
+  <P ALIGN=RIGHT><IMG SRC="dualpcb.gif" WIDTH="367" HEIGHT="231" ALIGN="RIGHT"
+  NATURALSIZEFLAG="3"><B><FONT SIZE=-1>Figure 4. Circuit board layout for
+  copper-striped board (component side).</FONT></B>
+  <P>Please note the component ratings and notes in the <A HREF="fbus.htm">FBUS-adapter
+  document</A>.
+  <P>Use an IC socket for MAX232. Please note that in the circuit board layout
+  shown in the figure 4 the pin 11 of the IC socket must be cut away.
+  <P>If you are going to use this adapter with a Nokia 5100/6100 series phone,
+  you must connect the Rx &amp; M2BUS to pins 6 and 7, Tx to pin 8 and GND
+  to 9 in the connector of the phone. The pin 9 is the rightmost pin when
+  the phone base is watched with keyboard up.
+  <P>The circuit is now ready for testing.
+  <P>&nbsp;
+  <LI><B>Testing the Dual-mode Circuit<BR>
+  </B>After you have built and checked the circuit (the polarity of the capacitors),
+  test the circuit. <B>Do not</B> connect a device (phone) to the adapter.
+  <OL>
+    <LI>Connect the adapter to computer. <B>Do not</B> insert the MAX232 yet
+    into the socket.
+    <LI>Open HyperTerminal (or equiv.) and set the device to corresponding
+    COM port and set flow control to &quot;none&quot;. Type some dummy characters
+    to the terminal.
+    <LI>Measure the voltage between the pins 15(-) and 16(+) of the IC socket.
+    It must be about 4.7 volts.
+    <LI>Choose Call - Disconnect from the menu. The voltage disappears.
+    <LI>Insert the MAX232 (check the direction).
+    <LI>Type several characters to the terminal to switch the power back on.
+    The characters should appear on the terminal window. (The adapter successfully
+    converts the V.24 data to 3 V and back.)
+    <LI>Check the voltage of pins 2 (about 8.5 V) and 6 (about -8.4 V) of the
+    chip. Use GND for the - probe.
+  </OL>
+</UL>
+
+<BLOCKQUOTE>
+  <P>If you do not get the correct results in these measurements, there is
+  a failure in your circuit. Check the circuit carefully and retry the tests.</P>
+</BLOCKQUOTE>
+
+<UL>
+  <P>See the <A HREF="fbus.htm">Testing with the Nokia Data Suite<SUP>TM</SUP>
+  Software</A> paragraph in the FBUS-adapter documentation for testing the
+  FBUS mode of the adapter. Please ensure that the FBUS application used
+  with the adapter holds the RTS (Ready To Send) signal unasserted. The M2BUS
+  application must assert the RTS signal when sending or receiving data.
+</UL>
+
+<BLOCKQUOTE>
+  <P><HR ALIGN=LEFT NOSHADE><B><I>Note:</I></B> It is illegal to use copied
+  Nokia Data Suite<SUP>TM</SUP> software or Nokia TEst and Service Locals
+  Application (WinTesla). There are <B>no</B> legal versions of the WinTesla
+  available for the public. Do not use this kind of device to such purposes.<HR ALIGN=LEFT
+  NOSHADE></P>
+</BLOCKQUOTE>
+
+<P>&COPY; <FONT SIZE=-1>Copyright 1999 Panu M Tuominen. All rights reserved.
+Republishing this document partially or completely is forbidden. Internet
+hyperlinks to <A HREF="index.htm">the main page</A> are allowed and such
+linking is encouraged. Send your comments to the <A HREF="mailto:pat@iki.fi">PanuWorld</A>.
+You are doing everything at your own risk. See the WARNING! in the top of
+this page.</FONT></P>
+
+<P><TABLE ALIGN="RIGHT" BORDER="0" CELLSPACING="2" CELLPADDING="0">
+<TR VALIGN="TOP">
+<TD ALIGN="CENTER"><FONT SIZE=-2 FACE="MS Sans Serif, Helvetica"><A HREF="index.htm"><IMG SRC=
+"../../img/icons/nds.gif" BORDER="0" WIDTH="32" HEIGHT="32" NATURALSIZEFLAG=
+"3" ALIGN="BOTTOM"></A><BR>
+Back to<BR>
+the Contents</FONT></TD>
+<TD ALIGN="CENTER"><FONT SIZE=-2 FACE="MS Sans Serif, Helvetica"><A HREF="../../nokia/index.htm"><IMG SRC=
+"../../img/icons/6110.gif" BORDER="0" WIDTH="32" HEIGHT="32" NATURALSIZEFLAG=
+"3" ALIGN="BOTTOM"></A><BR>
+Shortcut to the<BR>
+NuukiaWorld</FONT></TD>
+<TD ALIGN="CENTER"><FONT SIZE=-2 FACE="MS Sans Serif, Helvetica"><A HREF="mailto:pat@iki.fi"><IMG SRC=
+"../../img/shortmai.gif" BORDER="0" WIDTH="32" HEIGHT="32" NATURALSIZEFLAG=
+"3" ALIGN="BOTTOM"></A><BR>
+Sends mail to<BR>
+pat@iki.fi</FONT></TD></TR>
+</TABLE>
+</P>
+
+<P><FONT SIZE=-1>For example, Nokia 5110 and Nokia 6110 are 5100/6100 series
+phones. The tests have been done with Nokia Data Suite 2.0 application and
+a Nokia 6110 phone running software V05.24. No exact information about compatibility
+with others is known.</FONT></P>
+
+<P><FONT SIZE=-1>Nokia is a registered trademark of Nokia Corporation.</FONT>
+</BODY>
+</HTML>

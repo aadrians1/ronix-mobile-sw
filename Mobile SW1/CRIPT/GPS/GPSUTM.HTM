@@ -1,0 +1,1872 @@
+<HTML 2.0>
+
+<META http-equiv="PICS-Label" content='(PICS-1.1 "http://www.classify.org/safesurf/" l by "dbartlett@synapse.net" r (SS~~000 1))'>
+
+<head>
+<base href="http://www.synapse.net/~dbartlett/gpsutm.htm">
+<title>A Practical Guide to GPS -With Emphasis on UTM</title>
+
+
+
+<META NAME="author" CONTENT="Don Bartlett">
+
+
+      <META NAME="description" CONTENT="This article gives an
+excellent introduction into the use of handheld GPS units in
+back-country related activities. It explains how to use a GPS
+unit, how the UTM-grid is to be used and gives a few hints useful for buyers.">
+      <META NAME="keywords" CONTENT="GPS, UTM, back-country,
+navigation, hiking, hunting, fishing">
+      
+<LINK rel=made href="mailto:dbartlett@synapse.net">
+
+
+</head>
+<body bgcolor="#FFFFFF" text="#000000" LINK="#FF0000" ALINK="#FF000" VLINK="#FF0000">
+<center>
+
+
+
+<h1>
+
+
+<a name=top></a>
+
+                    A PRACTICAL GUIDE TO GPS - UTM &copy
+
+
+</h1>
+<font size=+2><H2>by Don Bartlett</font></H2>
+
+<IMG SRC="letsgo2.jpg"HEIGHT=137 WIDTH=185 ALIGN=MIDDLE ALT="The Man Himself">
+
+<IMG SRC="/cgi-bin/counter?font=fancydigital_g&mindigits=5&maxdigits=6" ALIGN=MIDDLE>
+
+</center>
+
+<P>
+January 25, 1999  
+
+<br><br>
+<a href="#French">français?</a>
+<br><br>
+
+<!-- start of NedStat code -->
+
+<a href="http://usa.nedstat.net/cgi-bin/viewstat?name=gpsutmcount">
+<img src="http://usa.nedstat.net/cgi-bin/nedstat.gif?name=gpsutmcount" border=0 alt="" width=22 height=22></a>
+<!-- end of NedStat code -->
+
+                      <script language="JavaScript">
+                      <!--
+                        document.write("<img src=\"http://usa.nedstat.net/cgi-bin/referstat.gif?name=gpsutmcount&refer="+escape(top.document.referrer)+"\" width=1 height=1 alt=\"\">");
+                      // -->
+                      </script>
+
+
+<br>
+<p>
+<strong>Note: This article is not to be used for any commercial purpose
+without the written permission of the author.</strong><br>
+
+<p>
+ 
+
+
+
+
+<a name=table></a>
+<h3>Table of Contents</h3>
+<ul>
+<li><a href="#intro">Introduction.</a>
+<li><a href="#warning">Warning.</a>
+<li><a href="#limitations">Limitations.</a>
+<li><a href="#accuracy">Accuracy.</a>
+<li><a href="#howwork">How the GPS works.</a>
+<li><a href="#beware">Beware.</a>
+<li><a href="#dop">Dilution of Precision - DOP.</a>
+<li><a href="#elevationerrors">Elevation (Errors).</a>
+<li><a href="#blob">SA and how to defeat it (The Blob).</a>
+<li><a href="#dgps">Differential GPS (DGPS).</a><br>
+<li><a href="#latlongutm">Latitude/Longitude vs. Universal Transverse Mercator Grid.</a>
+<li><a href="#maps">Maps.</a>
+<li><a href="#traveling">Traveling.</a>
+<li><a href="#way-points">Way-points - WPs.</a>
+<li><a href="#utm">UTM - an attempt to explain.</a>
+<li><a href="#useutm">Using UTM coordinates.</a>
+<li><a href="#setup">Setting up your unit.</a>
+<li><a href="#buying">Buying a GPS unit.</a>
+<li><a href="#power">Hooking up to an external power supply.</a>
+<li><a href="#speed">Speed.</a>
+<li><a href="#var">Variable readings.</a>
+<li><a href="#hownot">How not to use your GPS.</a>
+<li><a href="#moreinfo">For more information  and links.</a>
+</ul>
+
+
+
+<a name=intro></a>
+
+<h3>INTRODUCTION</h3>
+
+<p>
+(N.B. This Guide started as a text posting to re.backcountry Feb. 10, 1995)<br>
+
+Most of the articles and literature on the Global
+Positioning System have only described the use of a GPS unit in a
+nautical setting. As valuable as they are on water, they are
+equally as valuable in the bush, desert, mountains, tundra, or,
+just in Central Park.
+
+<p>
+This therefore is written for hikers, fishermen, hunters
+and all persons who wish to traverse the wilderness in the full
+knowledge of where they are, where they have been and where they
+wish to go, primarily in conjunction with a gridded map.
+
+<p>
+In this discussion, I will at times use "GPS" to mean the
+actual hand held unit itself as opposed to the whole system of
+satellites and their control.
+
+<p>
+The most basic requirements for land use of a hand held  GPS are: 
+     
+<p>
+1. The ability to give a position reading when not unduly impeded
+by overhead tree cover, thus virtually requiring a multi  parallel channel
+receiver unit such as the Eagle Explorer or Garmin 12XL.
+
+<p>
+2. The capability to store at least 100 way-point (WP) positions in
+the unit's memory.
+
+<p>
+3. The ability to list these WP positions giving their distance
+and  direction from the current position. 
+
+<p>
+4. If to be used with gridded topographical maps, the unit must be
+able  to handle the most common UTM datum. (explained later.)
+
+<p>
+Any added features are a bonus but not necessarily
+needed, depending on the intended use. The "odometer" function
+of some units can be useful, also the Track-back.
+
+<p>
+Also, being able to upload/download way-points and routes to a
+computer may be important to some but is not vital for the
+occasional use of a GPS.      
+
+<p>
+All of the units have  many other features, most of a
+nautical nature which may or may not be useful on land, depending
+on the circumstances.   
+
+<p>
+The basic requirement for the ease of use of a GPS on
+land and the correlation of the readings directly to a map require
+that the GPS be capable of handling the UTM grid system (Universal
+Transverse Mercator grid). While there are other grid systems in
+use, the UTM system is by far the most common. Within the UTM
+system, there are many map datums specific to the area of interest.
+(More about this later.)
+
+<p>
+When we have roads, power lines, heights of land, mountains, rivers 
+and lakes, these
+are often sufficient along with the map and compass for us to
+establish with a reasonable degree of accuracy, where we are on the
+map. In those featureless areas however, where all looks the same
+for miles and miles of slowly rolling bush-land, grassland,
+dessert, tundra etc. the GPS takes over and will give a definitive 
+location which may be found and plotted on the map. 
+
+<p>
+The usefulness of a GPS is now well recognized by many people
+and the interest is increasing all the time. As a result, there are
+those who do not know how to use a compass and map but, who after
+buying a GPS feel that they now have the ultimate tool for ease of
+travel in backcounry. A GPS is just another aid to traveling, high
+tech, yes, BUT must be used in conjunction with at least a compass
+and hopefully a detailed gridded topographical map. While using a GPS
+ greatly
+assists in traveling in featureless areas, it does not mean
+that there is no need to still maintain an independent record of
+way-points, routes and directions in case of a system failure.<br>
+ 
+<p><a href="#table">Back to Table of Contents</a></center>
+
+
+<hr size=2>
+
+<a name=warning></a>
+
+<strong>
+<CENTER><BLINK>WARNING</BLINK></center>
+
+No one should venture out in any area where being 
+lost would present a danger with only a GPS. It is
+essential to carry spare batteries, a compass and 
+a map and to have the knowledge of how to use them.   
+This message is so important that those who read this
+should pass it on to others, now that GPS receivers 
+have dropped to less than $100 US and will be bought 
+on impulse.
+</strong>    
+
+
+    
+<P> See the tutorial now available at:<br><br>
+<center><a href="http://www.uio.no/~kjetikj/compass/"> Kjetil's
+Compass Lesson</a></center>
+                                                                  
+<P>
+I always travel with a compass in the bush as the
+compass compliments the GPS and saves its batteries. I don't always
+have a map with me. The GPS should not be left on and used in place
+of a compass when on internal battery power in the wilderness
+unless there is an ample supply of batteries! This theme will be
+repeated several times in this article for it is important.
+
+
+<P>
+Like any other sophisticated instrument, a GPS unit is only
+as good as the person using it. A lack of knowledge of the
+limitations of the GPS system is responsible for many of the
+reports of so-called unit/system failure. 
+<P>
+
+I've had a (now outdated) Garmin 75 for over 4 years, having used it
+extensively in northern Ontario and Quebéc. It was extremely useful 
+and I found it more than accurate enough for my needs. If I could get a clear
+spot with a fair sized "window" to the sky, my readings would be
+within 100 metres (110 yards) 95% of the time, usually much less.
+I am now using a Garmin 12XL, ver. 4.0 and it is an impressive unit. <br><br>
+
+<p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+
+<a name=limitations></a>
+
+<h3>LIMITATIONS</h3>
+
+<P>
+
+A GPS antenna will not receive good signals from within
+a building. Likewise, leaves and branches of trees will interfere
+and degrade the signals with the result that the readings, if any,
+are slow to obtain, if at all. Some of the more sophisticated units 
+(meaning multi-channel receiver units) are better at obtaining readings 
+under these conditions than others, there is a price to pay. The price 
+a few years ago was in weight, power consumption and cost. Now it is really 
+only the cost.
+
+<P>
+
+The GPS system has been is use for a number of years and
+used by sailors and pilots, with great success. BUT, in an airplane or
+on a boat, the sky is in view, from horizon to horizon. Any GPS,
+even the least sophisticated, lowest price model single channel multi-
+plexing unit will give good results under these perfect conditions. In
+addition in most planes and boats, an external power source is available.
+<P>
+
+To expect a single/double channel hand held unit to perform
+under conditions never experienced on sea or in the air is ludicrous.
+Yet, this is exactly what many new users have done. As a result,
+specific makes and individual units have both been given a bad
+reputation and said to be unreliable. Much of the blame 
+here belongs directly on the various manufacturers who have not
+adequately explained in their advertisements, literature and
+manuals, the limitations in the system and requirements for use. 
+In addition, misleading claims for the accuracy of units and the
+system are made in some of the mail order catalogs and some
+staff in stores have been known to give faulty information. The
+best defence when buying a GPS unit is have a good understanding of 
+the system and the differences in the units - which is no different
+than buying anything such as a car, computer, stereo system or whatever.
+
+<p>
+Now that most newer units have at least 12 parallel channels,
+the speed of obtaining a usable reading is only a fraction of
+the time that the older multiplexing units needed and the
+frustrations experienced by earlier users will be minimized.     
+
+<P>        
+From four seasons hunting and fishing in the Canadian
+bush with my single channel unit, I've found that the readings are 
+always sufficient for my needs, if I take the time to pick a clearing 
+with as much sky and horizon showing as possible and take readings about 
+every 1/2 hour. While the unit that I used is perhaps twice the cost of
+the lowest priced units currently available, I have little doubt
+that the lowest priced units today would also perform almost as
+well, while possibly lacking some of the more sophisticated
+features.(Note: the above applies to multiplexing units and was
+written before the multi-channel parallel units became the standard.)<br><br>
+<p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+
+<a name=accuracy></a>
+
+<h3>ACCURACY</h3>
+
+<P>      
+The GPS satellites are owned and controlled by the US
+Department of Defense and this agency has the prerogative  to 
+degrade the  accuracy  for purposes of national defense. This is
+done by what is called "Selective Availability" or what is commonly
+known "SA." SA is normally turned "on" but the DOD says that 95% of
+the time, position accuracy will be 100 metres or better.
+ 
+<p>
+Let me say as a Canadian, who is very grateful for the GPS satellite 
+system paid for by US taxpayers, that the SA does not in any way impair
+the systems usefulness for my purposes. And even if SA were to disappear
+tomorrow, the gain in accuracy would still not be sufficient for me to 
+do my own surveying, to mark a hidden treasure or to find a bow-hunting
+tree-stand in the middle of a cedar swamp at 4am in the morning. 
+
+<P>
+The SA introduces a position error which changes over a
+period of time. A unit will not, when stationary, give a continuous
+stable reading. The position will gradually change and if the
+screen page chosen also shows speed, it will show a slow speed reading as 
+well. This is normal when SA is on. 
+
+<P> 
+By recording these readings over a number of hours (or even days)and
+averaging, a reading will be obtained that is quite close to the
+correct one. Several of the more sophisticated (and expensive)
+units will do this automatically but such accuracy is not needed
+for the general user. 
+
+<P>
+Very sophisticated systems are used by surveyors where
+the accuracy is excellent, often with two units working in tandem. 
+
+<P>
+DGPS is a system whereby the GPS unit receives
+corrections by way of radio signals from a GPS unit at a known
+location. While most hand held GPS units are said to be "DGPS
+Ready," that is for hook-up, this is  most commonly used by boats. 
+
+<P>
+There is the possibility that the US DOD will bow to US civilian 
+pressure and turn SA "off" which will give users accuracy
+of perhaps 25 metres or a bit better.
+
+<P>      
+If you intended to bury a treasure and come back in five years
+to dig it up, then a simple GPS would not be the answer by just
+taking a reading. Instead, take a reading on a feature that you
+will recognize easily from at least 50 to 100 yards. Then take a compass
+bearing and measure with a tape measure to the treasure and record
+the coordinates (of the recognizable feature), the bearing
+(compass direction) and the distance. Another way to accomplish 
+this would be to choose two ground features readily recognizable
+and to take compass bearings from each to the treasure.
+
+<p>
+There is some evidence that different makes and models of various 
+GPS units are slightly more accurate than others. To explore
+this, check into Tom Born's website listed in the links at the end.<br><br>
+
+<p><center><a href="#table">Back to Table of Contents</a></center>
+
+
+<hr size=2>
+
+<a name=howwork></a>
+
+<h3>HOW THE GPS WORKS</h3>
+
+<P>
+This explanation is not technically exact but will give the basic idea of 
+how it functions. 
+
+<P>
+The GPS unit does not send out radio signals, it only
+receives them. There are some 24/25 navigation satellites in orbit
+about 12,000 miles above the surface of  the earth, and more will
+hopefully be added. Each makes an earth orbit every 12 hours.
+
+<P>
+Each satellite knows from reference to land based control
+stations where it is at any given instant.  Likewise, it knows the
+exact time in UTC (Universal Time Coordinated, formerly Greenwich
+Mean Time). Each satellite also has the "almanac" which gives the
+same information about the other satellites as well their own orbits.
+
+<P>
+When you turn on your GPS and point the antenna to the
+sky, it starts picking up signals from the satellites, starting
+with the strongest signal. It then cycles (if it is an older multiplexer)
+through the others in sight gathering more info. If it is a newer
+multi  channel parallel unit, when four channels have good data,
+it will then calculate its distance from each of the satellites to itself.
+<br>
+<P>
+Let's say it reads three satellites and knows the
+distance from each one to itself. If you picture a satellite for a
+moment stationary, with a line the length of which is the same as
+the distance from GPS to the satellite, if you extend this line to
+the earth, you could trace a circle which touches the earth's
+surface making  a circle or an arc, depending whether or not it is
+overhead or towards a horizon. You and the GPS are somewhere on
+that arc or circle. Now with the line from a 2nd satellite, you
+have another circle or arc on the earth. You are at either of the
+two points where the two arcs or circles intersect, but which one?
+The third satellite settles the matter and you will have a
+position. At this point, you will be given a position reading,
+Garmin calls this 2D mode, that is, no elevation update. If a
+fourth satellite is in view, it brings more precision to the
+calculation and an elevation will be given, that is 3D mode.
+
+<P>
+For a good   positional fix, the required four satellites should be 
+located around about yet well above the horizon.
+Unfortunately, the  opposite is true for an elevation reading.
+In the latter case, the satellites should be more overhead. Generally
+speaking, the GPS system does not give accurate enough readings of
+height to be useful, the error being normally 150% to 200% of the
+horizontal error - for example, if the position error is 50
+metres, the elevation error could be 75 to 100 metres.
+
+<P>
+Depending on the type of roof, some units have receivers
+and antenna sensitive enough to obtain a usable signal inside and
+these are the ones which will do best under heavy tree cover,
+usually the multi channel types. 
+
+<P>
+With respect to the speed of giving a reading when turned,
+on the oftener a GPS is used, the faster it will give a reading.
+The first time that a new single channel unit is used it could take 
+up to 15 minutes for a reading! This is termed a "cold" start and has
+nothing to do with the temperature. Once it has the initial reading
+and orients itself, it will take much less time. Normally, after
+20-30 minutes, less than a minute is needed for a reading (a "hot"
+reading). Also while the lower priced units such as the older Garmins
+(38, 40, 45, and 75) and Magellans have only one receiver which switches
+from satellite to satellite, the more sophisticated units
+(Eagle, Trimble,  Garmins and now Magellan) have a sufficient number 
+of receivers to read the transmissions from the four required for 3D fix.
+
+<P>
+I will add here that I have heard two divergent opinions
+expressed about 2D and 3D fixes. A 2D fix is the initial fix
+calculated when the signals from only 3 satellites are strong
+enough to be used. My Garmin 75 will give a 2D fix usually quite
+quickly and when an additional satellite contributes it's data, 
+the fix will become a 3D fix. A 2D fix does not give an altitude or
+uses the last that it calculated whereas a 3D fix also gives the
+current elevation. One opinion is that the initial 2D fix is as
+accurate a position  as a later 3D fix. The contrary opinion is
+that 2D fixes are unreliable. While I have done no work to
+establish  which is correct, I lean towards the 2D being acceptable.
+Remember, I'm not expecting 20 metre accuracy. To be safe, it is
+probably good practice to wait for a 3D fix.
+
+<P>
+The newest multi parallel channel  units are very fast at obtaining
+a fix, usually within less than 1/2 a minute whereas the older 
+multiplexing units will take at the best, four times as long,
+but the newer units will not necessarily give more accurate fixes,
+all else being equal. <br><br>
+ 
+<p><center><a href="#table">Back to Table of Contents</a></center>
+<hr size=2>
+
+<a name=beware></a>
+
+<h3>BEWARE</h3>
+
+<P>
+With the advent of 12 channel units (Eagle Explorer and Garmin  12XL)
+there is a lot of misinformation floating around, particularly concerning
+the older and now much cheaper single or dual channel units.
+
+<P>
+Tracking 8 or 12  sats is NOT the same as having 8 or 12 parallel
+receiver channels in a unit! And to make it worse, some sales people
+either through ignorance or worse, will state that a unit tracking
+12 satellites is a 12 channel unit.  Not so!
+
+<P>
+My old Garmin 75 "tracks" up to 8 sats but it only reads data from one sat
+at a time and must cycle through them to get data from four for a fix.
+It is much slower than a Garmin 12XL which has 12 parallel channels.
+
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+
+<hr size=2>
+
+<a name=dop></a>
+
+<h3>DILUTION OF PRECISION - DOP</h3>
+
+<P>
+Some GPS units will give you an idea of the quality  of
+the reading. Usually it is called DOP for dilution of precision, as
+in my Garmin 75. Also given is a average  error in metres or feet.
+Some other makes call this the Position DOP or PDOP.
+
+<P>
+The lower the DOP number, the more accurate is the
+reading. A DOP of 2.5 or 3 is OK, at least for practical bush
+travel. I have seen it as low as 0.9 but this is with an almost
+clear horizon and good satellite coverage. (And don't ask me why
+the DOP can be less than 1.0.) 
+
+<P>
+Because the satellites are moving across the sky,  when
+a reading is attempted under tree cover, they will move in and out
+of sight quite rapidly. This is where a unit with parallel
+receivers excels because it takes much less time (about 1/4 as
+long) to have enough data to work out the fix. As mentioned
+earlier, it is the moisture in the leaves which absorbs the signal
+(or more correctly, the dissolved constituents of the moisture.)
+
+<P> 
+You will at this point ask, but what about rain, fog and
+clouds. I had only one report, high in the Swiss Alps, where the
+user felt that fog was degrading the signal. In this case, the fog
+was extremely heavy and was possibly degrading it. On
+the other hand, evidence is that weather does not unduly affect the
+accuracy of the units in rain or when there is cloud cover. 
+
+<P>
+There are at times a brief period when not enough
+satellites are in sight and positioned well enough to give an
+acceptable reading, especially in hilly  wooded country. Usually
+within 20 minutes or so however, a useful reading is possible. Fortunately,
+this is not common. I have rarely experienced this but a friend also
+with a Garmin 75 has more frequently seen it. When such a configuration
+of satellites does give a local problem, it will probably be experienced
+again about an hour later the next day. 
+
+<p>
+For those readings taken on water, with a clear horizon and good geometry 
+of the satellites, the reading will be much  better, as will be the altitude
+but, who needs altitude at sea?<br>
+Note: a sea level elevation reading of a minus figure is not necessarily
+a system or unit error but involves the distance to the center of the 
+earth at that point, not the distance above the actual water surface.   
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+
+<hr size=2>
+
+<a name=elevationerrors></a>
+
+<h3>ELEVATION -(ERRORS)</h3>
+
+<P>
+Generally, the elevation errors will be great enough  to make the readings 
+useless.<BR>
+A GPS is not to be depended on for accurate elevation readings.
+
+<P>
+For those of you who are fortunate enough to own a
+hand-held altimeter, don't expect the GPS to take its
+place.  
+
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+ 
+ 
+<hr size=2>
+
+<a name=blob></a>
+
+<H3>SA AND HOW TO DEFEAT IT - THE BLOB</H3>
+<p>
+<P>
+An interesting experiment is to turn a unit on, set it to
+record "track" on the "Plot" screen and after an interval of at
+least 60 minutes or longer if possible, check the plot of the track
+that the unit records. As the "track" is recorded by
+the pixels on the screen, it will draw an uneven "blob" with the
+position of the unit in the center of the screen. If you leave it
+on until the "+" (at least on the Garmin 75) appears to be well
+centered in the blob, take an immediate reading and you will have
+the best reading that you are ever going to get with SA "on" and a
+simple unit. I call this the Blob method of achieving an accurate
+fix. It is not my discovery but that of a contributor to the Usenet
+group: <EM> sci.geo.satellite-nav</EM>
+
+
+I understand that some units, the newer Garmins, permit the "+"
+on the plot screen to be moved (panned) and if so, it could be
+centered on the blob in order to take the reading, not waiting until the 
+blob centered itself over the "+" in the center of the screen.
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+
+<a name=dgps></a>
+
+<H3>DIFFERENTIAL GPS - DGPS</H3>
+
+<P>
+Where DGPS radio stations broadcasting the corrections
+to be applied because of SA are locally available, and  these corrections 
+are fed to the GPS unit, accuracy is much improved, perhaps giving an 
+error of 20 metres instead of closer to 100. <br>
+I don't view differential corrections of any practical use for my hiking, 
+even if they were available.
+
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+
+<a name=latlongutm></a>
+
+<H3>LATITUDE/LONGITUDE VS. UNIVERSAL TRANSVERSE MERCATOR (UTM)</H3>
+
+<P>When I initially started using the GPS, I worked with latitude
+and longitude and struggled making the conversions back and forth
+between the map and the GPS. In realizing that there had to be a
+better way than this, I found the relationship between the
+topographical map grid (UTM) and the GPS. 
+
+<P>If UTM gridded maps are available, don't waste time fooling
+around with Lat. & Long, at least on land. 
+
+<P>On the other hand, if you already have an older GPS that does not
+handle UTM, all is not lost but you will need to use latitude
+/longitude.  This is fine for bush work without a map. But for ease
+of conversion from map to GPS and back, you can't beat a grid
+system, UTM being by far the most common. 
+
+<P>Although most of the world has been mapped using UTM in one
+datum or another, gridded maps are not always available being
+kept to the military in some countries.
+
+<P>
+On checking Bowditch, <cite>The American Practical Navigator</cite>,
+1977, a standard marine text, reference is made to the fact that
+some harbours of the world have been mapped with the UTM grid
+and such maps are available.  
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+<a name=maps></a>
+
+<H3>MAPS</H3>
+
+<P>Most maps have latitude and longitude and can be used by
+making the calculations between degrees, minutes and seconds.
+However, the topographical maps of scales, from 1:100,000 down to
+1:50,000 and below usually also have the entire map gridded with
+the UTM system. Whenever possible, only purchase these maps. The
+Canadian topos in the 1:50,000 series, have a grid 2 cm. square,
+which is 1 kilometre on the ground. This means that each mm. on the
+map is 50 metres (or about 55 yards). If your map is not 1:50,000,
+check the scale to establish the grid size.  While 1:24,000 US
+topos are gridded at 1,000 metres ( 1 kilometre), I have seen a US
+Forest Service 1:100,000 map with a 10 kilometre grid! Likewise,
+the Canadian 1:250,000 maps have a grid too course for practical
+work.  
+
+<P>The newest USGS topos show a 7.5' X 15' rectangle on a scale
+of 1:25,000, metric, using NAD 27 UTM.
+They are available mail-order from:
+
+<P>
+USGS Map Sales, Box 25286, Denver, Co. 80225 and cost $4
+each plus $3.95 shipping for each order. 
+
+<P>
+Also, many hiking and outdoor shops carry local maps.
+
+<P>There has been some talk of the USGS dropping the UTM
+grid from their maps and only leaving a + where the intersections
+occur. 
+
+<P>
+Other Map Sources:   Phone 1-800 USA MAPS for topos
+
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+<a name=traveling></a>
+
+<H3>TRAVELING</H3>
+
+
+<P>When traveling any great distance, when I stop for gas or a
+coffee, I take a GPS reading, not saving it. This is because when
+first turned on, the GPS remembers where it was the last time that
+it was used.  When it finds that the satellites are not where they
+should be, it must then  update its data and work out the new
+calculations (a cold start). This might take a couple of minutes.
+There is no need to save this point. By doing this on the trip,
+when you arrive at your destination, the GPS will rapidly give a
+reading (a hot reading).
+
+<P>Since writing the above, I have found that my Garmin
+75 will give a reading from a cold fix after moving hundreds of miles
+within 2 to 3 minutes, with a good view of sky. 
+	
+<P>If you have hooked up the unit to the car electrical system,
+then you may have continuous read-outs right to your destination.
+(see below)
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+
+<hr size=2>
+
+<a name=way-points></a>
+
+<H3>WAY POINTS -WPS</H3>
+
+<P>Way-points are locations worth recording and storing in a GPS.
+They may be check points on a route, significant ground features,
+e.g. camp, the truck, a fork in a trail, where Charlie shot his
+deer, or whatever. They may be put in manually, having taken the
+data from a map. This can be done before ever leaving home. Or more
+usually, they may be entered directly by taking a reading with the
+unit at the location itself, giving it a name and then saving.  
+They may also be put into the unit by reference to a WP already
+stored, giving the reference WP, the distance and compass bearing
+to the new WP.<br>
+
+<p ALIGN=CENTER>
+<IMG SRC="http://www.synapse.net/~dbartlett/donroy2.jpg" HEIGHT=170 WIDTH=110 ALT="Checking Map in Camp">
+<IMG SRC="http://www.synapse.net/~dbartlett/gpsmap2.jpg" HEIGHT=170 WIDTH=150 ALT="Adding Way-Points to Map">
+<!--If I said where we are moose hunting here, it might get crowded next year :-)-->
+
+<P>Arriving at a new camp, the GPS should be turned on, and the
+location stored at CAMP. As the days unfold and more territory is
+explored, more way-points are named and stored. But be selective of
+those that are saved. Too many can be very confusing. Better, a
+small number of good ones than too many poor ones. In this regard,
+before you store any, think out a nomenclature. For example, a
+series on a trail could be TR1, TR2, TR3..... and RD1, RD2, RD3....
+for a road. With a series like this, you could plot them later on
+the map and draw the trail or road.
+
+<P>With a GPS, a person may explore a new  territory as he
+wishes, without having to worry about becoming lost. The GPS, after
+locating itself, will give the distance (in kilometres or miles)
+and direction (magnetic course, true course or grid course) for the
+nearest 10 or so way-points. Say that you want to go to camp. The
+GPS says 3.4 kilometres at a direction of 120 degrees. Turn off the
+GPS, head out about 120 degrees with compass in hand and walk the
+easy route. You do not need to travel 120 degrees exactly. Walk
+around each hill and swamp. After traveling for a while in the
+general direction, turn on the unit take another GPS reading and
+check distance and direction now to CAMP. You will find you are now
+only 2.2 kilometres but must head 145 degrees. You now can turn it
+off and alter your course further south. You repeat this until the
+distance drops to within 100 or so metres. You are now within the
+circle of error which is due to SA and camp should be within sight.
+
+<P>Remember, these units are mostly all oriented for nautical use
+and as such, when left ON, will do a GOTO and give continuous
+updated readings of direction to go and remaining distance to the
+destination. They will in effect "navigate" all the way. BUT, this
+technique presupposes that you have ample battery power (external
+hook-up) AND a clear view of the sky. This technique is standard
+procedure on the water and worked well for Dessert Storm. (No, I
+wasn't there  but SA was turned OFF and I just can't picture the
+guys fumbling with a new set of AA's when in a vehicle. "Hey, Joe
+grab that pink bunny and shak'm down for some  more coppertops, or
+we gunna miss the party in Bhagdad.")
+
+<P>BUT this "navigation" with a live hand held GPS in the
+wilderness where topography and tree cover can give intermittently 
+poor reception in my opinion is a NO NO. I believe that much of the
+frustration of some new users is because they are asking too much
+of the system and units under much less than ideal conditions.<br>
+While this advice of not "navigating" on land was pertinent with the
+units of several years ago, since 1997 and the lower battery drain
+of current units, it is not as important and indeed is  acceptable,
+remembering the need to always carry spare batteries. But in doing so,
+much that is to be seen will be missed if too much focus is on the GPS 
+and not more on the terrain  and scenery.<br>
+<br>
+
+<center>See:<a href="#hownot">How not to use your GPS.</a></center
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+
+<a name=utm></a>
+
+
+<a name=back></a>
+
+
+<H3>UTM - AN ATTEMPT TO EXPLAIN</H3>
+
+
+<P>Here is the exercise that I went through to discover how to
+use Universal Transverse Mercator grid system.
+
+<P>If you already have a GPS with way-points stored
+in Lat-Long, have no fear of losing them in the following exercise.
+The GPS will convert them back and forth effortlessly. 
+
+<P>For the Garmin 75, from the AUX screen, choose UNITS/HEADING
+and cycle through the options for Posn>,  choose UTM/UPS. (At this point,
+you are not yet worrying about the Datum. This is explained later.)
+
+<P>Now with a gridded map of your location, go OUTSIDE and take
+a reading. (I am certain that these directions, with some
+modification will work with all hand-held units).
+
+<P>Wait until you get a 3D reading, and the speed on the
+navigation drops to zero or close (it will continually vary because
+of SA) and appears something like this: 
+<PRE><code>       
+        18T 0439535
+            5024750
+</PRE></code>
+
+<P>Record this reading, turn off GPS and go inside to the gridded
+map, put a pencil mark on your location (hopefully you know where
+you are)! If you look along the edges of the map, you will see that
+the grid lines are numbered. Look at the lower left hand corner of
+the map. You should see a 6 digit number, printed horizontally with
+the 2nd and 3rd digits printed slightly larger than the others. The
+larger numbers are the ones relating to the vertical grid lines and
+will increase from left to right. Look again at the lower left
+hand corner and left of map, printed vertically will be another 
+number with 7 digits, the 3rd and 4th printed larger. These are the
+numbers increasing from bottom to top numbering the east/west grid
+lines. Now with the grid numbers on the map and what you recorded
+from the GPS, look for the relationship. Look at the grid numbers
+along the bottom of the map and see how they match up with the
+first number, e.g. <code>0439535</code> above.  
+
+<P>Close to where my house is on the map, the grid line 39
+appears along the map bottom. Likewise, looking at the grid numbers
+going up the left (and right) side of the map, I see 24 which is
+also close. My house is east and north of where north-south grid
+line 39 and east-west grid line 24 cross. The difference east and
+north of the 39 and 24 crossing is given by the last 3 digits in
+each number, e.g. 535 meters east and 750 meters north.     
+
+<P>As I said earlier, the UTM grid on the map is the key to
+coordinating the map with the GPS.  By using it, you can easily go
+back and forth with an accuracy of 50 meters or about 55 yards on
+a 1:50M map. You will do even better on larger scale map.
+The UTM grid has been in use for many years. To understand the
+grid, imagine instead of longitude, that the north-south lines are
+based on meridian lines 6 degrees apart. These strips are 6 degrees
+wide, centered on these meridians, starting at 180 degrees west and
+numbered towards the east.
+
+<P>Thus, all of North America (with the exception of the western
+Alaskan islands) is covered by those zones numbered from
+#5 to #22. Here in Ottawa, I am in zone 18.  Where we hunt moose is
+zone 16, to the west. Yellowstone Park is in zone 12. In referring
+to the grid, it is important to know what zone you are in and in
+giving a UTM reading, the GPS  will give the zone first. The
+letter, T in this case, is the UTM reference to how far north or
+south of the equator you are.  In normal use you can disregard the
+zone number and letter. 
+<br ><br>
+Take a look at <a href="http://www.utexas.edu/depts/grg/gcraft/
+notes/coordsys/gif/utmzones.gif">  a map of UTM Zone Numbers for the world.</a><br>
+</ul>
+
+
+
+
+
+
+<P>Please note that the above explanation is for a position north
+Lat. and west Lon. 
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+
+<hr size=2>
+
+<a name=useutm></a>
+
+<H3>USING UTM COORDINATES</H3>
+
+
+<P> In using UTM grid coordinates, the "easting" from the zone
+meridian is always given first, and then the "northing".  Also take
+note that for UTM, measurement is from the west, going EAST, the
+"easting" which is opposite to longitude. In reading coordinates,
+you <em>READ RIGHT UP</em>.  In other words, the easting is always given
+before the northing. The coordinates of a point could be given
+several ways. Here is an example:
+<PRE><code>
+       18T 0439535 5024750
+</PRE></code>
+<br>
+
+<P>This is the full location description of my home in Ottawa to
+the best precision the Garmin 75 will give. (NB-I have redone it
+by the "Blob" method and it is actually <code>18 T 0439426  5024376.)</code>
+The 18T refers specifically to the area of the earth where I am
+located, and normally is not used. The other 14 digit number must
+be broken up:
+
+<P>
+<code>0439535</code>   is the EASTING from the zone 18 meridian,  down to
+the closest metre.  If you place a decimal thus:<br>
+<code>0439.535</code>. (The leading 0 is redundant as EASTING
+only needs 6 digits). 
+
+<p>To the right of the decimal is <code>0.535</code> of a
+kilometre or 535 metres  and to the left are whole
+kilometres, 439. In practice, <code>0439.535</code> could be
+used as 395, dropping the 04 at first and rounding
+the 0.535 to 0.5 and ignoring the decimal. While
+the decimal in not written and the 5 refers to 500
+metres or 0.5 of a kilometre, this gives a ground
+precision of 100 metres, about the same as the maximum 
+error introduced by SA.
+
+<P>
+Thus<code>5024750</code>   for the NORTHING becomes 247
+
+<P>
+I could therefore say I live at<code> 395247</code> in the Ottawa area (or on a
+map showing the 18T UTM area) which  gives an accuracy to within
+100 metres (110 yards). (This six digit reference system has been
+used for years by the military to designate targets, objectives,
+rendezvous points etc. I learned it in high school cadet classes
+during WW2 but forgot all about it until I rediscovered it with
+GPS.)
+
+<P>Taking into account the possible 100 metre error due to SA, a
+6 digit UTM coordinate is really all that is needed.
+
+<P>It will be recognized that there will be a repetition in
+numbers going from one location of the country to another. To
+alleviate this confusion, in using 6 or 8 digit coordinates, the
+map must be identified. If not, then the whole number must be
+given, e.g.<code>18T 0439535 5024750</code>  
+
+<P>A grid coordinate usually has an even number of digits, the
+first half being the easting and the balance, the northing. But,
+when the number of digits after the zone (<code>18T</code> here) is odd, e.g.
+<code>18T 439535 5025750</code>, the extra digit belongs to the northing.
+
+<P>
+As a matter of interest, the northing, <code>5025750</code> in the above
+example, is the distance in metres north from the equator. The
+metric system defines the metre as 1/10,000,000 of the distance
+from the equator to the north pole. As a verification of this, I
+live close to 45 degrees north, half way from the equator to the
+north pole and my northing is 5,025 kilometres. 
+
+<P>
+If you refer to a UTM grid on a map, of either 1:50,000 or
+1:100,000 scale, the grid squares will usually be 1 kilometre (1000
+metres) to a side. It is simple to estimate between grid lines to
+1/10 or 100 metres.  For closer precision, on a 1:50,000 map, each
+1 mm.  is 50 metres on the ground. On the newest 1:25,000 US topos,
+1 mm. would represent 25 metres on the ground. Note, the most common
+Silva compasses have a mm.  scale on one side and this may be used to
+measure east from a grid line and north from the E-W grid lines.
+<P>
+<P>
+Here is a very helpful diagram drawn by Sam Wormley (see links below)
+who posted it to <i>sci.geo.satellite-nav</i> in Januray 1996.
+<P>
+It represents the UTM grid on a typical topo map. The "x" on the
+map would be described in UTM as <code> 597562,4402255</code>. The
+grid numbers on a real map will of course only be found on the
+map edges. 
+<P>
+<P>
+
+<PRE>		
+	        597          598
+>              |            |
+> 4403 --------|------------|---------------- 4403
+>              |            |
+>              |            |
+>              |            |
+>              |            |
+>              |            |
+>              |      x     |<--------   597562E, 4402255N
+>              |            |
+> 4402 --------|------------|---------------- 4402
+>              |            |
+>              |            |
+>              |            |
+>              |            |
+>             597          598
+</PRE>
+
+<P>Note: there is some distortion in the above diagram and the
+rectangle formed by the grid lines in reality is a square.
+<P> All of this sounds much more complicated than it really is. It
+is harder to explain in words than to take a map and demonstrate. <br><br>
+<p>
+So lets try it. This is a cut from the lower left corner of BOUCHETTE, QUÉBEC,
+a 1:50,000 Canadian topo, 31J/4 Edition 2.<br>
+
+<P ALIGN=CENTER>
+<IMG SRC="http://www.synapse.net/~dbartlett/map2.jpg" HEIGHT=356 WIDTH=308 alt="Bottom Left Corner of a Map"><br>
+
+<p>
+Remember, I said that with UTM, you <em>READ RIGHT UP</em>
+that is you do the Easting and then the Northing.<br>
+<p>
+The blue numbers along the bottom margin are the grid numbers for the 
+Easting. The first whole number is 424000m.E The 24 is 
+emphasized because this is the number which goes up by 1 for each  N/S
+grid line going to the right, e.g. East. The line of 424000m.E
+is 424 Kilometres East of the base line for Zone 18. Thus going from the line
+numbered 24 to that to the right, 25, is one kilometre or 1,000 metres.<br>
+<P>
+The same applies for the blue numbers going up the left margin, the first line
+being 5095000m.N which is 5,095 Kilometres North of the equator.
+<p>
+Looking at the dot that I inked in with the 3 arrows surrounding it,
+the full UTM coordinates for it would be:
+<code>
+<pre>
+			18T 0424200 5097850
+
+</pre></code><P>
+Where did I get the 200 for easting and 850 for northing? Just by eyeballing
+the map. (Note: If anybody gets to this little lake, give me a report on the 
+fishing.)
+   
+
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+<a name=setup></a>
+
+<H3>SETTING UP YOUR UNIT</H3>
+
+<
+<P>In setting up a unit, there are a number of choices to be
+made. What will suit one will not suit another.
+
+<p>
+I now have a 12 parallel channel unit, a Garmin 12XL (July 23/98) and until I have 
+time to get more famuliar with it, I must still use the Garmin 75 as an example, going
+through the more important auxiliary functions.
+
+<p>
+<H4>OP MODE SCREEN
+</H4>  
+ 
+<P>
+OPERATING MODE
+<blockquote>
+I leave it set at Battery Saver mode
+except when I am doing a simulation or
+extracting data when I set it at Simulator.
+Note- if you are connected to the car electrical
+system, then use Normal.
+</blockquote>
+
+<P>
+FILTERS 
+
+<P><blockquote>
+I leave them on automatic
+</blockquote>
+
+<P>
+<H4>PLOTTING SCREEN</H4> 
+
+<P>
+ORIENTATION 
+<blockquote>
+I like north up                                 
+</blockquote>                     
+
+<p>
+ROUTE & TRACK
+
+<P>
+<blockquote>
+No route or track.
+For this to operate, you must leave the unit on
+with antenna clear. This uses too much battery power!
+Don't get hung up on the graphics unless you have
+hooked up to an external power source. (see below) 
+With the newer units promising over 20 hours on a
+set of batteries, this caveat is no longer so important.          
+
+<P>
+N.B. See above where I explain how to set the
+unit to plot the TRACK for a length of time, for the   
+most precise reading when SA is on, the normal mode. 
+</blockquote>           
+
+<P>            
+RESOLUTION
+<blockquote>
+.100 KM 
+</blockquote>
+
+<P>
+TRACK
+<blockquote>-  OFF
+
+<P>  
+Note- by all means when you first buy a GPS, after taking
+a reading leave it and go for a walk with the route and
+track recording turned on.
+The graphics are great and you may be able to zoom in and
+out on the plotting screen. This exercise is very
+interesting and fun but it is hard on batteries. A
+WARNING- don't try this for the first time in a
+strange bush unless you have lots of batteries with you.
+If you bought the unit with a cigarette lighter plug,
+then try this in your vehicle.<br>
+(see below) 
+</Blockquote>
+
+<P>
+<H4>
+UNITS/HEADING SCREEN
+</H4>
+
+<P>
+POSN
+<blockquote>
+<P>
+UTM/UPS                                
+
+<P>                                     
+Note: This is where you cycle through various lat/long
+choices and then choose UTM/UPS. The UPS is a somewhat different system used
+at poles where N/S grid lines are converging. On some newer units you
+may also choose  the MGRS for the latest grid system.<br>
+(See below)
+</blockquote>
+
+<P>
+NAV     
+<Blockquote>
+I like Metric because the UTM grid is metric but  "statute"
+will give miles and will not interfere with UTM, except
+in converting back and forth between map and GPS. 
+
+<P>
+You may use UTM and still use yards/miles for units with
+no problem for distances. Just remember that the standard
+UTM grids are metric, usually 1 kilometre (1000 metres or
+about 1100 yards) to a square.
+</Blockquote>
+<p>
+<Blockquote>
+Auto mag Var (I have a West variation of 14 degrees and to make 
+an error could be bad. I therefore leave it on automatic. This 
+gives me courses in magnetic and I can forget about the variation.)<br>
+The other Hdg choices are grid heading and true heading. if you are 
+plotting a bearing on the map by grid, then set the Hdg> to grid. 
+While for most purposes, you can disregard the small difference
+between grid north and true north, for the most accurate bearing, 
+it should be noted.
+</blockquote>
+<p>
+
+<H4>ALARMS SCREEN</H4>
+<Blockquote>
+I have all of this turned off. It is great if you are
+operating on a boat with external power. For the alarms
+to be used the unit must be left on.  
+I had one man tell me though, that the alarms frightened
+his horse so he turned then off for that reason.   
+</Blockquote>
+<P>
+<H4>DATE/TIME SCREEN</H4>
+<P>
+LOCAL OFST
+<Blockquote>
+This is the difference in hours between GMT (it isn't
+really GMT as it is off by  slight bit- a technicality)
+and local time. If you want your unit to show your local time,
+then you must put in an offset.<br>
+Here in Ottawa on EST, the offset is
+-5.00. This must be changed when you go to DST, in
+summer, my offset is -4.00.<br>
+In Europe, say Finland, the offset would be a positive number.<br>
+Whether you input an offset or not makes no difference to the
+unit in using the system data.
+
+
+</Blockquote>
+
+<P>
+DISPLAY
+<Blockquote>
+
+Local time. The alternative is Greenwich ( GMT).
+As I said above, it is not exactly GMT but very
+close to it. The important thing for the unit to
+function accurately is that all SATs and your unit
+are using exactly the same time. You do not need to
+set the clock in the unit. It is done automatically
+when you turn it on and it starts picking up satellite
+signals. Instead, set your watch from the GPS!
+</Blockquote>
+
+<P>
+COUNT 
+<Blockquote>
+Up or down. Great for racing sailors!
+This might be of use to those orienteering.
+</Blockquote>
+<P>
+<H4>AUDIO/DISPLAY SCREEN</H4>
+
+<P>
+TONE
+<Blockquote>
+None
+
+</Blockquote>
+
+<P>
+CHANGE CONTRAST 
+<Blockquote> 
+I have set midway
+</Blockquote>
+
+<P>
+BKLGHT TIMEOUT
+<Blockquote>
+
+10 seconds is adequate when using in hand at
+night. The Garmin 75 asks for a delay in seconds and by default 
+is 10 seconds, to save power. But when on external power,
+I set the delay to 999 seconds. 
+</blockquote>
+
+<P>
+INTERFACE
+
+<P>
+NONE/NONE
+<Blockquote>
+Used to exchange and receive data with another GPS
+or computer. I can't give any help with this as I
+haven't hooked up yet. But check out 
+
+
+<li><a href="http://www.fugawi.com/index.html">Fugawi on the WWW</a><br>
+
+<p>
+Fugawi sells software that permits scanning topo maps
+so that if you have your GPS cabled to a laptop in a vehicle,
+your track will show up on the map on the computer screen.
+
+
+</Blockquote>
+
+<P>
+MAP DATUM
+
+<P>
+PRE-DEFINED
+<Blockquote>
+I am using NAD27 Canada for most of my maps although
+some of the newer one are NAD 83. If you choose a datum different
+than used by the map, your coordinates will not agree. If you find
+the GPS does not agree with the map coordinates, check this.
+</Blockquote>
+
+<p>
+<Blockquote>
+If you examine your topo map carefully, you should find the map
+datum given . On my 1:50M older Canadian topos, at the bottom in
+fine print, just to the right of the map name and the scale, it
+states "North American Datum 1927". The newest map dated 1995 gives
+North American 1983 (which is essentially same as WGS 84). I
+therefore have my unit set to the NAD27 Canadian datum but would
+change for to NAD 1983 or WGS 84 for the newer map.
+Similarly, on a US Forest Service 1:100M maps, on the lower right
+hand corner, it states "Universal Transverse Mercator Projection
+1927 North American datum". This is sufficient reason to reset the
+GPS to the NAD27 datum. Therefore, check a map over carefully to
+find out what datum is used and set the GPS to it. The Garmin comes
+set with WGS 84 which may be left as is but if you compare a
+reading with a map using NAD 27, you will find a discrepancy
+of 100 metres or so in the easting and a smaller one in the
+northing.
+</Blockquote><br><br>
+
+<IMG SRC="http://www.synapse.net/~dbartlett/bou.jpg"HEIGHT=267 WIDTH=671 ALIGN=MIDDLE><br>
+
+
+<p>The above is cut is from the bottom of the same map pictured above,
+topo map, 31J/4, titled BOUCHETTE. Underneath the left end of the 
+conversion scale for elevations, you will find in small print,
+"CONTOUR INTERVAL 50 FEET" and below that in even smaller print <br>
+<pre>
+			Elevations in Feet Above Mean Sea Level
+				North American Datum 1927
+			    Transverse Mercator Projection
+</pre>
+<p>
+Therefore in using this map with your GPS, you would set the datum as 
+NAD 27.<br>
+
+<P>
+SUNRISE/SUNSET
+<Blockquote>
+There is nothing here to change but you can change the
+date and get sunrise / sunset for other dates (for the
+location where the GPS was last active). Alternately, you
+may get the sunrise/sunset
+for another way-point (WP). To check for another
+location, create a WP with the location first and then
+call up the WP on this screen, changing the date as necessary.
+</Blockquote>
+
+<P>
+TRIP/FUEL PLANNING
+<Blockquote>
+I don't use it at all but great for sailors.
+More proof that these are still oriented for nautical use.
+</Blockquote>
+
+<p>
+<Blockquote>
+In summary, for my needs, I have all turned off that is not needed
+so as to save batteries. With the newer units having much lower
+battery drain, this is not as critical. 
+</Blockquote>
+<p>
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+ 
+<a name=buying></a>
+
+<hr size=2>
+<H4>BUYING A GPS</H4>
+
+<p>
+WHAT FACTORS TO CONSIDER?
+
+<P>
+Size is a factor and some are a good hand full but they are getting
+smaller. The Garmin 45 is about the size of a 110 camera! The Garmin 
+12 is even smaller.
+
+<P> 
+HOW MANY SATELLITES WILL IT TRACK? 
+
+<P>
+Please be sure at this point that you understand that for a unit
+to "track" 12 satellites does not mean very much. For an older or
+lower priced unit which must multiplex because it has only a single
+channel or even two channels, the unit should  track
+at least 5 satellites but more is better. However,
+these units while tracking satellites, must sequentially
+cycle through the 4 best to obtain a 3D fix (that is, with
+elevation). The various models of GPS track from 5 to 12 satellites 
+The more satellites that a unit tracks, the quicker it will choose
+the best 4 and switch if necessary. The Garmin 40/45 and lower
+priced Magellans only track 5  whereas the 75 tracks 8.
+This gives the 75 an advantage when conditions are difficult.
+
+<P>
+Most of the small hand held units can only process the data from
+one satellite at a time, no matter how many they are tracking. This
+being the case, the unit must cycle through the satellites one by
+one before giving a reading. Parallel processing units have the 
+advantage.
+
+<P>
+But all of the above is academic because the newer multi parallel channel 
+data from channel parallel units don't just "track" the sats, they receive
+
+each one AT THE SAME TIME! thereby speeding up the whole
+process of the unit working out a position fix. While I can appreciate
+someone wanting to buy a unit which only multiplexes (no matter
+how many sats it tracks) because of the low price, e.g. under
+$100, I feel that this is false economy and suggest the purchase
+of only a multi parallel channel  unit, such as the Garmin 12,
+12XL, III, Eagle Explorer etc. I do not recommend any Magellan
+units until the confusion of whether or not their units are or
+are not multi-channel parallel units is completely settled.
+ 
+
+<P><H4> 
+MULTI PARALLEL CHANNEL UNITS - WHERE THE ACTION IS! </H4>
+
+<p>
+With the newer units which have multi parallel channel  processing (Eagle 
+Explorer and newer Garmins such as 12, 12XL, II, III are good examples), it 
+means that the 5 (or more) best SATs are being tracked and data from the 4 
+best <STRONG> processed</strong> at the same time which in practice means 
+faster fixes, particularly under difficult conditions e.g. wet trees.
+Previously, the trade-off was that they used more battery power than the 
+older multiplexers, were usually larger and cost more. But that has all 
+changed and these new units are much easier on batteries than older single 
+channel units!
+
+<P>
+It should  store 100 or more way-points, (250 is common).
+
+<P>
+The capability to store several Routes is an asset. Most store
+10, 20 or more.
+
+<P>
+A unit must  be able to use UTM grid data or a local grid if available.
+In north America, topo maps are almost always have a grid whereas
+in some parts of the world, only the military have access to such
+maps. The Garmins handle over 100 different UTM map datums. If you have
+access to UTM gridded maps and wish to use them, then by all means look
+for a unit that will serve your needs and handles those UTM maps
+datums needed. Most units may be set for the common datums used
+worldwide. There are however some areas where the topographical maps 
+are based on a datum which is not found on some units. 
+
+<p>     
+The descriptions in some catalogs refer to M.G.R.S. standing for
+Military Grid Reference System. This is a newer grid reference
+system, similar to UTM if not the same.
+
+<P>
+BATTERIES
+<p>
+(The following was written in 1995 before the newer smaller
+units reduced their power needs) 
+Most will operate on either 3 or 4 AA cells. None of them are
+easy on batteries. My Garmin 75 uses 4 AA (I like the Rayovac
+Renewal Alkalines, see below). The Magellan Trailblazer only
+uses 3 AA cells whereas the Eagle AccuNav Sport needs 6!
+Remember, you will be carrying spares and these units, even
+the smallest are heavy enough without batteries.
+Some makes go through batteries faster then others.
+Another point against a unit using more than 4 AA cells is  
+that the small chargers like the Rayovac Renewal only hold 4
+AA cells. More than 4 cells could mean twice a long to      
+recharge! In choosing batteries, the best bet would be
+Ray-o-Vac Renewals or Pure Energy (sold in Canada), which are
+rechargeable alkalines. (I have been using Renewals now for 3
+years, same ones, 3 sets.) Nicads I have tried and don't like.
+They don't put out the volts and then there is the "memory"
+problem.   
+
+<p>
+With my rechargeable alkalines, I top them up when ever
+possible. This is not possible with nicads. Also alkalines 
+will hold a full charge in storage better than  nicads. They
+are also cheaper.
+<p>
+If you are going to use the unit in extreme cold, try and
+get lithium batteries. Radio Shack and some battery specialy
+shops carry them however, they are very expensive. 
+
+<P>
+<strong><H4>ALWAYS CARRY EXTRA BATTERIES</strong></H4>
+<Blockquote>
+          WARNING- Some units, e.g., the older Garmin 40 & 45 (but
+not the 75) and at least some Magellans have no internal lithium
+battery to maintain data when the unit is turned "off." They therefore 
+need to have the batteries in place at all times, even when turned off. 
+They will hold data for a little while when you change batteries. This 
+makes it all the more important to carry extra batteries. The newer
+Garmins e.g. 12XL, 12, III etc. have a lithium battery which recharges
+from the AAs, even when the unit is turned off. 
+</blockquote> 
+
+<P>Leave fresh (new or fully charged) batteries in your unit but occasionally
+check to be sure that they are up-to-strength and not leaking.
+
+<P>
+As an extra thought to the above, it would be prudent to
+record in a log-book the coordinates of important way-points and the
+compass courses between them just in case your batteries fail or your
+unit becomes inoperable. In the event of GPS failure, system or unit,
+your will be able to extricate yourself.
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+<hr size=2>
+<a name=power></a>
+
+<H3>HOOKING UP TO AN EXTERNAL POWER SUPPLY</H3>
+
+<P>
+Since this article was first written in February 1995, I 
+have mounted my G75 in my Explorer, drawing on the car battery.
+I bought a BNC cable from Radio Shack so that I may place the 
+antenna externally on a rear side window or set it on the dash
+board on the passenger side. In initially getting a fix, the 
+external antenna mount is quicker but once locked on the SATs,
+the dash board location works fine. It gives me direction of
+travel in magnetic (or would do so in Grid or True), speed as
+well as the UTM coordinates as they change. The plot screen will
+give the track I have made as well.
+
+<P> 
+This is a great set-up for mapping the bush roads we use in the 
+north in the fall. The passenger notes the coordinates and plots
+them directly to the map while traveling. If you only record a six
+digit WP (to a precision of 100 metres), you can plot very quickly
+while traveling. If working alone, I save each turn as a numbered
+WP to one route. Later, I can extract the WPS's and plot the route. <br> 
+<P>
+<CENTER>
+<IMG SRC="http://www.synapse.net/~dbartlett/hondagps2.jpg"HEIGHT=150 WIDTH=150 ALT="GPS ON A HONDA ATV" >
+</CENTER>
+
+<p>
+With the newer units such as the Garmin 12XL, the same can be
+accomplished automatically.
+
+<P>
+If your unit does not have an external antenna and you wish to
+use it on the dash board of the car, turn the unit on outside
+the car and wait until it gets a reading before bringing it inside 
+and placing it on the dash or in a mount. 
+
+<p>
+The windshield on some cars has a metallic coating through
+which the GPS can't receive the weak signals from the satellites.
+In such a situation, you can change cars or, cheaper, use an
+external antenna outside the vehicle. 
+
+<p>
+If you are going to use the unit in a vehicle or boat, then be
+sure to get whatever you need to hook into the electrical system
+and save your AA pack.
+
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+
+<hr size=2>
+
+<a name=speed></a>
+
+
+<H3>SPEED</H3>
+
+<P>
+Given that the system can guide flying cruise bombs at whatever
+speed they travel, most units will have no trouble tracking a hiker
+or boater. Note however that the Garmin 38,40, 45, 45XL & 75 are
+limited to 99 MPH, a speed that is useless for aircraft but does not
+seem to hinder the sail plane pilots. I have tried my Garmin 75 on the
+dash board of a truck at 60 MPH and the speed reading was more
+accurate, I am sure, than the speedometer of the car. Also, it was
+giving changes in position, heading, and keeping a plot. This is
+great fun but drains the AA cells very quickly, unless plugged in
+to the car electrical system.
+
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+
+<hr size=2>
+
+<a name=var></a>
+
+
+
+<H3>VARIABLE READINGS</H3>
+
+<P>
+A GPS left on and stationary will give a continuous but variable
+reading. This is not an error in the unit, just that SA is
+continuously altering and/or degrading the accuracy. A series of
+readings over many hours when averaged will come very close to the
+correct figures. N.B. See above how to defeat SA over a period of
+time using the Blob system.
+
+<P>
+I am fortunate in Ottawa to have access to a bench mark),
+the location of which is exactly known. While testing my unit, I
+took ten readings over 3-4 minutes. By using the Pythagorean
+theorem, I worked out the hypotenuse (or error) for each of the 10
+readings and the average was about 5 metres (5.5 yards) off! This
+was NOT a scientific test and my good results were as much chance
+as anything. What it means is that during the period that I took
+the readings, SA just happened to have a minimum error. Next time
+I try it, I could be off 60 metres, or 100 or perhaps much more!
+
+<p> 
+
+If you are fortunate enough to find a BM, the exact location of
+which is known, you can conduct the same test. Usually a BM's
+location is given in latitude/longitude. Enter the BM as a WP with
+the unit set for lat/lon, change the unit to UTM, then take your 10
+or more readings, and record the differences in easting and northing
+from the correct reading. For each pair of differences, square
+them, add them together, take the sq. root of the product and this
+is the distance in metres that that pair of readings varies from
+the stated position.
+
+<P>
+Note: The Ottawa BM is called "Babbage" and found at N 45-19-43.5
+and W 75-52-1.2, on Corktown Road at entrance to Nepean Municipal
+Campground. (Note: I give the lat/lon as these coordinates in UTM
+would vary depending on the Datum (e.g. NAD 27, NAD 83 etc.)
+
+<P>
+Some of the teckies with a hook-up between the GPS and a
+computer have done the same thing taking hundreds of readings and
+then applied statistical analysis to come up with guidance as to
+what degree of accuracy can be expected for different sampling
+rates and the time period. For me, I the Blob is accurate enough.
+(For those who have done these studies, I'm just jealous that I don't
+have the expertise and equipment to conduct them!)
+ 
+<P>
+It is important to stress however that one should not depend
+on obtaining accuracy of better than 110 yards/100 metres with SA.
+Generally, the accuracy will be better than this but you can't
+count on it. With SA OFF expectations are that the error will drop
+to perhaps 20 metres.
+
+<hr size=2>
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+<a name=hownot></a>
+
+
+<H3>HOW NOT TO USE YOUR GPS</H3>
+
+<p>
+In the fall of 1995, I read an account of a man with a new GPS who 
+took a reading (WP) of his car, then went on a long hike. To return to
+the car, he did a GOTO on it, leaving the unit on to give
+direction and distance. When he got within 100 yards or so of
+he car (which was hidden in bushes), his GPS was pointing every
+which way. It took him some hours to find it.
+
+<p>
+Why?
+
+<p>First of all, he should have parked near some feature which
+could be identified from 50 or so yards away. His car could not
+be seen from 20 or 30 feet away! Secondly, he had no compass and
+relied on the GPS completely for direction. When he got close to
+the car, he was expecting accuracy better than the system can
+yield because of SA. He also used up his batteries and his
+buddies were less than impressed with him and GPS.
+
+<p>
+Because of the inaccuracy introduced by SA, if a WP is saved and
+a return to it is made, in theory, the error could be of the magnitude
+of 200 metres! That is a 100 metre error when it was saved added
+to the 100 metre error when trying to find it. So what is the answer?
+Quite simple, if you have a spot that you must find e.g. the car
+and there are no easily seen geographical features, make a a line,
+perpendicular to the road for 100 or so yards on each side of
+it, intersecting at the car. (I am not suggesting blazing the trees or
+using a spray bomb but the use of surveyors' tape or toilet paper,
+which will also degrade in time.) When the GPS says you are
+within 100 metres of the car, TURN IT OFF and use your compass to
+go back and forth until you hit the road or the marked line. 
+
+<p>
+There is also the technique used by those skilled with a compass to
+navigate. They aim either to left or right of the objective and when
+it is reached, turn and follow the coast, road, trail or stream
+on which it is located. 
+<br>
+<br>
+<a href="#back">Back to UTM- AN ATTEMPT TO EXPLAIN</a>
+
+
+<p>
+In buying a unit, if you are unsure of how well your needs will be
+served, try and obtain a commitment from the seller that you may
+exchange the unit for another make or model if need be.
+
+<p>     
+This has been written in an effort to assist in making the
+right purchase decision and to shorten the learning curve in using
+a GPS. I have been accused of being biased towards Garmin and UTM.
+I make no apology for these  perceived biases. The Garmin 75 is the
+only unit with which I have any lengthy experience. As for UTM,
+where gridded maps are available, to use lat/lon is masochistic in
+the extreme. 
+
+<p>
+I have deleted much unit specific information and readers if they
+understand what I have explained here, will be able to make an
+intelligent choice of a unit.
+
+<p>
+The information I have given is thought to be accurate but I
+assume no liability for errors, omissions or for someone getting into
+difficulties in using a GPS and this guide.
+
+<p>
+I have no connection with Garmin or any retailers although I can recommend 
+<li><a href="http://www.prairie.mb.ca/">Prairie Geomatics</a>
+I found their Canadian price at least as good as the best U.S. price.<br>
+
+
+<p>
+<CENTER> *I am far from an expert & I can't answer questions of a technical nature.*</center> 
+
+<P>
+This is the product of my own experience and those of many
+others with whom I have communicated over the past 4 years.   
+
+
+
+
+<P>
+I would also like to mention a remarkable young Norwegian,
+Kjetil Kjernsmo,  in Oslo, a physics graduate student, well on
+his way to becoming an astronomer,  who in 1995 picked 
+up my original *.txt version of this article and mounted it on his Home
+Page. This gave it widespread exposure. 
+<P>
+
+<center><a href="http://www.astro.uio.no/~kjetikj/">Kjetil's Home Page</a>
+<P></center>
+Kjetil also has an excellent tutorial on compass use which isaalso available from his homepage.
+<br><br><p><center><a href="#table">Back to Table of Contents</a></center>
+
+<hr size=2>
+
+<a name=moreinfo></a>
+
+
+<H3>FOR MORE INFORMATION AND LINKS</H3>
+
+
+<P> 
+For those looking for more information, check out:
+<P>
+<center><a href="news:sci.geo.satellite-nav">sci.geo.satellite-nav</a></center>
+<P>
+There is a wealth of information in the postings to this group. 
+Often FAQ's (frequently asked questions)  appear here and this is the place
+to ask techical questions.
+<p>
+<p>
+Here are some links and I urge readers to check them thoroughly.:<br>
+<P>
+<P>
+<ul>
+<li>
+<a href="http://www.cnde.iastate.edu/maps.html#wpts">Sam Wormley's Web
+site</a>
+<br>
+<li><a href="http://www.bridge.de/~tom/garmin.htm">Tom Born's
+Garmin Web Site and lots of other good stuff.</a>
+<br>
+<li><a href="http://vancouver-webpages.com/peter">Peter
+Bennett's very complete collection of help files and FAQ's</a>
+<br>
+
+<li><a href="http://www.fugawi.com/gpslinks.html">Fugawi Links</a>
+<br>
+
+<li><a href="http://www.powerup.com.au/~lornew/oziexp.html">Des Newman's OziExplorer Page where
+a modified shareware version may be downloaded</a>
+
+<li><a href="http://www.quovadis-gps.com.">The Quo Vadis page in Germany where a working copy
+of the Quo Vadis mapping software may be downloaded</a>
+
+<br>
+
+<li><a href="http://joe.mehaffey.com">Joe Mehaffey's & Jack Yeazel's Site .<br>
+<li><a href="http://www.gpsy.com">Karen Nakamura Site of  special interest for Mac users.<br>
+<li><a href="http://www.trimble.com/cgi/satview.cgi">Trimble Satellite View Site</a><br>
+N.B. This site shows how the PDOP may vary greatly depending on the geometry of the sats.
+If one wants to get the most accurate reading, this site should first be visited to plan 
+the best time to take the readings.<br> 
+<li><a href="http://kartoserver.frw.ruu.nl/html/staff/oddens/oddens.htm">Roelof Odden's Bookmarks - The Fascinating World of Maps & Mapping, U. of Utrecht</a>
+<li><a href="http://gpsresource.com"> GPS Resource, many links and information.</a><br>
+</ul>
+<br>
+<br>
+
+
+http://www.allsurveyors.com/linksmanager/New/30-Jul-1998.htm  for All Surveyors Search Engine
+
+<br><br> Although I have not seen the book, I have had been told that one of the best is  
+GPS Land Navigation, A Complete Guidebook 
+for Backcountry Users of the NAVSTAR Satellite System, 1997, author Michael Ferguson.
+
+Glassford Publishing, Boise, Idaho, approx $19.<br><br>
+
+
+
+
+<P>
+<P>
+<center>Don Bartlett </center>
+<P>
+<center>at  18T 0439457 5024597 (NAD 83)</center>
+<p><center>or 45* 22.336' N  75* 46.395' W</center>
+<P> <center>in Ottawa, Ont. Canada</center>
+<p>
+<p>
+<center>or at 18T 418270 5117050 (NAD 83) Blue Sea Lake, Quebec.</center> 
+<P>
+<P>
+<center>Mail to:
+<a href="mailto:dbartlett@synapse.net">
+<address>dbartlett@synapse.net</address></a><br>
+</center>
+<P>
+
+<center>
+<IMG SRC="http://www.synapse.net/~dbartlett/roy2.jpg" HEIGHT=94 
+WIDTH=128 ALIGN=MIDDLE  ALT="Roy Gets a Position at Moose Camp">
+</center>
+<p><p>
+<CENTER>"...where da Fugawi?"<fontsize="6"><sub>&copy</sub></fontsize="6">..?</center>
+<br>
+<br>
+	
+<P>
+<center>January 31,1998</center><br><br>
+<br>
+
+<a name=French></a>
+
+Pour les lecteurs d'expression française, surtout les québécois, consultez
+<a href="http://www.quadnet.qc.ca/quad/crono/gps">Guide d'Antoine Salathe</a><br><br>
+
+
+Last Revision:<br>
+January 25, 1999 - Added Resource Com link.
+<br><br>
+
+              <CENTER>
+              <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=276 HEIGHT=69
+              BGCOLOR="#FFCE00">
+              <TR>
+              <FORM METHOD=GET ACTION="http://www.goto.com/d/search/" NAME="search">
+              <INPUT TYPE=HIDDEN NAME="Partner" VALUE="GoToLink">
+              <TD VALIGN=BOTTOM ALIGN=LEFT>
+              <A HREF="http://www.goto.com/"><IMG
+              SRC="http://www.goto.com/images-promoters/gotologo.gif"
+               WIDTH="89" HEIGHT="69" BORDER="0"></A></TD>
+              <TD VALIGN=MIDDLE ALIGN=CENTER><FONT FACE="HELVETICA, ARIAL" SIZE=2
+              COLOR="#FF0000">
+              Type It. Click It. Find It!
+              <INPUT TYPE=TEXT NAME="Keywords" SIZE=15>
+              </TD>
+              <TD VALIGN=MIDDLE ALIGN=LEFT>
+              <INPUT TYPE=IMAGE SRC="http://www.goto.com/images-promoters/findit_sm.gif"
+               WIDTH="40" HEIGHT="40" BORDER="0"></TD>
+              </FORM>
+              </TR>
+              </TABLE>
+              </CENTER><br.<br>
+
+<IMG src="http://cgi3.fxweb.com/v2-trackrun.cgi?userid=M42916" height="31" width="88"> 
+
+
+<center><a href="#top">Top of Guide</a></center>
+
+</font>
+</body>
+</HTML>
+

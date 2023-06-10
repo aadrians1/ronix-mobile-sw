@@ -1,0 +1,22 @@
+Group=ISSI Serial I2C EEPROMs
+
+[Device]=IS24C02;================ << IS24C02 >> =================
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+BlankData=0xFF
+EditRect= 0  0 73 19
+BlockLen=8
+ProgTimes=10.00 0 0 0
+Iden=0xA1
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice ;================ << IS24C02 >> ================

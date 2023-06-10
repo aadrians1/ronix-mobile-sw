@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 93C06
+
+Wprowadzanie : 1,2,3
+Wywol./Zatw. : 4
+
+UWAGI : 

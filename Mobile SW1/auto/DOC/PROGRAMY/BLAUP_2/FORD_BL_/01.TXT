@@ -1,0 +1,20 @@
+01 FORD SOUND 2000 ( 2005, 2015, ... )
+"KOD 123"
+EEPROM: ( MicroWire 9306  16x16 )
+
+0000  12 34 00 00  00 00 00 00  00 00 00 00  00 00 00 00  #..............
+0010  45 43 55 2D  32 44 20 31  39 33 33 30  37 33 31 00  ECU-2D 19330732.
+      *                     *                 *           ( wazne cyfry )
+
+ADRES:
+
+0000 12  ( 1 = pierwsza cyfra kodu )
+         ( 2 = druga cyfra kodu )
+
+0001 34  ( 3 = trzecia cyfra kodu )
+         ( 4 : 0 - kod wylaczony )
+
+0009 00  ( 00 : 00 - 0 prob ) 
+         (      10 - 1 proba ) 
+         (      20 - 2 proby ) 
+         (      30 - 3 proby, radio zablokowane ) 

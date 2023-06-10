@@ -1,0 +1,47 @@
+
+
+	     ************************************       
+	     *****   *****        
+	     ************************************       
+                                           
+
+
+CPU:    
+MEMORY: 
+FILE:   
+CODE:   
+INFO:   
+TECH:   
+	1 CYFRA $5A a	$5C a	$5E a
+	2 CYFRA $5A b	$5C b	$5E b
+	3 CYFRA $5B a	$5D a	$5F a
+	4 CYFRA $5B b	$5D b	$5F b
+
+	1 CYFRA $53 b
+	2 CYFRA $54 a
+	3 CYFRA $55 b
+	4 CYFRA $55 a
+
+LICZNIK B£ÊDÓW 	:$59 a,b = 09 
+LICZNIK CZASU  	:$5B a,b = 00
+RADIO Z KODEM	:$01 b=1
+RADIO BEZ KODU	:$01 b=0
+TABELA PRAWDY:
+	0->A	1->B	2->8	3->9	4->E
+	5->F	6->C	7->D	8->2	9->3
+
+	0-A
+	1-B
+	2-8
+	3-9
+	4-E
+	5-F
+	6-C
+	7-D
+	8-2
+	9-3
+PRZYK£AD:
+
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+
+

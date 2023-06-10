@@ -1,0 +1,58 @@
+			CENNIK
+			======
+	  wyrob¢w oferowanych przez "MicroMade"
+
+
+Cennik obowi¥zuje od 10 stycznia 1997r.
+
+Ceny podano w nowych zˆotych. 
+								   Cena
+Nazwa		Opis						netto	z VAT
+
+Piccolo		programator pami©ci EPROM i EEPROM		440,00	536,80
+ przystawki:
+  Picco-mb	pami©ci EPROM 1..8 MB				130,00	158,60
+  Picco-p49	mikrokontrolery 8748 i 8749			180,00	219,60
+  Picco-p51	mikrokontrolery serii 8751			180,00	219,60
+  Picco-at20    mkrokontr. ATMEL: AT89C2051,AT89C1051 (DIP20)	130,00	158,60
+  Picco-smd	EPROM 2716..27512 w obudowie PLCC		400,00	488,00
+  Picco-mbs	EPROM 1..8 MB w obudowie PLCC			400,00	488,00
+  Picco-p51s	seria 8751 w obudowie PLCC			440,00	536,80
+
+Picco-GAL	programator ukˆad¢w GAL i szeregowych pami©ci	550,00	671,00
+		EEPROM.
+
+Picco-kbz	kabel RS232 z wej˜ciem na zasilacz zewn©trzny	 20,00	 24,40
+ZAS-pic		zasilacz zewn©trzny do programatora 'Piccolo'	 25,00	 30,50
+ZAS-gal		zasilacz zewn©trzny do programatora 'Picco-GAL'	 25,00	 30,50
+
+Picco-512	symulator pami©ci EPROM 2716..27512		460,00	561,20
+
+ISEL-5		kasownik UV (max 5 szt. EPROM) z reg. czasu	310,00	378,20
+ZAS-kas		zasilacz do kasownika ISEL-5			 25,00	 30,50
+
+HAK-1		klucz sprz©towy			 1..4 szt	 80,00	 97,60
+						5..19 szt	 75,00	 91,50
+						 >=20 szt	 65,00	 79,30
+
+RS232-opto	izolacja galwaniczna ˆ¥cza RS232		 65,00	 79,30
+
+DSM-51		Dydaktyczny System Mikroprocesorowy	       1680,00 1797,60
+ modele:
+  M-01		skrzy¾owanie					120,00	128,40
+  M-02		tester diod i tranzystor¢w			 60,00	 64,20
+  M-03		licznik obiekt¢w				 75,00	 80,25
+  M-04		zegar czasu rzeczywistego			155,00	165,85
+  M-05		wyj˜cie do drukarki Centronix			 55,00	 58,85
+  M-06		tyrystorowy regulator o˜wietlenia		 55,00	 58,85
+  M-07		interface sieci RS485				 75,00	 80,25
+  M-08		czytnik kart magnetycznych			240,00	256,80
+  M-09		r¢wnia pochyˆa					155,00	165,85
+  M-10		miernik i regulator temperatury			 90,00	 96,30
+
+DSM51-PP	pakiet prototypowy zgodny z DSM-51		240,00	292,80
+DSM51-PPL	pakiet protot. z wy˜w.LCD i wewn.assemblerem	450,00  549,00
+DSM51-MM  	minimoduˆ zgodny z DSM-51			280,00	341,60
+ZAS-pp		zasilacz do pakiet¢w prototypowych		 25,00	 30,50
+
+D-51		Ksi¥¾ka "Podstawy progr. mikrokontrolera 8051"	 22,00	 22,00

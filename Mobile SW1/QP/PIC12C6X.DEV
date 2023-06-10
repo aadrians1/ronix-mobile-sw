@@ -1,0 +1,367 @@
+Group=Microchip Mid-range PIC
+[Device]=PIC12C671; ***************************************
+Socket=6 8
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 5.5
+Vpp= 13 13 12.75 13.25
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1023 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=OscCal
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=1023 1 1
+BlankData=0x3FFF
+EditRect=57 13 80 19
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 11111100000000 OSCCAL
+BitMapItem  = 110000xxxxxxxx movlw 0x%02X
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000111 OSC
+BitMapItem  = xxxxxxxxxxx111 ExtRC CLKout
+BitMapItem  = xxxxxxxxxxx110 ExtRC CLK no
+BitMapItem  = xxxxxxxxxxx101 IntRC CLKout
+BitMapItem  = xxxxxxxxxxx100 IntRC CLK no
+BitMapItem  = xxxxxxxxxxx010 HS
+BitMapItem  = xxxxxxxxxxx001 XT
+BitMapItem  = xxxxxxxxxxx000 LP
+
+BitMapGroup = 00000000001000 WDT
+BitMapItem  = xxxxxxxxxx1xxx On
+BitMapItem  = xxxxxxxxxx0xxx Off
+
+BitMapGroup = 00000000010000 PWRT
+BitMapItem  = xxxxxxxxx1xxxx Off
+BitMapItem  = xxxxxxxxx0xxxx On
+
+BitMapGroup = 11111101100000 CP
+BitMapItem  = 111111x11xxxxx Off
+BitMapItem  = 010101x01xxxxx 200:3FE
+BitMapItem  = 000000x00xxxxx All
+
+BitMapGroup = 00000010000000 Reset
+BitMapItem  = xxxxxx1xxxxxxx External
+BitMapItem  = xxxxxx0xxxxxxx Internal
+
+EndDevice
+[Device]=PIC12C672; ***************************************
+Socket=6 8
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 5.5
+Vpp= 13 13 12.75 13.25
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2047 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=OscCal
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=2047 1 1
+BlankData=0x3FFF
+EditRect=57 13 80 19
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 11111100000000 OSCCAL
+BitMapItem  = 110000xxxxxxxx movlw 0x%02X
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000111 OSC
+BitMapItem  = xxxxxxxxxxx111 ExtRC CLKout
+BitMapItem  = xxxxxxxxxxx110 ExtRC CLK no
+BitMapItem  = xxxxxxxxxxx101 IntRC CLKout
+BitMapItem  = xxxxxxxxxxx100 IntRC CLK no
+BitMapItem  = xxxxxxxxxxx010 HS
+BitMapItem  = xxxxxxxxxxx001 XT
+BitMapItem  = xxxxxxxxxxx000 LP
+
+BitMapGroup = 00000000001000 WDT
+BitMapItem  = xxxxxxxxxx1xxx On
+BitMapItem  = xxxxxxxxxx0xxx Off
+
+BitMapGroup = 00000000010000 PWRT
+BitMapItem  = xxxxxxxxx1xxxx Off
+BitMapItem  = xxxxxxxxx0xxxx On
+
+BitMapGroup = 11111101100000 CP
+BitMapItem  = 111111x11xxxxx Off
+BitMapItem  = 101010x10xxxxx 400:7FE
+BitMapItem  = 010101x01xxxxx 200:7FE
+BitMapItem  = 000000x00xxxxx All
+
+BitMapGroup = 00000010000000 Reset
+BitMapItem  = xxxxxx1xxxxxxx External
+BitMapItem  = xxxxxx0xxxxxxx Internal
+
+EndDevice
+[Device]=PIC12CE673; ***************************************
+Socket=6 8
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1023 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=OscCal
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=1023 1 1
+BlankData=0x3FFF
+EditRect=57 13 80 19
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 11111100000000 OSCCAL
+BitMapItem  = 110000xxxxxxxx movlw 0x%02X
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000111 OSC
+BitMapItem  = xxxxxxxxxxx111 ExtRC CLKout
+BitMapItem  = xxxxxxxxxxx110 ExtRC CLK no
+BitMapItem  = xxxxxxxxxxx101 IntRC CLKout
+BitMapItem  = xxxxxxxxxxx100 IntRC CLK no
+BitMapItem  = xxxxxxxxxxx010 HS
+BitMapItem  = xxxxxxxxxxx001 XT
+BitMapItem  = xxxxxxxxxxx000 LP
+
+BitMapGroup = 00000000001000 WDT
+BitMapItem  = xxxxxxxxxx1xxx On
+BitMapItem  = xxxxxxxxxx0xxx Off
+
+BitMapGroup = 00000000010000 PWRT
+BitMapItem  = xxxxxxxxx1xxxx Off
+BitMapItem  = xxxxxxxxx0xxxx On
+
+BitMapGroup = 11111101100000 CP
+BitMapItem  = 111111x11xxxxx Off
+BitMapItem  = 010101x01xxxxx 200:3FE
+BitMapItem  = 000000x00xxxxx All
+
+BitMapGroup = 00000010000000 Reset
+BitMapItem  = xxxxxx1xxxxxxx External
+BitMapItem  = xxxxxx0xxxxxxx Internal
+
+EndDevice
+[Device]=PIC12CE674; ***************************************
+Socket=6 8
+AddrDivider=2
+CmdMask=0x0F
+Vcc= 5 5 3 6
+Vpp= 13 13 12.5 13.5
+;-----------------
+[Part]=Program
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2047 8
+BlankData=0x3FFF
+EditRect=0 0 57 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=1
+Algo=181A19181D19
+;-----------------
+[Part]=OscCal
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=2047 1 1
+BlankData=0x3FFF
+EditRect=57 13 80 19
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 11111100000000 OSCCAL
+BitMapItem  = 110000xxxxxxxx movlw 0x%02X
+;-----------------
+[Part]=Iden
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=8192 4 2
+BlankData=0x3FFF
+EditRect=57 19 80 23
+BlockLen=1
+ProgTimes=0.1 25 3 0
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+;-----------------
+[Part]=Config
+InitActivity=1
+InitFill=0
+SecondPass=1
+AddrSize=8199 1 1
+BlankData=0x3FFF
+EditRect=57 0 80 13
+BlockLen=1
+ProgTimes=0.1 0 0 100
+Iden=0x0
+DataWidth=14
+DisplayASCII=0
+Algo=181A19181D19
+BitMapGroup = 00000000000111 OSC
+BitMapItem  = xxxxxxxxxxx111 ExtRC CLKout
+BitMapItem  = xxxxxxxxxxx110 ExtRC CLK no
+BitMapItem  = xxxxxxxxxxx101 IntRC CLKout
+BitMapItem  = xxxxxxxxxxx100 IntRC CLK no
+BitMapItem  = xxxxxxxxxxx010 HS
+BitMapItem  = xxxxxxxxxxx001 XT
+BitMapItem  = xxxxxxxxxxx000 LP
+
+BitMapGroup = 00000000001000 WDT
+BitMapItem  = xxxxxxxxxx1xxx On
+BitMapItem  = xxxxxxxxxx0xxx Off
+
+BitMapGroup = 00000000010000 PWRT
+BitMapItem  = xxxxxxxxx1xxxx Off
+BitMapItem  = xxxxxxxxx0xxxx On
+
+BitMapGroup = 11111101100000 CP
+BitMapItem  = 111111x11xxxxx Off
+BitMapItem  = 101010x10xxxxx 400:7FE
+BitMapItem  = 010101x01xxxxx 200:7FE
+BitMapItem  = 000000x00xxxxx All
+
+BitMapGroup = 00000010000000 Reset
+BitMapItem  = xxxxxx1xxxxxxx External
+BitMapItem  = xxxxxx0xxxxxxx Internal
+
+EndDevice

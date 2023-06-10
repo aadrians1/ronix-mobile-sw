@@ -1,0 +1,26 @@
+# 
+# (C) Copyright on the following code is reserved by 
+#     Michael J. McCormack 1998
+# You may use, modify and distribute it freely for non commercial 
+# purposes only, provided this header is left intact.
+#
+# Makefile for all GSM SIM related programs
+#
+
+#CFLAGS=-DDEBUG
+CFLAGS=-O3
+CC=gcc
+
+all: a8crack phonebook cardtest a8cracktest
+
+a8crack: a8crack.o amc151.o sim.o unblock.o a3a8.o
+
+a8cracktest: a8cracktest.o a3a8.o
+
+phonebook: phonebook.o amc151.o sim.o unblock.o
+
+cardtest: cardtest.o amc151.o
+
+clean:
+	rm -f *.o simtest cardtest amc151_tlp a8dump a8anal
+

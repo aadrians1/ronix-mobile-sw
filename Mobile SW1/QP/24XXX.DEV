@@ -1,0 +1,920 @@
+Group=Microchip Serial I2C EEPROMs
+
+
+Device=24AA00
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 6.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16 8
+BlankData=0xFF
+EditRect= 0  0 42  5
+BlockLen=8
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC00
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 6.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16 8
+BlankData=0xFF
+EditRect= 0  0 42  5
+BlockLen=8
+ProgTimes=10.00 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24C00
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16 8
+BlankData=0xFF
+EditRect= 0  0 42  5
+BlockLen=8
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24AA01
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 41 15
+BlockLen=8
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC01B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 41 19
+BlockLen=8
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24C01A
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128 8
+BlankData=0xFF
+EditRect= 0  0 41 19
+BlockLen=2
+ProgTimes=2.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24AA02
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+BlankData=0xFF
+EditRect= 0  0 73 19
+BlockLen=8
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC02B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+BlankData=0xFF
+EditRect= 0  0 73 19
+BlockLen=8
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24C02A
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256 16
+EditRect= 0  0 73 19
+BlockLen=2
+ProgTimes=2.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24AA04
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=16
+ProgTimes=10.00 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC04B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 16
+EditRect= 0  0 73 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24C04A
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 16
+EditRect= 0  0 73 23
+BlockLen=8
+ProgTimes=8.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24AA08
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 16
+EditRect= 0  0 74 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC08B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 16
+EditRect= 0  0 74 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24C08B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 16
+EditRect= 0  0 74 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24AA16
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2048 16
+EditRect= 0  0 73 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC16B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 73 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24C16B
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2048 16
+EditRect= 0  0 73 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24AA164
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 16
+EditRect= 0  0 73 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC164
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 1024 16
+EditRect= 0  0 73 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24AA174
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+Part=Data
+InitActivity=1
+InitFill=1
+SecondPass=0
+AddrSize=0 1024 16
+EditRect= 0  0 74 20
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+
+Part=OTP page
+InitActivity=0
+InitFill=1
+SecondPass=1
+AddrSize=8192 16 16
+EditRect= 0 20 74 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0x60
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC174
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 4.5
+
+Part=Data
+InitActivity=1
+InitFill=1
+SecondPass=0
+AddrSize=0 1024 16
+EditRect= 0  0 74 20
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+
+Part=OTP page
+InitActivity=0
+InitFill=1
+SecondPass=1
+AddrSize=8192 16 16
+EditRect= 0 20 74 23
+BlockLen=16
+ProgTimes=10.0 0 0 0
+Iden=0x60
+DataWidth=8
+DisplayASCII=1
+Algo=070108070408
+EndDevice 
+Device=24LC32
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 6.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 16
+EditRect= 0  0 73 23
+BlockLen=8
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 
+Device=24C32
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.0
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 4096 16
+EditRect= 0  0 73 23
+BlockLen=8
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 
+Device=24AA64
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 16
+EditRect= 0  0 76 23
+BlockLen=32
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 
+Device=24LC64
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 16
+EditRect= 0  0 76 23
+BlockLen=32
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 
+Device=AT24C64
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 16
+BlankData=0xFF
+EditRect= 2  0 78 23
+BlockLen=32
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 
+Device=24C64
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 16
+EditRect= 0  0 76 23
+BlockLen=32
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 
+Device=24AA65
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 1.8 5.5
+
+Part=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8192 8
+EditRect= 0  0 42 23
+BlockLen=8
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+
+Part=Endurance
+InitActivity=0
+InitFill=0
+SecondPass=0
+AddrSize=32770 1 1
+EditRect=51 12 70 18
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=072908072A08
+BitMapGroup = 11111111 HE num
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+
+Part=Security
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=32768 2 2
+EditRect=51  2 70  9
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=072908072A08
+BitMapGroup = 11111111 Start
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+BitMapOffset = 1
+BitMapGroup = 11111111 Number
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+EndDevice 
+Device=24LC65
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 2.5 6.0
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 16
+BlankData=0xFF
+EditRect= 0  0 57 23
+BlockLen=8
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+
+[Part]=Endurance
+InitActivity=0
+InitFill=1
+SecondPass=0
+SaveDis=1
+AddrSize=32770 1 1
+BlankData=0xFF
+EditRect=61  7 80 13
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=0
+Algo=072908072A08
+BitMapGroup = 11111111 HE num
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+
+[Part]=Security
+InitActivity=0
+InitFill=0
+SecondPass=1
+SaveDis=1
+AddrSize=32768 2 2
+BlankData=0xFF
+EditRect=61  0 80  7
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=0
+Algo=072908072A08
+BitMapGroup = 11111111 Start
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+BitMapOffset = 1
+BitMapGroup = 11111111 Number
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+EndDevice 
+Device=24C65
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 8
+BlankData=0xFF
+EditRect= 0  0 42 23
+BlockLen=8
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+
+[Part]=Enduranc
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=32770 1 1
+BlankData=0xFF
+EditRect=51 12 70 18
+BlockLen=1
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=0
+Algo=072908072A08
+BitMapGroup = 11111111 HE num
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+
+[Part]=Security
+InitActivity=0
+InitFill=0
+SecondPass=1
+AddrSize=32768 2 2
+BlankData=0xFF
+EditRect=51  2 70  9
+BlockLen=2
+ProgTimes=10.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=0
+Algo=072908072A08
+BitMapGroup = 11111111 Start
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+BitMapOffset = 1
+BitMapGroup = 11111111 Number
+BitMapItem  = 11110000 = 0
+BitMapItem  = 11110001 = 1
+BitMapItem  = 11110010 = 2
+BitMapItem  = 11110011 = 3
+BitMapItem  = 11110100 = 4
+BitMapItem  = 11110101 = 5
+BitMapItem  = 11110110 = 6
+BitMapItem  = 11110111 = 7
+BitMapItem  = 11111000 = 8
+BitMapItem  = 11111001 = 9
+BitMapItem  = 11111010 = 10
+BitMapItem  = 11111011 = 11
+BitMapItem  = 11111100 = 12
+BitMapItem  = 11111101 = 13
+BitMapItem  = 11111110 = 14
+BitMapItem  = 11111111 = 15
+
+EndDevice 
+[Device]=24LC128
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 16K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=8
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 
+[Device]=24LC256
+Socket=1 0 0
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32K 16
+BlankData=0xFF
+EditRect= 0  0 75 23
+BlockLen=8
+ProgTimes=5.0 0 0 0
+Iden=0xA0
+DataWidth=8
+DisplayASCII=1
+Algo=070208070508
+EndDevice 

@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 24C02
+
+Wprowadzanie : F7+^
+Wywol./Zatw. : F7+^
+
+UWAGI : 

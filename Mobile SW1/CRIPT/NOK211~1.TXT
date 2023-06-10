@@ -1,0 +1,49 @@
+X100 system connector for nokia 2110i/e pinouts
+By D. Kwan
+
+ANT  16            9       Charging connector
+(O) I-I-I-I-I-I-I-I-I ( ) ( o )
+CON  8             1
+
+My ascii isn't great so a word of explanation. The left symbol (O)  is the
+antenna connector for car kits. The symbol numberd 16-9 on the top and 8-1 on
+the bottom is the system connector. the ( ) is the open space next to the
+connector and the ( o ) is the charging connector for you home-charger.
+
+Description of X100
+
+PIN     Name                    Description
+---     ----                    -----------
+1,9     GND                     Digital ground
+2       MIC/JCONN               External audio input from accessories or
+                                handsfree microphone. Multiplexed with
+                                junction box connection control signal
+3       AGND                    Analogue ground for accessories
+4       TDA                     Transmitted DBUS data to the accessories
+5       M2BUS                   Serial Bidirectional data and control between
+                                the handportable and accessories
+6       HOOK/RXD2               Hook indication. HP has a 100KE pull-up
+                                resistor.
+7       PHFS/TXD2               Handsfree device power on/off, data to flash
+                                programming device.
+8,16    VCHAR                   Battery charging voltage
+10      EAR/HFPWR               External Audio output to accessories or
+                                handsfree speaker
+11      DSYNC                   DBUS data bit sync clock
+12      RDA                     DBUS recieved data from the accessories
+13      BENA                    Power supply to headset adapter
+14      VF                      Programming voltage for FLASH
+15      DCLK                    DBUS data clock
+
+As you can imagine. YOU CAN DESTROY YOUR NOKIA BY FOOLING AROUND WITH THESE
+CONNECTIONS. Therefor I accept NO responsability for any possible damages. My
+advice to you is to think twice before doing something and if you are going to
+try make use of a car-kit holder to get access to the X100 connector since it
+is to tiny to use a self-fashioned connector.
+
+IT IS POSSIBLE TO REPROGRAM THE NOKIA 2110 as is indicated by the pinout
+description so watch it !
+
+
+--end
+

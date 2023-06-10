@@ -1,0 +1,114 @@
+	
+	list    l=off
+
+movfw   macro   f       ; Move Contents of File Reg to W
+	movf    f,0
+	endm
+
+tstf    macro   f       ; Test Contents of File Register
+	movf    f,1
+	endm
+
+negf    macro   f,d     ; Negate File Register Contents
+	comf    f,1
+	incf    f,d
+	endm
+
+b       macro   k       ; Branch to Address 
+	goto    k
+	endm
+
+clrc    macro           ; Clear Carry
+	bcf     3,0
+	endm
+
+clrdc   macro           ; Clear Digit Carry
+	bcf     3,2
+	endm
+
+clrz    macro           ; Clear Zero
+	bcf     3,2
+	endm
+
+setc    macro           ; Set Carry
+	bsf     3,0
+	endm
+
+setdc   macro           ; Set Digit Carry
+	bsf     3,1
+	endm
+
+setz    macro           ; Set Zero
+	bcf     3,2
+	endm
+
+skpc    macro           ; Skip on Carry
+	BTFSS   3,0
+	endm
+
+skpdc   macro           ; Skip on Digit Carry
+	btfss   3,0
+	endm
+
+skpnc   macro           ; Skip on No Carry
+	btfsc   3,0
+	endm
+
+skpndc  macro           ; Skip on No Digit Carry
+	btfsc   3,1
+	endm
+
+skpnz   macro           ; Skip on No Zero
+	btfsc   3,2
+	endm
+
+skpz    macro           ; Skip on Zero
+	btfss   3,2
+	endm
+
+bc      macro   k       ; Branch on Carry to Address k
+	btfsc   3,0
+	goto    k
+	endm
+
+bdc     macro   k       ; Branch on Digit Carry to k
+	btfsc   3,1
+	goto    k
+	endm
+
+bnc     macro   k       ; Branch on No Carry to k
+	btfss   3,0
+	goto    k
+	endm
+
+bndc    macro   k       ; Branch on No Digit Carry to k
+	btfss   3,1
+	goto    k
+	endm
+
+bnz     macro   k       ; Branch on No Zero to Address
+	btfss   3,2
+	goto    k
+	endm
+
+bz      macro   k       ; Branch on Zero to Address k
+	btfsc   3,2
+	goto    k
+	endm
+
+addcf   macro   f,d     ; Add Carry to File Register
+	btfsc   3,0
+	incf    f,d
+	endm
+
+adddcf  macro   f,d     ; Add Digit to File Register
+	BTFSC   3,1
+	incf    f,d
+	endm
+
+subcf   macro   f,d     ; Subtract Carry from File Reg
+	btfsc   3,1
+	decf    f,d
+	endm
+
+	list    l=yes

@@ -1,0 +1,167 @@
+Group=XICOR Flash Parallel EEPROM
+
+;******************************************************************
+[Device]=X2804C
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=101312101412
+EndDevice ;================ << X2804C >> ================
+[Device]=X2816C;================ << X2816C >> ================
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 2K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=101312101412
+EndDevice ;================ << X2816C >> ================
+[Device]=X28C64
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=111312118E12
+EndDevice ;================ << X28C64 >> ================
+;================ << X28C64 >> ================
+[Device]=X28C256;================ << X28C256 >> ================
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=111312118E12
+EndDevice ;================ << X28C256 >> ================
+;******************************************************************
+[Device]=X28C512
+Socket=7
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 64K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E12
+EndDevice ;================ << X28C512 >> ================
+;******************************************************************
+[Device]=X28C010
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 128K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E12
+EndDevice ;================ << X28C010 >> ================
+;******************************************************************
+[Device]=XM28C020
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 256K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E12
+EndDevice ;================ << XM28C020 >> ================
+[Device]=XM28C040;================ << XM28C040 >> ================
+Socket=8
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 5.0 5.0
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 512K 16
+BlankData=0xFF
+EditRect= 0  0 74 23
+BlockLen=1
+ProgTimes=0.1 15 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=261312268E12
+EndDevice ;================ << XM28C040 >> ================

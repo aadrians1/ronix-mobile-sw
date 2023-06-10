@@ -1,0 +1,407 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META NAME="author" CONTENT="Joerg Arndt">
+<META NAME="keywords"  CONTENT="hfloat, pi, 3.1415, bignum, arctan, cryptic, ramanujan, ugly, useful, hfloatpage">
+<META NAME="description" CONTENT="source code and links for the computation of pi=3.1415...,
+ramanujanish formulas, links to bignum packages"> 
+<META NAME="robots" CONTENT="index,follow">
+<META NAME="generator" CONTENT="GNU Emacs">
+<META HTTP-EQUIV="content-language" CONTENT="en">
+<!-- base href="http://www.jjj.de/hfloat/hfloatpage.html" -->
+<TITLE>J&ouml;rgs useful and ugly HFLOAT page</TITLE>
+</HEAD>
+
+<BODY bgcolor="#fffff8" text="#000000">
+
+<HR NOSHADE>
+
+
+
+<center>
+<h1>
+<FONT COLOR="#ff0020">
+the HFLOAT page
+</FONT>
+</h1>
+</center>
+
+
+<HR noshade>
+
+Here you find
+<ul>
+<li><a href="#hfloat">the HFLOAT package</a> (new version of 15.june.1999)
+<li><a href="#howtopie">algorithms for pi &amp; e</a>
+<li><a href="#pidig">digits of pi</a>
+<li><a href="#formulas">cryptic (arctan and ramanujanish) formulas</a>
+</ul>
+
+
+<HR NOSHADE>
+
+Please read the
+<a href="../joerg.html#notes">notes</a>
+at the top of my
+<a href="../joerg.html">homepage</a>
+
+<!--
+<HR NOSHADE>
+<H2 align="center">
+<FONT COLOR="#FF0080">
+The book on pi is available, see
+<a href="/pibook/pibook.html">
+here </a>
+</FONT>
+</H2>
+-->
+
+
+<HR NOSHADE>
+
+<a name="hfloat"></a>
+<h3 align="center">
+<FONT COLOR="#00a020">
+the HFLOAT package
+</FONT>
+</h3>
+
+
+The
+<b>HUGE-FLOAT package</b>
+It's for computations with very long (huge!) floating point numbers.
+<br>
+With hfloat you can compute pi to a million digits.
+<br>
+<B>New HFLOAT version</B> (15.JUN.1999):
+<A HREF="hf990615.tgz">hf990615.tgz</A>,
+now distributed under the GPL.
+<br>
+Please read
+<A HREF="whatfor.txt">whatfor.txt</A>
+and
+<A HREF="hfloat.lsm">hfloat.lsm</A>
+<br>
+Please note that the doc is currently not up to date.
+<P>
+
+(old) version of 29-sept-97:
+<br>
+The C++ source is here (version of 29-sept-97):
+<A HREF="hf970929.tgz">
+hfloat (tarred and gzipped)</A> (271k)
+or
+<A HREF="hf970929.zip">
+hfloat (zipped)</A> (364k)
+<br>
+the doc is here:
+<A HREF="hfdoc.dvi.gz">hfdoc.dvi.gz</a> (dvi, 16k)
+<A HREF="hfdoc.ps.gz">hfdoc.ps.gz</a> (postscript, 47k)
+<A HREF="hfdoc.pdf.gz">hfdoc.pdf.gz</a> (pdf, 76k)
+<P>
+
+A text about some arithmetical algorithms
+and the computation of pi:
+<A HREF="arith.dvi.gz">arith.dvi.gz</a> (dvi, 71k)
+<A HREF="arith.ps.gz">arith.ps.gz</a> (postscript, 133k)
+<A HREF="arith.pdf.gz">arith.pdf.gz</a> (pdf, 243k)
+<br>
+hfloat uses fft-multiplication,
+it includes my fxtlib, the latest version of which is
+<a href="http://www.jjj.de/fxt/fxtpage.html#fxt">here</a>
+
+<!--
+<p>
+You can get hfloat also via ftp:
+<A HREF="ftp://ftp.jjj.de/pub/arndt/">
+ftp://www.jjj.de/pub/arndt/</a>
+<br>
+-->
+
+<p>
+
+<b>HFLOAT-pi-executable:</b>
+(compute digits of pi to (almost) any radix)
+<br>
+Linux exe, (elf type, version of 29-sept-97):
+(type 'pixlinux --help' for usage):
+<A HREF="pixlinux.gz">pixlinux.gz</A>
+<br>
+<!--
+Here is how it looks like when you compute 1 million decimal
+digits of pi (machine:=i486/100, earlier version):
+<A HREF="pi18_00.out">pi18_00.out</A>
+<br>
+There are 10 different (borwein-oidal) iterations for pi
+implemented in hfloat
+(plus the 3 quartic variants of the agm iterations).
+See how they compare in performance:
+<A HREF="pi18out.tgz">pi18out.tgz</A>
+-->
+
+
+<HR NOSHADE>
+<h3 align="center">
+<FONT COLOR="#00a020">
+Other bignum stuff
+</FONT>
+</h3>
+
+<!--<A HREF="http://www.iki.fi/~mtommila/apfloat/">-->
+<A HREF="http://www.jjj.de/mtommila/apfloat/">
+apfloat</A> (by Mikko Tommila)<!-- was: www.hut.fi -->
+
+<p>
+<!--<A HREF="ftp://ma2s2.mathematik.uni-karlsruhe.de/pub/gnu/cln.tar.z">-->
+<A HREF="ftp://ftp.ilog.fr/pub/Users/haible/gnu/">
+CLN</A> (by Bruno Haible,
+who also has a <A HREF="http://clisp.cons.org/~haible/">homepage</a>),
+includes gmp
+<br>
+This is probably the biggest and most complete bignum library available.
+
+<p>
+<A HREF="ftp://prep.ai.mit.edu/pub/gnu/gmp/">gmp</A>
+(by Torbj&ouml;rn Granlund)
+<BR>
+check for mirrors: e.g. in Germany
+<A HREF="http://fripp.hrz.tu-chemnitz.de/ftp-home/pub/gnu/gmp/">
+http://fripp.hrz.tu-chemnitz.de/ftp-home/pub/gnu/gmp/</A>
+<BR>
+a description can be found
+<A HREF="http://www.swox.com/gmp/">here</A>
+
+<p>
+pari/gp
+<A HREF="ftp://megrez.math.u-bordeaux.fr/pub/pari/">
+ftp://megrez.math.u-bordeaux.fr/pub/pari/</a>
+or
+<A HREF="http://hasse.mathematik.tu-muenchen.de/ntsw/pari/">
+http://hasse.mathematik.tu-muenchen.de/ntsw/pari/</a>
+(by H.Cohen et.al.)
+
+<p>
+<A HREF="http://crypt1.cs.uni-sb.de/linktop/LiDIA/">
+LiDIA</a> (by Johannes Buchmann) a library for computational number theory
+
+<p>
+<A HREF="ftp://ftp.informatik.uni-tuebingen.de/pub/CA/software/Piologie/">
+Piologie</a>, a library for arbitrary precision arithmetic
+(by Sebastian Wedeniwski)
+
+<p>
+<A HREF="http://www.cs.wisc.edu/~shoup/ntl/">
+NTL</a> (by Victor Shoup ) A Library for doing Number Theory
+
+
+<p>
+<A HREF="http://www.nas.nasa.gov/NAS/RNRreports/dbailey/dbailey.html">
+mpfun</A>
+(by David Bailey, in FORTRAN but has a C++ interface)
+
+
+<p>
+a (meta-)link to a
+<a href="../mathpage.html#mupad">
+<b>FREE Computer Algebra System</b></a>
+(yes, you read right)
+
+<p>
+There is more bignum stuff on the net,
+follow the links ...
+<br>
+Check e.g.
+<A HREF="ftp://ripem.msu.edu/pub/bignum/">
+ftp://ripem.msu.edu/pub/bignum/</a>
+pretty outdated, though.
+<br>
+A good list of
+<A HREF="http://www.maths.uq.oz.au/~krm/N1.html">
+number theoretic packages</a> by Keith Matthews.
+
+<HR NOSHADE>
+
+
+<a name="pidig"></a>
+<h3 align="center">
+<FONT COLOR="#00a020">
+3.14159265358979323846264338...
+</FONT>
+</h3>
+
+<center><b>- parental warning: explicit numbers -</b></center>
+
+<br>
+<b>Decimal digits of pi</b>,
+
+<!--
+each file is about 500k !
+<BR>
+first 2^20 digits:
+<A HREF="digits/dec0.gz">dec0.gz</A>
+<BR>
+second 2^20 digits:
+<A HREF="digits/dec1.gz">dec1.gz</A>
+<BR>
+third 2^20 digits:
+<A HREF="digits/dec2.gz">dec2.gz</A>,
+fourth 2^20 digits:
+<A HREF="digits/dec3.gz">dec3.gz</A>,
+<BR>
+-->
+
+The first 65536 decimal digits:
+<A HREF="digits/pidec64k.gz">pidec64k.gz</A>
+<br>
+Printers version, the first 20000 decimal digits on 2 pages:
+<A HREF="digits/pi20k.dvi">pi20k.dvi</A>.
+<br>
+The TeX source is here:
+<A HREF="digits/pi20k.tex">pi20k.tex</A>
+<br>
+These pi digits were computed with my hfloat package.
+<br>
+Get up to 50 million decimal digits of pi
+(and 30 million digits of 1/pi) at the
+<A HREF="http://www.cecm.sfu.ca/projects/ISC/data/pi.html">CECM</a>
+
+
+<p>
+<b>hexadecimal digits of pi</b>,
+
+<!--
+More than 3 million ...
+each file is about 600k !
+<BR>
+First 2^20 hex digits:
+<A HREF="digits/hex0.gz">hex0.gz</A>
+<BR>
+Second 2^20 hex digits:
+<A HREF="digits/hex1.gz">hex1.gz</A>
+<BR>
+-->
+
+the first 65536 hexadecimal digits:
+<A HREF="digits/pihex64k.gz">pihex64k.gz</A>
+<br>
+These pi digits were computed with my hfloat package.
+
+
+<br>
+<br>
+Constants to many digits can be found in
+<A HREF="http://www.cecm.sfu.ca/projects/ISC/records.html">
+http://www.cecm.sfu.ca/projects/ISC/records.html</a>
+
+
+<HR NOSHADE>
+<a name="howtopie"></a>
+<h3 align="center">
+<FONT COLOR="#00a020">
+How to Compute pi &amp; e
+</FONT>
+</h3>
+
+
+<ul>
+<li>See the text included in my
+<a href="#hfloat">hfloat</a>
+package !
+
+<li>The shortest programs for pi and e you have ever seen:
+<A HREF="calc-pi.c">calc-pi.c</A> and
+<A HREF="calc-e.c">calc-e.c</A>.
+
+<li>These the so called spigot algorithm.
+two remarks about the pi spigot algorithm:
+<A HREF="spigot.txt">
+spigot.txt</A>
+
+<li>The spigot algorithm for pi, a bit more explicit:
+<A HREF="spigotpi.c">
+spigotpi.c</A>
+
+<li>Christoph Haenel gives comments and improved versions of the code:
+<A HREF="spigot.haenel.txt">
+spigot.haenel.txt</A>
+
+<li>Texts on algorithms for the computation of pi:
+<A HREF="calc-pi.txt">
+calc-pi.txt</A> and
+<A HREF="calc-pi2.txt">
+calc-pi2.txt</A>
+
+<li>An interesting link to the CECM:
+<A HREF="http://www.cecm.sfu.ca/organics/papers/">
+http://www.cecm.sfu.ca/organics/papers/</A>.
+
+<li>A DOS executable (in uuencoded form) that computes almost
+10000 digits of pi, 125 bytes long:
+<A HREF="pi.com.uu">
+pi.com.uu</A>.
+Included is the commented disassembly by Greg Smith.
+
+<li>Compute the millionth hex digit of pi without computing all previous digits:
+C++ code,
+prints also binary and saves some table look up:
+<A HREF="pihex.cc">
+pihex.cc</A>.
+</ul>
+
+<li>And of course you have to get the book
+     <a href="/pibook/pibook.html">'Pi, Algorithmen, Computer, Arithmetik'</a>
+     by J&ouml;rg Arndt and Christoph Haenel, it will make your life better.
+
+<HR NOSHADE>
+<a name="formulas"></a>
+<h3 align="center">
+<FONT COLOR="#00a020">
+Completely useless formulas
+</FONT>
+</h3>
+
+
+<ul>
+<li><A HREF="jjf.dvi">arctan formulas (dvi)</a>
+(<A HREF="jjf.ps">same as postscript</a>)
+of the form $$ k\,\frac{\pi}{4}=\sum_{i=1}^{N}{m_i\,\ArcTan{x_i}} $$
+(cf. also the <A HREF="#hfloat">arith.*.gz</a>
+document)
+
+<li><A HREF="fox.dvi">big arctan formula bucket (dvi)</a>
+(<A HREF="fox.ps">same as postscript</a>)
+
+<li><A HREF="atn.dvi">More arctan related formulas (dvi)</a>
+(<A HREF="atn.ps">same as postscript</a>)
+
+<li>
+For the cryptic pi related formulas
+see the <A HREF="#hfloat">arith.*.gz</a>
+document.
+</ul>
+
+
+<HR NOSHADE>
+
+<br>
+Send useful email to
+<a href="mailto:arndt@tmt.REMOVE-ME.de (CORRECT ADDRESS BEFORE SENDING !)?subject=HFLOATpage">
+arndt AT tmt.de</a>
+<!--<b>note: I will be on vacation from 5-nov-98 ... 15-dec-98</b>-->
+<br>
+NOTE: remove the part that asks to be removed from the email address.
+Sorry for the inconvenience, this is to protect me from bulk email ("spam")
+e.g. from the idiotic dickheads on the agis.net domain.
+<br>
+
+<ADDRESS>
+J&ouml;rg Arndt
+</ADDRESS>
+
+
+<HR NOSHADE>
+Goto<a href="/joerg.html">
+J&ouml;rgs ugly Homepage</a>
+</BODY>
+</HTML>
+

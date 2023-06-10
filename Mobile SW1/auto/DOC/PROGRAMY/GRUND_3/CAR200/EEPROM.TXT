@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 24C01 SMD 
+
+Wprowadzanie : 
+Wywol./Zatw. : 
+
+UWAGI : 

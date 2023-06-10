@@ -1,0 +1,3 @@
+kod oryginalny w linii 70--------- 1421 > ---------podwojnie nastepne dwa znaki to blokada
+procesor d17003agf-e11
+pamiec 24c016

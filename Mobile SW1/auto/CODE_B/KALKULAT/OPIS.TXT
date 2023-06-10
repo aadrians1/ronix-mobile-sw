@@ -1,0 +1,33 @@
+Program ten liczy z pierwszych dwuch komurek w pamieci "GRX-XXX"reszte
+znakow :
+majac AB CD na poczatku,program wylicza reszte :
+
+ab cd 9f df xx xx xx xx xx xx xx xx xx xx xx xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx                                           xx
+xx xx xx xx xx xx xx xx xx xx xx xx yy yy yy yy
+
+gdzie yy yy yy yy =a4 5b a4 5b radio sie wlaczy bez kodu
+gdzie yy yy yy yy =a4 a4 a4 a4 radio sie wlaczy z kodem
+gdzie yy yy yy yy =a4 68 a4 68 radio sie wlaczy bez kodu a po nacisnieciu
+
+klawisza U1-3 radio pochwali sie kodem.
+zalerznie od modelu klawisz U1-3 oraz klawisz AS zatwierdzenie kodu.
+Program liczy poprawnie tylko z wielkich liter!!!
+Nalerzy pamietac ze grundig lubi zamieniac zapis : ab cd 9f df na cd ab df 9f
+w przypadku zamiany zapisu na poczatku jest on zamieniony na koncu.
+
+Aby program dziaˆaˆ poprawnie trzeba zast¥pi† plik qbasic.exe w kalkulatorze
+na plik o tej samej nazwie kt¢ry znajduje sie w Pana systemie.

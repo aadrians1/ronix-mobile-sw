@@ -1,0 +1,1004 @@
+{\rtf1\ansi\deff0\deftab720{\fonttbl{\f0\fnil MS Sans Serif;}{\f1\fnil\fcharset2{\*\fname Symbol;}MT Symbol;}{\f2\fswiss\fprq2\fcharset186 System;}{\f3\fnil\fcharset204{\*\fname Times New Roman;}Times New Roman Cyr;}{\f4\fnil Times New Roman;}{\f5\fnil\fcharset204{\*\fname Arial;}Arial Cyr;}{\f6\fnil Arial;}{\f7\fnil\fcharset204{\*\fname Courier New;}Courier New Cyr;}{\f8\fnil Courier New;}}
+{\colortbl\red0\green0\blue0;}
+\deflang1049\pard\plain\lang1033\f7\fs20 \'c3\'eb\'ee\'f1\'f1\'e0\'f0\'e8\'e9 \'f2\'e5\'f0\'ec\'e8\'ed\'ee\'e2:
+\par ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+\par    [TBC]:  \'ef\'ee\'e4\'f2\'e2\'e5\'f0\'e6\'e4\'e5\'ed
+\par    [TBD]:  \'ee\'ef\'f0\'e5\'e4\'e5\'eb\'e5\'ed
+\par    S.N.: \'d1\'e5\'f0\'e8\'e9\'ed\'fb\'e9 \'ed\'ee\'ec\'e5\'f0
+\par 
+\par    B (i): \'e1\'e8\'f2 i
+\par    B (i .. j): \'e1\'e8\'f2\'fb \'ee\'f2 i \'e4\'ee j (\'e5\'f1\'eb\'e8 i> j \'e7\'e0\'f2\'e5\'ec \'ee\'e1\'eb\'e0\'f1\'f2\'fc \'f7\'e8\'f2\'e0\'e5\'f2\'f1\'ff \'e2 \'ee\'e1\'f0\'e0\'f2\'ed\'ee\'ec \'ef\'ee\'f0\'ff\'e4\'ea\'e5)
+\par    B (I): \'e1\'e0\'e9\'f2 I
+\par    B (I.. J): \'e1\'e0\'e9\'f2\'fb \'ee\'f2 \'ff \'e4\'ee J (\'e5\'f1\'eb\'e8 I> J \'e7\'e0\'f2\'e5\'ec \'ee\'e1\'eb\'e0\'f1\'f2\'fc \'f7\'e8\'f2\'e0\'e5\'f2\'f1\'ff \'e2 \'ee\'e1\'f0\'e0\'f2\'ed\'ee\'ec \'ef\'ee\'f0\'ff\'e4\'ea\'e5)
+\par    X^y: x \'e2 (\'e7\'e0\'e2\'e8\'f1\'e8\'ec\'ee\'f1\'f2\'e8 \'ee\'f2)  at the power  y (\'e2 \'ec\'e0\'f2\'e5\'ec\'e0\'f2\'e8\'f7\'e5\'f1\'ea\'ee\'ec \'e2\'fb\'f0\'e0\'e6\'e5\'ed\'e8\'e8)
+\par 
+\par    \'d1\'e5\'f0\'e8\'e9\'ed\'fb\'e9 \'ed\'ee\'ec\'e5\'f0: \'d3\'ed\'e8\'ea\'e0\'eb\'fc\'ed\'fb\'e9 \'ed\'ee\'ec\'e5\'f0, \'ed\'e0\'e7\'ed\'e0\'f7\'e5\'ed\'ed\'fb\'e9 \'ea \'f7\'e8\'ef\'f3, \'fd\'f2\'ee\'f2 \'ed\'ee\'ec\'e5\'f0 \'ef\'f0\'ee\'e3\'f0\'e0\'ec\'ec\'e8\'f0\'f3\'e5\'ec\'fb\'e9
+\par                    \'f7\'e8\'ef\'e5 \'e8\'e7\'e3\'ee\'f2\'ee\'e2\'e8\'f2\'e5\'eb\'e5\'ec, \'c2\'fb \'ed\'e5 \'ec\'ee\'e6\'e5\'f2\'e5 \'e5\'e3\'ee \'e8\'e7\'ec\'e5\'ed\'e8\'f2\'fc \'fd\'f2\'ee. \'cd\'e5\'ea\'ee\'f2\'ee\'f0\'fb\'e5     
+\par                    \'ea\'e0\'f0\'f2\'fb \'ed\'e5 \'e8\'ec\'e5\'fe\'f2 \'f1\'e5\'f0\'e8\'e9\'ed\'fb\'e9 \'ed\'ee\'ec\'e5\'f0. \'ca\'ee\'ef\'e8\'ff \'f1\'e5\'f0\'e8\'e9\'ed\'ee\'e3\'ee \'ed\'ee\'ec\'e5\'f0\'e0  \'e8\'ed\'ee\'e3\'e4\'e0 
+\par                    \'ef\'e5\'f7\'e0\'f2\'e0\'e5\'f2\'f1\'ff \'ed\'e5\'ef\'ee\'f1\'f0\'e5\'e4\'f1\'f2\'e2\'e5\'ed\'ed\'ee \'ed\'e0 \'ea\'e0\'f0\'f2\'e5 .
+\par 
+\par    \'ca\'ee\'ed\'f2\'f0\'ee\'eb\'fc\'ed\'e0\'ff \'f1\'f3\'ec\'ec\'e0: \'ca\'ee\'ed\'f2\'f0\'ee\'eb\'fc\'ed\'fb\'e5 \'f1\'f3\'ec\'ec\'fb \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f2\'f1\'ff, \'f7\'f2\'ee\'e1\'fb \'ef\'f0\'ee\'e2\'e5\'f0\'e8\'f2\'fc \'e8\'e7\'ec\'e5\'ed\'e5\'ed \'eb\'e8 
+\par                       \'e7\'e0\'e3\'ee\'eb\'ee\'e2\'ee\'ea \'ea\'e0\'f0\'f2\'fb.\'cd\'e0\'ef\'f0\'e8\'ec\'e5\'f0 \'ee\'e4\'e8\'ed \'e1\'e0\'e9\'f2 \'e7\'e0\'e3\'ee\'eb\'ee\'e2\'ea\'e0 \'e2\'fb\'f7\'e8\'f1\'eb\'e5\'ed, \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'ff
+\par                       a -\'ef\'f0\'ee\'f1\'f2\'f3\'fe \'f4\'ee\'f0\'ec\'f3\'eb\'f3 (\'f2\'ee \'e5\'f1\'f2\'fc: \'e4\'eb\'ff \'e0 \'e1\'e8\'f2 \'f3\'f1\'f2\'e0\'ed\'ee\'e2\'e5\'ed \'e2 " 1 "
+\par                       \'e2 \'e1\'e0\'e9\'f2\'e0\'f5 1, 2, 3  Substract 4 \'ea \'e7\'ed\'e0\'f7\'e5\'ed\'e8\'fe 227, \'c2\'fb \'e4\'ee\'eb\'e6\'ed\'fb 
+\par                       \'ef\'ee\'eb\'f3\'f7\'e8\'f2\'fc \'ed\'e0\'e1\'ee\'f0 \'e7\'ed\'e0\'f7\'e5\'ed\'e8\'e9 \'e2 \'e1\'e0\'e9\'f2\'e5 0 \'ef\'eb\'e0\'f2\'fb). \'c2\'fb \'ec\'ee\'e6\'e5\'f2\'e5 \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'ee\'e2\'e0\'f2\'fc
+\par                       \'fd\'f2\'e8 \'ea\'ee\'ed\'f2\'f0\'ee\'eb\'fc\'ed\'fb\'e5 \'f1\'f3\'ec\'ec\'fb (\'e8 \'e4\'f0\'f3\'e3\'e8\'e5 \'e1\'e8\'f2\'fb \'e2 \'ee\'e1\'eb\'e0\'f1\'f2\'e8 \'e7\'e0\'e3\'ee\'eb\'ee\'e2\'ea\'e0) \'f7\'f2\'ee\'e1\'fb 
+\par                       \'ef\'f0\'ee\'e2\'e5\'f0\'e8\'f2\'fc, \'e8\'ec\'e5\'e5\'f2 \'eb\'e8 \'ea\'e0\'f0\'f2\'e0 a \'e4\'e0\'ed\'ed\'fb\'e9 \'f2\'e8\'ef. \'dd\'f2\'ee\'f2 \'e4\'ee\'ea\'f3\'ec\'e5\'ed\'f2  \'e2\'e0\'ec \'fd\'f2\'ee
+\par                       \'f1\'e4\'e5\'eb\'e0\'f2\'fc.
+\par 
+\par    \'d1\'e5\'f0\'f2\'e8\'f4\'e8\'ea\'e0\'f2: \'f1\'e5\'f0\'f2\'e8\'f4\'e8\'ea\'e0\'f2(\'ef\'ee\'f2\'e2\'e5\'f0\'e6\'e4\'e5\'f0\'e8\'e5)  \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f2\'f1\'ff \'e2 2-\'ee\'ec \'ef\'ee\'ea\'ee\'eb\'e5\'ed\'e8\'e8 \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2, 
+\par                       \'f7\'f2\'ee\'e1\'fb \'ef\'f0\'ee\'e2\'e5\'f0\'e8\'f2\'fc \'ef\'ee\'e4\'e8\'ed\'ed\'ee\'f1\'f2\'fc \'ef\'e0\'f2\'fb. \'d1\'e5\'f0\'f2\'e8\'f4\'e8\'ea\'e0\'f2 \'ee\'e1\'fb\'f7\'ed\'ee \'e4\'e8\'ed\'ed\'ee\'e9
+\par                       16 \'e8\'eb\'e8 32 \'e1\'e8\'f2\'e0 \'e8 \'e2\'fb\'f7\'e8\'f1\'ff\'e5\'f2\'f1\'ff \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'ff \'f4\'f3\'ed\'ea\'f6\'e8\'fe (\'f1\'e2\'ee\'fe \'f3 
+\par                       \'ea\'e0\'e6\'e4\'ee\'e3\'ee \'ee\'ef\'e5\'f0\'e0\'f2\'ee\'f0\'e0) , \'f1\'e5\'ea\'f0\'e5\'f2\'ed\'fb\'e9 \'ea\'eb\'fe\'f7 (\'f2\'e0\'ea\'e6\'e5 \'e7\'e0\'e2\'e8\'f1\'e8\'ec\'fb\'e9 \'ee\'f2
+\par                       \'ee\'ef\'e5\'f0\'e0\'f2\'ee\'f0\'e0 ) \'e8  \'e7\'ed\'e0\'f7\'e5\'ed\'e8\'e5 \'e1\'e8\'f2\'ee\'e2, \'f1\'ee\'e4\'e5\'f0\'e6\'e0\'f9\'e8\'f5\'f1\'ff \'e2 \'e7\'e0\'e3\'ee\'eb\'ee\'e2\'ea\'e5 \'ea\'e0\'f0\'f2\'fb.
+\par                       \'d2\'e0\'ea \'ea\'e0\'ea \'f4\'f3\'ed\'ea\'f6\'e8\'ff \'e8 \'ea\'eb\'fe\'f7 - \'f1\'ee\'f5\'f0\'e0\'ed\'ff\'fe\'f2\'f1\'ff \'e2 \'f1\'e5\'ea\'f0\'e5\'f2\'e5, \'c2\'fb \'ed\'e5 \'ec\'ee\'e6\'e5\'f2\'e5
+\par                       \'e2\'fb\'f7\'e8\'f1\'eb\'e8\'f2\'fc , \'e8 \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'ee\'e2\'e0\'f2\'fc \'fd\'f2\'ee:  \'ef\'f0\'ee\'e2\'e5\'f0\'fc\'f2\'e5, \'e8\'ec\'e5\'e5\'f2 \'eb\'e8 \'ea\'e0\'f0\'f2\'e0\'f2\'e0
+\par                       \'e4\'e0\'ed\'ed\'fb\'e9 \'f2\'e8\'ef.
+\par                       \'d5a\'ea\'e5\'f0\'fb, \'e4\'e5\'eb\'e0\'fe\'f9\'e8\'e5 crypto-\'e0\'ed\'e0\'eb\'e8\'e7 \'ef\'f0\'ee\'f2\'e8\'e2 \'f1\'e5\'f0\'f2\'e8\'f4\'e8\'ea\'e0\'f2\'e0, \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f2 
+\par                       \'e1\'ee\'eb\'fc\'f8\'ee\'e5 \'f7\'e8\'f1\'eb\'ee \'ef\'eb\'e0\'f2, \'fd\'f2\'ee \'ec\'ee\'e6\'e5\'f2 \'e1\'fb\'f2\'fc \'f3\'ed\'e8\'f7\'f2\'ee\'e6\'e5\'ed\'ee, \'ea\'ee\'e3\'e4\'e0 \'ea\'e0\'f0\'f2\'e0 \'ef\'f3\'f1\'f2\'e0.
+\par                       \'c7\'e0\'ef\'e8\'f1\'fc \'e2 \'fd\'f2\'ee\'e9 \'ee\'e1\'eb\'e0\'f1\'f2\'e8 \'ec\'ee\'e6\'e5\'f2 \'eb\'e8\'f8\'e0\'f2\'fc \'e7\'e0\'ea\'ee\'ed\'ed\'ee\'e9 \'f1\'e8\'eb\'fb \'ea\'e0\'f0\'f2\'f3.
+\par 
+\par    \'ce\'e1\'e0\'f1\'f2\'fc   
+\par    \'d1\'f7\'e5\'f2\'f7\'e8\'ea /\'c5\'e4\'e8\'ed\'e8\'f6 : \'dd\'f2\'e0 \'ee\'e1\'eb\'e0\'f1\'f2\'fc \'f1\'ee\'e4\'e5\'f0\'e6\'e8\'f2 \'ed\'ee\'ec\'e5\'f0 \'ee\'f1\'f2\'e0\'e2\'f8\'e8\'f5\'f1\'ff (\'e8\'eb\'e8 \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'ee\'e2\'e0\'ed\'fb\'f5) 
+\par                      \'e5\'e4\'e8\'ed\'e8\'f6 \'ec\'ee\'e6\'e5\'f2 \'e1\'fb\'f2\'fc \'f0\'e0\'e7\'f0\'e0\'e1\'ee\'f2\'e0\'ed, \'f2\'e0\'ea \'f7\'f2\'ee \'e2\'fb \'ed\'e5 \'f1\'ec\'ee\'e6\'e5\'f2\'e5 \'f3\'e2\'e5\'eb\'e8\'f7\'e8\'f2\'fc
+\par                      \'e7\'ed\'e0\'f7\'e5\'ed\'e8\'e5 \'e5\'e4\'e8\'ed\'e8\'f6 \'ed\'e0 \'ea\'e0\'f0\'f2\'e5. \'ca\'e0\'ea \'fd\'f2\'e0 \'ee\'e1\'eb\'e0\'f1\'f2\'fc \'f0\'e0\'e1\'ee\'f2\'e0\'e5\'f2 
+\par                      (\'e4\'e5\'ea\'ee\'e4\'e8\'f0\'ee\'e2\'e0\'ed\'e8\'e5, \'e8 \'e7\'e0\'ef\'e8\'f1\'fc) \'e7\'e0\'e2\'e8\'f1\'e8\'f2 \'ee\'f2 \'f2\'e8\'ef\'e0 \'ea\'e0\'f0\'f2\'fb. \'dd\'f2\'ee\'f2 \'e4\'ee\'ea\'f3\'ec\'e5\'ed\'f2
+\par                      \'ef\'ee\'ec\'ee\'e6\'e5\'f2 \'e2\'e0\'ec  \'e2\'fb\'f7\'e8\'f1\'eb\'e8\'f2\'fc  \'ee\'f1\'f2\'e0\'fe\'f9\'e8\'e9\'f1\'ff \'ea\'f0\'e5\'e4\'e8\'f2 \'ea\'e0\'f2\'f0\'fb.
+\par 
+\par 
+\par    \'c0\'ed\'f2\'e8-\'e1\'e5\'f8\'e5\'ed\'f1\'f2\'e2\'e0 \'f4\'eb\'e0\'e3:  (\'f2\'e0\'ea\'e6\'e5 \'e8\'e7\'e2\'e5\'f1\'f2\'ed\'fb\'e9 \'ea\'e0\'ea \'f4\'eb\'e0\'e3 \'ef\'ee\'eb\'ed\'ee\'e3\'ee \'e2\'fb\'f5\'ee\'e4\'e0) \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f2\'f1\'ff 
+\par                      \'e4\'eb\'ff, \'f2\'ee\'e3\'ee \'f7\'f2\'ee\'e1\'fb \'e3\'e0\'f0\'e0\'ed\'f2\'e8\'f0\'ee\'e2\'e0\'f2\'fc, \'f7\'f2\'ee \'e4\'e5\'f0\'e6\'e0\'f2\'e5\'eb\'fc \'ea\'e0\'f0\'f2\'fb \'ed\'e5 \'e7\'e0\'ef\'e0\'f2\'e8\'f2
+\par                      \'e4\'e5\'ed\'fc\'e3\'e8, \'e5\'f1\'eb\'e8 \'ee\'ed \'f3\'e4\'e0\'eb\'e8\'f2 \'ef\'eb\'e0\'f2\'f3 \'e2 \'f2\'e5\'f7\'e5\'ed\'e8\'e5 \'ee\'ef\'e5\'f0\'e0\'f6\'e8\'e8.
+\par                      \'c0\'ed\'f2\'e8-\'e1\'e5\'f8\'e5\'ed\'fb\'e5 \'f4\'eb\'e0\'e6\'ea\'e8 \'ed\'e0\'ef\'e8\'f1\'e0\'ed\'fb, \'ea\'ee\'e3\'e4\'e0 \'ee\'e1\'eb\'e0\'f1\'f2\'fc \'f1\'f7\'e5\'f2\'f7\'e8\'ea\'e0 \'ed\'e5 \'e7\'e0\'ef\'e8\'f1\'e0\'ed\'e0,
+\par                      \'ee\'ed\'e8 \'f3\'ed\'e8\'f7\'f2\'ee\'e6\'e5\'ed\'fb, \'ea\'ee\'e3\'e4\'e0 \'ee\'ef\'e5\'f0\'e0\'f6\'e8\'ff \'e7\'e0\'e2\'e5\'f0\'f8\'e5\'ed\'e0.
+\par                      \'c5\'f1\'eb\'e8 \'ef\'eb\'e0\'f2\'e0 \'f3\'e4\'e0\'eb\'e5\'ed\'e0 \'e2 \'f2\'e5\'f7\'e5\'ed\'e8\'e5 \'ee\'ef\'e5\'f0\'e0\'f6\'e8\'e8 \'ee\'ed\'e8   \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f2\'f1\'ff, \'f7\'f2\'ee\'e1\'fb
+\par                      \'e2\'ee\'f1\'f1\'f2\'e0\'ed\'ee\'e2\'e8\'f2\'fc \'ee\'e1\'eb\'e0\'f1\'f2\'fc \'f1\'f7\'e5\'f2\'f7\'e8\'ea\'e0 \'e2 \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e8\'e9 \'f0\'e0\'e7 \'ef\'f0\'e8 \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'ee\'e2\'e0\'ed\'e8\'e8 
+\par                      \'ea\'e0\'f0\'f2\'fb.
+\par 
+\par 
+\par *\'d1\'ee\'e4\'e5\'f0\'e6\'e0\'ed\'e8\'e5* ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+\par 
+\par I) 1-\'ee\'e5 \'ef\'ee\'ea\'ee\'eb\'e5\'ed\'e8\'e5 \'f2e\'eb\'e5\'ea\'e0\'f0\'f2:
+\par 
+\par 1.1 - \'c2\'e2\'e5\'e4\'e5\'ed\'e8\'e5:
+\par 1.2 - \'d1\'f5\'e5\'ec\'e0 \'f7\'e8\'ef\'e0:
+\par 1.3 - PINOUT \'ea\'ee\'ed\'e5\'ea\'f2\'ee\'f0\'e0:
+\par 1.4 - \'ce\'f1\'ed\'ee\'e2\'ed\'fb\'e5 \'ee\'f1\'ee\'e1\'e5\'ed\'ed\'ee\'f1\'f2\'e8:
+\par 1.5 - \'c2\'f0\'e5\'ec\'e5\'ed\'ed\'fb\'e5 \'e4\'e8\'e0\'e3\'f0\'e0\'ec\'ec\'fb
+\par 1.6 - \'ca\'e0\'f0\'f2\'e0 \'ef\'e0\'ec\'ff\'f2\'e8 \'e4\'eb\'ff \'ea\'e0\'f0\'f2 \'e8\'e7 \'d4\'d0\'c0\'cd\'d6\'c8\'c8 \'e8 \'cc\'ce\'cd\'c0\'ca\'ce:
+\par 1.7 - \'ca\'e0\'f0\'f2\'e0 \'ef\'e0\'ec\'ff\'f2\'e8 \'e4\'eb\'ff \'ea\'e0\'f0\'f2 \'e8\'e7 \'e4\'f0\'f3\'e3\'e8\'f5 \'f1\'f2\'f0\'e0\'ed:
+\par 1.8 - \'ca\'e0\'f0\'f2\'e0 \'ef\'e0\'ec\'ff\'f2\'e8 \'e4\'eb\'ff \'ea\'e0\'f0\'f2 \'e8\'e7 \'c8\'d1\'cf\'c0\'cd\'c8\'c8, CROATIA \'e8 \'cc\'c5\'ca\'d1\'c8\'ca\'c8:
+\par 1.9 - \'ca\'e0\'f0\'f2\'e0 \'ef\'e0\'ec\'ff\'f2\'e8 \'e4\'eb\'ff \'cc\'e5\'ea\'f1\'e8\'ea\'e0\'ed\'f1\'ea\'e8\'f5 \'ea\'e0\'f0\'f2 \'e8\'e7 Telmex:
+\par 
+\par 
+\par II) 2-\'fb\'e5 \'ef\'ee\'ea\'ee\'eb\'e5\'ed\'e8\'ff \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2:
+\par 
+\par 2.1 - \'c2\'e2\'e5\'e4\'e5\'ed\'e8\'e5:
+\par 2.2 - Pinout:
+\par 2.3 - \'ce\'f1\'ed\'ee\'e2\'ed\'fb\'e5 \'ee\'f1\'ee\'e1\'e5\'ed\'ed\'ee\'f1\'f2\'e8:
+\par 2.4 - \'c2\'f0\'e5\'ec\'e5\'ed\'ed\'fb\'e5 \'e4\'e8\'e0\'e3\'f0\'e0\'ec\'ec\'fb:
+\par 2.5 - \'ca\'e0\'f0\'f2\'e0 \'ef\'e0\'ec\'ff\'f2\'e8:
+\par 
+\par 2.5.1 - \'ca\'e0\'f0\'f2\'e0 \'ef\'e0\'ec\'ff\'f2\'e8 \'e4\'eb\'ff 4 \'e8\'eb\'e8 5 \'f1\'f2\'f3\'ef\'e5\'ed\'f7\'e0\'f2\'fb\'f5 \'e2\'ee\'f1\'fc\'ec\'e5\'f0\'e8\'f7\'ed\'fb\'e9 \'f1\'f7\'e5\'f2\'f7\'e8\'ea \'e5\'e4\'e8\'ed\'e8\'f6:
+\par 2.5.2 - \'ca\'e0\'f0\'f2\'e0 \'ef\'e0\'ec\'ff\'f2\'e8 \'e4\'eb\'ff \'ed\'ee\'e2\'ee\'e9 512 \'e1\'e8\'f2\'ed\'ee\'e9 \'c3\'f0\'e5\'f7\'e5\'f1\'ea\'ee\'e9 \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2\'fb:
+\par 2.5.3 - 2-\'ee\'e9 \'ef\'ee\'ea\'ee\'eb\'e5\'ed\'e8\'e5 \'d4\'f0\'e0\'ed\'f6\'f3\'e7\'f1\'ea\'e8\'f5 \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2 (TG2):
+\par 
+\par 2.6 - \'dd\'eb\'e5\'ea\'f2\'f0\'e8\'f7\'e5\'f1\'ea\'e8\'e5 \'ee\'f1\'ee\'e1\'e5\'ed\'ed\'ee\'f1\'f2\'e8:
+\par 
+\par 
+\par III) \'d1\'f5\'e5\'ec\'ed\'fb\'e5 \'f0\'e5\'f8\'e5\'ed\'e8\'ff \'f1\'f7\'e8\'f2\'e0\'f2\'fb\'e2\'e0\'f2\'e5\'eb\'e5\'e9:
+\par 
+\par 3.1 - 1 \'f1\'f7\'e8\'f2\'e0\'f2\'fb\'e2\'e0\'f2\'e5\'eb\'e5\'e9 (\'ee\'f7\'e5\'ed\'fc \'ef\'f0\'ee\'f1\'f2\'ee\'e9, \'f2\'ee\'eb\'fc\'ea\'ee \'e4\'eb\'ff \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2)
+\par 3.2 - \'d1\'f7\'e8\'f2\'e0\'f2\'fb\'e2\'e0\'f2\'e5\'eb\'fc 2 (\'e4\'eb\'ff \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2 \'e8 ISO7816 \'ea\'e0\'f0\'f2 \'f2\'e0\'ea\'e6\'e5)
+\par 
+\par 
+\par --------------------------------------- ---------------------------------------
+\par 
+\par I) 1-\'ee\'e5 \'ef\'ee\'ea\'ee\'eb\'e5\'ed\'e8\'e5 \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2:
+\par ============================
+\par 
+\par 1.1 - \'c2\'e2\'e5\'e4\'e5\'ed\'e8\'e5:
+\par ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+\par 
+\par \'c2 \'f1\'e5\'f0\'e5\'e4\'e8\'ed\'f3 80'\'f5 \'ef\'ee\'ff\'e2\'e8\'eb\'e0\'f1\'fc \'ed\'ee\'e2\'ee\'e5 \'ef\'ee\'ea\'ee\'eb\'e5\'ed\'e8\'e5 \'ea\'e0\'f0\'f2 (\'e8\'ed\'f2\'e5\'eb\'eb\'e5\'ea\'f2\'f3\'e0\'eb\'fc\'ed\'fb\'e5 \'ea\'e0\'f0\'f2\'fb \'e8\'eb\'e8 \'f7\'e8\'ef \'ea\'e0\'f0\'f2\'fb) \'ea\'ee\'f2\'ee\'f0\'fb\'e5 \'e7\'e0\'ec\'e5\'ed\'e8\'eb\'e8 
+\par \'e1\'ee\'eb\'fc\'f8\'e8\'ed\'f1\'f2\'e2\'ee \'ec\'e0\'e3\'ed\'e8\'f2\'ed\'fb\'f5  \'ee\'f1\'ee\'e1\'e5\'ed\'ed\'ee \'e2 \'e0\'e1\'ee\'ed\'e8\'f0\'ee\'e2\'e0\'ed\'e8\'e8 \'f2\'e5\'e5\'ea\'ee\'ec\'f3\'ed\'e8\'ea\'e0\'f6\'e8\'e9 \'e8 \'f2\'e0\'ea\'e6\'e5 \'e4\'eb\'ff \'ea\'f0\'e5\'e4\'e8\'f2\'ed\'fb\'f5 \'ea\'e0\'f0\'f2\'ee\'f7\'e5\'ea. \'dd\'f2\'e8 \'ea\'e0\'f0\'f2\'fb
+\par \'e3\'ee\'f0\'e0\'e7\'e4\'ee \'e1\'ee\'eb\'e5\'e5 \'e1\'e5\'e7\'ee\'ef\'e0\'f1\'ed\'fb \'f7\'e5\'ec \'ec\'e0\'e3\'ed\'e8\'f2\'ed\'fb\'e5 \'ea\'e0\'f0\'f2\'fb, \'e8 \'e8\'ec\'e5\'e5\'f2\'f1\'ff \'ed\'e5\'f1\'ea\'ee\'eb\'fc\'ea\'ee \'e2\'e8\'e4\'ee\'e2 \'ea\'e0\'f0\'f2 . Simplier - \'cf\'f0\'ee\'f1\'f2\'fb\'e5 
+\par \'ca\'e0\'f0\'f2\'ee\'f7\'ea\'e8 \'f1 \'ef\'e0\'ec\'ff\'f2\'fc\'fe \'ef\'ee\'e4\'ee\'e1\'ed\'fb\'e5 \'f2\'e5\'ec \'f7\'f2\'ee \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f2\'f1\'ff, \'e2 \'f2\'e5\'eb\'e5\'f4\'ee\'ed\'ed\'ee\'e9 \'f1\'e2\'ff\'e7\'e8, \'ef\'ee\'f1\'ea\'ee\'eb\'fc\'ea\'f3 \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2\'fb \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f2\'f1\'ff
+\par \'ee\'e1\'f9\'e8\'f5 \'f2\'e5\'eb\'e5\'f4\'ee\'ed\'e0\'f5 ( \'e2\'f1\'e5 \'f1\'ee\'e4\'e5\'f0\'e6\'e0\'ed\'e8\'e5 \'ef\'e0\'ec\'ff\'f2\'e8 \'f7\'e8\'f2\'e0\'e5\'ec\'ee, \'e8 \'e8\'ec\'e5\'e5\'f2\'f1\'ff \'ee\'e1\'eb\'e0\'f1\'f2\'fc \'e8\'e7\'e3\'ee\'f2\'ee\'e2\'e8\'f2\'e5\'eb\'ff, \'ea\'ee\'f2\'ee\'f0\'e0\'ff \'ff\'e2\'eb\'ff\'e5\'f2\'f1\'ff 
+\par \'ed\'e5\'ef\'e5\'f0\'e5\'e7\'e0\'ef\'e8\'f1\'fb\'e2\'e0\'e5\'ec\'ee\'e9), \'e7\'e0\'f2\'e5\'ec \'e8\'ec\'e5\'e5\'f2\'f1\'ff \'e1\'ee\'eb\'fc\'f8\'ee\'e5 \'ea\'ee\'eb\'e8\'f7\'e5\'f1\'f2\'e2\'ee sofisticated(\'ef\'f0\'ee\'e3\'f0\'e0\'ec\'e8\'f0\'f3\'e5\'ec\'fb\'f5) \'ea\'e0\'f0\'f2:  \'f1 \'ee\'e1\'eb\'e0\'f1\'f2\'fc\'fe 
+\par \'ef\'e0\'ec\'ff\'f2\'e8 \'e7\'e0\'f9\'e8\'f9\'e5\'ed\'ed\'ee\'e9 \'ea\'eb\'fe\'f7\'ee\'ec, \'fd\'f2\'e8 \'ea\'e0\'f0\'f2\'fb \'ec\'ee\'e3\'f3\'f2 \'f1\'ee\'e4\'e5\'f0\'e6\'e0\'f2\'fc \'ed\'e5\'ea\'ee\'f2\'ee\'f0\'f3\'fe \'f7\'e0\'f1\'f2\'ed\'f3\'fe \'e8\'ed\'f4\'ee\'f0\'ec\'e0\'f6\'e8\'fe \'e2 \'e7\'e0\'f9\'e8\'f9\'e5\'ed\'ed\'ee\'e9 \'ee\'f2 \'f7\'f2\'e5\'ed\'e8\'ff
+\par \'ee\'e1\'eb\'e0\'f1\'f2\'e8.\'d2\'f4\'ea\'e6\'e5 \'e8\'ec\'e5\'fe\'f2\'f1\'ff  \'ec\'e8\'ea\'f0\'ee\'ef\'f0\'ee\'f6\'e5\'f1\'f1\'ee\'f0-\'ea\'e0\'f0\'f2\'fb (\'f0\'e0\'e1\'ee\'f2\'e0\'fe\'f9\'e8\'f5 \'ef\'ee \'ef\'f0\'ee\'f2\'ee\'ea\'ee\'eb\'f3 -7816), \'ea\'ee\'f2\'ee\'f0\'fb\'e5 \'ff\'e2\'eb\'ff\'fe\'f2\'f1\'ff \'e3\'e8\'e1\'ea\'e8\'ec\'e8, 
+\par \'f2\'e0\'ea \'ea\'e0\'ea \'fd\'f2\'e8 \'ea\'e0\'f0\'f2\'fb \'e8\'ec\'e5\'fe\'f2 \'e8\'f5 \'f1\'ee\'e1\'f1\'f2\'e2\'e5\'ed\'ed\'f3\'fe \'e2\'ed\'f3\'f2\'f0\'e5\'ed\'ed\'fe\'fe \'ce\'ef\'e5\'f0\'e0\'f6\'e8\'ee\'ed\'ed\'f3\'fe \'f1\'e8\'f1\'f2\'e5\'ec\'f3, \'ea\'ee\'f2\'ee\'f0\'fb\'e5 \'ef\'f0\'e5\'e4\'ee\'f2\'e2\'f0\'e0\'f9\'e0\'fe\'f2 \'e2\'e2\'ee\'e4-\'e2\'fb\'e2\'ee\'e4,
+\par \'e5\'f1\'eb\'e8 PIN (\'cf\'e5\'f0\'f1\'ee\'ed\'e0\'eb\'fc\'ed\'fb\'e9 \'c8\'e4\'e5\'ed\'f2\'e8\'f4\'e8\'ea\'e0\'f6\'e8\'ee\'ed\'ed\'fb\'e9 \'cd\'ee\'ec\'e5\'f0) \'ed\'e5 \'e1\'fb\'eb \'e2\'e2\'e5\'e4\'e5\'ed (\'dd\'f2\'e8 \'ea\'e0\'f0\'f2\'fb \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f2\'f1\'ff, \'ea\'ee\'e3\'e4\'e0 
+\par \'ea\'ee\'ed\'f4\'e8\'e4\'e5\'ed\'f6\'e8\'e0\'eb\'fc\'ed\'ee\'f1\'f2\'fc \'ed\'e5\'ee\'e1\'f5\'ee\'e4\'e8\'ec\'e0, \'ef\'ee\'e4\'ee\'e1\'ed\'ee \'e2 \'ea\'f0\'e5\'e4\'e8\'f2\'ed\'fb\'f5 \'ea\'e0\'f0\'f2\'ee\'f7\'ea\'e0\'f5  (\'e1\'e0\'ed\'ea\'e5, crypted  \'ea\'e0\'f0\'f2\'e0\'f5 \'e4\'ee\'f1\'f2\'f3\'ef\'e0 \'d2\'c5\'cb\'c5\'c2\'c8\'c4\'c5\'cd\'c8\'df,
+\par \'ea\'e0\'f0\'f2\'e0\'f5 \'e7\'e4\'ee\'f0\'ee\'e2\'fc\'ff, SIM \'e2 \'ea\'e0\'f0\'f2\'e0\'f5 \'e4\'eb\'ff GSM, \'e8 \'f2.\'e4 ...).
+\par 
+\par \'ce\'f2\'ed\'ee\'f1\'e8\'f2\'e5\'eb\'fc\'ed\'ee \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2, \'e4\'e0\'e6\'e5 \'e5\'f1\'eb\'e8 \'fd\'f2\'e8 \'ea\'e0\'f0\'f2\'fb - \'ec\'e5\'ed\'e5\'e5 \'e1\'e5\'e7\'ee\'ef\'e0\'f1\'ed\'fb\'e5, \'ed\'e5 \'e4\'f3\'ec\'e0\'fe, \'f7\'f2\'ee \'c2\'fb \'f1\'ec\'ee\'e6\'e5\'f2\'e5 \'e7\'e2\'ee\'ed\'e8\'f2\'fc \'f1\'e2\'ee\'e1\'ee\'e4\'ed\'ee.
+\par \'c2\'f1\'e5 \'e4\'e0\'ed\'ed\'fb\'e5 \'f7\'e8\'f2\'e0\'e5\'ec\'fb \'e4\'ee \'f2\'e5\'f5 \'ef\'ee\'f0 \'ef\'ee\'ea\'e0 \'ed\'e5 \'e8\'ec\'e5\'e5\'f2\'f1\'ff \'ed\'e8\'ea\'e0\'ea\'e8\'f5 \'ea\'ee\'ed\'f4\'e8\'e4\'e5\'ed\'f6\'e8\'e0\'eb\'fc\'ed\'fb\'f5 \'e4\'e0\'ed\'ed\'fb\'f5 \'e2\'ed\'f3\'f2\'f0\'e8, \'ea\'e0\'f0\'f2\'fb \'f5\'ee\'f0\'ee\'f8\'ee 
+\par \'e2\'fb\'ef\'ee\'eb\'ed\'e5\'ed\'fb( \'e4\'ee\'f1\'f2\'e0\'f2\'ee\'f7\'ed\'ee, \'f7\'f2\'ee\'e1\'fb \'e1\'fb\'f2\'fc \'ee\'f7\'e5\'ed\'fc \'e1\'e5\'e7\'ee\'ef\'e0\'f1\'ed\'fb\'ec\'e8 \'e4\'eb\'ff  \'f1\'e2\'ff\'e7\'e8  \'e2 \'ee\'e1\'f9\'e5\'e9 \'f2\'e5\'e5\'f4\'ee\'ed\'ed\'ee\'e9 \'ea\'e0\'e1\'e8\'ed\'e5).              
+\par 
+\par \'d2\'e0\'ea, \'f7\'f2\'ee \'ff\'e2\'eb\'ff\'e5\'f2\'f1\'ff phonecard \'f2\'ee\'f7\'ed\'ee? \'d4\'e0\'ea\'f2\'e8\'f7\'e5\'f1\'ea\'e8 \'ee\'e1\'fb\'f7\'ed\'ee \'fd\'f2\'ee - 256 \'e1\'e8\'f2\'ee\'e2 EPROM ( \'ef\'ee\'e4\'ee\'e1\'ed\'ee \'f4\'f0\'e0\'ed\'f6\'f3\'e7\'f1\'ea\'e8 \'ea\'e0\'f0\'f2\'e0\'ec),
+\par \'e8\'eb\'e8 128 \'e1\'e8\'f2\'ee\'e2 EEPROM ( \'ef\'ee\'e4\'ee\'e1\'ed\'ee \'ed\'e5\'ec\'e5\'f6\'ea\'e8\'ec \'ea\'e0\'f0\'f2\'e0\'ec) \'f1 \'ef\'ee\'f1\'eb\'e5\'e4\'ee\'e2\'e0\'f2\'e5\'eb\'fc\'ed\'fb\'ec \'e2\'fb\'e2\'ee\'e4\'ee\'ec \'e8 \'ed\'e5\'ea\'ee\'f2\'ee\'f0\'fb\'ec\'e8 \'e4\'f0\'f3\'e3\'e8\'ec\'e8 \'ef\'e8\'ed\'e0\'ec\'e8 
+\par \'f3\'ef\'f0\'e0\'e2\'eb\'e5\'ed\'e8\'ff.
+\par 
+\par \'cf\'ee\'f7\'e5\'ec\'f3  \'ed\'e5\'eb\'fc\'e7\'ff \'ef\'ee\'e2\'f2\'ee\'f0\'ed\'ee \'e7\'e0\'ef\'ee\'eb\'ed\'e8\'f2\'fc? \'d5\'ee\'f0\'ee\'f8\'ee, \'e4\'e5\'e9\'f1\'f2\'e2\'e8\'f2\'e5\'eb\'fc\'ed\'ee, \'f7\'f2\'ee\'e1\'fb \'ef\'ee\'e2\'f2\'ee\'f0\'ed\'ee \'e7\'e0\'ef\'ee\'eb\'ed\'e8\'f2\'fc \'ea\'e0\'f0\'f2\'f3 \'c2\'fb  \'e4\'ee\'eb\'e6\'ed\'fb \'f1\'f2\'e5\'f0\'e5\'f2\'fc
+\par \'ea\'e0\'f0\'f2\'fb \'f1 UV, \'e7\'ed\'e0\'ff, \'f7\'f2\'ee \'ea\'e0\'f0\'f2\'fb \'ef\'ee\'ea\'f0\'fb\'f2\'fb \'e2 UV \'ed\'e5\'ef\'f0\'ee\'e7\'f0\'e0\'f7\'ed\'ee\'e9 \'f1\'ec\'ee\'eb\'ee\'e9, \'ea\'ee\'f2\'ee\'f0\'fb\'e5 \'ef\'f0\'e5\'e4\'ee\'f2\'e2\'f0\'e0\'f9\'e0\'fe\'f2 UV \'ee\'f2 \'e4\'ee\'f1\'f2\'e8\'e6\'e5\'ed\'e8\'ff \'ea\'f0\'e5\'ec\'ed\'e8\'ff
+\par \'f7\'e8\'ef\'e0, \'e8 \'e4\'e0\'e6\'e5 \'e5\'f1\'eb\'e8 \'e1\'fb \'c2\'fb \'f1\'ec\'ee\'e3\'eb\'e8 \'e1\'fb,  \'f1\'f2\'e5\'f0\'e5\'f2\'fc \'f7\'e8\'ef, \'c2\'fb \'e1\'f3\'e4\'e5\'f2\'e5 \'e4\'ee\'eb\'e6\'ed\'fb \'ef\'f0\'ee\'e3\'f0\'e0\'ec\'ec\'e8\'f0\'ee\'e2\'e0\'f2\'fc  \'ee\'e1\'eb\'e0\'f1\'f2\'fc, \'ea\'ee\'f2\'ee\'f0\'e0\'ff \'e7\'e0\'f9\'e8\'f9\'e5\'ed\'e0
+\par \'ee\'f2 \'e7\'e0\'ef\'e8\'f1\'e8 \'ef\'eb\'e0\'e2\'ea\'e8\'ec \'ef\'f0\'e5\'e4\'ee\'f5\'f0\'e0\'ed\'e8\'f2\'e5\'eb\'e5\'ec \'e1\'eb\'ee\'ea\'e8\'f0\'ee\'e2\'ea\'e8, \'ea\'ee\'f2\'ee\'f0\'fb\'e9 \'e1\'fb\'eb \'f1\'ee\'e5\'e4\'e8\'ed\'e5\'ed \'ef\'ee\'f1\'eb\'e5 \'ef\'f0\'ee\'e3\'f0\'e0\'ec\'ec\'e8\'f0\'ee\'e2\'e0\'ed\'e8\'ff \'ea\'e0\'f0\'f2\'fb \'ed\'e0 \'f4\'e0\'e1\'f0\'e8\'ea\'e5.
+\par 
+\par \'cd\'e5 \'e7\'e0\'e1\'f3\'e4\'fc\'f2\'e5, \'f7\'f2\'ee \'ee\'e1\'f9\'e8\'e9 \'f2\'e5\'eb\'e5\'f4\'ee\'ed \'f1\'ee\'e4\'e5\'f0\'e6\'e8\'f2 \'f1\'ef\'e5\'f6\'e8\'e0\'eb\'e8\'e7\'e8\'f0\'ee\'e2\'e0\'ed\'ed\'fb\'e9 \'ea\'ee\'ec\'ef\'fc\'fe\'f2\'e5\'f0 \'e8 \'e8\'ec\'e5\'f2\'fc \'ef\'f0\'ff\'ec\'f3\'fe \'f1\'e2\'ff\'e7\'fc \'ea \'ee\'e1\'f9\'e5\'e9 \'f2\'e5\'eb\'e5\'f4\'ee\'ed\'ed\'ee\'e9
+\par \'f1\'e5\'f2\'e8, \'e8 \'f2\'e0\'ea \'ed\'e0 \'e4\'f0\'f3\'e3\'e8\'e5 \'ea\'ee\'ec\'ef\'fc\'fe\'f2\'e5\'f0\'fb. \'c2\'ee \'d4\'f0\'e0\'ed\'f6\'e8\'e8 \'ee\'e1\'f9\'e8\'e5 \'f2\'e5\'eb\'e5\'f4\'ee\'ed\'fb \'f1\'ee\'e5\'e4\'e8\'ed\'e5\'ed\'fb \'f1 \'f2\'e5\'eb\'e5\'f4\'ee\'ed\'ed\'ee\'e9 \'f1\'e5\'f2\'fc\'fe, \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'fe\'f9\'e5\'e9
+\par " Unite  de raccordement de publiphone (URP)" \'ea\'ee\'f2\'ee\'f0\'fb\'e9 \'f1\'ee\'e4\'e5\'f0\'e6\'e8\'f2 " \'f7\'e5\'f0\'ed\'fb\'e9 \'f1\'ef\'e8\'f1\'ee\'ea " \'e7\'e0\'f5\'e2\'e0\'f7\'e5\'ed\'ed\'fb\'f5, \'ea\'e0\'f0\'f2 \'f4\'e0\'eb\'fc\'f8\'e8\'e2\'ee\'ea
+\par ... \'f2\'e0\'ea\'f1\'ee\'f4\'ee\'ed \'f1\'ed\'e0\'f7\'e0\'eb\'e0 \'f7\'e8\'f2\'e0\'e5\'f2 \'ea\'e0\'f0\'f2\'f3, \'ef\'f0\'ee\'e2\'e5\'f0\'ff\'e5\'f2,(\'ea\'ee\'ed\'f2\'f0\'ee\'eb\'fc\'ed\'fb\'e5 \'f1\'f3\'ec\'ec\'fb, \'f1\'e5\'f0\'f2\'e8\'f4\'e8\'ea\'e0\'f2\'fb ...) \'e5\'f1\'eb\'e8  OK, \'f2\'ee \'ef\'f0\'ee\'f1\'e8\'f2, \'f7\'f2\'ee\'e1\'fb
+\par URP \'ef\'f0\'ee\'e2\'e5\'f0\'e8\'eb, \'f1\'ee\'ee\'e1\'f9\'e5\'ed\'e0 \'eb\'e8 \'ea\'e0\'f0\'f2\'e0 \'e7\'e0\'f5\'e2\'e0\'f7\'e5\'ed\'ed\'ee\'e9 \'e8\'eb\'e8 \'e8\'e7\'e2\'e5\'f1\'f2\'ed\'e0 \'ea\'e0\'ea \'f4\'e0\'eb\'fc\'f8\'e8\'e2\'ea\'e0, \'e8 \'e7\'e0\'f2\'e5\'ec  \'ef\'ee\'e7\'e2\'ee\'eb\'ff\'e5\'f2 \'c2\'e0\'ec \'ed\'e0\'e1\'e8\'f0\'e0\'f2\'fc \'ed\'ee\'ec\'e5\'f0.
+\par 
+\par \'cd\'c5 \'c7\'c0\'c1\'d3\'c4\'dc\'d2\'c5: \'e5\'f1\'eb\'e8 \'c2\'fb \'ef\'f0\'ee\'e1\'f3\'e5\'f2\'e5 \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'ee\'e2\'e0\'f2\'fc \'ea\'e0\'f0\'f2\'f3 \'f4\'e0\'eb\'fc\'f8\'e8\'e2\'ea\'f3, \'f2\'e0\'ea\'f1\'ee\'f4\'ee\'ed \'ec\'ee\'e6\'e5\'f2 \'ef\'ee\'e7\'e2\'ee\'eb\'e8\'f2\'fc \'c2\'e0\'ec \'e7\'e2\'ee\'ed\'e8\'f2\'fc, \'e8 URP \'ef\'ee\'e4\'e0\'f1\'f2
+\par \'f2\'f0\'e5\'e2\'ee\'e3\'f3 \'ee\'ef\'e5\'f0\'e0\'f2\'ee\'f0\'f3, \'ea\'f2\'ee \'ec\'ee\'e6\'e5\'f2 \'e2\'fb\'e7\'fb\'e2\'e0\'f2\'fc \'ef\'ee\'eb\'e8\'f6\'e8\'fe. \'cc\'ed\'ee\'e3\'ee \'eb\'fe\'e4\'e5\'e9 \'e2\'ee \'d4\'f0\'e0\'ed\'f6\'e8\'e8  \'e7\'e0\'ea\'eb\'fe\'f7\'e5\'ed\'ee \'e2 \'f2\'fe\'f0\'fc\'ec\'f3 \'ef\'ee \'fd\'f2\'ee\'ec\'f3 \'ef\'f3\'f2\'e8.
+\par \'d2\'c0\'ca \'d7\'d2\'ce \'cd\'c0 \'c2\'ce\'cf\'d0\'ce\'d1\'db \'ce\'d2\'cd\'ce\'d1\'c8\'d2\'c5\'cb\'dc\'cd\'ce \'c8\'cc\'c8\'d2\'c0\'d6\'c8\'c8, \'cf\'c5\'d0\'c5\'c7\'c0\'d0\'df\'c6\'c0\'de\'d9\'c5\'c9 ... PHONECARDS \'cd\'c5\'c1\'d3\'c4\'d3 \'ce\'d2\'c2\'c5\'d7\'c0\'d2\'dc, \'cf\'ce\'d1\'ca\'ce\'cb\'dc\'ca\'d3 \'dd\'d2\'ce 
+\par \'c7\'c0\'cf\'d0\'c5\'d9\'c5\'cd\'cd\'ce \'c8 \'cc\'ce\'c6\'c5\'d2 \'c1\'db\'d2\'dc \'ce\'d7\'c5\'cd\'dc \'cf\'cb\'ce\'d5\'ce \'c4\'cb\'df  \'c2\'c0\'d8\'c5\'c9 \'ca\'c0\'d0\'cc\'db.
+\par 
+\par  
+\par \'d4\'f0\'e0\'ed\'f6\'f3\'e7\'f1\'ea\'e8\'e5  \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2 \'e1\'fb\'eb\'e8 \'f1\'ee\'e7\'e4\'e0\'ed\'fb, \'e2 1984 \'e8 \'e2 \'f2\'e5 \'e2\'f0\'e5\'ec\'e5\'ed\'e0 \'ea\'ee\'ed\'f1\'f2\'f0\'f3\'ea\'f2\'ee\'f0 \'f0\'e5\'f8\'e8\'eb \'f4\'ee\'f0\'ec\'e8\'f0\'ee\'e2\'e0\'f2\'fc \'fd\'f2\'e8 \'ea\'e0\'f0\'f2\'fb \'e2 NMOS 
+\par \'f2\'e5\'f5\'ed\'ee\'eb\'ee\'e3\'e8\'e8, \'ed\'ee \'f2\'e5\'ef\'e5\'f0\'fc, \'d4\'f0\'e0\'ed\'f6\'e8\'ff, \'f2\'e5\'eb\'e5\'f1\'e2\'ff\'e7\'fc \'e7\'e0\'ec\'e5\'ed\'e8\'eb\'e0 \'e2\'f1\'e5 \'f2\'e0\'ea\'f1\'ee\'f4\'ee\'ed\'fb \'e8 \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'e5\'f2 CMOS \'f2\'e5\'f5\'ed\'ee\'eb\'ee\'e3\'e8\'fe \'e4\'eb\'ff 70 % \'ea\'e0\'f0\'f2 
+\par \'e2 \'ed\'e0\'f1\'f2\'ee\'ff\'f9\'e5\'e5 \'e2\'f0\'e5\'ec\'ff (07/1997).
+\par 
+\par \'d2\'e0\'ea\'e6\'e5 \'ee\'ed\'e8 \'ef\'eb\'e0\'ed\'e8\'f0\'f3\'fe\'f2 \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'ee\'e2\'e0\'f2\'fc EEPROM, \'f7\'f2\'ee\'e1\'fb \'e7\'e0\'f9\'e8\'f2\'e8\'f2\'fc \'ea\'e0\'f0\'f2\'fb \'e8 \'e4\'ee\'e1\'e0\'e2\'e8\'f2\'fc \'ec\'ed\'ee\'e3\'ee \'ef\'f0\'e8\'ec\'e5\'ed\'e8\'ec\'ee\'e9 \'e8\'ed\'f4\'ee\'f0\'ec\'e0\'f6\'e8\'e8,
+\par \'e8 \'c2\'fb \'e2\'ee\'e7\'ec\'ee\'e6\'ed\'ee \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'e5\'f2\'e5 \'ea\'e0\'f0\'f2\'fb \'f2\'e5\'eb\'e5\'f4\'ee\'ed\'e0, \'f7\'f2\'ee\'e1\'fb \'ef\'ee\'ea\'f3\'ef\'e0\'f2\'fc \'f5\'eb\'e5\'e1 \'e8\'eb\'e8 \'f7\'f2\'ee - \'ed\'e8\'e1\'f3\'e4\'fc \'e5\'f9\'e5. \'ca\'e0\'f0\'f2\'fb\'f2\'fb, \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'e5\'ec\'fb\'e5 \'e4\'eb\'ff 
+\par \'f0\'e5\'ea\'eb\'e0\'ec\'fb \'ec\'ee\'e3\'f3\'f2 \'ef\'f0\'ee\'e3\'f0\'e0\'ec\'ec\'e8\'f0\'ee\'e2\'e0\'f2\'fc\'f1\'ff, \'f2\'e0\'ea \'f2\'e0\'ea\'f1\'ee\'f4\'ee\'ed \'e0\'e2\'f2\'ee\'ec\'e0\'f2\'e8\'f7\'e5\'f1\'ea\'e8 \'e2\'fb\'e7\'fb\'e2\'e0\'e5\'f2 \'e4\'e0\'ed\'ed\'fb\'e9 \'ed\'ee\'ec\'e5\'f0, \'ea\'ee\'e3\'e4\'e0 \'ea\'e0\'f0\'f2\'e0 \'e2\'f1\'f2\'e0\'e2\'eb\'e5\'ed\'e0.
+\par \'f0\'e5\'ea\'eb\'e0\'ec\'ee\'e4\'e0\'f2\'e5\'eb\'fc \'ec\'ee\'e6\'e5\'f2 \'e2\'fb\'e1\'e8\'f0\'e0\'f2\'fc, \'ea\'f2\'ee \'ec\'ee\'e6\'e5\'f2 \'e2\'fb\'e7\'fb\'e2\'e0\'f2\'fc \'f1\'e2\'ee\'e1\'ee\'e4\'ed\'ee \'e8 \'e3\'e4\'e5 \'ef\'ee\'eb\'fc\'e7\'ee\'e2\'e0\'f2\'e5\'eb\'fc \'ed\'e5 \'e4\'ee\'eb\'e6\'e5\'ed \'e1\'e5\'f1\'ef\'ee\'ea\'ee\'e8\'f2\'fc).
+\par 
+\par \pard\plain\f7\fs20 These cards are called Second Generation Telecards (T2G).
+\par 
+\par 
+\par    1.2 - SCHEMATICS of the chip:
+\par          ~~~~~~~~~~~~~~~~~~~~~~
+\par 
+\par         .-----------------.
+\par       --|>_ Clk           |
+\par       --| R/W             |
+\par       --| Reset           |
+\par       --| Fuse            |
+\par       --| Vpp             |
+\par         '-,             ,-'
+\par         .-'-------------'-.
+\par         |             Out |-- serial output
+\par         '-----------------'
+\par 
+\par 
+\par    1.3 - PINOUT of the connector:
+\par          ~~~~~~~~~~~~~~~~~~~~~~~
+\par 
+\par 
+\par                                AFNOR CHIP
+\par                                ----------
+\par         Afnor Position                              ISO position
+\par    (in the left top corner)                     (in the middle left)
+\par 
+\par ,-------------+-------------,               ,-------------+-------------,
+\par |   8         |         4   |               |   1         |         5   |
+\par +-------\\     |     /-------+               +-------\\     |     /-------+
+\par |   7    +----+----+    3   |               |   2    +----+    +    6   |
+\par +--------|         |--------+               +--------|         |--------+
+\par |   6    +    +----+    2   |               |   3    +----+----+    7   |
+\par +-------/     |     \\-------+               +-------/     |     \\-------+
+\par |   5         |         1   |               |   4         |         8   |
+\par '-------------+-------------'               '-------------+-------------'
+\par 
+\par NB: only the position of the chip is ISO standardized and not the pinout.
+\par 
+\par PINOUT:   1 : Vcc = 5V     5 : Gnd
+\par ~~~~~~    2 : R/W          6 : Vpp = 21V   (*)
+\par           3 : Clock        7 : I/O
+\par           4 : RAS          8 : Fus         (*)
+\par 
+\par \plain\f5\fs20 ( *) \'cd\'e5 \'e8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'e5\'ec\'fb\'e9 \'f1 \'ed\'ee\'e2\'fb\'ec G + D \'ea\'e0\'f0\'f2\'e0\'ec\'e8, \'f1\'ee\'e2\'ec\'e5\'f1\'f2\'e8\'ec\'fb\'e5 \'f1 256 \'f0\'e0\'e7\'f0\'ff\'e4\'ed\'ee\'e9 \'ef\'e0\'ec\'ff\'f2\'fc\'fe \'ed\'e0\'ef\'f0\'e8\'ec\'e5\'f0: spannish G + D \'ef\'eb\'e0\'f2\'fb.\plain\lang1033\f6\fs24 
+\par 
+\par 
+\par \plain\f5\fs20 1.4 - \'ce\'f1\'ed\'ee\'e2\'ed\'fb\'e5 \'ee\'f1\'ee\'e1\'e5\'ed\'ed\'ee\'f1\'f2\'e8:\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\plain\lang1033\f6\fs24 
+\par 
+\par \plain\f5\fs20 - \'d1\'e8\'ed\'f5\'f0\'ee\'ed\'ed\'fb\'e9 \'ef\'f0\'ee\'f2\'ee\'ea\'ee\'eb.\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 - N-MOS \'f2\'e5\'f5\'ed\'ee\'eb\'ee\'e3\'e8\'ff \'e8\'eb\'e8 CMOS \'e4\'eb\'ff \'ed\'ee\'e2\'fb\'f5. - 256x1 \'f0\'e0\'e7\'f0\'ff\'e4\'ed\'e0\'ff \'ee\'f0\'e3\'e0\'ed\'e8\'e7\'e0\'f6\'e8\'ff.\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 - 96 \'ed\'e0\'ef\'e8\'f1\'e0\'e2\'f1\'ff \'e7\'e0\'f9\'e8\'f9\'e5\'ed\'ed\'fb\'e9 \'ef\'eb\'e0\'e2\'ea\'e8\'ec \'ef\'f0\'e5\'e4\'ee\'f5\'f0\'e0\'ed\'e8\'f2\'e5\'eb\'e5\'ec \'c1\'eb\'ee\'ea\'e8\'f0\'ee\'e2\'ea\'e8. - \'cc\'e0\'eb\'e0\'ff \'ec\'ee\'f9\'ed\'ee\'f1\'f2\'fc 85mW \'e2 \'f0\'e5\'e6\'e8\'ec\'e5 \'f7\'f2\'e5\'ed\'e8\'ff.\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 - 21 V \'ed\'e0\'ef\'f0\'ff\'e6\'e5\'ed\'e8\'e5 \'ef\'f0\'ee\'e3\'f0\'e0\'ec\'ec\'e8\'f0\'ee\'e2\'e0\'ed\'e8\'ff.\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 - \'c2\'f0\'e5\'ec\'ff \'e4\'ee\'f1\'f2\'f3\'ef\'e0: 500ns\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 - \'d2\'e5\'ec\'ef\'e5\'f0\'e0\'f2\'f3\'f0\'ed\'fb\'e9 \'e4\'e8\'e0\'ef\'e0\'e7\'ee\'ed: -10C +70C\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 - 4-\'eb\'e5\'f2\'ed\'e8\'e5 \'f1\'ee\'f5\'f0\'e0\'ed\'e5\'ed\'e8\'e5 \'e4\'e0\'ed\'ed\'fb\'f5 .\plain\lang1033\f6\fs24 
+\par 
+\par 
+\par \plain\f5\fs20 1.5 - \'e2\'f0\'e5\'ec\'e5\'ed\'ed\'fb\'e5 \'e4\'e8\'e0\'e3\'f0\'e0\'ec\'ec\'fb:\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\plain\lang1033\f6\fs24 
+\par \plain\f5\fs20 a - \'cf\'eb\'e0\'f2\'fb \'e8\'e7 Schlumberger, Solaic, Gemplus ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\plain\lang1033\f6\fs24 
+\par \plain\lang1033\f8\fs20 
+\par 
+\par \plain\f7\fs20 +21V                                     _____________
+\par +5V ____________________________________|             |_________________ VPP
+\par                                         :             :
+\par +5V                  ___________________:_____________:_________________ ___
+\par 0V  ________________|                   :             :                  RST
+\par                     :                   :             :
+\par +5V     ____        :      ____         :       ______:______
+\par 0V  ___|    |_______:_____|    |________:______|      :      |__________ CLK
+\par        :    :       :     :    :        :      :      :      :
+\par +5V    :    :       :     :    :        :______:______:      :           _
+\par 0V  ___:____:_______:_____:____:________|      :      |______:__________ R/W
+\par        :    :       :     :    :        :      :      :      :
+\par +5V    :    :       :_____:    :________:      :      :      :__________
+\par 0V  XXXXXXXXXXXXXXXXX_____XXXXXX________XXXXXXXXXXXXXXXXXXXXXX__________ OUT
+\par        :    :       :     :    :        :<-----><---->:      :
+\par        :    :       :     :    :        :10 to   10 to       :
+\par        :    :       :     :    :        :50 ms   50ms        :
+\par         Reset        Bit0         Bit1                           Bit2
+\par         card        reading      reading  Bit1 writing to 1     reading
+\par 
+\par \plain\lang1033\f8\fs20 
+\par \plain\f5\fs20 \'ce\'c1\'d0\'c0\'d2\'c8\'d2\'c5 \'c2\'cd\'c8\'cc\'c0\'cd\'c8\'c5: Vpp \'cd\'e5\'e0\'ea\'f2\'e8\'e2\'ed\'ee\'e5 \'f1\'ee\'f1\'f2\'ee\'ff\'ed\'e8\'e5 - 5V, \'f2\'e0\'ea\'e8\'ec \'ee\'e1\'f0\'e0\'e7\'ee\'ec Vpp \'e1\'f3\'e4\'e5\'f2 \'e4\'ee\'eb\'e6\'e5\'ed \'e1\'fb\'f2\'fc \'f1\'ee\'e5\'e4\'e8\'ed\'e5\'ed \'f1 Vcc,
+\par \'f7\'f2\'ee\'e1\'fb \'f1\'f7\'e8\'f2\'e0\'f2\'fc \'ea\'e0\'f0\'f2\'f3.\plain\f6\fs24 
+\par \plain\f5\fs24 
+\par \plain\f5\fs20 b - \'ca\'e0\'f0\'f2\'fb\'f2\'fb \'e8\'e7 G + D (\'c8\'f1\'ef\'e0\'ed\'f1\'ea\'e8\'e5 \'ef\'eb\'e0\'f2\'fb, \'ef\'ee\'ec\'e5\'f7\'e5\'ed\'ed\'fb\'e5 5-\'fb\'ec \'e1\'e0\'e9\'f2\'ee\'ec = $30) ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ \plain\lang1033\f6\fs24 
+\par \plain\lang1033\f8\fs20 
+\par \plain\f7\fs20 +5V                  ___________________________________________________ ___
+\par 0V  ________________|                                                    RST
+\par 
+\par +5V     ____               ____                 _____________
+\par 0V  ___|    |_____________|    |_______________|             |__________ CLK
+\par        :    :             :    :               :             :
+\par +5V    :    :             :    :         ______:______       :           _
+\par 0V  ___:____:_____________:____:________|      :      |______:__________ R/W
+\par        :    :             :    :               :      :      :
+\par +5V    :____:_____________:____:_______________:______:______:__________
+\par 0V  XXXX    X_____________X    X_______________X      :      X__________ OUT
+\par        :    :             :    :               :<---->:      :
+\par        :    :             :    :               : 1 ms        :
+\par        :    :             :    :               :             :
+\par         Reset     Bit0               Bit1           Bit1          Bit2
+\par         card     reading            reading      writing to 1    reading
+\par 
+\par 1.6 - Memory Map for cards from FRANCE, MONACO and St MAARTEN:
+\par          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\par 
+\par Byte (Bit)      Hexa
+\par 
+\par               +-----+
+\par 0 (0..7)      |     | --> Checksum for bytes 1, 2, 3 (*)
+\par               +-----+
+\par 1 (8..15)     | $0s | --> French telecard
+\par               |     |     Serial Number (1st byte)
+\par               | $80 | --> St Maarten
+\par               +-----+
+\par 2 (16..23)    |     | --> Serial Number (2nd byte)
+\par               +-----+
+\par 3 (24..31)    |     | --> Serial Number (3rd byte)
+\par               +-----+
+\par 4 (32..39)    |     | --> checksum for bytes 5, 6, 7 (*)
+\par               +-----+
+\par 5 (40..47)    |     | --> Serial Number (4th byte)
+\par               +-----+
+\par 6 (48..55)    |     | --> Serial Number (5th byte)
+\par               +-----+
+\par 7 (56..63)    |     | --> ? [TBD]
+\par               | $FF | --> St Maarten
+\par               +-----+
+\par 8 (64..71)    |     | --> checksum for byte 9, 10, 11 (*)
+\par               +-----+
+\par 9  (72..79)   |     | --> ? [TBD]
+\par               | $FF | --> St Maarten
+\par               +-----+
+\par 10 (80..87)   | $10 | --> France and Monaco
+\par               | $14 | --> St Maarten
+\par               +-----+
+\par 11 (88..95)   | $13 | --> 120 units
+\par               | $07 | --> 60 units (St Maarten)
+\par               | $06 | --> 50 units
+\par               | $05 | --> 40 units
+\par               | $04 | --> 25 units
+\par               | $02 | --> 5 units
+\par               +-----+
+\par 12 (96..103)  |     | --> The units area: each time a unit is used
+\par      .        |     |     then a bit is set to "1"; The 1st 10 units
+\par      .        |     |     are fused in factory for test (15 units for
+\par      .        |     |     25u and 5u cards).
+\par      .        |     |
+\par      .        |     |
+\par 30 (240..247) |     |
+\par               +-----+
+\par 31 (248..255) | $FF | --> $FF is set when all the units are used.
+\par               +-----+
+\par 
+\par (*) checksum is calculated by the following expresion:
+\par 
+\par               max                | min=32*(j-1)+8
+\par     $E3 - 4 * Sum b(i)     where | max=32*j-1
+\par              i=min               | and j is the checksum number (1, 2 or 3)
+\par 
+\par NOTE: The card number is the concatenation in a single string of the 5 bytes
+\par       written in hexadecimal.
+\par 
+\par 
+\par 
+\par    1.7 - Memory Map for cards from other countries:
+\par          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\par 
+\par 
+\par Byte (Bit)      Hexa
+\par 
+\par                +-----+                              95
+\par 0 (0..7)       |     |  --> Check Sum Byte = $D8 - Sum b(i)
+\par                +-----+                             i=8
+\par 1 (8..15)      | $83 |  --> Telecard
+\par                | $80 |  --> Other Applications (See below)
+\par                | $9A |  --> PIAF card [TBC]
+\par                | $C0 |  --> AVANT card [TBC]
+\par                +-----+-----+
+\par 2-3 (16..31)   | $1x | $xx |  --> Units+2 (0x1152 : exemple for a 150u card).
+\par                + - - - - - +
+\par                | $10 | $00 |  --> In case of special Argentine telecard
+\par                | $3D | $13 |  -->  80u (Morocco)
+\par                | $DB | $B5 |  -->  40u (Morocco)
+\par                +-----+-----+
+\par 
+\par                ARGENTINA
+\par                +-----+-----+-----+-----+
+\par 4..7 (32..63)  | $Ta | $bc | $de | $fg | T = Manufacturer (4 Gemplus, 0 Schlumberger)
+\par                |     |     |     |     | S.N. = a*64 + b*32 + c*16 + d*8 + e*4 + f*2 + g
+\par                +-----+-----+-----+-----+
+\par 8..9  (64..79) |     |     | --> Don't Know
+\par                +-----+-----+
+\par 
+\par                HUNGARY
+\par                +-----+-----+-----+-----+
+\par 4..7 (32..63)  | $Ta | $B  | $C  | $D  | T = Manufacturer (4 Gemplus, C ODS)
+\par                |     |     |     |     | S.N. = a*2^21 + B*2^17 + C*2^9 + D
+\par                +-----+-----+-----+-----+
+\par 8..9  (64..79) |     |     | --> Unit value : $0103 for 120u;  $010A for 50u
+\par                +-----+-----+
+\par 
+\par                PORTUGAL
+\par                +-----+-----+-----+-----+
+\par 4..7 (32..63)  | $00 | $A  | $B  | $C  | Portugal : S.N. = A*2^17 + B*2^9 + C
+\par                +-----+-----+-----+-----+
+\par 8..9  (64..79) |     |     | --> Certificate
+\par                +-----+-----+
+\par 
+\par                OTHERS
+\par                +-----+
+\par 4 (32..39)     | $Tx | --> T = Manufacturer 0 --> Schlumberger
+\par                |     | -->                  1 --> Solaic [TBC]
+\par                |     | -->                  3 --> Gemplus [TBC] (finnish cards)
+\par                |     | -->                  4 --> Gemplus
+\par                +-----+----+----+----+----+
+\par 5..9  (40..79) |     |    |    |    |    | --> Serial Number
+\par                +-----+----+----+----+----+
+\par 
+\par                +-----+-----+
+\par 10-11(80..95)  | $10 | $16 | --> French Polynesia
+\par                |     | $78 | --> DisneyLand Paris (see note)
+\par                | $11 | $15 | --> Djibouti
+\par                |     | $1C | --> Senegal (Sonatel)
+\par                |     | $1D | --> French Cinecarte [TBC]
+\par                |     | $1E | --> Sweden
+\par                |     | $30 | --> Norway
+\par                |     | $31 | --> New Caledonia
+\par                |     | $32 | --> Cameroon
+\par                |     | $33 | --> Andorra
+\par                |     | $36 | --> Central African Republic (Socatel)
+\par                |     | $39 | --> Luxembourg
+\par                |     | $3C | --> Ireland
+\par                |     | $3D | --> Gambia
+\par                |     | $47 | --> Portugal
+\par                |     | $54 | --> Malta
+\par                |     | $55 | --> Czech Republic / Yougoslavia [TBC]
+\par                |     | $58 | --> Comores
+\par                |     | $5C | --> Argentina
+\par                |     | $5D | --> Burkina Faso
+\par                |     | $5E | --> Mali
+\par                |     | $5F | --> Gabon
+\par                |     | $65 | --> Finland
+\par                |     | $72 | --> Togo (OPT Togo)
+\par                |     | $86 | --> Slovakia
+\par                |     | $9E | --> Cuba (Etecsa)
+\par                |     | $B7 | --> Morocco (Special Operator)
+\par                |     | $C3 | --> Emirates (Etisalat)
+\par                |     | $E0 | --> Hungary
+\par                |     | $E1 | --> Cameroon (CamTel)
+\par                |     | $E2 | --> Morocco (Ave Phone)
+\par                | $1E | $5C | --> Argentina (Special Cards)
+\par                +-----+-----+
+\par 12 (96..103)   |     | --> The units area: each time a unit
+\par      .         |     |     is used, then a bit is set to "1";
+\par      .         |     |
+\par      .         |     |     The first two units are fused in
+\par      .         |     |     factory as test.
+\par      .         |     |
+\par      .         |     |     In some countries 5 extra units are burned when the
+\par      .         |     |     card is empty (credit seems to be -5 units).
+\par      .         |     |
+\par      .         |     |     Hungary: Each bit set to 1 in this area is a unit used.
+\par      .         |     |     ~~~~~~~  10u are used in factory when the cards is new.
+\par 31 (248..255)  |     |
+\par                +-----+
+\par 
+\par Note for DisneyLand Paris: Unit Area is b(128..239), B(30) is set to $FF to
+\par                            mark an empty card.
+\par 
+\par                ARGENTINA SPECIAL
+\par                +-----+
+\par 12 (96..103)   | $C0 |  --> The first two units are fused in factory as test.
+\par       .        |     |
+\par       .        |     |
+\par 20-21(160..175)|$XXXX|  --> User number Eg. $2456
+\par 22-23(176..191)|$XXXX|                      $1252  --> 2456 1252 6578
+\par 24-25(192..207)|$XXXX|                      $6578
+\par       .        |     |
+\par       .        |     |
+\par 30 (240..247)  |     |
+\par                +-----+
+\par 
+\par 
+\par    1.8 - Memory Map for cards from Argentina, Spain, Croatia and Mexico:
+\par          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\par    The spanish telecards are made from different manufacturers, and these cards
+\par    should be read and written with a different protocol following byte 04
+\par    of the memory (see subclause 1.6-a for the cards with the byte 04=$90 and
+\par    see the subclause 1.6-b for the cards with the byte 04=$30).
+\par 
+\par 
+\par Byte (Bit)       Binary    Hexa
+\par 
+\par               +-----------+-----+                            95
+\par 0 (0..7)      |           |     | ---> Checksum byte = 216 - Sum b(i)
+\par               +-----------+-----+                            i=8
+\par 1 (8..15)     | 1000 0011 | $83 | ---> Telecard
+\par               +-----------+-----+
+\par 2 (16..23)    | 1111 1111 | $FF |
+\par               +-----------+-----+
+\par 3 (24..31)    | 1111 1111 | $FF |
+\par               +-----------+-----+
+\par 4 (32..39)    | 1001 0000 | $90 | --> Oberthur
+\par               | 1001 1110 | $9E | --> Oberthur (Argentina)
+\par               | 0011 0000 | $30 | --> G+D
+\par               | 0101 1010 | $5A | --> Gemplus
+\par               | 0101 0000 | $A0 | --> Solaic
+\par               +-----------+-----+
+\par 5 (40..47)    |           |     |
+\par 6 (48..55)    |           |     | ---> Serial Number (*)
+\par 7 (56..63)    |           |     |
+\par               +-----------+-----+-----------+-----+
+\par 8-9  (64..79) | 0000 0000 | $00 | 0000 1010 | $0A | -->  500 pesetas (spain)
+\par               | 0001 0100 | $14 | 1000 1010 | $8A | --> 1000 pesetas (spain)
+\par               | 0010 0101 | $25 | 0000 0100 | $04 | --> 2000 pesetas (spain)
+\par               | 0010 0101 | $25 | 0000 0110 | $06 | --> 2100 pesetas (spain)
+\par               | 0001 0100 | $14 | 1100 1010 | $CA | --> N$ 25.00 (Mexico)
+\par               | 0000 0000 | $00 | 0000 0011 | $03 | --> 25 (Argentina)
+\par               | 0000 0000 | $00 | 0000 1010 | $0A | --> 100u (Croatia)
+\par               | 0010 1010 | $2A | 0010 0101 | $85 | --> 1000u (Croatia)
+\par               +-----------+-----+-----------+-----+
+\par 10 (80..87)   | 0001 1110 | $1E |
+\par               +-----------+-----+
+\par 11 (88..95)   | 0010 0010 | $22 | --> Spain
+\par               | 0010 0100 | $24 | --> Mexico
+\par               | 0010 0110 | $26 | --> Croatia
+\par               | 0010 1000 | $28 | --> Argentina
+\par               +-----------+-----+
+\par 12 (96..103)  | 1111 1111 | $FF | ---> the first 10 units are fused
+\par     .         | 11xx xxxx | $xx |      in factory for testing.
+\par     .         | xxxx xxxx | $xx |
+\par     .         | xxxx xxxx | $xx | ---> Slow counter area
+\par     .         | xxxx xxxx | $xx |
+\par     .         +-----------+-----+
+\par     .         | xxxx xxxx | $xx |
+\par     .         | xxxx xxxx | $xx | ---> Fast counter area
+\par 31 (248..255) | xxxx xxxx | $xx |
+\par               +-----------+-----+
+\par 
+\par    The slow counter area:
+\par    ----------------------
+\par        - Increment: counts units by an increment of 5 pesetas
+\par        - size:
+\par                 o [b156 ... b255] for  500 pesetas cards
+\par                 o [b106 ... b205] for 1000 pesetas cards
+\par                 o [b126 ... b165] for 2000 pesetas cards
+\par                 o [b106 ... b165] for 2100 pesetas cards
+\par 
+\par    The Fast counter area:
+\par    ----------------------
+\par        - Increment: counts units by an increment of
+\par                 o No fast counter area for the 500 pesetas cards.
+\par                 o 10 pesetas for the 1000 pesetas cards
+\par                 o 20 pesetas for the 2000 pesetas cards
+\par                 o 20 pesetas for the 2100 pesetas cards
+\par 
+\par        - size:
+\par                 o No fast counter area for the 500 pesetas cards.
+\par                 o [b206 ... b255] for the 1000 pesetas cards
+\par                 o [b166 ... b255] for the 2000 pesetas cards
+\par                 o [b166 ... b255] for the 2100 pesetas cards
+\par 
+\par    Exemple of an fast units area: (1000 pesetas cards)
+\par    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\par                 00 -,
+\par          0000 0000  |
+\par          0000 0000  |-> Unused units
+\par          0000 0000  |
+\par          0000 0000 -'
+\par          0011 1110 ---> 14*10 pesetas are used (same as 0011 1111
+\par          1000 1110                                      1111 1111)
+\par 
+\par    NB: Several units can be used, in this case only the last unit is set as
+\par        used, like in the previous exemple, where some units are set to 0 but
+\par        are nonetheless used.
+\par 
+\par    (*) Serial Number for spanish telecards: The serial number for G+D,
+\par        Gemplus and Solaic telecards is directly obtained by the following formula:
+\par 
+\par                  Byte[5]*$10000 + Byte[6]*$100 + Byte[7]
+\par 
+\par    1.9a - Memory Map for Mexican cards from Telmex (LadaTel):
+\par           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\par 
+\par Byte (Bit)     Hexa
+\par 
+\par               +-----+                              95
+\par 0 (0..7)      |     | ---> Check Sum Byte = 216 - Sum b(i)
+\par               +-----+                             i=8
+\par 1 (8..15)     | $80 |
+\par               +-----+
+\par 2 (16..23)    |     |
+\par 3 (24..31)    |     | --> [TBD]
+\par               +-----+
+\par 4 (32..39)    | $0s | --> Schlumberger
+\par               | $1s | --> Solaic [TBC]
+\par               | $4s | --> Gemplus
+\par               +-----+
+\par 5 (40..47)    |  ss |
+\par 6 (48..55)    |  ss | --> Serial Number (*)
+\par 7 (56..63)    |  ss |
+\par               +-----+-----+
+\par 8-9  (64..79) | $sv |  vC | --> Card Value (*)
+\par               +-----+-----+
+\par 10 (80..87)   | $32 |
+\par               | $64 | --> [TBD]
+\par               +-----+
+\par 11 (88..95)   | $59 | --> Mexico
+\par               +-----+
+\par 12 (96..103)  |     | ---> The units area: each time a unit
+\par      .        |     |      is used, then a bit is set to "1";
+\par      .        |     |
+\par      .        |     |      The first 4 units are fused in
+\par      .        |     |      factory as test.
+\par      .        |     |
+\par 30 (240..247) |     |
+\par               +-----+
+\par 31 (248..255) | $FF | --> $FF is set when all the units are used.
+\par               +-----+
+\par 
+\par 
+\par Serial Number = b(34..65) displayed in decimal
+\par 
+\par Card Value: Each unit has 0.5N$ worth. Units burned in factory are not counted
+\par             in the value (so a 40 units card has a 20N$ value and 44 units are
+\par             burned when card is empty).
+\par 
+\par    1.9b - Memory Map for Ivory Coast cards from publicom S.A.:
+\par           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\par 
+\par Byte (Bit)     Hexa
+\par 
+\par               +-----+                              95
+\par 0 (0..7)      |     | ---> Check Sum Byte = 216 - Sum b(i)
+\par               +-----+                             i=8
+\par 1 (8..15)     | $80 |
+\par               +-----+
+\par 2 (16..23)    |     |
+\par 3 (24..31)    |     | --> [TBD]
+\par               +-----+
+\par 4 (32..39)    | $0s | --> Schlumberger
+\par               | $1s | --> Solaic [TBC]
+\par               | $4s | --> Gemplus
+\par               +-----+
+\par 5 (40..47)    |  ss |
+\par 6 (48..55)    |  ss | --> Serial Number (*)
+\par 7 (56..63)    |  ss |
+\par               +-----+-----+
+\par 8-9  (64..79) | $sv |  vC | --> Card Value (*)
+\par               +-----+-----+
+\par 10 (80..87)   | $32 |
+\par               | $64 | --> [TBD]
+\par               +-----+
+\par 11 (88..95)   | $59 | --> Mexico
+\par               +-----+
+\par 12 (96..103)  |     | ---> The units area: each time a unit
+\par      .        |     |      is used, then a bit is set to "1";
+\par      .        |     |
+\par      .        |     |      The first 4 units are fused in
+\par      .        |     |      factory as test.
+\par      .        |     |
+\par 30 (240..247) |     |
+\par               +-----+
+\par 31 (248..255) | $FF | --> $FF is set when all the units are used.
+\par               +-----+
+\par 
+\par Serial Number = b(34..65) displayed in decimal
+\par 
+\par Card Value: Units burned in factory are not counted in the value (so
+\par             a 40 units card has a 20N$ value and 44 units are burned
+\par             when card is empty).
+\par 
+\par 
+\par 1.10 - Memory Map for Slovenian Cards:
+\par        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\par 
+\par Byte (Bit)     Hexa
+\par 
+\par               +-----+
+\par 0 (0..7)      | $5A |
+\par               +-----+
+\par 1 (8..15)     | $vv | --> Unit Value
+\par               |     |     $81 -> 100u
+\par               |     |     $82 -> 20u
+\par               |     |     $83 -> 300u (2 units/bit)
+\par               |     |     $84 -> 100u (not used)
+\par               |     |     $85 -> 50u
+\par               |     |     $86 -> 25u
+\par               +-----+-----+-----+
+\par 2..4 (16..39) | $E9 | $B5 | $4B | --> Telekom cards
+\par               |     | $B4 |     | --> "Impulz" cards
+\par               +-----+-----+-----+
+\par 5 (40..47)    | $00 |
+\par               | $01 | --> first digit of serial number
+\par               +-----+
+\par 6 (48..55)    | $xx | --> Serial Number = (B(6) << 16) + (B(7)  << 8) + B(8)
+\par 7 (56..63)    | $xx |
+\par 8 (64..71)    | $xx |
+\par               +-----+
+\par 9  (72..79)   | $yy | --> Signature for the S.N.
+\par 10 (80..87)   | $yy |
+\par               +-----+                                             10
+\par 11 (88..95)   | $zz | --> Checksum for B[0] .. B[10] = 0xFF & [( Sum B(i) )-1]
+\par               |     |                                            i=0
+\par               +-----+
+\par 12 (96..103)  |     | --> The units area: each time a unit
+\par      .        |     |     is used, then a bit is set to "1";
+\par      .        |     |
+\par      .        |     |
+\par      .        |     |
+\par 31 (248..255) |     |
+\par               +-----+
+\par 
+\par \plain\f0\fs20 II) 2-\'ee\'e5 \'ef\'ee\'ea\'ee\'eb\'e5\'ed\'e8\'e5 \'f2\'e5\'eb\'e5\'ea\'e0\'f0\'f2:\plain\f5\fs24 
+\par \plain\f0\fs20      ============================\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20    2.1 - \'c2\'e2\'e5\'e4\'e5\'ed\'e8\'e5:\plain\f5\fs24 
+\par \plain\f0\fs20          ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20    \'dd\'f2\'e8 \'ea\'e0\'f0\'f2\'fb - \'f4\'e0\'ea\'f2\'e8\'f7\'e5\'f1\'ea\'e8 128 bit \'ef\'e0\'ec\'ff\'f2\'e8 \'e2 NMOS \'f2\'e5\'f5\'ed\'ee\'eb\'ee\'e3\'e8\'e8,  \'ea\'e0\'f0\'f2a\plain\f5\fs24 
+\par \plain\f0\fs20    \'f1\'ee\'e4\'e5\'f0\'e6\'e8\'f2 \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e5\'e5:\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20         64 \'e1\'e8\'f2 EPROM \'ef\'f0\'ee\'ef\'e8\'f1\'e0\'ed\'ed\'fb\'e9, \'e7\'e0\'f9\'e8\'f9\'e5\'ed\'ed\'fb\'e9 ( \'ee\'e1\'eb\'e0\'f1\'f2\'fc \'e8\'e7\'e3\'ee\'f2\'ee\'e2\'e8\'f2\'e5\'eb\'ff).\plain\f5\fs24 
+\par \plain\f0\fs20         40 \'e1\'e8\'f2\'e0 EEPROM (5x8 \'e1\'e8\'f2\'fb).\plain\f5\fs24 
+\par \plain\f0\fs20         \'cd\'e0\'e1\'ee\'f0 24 \'e1\'e8\'f2\'e0 \'f3\'f1\'f2\'e0\'ed\'ee\'e2\'eb\'e5\'ed\'fb \'e2 "1".\plain\f5\fs24 
+\par 
+\par \plain\f7\fs20 2.2 - Pinout:
+\par          ~~~~~~
+\par 
+\par            ISO 7816-2
+\par 
+\par  ,-------------+-------------,
+\par  |   1         |         5   |   Pinout:
+\par  +-------\\     |     /-------+   ~~~~~~
+\par  |   2    +----+    +    6   |     1 : VCC=5V    5 : Gnd
+\par  +--------|         |--------+     2 : Reset     6 : n.c.
+\par  |   3    +----+----+    7   |     3 : Clock     7 : I/O
+\par  +-------/     |     \\-------+     4 : n.c.      8 : n.c.
+\par  |   4         |         8   |
+\par  '-------------+-------------'     (n.c. : not connected)
+\par 
+\par \plain\lang1033\f7\fs20 
+\par \plain\f0\fs20 2.3 - \'ce\'f1\'ed\'ee\'e2\'ed\'fb\'e5 \'ee\'f1\'ee\'e1\'e5\'ed\'ed\'ee\'f1\'f2\'e8:\plain\f5\fs24 
+\par \plain\f0\fs20          ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20         - ISO 7816- \'f1\'ee\'e2\'ec\'e5\'f1\'f2\'e8\'ec\'fb\'e9 1/2.\plain\f5\fs24 
+\par \plain\f0\fs20         - \'c8\'f1\'ef\'ee\'eb\'fc\'e7\'f3\'e5\'f2 \'f2\'ee\'eb\'fc\'ea\'ee 5V \'ef\'e8\'f2\'e0\'ed\'e8\'e5.\plain\f5\fs24 
+\par \plain\f0\fs20         - \'cc\'e0\'eb\'e0\'ff \'ec\'ee\'f9\'ed\'ee\'f1\'f2\'fc .\plain\f5\fs24 
+\par \plain\f0\fs20         - NMOS \'f2\'e5\'f5\'ed\'ee\'eb\'ee\'e3\'e8\'ff.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20    2.4 - \'c2\'f0\'e5\'ec\'e5\'ed\'ed\'e0\'ff \'e4\'e8\'e0\'e3\'f0\'e0\'ec\'ec\'e0:\plain\f5\fs24 
+\par \plain\f0\fs20          ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 \'d1\'e1\'f0\'ee\'f1(Reset):\plain\f5\fs24 
+\par \plain\f0\fs20 ------\plain\f5\fs24 
+\par \plain\f0\fs20   \'d1\'f7\'e5\'f2\'f7\'e8\'ea \'e0\'e4\'f0\'e5\'f1\'ee\'e2 \'f1\'e1\'f0\'ee\'f8\'e5\'ed \'e2 0, \'ea\'ee\'e3\'e4\'e0  \'eb\'e8\'ed\'e8\'ff clock  CLK,  \'ef\'ee\'e4\'ed\'ff\'f2\'e0 \'e2 \'f2\'ee \'e2\'f0\'e5\'ec\'ff \'ea\'e0\'ea\plain\f5\fs24 
+\par \plain\f0\fs20 \'ed\'e0 \'eb\'e8\'ed\'e8\'ff \'f3\'ef\'f0\'e0\'e2\'eb\'e5\'ed\'e8\'ff R \'e2\'fb\'f1\'ee\'ea\'e8\'e9 \'f3\'f0\'ee\'e2\'e5\'ed\'fc \{, \'ee\'e1\'f0\'e0\'f9\'e0\'fe\'f2 \'e2\'ed\'e8\'ec\'e0\'ed\'e8\'e5, \'f7\'f2\'ee \'f1\'f7\'e5\'f2\'f7\'e8\'ea \'e0\'e4\'f0\'e5\'f1\'ee\'e2 \'ec\'ee\'e6\'e5\'f2
+\par \'ed\'e5 \'f1\'e1\'f0\'ee\'f1\'e8\'f2\'f1\'ff  \'e2 \'e4\'e8\'e0\'ef\'e0\'e7\'ee\'ed\'e5 0 \'ea 7\}.\plain\f5\fs24 
+\par \plain\lang1033\f7\fs20       __________________
+\par \plain\f7\fs20 _____|                  |_____________________________________________ Reset
+\par      :                  :
+\par      :        _____     :  _____       _____       _____       _____
+\par _____:_______|     |____:_|     |_____|     |_____|     |_____|     |_ Clk
+\par      :       :          : :     :     :     :     :     :     :     :
+\par _____:_______:__________:_:_____:_____:_____:_____:_____:_____:_____:_
+\par _____:___n___|_____0____:_|_____1_____|_____2_____|_____3_____|___4_:_(Address)
+\par      :                  :       :           :           :           :
+\par _____:                  :_______:___________:___________:___________:_
+\par _____XXXXXXXXXXXXXXXXXXXX_______|___________|___________|___________|_ Data
+\par Bit n                      Bit 0    Bit 1        Bit2       Bit3
+\par 
+\par \plain\f0\fs20 \'d1\'f7\'e5\'f2\'f7\'e8\'ea \'e0\'e4\'f0\'e5\'f1\'ee\'e2 \'f3\'e2\'e5\'eb\'e8\'f7\'e8\'e2\'e0\'e5\'f2\'f1\'ff \'ef\'ee \'f4\'f0\'ee\'ed\'f2\'f3 \'f2\'e0\'ea\'f2\'ee\'e2\'ee\'e3\'ee \'e8\'ec\'ef\'f3\'fc\'f1\'e0 \'ed\'e0 1 \'ef\'ee\'ea\'e0 Reset, \'ee\'f1\'f2\'e0\'e5\'f2\'f1\'ff \'ed\'e8\'e7\'ea\'e8\'ec. \'ca\'e0\'e6\'e4\'fb\'e9 \'e0\'e4\'f0\'e5\'f1\'ee\'e2\'e0\'ed\'ed\'fb\'e9 \'e1\'e8\'f2 \'e2\'fb\'e2\'ee\'e4\'e8\'f2\'f1\'ff \'ea \'ea\'ee\'ed\'f2\'e0\'ea\'f2\'f3 \'e2\'e2\'ee\'e4\'e0 - \'e2\'fb\'e2\'ee\'e4\'e0 \'ea\'e0\'e6\'e4\'fb\'e9 \'f0\'e0\'e7 Clk \'ef\'e0\'e4a\'e5\'f2.\'d1\'f7\'e5\'f2\'f7\'e8\'ea \'ec\'ee\'e6\'e5\'f2 \'e1\'fb\'f2\'fc \'f2\'ee\'eb\'fc\'ea\'ee \'f3\'e2\'e5\'eb\'e8\'f7\'e5\'ed. \'c5\'f1\'eb\'e8 \'c2\'fb \'f5\'ee\'f2\'e8\'f2\'e5 \'f1\'f7\'e8\'f2\'e0\'f2\'fc \'e1\'e8\'f2 \'f1 \'e0\'e4\'f0\'e5\'f1\'ee\'ec \'ec\'e5\'ed\'fc\'f8\'e5 \'f2\'e5\'ea\'f3\'f9\'e5\'e3\'ee, \'f2\'ee \'f1\'f7\'e5\'f2\'f7\'e8\'ea \'ed\'f3\'e6\'ed\'ee \'f1\'e1\'f0\'ee\'f1\'e8\'f2\'fc \'e2 0, \'e0 \'e7\'e0\'f2\'e5\'ec \'f3\'e2\'e5\'eb\'e8\'f7\'e8\'f2\'fc \'e4\'ee \'ed\'e5\'ee\'e1\'f5\'ee\'e4\'e8\'ec\'ee\'e3\'ee \'e7\'ed\'e0\'f7\'e5\'ed\'e8\'ff .\plain\f5\fs24 
+\par 
+\par 
+\par \plain\f0\fs20 \'c7\'e0\'ef\'e8\'f1\'fc:\plain\f5\fs24 
+\par \plain\f0\fs20 ------\plain\f5\fs24 
+\par \plain\f0\fs20    \'c2\'f1\'e5 \'ed\'e5\'e7\'e0\'ef\'e8\'f1\'e0\'ed\'ed\'fb\'e5 \'e8\'eb\'e8 \'f1\'f2\'b8\'f0\'f2\'fb\'e5 \'e1\'e8\'f2\'fb \'e2 \'e0\'e4\'f0\'e5\'f1\'e5 64-104 \'ec\'ee\'e3\'f3\'f2 \'e1\'fb\'f2\'fc \'ed\'e5\'e7\'e0\'ef\'e8\'f1\'e0\'ed\'fb.\plain\f5\fs24 
+\par \plain\f0\fs20 \'ca\'ee\'e3\'e4\'e0 \'ff\'f7\'e5\'e9\'ea\'e0 \'ef\'e0\'ec\'ff\'f2\'e8 \'ed\'e5\'e7\'e0\'ef\'e8\'f1\'e0\'ed\'e0, \'f2\'ee \'e5\'f1\'f2\'fc \'f3\'f1\'f2\'e0\'ed\'ee\'e2\'eb\'e5\'ed\'e0 \'e2 0. \'c0\'e4\'f0\'e5\'f1\'ee\'e2\'e0\'ed\'ed\'e0\'ff \'ff\'f7\'e5\'e9\'ea\'e0\plain\f5\fs24 
+\par \plain\f0\fs20 \'cd\'e5\'e7\'e0\'ef\'e8\'f1\'e0\'ed\'e0\'ff \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e5\'e9 \'ef\'ee\'f1\'eb\'e5\'e4\'ee\'e2\'e0\'f2\'e5\'eb\'fc\'ed\'ee\'f1\'f2\'fc\'fe.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 1- Reset \'ef\'ee\'e4\'ed\'ff\'f2, \'e2 \'f2\'ee \'e2\'f0\'e5\'ec\'ff \'ea\'e0\'ea Clk \'ed\'e8\'e7\'ee\'ea \'f7\'f2\'ee \'ee\'f2\'ea\'eb\'fe\'f7\'e0\'e5\'f2 \'ef\'f0\'e8\'f0\'e0\'f9\'e5\'ed\'e8\'e5 \'f1\'f7\'e5\'f2\'f7\'e8\'ea\'e0 \'e0\'e4\'f0\'e5\'f1\'e0 \'e4\'eb\'ff \'ea\'e0\'e6\'e4\'ee\'e3\'ee \'f2\'e0\'ea\'f2\'ee\'e2\'ee\'e3\'ee \'e8\'ec\'ef\'f3\'eb\'fc\'f1\'e0 .\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 2- Clk \'e7\'e0\'f2\'e5\'ec \'ef\'ee\'e4\'ed\'ff\'f2 \'e4\'eb\'ff \'ec\'e8\'ed\'e8\'ec\'f3\'ec\'e0 10ms, \'f7\'f2\'ee\'e1\'fb \'ef\'e8\'f1\'e0\'f2\'fc \'e1\'e8\'f2 \'e0\'e4\'f0\'e5\'f1\'e0.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 \'ca\'ee\'e3\'e4\'e0  \'ee\'ef\'e5\'f0\'e0\'f6\'e8\'ff \'ea\'ee\'ed\'f7\'e8\'e0\'f1\'fc, \'e8  Clk \'f3\'ef\'e0\'eb \'f1\'f7\'e5\'f2\'f7\'e8\'ea \'e0\'e4\'f0\'e5\'f1\'ee\'e2 \'f0\'e0\'e7\'e1\'eb\'ee\'ea\'e8\'f0\'ee\'e2\'e0\'ed\plain\f5\fs24 
+\par \plain\f0\fs20  \'f1\'ee\'e4\'e5\'f0\'e6\'e0\'ed\'e8\'e5 \'e7\'f4\'ef\'e8\'f1\'e0\'ed\'ed\'ee\'e9 \'ff\'f7\'e5\'e9\'ea\'e8,  \'ff\'e2\'eb\'ff\'e5\'f2\'f1\'ff \'f2\'e5\'ef\'e5\'f0\'fc 0, \'e2\'fb\'e2\'ee\'e4\'e8\'f2\'f1\'ff \'ed\'e0\plain\f5\fs24 
+\par \plain\f0\fs20  \'ea\'ee\'ed\'f2\'e0\'ea\'f2 \'e2\'e2\'ee\'e4\'e0 - \'e2\'fb\'e2\'ee\'e4\'e0 , \'e5\'f1\'eb\'e8 \'ee\'ef\'e5\'f0\'e0\'f6\'e8\'ff \'ef\'f0\'e0\'e2\'e8\'eb\'fc\'ed\'e0.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 \'d1\'eb\'e5\'e4\'f3\'fe\'f9\'e8\'e9 Clk \'e8\'ec\'ef\'f3\'eb\'fc\'f1 \'f3\'e2\'e5\'eb\'e8\'f7\'e8\'f2 \'e0\'e4\'f0\'e5\'f1 \'ed\'e0 \'e5\'e4\'e8\'ed\'e8\'f6\'f3, \'e7\'e0\'f2\'e5\'ec \'ef\'e8\'f8\'f3\'f9\'e0\'e5\'f1\'ff\plain\f5\fs24 
+\par \plain\f0\fs20 \'ef\'ee\'f1\'eb\'e5\'e4\'ee\'e2\'e0\'f2\'e5\'eb\'fc\'ed\'ee\'f1\'f2\'fc \'ec\'ee\'e6\'e5\'f2 \'e1\'fb\'f2\'fc \'ef\'ee\'e2\'f2\'ee\'f0\'e5\'ed\'e0, \'f7\'f2\'ee\'e1\'fb \'ef\'e8\'f1\'e0\'f2\'fc \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e8\'e9 \'e1\'e8\'f2.\plain\f5\fs24 
+\par 
+\par \plain\f7\fs20 \tab       _____                                _____
+\par ____________|     |______________________________|     |_______________ Reset
+\par             :                                    :
+\par     ___     :           _____           ___      :           _____
+\par ___|   |____:__________|     |_________|   |_____:__________|     |____ Clk
+\par    :        :          :     :         :   :     :          :     :
+\par ___:________:__________:_____:_________:___:_____:__________:_____:_____
+\par n  |      n+1          |     n+2       |   :    n+3         |     :      (Addr)
+\par ---'--------:----------'-----:---------'---:-----:----------'-----:-----
+\par             :          :     :             :     :          :     :
+\par ________   _:          :     : ____________:  ___:          :     :
+\par ________XXX_XXXXXXXXXXXXXXXXXXX____________ XX___XXXXXXXXXXXXXXXXXXXXXXX I/O
+\par   n      n+1           :     :     n+1        n+2           :     :
+\par                        :     :                              :     :
+\par                         write                                write
+\par 
+\par 
+\par 
+\par \plain\f0\fs20 WriteCarry:(\'e7\'e0\'ef\'e8\'f1\'fc \'f1 \'ef\'e5\'f0\'e5\'ed\'ee\'f1\'ee\'ec)\plain\f5\fs24 
+\par \plain\f0\fs20 -----------\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20    \'d1\'f7\'e5\'f2\'f7\'e8\'ea \'f3\'ed\'e8\'f7\'f2\'ee\'e6\'e0\'e5\'f2\'f1\'ff,  \'e2\'fb\'ef\'ee\'eb\'ed\'ff\'ff WRITECARRY \'ef\'ee\'f1\'eb\'e5\'e4\'ee\'e2\'e0\'f2\'e5\'eb\'fc\'ed\'ee\'f1\'f2\'fc \'ed\'e0\plain\f5\fs24 
+\par \plain\f0\fs20  \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e5\'e3\'ee \'f1\'e0\'ec\'ee\'e3\'ee \'e2\'fb\'f1\'ee\'ea\'ee\'e3\'ee \'f0\'e0\'e7\'f0\'ff\'e4\'e0 , \'f7\'f2\'ee\'e1\'fb \'e1\'fb\'f2\'fc \'f3\'ed\'e8\'f7\'f2\'ee\'e6\'e5\'ed\'ed\'fb\'ec.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 Writecarry \'ef\'ee\'f1\'eb\'e5\'e4\'ee\'e2\'e0\'f2\'e5\'eb\'fc\'ed\'ee\'f1\'f2\'fc \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e0\'ff:\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 1 - \'d3\'f1\'f2\'e0\'ed\'ee\'e2\'e8\'f2\'fc \'f1\'f7\'e5\'f2\'f7\'e8\'ea \'e0\'e4\'f0\'e5\'f1\'ee\'e2 \'ea \'ed\'e5\'e7\'e0\'ef\'e8\'f1\'e0\'ed\'ed\'ee\'ec\'f3 \'e1\'e8\'f2\'f3 \'e2 \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e5\'ec \'f1\'e0\'ec\'ee\'ec \'e2\'fb\'f1\'ee\'ea\'ee\'ec\plain\f5\fs24 
+\par \plain\f0\fs20 \'f0\'e0\'e7\'f0\'ff\'e4\'e5 \'f1\'f7\'e5\'f2\'f7\'e8\'ea\'e0 \'ea\'ee\'f2\'f0\'fb\'e9 \'e4\'ee\'eb\'e6\'e5\'ed \'e1\'fb\'f2\'fc \'f3\'ed\'e8\'f7\'f2\'ee\'e6\'e5\'ed.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 2 - \'cf\'f0\'e8\'f0\'e0\'f9\'e5\'ed\'e8\'e5 \'e7\'e0\'e1\'eb\'ee\'ea\'e8\'f0\'ee\'e2\'e0\'ed\'ee \'ed\'e0 \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e5\'ec \'f4\'f0\'ee\'ed\'f2\'e5 \'e8\'ec\'ef\'f3\'fc\'f1\'e0 R \'e3\'e4\'e5 Clk\plain\f5\fs24 
+\par \plain\f0\fs20 \'ee\'f1\'f2\'e0\'e5\'f2\'f1\'ff \'ed\'e8\'e7\'ea\'e8\'ec.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 3 - Clk \'e7\'e0\'f2\'e5\'ec \'ef\'ee\'e4\'ed\'ff\'f2 \'e4\'ee \'ec\'e8\'ed\'e8\'ec\'f3\'ec\'e0 10ms, \'e2 \'f2\'ee \'e2\'f0\'e5\'ec\'ff \'ea\'e0\'ea R \'ed\'e8\'e7\'ee\'ea, \'e7\'e0\'ef\'e8\'f1\'fc\plain\f5\fs24 
+\par \plain\f0\fs20 \'e2 \'f1\'eb\'e5\'e4\'f3\'fe\'f9\'e8\'e9 \'e1\'e8\'f2\'f3 \'e0\'e4\'f0\'e5\'f1\'e0.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 4 - R \'ef\'ee\'e4\'ed\'ff\'f2 \'f1\'ed\'ee\'e2\'e0, \'e2 \'f2\'ee \'e2\'f0\'e5\'ec\'ff \'ea\'e0\'ea Clk \'ee\'f1\'f2\'e0\'e5\'f2\'f1\'ff \'ed\'e8\'e7\'ea\'e8\'ec, \'f7\'f2\'ee\'e1\'fb \'ee\'f2\'ea\'eb\'fe\'f7\'e8\'f2\'fc \'ef\'f0\'e8\'f0\'e0\'f9\'e5\'ed\'e8\'e5 \'e2\'f2\'ee\'f0\'ee\'e9 \'f0\'e0\'e7.\plain\f5\fs24 
+\par 
+\par \plain\f0\fs20 5 - Clk \'ef\'ee\'e4\'ed\'ff\'f2 \'e4\'ee \'ec\'e8\'ed\'e8\'ec\'f3\'ec\'e0 1ms, \'e2 \'f2\'ee \'e2\'f0\'e5\'ec\'ff \'ea\'e0\'ea R \'ed\'e8\'e7\'ee\'ea, \'e7\'e0\'ef\'e8\'f1\'fc \plain\f5\fs24 
+\par \plain\f0\fs20 \'e2 \'e0\'e4\'f0\'e5\'f1\'ee\'e2\'e0\'ed\'ed\'fb\'e9 \'e1\'e8\'f2 \'e2\'f2\'ee\'f0\'ee\'e9  \'f0\'e0\'e7, \'f1\'f2\'e8\'f0\'e0\'ff \'f3\'f0\'ee\'e2\'e5\'ed\'fc \'f1\'f7\'e5\'f2\'f7\'e8\'ea\'e0 \'ed\'e5\'ef\'ee\'f1\'f0\'e5\'e4\'f1\'f2\'e2\'e5\'ed\'ed\'ee\plain\f5\fs24 
+\par \plain\f0\fs20 \'ed\'e8\'e6\'e5 \'fd\'f2\'ee\'e3\'ee \'e0\'e4\'f0\'e5\'f1\'ee\'e2\'e0\'ed\'ed\'ee\'e3\'ee \'e1\'e8\'f2\'e0.\plain\f5\fs24 
+\par 
+\par \plain\f7\fs20 
+\par 
+\par        _____                      _____
+\par ______|     |____________________|     |_________________________________  Rst
+\par       :                          :
+\par       :            _______       :              _______        ___
+\par ______:___________|       |______:_____________|       |______|   |______  Clk
+\par       :           :       :      :             :       :      :   :
+\par       :           :       :      :             :       :      :   :
+\par <------------------------- address n ------------------------>:<--- n+1 ------
+\par       :           :       :      :             :       :          :
+\par       :           :       :      :             :       :          :
+\par ______:           :       :______:             :       :__________: _____
+\par ______XXXXXXXXXXXXXXXXXXXXX______XXXXXXXXXXXXXXXXXXXXXXX__________XX_____  I/O
+\par \tab \tab   :       :  n                 :       :     n        n+1
+\par \tab \tab   :       :                    :       :
+\par \tab \tab     Write                        Erase
+\par 
+\par      II-5) Memory Map:
+\par \tab  -------------
+\par 
+\par Bytes       Bits      Binary     Hexa
+\par 
+\par \tab \tab     +-----------+-----+
+\par   1       1 -->   8 |           |     |
+\par \tab \tab     +-----------+-----+
+\par   2       9 -->  16 | 0010 1111 | $2F | ---> Germany
+\par \tab \tab     | 0011 0111 | $37 | ---> Netherland
+\par \tab \tab     | 0011 1011 | $3B | ---> Greece
+\par \tab \tab     +-----------+-----+
+\par   3      17 -->  24 |           |     |
+\par   4      25 -->  32 |           |     | ---> Issuer area (written protected)
+\par   5      33 -->  40 |           |     |
+\par   6      41 -->  48 |           |     |
+\par   7      49 -->  56 |           |     |
+\par   8      57 -->  64 |           |     |
+\par \tab \tab     +-----------+-----+
+\par   9      65 -->  72 |           |     | ---> c4096  )
+\par  10      73 -->  80 |           |     | --->  c512  )
+\par  11      81 -->  88 |           |     | --->   c64  ) 5 stage octal counter
+\par  12      89 -->  96 |           |     | --->    c8  )
+\par  13      97 --> 104 |           |     | --->    c0  )
+\par \tab \tab     +-----------+-----+
+\par  14     105 --> 112 | 1111 1111 | $FF |
+\par  15     113 --> 120 | 1111 1111 | $FF | ---> area of bits set to "1"
+\par  16     120 --> 128 | 1111 1111 | $FF |
+\par \tab \tab     +-----------+-----+
+\par 
+\par The Issuer area:
+\par ----------------
+\par 
+\par     This issuer consists of 40 bits. The contents of the issuer area are
+\par specified by the card issuer, and are fixed during the manufacturing
+\par process. The contents of the issuer area will include data such as
+\par serial numbers, dates, and distribution centers.
+\par 
+\par This area may only be read.
+\par 
+\par The Counter area:
+\par -----------------
+\par 
+\par    The counter area stores the card's units. Its initial value is
+\par specified by the card issuer and set during manufacturing.
+\par 
+\par The counter area is divided into a 5 stage abacus.
+\par 
+\par Note that you can only decrease the counter and it is not authorized to
+\par write in the counter a value greater than the old value.
+\par 
+\par 
+\par     I-6) Electrical features:
+\par \tab --------------------
+\par 
+\par Maximum ratings:
+\par ----------------
+\par 
+\par \tab \tab        +--------+------+------+------+
+\par \tab \tab        | Symbol | Min  |  Max | Unit |
+\par +----------------------+--------+------+------+------+
+\par | Supply voltage       |   Vcc  | -0.3 |    6 |   V  |
+\par +----------------------+--------+------+------+------+
+\par | Input voltage        |   Vss  | -0.3 |    6 |   V  |
+\par +----------------------+--------+------+------+------+
+\par | Storage temperature  |  Tstg  |  -20 |  +55 |  0C  |
+\par +----------------------+--------+------+------+------+
+\par | Power dissipation   |    Pd  |   -  |   50 |  mW  |
+\par +----------------------+--------+------+------+------+
+\par 
+\par 
+\par DC characteristics:
+\par ------------------
+\par \tab \tab \tab     +--------+-----+-----+-----+------+
+\par \tab \tab \tab     | Symbol | Min.| Typ.| Max.| Unit |
+\par +---------------------------+--------+-----+-----+-----+------+
+\par | Supply current            |   Icc  |  -  |  -  |   5 |   mA |
+\par +---------------------------+--------+-----+-----+-----+------+
+\par | Input Voltage (low)       |    Vl  |   0 |  -  | 0.8 |    V |
+\par +---------------------------+--------+-----+-----+-----+------+
+\par | Input voltage (high)      |    Vh  | 3.5 |  -  | Vcc |    V |
+\par +---------------------------+--------+-----+-----+-----+------+
+\par | Input current R           |    Ih  |  -  |  -  | 100 |   uA |
+\par +---------------------------+--------+-----+-----+-----+------+
+\par | Input current Clk         |    Il  |  -  |  -  | 100 |   uA |
+\par +---------------------------+--------+-----+-----+-----+------+
+\par | Output current (Vol=0.5V) |   Iol  |  -  |  -  |  10 |   uA |
+\par +---------------------------+--------+-----+-----+-----+------+
+\par | Output current (Voh=5V)   |   Ioh  |  -  |  -  | 0.5 |   mA |
+\par +---------------------------+--------+-----+-----+-----+------+
+\par 
+\par AC characteristics:
+\par ------------------     +--------+------+------+------+
+\par \tab \tab        | Symbol | Min. | Max. | Unit |
+\par +----------------------+--------+------+------+------+
+\par | Pulse duration       |    tr  |   50 |   -  |  us  |
+\par | R address reset      |        |      |      |      |
+\par +----------------------+--------+------+------+------+
+\par | Pulse duration       |    ts  |   10 |   -  |  us  |
+\par | R write              |        |      |      |      |
+\par +----------------------+--------+------+------+------+
+\par | High level Clk       |    th  |    8 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par | Low level Clk        |    tl  |   12 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par | Write window         | Twrite |   10 |   -  |  ms  |
+\par +----------------------+--------+------+------+------+
+\par | Erase window         | Terase |   10 |   -  |  ms  |
+\par +----------------------+--------+------+------+------+
+\par |                      |   tv1  |    5 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par |                      |   tv2  |  3.5 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par |                      |   tv3  |  3.5 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par |                      |   tv4  |  3.5 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par |                      |   tv5  |  3.5 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par |                      |   tv6  |    5 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par |                      |   tv7  |    5 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par |                      |   tv8  |   10 |   -  |  us  |
+\par +----------------------+--------+------+------+------+
+\par 
+\par 
+\par 
+\par III) The Reader Schematic:
+\par     ======================
+\par 
+\par    External 5V (Optional)
+\par 
+\par 5V o------,
+\par \tab   |                 /             T2  PNP      d13  r7 10
+\par 0V o--,   |                /               BC 177     |\\ |  _____
+\par       |   |      ,-------o/   o--*------. E      C .--| >+-[_____]--------,
+\par     __+__ |      |               |       \\        /   |/ |                |
+\par     \\\\\\\\\\ |    __|__ Battery     |         \\    /                         |
+\par \tab   |      -   22.5V       |       ---------                        |
+\par .......   |      |               |   _____   |   _____                    |
+\par        :  |    __+__             +--[_____]--*--[_____]--,                |
+\par    D2  :  |    \\\\\\\\\\                r6 150k     r5 15k   |                |
+\par 4 o-------|---------------------------*------------------|-------------,  |
+\par        :  |                           |   r3 220k       / C            |  |
+\par    Ack :  |                           |   _____      |/    T1 - NPN    |  |
+\par 10 o------|--------.                  '--[_____]-*---|      BC107      |  |
+\par        :  |        |                      _____  |   |\\                |  |
+\par        : ,-,      ,-,                 +--[_____]-'      \\ E            |  |
+\par        : | |r2    | |r1               |  r4 390k         |             |  |
+\par        : | |220   | |22k            __+__              __+__           |  |
+\par        : |_|      |_|               \\\\\\\\\\              \\\\\\\\\\           |  |
+\par        :  |  |\\ |  |                                                   |  |
+\par        :  *--| >+--|----------------*----------------------------------|--*
+\par        :  |  |/ |  |          ,-----|-----------------------------,    |  |
+\par        :  |  d1    |          |     |   ,----------,----------,   |    |  |
+\par        :  |        |          |     *---|--*  Fuse | Reset *--|---'    |  |
+\par        :  |        |          |     |   |----------|----------|        |  |
+\par    D0  :  |        |          |   ,-|---|--*   I/O | Clk   *--|---,    |  |
+\par 2 o-------|--------|----------'   | |   |----------|----------|   |    |  |
+\par        :  |        |              | '---|--*   Vpp | R/W   *--|---|----'  |
+\par   Busy :  |        |              |     |----------|----------|   |       |
+\par 11 o------|--------|--------------' ,---|--*   Gnd | 5V    *  |   |       |
+\par        :  |        |                |   '----------'-------|--'   |       |
+\par    D1  :  |        |              __+__    Chip connector  |      |       |
+\par 3 o-------|--------|--------,     \\\\\\\\\\                    |      |       |
+\par        :  |        |        '------------------------------|------'       |
+\par   Str  :  |  |\\ |  |                                       |              |
+\par 1 o-------*--| >+--*----*----*----*----*-------------------'              |
+\par        :   d2|/ |  |d3  |d4  |d5  |d6  |d7                                |
+\par        :          -+-  -+-  -+-  -+-  -+-                                 |
+\par        :          /_\\  /_\\  /_\\  /_\\  /_\\                                 |
+\par    D3  :           |    |    |    |    |   |\\ | d8                        |
+\par 5 o----------------*----|----|----|----|---| >+-------*-------------------'
+\par        :                |    |    |    |   |/ |       |
+\par        :                |    |    |    |              |
+\par    D4  :                |    |    |    |   |\\ | d9    |
+\par 6 o---------------------*----|----|----|---| >+-------*
+\par        :                     |    |    |   |/ |       |
+\par        :                     |    |    |              |
+\par    D5  :                     |    |    |   |\\ | d10   |
+\par 7 o--------------------------*----|----|---| >+-------*
+\par        :                          |    |   |/ |       |
+\par        :                          |    |              |
+\par    D6  :                          |    |   |\\ | d11   |
+\par 8 o-------------------------------*----|---| >+-------*
+\par        :                               |   |/ |       |
+\par        :                               |              |
+\par    D7  :                               |   |\\ | d12   |
+\par 9 o------------------------------------*---| >+-------'
+\par        :                                   |/ |
+\par        :
+\par        :
+\par 25 o------.
+\par        :  |
+\par .......:  |                                 d1 to d13: 1N4148
+\par \tab __+__
+\par \tab \\\\\\\\\\\plain\lang1033\f7\fs20 
+\par }
+ 

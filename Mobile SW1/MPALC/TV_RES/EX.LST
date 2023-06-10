@@ -1,0 +1,561 @@
+16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 1
+
+Line   PC    Opcode
+
+0001               ; Пpимеp базового кода для демонстpационной пpогpаммы
+0002               ;
+0003                       LIST P=16C84, E=2
+0004                       include "reg.h"
+0005         0004          LIST L=ON
+0006               ; ячейки ОЗУ
+0007         000E  tmpReg          equ     0Eh
+0008         000F  Keyreg1         equ     0Fh
+0009         0010  Keyreg2         equ     10h
+0010         0011  Prekey          equ     11h
+0011         0012  Savef           equ     12h
+0012         0013  Nkey            equ     13h     ;длина кода
+0013         0014  Countkey        equ     14h
+0014         0015  Keyf            equ     15h
+0015         0016  Protdelay1      equ     16h
+0016         0017  Protdelay2      equ     17h
+0017         0018  Delayreg1       equ     18h
+0018         0019  Delayreg2       equ     19h
+0019         0020  Doorf           equ     20h
+0020               ; ячейки ПЗУ
+0021         0000  EE_Nkey         equ     00h
+0022               ; биты порта А
+0023         0000  DOORD           equ     0       ; датчик двери
+0024         0001  TRANZ           equ     1       ; силовой транзистор
+0025         0002  RED_LED         equ     2       ; светодиод
+0026         0003  RELE            equ     3       ; реле направления
+0027         0004  ALERT           equ     4       ; сигнализация взлома
+0028               ; биты Doorf
+0029         0001  ZAMOK           equ     1
+0030         0000  DVER            equ     0
+0031               ; Рабочая секция : начало исполняемого кода
+0032               ;
+0033         0000          ORG     0
+0034   0000  2830          goto    BEGIN
+0035               ;
+0036         0000          ORG     30h
+0037               BEGIN
+0038   0030  20C2          call    InitPort
+0039   0031  0192          clrf    Savef
+0040   0032  01A0          clrf    Doorf
+0041   0033  2120          call    DoorUpdate
+0042   0034  3001          movlw   1h              ; сброс защитных задержек
+                       
+0043   0035  0096          movwf   Protdelay1      ;
+0044   0036  0197          clrf    Protdelay2      ;
+0045   0037  1505          bsf     PORT_A,RED_LED
+0046   0038  2124          call    Delay
+0047   0039  1105          bcf     PORT_A,RED_LED
+0048   003A  1585          bsf     PORT_A,RELE
+0049   003B  2124          call    Delay
+0050   003C  1185          bcf     PORT_A,RELE
+0051               RESLEEP
+16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 2
+
+Line   PC    Opcode
+
+0052   003D  3000          movlw   EE_Nkey         ;Считать длину кода
+0053   003E  0089          movwf   EEADR           ;
+0054   003F  20E4          call    ReadEEPROM      ;
+0055   0040  0808          movfw   EEDATA          ;
+0056   0041  0093          movwf   Nkey            ;в Nkey длина кода
+0057   0042  0194          clrf    Countkey
+0058   0043  0195          clrf    Keyf
+0059               ;
+0060   0044  0806          movfw   PORT_B          ;пpочитать поpт B
+0061   0045  100B          bcf     INTCON,RBIF     ;очистить флаг кл.
+0062   0046  158B          bsf     INTCON,RBIE     ;разрешить маску кл.
+0063               NO_INT
+0064   0047  210C          call    VerDoor
+0065   0048  1505          bsf     PORT_A,RED_LED
+0066   0049  1105          bcf     PORT_A,RED_LED
+0067   004A  0063          sleep
+0068   004B  0803          movfw   STATUS
+0069   004C  3918          andlw   B'11000'        ; проверка на выход из SL
+                       EEP по WDT
+0070   004D  1903          bz      NO_INT
+0071   004E  2847 m
+0072               0073   004F  118B          bcf     INTCON,RBIE     ;запретить маску кл.
+0074               ;
+0075   0050  0181          clrf    TMR0
+0076   0051  110B          bcf     INTCON,RTIF
+0077               NEW_KEY
+0078   0052  1812          btfsc   Savef,0
+0079   0053  0181            clrf    TMR0
+0080   0054  190B          btfsc   INTCON,RTIF
+0081   0055  283D            goto    RESLEEP
+0082   0056  20A8          call    ScanKey
+0083   0057  1903          bz      NEW_KEY
+0084   0058  2852 m
+0085               0086               ;
+0087   0059  0181          clrf    TMR0
+0088   005A  1812          btfsc   Savef,0
+0089   005B  20EC            call    LedsSavePress  ; если запись
+0090   005C  1C12          btfss   Savef,0
+0091   005D  20EE            call    LedsNormPress  ; если не запись
+0092   005E  080F          movfw   Keyreg1
+0093   005F  0091          movwf   Prekey
+0094               LOOP
+0095   0060  1812          btfsc   Savef,0
+0096   0061  0181            clrf    TMR0
+0097   0062  190B          btfsc   INTCON,RTIF
+0098   0063  283D            goto    RESLEEP
+0099   0064  20A8          call    ScanKey
+0100   0065  1D03          bnz     LOOP
+0101   0066  2860 m
+0102               16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 3
+
+Line   PC    Opcode
+
+0103               ;
+0104   0067  1812          btfsc   Savef,0
+0105   0068  20E8            call    LedsSaveNoPress  ; если запись
+0106   0069  1C12          btfss   Savef,0
+0107   006A  20EA            call    LedsNormNoPress  ; если не запись
+0108               ;
+0109   006B  0811          movfw   Prekey
+0110   006C  3AE1          xorlw   0E1h
+0111   006D  1903          bz      MODE             ; переход при наж MODE
+0112   006E  288C m
+0113               0114   006F  0811          movfw   Prekey
+0115   0070  3AD1          xorlw   0D1h
+0116   0071  1903          bz      OPENDOOR
+0117   0072  289A m
+0118               0119               ;
+0120   0073  1C12          btfss   Savef,0
+0121   0074  287C            goto    NO_SAVE          ; переход если нет зап
+                       иси
+0122               SAVE
+0123   0075  0811          movfw   Prekey
+0124   0076  0088          movwf   EEDATA
+0125   0077  0A13          incf    Nkey,w
+0126   0078  0089          movwf   EEADR
+0127   0079  20D6          call    WriteEEPROM
+0128   007A  0A93          incf    Nkey,f
+0129   007B  2852          goto    NEW_KEY
+0130               NO_SAVE
+0131   007C  0A14          incf    Countkey,w
+0132   007D  0089          movwf   EEADR
+0133   007E  20E4          call    ReadEEPROM
+0134   007F  0811          movfw   Prekey
+0135   0080  0208          subwf   EEDATA,w
+0136   0081  1D03          skpz
+0137   0082  1415            bsf     Keyf,0         ; установить бит,если не
+                       пр. кл.
+0138   0083  0A94          incf    Countkey,f
+0139   0084  0B93          decfsz  Nkey,f
+0140   0085  2852            goto    NEW_KEY        ; переход,если не посл. 
+                       кл.
+0141   0086  1815          btfsc   Keyf,0
+0142   0087  288A            goto    PASS_ER
+0143               PASS_OK
+0144   0088  20F0          call    PasswordOk
+0145   0089  288B          goto    PASS_END
+0146               PASS_ER
+0147   008A  20FA          call    PasswordErr
+0148               PASS_END
+0149   008B  283D          goto    RESLEEP
+0150               MODE
+0151   008C  1812          btfsc   Savef,0
+0152   008D  2892          goto    MODE_OFF
+0153               MODE_ON
+16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 4
+
+Line   PC    Opcode
+
+0154   008E  1412          bsf     Savef,0         ; включить запись
+0155   008F  20E8          call    LedsSaveNoPress
+0156   0090  0193          clrf    Nkey
+0157   0091  2899          goto    MODE_END
+0158               MODE_OFF
+0159   0092  1012          bcf     Savef,0         ; выключить запись
+0160   0093  20EA          call    LedsNormNoPress
+0161   0094  0813          movfw   Nkey
+0162   0095  0088          movwf   EEDATA
+0163   0096  3000          movlw   EE_Nkey
+0164   0097  0089          movwf   EEADR
+0165   0098  20D6          call    WriteEEPROM
+0166               MODE_END
+0167   0099  2852          goto    NEW_KEY
+0168               OPENDOOR
+0169   009A  20F0          call    PasswordOk
+0170   009B  283D          goto    RESLEEP
+0171               ;
+0172               ;   П О Д П Р О Г Р А М М Ы
+0173               ;
+0174               ; Эта подпpогpамма проверяет нажата ли кл. нет-Z,да-NZ
+0175               ;
+0176               KeyHit
+0177   009C  3020          movlw   20h            ; считывание н раз
+0178   009D  008E          movwf   tmpReg
+0179               _keyhit1
+0180   009E  0064          clrwdt
+0181   009F  0806          movfw   PORT_B
+0182   00A0  380F          iorlw   B'00001111'
+0183   00A1  3AFF          xorlw   0ffh
+0184   00A2  1903          bz      _keyhit2       ; проверка наж кл.переход,
+                       если кл.не нажата.
+0185   00A3  28A7 m
+0186               0187   00A4  0B8E          decfsz  tmpReg,f
+0188   00A5  289E          goto    _keyhit1
+0189   00A6  1103          clrz
+0190               _keyhit2
+0191   00A7  0008          return
+0192               ;
+0193               ; Эта подпpогpамма считывает код кл., если нет то Z, ok -
+                        NZ
+0194               ;
+0195               ScanKey
+0196   00A8  300E          movlw   B'00001110'
+0197   00A9  0086          movwf   PORT_B
+0198   00AA  3004          movlw   4
+0199   00AB  008F          movwf   Keyreg1
+0200               _scan_1
+0201   00AC  209C          call    KeyHit
+0202   00AD  1D03          bnz     _scan_keypress_ok
+0203   00AE  28B8 m
+0204               16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 5
+
+Line   PC    Opcode
+
+0205   00AF  1403          setc
+0206   00B0  0D86          rlf     PORT_B,f
+0207   00B1  0B8F          decfsz  Keyreg1
+0208   00B2  28AC          goto    _scan_1
+0209   00B3  0186          clrf    PORT_B
+0210   00B4  018F          clrf    Keyreg1
+0211   00B5  1503          setz
+0212   00B6  0064          clrwdt
+0213   00B7  0008          return
+0214               _scan_keypress_ok
+0215   00B8  0806          movfw   PORT_B
+0216   00B9  39F0          andlw   0F0h
+0217   00BA  070F          addwf   Keyreg1,w
+0218   00BB  008F          movwf   Keyreg1
+0219   00BC  0186          clrf    PORT_B
+0220   00BD  1103          clrz
+0221   00BE  0064          clrwdt
+0222   00BF  0008          return
+0223               ;
+0224               ; Эта подпpогpамма разрешает запись
+0225               ;
+0226               WriteEn
+0227   00C0  1508          bsf     EECON1,WREN
+0228   00C1  0008          return
+0229               ;
+0230               ; Эта подпpогpамма инициализиpует поpты
+0231               ;
+0232               InitPort
+0233                       MPAGE   1               ;выбpать банк 1
+0234   00C2  1683 m            bsf   STATUS,RP
+0235   00C3  3001          movlw   B'00000001'
+0236   00C4  0085          movwf   TRISA
+0237   00C5  30F0          movlw   B'11110000'
+0238   00C6  0086          movwf   TRISB
+0239   00C7  0064          clrwdt
+0240   00C8  1401          bsf     OPTN,PS0        ;делитель
+0241   00C9  1481          bsf     OPTN,PS1        ;делитель
+0242   00CA  1501          bsf     OPTN,PS2        ;делитель
+0243   00CB  1181          bcf     OPTN,PSA        ;делитель к RTCC
+0244   00CC  1281          bcf     OPTN,RTS        ;сигнал от внутр генерато
+                       ра
+0245   00CD  1381          bcf     OPTN,RBPU       ;pазpешить подтягивающие 
+                       pезистоpы
+0246                       MPAGE   0               ;выбpать стpаницу 0
+0247   00CE  1283 m            bcf   STATUS,RP
+0248   00CF  0186          clrf    PORT_B          ;иницииpовать поpт B
+0249   00D0  0185          clrf    PORT_A          ;иницииpовать поpт A
+0250   00D1  018B          clrf    INTCON
+0251   00D2  0806          movfw   PORT_B          ;пpочитать поpт B
+0252   00D3  100B          bcf     INTCON,RBIF     ;очистить флаг
+0253   00D4  158B          bsf     INTCON,RBIE     ;pазpешить маску
+0254   00D5  0008          return
+0255               ;
+16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 6
+
+Line   PC    Opcode
+
+0256               ; Эта подпpогpамма записывает в EEPROM
+0257               ;
+0258               WriteEEPROM
+0259   00D6  0064          clrwdt
+0260                       MPAGE   1
+0261   00D7  1683 m            bsf   STATUS,RP
+0262   00D8  20C0          call    WriteEn
+0263   00D9  3055          movlw   055h
+0264   00DA  0089          movwf   EECON2
+0265   00DB  30AA          movlw   0AAh
+0266   00DC  0089          movwf   EECON2
+0267   00DD  1488          bsf     EECON1,WR
+0268               _write1
+0269   00DE  1E08          btfss   EECON1,EEIF
+0270   00DF  28DE          goto    _write1
+0271   00E0  1108          bcf     EECON1,WREN
+0272   00E1  1208          bcf     EECON1,EEIF
+0273                       MPAGE   0
+0274   00E2  1283 m            bcf   STATUS,RP
+0275   00E3  0008          return
+0276               ;
+0277               ; Эта подпpогpамма считывает из EEPROM
+0278               ;
+0279               ReadEEPROM
+0280                       MPAGE   1
+0281   00E4  1683 m            bsf   STATUS,RP
+0282   00E5  1408          bsf     EECON1,RD
+0283                       MPAGE   0
+0284   00E6  1283 m            bcf   STATUS,RP
+0285   00E7  0008          return
+0286               ;
+0287               ; Эти подпpогpаммы управляют светодиодом
+0288               ;
+0289               LedsSaveNoPress
+0290   00E8  1505          bsf     PORT_A,RED_LED
+0291   00E9  0008          return
+0292               LedsNormNoPress
+0293   00EA  1105          bcf     PORT_A,RED_LED
+0294   00EB  0008          return
+0295               LedsSavePress
+0296   00EC  1105          bcf     PORT_A,RED_LED
+0297   00ED  0008          return
+0298               LedsNormPress
+0299   00EE  1505          bsf     PORT_A,RED_LED
+0300   00EF  0008          return
+0301               ; Эта подпpогpамма вызывается при прав.коде
+0302               ;
+0303               PasswordOk
+0304   00F0  1185          bcf     PORT_A,RELE
+0305   00F1  1485          bsf     PORT_A,TRANZ
+0306   00F2  2124          call    Delay
+16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 7
+
+Line   PC    Opcode
+
+0307   00F3  2124          call    Delay
+0308   00F4  3001          movlw   1h              ; сброс защитных задержек
+                       
+0309   00F5  0096          movwf   Protdelay1      ;
+0310   00F6  0197          clrf    Protdelay2      ;
+0311   00F7  1085          bcf     PORT_A,TRANZ
+0312   00F8  14A0          bsf     Doorf,ZAMOK
+0313   00F9  0008          return
+0314               ;
+0315               ; Эта подпpогpамма вызывается при неправ.коде
+0316               ;
+0317               PasswordErr
+0318   00FA  1505          bsf     PORT_A,RED_LED
+0319   00FB  1003          clrc
+0320   00FC  0D96          rlf     Protdelay1,f
+0321   00FD  0D97          rlf     Protdelay2,f
+0322               ;
+0323   00FE  0817          movfw   Protdelay2
+0324   00FF  0099          movwf   Delayreg2
+0325               _passer1
+0326   0100  0816          movfw   Protdelay1
+0327   0101  0098          movwf   Delayreg1
+0328               _passer2
+0329   0102  2124          call    Delay
+0330   0103  0B98          decfsz  Delayreg1,f    ;уменьшать на 1
+0331   0104  2902          goto    _passer2       ;и пеpеходить обpатно, пок
+                       а не станет = 0
+0332   0105  0899          tstf    Delayreg2,f
+0333   0106  1903          bz      _passer3
+0334   0107  290A m
+0335               0336   0108  0399          decf    Delayreg2,f    ;уменьшать на 1
+0337   0109  2900          goto    _passer1       ;и пеpеходить обpатно, пок
+                       а не станет = 0
+0338               ;
+0339               _passer3
+0340   010A  1105          bcf     PORT_A,RED_LED
+0341   010B  0008          return
+0342               ;
+0343               ; Эта подпpогpамма вызывается для проверки двери
+0344               ;
+0345               VerDoor
+0346   010C  0064          clrwdt
+0347   010D  1C05          btfss   PORT_A,DOORD
+0348   010E  2916            goto    _door_close
+0349               _door_open                     ; Дверь открыта
+0350   010F  1CA0          btfss   Doorf,ZAMOK
+0351   0110  2912            goto    _door_vzlom
+0352   0111  2920          goto    DoorUpdate
+0353               _door_vzlom
+0354   0112  1405          bsf     PORT_A.ALERT  ; ВЗЛОМ !!!!
+0355   0113  2124          call    Delay
+0356   0114  1205          bcf     PORT_A,ALERT
+0357   0115  0008          return
+16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 8
+
+Line   PC    Opcode
+
+0358               _door_close                    ; дверь закрыта
+0359   0116  1C20          btfss   Doorf,DVER
+0360   0117  0008            return               ; дверь была закрыта
+0361   0118  1585          bsf     PORT_A,RELE
+0362   0119  2124          call    Delay
+0363   011A  1485          bsf     PORT_A,TRANZ
+0364   011B  2124          call    Delay
+0365   011C  2124          call    Delay
+0366   011D  1085          bcf     PORT_A,TRANZ
+0367   011E  1185          bcf     PORT_A,RELE
+0368   011F  10A0          bcf     Doorf,ZAMOK
+0369               DoorUpdate
+0370   0120  0805          movfw   PORT_A
+0371   0121  3901          andlw   1h
+0372   0122  00A0          movwf   Doorf
+0373   0123  0008          return
+0374               ;
+0375               ; Эта подпpогpамма - задержка
+0376               ;
+0377               Delay
+0378   0124  3011          movlw   11h
+0379   0125  0090          movwf   Keyreg2
+0380               _delay2
+0381   0126  018E          clrf    tmpReg
+0382               _delay1
+0383   0127  0064          clrwdt
+0384   0128  0B8E          decfsz  tmpReg,1       ;уменьшать на 1
+0385   0129  2927          goto    _delay1        ;и пеpеходить обpатно, пок
+                       а не станет = 0
+0386   012A  0B90          decfsz  Keyreg2
+0387   012B  2926          goto    _delay2
+0388   012C  0064          clrwdt
+0389   012D  0008          return
+0390               ;
+0391               ;
+0392         0000  END
+16c5x/xx Cross-Assembler V4.14 Released  Mon Feb 07 19:21:11 2000  Page 9
+
+
+
+Cross-Reference Listing
+LABEL        VALUE        DEFN        REFERENCES
+ALERT        4            87          87     414    416    
+BEGIN        48           97          94     97     
+C            0            44          44     
+Countkey     20           73          73     117    191    198    
+DC           1            45          45     
+DOORD        0            83          83     407    
+DVER         0            90          90     419    
+Delay        292          437         106    109    366    367    389    415    
+                                      422    424    425    437    
+Delayreg1    24           77          77     387    390    
+Delayreg2    25           78          78     384    392    396    
+DoorUpdate   288          429         101    412    429    
+Doorf        32           79          79     100    372    410    419    428    
+                                      432    
+EEADR        9            14          14     113    186    192    224    
+EECON1       136          17          17     287    327    329    331    332    
+                                      342    
+EECON2       137          18          18     324    326    
+EEDATA       8            13          13     115    184    195    222    
+EEIE         6            41          41     
+EEIF         4            55          55     329    332    
+EE_Nkey      0            81          81     112    223    
+FSR          4            12          12     
+GIE          7            42          42     
+INTCON       11           15          15     121    122    133    136    140    
+                                      157    310    312    313    
+INTE         4            39          39     
+INTEDG       6            32          32     
+INTF         1            36          36     
+InitPort     194          292         98     292    
+KeyHit       156          236         236    261    
+Keyf         21           74          74     118    197    201    
+Keyreg1      15           68          68     152    259    267    270    277    
+                                      278    
+Keyreg2      16           69          69     439    446    
+LOOP         96           154         154    160    
+LedsNormNoPr 234          352         167    220    352    
+LedsNormPres 238          358         151    358    
+LedsSaveNoPr 232          349         165    215    349    
+LedsSavePres 236          355         149    355    
+MODE         140          210         171    210    
+MODE_END     153          226         217    226    
+MODE_OFF     146          218         212    218    
+MODE_ON      142          213         213    
+MPAGE        56           57          57     293    306    320    333    340    
+                                      343    
+NEW_KEY      82           137         137    143    189    200    227    
+NO_INT       71           123         123    130    
+NO_SAVE      124          190         181    190    
+Nkey         19           72          72     116    185    188    199    216    
+                                      221    
+OPENDOOR     154          228         176    228    
+OPTN         129          16          16     300    301    302    303    304    
+                                      305    
+PASS_END     139          208         205    208    
+PASS_ER      138          206         202    206    
+PASS_OK      136          203         203    
+PC           2            10          10     
+PD           3            47          47     
+PORT_A       5            20          20     105    107    108    110    125    
+                                      126    309    350    353    356    359    
+                                      364    365    371    378    400    407    
+                                      414    416    421    423    426    427    
+                                      430    
+PORT_B       6            21          21     120    241    257    266    269    
+                                      275    279    308    311    
+PS0          0            26          26     300    
+PS1          1            27          27     301    
+PS2          2            28          28     302    
+PSA          3            29          29     303    
+PasswordErr  250          377         207    377    
+PasswordOk   240          363         204    229    363    
+Prekey       17           70          70     153    169    174    183    194    
+Protdelay1   22           75          75     103    369    380    386    
+Protdelay2   23           76          76     104    370    381    383    
+RBIE         3            38          38     122    133    313    
+RBIF         0            35          35     121    312    
+RBPU         7            33          33     305    
+RD           0            51          51     342    
+RED_LED      2            85          85     105    107    125    126    350    
+                                      353    356    359    378    400    
+RELE         3            86          86     108    110    364    421    427    
+RESLEEP      61           111         111    141    158    209    230    
+RP           5            49          49     59     61     294    294    307    
+                                      308    321    321    334    335    341    
+                                      341    344    345    
+RTE          4            30          30     
+RTIE         5            40          40     
+RTIF         2            37          37     136    140    157    
+RTS          5            31          31     304    
+ReadEEPROM   228          339         114    193    339    
+SAVE         117          182         182    
+STATUS       3            11          11     59     61     128    294    294    
+                                      307    308    321    321    334    335    
+                                      341    341    344    345    
+Savef        18           71          71     99     138    148    150    155    
+                                      164    166    180    211    214    219    
+ScanKey      168          255         142    159    255    
+TMR0         1            9           9      135    139    147    156    
+TO           4            48          48     
+TRANZ        1            84          84     365    371    423    426    
+TRISA        133          23          23     296    
+TRISB        134          24          24     298    
+VerDoor      268          405         124    405    
+WR           1            52          52     327    
+WREN         2            53          53     287    331    
+WRERR        3            54          54     
+WriteEEPROM  214          318         187    225    318    
+WriteEn      192          286         286    322    
+Z            2            46          46     
+ZAMOK        1            89          89     372    410    428    
+_delay1      295          442         442    445    
+_delay2      294          440         440    447    
+_door_close  278          418         408    418    
+_door_open   271          409         409    
+_door_vzlom  274          413         411    413    
+_keyhit1     158          239         239    248    
+_keyhit2     167          250         244    250    
+_passer1     256          385         385    397    
+_passer2     258          388         388    391    
+_passer3     266          399         393    399    
+_scan_1      172          260         260    268    
+_scan_keypre 184          274         262    274    
+_write1      222          328         328    330    
+tmpReg       14           67          67     238    247    441    444    
+

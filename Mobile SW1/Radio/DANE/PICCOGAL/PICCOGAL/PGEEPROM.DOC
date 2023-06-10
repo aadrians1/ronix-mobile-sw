@@ -1,0 +1,245 @@
+
+
+            ========      PGEEPROM.EXE     ===========
+
+Najaktualniejsze informacje o programie pgeeprom.exe.
+
+Spis tre˜ci:
+------------
+ 1. Wywoˆanie programu
+ 2. Umieszczanie EEPROMu w podstawce Picco-GALa
+ 3. Programowane EEPROMy
+   - IýC
+   - MicroWire
+   - Other
+ 4. Programowanie EEPROM¢w MDA2062
+ 5. Kolejne wersje programu
+
+
+1. Wywoˆanie programu
+======================
+
+PGEEPROM [/m]
+
+/m - praca w trybie 'mono'.
+
+
+2. Umieszczanie EEPROMu w podstawce Picco-GALa
+===============================================
+
+Umieszczenie wi©kszo˜ci EEPROM¢w w podstawce programatora nie 
+stanowi ¾adnego problemu - ˜wiec¥cy si© LED wskazuje miejsce
+wˆo¾enia pierwszej nogi EEPROMu.
+
+Istniej¥ jednak wyj¥tki - EEPROMy w innej obudowie lub o
+nietypowym podˆ¥czeniu zasilania.  Po wybraniu typu EEPROMu
+spos¢b jego prawidˆowego umieszczenia w podstawce Picco-GALa
+jest przedstawiony na ekranie komputera.  Linie opisane jako
+'External connection' przedstawiaj¥ zewn©trzne zwory, kt¢re
+nale¾y wykona† umieszczaj¥c w podstawce (opr¢cz EEPROMu) kawaˆek
+cienkiego przewodu.  Skrzy¾owanie przewodu z wkˆadan¥ razem z
+nim nog¥ EEPROMu pozwala podstawce dobrze chwyci† oba te
+elementy, co zapewnia prawidˆowy kontakt.
+
+
+3. Programowane EEPROMy:
+========================
+
+IýC:
+======
+
+Ind.Standard	:2401,2402,2404,2408,2416,8581,8582,8594,8598,85??,
+CATTALYST	:CAT24C02,CAT24LC02,CAT24C02A,CAT24LC02A,CAT24C04,
+		 CAT24LC04,CAT24C08,CAT24LC08,CAT24C16,CAT24LC16,
+G.INSTRUMENT	:GI8819,
+ITT		:
+MICROCHIP	:24C01A,24LC01,24C02A,24LC02,24C04A,24LC04,24C16,
+		 24LC16,24C32,24LC32,24C65,24LC65,24AA65,
+		 85C72,85C82,85C92,
+MITSUBISHI	:
+NATIONAL S.	:NM24C02,NM24C02L,NM24C03,NM24C03L,NM24C04,NM24C04L,
+		 NM24C05,NM24C05L,NM24C08,NM24C09,NM24C16,NM24C17,
+PHILIPS		:PCF8581,PCF8581C,PCF8582(int.clock),PCF8582(ext.clock),
+		 PCx8582x-2,PCx8594x-2,PCx8598x-2,OM8305,
+SAMSUNG		:
+SGS THOMSON	:ST24C02,ST24C02A,ST25C02A,ST24C04,ST25C04,ST24C08,
+SIEMENS		:SDA2516,SDA2526,SDA2526A,SDA2546,SDA2586,
+SONY		:
+XICOR		:X2402,X2404,X24C04,X24C16,
+Unknown		:
+
+MicroWire
+===========
+
+Ind.Standard	:5911,9306,9326,9346,9356,9366,
+CATTALYST	:CAT59C11,CAT35C202,CAT93C46,CAT93C46A,CAT93C46B,
+		 CAT93C56,CAT35C102,CAT35C104,CAT35C108,CAT35C116,
+G.INSTRUMENT	:
+ITT		:
+MICROCHIP	:5911,59C11,93C06,93C46,93LC46,93LC46A,93LC46B,93C56,
+		 93LC56,93LC56A,93LC56B,93C66,93LC66,93LC66A,93LC66B,
+MITSUBISHI	:
+NATIONAL S.	:NM59C11,NM93C06,NM93C06L,NM93C46,NM93C46L,NM93C46A,
+		 NM93C46AL,NM93C56,NM93C56L,NM93C66,NM93C66L,
+PHILIPS		:	
+SAMSUNG		:KM93C06,KM93C07,KM93C46,
+SGS THOMSON	:M9306,M9346,ST93C06,ST93C46,ST93CS46,ST93CS47,ST93C56,
+		 ST93CS56,ST93CS57,TS59C11,TS93C46,
+SIEMENS		:
+SONY		:
+XICOR		:
+Unknown		:
+
+Other
+======
+
+Ind.Standard	:2506,2444,MDA2062,NVM3060
+CATTALYST	:CAT24C44,CAT64LC10,CAT64LC20,CAT64LC40,
+G.INSTRUMENT	:
+ITT		:MDA2062,NVM3060
+MICROCHIP	:
+MITSUBISHI	:M6M80021P
+NATIONAL S.	:
+PHILIPS		:
+SAMSUNG		:
+SGS THOMSON	:
+SIEMENS		:SDA2506-2,SDA2506A2,
+SONY		:CXK1012P,
+XICOR		:X2444,X2444I,X2444M
+Unknown		:PDG011,PDH001
+
+
+4. Programowanie EEPROM¢w MDA2062.
+==================================
+
+EEPROM MDA2062 zawiera 128 bajt¢w adresowanych od 128 do 255.
+W oknie edycyjnym programatora Picco-GAL s¥ one przesuni©te do
+pocz¥tku bufora (adresy 0x00..0x7F).
+
+Ten EEPROM ma pewn¥ nietypow¥ cech©. Zawiera on opr¢cz podsta-
+wowej pami©ci (128 bajt¢w) r¢wnie¾ pami©† rezerwow¥ (2 zestawy
+po 4 bajty).  Ta pami©† rezerwowa sˆu¾y do zast©powania uszko-
+dzonych fragment¢w pami©ci podstawowej. O tym jakie fragmenty
+pami©ci podstawowej s¥ zast©powane pami©ci¥ rezerwow¥ decyduje
+zawarto˜† dw¢ch kom¢rek (adresy 160 (0x20) i 192 (0x40)).  Te
+dwa bajty nie mog¥ by† zast¥pione w przypadku ich uszkodzenia.
+Warto˜† 0xFF wpisana w te kom¢rki oznacza brak zast©powania.
+
+Je¾eli w fabrycznie czystym EEPROMie kt¢ry˜ z tych dwu bajt¢w
+jest r¢¾ny od 0xFF (pewne kom¢rki EEPROMu s¥ zast©powane) to
+jego zawarto˜ci nie nale¾y zmienia†.
+
+Aby skopiowa† MDA2062 nale¾y post¥pi† nast©puj¥co:
+
+  - odczyta† EEPROM docelowy i sprawdzi† warto˜ci w kom¢rkach
+    0x20 i 0x40 (w oknie edycji bufora Picco-GALa),
+  - odczyta† EEPROM «r¢dˆowy,
+  - wpisa† w kom¢rki 0x20 i 0x40 warto˜ci odczytane z EEPROMu
+    docelowego,
+  - zaprogramowa† EEPROM docelowy.
+
+Praktycznie najcz©˜ciej w obu EEPROMach obie te kom¢rki
+zawieraj¥ 0xFF (brak podmian).
+
+W przypadku zmieniania zawarto˜ci kt¢rej˜ z tych dwu kom¢rek w
+czasie programowania (lub kasowania) pozostaˆe kom¢rki s¥
+programowane w/g zawarto˜ci tych bajt¢w sprzed programowania.
+Natomiast przy weryfikacji uwzgl©dniona jest ju¾ ich nowa
+zawarto˜† (nowe podmiany kom¢rek pami©ci).  W tej sytuacji
+dopiero drugie programowanie (kasowanie) b©dzie udane (pod
+warunkiem, ¾e nie pozostaˆy niepodmienione uszkodzone kom¢rki).
+
+
+5. Kolejne wersje programu pgeeprom.exe
+========================================
+
+Data,wersja	Opis
+=========================================================================
+lipiec 93	Robocza wersja programu. Cz©sto zmieniana i
+v 0.9		uzupeˆniana bez zmiany numeru wersji. Dostarczona
+		kilku u¾ytkownikom do testowania.
+
+listopad 93	Pierwsza wersja dopuszczona do dystrybucji.
+v 1.0		Po poprawieniu podstawowych EEPROM¢w i wpisaniu
+		r¢¾nych popularnych EEPROM¢w dostarczonych przez
+		odbiorc¢w.
+
+12.02.94	Spowolnienie procedur obsˆugi MicroWire - wyst©powaˆy
+v 1.1		problemy z niekt¢rymi egzemplarzami EEPROM¢w MicroWire.
+
+		Program uzupeˆniono o:
+
+		 - mo¾liwo˜† por¢wnania zawarto˜ci bufora z zawarto˜ci¥
+		   EEPROMu.
+
+		     Je¾eli funkcja Verify stwierdza bˆ¥d to nast©puje
+		     automatyczne wej˜cie w mod por¢wnania. Otwierane
+		     jest okno, w kt¢rym przedstawiona jest zawarto˜†
+		     bufora i EEPROMu. Bajty r¢¾ne s¥ wyr¢¾nione innym
+		     kolorem.
+		   
+		 - mo¾liwo˜† wydruku zawarto˜ci bufora (File|Print).
+
+		 - EEPROMy National Semiconductor w/g katalogu
+		   Memory Databook 1992.
+
+02.03.94	Modyfikacja algorytmu komunikacji z EERPOMami MicroWire.
+v 1.11
+		Umo¾liwiˆo to programowanie EEPROMu 7002(oznaczenie
+		przemysˆowe Nationala - r¢wnowa¾ny 9306 (16 bit)).
+		R¢wnie¾	EEPROM Thomsona 93C06 kt¢ry do tej pory dziaˆaˆ
+		tylko jako 8 bitowy dziaˆa r¢wnie¾ jako 16 bitowy.
+
+
+03.03.94	Doˆo¾enie 9326 w Industry Standard MicroWire.
+v 1.12		
+
+09.03.94	Modyfikacja procedur komunikacji z Picco-GALem.
+v 1.13		Przy niekt¢rych (szybkich) komputerach wyst©powaˆy
+		problemy.
+		
+20.04.94	Doˆo¾enie EEPROMu MDA2062, oraz poprawienie funkcji
+v 1.14		<File|Load> tak, aby widoczne byˆy kartoteki o nazwach
+		zawieraj¥cych rozszerzenia.
+
+		Umieszczenie w tym zbiorze opisu programowania MDA2062.
+
+28.05.94	Umo¾liwienie wymuszenia pracy programu w trybie mono.
+v 1.15		Sˆu¾y do tego celu opcja /m przy wywoˆaniu programu.
+		Na razie jest to jedyna opcja rozpoznawana przez program.
+
+22.09.94	Dopisanie EEPROMu 5911 MICROCHIPa.
+v 1.16		Modyfikacja algorytm¢w programowania wszystkich EEPROM¢w
+		Industry Standard MicroWire.
+
+27.10.94	Dopisanie EEPROMu PDH001 (Unknown, Other).
+v 1.17
+
+08.12.94	Dopisanie EEPROM¢w 24C32,24LC32,24C65,24LC65,24AA65 
+v 1.18		(MICROCHIP). 
+		Modyfikacja algorytm¢w programowania EEPROM¢w CXK1012P
+		i PDG011.
+
+26.01.95	Dopisanie EEPROMu NVM3060 (ITT i Industry Standard).
+v 1.19		Umieszczenie w tym zbiorze rozdziaˆu o wkˆadaniu 
+		EEPROM¢w do podstawki Picco-GALa.
+
+17.03.95	Przebudowa od podstaw wewn©trznej struktury danych.
+v 1.50		Wstawienie, w procedurach obsˆugi wszystkich EEPROM¢w,
+		op¢«nienia 10ms miedzy wˆ¥czeniem zasilania EEPROMu
+		a pierwszym rozkazem.
+
+6.06.95		Wprowadzenie obsˆugi rejestru zabezpieczenia EEPROMu
+v 1.60		przed przypadkowym zapisem danych.
+		Pozycja <Chip|Protect> menu zawiera nast©puj¥ce polecenia:
+		  Clear - kasowanie zabezpieczenia,
+		  Read  - odczyt rejestru zabezpieczenia,
+		  Write - zabezpieczenie.
+		Wybranie jednego z EEPROM¢w posiadaj¥cych takie zabezpie-
+		czenie (ST93CS47, ST93CS47, ST93CS56, ST93CS57) uaktywnia
+		t© pozycj© menu.
+		Zmiana zbior¢w *.doc i *.hlp towarzysz¥cych programom ze
+		standardu mazowii na dos852.
+
+7.03.97		Poprawienie procedur programowania EEPROM¢w Catalyst:
+v 1.61		CAT35C108 i CAT35C116

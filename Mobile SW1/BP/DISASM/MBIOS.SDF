@@ -1,0 +1,2902 @@
+
+                  ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+                          SOURCER DEFINITION FILE
+                  ‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+
+ ±±±±±±±±±±±±±±±±±± Section 1: CONTROL INFORMATION   ±±±±±±±±±±±±±±±±±±
+
+Analysis Options = a b c d e f g h i j k l m n o p Q R S t u v w x y z
+uP               = P486
+Math uP code     = ON
+File format      = LST
+Label type       = Decimal
+Remarks          = All
+Segment display  = Hex
+Target Assembler = NONE
+Code style       = Exe
+Header           = BIOS ROM Analysis
+Drive (output)   = C
+Output filename  = MBIOS.LST
+Passes           = 5
+Xref             = ON
+
+
+
+ ±±±±±±±±±±±±±±±±±± Section 2: RANGE DEFINITION      ±±±±±±±±±±±±±±±±±±
+
+ ÕÕÕÕ Segments ÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕ
+
+  begin      end      default	   seg	 seg          seg
+ seg:off     off     ds     es	   type	 size         value
+ -------     ----    ----   ----   ----- -----        -----
+0000:0000    004F    0000   0000   data	 use16       ; 0000
+0000:0400    04CF    0000   0000   data	 use16       ; 0000
+0040:0000    0100    0000   0000   data	 use16       ; 0040
+0050:0000    0001    0000   0000   data	 use16       ; 0050
+F000:0000    FFFF    0040   0040   rauto use16       ; F000
+
+ ±±±±±±±±±±±±±±±±±± Section 3: REFERENCE DEFINITIONS ±±±±±±±±±±±±±±±±±±
+
+ ÕÕÕÕ Subroutines ÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕ
+  seg:off    type & options	labels & comments
+  -------    --------------	----------------------------------------------
+F000:6FE9    sub			       ; sub_1
+F000:7000    sub			       ; sub_2
+F000:7024    sub			       ; sub_3
+F000:7045    sub			       ; sub_4
+F000:704B    sub			       ; sub_5
+F000:7068    sub			       ; sub_6
+F000:7085    sub			       ; sub_7
+F000:70A2    sub			       ; sub_8
+F000:70BF    sub			       ; sub_9
+F000:70DC    sub			       ; sub_10
+F000:70F9    sub			       ; sub_11
+F000:7105    sub			       ; sub_12
+F000:7151    sub			       ; sub_13
+F000:717F    sub			       ; sub_14
+F000:7185    sub			       ; sub_15
+F000:720E    sub			       ; sub_16
+F000:721A    sub			       ; sub_17
+F000:728E    sub			       ; sub_18
+F000:739D    sub			       ; sub_19
+F000:73DD    sub			       ; sub_20
+F000:7422    sub			       ; sub_21
+F000:74BB    sub			       ; sub_22
+F000:74EA    sub			       ; sub_23
+F000:7517    sub			       ; sub_24
+F000:7684    sub			       ; sub_25
+F000:7698    sub			       ; sub_26
+F000:7C90    sub			       ; sub_27
+F000:7C9F    sub			       ; sub_28
+F000:7CCF    sub			       ; sub_29
+F000:7D07    sub			       ; sub_30
+F000:7D1E    sub			       ; sub_31
+F000:7D44    sub			       ; sub_32
+F000:7D6C    sub			       ; sub_33
+F000:7DD6    sub			       ; sub_34
+F000:7DE3    sub			       ; sub_35
+F000:7DF9    sub			       ; sub_36
+F000:7E0F    sub			       ; sub_37
+F000:7E42    sub			       ; sub_38
+F000:7E60    sub			       ; sub_39
+F000:7E67    sub			       ; sub_40
+F000:7E8B    sub			       ; sub_41
+F000:7EED    sub			       ; sub_42
+F000:7F17    sub			       ; sub_43
+F000:7F6E    sub			       ; sub_44
+F000:7F94    sub			       ; sub_45
+F000:8348    sub			       ; sub_46
+F000:834E    sub			       ; sub_47
+F000:8351    sub			       ; sub_48
+F000:8357    sub			       ; sub_49
+F000:87C4    sub			       ; sub_50
+F000:8BCC    sub			       ; sub_51
+F000:8F43    sub			       ; sub_52
+F000:8F66    sub			       ; sub_53
+F000:90A6    sub			       ; sub_54
+F000:90E5    sub			       ; sub_55
+F000:90E9    sub			       ; sub_56
+F000:90ED    sub			       ; sub_57
+F000:910E    sub			       ; sub_58
+F000:912C    sub			       ; sub_59
+F000:9146    sub			       ; sub_60
+F000:915C    sub			       ; sub_61
+F000:9209    sub			       ; sub_62
+F000:9300    sub			       ; sub_63
+F000:930A    sub			       ; sub_64
+F000:930E    sub			       ; sub_65
+F000:932C    sub			       ; sub_66
+F000:9367    sub			       ; sub_67
+F000:944E    sub			       ; sub_68
+F000:946E    sub			       ; sub_69
+F000:9550    sub			       ; sub_70
+F000:955D    sub			       ; sub_71
+F000:9600    sub			       ; sub_72
+F000:9653    sub			       ; sub_73
+F000:9686    sub			       ; sub_74
+F000:9729    sub			       ; sub_75
+F000:9740    sub			       ; sub_76
+F000:9757    sub			       ; sub_77
+F000:981C    sub			       ; sub_78
+F000:9820    sub			       ; sub_79
+F000:98D8    sub			       ; sub_80
+F000:994A    sub			       ; sub_81
+F000:997A    sub			       ; sub_82
+F000:9996    sub			       ; sub_83
+F000:999F    sub			       ; sub_84
+F000:99EB    sub			       ; sub_85
+F000:9AC9    sub			       ; sub_86
+F000:9AE7    sub			       ; sub_87
+F000:9AED    sub			       ; sub_88
+F000:9B20    sub			       ; sub_89
+F000:9B27    sub			       ; sub_90
+F000:9B69    sub			       ; sub_91
+F000:9BAB    sub			       ; sub_92
+F000:9BD7    sub			       ; sub_93
+F000:9C01    sub			       ; sub_94
+F000:9C0C    sub			       ; sub_95
+F000:9C14    sub			       ; sub_96
+F000:9D77    sub			       ; sub_97
+F000:9DB5    sub			       ; sub_98
+F000:9DBD    sub			       ; sub_99
+F000:9E60    sub			       ; sub_100
+F000:9F3C    sub			       ; sub_101
+F000:9F45    sub			       ; sub_102
+F000:9F4C    sub			       ; sub_103
+F000:9F52    sub			       ; sub_104
+F000:9F57    sub			       ; sub_105
+F000:A014    sub			       ; sub_106
+F000:A01F    sub			       ; sub_107
+F000:A02F    sub			       ; sub_108
+F000:A047    sub			       ; sub_109
+F000:A068    sub			       ; sub_110
+F000:A0DA    sub			       ; sub_111
+F000:A124    sub			       ; sub_112
+F000:A157    sub			       ; sub_113
+F000:A166    sub			       ; sub_114
+F000:A282    sub			       ; sub_115
+F000:A2CB    sub			       ; sub_116
+F000:A2F5    sub			       ; sub_117
+F000:A31B    sub			       ; sub_118
+F000:A34E    sub			       ; sub_119
+F000:A377    sub			       ; sub_120
+F000:A37A    sub			       ; sub_121
+F000:A387    sub			       ; sub_122
+F000:A3DF    sub			       ; sub_123
+F000:A3F7    sub			       ; sub_124
+F000:A406    sub			       ; sub_125
+F000:A42E    sub			       ; sub_126
+F000:A469    sub			       ; sub_127
+F000:A492    sub			       ; sub_128
+F000:A4B3    sub			       ; sub_129
+F000:A515    sub			       ; sub_130
+F000:A54B    sub			       ; sub_131
+F000:A577    sub			       ; sub_132
+F000:A589    sub			       ; sub_133
+F000:A5BD    sub			       ; sub_134
+F000:A5FA    sub			       ; sub_135
+F000:A621    sub			       ; sub_136
+F000:A77A    sub			       ; sub_137
+F000:A795    sub			       ; sub_138
+F000:A7A0    sub			       ; sub_139
+F000:A7A7    sub			       ; sub_140
+F000:A7AE    sub			       ; sub_141
+F000:A7B5    sub			       ; sub_142
+F000:A7BC    sub			       ; sub_143
+F000:A7C3    sub			       ; sub_144
+F000:A7CA    sub			       ; sub_145
+F000:A7D2    sub			       ; sub_146
+F000:A7E9    sub			       ; sub_147
+F000:A811    sub			       ; sub_148
+F000:A83D    sub			       ; sub_149
+F000:A8B2    sub			       ; sub_150
+F000:A914    sub			       ; sub_151
+F000:A97E    sub			       ; sub_152
+F000:A982    sub			       ; sub_153
+F000:A984    sub			       ; sub_154
+F000:A9A2    sub			       ; sub_155
+F000:A9AD    sub			       ; sub_156
+F000:A9E4    sub			       ; sub_157
+F000:A9F4    sub			       ; sub_158
+F000:AA28    sub			       ; sub_159
+F000:AA30    sub			       ; sub_160
+F000:AA4B    sub			       ; sub_161
+F000:AC94    sub			       ; sub_162
+F000:ACA0    sub			       ; sub_163
+F000:ACBE    sub			       ; sub_164
+F000:ACCD    sub			       ; sub_165
+F000:ACDE    sub			       ; sub_166
+F000:ACF0    sub			       ; sub_167
+F000:ACF4    sub			       ; sub_168
+F000:ACFE    sub			       ; sub_169
+F000:AD0A    sub			       ; sub_170
+F000:AD19    sub			       ; sub_171
+F000:AD1B    sub			       ; sub_172
+F000:AD21    sub			       ; sub_173
+F000:AD38    sub			       ; sub_174
+F000:AD3A    sub			       ; sub_175
+F000:AD85    sub			       ; sub_176
+F000:AD92    sub			       ; sub_177
+F000:AD9B    sub			       ; sub_178
+F000:ADB4    sub			       ; sub_179
+F000:AE2B    sub			       ; sub_180
+F000:AE48    sub			       ; sub_181
+F000:AF4C    sub			       ; sub_182
+F000:AF9E    sub			       ; sub_183
+F000:AFA3    sub			       ; sub_184
+F000:AFD5    sub			       ; sub_185
+F000:AFE3    sub			       ; sub_186
+F000:AFFA    sub			       ; sub_187
+F000:B2AF    sub			       ; sub_188
+F000:B2EB    sub			       ; sub_189
+F000:B2EF    sub			       ; sub_190
+F000:B305    sub			       ; sub_191
+F000:B31B    sub			       ; sub_192
+F000:B31F    sub			       ; sub_193
+F000:B32C    sub			       ; sub_194
+F000:B346    sub			       ; sub_195
+F000:B353    sub			       ; sub_196
+F000:B360    sub			       ; sub_197
+F000:B36A    sub			       ; sub_198
+F000:B376    sub			       ; sub_199
+F000:B483    sub			       ; sub_200
+F000:B495    sub			       ; sub_201
+F000:B4BA    sub			       ; sub_202
+F000:B4EF    sub			       ; sub_203
+F000:B4F6    sub			       ; sub_204
+F000:B4F7    sub			       ; sub_205
+F000:B4F8    sub			       ; sub_206
+F000:B4FD    sub			       ; sub_207
+F000:B521    sub			       ; sub_208
+F000:B554    sub			       ; sub_209
+F000:B599    sub			       ; sub_210
+F000:B5DE    sub			       ; sub_211
+F000:B634    sub			       ; sub_212
+F000:B68A    sub			       ; sub_213
+F000:B697    sub			       ; sub_214
+F000:B6A8    sub			       ; sub_215
+F000:B6B9    sub			       ; sub_216
+F000:B6BD    sub			       ; sub_217
+F000:B6D4    sub			       ; sub_218
+F000:B787    sub			       ; sub_219
+F000:B798    sub			       ; sub_220
+F000:B7A5    sub			       ; sub_221
+F000:B7B5    sub			       ; sub_222
+F000:B7E3    sub			       ; sub_223
+F000:B7F3    sub			       ; sub_224
+F000:B821    sub			       ; sub_225
+F000:B82A    sub			       ; sub_226
+F000:BB82    sub			       ; sub_227
+F000:BB84    sub			       ; sub_228
+F000:BB86    sub			       ; sub_229
+F000:BB88    sub			       ; sub_230
+F000:BCA8    sub			       ; sub_231
+F000:BE93    sub			       ; sub_232
+F000:BE9D    sub			       ; sub_233
+F000:BEAA    sub			       ; sub_234
+F000:BED5    sub			       ; sub_235
+F000:BF62    sub			       ; sub_236
+F000:BF7F    sub			       ; sub_237
+F000:BF92    sub			       ; sub_238
+F000:BF9E    sub			       ; sub_239
+F000:C005    sub			       ; sub_240
+F000:C006    sub			       ; sub_241
+F000:C01D    sub			       ; sub_242
+F000:C01E    sub			       ; sub_243
+F000:C01F    sub			       ; sub_244
+F000:C029    sub			       ; sub_245
+F000:C02D    sub			       ; sub_246
+F000:C031    sub			       ; sub_247
+F000:C036    sub			       ; sub_248
+F000:C0E3    sub			       ; sub_249
+F000:C127    sub			       ; sub_250
+F000:C18E    sub			       ; sub_251
+F000:C1AE    sub			       ; sub_252
+F000:C3DE    sub			       ; sub_253
+F000:C4C1    sub			       ; sub_254
+F000:C5BB    sub			       ; sub_255
+F000:C62A    sub			       ; sub_256
+F000:C67F    sub			       ; sub_257
+F000:C68C    sub			       ; sub_258
+F000:C6B0    sub			       ; sub_259
+F000:C6B9    sub			       ; sub_260
+F000:C6C2    sub			       ; sub_261
+F000:C7BF    sub			       ; sub_262
+F000:C7C9    sub			       ; sub_263
+F000:C7D0    sub			       ; sub_264
+F000:C80C    sub			       ; sub_265
+F000:C86A    sub			       ; sub_266
+F000:C88B    sub			       ; sub_267
+F000:C89E    sub			       ; sub_268
+F000:C963    sub			       ; sub_269
+F000:C96D    sub			       ; sub_270
+F000:C978    sub			       ; sub_271
+F000:C986    sub			       ; sub_272
+F000:C9BB    sub			       ; sub_273
+F000:C9ED    sub			       ; sub_274
+F000:CF2C    sub			       ; sub_275
+F000:CF91    sub			       ; sub_276
+F000:D13F    sub			       ; sub_277
+F000:D1C0    sub			       ; sub_278
+F000:D1F0    sub			       ; sub_279
+F000:D242    sub			       ; sub_280
+F000:D283    sub			       ; sub_281
+F000:D2AC    sub			       ; sub_282
+F000:D302    sub			       ; sub_283
+F000:D32F    sub			       ; sub_284
+F000:D35C    sub			       ; sub_285
+F000:D380    sub			       ; sub_286
+F000:D3A9    sub			       ; sub_287
+F000:D434    sub			       ; sub_288
+F000:D46D    sub			       ; sub_289
+F000:D48F    sub			       ; sub_290
+F000:D491    sub			       ; sub_291
+F000:D4A1    sub			       ; sub_292
+F000:D4B5    sub			       ; sub_293
+F000:D588    sub			       ; sub_294
+F000:D5EC    sub			       ; sub_295
+F000:D615    sub			       ; sub_296
+F000:D61E    sub			       ; sub_297
+F000:D6AC    sub			       ; sub_298
+F000:D6B1    sub			       ; sub_299
+F000:D6B5    sub			       ; sub_300
+F000:D6B9    sub			       ; sub_301
+F000:D6BB    sub			       ; sub_302
+F000:D6BF    sub			       ; sub_303
+F000:D6C1    sub			       ; sub_304
+F000:D6C5    sub			       ; sub_305
+F000:D6CA    sub			       ; sub_306
+F000:D6CC    sub			       ; sub_307
+F000:D6D0    sub			       ; sub_308
+F000:D6D2    sub			       ; sub_309
+F000:D6D6    sub			       ; sub_310
+F000:D6DA    sub			       ; sub_311
+F000:D739    sub			       ; sub_312
+F000:D77E    sub			       ; sub_313
+F000:D7B2    sub			       ; sub_314
+F000:D7F2    sub			       ; sub_315
+F000:E0B6    sub			       ; sub_316
+F000:E2C8    sub			       ; sub_317
+F000:E2E6    sub			       ; sub_318
+F000:E2F4    sub			       ; sub_319
+F000:E326    sub			       ; sub_320
+F000:E338    sub			       ; sub_321
+F000:E34C    sub			       ; sub_322
+F000:E362    sub			       ; sub_323
+F000:E38D    sub			       ; sub_324
+F000:E39F    sub			       ; sub_325
+F000:E3CC    sub			       ; sub_326
+F000:E3E2    sub			       ; sub_327
+F000:E3EF    sub			       ; sub_328
+F000:E3F5    sub			       ; sub_329
+F000:E3FB    sub			       ; sub_330
+F000:E73C    sub			       ; sub_331
+F000:E776    sub			       ; sub_332
+F000:E7B2    sub			       ; sub_333
+F000:E7EC    sub			       ; sub_334
+F000:E81F    sub			       ; sub_335
+F000:E98A    sub			       ; sub_336
+F000:E9BC    sub			       ; sub_337
+F000:E9C4    sub			       ; sub_338
+F000:E9F4    sub			       ; sub_339
+F000:EA09    sub			       ; sub_340
+F000:EA19    sub			       ; sub_341
+F000:EB55    sub			       ; sub_342
+F000:EB7B    sub			       ; sub_343
+F000:EBC2    sub			       ; sub_344
+F000:EBCD    sub			       ; sub_345
+F000:EBD3    sub			       ; sub_346
+F000:EBD9    sub			       ; sub_347
+F000:EBE1    sub			       ; sub_348
+F000:EBEA    sub			       ; sub_349
+F000:EC0A    sub			       ; sub_350
+F000:EC10    sub			       ; sub_351
+F000:EC2A    sub			       ; sub_352
+F000:EC2E    sub			       ; sub_353
+F000:EC4B    sub			       ; sub_354
+F000:EC5C    sub			       ; sub_355
+F000:EC79    sub			       ; sub_356
+F000:EC99    sub			       ; sub_357
+F000:EC9F    sub			       ; sub_358
+F000:ECA2    sub			       ; sub_359
+F000:ECC2    sub			       ; sub_360
+F000:ECD5    sub			       ; sub_361
+F000:ECE4    sub			       ; sub_362
+F000:ECF1    sub			       ; sub_363
+F000:ECF9    sub			       ; sub_364
+F000:ED12    sub			       ; sub_365
+F000:ED16    sub			       ; sub_366
+F000:EDE2    sub			       ; sub_367
+F000:EDE6    sub			       ; sub_368
+F000:EDF5    sub			       ; sub_369
+F000:EE00    sub			       ; sub_370
+F000:EF96    sub			       ; sub_371
+F000:EFA1    sub			       ; sub_372
+F000:F14E    sub			       ; sub_373
+F000:F174    sub			       ; sub_374
+F000:F193    sub			       ; sub_375
+F000:F19F    sub			       ; sub_376
+F000:F1D4    sub			       ; sub_377
+F000:F1DE    sub			       ; sub_378
+F000:F1E9    sub			       ; sub_379
+F000:F226    sub			       ; sub_380
+F000:F247    sub			       ; sub_381
+F000:F2A0    sub			       ; sub_382
+F000:F2FF    sub			       ; sub_383
+F000:F316    sub			       ; sub_384
+F000:F336    sub			       ; sub_385
+F000:F33A    sub			       ; sub_386
+F000:F356    sub			       ; sub_387
+F000:F3CF    sub			       ; sub_388
+F000:F3DA    sub			       ; sub_389
+F000:F3E3    sub			       ; sub_390
+F000:F3FC    sub			       ; sub_391
+F000:F410    sub			       ; sub_392
+F000:F41B    sub			       ; sub_393
+F000:F431    sub			       ; sub_394
+F000:F442    sub			       ; sub_395
+F000:F44E    sub			       ; sub_396
+F000:F459    sub			       ; sub_397
+F000:F462    sub			       ; sub_398
+F000:F46F    sub			       ; sub_399
+F000:F7A9    sub			       ; sub_400
+F000:F7BC    sub			       ; sub_401
+F000:F7C7    sub			       ; sub_402
+F000:F85E    sub			       ; sub_403
+F000:FA1C    sub			       ; sub_404
+F000:FA50    sub			       ; sub_405
+F000:FE8A    sub			       ; sub_406
+F000:FE93    sub			       ; sub_407
+
+ ÕÕÕÕ Locations ÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕ
+  seg:off    type & options	labels & comments
+  -------    --------------	----------------------------------------------
+0000:7C00    loc, far		run_boot_sector
+3000:C89B    loc			       ; loc_1
+F000:0DA0    loc			       ; loc_2
+F000:1B6B    loc			       ; loc_3
+F000:1B86    loc			       ; loc_4
+F000:3ABF    loc			       ; loc_5
+F000:664B    loc			       ; loc_6
+F000:6F50    loc			       ; loc_7
+F000:6F5B    loc			       ; loc_8
+F000:6F66    loc			       ; loc_9
+F000:6F71    loc			       ; loc_10
+F000:6F7C    loc			       ; loc_11
+F000:6F87    loc			       ; loc_12
+F000:6F92    loc			       ; loc_13
+F000:6F9D    loc			       ; loc_14
+F000:6FA8    loc			       ; loc_15
+F000:6FB3    loc			       ; loc_16
+F000:6FBE    loc			       ; loc_17
+F000:6FC9    loc			       ; loc_18
+F000:6FD4    loc			       ; loc_19
+F000:6FD5    loc			       ; loc_20
+F000:6FD7    loc			       ; loc_21
+F000:6FDC    loc			       ; loc_ret_22
+F000:6FDD    loc			       ; loc_23
+F000:701F    loc			       ; loc_24
+F000:7020    loc			       ; loc_ret_25
+F000:7021    loc			       ; loc_26
+F000:7043    loc			       ; loc_27
+F000:7045    loc			       ; loc_28
+F000:7062    loc			       ; loc_29
+F000:707F    loc			       ; loc_30
+F000:709C    loc			       ; loc_31
+F000:70B9    loc			       ; loc_32
+F000:70D6    loc			       ; loc_33
+F000:70F3    loc			       ; loc_34
+F000:7145    loc			       ; loc_35
+F000:7177    loc			       ; loc_36
+F000:717C    loc			       ; loc_37
+F000:7331    loc			       ; loc_38
+F000:7382    loc			       ; loc_39
+F000:7384    loc			       ; loc_40
+F000:738E    loc			       ; loc_41
+F000:73BB    loc			       ; loc_42
+F000:73C9    loc			       ; loc_43
+F000:746D    loc			       ; loc_44
+F000:74A2    loc			       ; loc_45
+F000:74AE    loc			       ; loc_46
+F000:74B4    loc			       ; loc_47
+F000:74B6    loc			       ; loc_48
+F000:74B9    loc			       ; loc_49
+F000:74C9    loc			       ; loc_50
+F000:74D3    loc			       ; loc_51
+F000:74E2    loc			       ; locloop_52
+F000:74E8    loc			       ; loc_53
+F000:74F5    loc			       ; loc_54
+F000:7501    loc			       ; loc_55
+F000:7513    loc			       ; loc_56
+F000:7524    loc			       ; loc_57
+F000:7528    loc, near, c 10	int_10h_video
+F000:7540    loc			       ; loc_58
+F000:7555    loc			       ; loc_59
+F000:7557    loc			       ; loc_60
+F000:7559    loc			       ; loc_61
+F000:755C    loc			       ; loc_62
+F000:7561    loc			       ; loc_63
+F000:7563    loc			       ; loc_64
+F000:7564    loc			       ; loc_65
+F000:756B    loc			       ; loc_66
+F000:756F    loc			       ; loc_67
+F000:7572    loc			       ; loc_68
+F000:7575    loc			       ; loc_69
+F000:7577    loc			       ; loc_70
+F000:7578    loc			       ; loc_71
+F000:7579    loc			       ; loc_72
+F000:757D    loc			       ; loc_73
+F000:758F    loc			       ; loc_74
+F000:759E    loc			       ; loc_75
+F000:75A4    forced, od F000
+F000:75BE    loc			       ; loc_76
+F000:75DC    loc			       ; loc_77
+F000:75E7    forced, od 0040
+F000:75ED    loc			       ; locloop_78
+F000:7603    loc			       ; loc_79
+F000:760F    loc			       ; locloop_80
+F000:7641    loc			       ; loc_81
+F000:765F    loc			       ; loc_82
+F000:767E    loc			       ; loc_83
+F000:7698    loc			       ; loc_84
+F000:76B2    loc			       ; loc_85
+F000:76DF    loc			       ; loc_86
+F000:76E6    loc			       ; loc_87
+F000:770E    forced, od F000
+F000:7719    loc			       ; loc_88
+F000:7726    loc			       ; loc_89
+F000:772E    loc			       ; loc_90
+F000:7746    loc			       ; loc_91
+F000:7759    loc			       ; loc_92
+F000:775C    loc			       ; loc_93
+F000:775F    loc			       ; loc_94
+F000:776A    loc			       ; loc_95
+F000:776E    loc			       ; loc_96
+F000:7772    loc			       ; loc_97
+F000:77AA    loc			       ; loc_98
+F000:77C1    loc			       ; loc_99
+F000:77D0    loc			       ; loc_100
+F000:77D6    loc			       ; locloop_101
+F000:77E2    loc			       ; loc_102
+F000:77E6    loc			       ; loc_103
+F000:77F2    loc			       ; loc_104
+F000:77FF    loc			       ; loc_105
+F000:781C    loc			       ; loc_106
+F000:783E    loc			       ; loc_107
+F000:7842    forced, od 0040
+F000:7846    loc			       ; loc_108
+F000:7849    loc			       ; loc_109
+F000:7861    loc			       ; loc_110
+F000:7872    loc			       ; loc_111
+F000:7875    loc			       ; loc_112
+F000:7881    forced, od 0040
+F000:7885    forced, od 0040
+F000:789A    loc			       ; loc_113
+F000:789F    loc			       ; loc_114
+F000:78A7    forced, od 0040
+F000:78B9    loc			       ; loc_115
+F000:78C6    loc			       ; loc_116
+F000:78CA    loc			       ; loc_117
+F000:78DF    loc			       ; loc_118
+F000:78E4    loc			       ; loc_119
+F000:7901    loc			       ; loc_ret_120
+F000:7912    loc			       ; loc_121
+F000:794C    loc			       ; locloop_122
+F000:795B    loc			       ; locloop_123
+F000:7962    loc			       ; loc_124
+F000:7968    forced, od 0040
+F000:7968    loc			       ; loc_125
+F000:7992    loc			       ; loc_126
+F000:79A3    loc			       ; loc_127
+F000:79B2    loc			       ; loc_128
+F000:79BA    forced, od C000
+F000:79BF    loc			       ; loc_129
+F000:79E8    loc			       ; loc_130
+F000:79FC    loc			       ; loc_131
+F000:7A2F    loc			       ; loc_132
+F000:7A37    loc			       ; loc_133
+F000:7A39    loc			       ; loc_134
+F000:7A44    loc			       ; loc_135
+F000:7A46    loc			       ; locloop_136
+F000:7A55    loc			       ; locloop_137
+F000:7A5C    loc			       ; loc_138
+F000:7A70    loc			       ; loc_139
+F000:7A72    loc			       ; loc_140
+F000:7AA3    loc			       ; loc_141
+F000:7AA5    loc			       ; locloop_142
+F000:7AAB    loc			       ; loc_143
+F000:7AB6    loc			       ; loc_144
+F000:7AB8    loc			       ; locloop_145
+F000:7AC7    loc			       ; locloop_146
+F000:7ACE    loc			       ; loc_147
+F000:7AD7    loc			       ; loc_148
+F000:7AF5    forced, od C000
+F000:7B0E    loc			       ; loc_149
+F000:7B1D    loc			       ; loc_150
+F000:7B24    loc			       ; loc_151
+F000:7B27    loc			       ; locloop_152
+F000:7B32    loc			       ; loc_153
+F000:7B42    loc			       ; loc_154
+F000:7B58    loc			       ; loc_155
+F000:7B5B    loc			       ; loc_156
+F000:7B5E    loc			       ; locloop_157
+F000:7B67    loc			       ; loc_158
+F000:7B75    loc			       ; loc_159
+F000:7B9D    loc			       ; loc_160
+F000:7BA4    loc			       ; loc_161
+F000:7BC1    loc			       ; loc_162
+F000:7BC7    loc			       ; loc_163
+F000:7BD8    loc			       ; loc_164
+F000:7BF0    loc			       ; loc_165
+F000:7BF5    loc			       ; loc_166
+F000:7BF9    loc			       ; loc_167
+F000:7BFF    loc			       ; loc_168
+F000:7C12    loc			       ; loc_169
+F000:7C17    loc			       ; loc_170
+F000:7C19    loc			       ; loc_171
+F000:7C50    loc			       ; locloop_172
+F000:7C65    loc			       ; loc_173
+F000:7C6F    loc			       ; loc_174
+F000:7C79    loc			       ; loc_175
+F000:7C80    loc			       ; loc_176
+F000:7C8F    loc			       ; loc_ret_177
+F000:7CB8    loc			       ; loc_178
+F000:7CBC    loc			       ; loc_179
+F000:7CCE    loc			       ; loc_ret_180
+F000:7CDC    loc			       ; loc_181
+F000:7CF9    loc			       ; loc_182
+F000:7D12    loc			       ; locloop_183
+F000:7D20    loc			       ; loc_184
+F000:7D53    loc			       ; locloop_185
+F000:7D65    loc			       ; loc_186
+F000:7D82    loc			       ; locloop_187
+F000:7D9B    loc			       ; loc_188
+F000:7DA4    loc			       ; loc_189
+F000:7DA6    loc			       ; loc_190
+F000:7DAE    loc			       ; loc_191
+F000:7DB1    loc			       ; loc_192
+F000:7DC2    loc			       ; locloop_193
+F000:7DD6    loc			       ; loc_194
+F000:7DDC    loc			       ; loc_195
+F000:7DE7    loc			       ; loc_196
+F000:7DF8    loc			       ; loc_ret_197
+F000:7DFB    forced, od F000
+F000:7DFF    loc			       ; loc_198
+F000:7E0D    loc			       ; loc_199
+F000:7E10    loc			       ; loc_200
+F000:7E28    loc			       ; loc_201
+F000:7E2C    loc			       ; loc_202
+F000:7E38    loc			       ; loc_203
+F000:7E3A    loc			       ; loc_204
+F000:7E3D    loc			       ; loc_205
+F000:7E40    loc			       ; loc_206
+F000:7E5B    loc			       ; loc_207
+F000:7E5D    loc			       ; loc_208
+F000:7E5F    loc			       ; loc_ret_209
+F000:7E88    loc			       ; loc_210
+F000:7E89    loc			       ; loc_211
+F000:7EBA    loc			       ; loc_212
+F000:7ED2    loc			       ; loc_213
+F000:7F13    loc			       ; loc_214
+F000:7F21    loc			       ; loc_215
+F000:7F38    loc			       ; loc_216
+F000:7F43    loc			       ; loc_217
+F000:7F47    loc			       ; locloop_218
+F000:7F5B    loc			       ; loc_219
+F000:7F6C    loc			       ; loc_220
+F000:7F71    loc			       ; loc_221
+F000:7F76    loc			       ; locloop_222
+F000:7FA2    loc			       ; loc_223
+F000:7FA7    loc			       ; locloop_224
+F000:7FB4    loc			       ; loc_225
+F000:834B    loc			       ; loc_226
+F000:8370    loc, near, c 29	system_reset
+F000:8375    loc			       ; loc_227
+F000:837A    loc			       ; loc_228
+F000:837D    loc			       ; loc_229
+F000:83AD    loc			       ; loc_230
+F000:83B0    forced, od F000
+F000:83B8    loc			       ; loc_231
+F000:83BB    loc			       ; loc_232
+F000:83BC    loc			       ; loc_233
+F000:83E8    loc			       ; loc_234
+F000:83EC    loc			       ; loc_235
+F000:8401    loc			       ; loc_236
+F000:8411    loc			       ; loc_237
+F000:8415    loc			       ; loc_238
+F000:8420    loc			       ; loc_239
+F000:8422    forced, od 5000
+F000:842B    loc			       ; loc_240
+F000:842E    loc			       ; loc_241
+F000:8452    loc			       ; loc_242
+F000:8458    loc			       ; loc_243
+F000:845B    loc			       ; loc_244
+F000:84DB    loc			       ; loc_245
+F000:84E1    loc			       ; loc_246
+F000:851D    loc			       ; loc_247
+F000:852B    loc			       ; loc_248
+F000:852F    loc			       ; loc_249
+F000:8537    loc			       ; loc_250
+F000:854C    loc			       ; loc_251
+F000:8559    loc			       ; loc_252
+F000:8576    loc			       ; loc_253
+F000:858F    loc			       ; loc_254
+F000:8595    loc			       ; loc_255
+F000:859B    loc			       ; loc_256
+F000:85B8    loc			       ; loc_257
+F000:85BD    loc			       ; loc_258
+F000:85C5    loc			       ; loc_259
+F000:85D5    forced, ol F000
+F000:85E2    loc			       ; loc_260
+F000:85EF    loc			       ; loc_261
+F000:8600    loc			       ; loc_262
+F000:8614    loc			       ; loc_263
+F000:862A    loc			       ; loc_264
+F000:862D    loc			       ; loc_265
+F000:8669    loc			       ; loc_266
+F000:8671    loc			       ; loc_267
+F000:8677    loc			       ; loc_268
+F000:869C    loc			       ; loc_269
+F000:86A9    loc			       ; loc_270
+F000:86B6    loc			       ; loc_271
+F000:86D3    loc			       ; loc_ret_272
+F000:870E    loc			       ; loc_273
+F000:8712    loc			       ; loc_ret_274
+F000:8716    loc			       ; loc_275
+F000:872E    loc			       ; loc_276
+F000:8731    loc, near, c 19	int_19h_bootup
+F000:873A    forced, od 0000
+F000:8742    forced, od 0000
+F000:8779    loc			       ; loc_277
+F000:877E    loc			       ; loc_278
+F000:8789    loc			       ; loc_279
+F000:87A2    loc			       ; loc_280
+F000:87AC    forced, od 0040
+F000:87AC    loc			       ; loc_281
+F000:87BC    loc			       ; loc_282
+F000:87C8    forced, od 0000
+F000:87CB    loc			       ; locloop_283
+F000:87E3    loc			       ; loc_284
+F000:87E6    loc, near, c 09	int_9_keyboard
+F000:87F5    loc			       ; loc_285
+F000:880B    loc			       ; loc_286
+F000:8816    loc			       ; loc_287
+F000:8820    loc			       ; loc_288
+F000:8829    loc			       ; loc_289
+F000:882F    loc			       ; loc_290
+F000:8848    loc			       ; loc_291
+F000:8864    loc			       ; loc_292
+F000:8869    loc			       ; loc_293
+F000:886C    loc			       ; loc_294
+F000:8877    loc			       ; loc_295
+F000:8880    loc			       ; loc_296
+F000:8883    loc			       ; loc_297
+F000:888A    loc			       ; loc_298
+F000:8898    loc			       ; loc_299
+F000:88A2    loc			       ; loc_300
+F000:88AD    loc			       ; loc_301
+F000:88B5    loc			       ; loc_302
+F000:88C4    loc			       ; loc_303
+F000:88E3    loc			       ; loc_304
+F000:88EA    loc			       ; loc_305
+F000:890D    loc			       ; loc_306
+F000:8910    loc			       ; loc_307
+F000:8913    loc			       ; loc_308
+F000:892B    loc			       ; loc_309
+F000:8935    loc			       ; loc_310
+F000:8950    loc			       ; loc_311
+F000:8959    loc			       ; loc_312
+F000:8974    loc			       ; loc_313
+F000:8982    loc			       ; loc_314
+F000:8995    loc			       ; loc_315
+F000:8997    loc			       ; loc_316
+F000:89AD    loc			       ; loc_317
+F000:89B2    loc			       ; loc_318
+F000:89B8    loc			       ; loc_319
+F000:89C0    forced, od F000
+F000:89CD    forced, od F000
+F000:89CD    loc			       ; loc_320
+F000:89E7    loc			       ; loc_321
+F000:89EA    loc			       ; loc_322
+F000:89F4    loc			       ; loc_323
+F000:89FF    loc			       ; loc_324
+F000:8A06    loc			       ; loc_325
+F000:8A08    loc			       ; loc_326
+F000:8A0A    loc			       ; loc_327
+F000:8A0D    loc			       ; loc_328
+F000:8A1A    loc			       ; loc_329
+F000:8A1D    forced, od F000
+F000:8A2D    loc			       ; loc_330
+F000:8A49    loc			       ; loc_331
+F000:8A53    loc			       ; loc_332
+F000:8A60    loc			       ; loc_333
+F000:8A62    loc			       ; loc_334
+F000:8A77    loc			       ; loc_335
+F000:8A79    loc			       ; loc_336
+F000:8A88    loc			       ; loc_337
+F000:8A8A    loc			       ; loc_338
+F000:8A8D    loc			       ; loc_339
+F000:8A90    loc			       ; loc_340
+F000:8AA8    loc			       ; loc_341
+F000:8AAF    loc			       ; loc_342
+F000:8AB9    loc			       ; loc_343
+F000:8AC9    loc			       ; loc_344
+F000:8AD0    loc			       ; loc_345
+F000:8AE3    loc			       ; loc_346
+F000:8AE8    loc			       ; loc_347
+F000:8AF1    loc			       ; loc_348
+F000:8AFB    loc			       ; loc_349
+F000:8B12    loc			       ; loc_350
+F000:8B17    loc			       ; loc_351
+F000:8B33    loc			       ; loc_352
+F000:8B36    loc			       ; loc_353
+F000:8B56    loc			       ; loc_354
+F000:8B58    loc			       ; loc_355
+F000:8B61    loc			       ; loc_356
+F000:8B66    loc			       ; loc_357
+F000:8B6B    loc			       ; loc_358
+F000:8B6E    loc			       ; loc_359
+F000:8B7A    loc			       ; loc_360
+F000:8B94    loc			       ; loc_361
+F000:8B9E    loc			       ; loc_362
+F000:8BB2    loc			       ; loc_363
+F000:8C2A    loc			       ; loc_364
+F000:8C30    loc			       ; loc_365
+F000:8C35    loc			       ; loc_366
+F000:8C48    loc			       ; loc_367
+F000:8C4A    loc, near, c 1A	int_1Ah_RTC
+F000:8C4F    loc			       ; loc_368
+F000:8C52    loc			       ; loc_369
+F000:8C67    loc			       ; loc_370
+F000:8C69    loc			       ; loc_371
+F000:8CCA    loc			       ; loc_372
+F000:8CD9    forced, od F000
+F000:8CE4    loc			       ; loc_373
+F000:8CED    loc			       ; loc_374
+F000:8CF4    loc			       ; loc_375
+F000:8CFA    loc			       ; loc_376
+F000:8CFF    loc			       ; loc_377
+F000:8D0A    loc			       ; loc_378
+F000:8D19    loc			       ; loc_379
+F000:8D1B    loc			       ; loc_380
+F000:8D61    loc			       ; loc_381
+F000:8D8E    loc			       ; loc_382
+F000:8D90    loc			       ; loc_383
+F000:8DB1    loc			       ; loc_384
+F000:8DB2    loc			       ; loc_385
+F000:8DC4    loc			       ; loc_386
+F000:8DC7    loc			       ; loc_387
+F000:8DC8    loc			       ; loc_388
+F000:8DD1    loc			       ; loc_389
+F000:8DDA    loc			       ; loc_390
+F000:8DE2    loc			       ; loc_391
+F000:8DE7    loc			       ; loc_392
+F000:8E21    loc			       ; loc_393
+F000:8E38    loc			       ; loc_394
+F000:8E3E    loc			       ; loc_395
+F000:8E44    loc			       ; loc_396
+F000:8E60    loc			       ; loc_397
+F000:8E63    loc			       ; loc_398
+F000:8E6A    loc			       ; loc_399
+F000:8E73    loc			       ; loc_400
+F000:8E78    loc			       ; loc_401
+F000:8EBA    loc			       ; loc_402
+F000:8EC1    loc			       ; loc_403
+F000:8EDF    loc			       ; loc_404
+F000:8EE4    loc			       ; loc_405
+F000:8EEE    loc			       ; loc_406
+F000:8F11    loc			       ; loc_407
+F000:8F2E    loc			       ; locloop_408
+F000:8F3A    loc			       ; loc_409
+F000:8F3E    loc			       ; loc_410
+F000:8F43    forced, od F000
+F000:8F48    loc			       ; loc_411
+F000:8F56    loc			       ; loc_ret_412
+F000:8F61    loc			       ; loc_413
+F000:8F64    loc			       ; loc_414
+F000:8F79    loc			       ; loc_415
+F000:8F83    loc			       ; loc_ret_416
+F000:90F2    forced, od 0000
+F000:90FE    forced, od 0000
+F000:911E    loc			       ; loc_ret_417
+F000:912B    loc			       ; loc_ret_418
+F000:912F    loc			       ; locloop_419
+F000:913C    loc			       ; loc_420
+F000:9140    loc			       ; loc_421
+F000:917C    loc			       ; loc_422
+F000:917E    loc			       ; loc_423
+F000:919D    loc			       ; loc_424
+F000:91A0    loc			       ; loc_425
+F000:91D7    loc			       ; locloop_426
+F000:91FB    loc			       ; loc_427
+F000:9203    loc			       ; loc_428
+F000:922A    forced, od 0040
+F000:922A    loc			       ; loc_429
+F000:922D    loc			       ; loc_430
+F000:9249    loc			       ; loc_431
+F000:924E    loc			       ; loc_432
+F000:9263    loc			       ; loc_433
+F000:926C    loc			       ; locloop_434
+F000:9275    loc			       ; loc_435
+F000:9325    loc			       ; loc_436
+F000:9347    loc			       ; locloop_437
+F000:9360    loc			       ; loc_438
+F000:937E    loc			       ; loc_439
+F000:938B    loc			       ; loc_440
+F000:938E    loc			       ; loc_441
+F000:9440    loc			       ; loc_442
+F000:9460    loc			       ; loc_443
+F000:9488    loc			       ; locloop_444
+F000:9499    forced, od 0040
+F000:94A9    loc			       ; locloop_445
+F000:94D9    loc			       ; loc_446
+F000:9528    forced, od 0040
+F000:952B    forced, od 0040
+F000:9540    loc			       ; loc_447
+F000:9555    loc			       ; locloop_448
+F000:9580    loc			       ; loc_449
+F000:9607    loc			       ; loc_450
+F000:962D    loc			       ; loc_451
+F000:9651    loc			       ; loc_452
+F000:9680    loc, near, c 15	int_15h_servics
+F000:9683    loc, near, c 02	int_2_NMI
+F000:969F    loc			       ; locloop_453
+F000:96A7    loc			       ; loc_454
+F000:96F9    loc			       ; loc_455
+F000:96FB    loc			       ; loc_ret_456
+F000:96FC    loc			       ; loc_457
+F000:9720    loc			       ; loc_458
+F000:9722    loc			       ; loc_459
+F000:9739    loc			       ; loc_460
+F000:973B    loc			       ; loc_461
+F000:9750    loc			       ; loc_462
+F000:9752    loc			       ; loc_463
+F000:9767    loc			       ; loc_464
+F000:9769    loc			       ; loc_465
+F000:977E    loc			       ; loc_466
+F000:9780    loc			       ; loc_467
+F000:9795    loc			       ; loc_468
+F000:9797    loc			       ; loc_469
+F000:97AC    loc			       ; loc_470
+F000:97AE    loc			       ; loc_471
+F000:97CA    forced, od 0040
+F000:97E6    loc			       ; loc_472
+F000:97F1    loc			       ; loc_473
+F000:9814    loc			       ; loc_474
+F000:9817    loc			       ; loc_475
+F000:982C    loc			       ; loc_476
+F000:982E    loc			       ; loc_477
+F000:984F    loc			       ; loc_478
+F000:985B    loc			       ; loc_479
+F000:9865    loc			       ; loc_480
+F000:986F    loc			       ; loc_481
+F000:9878    loc			       ; loc_482
+F000:9887    loc			       ; loc_483
+F000:9889    loc			       ; loc_484
+F000:98BE    loc			       ; loc_485
+F000:98CF    loc			       ; loc_486
+F000:990C    loc			       ; loc_487
+F000:9913    loc			       ; loc_488
+F000:9928    loc			       ; loc_489
+F000:9934    loc			       ; loc_490
+F000:9939    loc			       ; loc_491
+F000:9964    loc			       ; locloop_492
+F000:9978    loc			       ; loc_493
+F000:99A2    loc			       ; loc_494
+F000:99A7    forced, od F000
+F000:99AF    loc			       ; locloop_495
+F000:99CA    loc			       ; loc_496
+F000:99CD    loc			       ; loc_497
+F000:99E7    loc			       ; loc_498
+F000:9A6E    loc			       ; loc_499
+F000:9A77    loc			       ; loc_500
+F000:9ABA    loc			       ; loc_501
+F000:9ABC    loc			       ; loc_502
+F000:9AC3    loc			       ; loc_503
+F000:9AC4    loc			       ; loc_504
+F000:9AC6    loc			       ; loc_505
+F000:9ACF    forced, od F000
+F000:9AD2    loc			       ; loc_506
+F000:9ADD    loc			       ; loc_507
+F000:9AF7    loc			       ; loc_508
+F000:9B13    loc			       ; loc_509
+F000:9B53    loc			       ; loc_510
+F000:9B5E    loc			       ; loc_511
+F000:9B63    loc			       ; loc_512
+F000:9B95    loc			       ; loc_513
+F000:9BA0    loc			       ; loc_514
+F000:9BA5    loc			       ; loc_515
+F000:9BAB    loc			       ; loc_516
+F000:9BD7    loc			       ; loc_517
+F000:9C2D    forced, od F000
+F000:9C32    loc			       ; loc_518
+F000:9C40    loc			       ; loc_519
+F000:9C46    loc			       ; loc_520
+F000:9C52    loc			       ; loc_521
+F000:9C58    loc			       ; loc_522
+F000:9C5E    loc			       ; loc_523
+F000:9C65    loc			       ; loc_524
+F000:9C78    loc			       ; loc_525
+F000:9C7C    loc			       ; loc_526
+F000:9C7E    loc			       ; loc_527
+F000:9C89    loc			       ; loc_528
+F000:9C92    loc			       ; loc_529
+F000:9CB7    loc			       ; loc_530
+F000:9CC2    forced, od F000
+F000:9CC5    loc			       ; loc_531
+F000:9CCF    loc			       ; loc_532
+F000:9CD5    loc			       ; loc_533
+F000:9CD9    loc			       ; loc_534
+F000:9CE1    loc			       ; loc_535
+F000:9CE3    loc			       ; loc_536
+F000:9D05    forced, od F000
+F000:9D0A    loc			       ; loc_537
+F000:9D18    loc			       ; loc_538
+F000:9D1E    loc			       ; loc_539
+F000:9D2A    loc			       ; loc_540
+F000:9D30    loc			       ; loc_541
+F000:9D36    loc			       ; loc_542
+F000:9D3D    loc			       ; loc_543
+F000:9D50    loc			       ; loc_544
+F000:9D54    loc			       ; loc_545
+F000:9D56    loc			       ; loc_546
+F000:9D61    loc			       ; loc_547
+F000:9D6A    loc			       ; loc_548
+F000:9D7A    forced, od F000
+F000:9D8A    loc			       ; loc_549
+F000:9D8F    loc			       ; loc_550
+F000:9DA3    loc			       ; loc_551
+F000:9DAD    loc			       ; loc_552
+F000:9DB7    loc			       ; locloop_553
+F000:9DD0    forced, od 0040
+F000:9DEF    loc			       ; loc_554
+F000:9DFD    loc			       ; loc_555
+F000:9E02    forced, od 0040
+F000:9E10    forced, od 0040
+F000:9E19    forced, od 0040
+F000:9E2A    loc			       ; loc_556
+F000:9E31    forced, od 0040
+F000:9E43    forced, od 0040
+F000:9E43    loc			       ; locloop_557
+F000:9E51    loc			       ; loc_558
+F000:9E61    forced, od 0040
+F000:9E73    loc			       ; loc_559
+F000:9E78    forced, od 3000
+F000:9E85    loc			       ; loc_560
+F000:9E8B    loc			       ; loc_561
+F000:9E8D    loc			       ; loc_562
+F000:9E8F    loc			       ; loc_563
+F000:9E97    loc, near, c 26	int_13h_hrd_dsk
+F000:9EA6    loc			       ; loc_564
+F000:9EC4    loc			       ; loc_565
+F000:9ED9    loc			       ; loc_566
+F000:9EE6    loc			       ; loc_567
+F000:9EF9    loc			       ; loc_568
+F000:9F03    loc			       ; loc_569
+F000:9F4A    loc			       ; loc_570
+F000:9F51    loc			       ; loc_ret_571
+F000:9F5A    loc			       ; loc_572
+F000:9F61    loc			       ; loc_573
+F000:9F85    loc			       ; loc_574
+F000:9F8B    loc			       ; loc_575
+F000:9F8E    loc			       ; loc_576
+F000:9FA9    loc			       ; loc_577
+F000:9FD9    loc			       ; loc_578
+F000:A00D    loc			       ; loc_579
+F000:A00F    loc			       ; loc_580
+F000:A013    loc			       ; loc_ret_581
+F000:A02E    loc			       ; loc_ret_582
+F000:A037    loc			       ; loc_583
+F000:A046    loc			       ; loc_ret_584
+F000:A067    loc			       ; loc_ret_585
+F000:A070    loc			       ; loc_586
+F000:A07A    loc			       ; loc_587
+F000:A07C    loc			       ; loc_588
+F000:A0D9    loc			       ; loc_ret_589
+F000:A0E8    loc			       ; loc_590
+F000:A100    loc			       ; loc_591
+F000:A11F    loc			       ; loc_592
+F000:A156    loc			       ; loc_ret_593
+F000:A165    loc			       ; loc_ret_594
+F000:A17A    loc			       ; loc_595
+F000:A17E    loc			       ; loc_ret_596
+F000:A17F    loc			       ; loc_597
+F000:A199    loc			       ; loc_598
+F000:A1A8    loc			       ; loc_599
+F000:A1AB    loc			       ; loc_600
+F000:A1C1    loc			       ; loc_601
+F000:A1D3    loc			       ; loc_602
+F000:A1E4    loc			       ; locloop_603
+F000:A1F3    loc			       ; loc_604
+F000:A1FC    loc			       ; loc_ret_605
+F000:A1FD    loc			       ; loc_606
+F000:A21A    loc			       ; loc_607
+F000:A229    loc			       ; loc_608
+F000:A231    loc			       ; loc_609
+F000:A248    loc			       ; loc_610
+F000:A25E    loc			       ; locloop_611
+F000:A26A    loc			       ; loc_612
+F000:A279    loc			       ; loc_613
+F000:A282    loc			       ; loc_614
+F000:A2CA    loc			       ; loc_ret_615
+F000:A2F0    loc			       ; loc_616
+F000:A2F4    loc			       ; loc_ret_617
+F000:A308    loc			       ; loc_618
+F000:A317    loc			       ; loc_619
+F000:A31A    loc			       ; loc_ret_620
+F000:A349    loc			       ; loc_621
+F000:A34D    loc			       ; loc_ret_622
+F000:A35A    loc			       ; loc_623
+F000:A387    loc			       ; loc_624
+F000:A393    forced, od 0000
+F000:A3B1    loc			       ; loc_625
+F000:A3BB    forced, od F000
+F000:A3C0    loc			       ; loc_626
+F000:A3C3    loc			       ; loc_627
+F000:A3D4    loc			       ; locloop_628
+F000:A3DD    loc			       ; loc_629
+F000:A3EF    loc			       ; loc_630
+F000:A412    loc			       ; locloop_631
+F000:A42A    loc			       ; loc_632
+F000:A42B    loc			       ; loc_633
+F000:A434    loc			       ; locloop_634
+F000:A454    loc			       ; loc_635
+F000:A45D    loc			       ; loc_636
+F000:A464    loc			       ; loc_637
+F000:A473    forced, od 0040
+F000:A479    loc			       ; loc_638
+F000:A483    loc			       ; loc_639
+F000:A48B    loc			       ; loc_640
+F000:A490    loc			       ; loc_641
+F000:A4AF    loc			       ; loc_642
+F000:A4B0    loc			       ; loc_643
+F000:A507    loc			       ; loc_644
+F000:A514    loc			       ; loc_ret_645
+F000:A576    loc			       ; loc_ret_646
+F000:A5F1    loc			       ; loc_647
+F000:A60D    loc			       ; loc_648
+F000:A619    loc			       ; loc_649
+F000:A61A    loc			       ; loc_650
+F000:A61E    loc			       ; loc_651
+F000:A634    loc			       ; loc_652
+F000:A638    loc			       ; loc_653
+F000:A68C    loc			       ; loc_654
+F000:A6BD    loc			       ; loc_655
+F000:A6D8    loc			       ; loc_656
+F000:A6DF    loc			       ; loc_657
+F000:A713    loc			       ; loc_658
+F000:A73C    loc			       ; loc_659
+F000:A769    loc			       ; loc_660
+F000:A774    loc			       ; loc_661
+F000:A7EE    forced, od 0000
+F000:A805    loc			       ; loc_662
+F000:A81B    loc			       ; locloop_663
+F000:A824    loc			       ; loc_664
+F000:A833    loc			       ; loc_665
+F000:A835    loc			       ; loc_666
+F000:A854    loc			       ; loc_667
+F000:A86E    loc			       ; loc_668
+F000:A86F    loc			       ; loc_669
+F000:A898    loc			       ; loc_670
+F000:A89A    loc			       ; loc_671
+F000:A8C0    forced, od 0040
+F000:A8DB    loc			       ; loc_672
+F000:A8EE    loc			       ; loc_673
+F000:A8F9    loc			       ; loc_674
+F000:A905    loc			       ; loc_675
+F000:A97C    loc			       ; loc_676
+F000:A97D    loc			       ; loc_ret_677
+F000:A9A1    loc			       ; loc_ret_678
+F000:A9E3    loc			       ; loc_ret_679
+F000:A9F3    loc			       ; loc_ret_680
+F000:AA0E    loc			       ; loc_ret_681
+F000:AA0F    loc			       ; loc_682
+F000:AA28    loc			       ; loc_683
+F000:AA5A    loc			       ; loc_684
+F000:AA62    loc			       ; locloop_685
+F000:AAAC    loc, near, c 16	int_16h_keybd
+F000:AAB0    loc			       ; loc_686
+F000:AAD1    loc			       ; loc_687
+F000:AADD    loc			       ; loc_688
+F000:AAE1    loc			       ; loc_689
+F000:AAFC    loc			       ; loc_690
+F000:AAFF    loc			       ; loc_691
+F000:AB2B    loc			       ; loc_692
+F000:AB2D    loc			       ; loc_693
+F000:AB41    loc			       ; loc_694
+F000:AB46    loc			       ; loc_695
+F000:AB4E    loc			       ; loc_696
+F000:AB58    loc			       ; loc_697
+F000:AB68    loc			       ; loc_698
+F000:AB71    loc			       ; loc_699
+F000:AB78    loc			       ; loc_700
+F000:AB8D    loc			       ; loc_701
+F000:AB92    loc			       ; loc_702
+F000:ABA4    loc			       ; loc_703
+F000:ABA8    loc			       ; loc_704
+F000:ABC9    loc			       ; loc_705
+F000:ABD4    loc			       ; loc_706
+F000:ABD5    loc			       ; loc_707
+F000:ABD6    loc			       ; loc_708
+F000:ABD8    loc			       ; loc_709
+F000:ABDD    loc			       ; loc_710
+F000:ABF9    loc			       ; loc_711
+F000:AC1A    loc			       ; loc_712
+F000:AC35    loc			       ; loc_713
+F000:AC49    loc			       ; loc_714
+F000:AC6B    loc			       ; loc_715
+F000:AC6E    loc			       ; loc_716
+F000:AC8E    loc			       ; loc_717
+F000:AC9A    loc			       ; loc_718
+F000:AC9B    loc			       ; loc_719
+F000:ACBD    loc			       ; loc_ret_720
+F000:ACC1    loc			       ; locloop_721
+F000:ACF8    loc			       ; loc_722
+F000:AD08    loc			       ; loc_723
+F000:AD09    loc			       ; loc_ret_724
+F000:AD1B    loc			       ; loc_725
+F000:AD35    loc			       ; loc_726
+F000:AD37    loc			       ; loc_ret_727
+F000:AD56    loc			       ; loc_728
+F000:AD60    loc			       ; loc_729
+F000:AD6C    loc			       ; loc_730
+F000:AD70    loc			       ; locloop_731
+F000:AD74    forced, od F000
+F000:AD74    loc			       ; loc_732
+F000:AD7A    loc			       ; loc_733
+F000:AD87    loc			       ; loc_734
+F000:AD91    loc			       ; loc_ret_735
+F000:ADA5    loc			       ; loc_736
+F000:AE2A    loc			       ; loc_ret_737
+F000:AE45    loc			       ; loc_738
+F000:AEAB    loc			       ; loc_739
+F000:AEAE    loc			       ; loc_ret_740
+F000:AF09    loc			       ; loc_741
+F000:AF4B    loc			       ; loc_ret_742
+F000:AF4C    forced, od F000
+F000:AF4C    loc			       ; loc_743
+F000:AF4F    loc			       ; loc_744
+F000:AF69    loc			       ; loc_745
+F000:AF73    loc			       ; loc_746
+F000:AF9C    loc			       ; loc_747
+F000:AF9E    loc			       ; loc_748
+F000:B05D    loc			       ; loc_749
+F000:B06E    loc			       ; loc_ret_750
+F000:B0B0    loc			       ; loc_751
+F000:B0CE    loc			       ; loc_752
+F000:B0DC    loc			       ; loc_753
+F000:B0E9    forced, od F000
+F000:B0F1    loc			       ; loc_754
+F000:B100    loc			       ; loc_755
+F000:B10C    forced, od F000
+F000:B114    loc			       ; loc_756
+F000:B124    forced, od F000
+F000:B124    loc			       ; loc_757
+F000:B12C    forced, od F000
+F000:B134    loc			       ; loc_758
+F000:B136    loc			       ; loc_759
+F000:B13C    forced, od F000
+F000:B144    loc			       ; loc_760
+F000:B148    forced, od F000
+F000:B14F    loc			       ; loc_761
+F000:B152    forced, od F000
+F000:B159    loc			       ; loc_762
+F000:B15B    loc			       ; loc_ret_763
+F000:B15C    loc			       ; loc_764
+F000:B16C    forced, od F000
+F000:B173    loc			       ; loc_765
+F000:B17C    forced, od F000
+F000:B183    loc			       ; loc_766
+F000:B190    forced, od F000
+F000:B197    loc			       ; loc_767
+F000:B199    loc			       ; loc_768
+F000:B1B7    loc			       ; loc_769
+F000:B1C9    loc			       ; loc_770
+F000:B224    loc			       ; loc_771
+F000:B265    loc			       ; loc_772
+F000:B26D    forced, od F000
+F000:B2E8    loc			       ; loc_773
+F000:B323    loc			       ; loc_774
+F000:B382    loc			       ; loc_775
+F000:B38E    loc			       ; loc_776
+F000:B395    loc			       ; loc_777
+F000:B39A    loc			       ; loc_778
+F000:B39E    loc			       ; loc_779
+F000:B3A5    loc			       ; loc_780
+F000:B3BA    loc			       ; locloop_781
+F000:B3C0    loc			       ; loc_782
+F000:B3C3    loc			       ; locloop_783
+F000:B3D4    forced, od F000
+F000:B3DC    forced, od F000
+F000:B3DC    loc			       ; loc_784
+F000:B3E4    loc			       ; loc_785
+F000:B3E7    loc			       ; loc_786
+F000:B3F0    loc			       ; loc_787
+F000:B406    loc			       ; loc_788
+F000:B408    forced, od F000
+F000:B410    loc			       ; loc_789
+F000:B414    forced, od F000
+F000:B41C    forced, od F000
+F000:B41C    loc			       ; loc_790
+F000:B424    loc			       ; loc_791
+F000:B430    forced, od F000
+F000:B438    loc			       ; loc_792
+F000:B43C    forced, od F000
+F000:B444    loc			       ; loc_793
+F000:B448    forced, od F000
+F000:B450    loc			       ; loc_794
+F000:B458    forced, od F000
+F000:B460    loc			       ; loc_795
+F000:B464    forced, od F000
+F000:B46C    loc			       ; loc_796
+F000:B474    forced, od F000
+F000:B47C    loc			       ; loc_797
+F000:B492    loc			       ; loc_798
+F000:B4A4    loc			       ; loc_799
+F000:B4A7    loc			       ; loc_800
+F000:B4AB    loc			       ; locloop_801
+F000:B4B7    loc			       ; loc_802
+F000:B4CD    loc			       ; loc_803
+F000:B4E5    loc			       ; loc_ret_804
+F000:B4E6    loc			       ; loc_805
+F000:B4EE    loc			       ; loc_ret_806
+F000:B4FE    loc			       ; loc_807
+F000:B51B    loc			       ; loc_808
+F000:B535    loc			       ; loc_809
+F000:B53A    loc			       ; loc_810
+F000:B54D    loc			       ; loc_811
+F000:B552    loc			       ; loc_812
+F000:B565    loc			       ; loc_813
+F000:B572    loc			       ; loc_814
+F000:B58D    loc			       ; loc_815
+F000:B596    loc			       ; loc_816
+F000:B5AA    loc			       ; loc_817
+F000:B5B7    loc			       ; loc_818
+F000:B5D2    loc			       ; loc_819
+F000:B5DB    loc			       ; loc_820
+F000:B5F1    loc			       ; loc_821
+F000:B5FE    loc			       ; loc_822
+F000:B619    loc			       ; loc_823
+F000:B622    loc			       ; loc_824
+F000:B631    loc			       ; loc_825
+F000:B645    loc			       ; loc_826
+F000:B656    loc			       ; loc_827
+F000:B663    loc			       ; loc_828
+F000:B67E    loc			       ; loc_829
+F000:B687    loc			       ; loc_830
+F000:B68C    loc			       ; loc_831
+F000:B704    loc			       ; loc_ret_832
+F000:B7A5    loc			       ; loc_833
+F000:B7D3    loc			       ; loc_834
+F000:B7E3    loc			       ; loc_835
+F000:B811    loc			       ; loc_836
+F000:BC01    loc			       ; locloop_837
+F000:BC47    loc			       ; loc_838
+F000:BC59    loc			       ; loc_839
+F000:BC5C    loc			       ; loc_840
+F000:BCA1    loc			       ; loc_841
+F000:BCA4    loc			       ; loc_ret_842
+F000:BCA7    loc, near, c 25	int_77h
+F000:BCA9    loc			       ; loc_843
+F000:BCC9    forced, od F000
+F000:BCC9    loc			       ; loc_844
+F000:BCD6    loc			       ; loc_845
+F000:BCD9    loc			       ; loc_846
+F000:BD9D    loc			       ; loc_847
+F000:BDF4    loc			       ; loc_848
+F000:BE00    loc			       ; loc_849
+F000:BE2D    loc			       ; loc_850
+F000:BE4F    loc			       ; loc_851
+F000:BE90    loc			       ; loc_852
+F000:BEA6    loc			       ; loc_853
+F000:BEBA    loc			       ; loc_854
+F000:BEBB    loc			       ; loc_ret_855
+F000:BEBC    loc			       ; loc_856
+F000:BECB    loc			       ; loc_857
+F000:BEE7    loc			       ; loc_858
+F000:BEFF    loc			       ; loc_859
+F000:BF08    loc			       ; loc_860
+F000:BF1A    loc			       ; loc_861
+F000:BF28    loc			       ; loc_862
+F000:BF44    loc			       ; loc_863
+F000:BF4E    loc			       ; loc_864
+F000:BF5A    loc			       ; loc_865
+F000:BF5E    loc			       ; loc_866
+F000:BF76    loc			       ; loc_ret_867
+F000:BF77    loc			       ; loc_868
+F000:BF7B    loc			       ; loc_869
+F000:BFDA    loc			       ; loc_870
+F000:BFE3    loc			       ; loc_871
+F000:BFF0    loc			       ; loc_872
+F000:C018    loc			       ; loc_873
+F000:C01C    loc			       ; loc_ret_874
+F000:C05E    forced, od 4000
+F000:C070    forced, od 4000
+F000:C08D    loc			       ; loc_875
+F000:C0A3    loc			       ; loc_876
+F000:C0A6    loc			       ; loc_877
+F000:C0C2    loc			       ; loc_878
+F000:C0D4    loc			       ; loc_879
+F000:C0DF    loc			       ; loc_880
+F000:C0F1    loc			       ; loc_881
+F000:C108    loc			       ; loc_882
+F000:C123    loc			       ; loc_883
+F000:C13A    loc			       ; loc_884
+F000:C16F    loc			       ; loc_885
+F000:C17A    loc			       ; loc_886
+F000:C1BA    loc			       ; locloop_887
+F000:C1CD    loc			       ; loc_888
+F000:C1E4    loc			       ; loc_889
+F000:C1F5    loc			       ; loc_890
+F000:C238    loc			       ; loc_891
+F000:C256    loc			       ; loc_892
+F000:C262    loc			       ; loc_893
+F000:C272    loc			       ; loc_894
+F000:C286    forced, od 0040
+F000:C2AB    loc			       ; loc_895
+F000:C2B4    loc			       ; loc_896
+F000:C2D3    loc			       ; loc_897
+F000:C2E4    loc			       ; loc_898
+F000:C30C    loc			       ; loc_899
+F000:C32C    loc			       ; locloop_900
+F000:C339    loc			       ; loc_901
+F000:C37B    loc			       ; loc_902
+F000:C39C    loc			       ; loc_903
+F000:C3AB    loc			       ; loc_904
+F000:C3BA    loc			       ; loc_905
+F000:C3C2    loc			       ; loc_906
+F000:C3CC    loc			       ; loc_907
+F000:C3DA    loc			       ; loc_908
+F000:C3FE    forced, od 4000
+F000:C405    loc			       ; loc_909
+F000:C40B    forced, od 4000
+F000:C40B    loc			       ; loc_910
+F000:C41A    loc			       ; loc_911
+F000:C41E    loc			       ; loc_912
+F000:C43C    loc			       ; loc_913
+F000:C448    loc			       ; loc_914
+F000:C456    loc			       ; loc_915
+F000:C45B    loc			       ; loc_916
+F000:C485    loc			       ; loc_917
+F000:C48B    loc			       ; loc_918
+F000:C493    loc			       ; loc_919
+F000:C4A4    loc			       ; loc_920
+F000:C4AE    loc			       ; loc_921
+F000:C4BD    loc			       ; loc_922
+F000:C4DD    loc			       ; loc_923
+F000:C4E3    forced, od 0040
+F000:C4E9    forced, od 4000
+F000:C4EF    loc			       ; locloop_924
+F000:C4F8    loc			       ; loc_925
+F000:C506    loc			       ; loc_926
+F000:C509    loc			       ; loc_927
+F000:C51D    loc			       ; loc_928
+F000:C52F    loc			       ; loc_929
+F000:C536    loc			       ; loc_930
+F000:C550    loc			       ; loc_931
+F000:C561    loc			       ; loc_932
+F000:C56D    loc			       ; loc_933
+F000:C570    loc			       ; loc_934
+F000:C57B    loc			       ; loc_935
+F000:C588    loc			       ; loc_936
+F000:C593    loc			       ; loc_937
+F000:C599    loc			       ; loc_938
+F000:C59F    forced, od F000
+F000:C5A5    loc			       ; loc_939
+F000:C5B6    loc			       ; loc_940
+F000:C5E9    loc			       ; loc_941
+F000:C604    loc			       ; loc_942
+F000:C616    loc			       ; loc_943
+F000:C618    forced, od 0040
+F000:C61E    loc			       ; loc_944
+F000:C640    loc			       ; loc_945
+F000:C652    loc			       ; loc_946
+F000:C659    loc			       ; loc_947
+F000:C67A    loc			       ; loc_948
+F000:C68F    loc			       ; loc_949
+F000:C6AF    loc			       ; loc_ret_950
+F000:C6EF    loc			       ; loc_951
+F000:C709    forced, od 2000
+F000:C711    loc			       ; locloop_952
+F000:C744    loc			       ; loc_953
+F000:C749    loc			       ; loc_954
+F000:C74F    loc			       ; loc_955
+F000:C762    loc			       ; loc_956
+F000:C775    loc			       ; loc_957
+F000:C7D5    loc			       ; loc_958
+F000:C7D8    loc			       ; loc_959
+F000:C811    forced, od 2000
+F000:C819    loc			       ; locloop_960
+F000:C838    loc			       ; loc_961
+F000:C85C    loc			       ; loc_962
+F000:C864    loc			       ; loc_963
+F000:C868    loc			       ; loc_964
+F000:C887    loc			       ; loc_965
+F000:C8A6    forced, od 2000
+F000:C8A9    forced, od 2000
+F000:C8CA    loc, near, c 13	int_13h_floppy
+F000:C8FA    loc			       ; loc_966
+F000:C900    loc			       ; loc_967
+F000:C90B    loc			       ; loc_968
+F000:C91B    forced, od 0040
+F000:C931    loc			       ; loc_969
+F000:C935    loc			       ; loc_970
+F000:C942    loc			       ; loc_971
+F000:C959    loc			       ; loc_972
+F000:C96C    loc			       ; loc_ret_973
+F000:C985    loc			       ; loc_ret_974
+F000:C9BA    loc			       ; loc_ret_975
+F000:C9C9    loc			       ; loc_ret_976
+F000:C9CA    loc			       ; loc_977
+F000:C9F5    loc			       ; loc_978
+F000:C9FA    loc			       ; loc_979
+F000:C9FE    loc			       ; loc_ret_980
+F000:C9FF    loc			       ; loc_981
+F000:CA08    loc			       ; loc_982
+F000:CA0B    loc			       ; loc_983
+F000:CA19    forced, od 0040
+F000:CA19    loc			       ; loc_984
+F000:CA2A    loc			       ; loc_985
+F000:CA3D    loc			       ; loc_986
+F000:CA3F    loc			       ; loc_987
+F000:CA45    loc			       ; loc_988
+F000:CA48    loc			       ; loc_989
+F000:CA4F    loc			       ; loc_990
+F000:CA51    loc			       ; loc_991
+F000:CA58    loc			       ; loc_992
+F000:CA75    loc			       ; loc_993
+F000:CA9A    loc			       ; loc_994
+F000:CAA4    loc			       ; loc_995
+F000:CAAE    loc			       ; loc_996
+F000:CAB1    loc			       ; loc_997
+F000:CABA    loc			       ; loc_998
+F000:CABD    loc			       ; loc_999
+F000:CAC4    loc			       ; loc_1000
+F000:CAC7    loc			       ; loc_1001
+F000:CAC9    forced, od 0040
+F000:CAE1    loc			       ; loc_1002
+F000:CAE6    loc			       ; loc_1003
+F000:CAF8    loc			       ; loc_1004
+F000:CAFF    forced, od 0000
+F000:CB14    loc			       ; loc_1005
+F000:CB1B    loc			       ; loc_1006
+F000:CB25    forced, od 0040
+F000:CB25    loc			       ; loc_1007
+F000:CB3A    loc			       ; loc_1008
+F000:CB3E    loc			       ; loc_1009
+F000:CB46    forced, od 0040
+F000:CB46    loc			       ; loc_1010
+F000:CB54    loc			       ; loc_1011
+F000:CB61    loc			       ; loc_1012
+F000:CB6A    loc			       ; loc_1013
+F000:CB78    loc			       ; loc_1014
+F000:CB84    loc			       ; loc_1015
+F000:CB87    forced, od 0040
+F000:CB87    loc			       ; loc_1016
+F000:CBA2    loc			       ; loc_1017
+F000:CBDA    loc			       ; loc_1018
+F000:CBE1    loc			       ; loc_1019
+F000:CBED    loc			       ; loc_1020
+F000:CBF6    loc			       ; loc_1021
+F000:CC02    loc			       ; loc_1022
+F000:CC0D    loc			       ; loc_1023
+F000:CC16    loc			       ; loc_1024
+F000:CC1C    loc			       ; loc_1025
+F000:CC23    loc			       ; loc_1026
+F000:CC2B    forced, od 0040
+F000:CC2B    loc			       ; loc_1027
+F000:CC3B    forced, od 0040
+F000:CC49    loc			       ; loc_1028
+F000:CC4E    loc			       ; loc_1029
+F000:CC7C    loc			       ; loc_1030
+F000:CC89    loc			       ; loc_1031
+F000:CCC1    loc			       ; loc_1032
+F000:CCD1    loc			       ; loc_1033
+F000:CCD4    loc			       ; loc_1034
+F000:CCE3    loc			       ; loc_1035
+F000:CCFD    loc			       ; loc_1036
+F000:CD05    loc			       ; loc_1037
+F000:CD15    loc			       ; loc_1038
+F000:CD23    forced, od 0040
+F000:CD4C    loc			       ; loc_1039
+F000:CD50    forced, od 0040
+F000:CD50    loc			       ; loc_1040
+F000:CD71    loc			       ; loc_1041
+F000:CD79    loc			       ; loc_1042
+F000:CD90    loc			       ; loc_1043
+F000:CDB5    loc			       ; loc_1044
+F000:CDB7    loc			       ; loc_1045
+F000:CDC7    loc			       ; loc_1046
+F000:CE3D    loc			       ; loc_1047
+F000:CE44    loc			       ; loc_1048
+F000:CE48    loc			       ; loc_1049
+F000:CE4D    loc			       ; loc_1050
+F000:CE51    loc			       ; loc_1051
+F000:CE58    forced, od 0040
+F000:CE72    loc			       ; loc_1052
+F000:CE81    loc			       ; loc_1053
+F000:CEA4    loc			       ; loc_1054
+F000:CEB5    loc			       ; loc_1055
+F000:CEC4    loc			       ; loc_1056
+F000:CF02    loc			       ; loc_1057
+F000:CF26    loc			       ; loc_1058
+F000:CF5B    forced, od 0040
+F000:CF89    loc			       ; loc_1059
+F000:CFAC    forced, od 0040
+F000:CFAC    loc			       ; loc_1060
+F000:CFB3    forced, od 0040
+F000:CFC1    loc			       ; loc_1061
+F000:CFD4    loc			       ; loc_1062
+F000:CFE2    forced, od 0040
+F000:CFF0    loc			       ; loc_1063
+F000:D001    loc			       ; loc_1064
+F000:D01B    forced, od 0040
+F000:D030    forced, od 0040
+F000:D039    forced, od 0040
+F000:D047    loc			       ; loc_1065
+F000:D074    loc			       ; loc_1066
+F000:D082    loc			       ; loc_1067
+F000:D084    loc			       ; loc_1068
+F000:D088    loc			       ; loc_1069
+F000:D08E    loc			       ; loc_1070
+F000:D093    loc			       ; loc_1071
+F000:D0A3    loc			       ; loc_1072
+F000:D0BE    forced, od 0040
+F000:D0E4    loc			       ; loc_1073
+F000:D101    loc			       ; loc_1074
+F000:D115    loc			       ; loc_1075
+F000:D118    loc			       ; loc_1076
+F000:D11D    loc			       ; loc_1077
+F000:D12C    loc			       ; loc_1078
+F000:D12F    loc			       ; loc_1079
+F000:D19E    loc			       ; loc_1080
+F000:D1A4    loc			       ; loc_1081
+F000:D1B0    loc			       ; loc_1082
+F000:D1BD    loc			       ; loc_1083
+F000:D1D1    forced, od 0040
+F000:D1E0    loc			       ; loc_1084
+F000:D1E5    loc			       ; loc_1085
+F000:D1E8    loc			       ; loc_1086
+F000:D1FC    loc			       ; loc_1087
+F000:D238    loc			       ; loc_1088
+F000:D23D    loc			       ; loc_1089
+F000:D2AB    loc			       ; loc_ret_1090
+F000:D301    loc			       ; loc_ret_1091
+F000:D312    loc			       ; loc_1092
+F000:D324    loc			       ; loc_1093
+F000:D326    loc			       ; loc_ret_1094
+F000:D327    loc			       ; loc_1095
+F000:D356    loc			       ; loc_1096
+F000:D359    loc			       ; loc_1097
+F000:D35D    loc			       ; locloop_1098
+F000:D37C    loc			       ; loc_1099
+F000:D37E    loc			       ; loc_1100
+F000:D39F    loc			       ; loc_1101
+F000:D3A7    loc			       ; loc_1102
+F000:D3A9    forced, od 0040
+F000:D3E8    loc			       ; loc_ret_1103
+F000:D3E9    loc			       ; loc_1104
+F000:D3FA    loc			       ; loc_1105
+F000:D409    loc			       ; loc_1106
+F000:D40E    loc			       ; loc_1107
+F000:D431    loc			       ; loc_1108
+F000:D461    loc			       ; loc_1109
+F000:D46C    loc			       ; loc_ret_1110
+F000:D46D    loc			       ; loc_1111
+F000:D491    forced, od 0040
+F000:D4A0    loc			       ; loc_ret_1112
+F000:D4B0    loc			       ; loc_1113
+F000:D4B4    loc			       ; loc_ret_1114
+F000:D4C9    loc			       ; loc_1115
+F000:D4D3    loc			       ; loc_1116
+F000:D4E0    loc			       ; loc_1117
+F000:D4EC    loc			       ; loc_1118
+F000:D508    loc			       ; loc_1119
+F000:D50C    loc			       ; loc_1120
+F000:D513    loc			       ; loc_1121
+F000:D52A    loc			       ; loc_1122
+F000:D52E    loc			       ; loc_1123
+F000:D54D    loc			       ; loc_1124
+F000:D551    loc			       ; loc_1125
+F000:D552    loc			       ; loc_1126
+F000:D55A    loc			       ; loc_1127
+F000:D585    loc			       ; loc_1128
+F000:D5A6    loc			       ; loc_1129
+F000:D5A9    loc			       ; locloop_1130
+F000:D5E0    loc			       ; loc_1131
+F000:D5E1    loc			       ; loc_1132
+F000:D5E9    loc			       ; loc_1133
+F000:D5EA    loc			       ; loc_1134
+F000:D5ED    forced, od 0040
+F000:D647    loc			       ; loc_1135
+F000:D64D    loc			       ; loc_1136
+F000:D65D    loc			       ; loc_ret_1137
+F000:D662    forced, od F000
+F000:D66A    loc			       ; loc_1138
+F000:D66D    loc			       ; locloop_1139
+F000:D678    forced, od F000
+F000:D680    loc			       ; loc_1140
+F000:D684    forced, od F000
+F000:D68C    loc			       ; loc_1141
+F000:D690    loc			       ; loc_1142
+F000:D694    forced, od F000
+F000:D69C    loc			       ; loc_1143
+F000:D6A0    loc			       ; loc_1144
+F000:D6A8    loc			       ; loc_1145
+F000:D6C7    loc			       ; loc_1146
+F000:D6D6    loc			       ; loc_1147
+F000:D700    loc			       ; loc_1148
+F000:D706    loc			       ; locloop_1149
+F000:D70B    loc			       ; locloop_1150
+F000:D714    loc			       ; locloop_1151
+F000:D74D    loc			       ; loc_1152
+F000:D755    loc			       ; loc_1153
+F000:D770    loc			       ; loc_1154
+F000:D77C    loc			       ; loc_1155
+F000:D7E4    loc			       ; loc_1156
+F000:E000    loc, ext, c 2A	int_18h_entry
+F000:E005    loc, near, c 18	int_18h_basic
+F000:E05B    loc			       ; loc_1157
+F000:E05E    loc, near, c 08	int_8_timer
+F000:E065    forced, od 0040
+F000:E068    forced, od 0040
+F000:E071    loc			       ; loc_1158
+F000:E087    loc			       ; loc_1159
+F000:E08C    loc			       ; loc_1160
+F000:E091    loc			       ; loc_1161
+F000:E0AB    loc			       ; loc_1162
+F000:E2C3    loc, ext, c 2A	int_2_entry
+F000:E2D7    loc			       ; loc_1163
+F000:E2F1    loc			       ; loc_1164
+F000:E30C    loc			       ; loc_1165
+F000:E320    loc			       ; loc_1166
+F000:E323    loc			       ; loc_1167
+F000:E336    loc			       ; loc_1168
+F000:E340    loc			       ; loc_1169
+F000:E360    loc			       ; loc_1170
+F000:E374    loc			       ; locloop_1171
+F000:E37B    loc			       ; locloop_1172
+F000:E383    loc			       ; locloop_1173
+F000:E3C1    loc			       ; loc_1174
+F000:E3C6    loc			       ; loc_1175
+F000:E3CF    loc			       ; locloop_1176
+F000:E3D9    loc			       ; locloop_1177
+F000:E3E1    loc			       ; loc_ret_1178
+F000:E3EE    loc			       ; loc_ret_1179
+F000:E6F2    loc, ext, c 2A	int_19h_entry
+F000:E739    loc, ext, c 2A	int_14h_entry
+F000:E745    loc			       ; loc_1180
+F000:E74A    loc			       ; loc_1181
+F000:E758    loc			       ; loc_1182
+F000:E761    loc			       ; loc_1183
+F000:E762    loc			       ; loc_1184
+F000:E764    loc			       ; loc_1185
+F000:E76D    loc			       ; loc_1186
+F000:E77F    loc			       ; loc_1187
+F000:E784    loc			       ; loc_1188
+F000:E792    loc			       ; loc_1189
+F000:E79B    loc			       ; loc_1190
+F000:E79C    loc			       ; loc_1191
+F000:E7A0    loc			       ; loc_1192
+F000:E7A9    loc			       ; loc_1193
+F000:E7BB    loc			       ; loc_1194
+F000:E7C0    loc			       ; loc_1195
+F000:E7CE    loc			       ; loc_1196
+F000:E7D7    loc			       ; loc_1197
+F000:E7D8    loc			       ; loc_1198
+F000:E7DA    loc			       ; loc_1199
+F000:E7E3    loc			       ; loc_1200
+F000:E800    loc			       ; loc_1201
+F000:E82E    loc, ext, c 2A	int_16h_entry
+F000:E831    loc, near, c 0E	int_0Eh_floppy
+F000:E845    loc, near, c 24	int_76h_hddone
+F000:E84E    loc			       ; loc_1202
+F000:E860    loc			       ; loc_1203
+F000:E8A9    loc			       ; loc_1204
+F000:E8AA    forced, od 0040
+F000:E8C4    loc			       ; loc_1205
+F000:E8C5    loc			       ; loc_1206
+F000:E8DA    loc			       ; loc_1207
+F000:E8E5    loc			       ; loc_1208
+F000:E8EE    forced, od 0040
+F000:E910    loc			       ; loc_1209
+F000:E91D    loc			       ; loc_1210
+F000:E92D    loc			       ; loc_1211
+F000:E932    loc			       ; loc_1212
+F000:E937    loc			       ; loc_1213
+F000:E941    loc			       ; loc_1214
+F000:E943    loc			       ; loc_1215
+F000:E94A    loc			       ; loc_1216
+F000:E94C    loc			       ; loc_1217
+F000:E951    loc			       ; loc_1218
+F000:E953    loc			       ; loc_1219
+F000:E955    loc			       ; loc_1220
+F000:E963    loc			       ; loc_1221
+F000:E987    loc, ext, c 2A	int_9_entry
+F000:E9B9    loc			       ; loc_1222
+F000:E9BC    loc			       ; loc_1223
+F000:E9DF    loc			       ; loc_1224
+F000:E9E7    loc			       ; loc_1225
+F000:EA18    loc			       ; loc_ret_1226
+F000:EA22    loc, near, c 07	int_7_unused
+F000:EA49    loc			       ; loc_1227
+F000:EA4A    loc			       ; loc_1228
+F000:EA61    loc			       ; loc_1229
+F000:EA6A    loc			       ; loc_1230
+F000:EA6B    loc			       ; loc_1231
+F000:EA73    loc			       ; loc_1232
+F000:EA7A    loc, near, c 06	int_6_badopcode
+F000:EAAA    forced, od 0000
+F000:EACB    forced, od 0000
+F000:EAD8    loc			       ; loc_1233
+F000:EADB    forced, od 0000
+F000:EAE6    loc			       ; loc_1234
+F000:EB00    loc			       ; loc_1235
+F000:EB09    loc			       ; loc_1236
+F000:EB12    loc			       ; loc_1237
+F000:EB1C    loc			       ; loc_1238
+F000:EB72    loc			       ; loc_ret_1239
+F000:EB73    loc			       ; loc_1240
+F000:EBE1    loc			       ; loc_1241
+F000:EBEA    loc			       ; loc_1242
+F000:EC1B    loc			       ; loc_1243
+F000:EC30    loc			       ; loc_1244
+F000:EC36    loc, near, c 1F	int_71h_cascade
+F000:EC3F    loc, near, c 23	int_75h_math
+F000:EC59    loc, ext, c 2A	int_13h_entry
+F000:EC68    loc			       ; loc_ret_1245
+F000:EC75    loc			       ; loc_ret_1246
+F000:EC76    loc			       ; loc_1247
+F000:EC83    loc			       ; loc_1248
+F000:EC93    loc			       ; loc_1249
+F000:ECA2    loc			       ; locloop_1250
+F000:ECA5    loc			       ; locloop_1251
+F000:ECB3    loc			       ; locloop_1252
+F000:ECBF    loc			       ; loc_1253
+F000:ECCC    loc			       ; loc_ret_1254
+F000:ECE3    loc			       ; loc_ret_1255
+F000:ECF0    loc			       ; loc_ret_1256
+F000:ECF9    loc			       ; loc_1257
+F000:ECFB    loc			       ; locloop_1258
+F000:ED03    loc			       ; locloop_1259
+F000:ED0B    loc			       ; locloop_1260
+F000:ED11    loc			       ; loc_ret_1261
+F000:ED12    loc			       ; loc_1262
+F000:ED16    loc			       ; loc_1263
+F000:ED18    loc			       ; loc_1264
+F000:ED1A    loc			       ; locloop_1265
+F000:ED26    loc			       ; locloop_1266
+F000:ED32    loc			       ; locloop_1267
+F000:ED39    loc			       ; loc_1268
+F000:ED91    loc			       ; loc_1269
+F000:EDB5    loc			       ; loc_1270
+F000:EDBC    loc			       ; loc_1271
+F000:EDC0    loc			       ; loc_1272
+F000:EDC6    loc			       ; loc_1273
+F000:EDC9    loc			       ; loc_1274
+F000:EDD7    loc			       ; loc_1275
+F000:EDE8    loc			       ; loc_1276
+F000:EDF4    loc			       ; loc_ret_1277
+F000:EDF5    loc			       ; loc_1278
+F000:EF57    loc, ext, c 2A	int_0Eh_entry
+F000:EF5A    loc			       ; loc_1279
+F000:EF5C    forced, od F000
+F000:EF5C    loc			       ; loc_1280
+F000:EF61    loc			       ; locloop_1281
+F000:EF63    loc			       ; locloop_1282
+F000:EF65    loc			       ; locloop_1283
+F000:EF6D    loc			       ; locloop_1284
+F000:EF74    loc			       ; loc_1285
+F000:EF7F    loc			       ; loc_1286
+F000:EF86    loc			       ; locloop_1287
+F000:EF8F    loc			       ; locloop_1288
+F000:EFB4    loc			       ; loc_1289
+F000:EFD2    loc, ext, c 2A	int_17h_entry
+F000:EFD5    loc			       ; loc_1290
+F000:EFDC    loc			       ; loc_1291
+F000:EFF3    loc			       ; loc_1292
+F000:EFFC    loc			       ; loc_1293
+F000:F002    loc			       ; loc_1294
+F000:F027    loc			       ; loc_1295
+F000:F065    loc, ext, c 2A	int_10h_entry
+F000:F06A    loc, near, c 2E	ROM_exception
+F000:F076    loc			       ; loc_1296
+F000:F092    loc			       ; loc_1297
+F000:F108    loc			       ; loc_1298
+F000:F122    loc			       ; loc_1299
+F000:F131    loc			       ; loc_1300
+F000:F139    loc			       ; loc_1301
+F000:F155    loc			       ; loc_1302
+F000:F157    loc			       ; loc_1303
+F000:F159    loc			       ; loc_1304
+F000:F15B    loc			       ; loc_1305
+F000:F167    loc			       ; loc_1306
+F000:F186    loc			       ; loc_1307
+F000:F188    loc			       ; loc_1308
+F000:F1B0    loc			       ; loc_1309
+F000:F1C7    loc			       ; loc_1310
+F000:F1C9    loc			       ; loc_1311
+F000:F206    loc			       ; loc_1312
+F000:F216    loc			       ; loc_1313
+F000:F227    forced, od 0000
+F000:F23D    loc			       ; loc_1314
+F000:F23F    loc			       ; loc_1315
+F000:F27F    loc			       ; loc_1316
+F000:F28B    loc			       ; loc_1317
+F000:F28E    loc			       ; loc_1318
+F000:F29C    loc			       ; loc_1319
+F000:F29E    loc			       ; loc_1320
+F000:F2A4    loc			       ; locloop_1321
+F000:F2C0    loc			       ; loc_1322
+F000:F2C3    loc			       ; locloop_1323
+F000:F2C6    loc			       ; locloop_1324
+F000:F2D9    loc			       ; loc_1325
+F000:F2DC    loc			       ; loc_1326
+F000:F2E4    loc			       ; loc_1327
+F000:F2F6    loc			       ; loc_1328
+F000:F304    loc			       ; locloop_1329
+F000:F307    loc			       ; locloop_1330
+F000:F314    loc			       ; loc_1331
+F000:F31A    loc			       ; locloop_1332
+F000:F328    loc			       ; loc_1333
+F000:F32F    loc			       ; loc_1334
+F000:F33C    loc			       ; loc_1335
+F000:F342    loc			       ; locloop_1336
+F000:F352    loc			       ; loc_1337
+F000:F35D    loc, near, c 05	int_5_prn_scrn
+F000:F382    loc			       ; loc_1338
+F000:F390    loc			       ; loc_1339
+F000:F39C    loc			       ; loc_1340
+F000:F3BE    loc			       ; loc_1341
+F000:F3C3    loc			       ; loc_1342
+F000:F3C7    loc			       ; loc_1343
+F000:F3CC    loc			       ; loc_1344
+F000:F3F9    loc			       ; loc_1345
+F000:F3FB    loc			       ; loc_ret_1346
+F000:F40C    loc			       ; loc_1347
+F000:F40F    loc			       ; loc_ret_1348
+F000:F430    loc			       ; loc_ret_1349
+F000:F441    loc			       ; loc_ret_1350
+F000:F458    loc			       ; loc_ret_1351
+F000:F474    loc			       ; locloop_1352
+F000:F484    loc			       ; locloop_1353
+F000:F48D    loc			       ; loc_1354
+F000:F49D    loc			       ; loc_ret_1355
+F000:F71E    loc, near, c 1E	int_70h_clock
+F000:F721    loc			       ; loc_1356
+F000:F722    loc			       ; loc_1357
+F000:F726    loc			       ; loc_1358
+F000:F758    loc			       ; loc_1359
+F000:F765    loc			       ; loc_1360
+F000:F773    loc, near, c 27	int_unused
+F000:F792    loc			       ; loc_1361
+F000:F79D    loc			       ; loc_1362
+F000:F7C7    loc			       ; loc_1363
+F000:F7C9    loc			       ; locloop_1364
+F000:F7DB    loc			       ; loc_ret_1365
+F000:F841    loc, near, c 12	int_12h_memsiz
+F000:F84D    loc, near, c 11	int_11h_equip
+F000:F859    loc, ext, c 2A	int_15h_entry
+F000:F868    loc			       ; loc_1366
+F000:F871    loc			       ; loc_1367
+F000:F87A    loc			       ; loc_1368
+F000:F87C    loc			       ; loc_1369
+F000:F880    loc			       ; loc_1370
+F000:F889    loc, near, c 17	int_17h_printer
+F000:F8BE    loc			       ; loc_1371
+F000:F8C9    loc			       ; loc_1372
+F000:F8CB    loc			       ; locloop_1373
+F000:F8DE    loc			       ; loc_1374
+F000:F8EB    loc			       ; loc_1375
+F000:F8F6    loc			       ; loc_1376
+F000:F8FC    loc			       ; loc_1377
+F000:F907    loc			       ; loc_1378
+F000:F90B    loc			       ; loc_1379
+F000:F913    loc, near, c 14	int_14h_RS232
+F000:F953    loc			       ; loc_1380
+F000:F955    loc			       ; loc_1381
+F000:F970    loc			       ; loc_1382
+F000:F97A    loc			       ; loc_1383
+F000:F980    loc			       ; loc_1384
+F000:F9A9    loc			       ; loc_1385
+F000:F9C4    loc			       ; loc_1386
+F000:F9D2    loc			       ; loc_1387
+F000:F9DF    loc			       ; loc_1388
+F000:F9E6    loc			       ; loc_1389
+F000:F9EC    loc			       ; loc_1390
+F000:FA14    loc			       ; loc_1391
+F000:FA18    loc			       ; loc_1392
+F000:FA1B    loc			       ; loc_ret_1393
+F000:FA30    loc			       ; loc_1394
+F000:FA3D    loc			       ; loc_1395
+F000:FA42    loc			       ; loc_1396
+F000:FD48    loc			       ; loc_1397
+F000:FD5F    loc			       ; loc_1398
+F000:FD66    loc			       ; loc_1399
+F000:FD76    loc			       ; loc_1400
+F000:FD8F    loc			       ; loc_1401
+F000:FDA7    loc			       ; loc_1402
+F000:FDB9    loc			       ; loc_1403
+F000:FDE9    loc			       ; loc_1404
+F000:FE09    loc			       ; loc_1405
+F000:FE18    loc			       ; loc_1406
+F000:FE19    loc			       ; loc_1407
+F000:FE42    loc			       ; loc_1408
+F000:FE49    loc			       ; loc_1409
+F000:FE6E    loc, ext, c 2A	int_1Ah_entry
+F000:FE77    loc			       ; loc_1410
+F000:FE84    loc			       ; loc_1411
+F000:FEA1    loc			       ; loc_ret_1412
+F000:FEA5    loc, ext, c 2A	int_8_entry
+F000:FF53    loc, near		int_return
+F000:FF54    loc, ext, c 2A	int_5_entry
+F000:FFF0    loc, ext, c 2A	power_on_reset
+
+ ÕÕÕÕ Data Items ÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕÕ
+  seg:off    type & options	labels & comments
+  -------    --------------	----------------------------------------------
+0000:0000    dw, c 93		vector_0h_off
+0000:0002    dw			vector_0h_seg
+0000:0004    dw, c 94		vector_1h_off
+0000:0006    dw			vector_1h_seg
+0000:0008    dw, c 95		vector_2h_off
+0000:000A    dw			vector_2h_seg
+0000:000C    dw, c 96		vector_3h_off
+0000:000E    dw			vector_3h_seg
+0000:0010    dw, c 97		vector_4h_off
+0000:0012    dw			vector_4h_seg
+0000:0014    dw, c 98		vector_5h_off
+0000:0016    dw			vector_5h_seg
+0000:0018    dw			vector_6h_off
+0000:001A    dw			vector_6h_seg
+0000:001C    dw			vector_7h_off
+0000:001E    dw			vector_7h_seg
+0000:0020    dw, c 99		vector_8h_off
+0000:0022    dw			vector_8h_seg
+0000:0024    dw, c 9A		vector_9h_off
+0000:0026    dw			vector_9h_seg
+0000:0028    dw			vector_Ah_off
+0000:002A    dw			vector_Ah_seg
+0000:002C    dw, c 9B		vector_Bh_off
+0000:002E    dw			vector_Bh_seg
+0000:0030    dw, c 9C		vector_Ch_off
+0000:0032    dw			vector_Ch_seg
+0000:0034    dw, c 9D		vector_Dh_off
+0000:0036    dw			vector_Dh_seg
+0000:0038    dw, c 9E		vector_Eh_off
+0000:003A    dw			vector_Eh_seg
+0000:003C    dw, c 9F		vector_Fh_off
+0000:003E    dw			vector_Fh_seg
+0000:0040    dw, c 0A0		vectr_10h_off
+0000:0042    dw			vectr_10h_seg
+0000:0044    dw, c 0A1		vectr_11h_off
+0000:0046    dw			vectr_11h_seg
+0000:0048    dw, c 0A2		vectr_12h_off
+0000:004A    dw			vectr_12h_seg
+0000:004C    dw, c 0A3		vectr_13h_off
+0000:004E    dw			vectr_13h_seg
+0000:0054    dw, equ, c 0A4	vectr_15h_off
+0000:0056    dw, equ		vectr_15h_seg
+0000:0074    dw, equ		video_hdw_off
+0000:0078    dw, equ		disk_parm_off
+0000:007C    dw, equ		graph_tbl_off
+0000:0104    db, equ			       ; data_2e
+0000:0400    dw			@rs232_port_1_ Duplicates
+0000:0402    dw			@rs232_port_2_ (see 0040:0000 for
+0000:0404    dw			@rs232_port_3_ full information)
+0000:0406    dw			@rs232_port_4_
+0000:0408    dw			@prn_port_1_
+0000:040A    dw			@prn_port_2_
+0000:040C    dw			@prn_port_3_
+0000:040E    dw			BIOS_data_seg_
+0000:0410    dw			equip_bits_
+0000:0412    db			manufactr_test_
+0000:0413    dw			main_ram_size_
+0000:0415    dw			error_codes_
+0000:0417    db			keybd_flags_1_
+0000:0418    db			keybd_flags_2_
+0000:0419    db			keybd_alt_num_
+0000:041A    dw			keybd_q_head_
+0000:041C    dw			keybd_q_tail_
+0000:041E    dw, r 10		keybd_queue_
+0000:043E    db			dsk_recal_stat_
+0000:043F    db			dsk_motor_stat_
+0000:0440    db			dsk_motor_tmr_
+0000:0441    db			dsk_ret_code_
+0000:0442    db			dsk_status_1_
+0000:0443    db			dsk_status_2_
+0000:0444    db			dsk_status_3_
+0000:0445    db			dsk_status_4_
+0000:0446    db			dsk_status_5_
+0000:0447    db			dsk_status_6_
+0000:0448    db			dsk_status_7_
+0000:0449    db			video_mode_
+0000:044A    dw			video_columns_
+0000:044C    dw			video_buf_siz_
+0000:044E    dw			video_pag_off_
+0000:0450    dw			vid_curs_pos0_
+0000:0452    dw			vid_curs_pos1_
+0000:0454    dw			vid_curs_pos2_
+0000:0456    dw			vid_curs_pos3_
+0000:0458    dw			vid_curs_pos4_
+0000:045A    dw			vid_curs_pos5_
+0000:045C    dw			vid_curs_pos6_
+0000:045E    dw			vid_curs_pos7_
+0000:0460    dw			vid_curs_mode_
+0000:0462    db			video_page_
+0000:0463    dw			@video_port_
+0000:0465    db			video_mode_reg_
+0000:0466    db			video_color_
+0000:0467    dw			@gen_use_ptr_
+0000:0469    dw			@gen_use_seg_
+0000:046B    db			gen_int_occurd_
+0000:046C    dw			timer_low_
+0000:046E    dw			timer_hi_
+0000:0470    db			timer_rolled_
+0000:0471    db			keybd_break_
+0000:0472    dw			warm_boot_flag_
+0000:0474    db			hdsk_status_1_
+0000:0475    db			hdsk_count_
+0000:0476    db			hdsk_head_ctrl_
+0000:0477    db			hdsk_ctrl_port_
+0000:0478    db			prn_timeout_1_
+0000:0479    db			prn_timeout_2_
+0000:047A    db			prn_timeout_3_
+0000:047B    db			prn_timeout_4_
+0000:047C    db			rs232_timeout1_
+0000:047D    db			rs232_timeout2_
+0000:047E    db			rs232_timeout3_
+0000:047F    db			rs232_timeout4_
+0000:0480    dw			@keybd_begin_
+0000:0482    dw			@keybd_end_
+0000:0484    db			video_rows_
+0000:0485    dw			video_pixels_
+0000:0487    db			video_options_
+0000:0488    db			video_switches_
+0000:0489    db			video_1_save_
+0000:048A    db			video_2_save_
+0000:048B    db			dsk_data_rate_
+0000:048C    db			hdsk_status_2_
+0000:048D    db			hdsk_error_
+0000:048E    db			hdsk_complete_
+0000:048F    db			dsk_options_
+0000:0490    db			dsk0_media_st_
+0000:0491    db			dsk1_media_st_
+0000:0492    db			dsk0_start_st_
+0000:0493    db			dsk1_start_st_
+0000:0494    db			dsk0_cylinder_
+0000:0495    db			dsk1_cylinder_
+0000:0496    db			keybd_flags_3_
+0000:0497    db			keybd_flags_4_
+0000:0498    dw			@timer_waitoff_
+0000:049A    dw			@timer_waitseg_
+0000:049C    dw			timer_clk_low_
+0000:049E    dw			timer_clk_hi_
+0000:04A0    db			timer_clk_flag_
+0000:0818    dw, equ			       ; data_4e
+0000:081A    dw, equ			       ; data_5e
+0000:0820    dw, equ			       ; data_6e
+0000:0822    dw, equ			       ; data_7e
+0000:082C    dw, equ			       ; data_8e
+0000:0836    db, equ			       ; data_9e
+0000:0848    db, equ			       ; data_10e
+0000:089E    dw, equ			       ; data_11e
+0000:7C00    db, equ			       ; data_12e
+0000:7DFE    dw, equ			       ; data_13e
+0000:E270    db, equ			       ; data_14e
+0040:0000    dw, c 1		@rs232_port_1
+0040:0002    dw			@rs232_port_2
+0040:0004    dw			@rs232_port_3
+0040:0006    dw			@rs232_port_4
+0040:0008    dw, c 2		@prn_port_1
+0040:000A    dw			@prn_port_2
+0040:000C    dw			@prn_port_3
+0040:000E    dw, c 8A		BIOS_data_seg
+0040:0010    dw, c 3		equip_bits
+0040:0012    db, c 4		manufactr_test
+0040:0013    dw, c 5		main_ram_size
+0040:0015    dw, c 6		error_codes
+0040:0017    db, c 7		keybd_flags_1
+0040:0018    db, c 8		keybd_flags_2
+0040:0019    db, c 9		keybd_alt_num
+0040:001A    dw, c 0A		keybd_q_head
+0040:001C    dw, c 0B		keybd_q_tail
+0040:001E    dw, c 0C, r 10	keybd_queue
+0040:003E    db, c 0E		dsk_recal_stat
+0040:003F    db, c 0F		dsk_motor_stat
+0040:0040    db, c 10		dsk_motor_tmr
+0040:0041    db, c 11		dsk_ret_code
+0040:0042    db, c 12		dsk_status_1
+0040:0043    db			dsk_status_2
+0040:0044    db			dsk_status_3
+0040:0045    db			dsk_status_4
+0040:0046    db			dsk_status_5
+0040:0047    db			dsk_status_6
+0040:0048    db			dsk_status_7
+0040:0049    db, c 14		video_mode
+0040:004A    dw, c 15		video_columns
+0040:004C    dw, c 16		video_buf_siz
+0040:004E    dw, c 17		video_page_off
+0040:0050    dw, c 18		vid_curs_pos0
+0040:0052    dw, c 19		vid_curs_pos1
+0040:0054    dw, c 1A		vid_curs_pos2
+0040:0056    dw, c 1B		vid_curs_pos3
+0040:0058    dw, c 1C		vid_curs_pos4
+0040:005A    dw, c 1D		vid_curs_pos5
+0040:005C    dw, c 1E		vid_curs_pos6
+0040:005E    dw, c 1F		vid_curs_pos7
+0040:0060    dw, c 20		vid_curs_mode
+0040:0062    db, c 21		video_page
+0040:0063    dw, c 22		@video_port
+0040:0065    db, c 23		video_mode_reg
+0040:0066    db, c 24		video_color
+0040:0067    dw, c 25		@gen_use_ptr
+0040:0069    dw, c 26		@gen_use_seg
+0040:006B    db, c 27		gen_int_occured
+0040:006C    dw, c 28		timer_low
+0040:006E    dw, c 29		timer_hi
+0040:0070    db, c 2A		timer_rolled
+0040:0071    db, c 2B		keybd_break
+0040:0072    dw, c 2C		warm_boot_flag
+0040:0074    db, c 2D		hdsk_status_1
+0040:0075    db, c 2E		hdsk_count
+0040:0076    db, c 2F		hdsk_head_ctrl
+0040:0077    db, c 30		hdsk_ctrl_port
+0040:0078    db, c 31		prn_timeout_1
+0040:0079    db, c 32		prn_timeout_2
+0040:007A    db			prn_timeout_3
+0040:007B    db			prn_timeout_4
+0040:007C    db, c 33		rs232_timeout_1
+0040:007D    db, c 34		rs232_timeout_2
+0040:007E    db			rs232_timeout_3
+0040:007F    db			rs232_timeout_4
+0040:0080    dw, c 35		@keybd_begin
+0040:0082    dw, c 36		@keybd_end
+0040:0084    db, c 37		video_rows
+0040:0085    dw, c 38		video_pixels
+0040:0087    db, c 39		video_options
+0040:0088    db, c 3A		video_switches
+0040:0089    db, c 3B		video_1_save
+0040:008A    db, c 3C		video_2_save
+0040:008B    db, c 3D		dsk_data_rate
+0040:008C    db, c 3E		hdsk_status_2
+0040:008D    db, c 3F		hdsk_error
+0040:008E    db, c 40		hdsk_complete
+0040:008F    db, c 41		dsk_options
+0040:0090    db, c 42		dsk0_media_st
+0040:0091    db, c 43		dsk1_media_st
+0040:0092    db, c 44		dsk0_start_st
+0040:0093    db, c 45		dsk1_start_st
+0040:0094    db, c 46		dsk0_cylinder
+0040:0095    db, c 47		dsk1_cylinder
+0040:0096    db, c 48		keybd_flags_3
+0040:0097    db, c 49		keybd_flags_4
+0040:0098    dw, c 4A		@timer_wait_off
+0040:009A    dw, c 4B		@timer_wait_seg
+0040:009C    dw, c 4C		timer_clk_low
+0040:009E    dw, c 4D		timer_clk_hi
+0040:00A0    db, c 4E		timer_clk_flag
+0040:00A1    db, c 4F		lan_1
+0040:00A2    db			lan_2
+0040:00A3    db			lan_3
+0040:00A4    db			lan_4
+0040:00A5    db			lan_5
+0040:00A6    db			lan_6
+0040:00A7    db			lan_7
+0040:00A8    dd, c 51		@video_sav_tbls
+0040:00F0    db				       ; data_24
+0040:0100    db			prn_scrn_stat_b
+0040:01FE    db, equ			       ; data_25e
+0040:0472    dw, equ			       ; data_26e
+0040:0D33    dw, equ			       ; data_27e
+0040:13D2    db, equ			       ; data_28e
+0040:13E0    db, equ			       ; data_29e
+0040:13E2    db, equ			       ; data_30e
+0040:13E6    db, equ			       ; data_31e
+0040:1404    db, equ			       ; data_32e
+0040:1409    db, equ			       ; data_33e
+0040:1412    db, equ			       ; data_34e
+0040:1818    db, equ			       ; data_35e
+0040:2000    dw, equ			       ; data_36e
+0040:201A    dw, equ			       ; data_37e
+0040:2810    dw, equ			       ; data_38e
+0040:2AAA    db, equ			       ; data_39e
+0040:3000    db, equ			       ; data_40e
+0040:3008    db, equ			       ; data_41e
+0040:3206    db, equ			       ; data_42e
+0040:3A0F    dw, equ			       ; data_43e
+0040:5555    db, equ			       ; data_44e
+0040:578C    db, equ			       ; data_45e
+0040:5E41    dw, equ			       ; data_46e
+0040:7C00    db, equ			       ; data_47e
+0040:7DFE    dw, equ			       ; data_48e
+0040:9898    db, equ			       ; data_49e
+0040:BA66    db, equ			       ; data_50e
+0050:0000    db, c 57		prn_scrn_stat
+2000:0010    db, equ			       ; data_51e
+2000:E05B    db, equ			       ; data_52e
+2000:FFE0    db, equ			       ; data_53e
+3000:0016    db, equ			       ; data_54e
+3000:13E2    db, equ			       ; data_55e
+3000:13E4    db, equ			       ; data_56e
+3000:13FE    db, equ			       ; data_57e
+3000:1400    dw, equ			       ; data_58e
+3000:1410    dw, equ			       ; data_59e
+4000:0000    dw, equ			       ; data_60e
+4000:0002    dw, equ			       ; data_61e
+4000:0004    dw, equ			       ; data_62e
+4000:0006    dw, equ			       ; data_64e
+4000:0008    dw, equ			       ; data_65e
+4000:000A    dw, equ			       ; data_66e
+4000:000C    dw, equ			       ; data_67e
+4000:000E    dw, equ			       ; data_68e
+4000:0010    dw, equ			       ; data_69e
+4000:0012    dw, equ			       ; data_70e
+4000:0014    dw, equ			       ; data_71e
+4000:0016    db, equ			       ; data_72e
+4000:2016    dw, equ, r 2		       ; data_73e
+4000:3008    db, equ			       ; data_75e
+4000:3206    db, equ			       ; data_76e
+4000:3A0F    dw, equ			       ; data_77e
+4000:5E41    dw, equ			       ; data_78e
+5000:0073    db, equ			       ; data_79e
+5000:2C86    dw, equ			       ; data_80e
+5000:8428    db, equ			       ; data_81e
+C000:FA6E    db, equ			       ; data_82e
+F000:0000    dw, r 2			       ; data_83
+F000:0004    db				       ; data_84
+F000:000D    db				       ; data_85
+F000:01FE    db				       ; data_86
+F000:049F    db				       ; data_87
+F000:7500    dw				       ; data_89
+F000:8238    db				       ; data_99
+F000:8250    db				       ; data_100
+F000:8251    db				       ; data_101
+F000:8252    dw				       ; data_102
+F000:8254    db				       ; data_103
+F000:8255    db				       ; data_104
+F000:8256    db				       ; data_105
+F000:8258    db				       ; data_106
+F000:8259    db				       ; data_107
+F000:825A    dw				       ; data_108
+F000:825C    db				       ; data_109
+F000:825D    db				       ; data_110
+F000:825E    db				       ; data_111
+F000:8260    db				       ; data_112
+F000:8261    db				       ; data_113
+F000:8262    dw				       ; data_114
+F000:8264    db				       ; data_115
+F000:8265    db				       ; data_116
+F000:8268    db				       ; data_117
+F000:8269    db				       ; data_118
+F000:826A    dw				       ; data_119
+F000:826C    db				       ; data_120
+F000:826D    db				       ; data_121
+F000:826E    db				       ; data_122
+F000:8270    db				       ; data_123
+F000:8278    dw				       ; data_124
+F000:827A    db				       ; data_125
+F000:827C    dw				       ; data_126
+F000:827E    db				       ; data_127
+F000:8280    db				       ; data_128
+F000:8281    db				       ; data_129
+F000:8285    db				       ; data_130
+F000:828C    dw				       ; data_131
+F000:82CA    dw				       ; data_132
+F000:82E0    db				       ; data_133
+F000:83B6    dw, oln			       ; data_136
+F000:83D2    dw, oln			       ; data_137
+F000:83D4    dw, oln			       ; data_138
+F000:8BDA    dw				       ; data_139
+F000:8C6F    dw				       ; data_140
+F000:8C87    dw				       ; data_142
+F000:8F90    db				       ; data_144
+F000:9421    dw				       ; data_148
+F000:9423    dd				       ; data_149
+F000:9895    db				       ; data_153
+F000:9896    dw				       ; data_154
+F000:9898    db				       ; data_155
+F000:9F08    dw, osn			       ; data_156
+F000:9F0A    dw, osn			       ; data_157
+F000:9F0C    dw, osn			       ; data_158
+F000:9F0E    dw, osn			       ; data_159
+F000:9F10    dw, osn			       ; data_160
+F000:9F12    dw, osn			       ; data_161
+F000:9F14    dw, osn			       ; data_162
+F000:9F16    dw, osn			       ; data_163
+F000:9F18    dw, osn			       ; data_164
+F000:9F1A    dw, osn			       ; data_165
+F000:9F1C    dw, osn			       ; data_166
+F000:9F1E    dw, osn			       ; data_167
+F000:9F20    dw, osn			       ; data_168
+F000:9F22    dw, osn			       ; data_169
+F000:9F24    dw, osn			       ; data_170
+F000:9F26    dw, osn			       ; data_171
+F000:9F28    dw, osn			       ; data_172
+F000:9F2A    dw, osn			       ; data_173
+F000:9F2C    dw, osn			       ; data_174
+F000:9F2E    dw, osn			       ; data_175
+F000:9F30    dw, osn			       ; data_176
+F000:9F32    dw, osn			       ; data_177
+F000:9F34    dw, osn			       ; data_178
+F000:9F36    dw, osn			       ; data_179
+F000:9F38    dw, osn			       ; data_180
+F000:9F3A    dw, osn			       ; data_181
+F000:A8A8    dw, osn			       ; data_182
+F000:A8AA    dw, osn			       ; data_183
+F000:A8AC    dw, osn			       ; data_184
+F000:A8AE    dw, osn			       ; data_185
+F000:A8B0    dw, osn			       ; data_186
+F000:AA12    dw, osn			       ; data_187
+F000:AA14    dw, osn			       ; data_188
+F000:AA16    dw, osn			       ; data_189
+F000:AA18    dw, osn			       ; data_190
+F000:AA1A    dw, osn			       ; data_191
+F000:AA1C    dw, osn			       ; data_192
+F000:AA1E    dw, osn			       ; data_193
+F000:AA20    dw, osn			       ; data_194
+F000:AA22    dw, osn			       ; data_195
+F000:AA24    dw, osn			       ; data_196
+F000:AA26    dw, osn			       ; data_197
+F000:AD7A    db				       ; data_198
+F000:AEB8    db				       ; data_199
+F000:AEB9    db				       ; data_200
+F000:AEBA    dw				       ; data_201
+F000:AEBC    dw				       ; data_202
+F000:AEC0    dw				       ; data_203
+F000:AF08    db				       ; data_207
+F000:B02D    dw				       ; data_208
+F000:B031    dw				       ; data_209
+F000:B08D    db				       ; data_210
+F000:B0A9    db				       ; data_211
+F000:B0EE    db				       ; data_212
+F000:B112    dw, oln			       ; data_213
+F000:B132    dw, oln			       ; data_214
+F000:B142    dw, oln			       ; data_215
+F000:B14D    dw, oln			       ; data_216
+F000:B157    dw, oln			       ; data_217
+F000:B171    dw, oln			       ; data_218
+F000:B181    dw, oln			       ; data_219
+F000:B195    dw, oln			       ; data_220
+F000:B274    da, r 17			       ; data_222
+F000:B3DA    dw, oln			       ; data_223
+F000:B3E2    dw, oln			       ; data_224
+F000:B40E    dw, oln			       ; data_225
+F000:B41A    dw, oln			       ; data_226
+F000:B422    dw, oln			       ; data_227
+F000:B436    dw, oln			       ; data_228
+F000:B442    dw, oln			       ; data_229
+F000:B44E    dw, oln			       ; data_230
+F000:B45E    dw, oln			       ; data_231
+F000:B46A    dw, oln			       ; data_232
+F000:B47A    dw, oln			       ; data_233
+F000:B85E    db				       ; data_234
+F000:BB4D    db				       ; data_235
+F000:BBD7    dd				       ; data_236
+F000:BCDE    dw				       ; data_239
+F000:C8B4    dw, oln			       ; data_240
+F000:C8B6    dw, oln			       ; data_241
+F000:C8B8    dw, oln			       ; data_242
+F000:C8BA    dw, oln			       ; data_243
+F000:C8BC    dw, oln			       ; data_244
+F000:C8BE    dw, oln			       ; data_245
+F000:C8C0    dw, oln			       ; data_246
+F000:C8C2    dw, oln			       ; data_247
+F000:C8C4    dw, oln			       ; data_248
+F000:C8C6    dw, oln			       ; data_249
+F000:C8C8    dw, oln			       ; data_250
+F000:CDDB    dw				       ; data_251
+F000:CDE5    dw				       ; data_252
+F000:CDEF    db, c 5D		diskette_info_1
+F000:CDF0    db, c 5E		diskette_info_2
+F000:CDF1    db, c 5F		dsk_motor_delay
+F000:CDF2    db, c 60		dsk_sectr_bytes
+F000:CDF3    db, c 61		dsk_sector_trac
+F000:CDF4    db, c 62		dsk_head_gap
+F000:CDF5    db, c 63		dsk_data_length
+F000:CDF6    db, c 64		dsk_format_gap
+F000:CDF7    db, c 65		dsk_format_byte
+F000:CDF8    db, c 66		dsk_settlg_time
+F000:CDF9    db, c 67		dsk_startup_tim
+F000:CDFC    db			diskette2info_1
+F000:CDFD    db			diskette2info_2
+F000:CDFE    db			dsk2motor_delay
+F000:CDFF    db			dsk2sectr_bytes
+F000:CE00    db			dsk2sector_trac
+F000:CE01    db			dsk2head_gap
+F000:CE02    db			dsk2data_length
+F000:CE03    db			dsk2format_gap
+F000:CE04    db			dsk2format_byte
+F000:CE05    db			dsk2settlg_time
+F000:CE06    db			dsk2startup_tim
+F000:CE09    db			diskette3info_1
+F000:CE0A    db			diskette3info_2
+F000:CE0B    db			dsk3motor_delay
+F000:CE0C    db			dsk3sectr_bytes
+F000:CE0D    db			dsk3sector_trac
+F000:CE0E    db			dsk3head_gap
+F000:CE0F    db			dsk3data_length
+F000:CE10    db			dsk3format_gap
+F000:CE11    db			dsk3format_byte
+F000:CE12    db			dsk3settlg_time
+F000:CE13    db			dsk3startup_tim
+F000:CE16    db			diskette4info_1
+F000:CE17    db			diskette4info_2
+F000:CE18    db			dsk4motor_delay
+F000:CE19    db			dsk4sectr_bytes
+F000:CE1A    db			dsk4sector_trac
+F000:CE1B    db			dsk4head_gap
+F000:CE1C    db			dsk4data_length
+F000:CE1D    db			dsk4format_gap
+F000:CE1E    db			dsk4format_byte
+F000:CE1F    db			dsk4settlg_time
+F000:CE20    db			dsk4startup_tim
+F000:CE23    db			diskette5info_1
+F000:CE24    db			diskette5info_2
+F000:CE25    db			dsk5motor_delay
+F000:CE26    db			dsk5sectr_bytes
+F000:CE27    db			dsk5sector_trac
+F000:CE28    db			dsk5head_gap
+F000:CE29    db			dsk5data_length
+F000:CE2A    db			dsk5format_gap
+F000:CE2B    db			dsk5format_byte
+F000:CE2C    db			dsk5settlg_time
+F000:CE2D    db			dsk5startup_tim
+F000:CE30    db			diskette6info_1
+F000:CE31    db			diskette6info_2
+F000:CE32    db			dsk6motor_delay
+F000:CE33    db			dsk6sectr_bytes
+F000:CE34    db			dsk6sector_trac
+F000:CE35    db			dsk6head_gap
+F000:CE36    db			dsk6data_length
+F000:CE37    db			dsk6format_gap
+F000:CE38    db			dsk6format_byte
+F000:CE39    db			dsk6settlg_time
+F000:CE3A    db			dsk6startup_tim
+F000:D668    dw, oln			       ; data_253
+F000:D67E    dw, oln			       ; data_254
+F000:D68A    dw, oln			       ; data_255
+F000:D69A    dw, oln			       ; data_256
+F000:E160    dw, oln		idt_dest_off_
+F000:E162    dw			idt_dest_seg_
+F000:E164    db			idt_count_
+F000:E165    db			idt_rights_
+F000:E166    dw			idt_unused_
+F000:E168    dw, oln		idt_dest_off_1
+F000:E16A    dw			idt_dest_seg_1
+F000:E16C    db			idt_count_1
+F000:E16D    db			idt_rights_1
+F000:E16E    dw			idt_unused_1
+F000:E170    dw, oln		idt_dest_off_2
+F000:E172    dw			idt_dest_seg_2
+F000:E174    db			idt_count_2
+F000:E175    db			idt_rights_2
+F000:E176    dw			idt_unused_2
+F000:E178    dw, oln		idt_dest_off_3
+F000:E17A    dw			idt_dest_seg_3
+F000:E17C    db			idt_count_3
+F000:E17D    db			idt_rights_3
+F000:E17E    dw			idt_unused_3
+F000:E180    dw, oln		idt_dest_off_4
+F000:E182    dw			idt_dest_seg_4
+F000:E184    db			idt_count_4
+F000:E185    db			idt_rights_4
+F000:E186    dw			idt_unused_4
+F000:E188    dw, oln		idt_dest_off_5
+F000:E18A    dw			idt_dest_seg_5
+F000:E18C    db			idt_count_5
+F000:E18D    db			idt_rights_5
+F000:E18E    dw			idt_unused_5
+F000:E190    dw, oln		idt_dest_off_6
+F000:E192    dw			idt_dest_seg_6
+F000:E194    db			idt_count_6
+F000:E195    db			idt_rights_6
+F000:E196    dw			idt_unused_6
+F000:E198    dw, oln		idt_dest_off_7
+F000:E19A    dw			idt_dest_seg_7
+F000:E19C    db			idt_count_7
+F000:E19D    db			idt_rights_7
+F000:E19E    dw			idt_unused_7
+F000:E1A0    dw, oln		idt_dest_off_8
+F000:E1A2    dw			idt_dest_seg_8
+F000:E1A4    db			idt_count_8
+F000:E1A5    db			idt_rights_8
+F000:E1A6    dw			idt_unused_8
+F000:E1A8    dw, oln		idt_dest_off_9
+F000:E1AA    dw			idt_dest_seg_9
+F000:E1AC    db			idt_count_9
+F000:E1AD    db			idt_rights_9
+F000:E1AE    dw			idt_unused_9
+F000:E1B0    dw, oln		idt_dest_off_A
+F000:E1B2    dw			idt_dest_seg_A
+F000:E1B4    db			idt_count_A
+F000:E1B5    db			idt_rights_A
+F000:E1B6    dw			idt_unused_A
+F000:E1B8    dw, oln		idt_dest_off_B
+F000:E1BA    dw			idt_dest_seg_B
+F000:E1BC    db			idt_count_B
+F000:E1BD    db			idt_rights_B
+F000:E1BE    dw			idt_unused_B
+F000:E1C0    dw, oln		idt_dest_off_C
+F000:E1C2    dw			idt_dest_seg_C
+F000:E1C4    db			idt_count_C
+F000:E1C5    db			idt_rights_C
+F000:E1C6    dw			idt_unused_C
+F000:E1C8    dw, oln		idt_dest_off_D
+F000:E1CA    dw			idt_dest_seg_D
+F000:E1CC    db			idt_count_D
+F000:E1CD    db			idt_rights_D
+F000:E1CE    dw			idt_unused_D
+F000:E1D0    dw, oln		idt_dest_off_E
+F000:E1D2    dw			idt_dest_seg_E
+F000:E1D4    db			idt_count_E
+F000:E1D5    db			idt_rights_E
+F000:E1D6    dw			idt_unused_E
+F000:E1D8    dw, oln		idt_dest_off_F
+F000:E1DA    dw			idt_dest_seg_F
+F000:E1DC    db			idt_count_F
+F000:E1DD    db			idt_rights_F
+F000:E1DE    dw			idt_unused_F
+F000:E1E0    dw, oln		idt_dest_off_10
+F000:E1E2    dw			idt_dest_seg_10
+F000:E1E4    db			idt_count_10
+F000:E1E5    db			idt_rights_10
+F000:E1E6    dw			idt_unused_10
+F000:E1E8    dw, oln		idt_dest_off_11
+F000:E1EA    dw			idt_dest_seg_11
+F000:E1EC    db			idt_count_11
+F000:E1ED    db			idt_rights_11
+F000:E1EE    dw			idt_unused_11
+F000:E1F0    dw, oln		idt_dest_off_12
+F000:E1F2    dw			idt_dest_seg_12
+F000:E1F4    db			idt_count_12
+F000:E1F5    db			idt_rights_12
+F000:E1F6    dw			idt_unused_12
+F000:E1F8    dw, oln		idt_dest_off_13
+F000:E1FA    dw			idt_dest_seg_13
+F000:E1FC    db			idt_count_13
+F000:E1FD    db			idt_rights_13
+F000:E1FE    dw			idt_unused_13
+F000:E200    dw, oln		idt_dest_off_14
+F000:E202    dw			idt_dest_seg_14
+F000:E204    db			idt_count_14
+F000:E205    db			idt_rights_14
+F000:E206    dw			idt_unused_14
+F000:E208    dw, oln		idt_dest_off_15
+F000:E20A    dw			idt_dest_seg_15
+F000:E20C    db			idt_count_15
+F000:E20D    db			idt_rights_15
+F000:E20E    dw			idt_unused_15
+F000:E210    dw, oln		idt_dest_off_16
+F000:E212    dw			idt_dest_seg_16
+F000:E214    db			idt_count_16
+F000:E215    db			idt_rights_16
+F000:E216    dw			idt_unused_16
+F000:E218    dw, oln		idt_dest_off_17
+F000:E21A    dw			idt_dest_seg_17
+F000:E21C    db			idt_count_17
+F000:E21D    db			idt_rights_17
+F000:E21E    dw			idt_unused_17
+F000:E220    dw, oln		idt_dest_off_18
+F000:E222    dw			idt_dest_seg_18
+F000:E224    db			idt_count_18
+F000:E225    db			idt_rights_18
+F000:E226    dw			idt_unused_18
+F000:E228    dw, oln		idt_dest_off_19
+F000:E22A    dw			idt_dest_seg_19
+F000:E22C    db			idt_count_19
+F000:E22D    db			idt_rights_19
+F000:E22E    dw			idt_unused_19
+F000:E230    dw, oln		idt_dest_off_1A
+F000:E232    dw			idt_dest_seg_1A
+F000:E234    db			idt_count_1A
+F000:E235    db			idt_rights_1A
+F000:E236    dw			idt_unused_1A
+F000:E238    dw, oln		idt_dest_off_1B
+F000:E23A    dw			idt_dest_seg_1B
+F000:E23C    db			idt_count_1B
+F000:E23D    db			idt_rights_1B
+F000:E23E    dw			idt_unused_1B
+F000:E240    dw, oln		idt_dest_off_1C
+F000:E242    dw			idt_dest_seg_1C
+F000:E244    db			idt_count_1C
+F000:E245    db			idt_rights_1C
+F000:E246    dw			idt_unused_1C
+F000:E248    dw, oln		idt_dest_off_1D
+F000:E24A    dw			idt_dest_seg_1D
+F000:E24C    db			idt_count_1D
+F000:E24D    db			idt_rights_1D
+F000:E24E    dw			idt_unused_1D
+F000:E250    dw, oln		idt_dest_off_1E
+F000:E252    dw			idt_dest_seg_1E
+F000:E254    db			idt_count_1E
+F000:E255    db			idt_rights_1E
+F000:E256    dw			idt_unused_1E
+F000:E258    dw, oln		idt_dest_off_1F
+F000:E25A    dw			idt_dest_seg_1F
+F000:E25C    db			idt_count_1F
+F000:E25D    db			idt_rights_1F
+F000:E25E    dw			idt_unused_1F
+F000:E260    dw			gdt_limit_
+F000:E262    dw			gdt_seg_lo_
+F000:E264    db			gdt_seg_hi_
+F000:E265    db			gdt_rights_
+F000:E266    dw			gdt_unused_
+F000:E268    dw			gdt_limit_1
+F000:E26A    dw			gdt_seg_lo_1
+F000:E26C    db			gdt_seg_hi_1
+F000:E26D    db			gdt_rights_1
+F000:E26E    dw			gdt_unused_1
+F000:E270    dw			gdt_limit_2
+F000:E272    dw			gdt_seg_lo_2
+F000:E274    db			gdt_seg_hi_2
+F000:E275    db			gdt_rights_2
+F000:E276    dw			gdt_unused_2
+F000:E278    dw			gdt_limit_3
+F000:E27A    dw			gdt_seg_lo_3
+F000:E27C    db			gdt_seg_hi_3
+F000:E27D    db			gdt_rights_3
+F000:E27E    dw			gdt_unused_3
+F000:E280    dw			gdt_limit_4
+F000:E282    dw			gdt_seg_lo_4
+F000:E284    db			gdt_seg_hi_4
+F000:E285    db			gdt_rights_4
+F000:E286    dw			gdt_unused_4
+F000:E288    dw			gdt_limit_5
+F000:E28A    dw			gdt_seg_lo_5
+F000:E28C    db			gdt_seg_hi_5
+F000:E28D    db			gdt_rights_5
+F000:E28E    dw			gdt_unused_5
+F000:E290    dw			gdt_limit_6
+F000:E292    dw			gdt_seg_lo_6
+F000:E294    db			gdt_seg_hi_6
+F000:E295    db			gdt_rights_6
+F000:E296    dw			gdt_unused_6
+F000:E298    dw			gdt_limit_7
+F000:E29A    dw			gdt_seg_lo_7
+F000:E29C    db			gdt_seg_hi_7
+F000:E29D    db			gdt_rights_7
+F000:E29E    dw			gdt_unused_7
+F000:E2A0    dw			gdt_limit_8
+F000:E2A2    dw			gdt_seg_lo_8
+F000:E2A4    db			gdt_seg_hi_8
+F000:E2A5    db			gdt_rights_8
+F000:E2A6    dw			gdt_unused_8
+F000:E2A8    dw			gdt_limit_9
+F000:E2AA    dw			gdt_seg_lo_9
+F000:E2AC    db			gdt_seg_hi_9
+F000:E2AD    db			gdt_rights_9
+F000:E2AE    dw			gdt_unused_9
+F000:E2B8    dw, r 4			       ; data_263
+F000:E401    dw, c 72		hdsk_cylinders
+F000:E403    db, c 73		hdsk_heads
+F000:E404    dw, c 74		hdsk_lo_wrt_cyl
+F000:E406    dw, c 75		hdsk_precompcyl
+F000:E408    db, c 76		hdsk_err_length
+F000:E409    db, c 77		hdsk_misl_bits
+F000:E40A    db, c 78		hdsk_timeout
+F000:E40B    db, c 79		hdsk_fmt_timout
+F000:E40C    db, c 7A		hdsk_chk_timout
+F000:E40D    dw, c 7B		hdsk_parkng_cyl
+F000:E40F    db, c 7C		hdsk_sectr_trac
+F000:E410    db, c 7D		hdsk_unused
+F000:E411    db, r 10		hdsk_type_
+F000:E421    db, r 10		hdsk_type_3
+F000:E431    db, r 10		hdsk_type_4
+F000:E441    db, r 10		hdsk_type_5
+F000:E451    db, r 10		hdsk_type_6
+F000:E461    db, r 10		hdsk_type_7
+F000:E471    db, r 10		hdsk_type_8
+F000:E481    db, r 10		hdsk_type_9
+F000:E491    db, r 10		hdsk_type_A
+F000:E4A1    db, r 10		hdsk_type_B
+F000:E4B1    db, r 10		hdsk_type_C
+F000:E4C1    db, r 10		hdsk_type_D
+F000:E4D1    db, r 10		hdsk_type_E
+F000:E4E1    db, r 10		hdsk_type_F
+F000:E4F1    db, r 10		hdsk_type_10
+F000:E501    db, r 10		hdsk_type_11
+F000:E511    db, r 10		hdsk_type_12
+F000:E521    db, r 10		hdsk_type_13
+F000:E531    db, r 10		hdsk_type_14
+F000:E541    db, r 10		hdsk_type_15
+F000:E551    db, r 10		hdsk_type_16
+F000:E561    db, r 10		hdsk_type_17
+F000:E571    db, r 10		hdsk_type_18
+F000:E581    db, r 10		hdsk_type_19
+F000:E591    db, r 10		hdsk_type_1A
+F000:E5A1    db, r 10		hdsk_type_1B
+F000:E5B1    db, r 10		hdsk_type_1C
+F000:E5C1    db, r 10		hdsk_type_1D
+F000:E5D1    db, r 10		hdsk_type_1E
+F000:E5E1    db, r 10		hdsk_type_1F
+F000:E5F1    db, r 10		hdsk_type_20
+F000:E601    db, r 10		hdsk_type_21
+F000:E611    db, r 10		hdsk_type_22
+F000:E621    db, r 10		hdsk_type_23
+F000:E631    db, r 10		hdsk_type_24
+F000:E641    db, r 10		hdsk_type_25
+F000:E651    db, r 10		hdsk_type_26
+F000:E661    db, r 10		hdsk_type_27
+F000:E671    db, r 10		hdsk_type_28
+F000:E681    db, r 10		hdsk_type_29
+F000:E691    db, r 10		hdsk_type_2A
+F000:E6A1    db, r 10		hdsk_type_2B
+F000:E6B1    db, r 10		hdsk_type_2C
+F000:E6C1    db, r 10		hdsk_type_2D
+F000:E6D1    db, r 10		hdsk_type_2E
+F000:E6F5    dw, c 8D		Config_tbl_size
+F000:E6F7    db, c 8E		Config_model
+F000:E6F8    db, c 8F		Config_submodel
+F000:E6F9    db, c 90		Config_BIOS_rev
+F000:E6FA    db, c 91		Config_features
+F000:E6FB    db, c 92, r 4	Config_bytes
+F000:E729    dw, c 8C		baud_rate_tbl
+F000:E72B    dw			baud_150
+F000:E72D    dw			baud_300
+F000:E72F    dw			baud_600
+F000:E731    dw			baud_1200
+F000:E733    dw			baud_2400
+F000:E735    dw			baud_4800
+F000:E737    dw			baud_9600
+F000:E739    dw			baud_19200
+F000:E87E    db, r 8		shift_keys
+F000:E886    db, r 8		shift_mask_tbl
+F000:E900    dw, oln			       ; data_269
+F000:E902    dw, oln			       ; data_270
+F000:E904    dw, oln			       ; data_271
+F000:E906    dw, oln			       ; data_272
+F000:E908    dw, oln			       ; data_273
+F000:E90A    dw, oln			       ; data_274
+F000:E90C    dw, oln			       ; data_275
+F000:E90E    dw, oln			       ; data_276
+F000:EEA0    db				       ; data_282
+F000:EF61    db				       ; data_285
+F000:EFC7    db			diskette7info_1
+F000:EFC8    db			diskette7info_2
+F000:EFC9    db			dsk7motor_delay
+F000:EFCA    db			dsk7sectr_bytes
+F000:EFCB    db			dsk7sector_trac
+F000:EFCC    db			dsk7head_gap
+F000:EFCD    db			dsk7data_length
+F000:EFCE    db			dsk7format_gap
+F000:EFCF    db			dsk7format_byte
+F000:EFD0    db			dsk7settlg_time
+F000:EFD1    db			dsk7startup_tim
+F000:F0A4    db, c 68, r 10	video_hdwr_tbl1
+F000:F0B4    db, c 69, r 10	video_hdrw_tbl2
+F000:F0C4    db, c 6A, r 10	video_hdwr_tbl3
+F000:F0D4    db, c 6B, r 10	video_hdwr_tbl4
+F000:F0E4    dw, c 6C		video_buf_size1
+F000:F0E6    dw, c 6D		video_buf_size2
+F000:F0E8    dw, c 6E		video_buf_size3
+F000:F0EA    dw, c 6F		video_buf_size4
+F000:F0EC    db, c 70, r 8	video_columntbl
+F000:F0F4    db, c 71, r 8	video_hdwr_mode
+F000:F0FC    db				       ; data_289
+F000:F13E    dw, osn			       ; data_290
+F000:F140    dw, osn			       ; data_291
+F000:F142    dw, osn			       ; data_292
+F000:F144    dw, osn			       ; data_293
+F000:F146    dw, osn			       ; data_294
+F000:F148    dw, osn			       ; data_295
+F000:F14A    dw, osn			       ; data_296
+F000:F14C    dw, osn			       ; data_297
+F000:F1CD    db				       ; data_298
+F000:F49E    db, c 0B9, r 200	key_scan_codes
+F000:F69E    db				       ; data_300
+F000:F959    dw				       ; data_303
+F000:FA6E    db, c 7F, r 400	video_char_tbl
+F000:FEA8    dw, r 2			       ; data_309
+F000:FEB0    dd				       ; data_310
+F000:FEE3    dw, oln, r 8	int_vec_table_0
+F000:FEF3    dw, oln, c 87, r 15 int_vec_table_1
+F000:FF1D    dw, odn, r 2	int_data_table
+F000:FF21    dw			video_ptr
+F000:FF23    dw, oln, r 8	int_vec_table_2
+F000:FFF5    da, c 88, r 9	rom_versn_date
+F000:FFFE    db, c 89		model_type
+F000:FFFF    db			model_sub_type
+F008:00E0    db, equ			       ; data_314e
+F008:00E1    db, equ			       ; data_315e
+F008:00E2    dw, equ			       ; data_316e

@@ -1,0 +1,108 @@
+Group=Xicor SPI Serial EEPROM
+
+;******************************************************************
+Device=S2430;================ << S2430 >> ================
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8 8
+BlankData=0xFF
+EditRect= 0  0 41  7
+BlockLen=8
+ProgTimes=5.1 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=848C87848D87
+EndDevice ;================ << S2430 >> ================
+Device=2430;================ << 2430 >> ================
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 8 8
+BlankData=0xFF
+EditRect= 0  0 41  7
+BlockLen=8
+ProgTimes=5.1 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=848C87848D87
+EndDevice ;================ << 2430 >> ================
+Device=X24C44
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32 8
+BlankData=0xFF
+EditRect= 0  0 41  7
+BlockLen=2
+ProgTimes=5.1 0 0 0
+Iden=0x0
+DataWidth=8
+DisplayASCII=1
+Algo=848587848687
+EndDevice ;================ << X24C44 >> ================
+
+;******************************************************************
+Device=X24C45
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32 8
+BlankData=0xFF
+EditRect= 0  0 41  7
+BlockLen=2
+ProgTimes=5.1 0 0 0
+Iden=0x1
+DataWidth=8
+DisplayASCII=1
+Algo=848587848687
+EndDevice ;================ << X24C45 >> ================
+
+;******************************************************************
+Device=X25401
+Socket=1
+AddrDivider=1
+CmdMask=0x1F
+Vcc= 5.0 5.0 4.5 5.5
+;-----------------
+[Part]=Data
+InitActivity=1
+InitFill=0
+SecondPass=0
+AddrSize=0 32 8
+BlankData=0xFF
+EditRect= 0  0 41  7
+BlockLen=2
+ProgTimes=5.1 0 0 0
+Iden=0x3
+DataWidth=8
+DisplayASCII=1
+Algo=848587848687
+EndDevice ;================ << X25401 >> ================
+
