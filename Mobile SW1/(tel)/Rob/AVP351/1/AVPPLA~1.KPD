@@ -1,0 +1,9 @@
+[Product]
+Name=AVP Platinum
+RegKey=AVP for WS
+
+[Version]
+VerMajor=3
+VerMinor=5
+VerBuild=1
+VerPatch=0

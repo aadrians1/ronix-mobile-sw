@@ -1,0 +1,37 @@
+1.44
+-fixed partial for nk6210 4.36
+-fixed partial for nk3310 4.24
+
+1.43
+-added support for nk6210 4.36
+
+1.42
+-added support for nk3310 4.24
+-small stupid bug fix
+
+1.41
+-fixed major bug that prevented flasher to find the flash file
+-added support for nk3310 4.19
+-changed flash file for nk6210 4.27. the old file was non working. this one was patched by me from a portuguese phone and it's working 100%
+
+1.4
+-changed working directory (not needed anymore to work on 'C:\' - you may now unpack the DarkFlasherShell to any directory and delete the ugly C:\flasher and c:\nk_files directories
+-changed default setting of boot file (now it's 868) - thanx FSC
+-changed default setting of starting method (mow it's manual) - thanx FSC
+-added automatic flash loader selection via flash id list - thanx FSC
+-minor bug fixes
+
+1.3 (internal release for directory redirection testing purposes)
+-trying to change working directory
+
+1.2
+-automatic and manual settings in flasher.com (you only need to press enter twice and power up the phone)
+-added support for nk3310 4.23
+-added support for nk7110 5.01
+-minor bug revision
+
+1.1
+-major bug fixes
+
+1.0
+-first release

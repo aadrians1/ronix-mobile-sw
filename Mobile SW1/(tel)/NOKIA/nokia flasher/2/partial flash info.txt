@@ -1,0 +1,7 @@
+partial flash filenames must be:
+
+mobile-version.fls	like	7110-494.fls
+
+everything else about this shell you understand... i hope :))
+
+regards. Dark Lemming

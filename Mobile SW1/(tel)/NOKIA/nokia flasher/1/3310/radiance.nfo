@@ -1,0 +1,110 @@
+     r           a         d      i      a        n          c          e
+БВлмммм        мммммлллммммм    ллВл   мммммллллммммм   лллммммм   мллммммм
+Влл пллВВмм мВллллп ллВ плллВВммпВллмВВлллп ВллВ плллВВммпВ плллВВммпВ плллВВм
+ллВ А ллВВВлолллп А лВВ А пллВВВлолВВВллп А ВлВВ А пллВВВло А пллВВВло А пллВВн
+БлВ ААолБВВлоллн АА ВВБ АА оллВВВнлАВллн АА БВВБ АА оллВВВн АА ммммммлппппппппп
+Блл  мллБВВнВллн АА лВБ АА олВВВлнВАВВлн АА БлВБ АА олВВВло АА ллВВВло АА ллВВн
+БВллллВБпппоВллл  А лВБ А  ллВВВлоВБВВлл  А БлВБ А  ллВВВло А  ллВВВло А  ллВВн
+ВВВ пВВВлм пВВлллм  ллВ  мллВВппмБВАпВВллм  ВллВ  мллВВппмБ  мллВВппмл  мллВВп
+ББВ   ппБмп мм ппппплллппппп мм лВВВ м ппппплллл пппп м ллВппппп м пмпппппп
+    мммлл мллллллммммммлллллллммммммллллллммммммллллллмммммллллллллм ллмм
+  пплллл мммммммммм пппппппппппппппппппппппппппппппппппппп мммммммммм ллллпп
+  млп л     ппппппплВллллллллллллллллллллллллллллллллллллВлппппппп     л плм
+ лп Б  мл                                                            лм  Б пл
+ол  А ллл         Nokia 3310  Flash Pack (c) Dejan Kaljevic          ллл А  лн
+ плмм ллл                                                            ллл ммлп
+    п ллл      supplier ў KanKava  А  release date ў 08/01/2001      ллл п
+      лллом                           # of disk(s) ў 01            мнллл
+      ллл Вн   packager ў RADiANCE А  Os           ў Win9x,me,2k  оВ ллл
+      ллнолн                                                      олнолл
+      п млп                                                        плм п
+     млпп               * THE LEADER GROUP ON GSM SCENE*             пплм
+    олп л      мммммммммммммммммммммммммммммммммммммммммммммммм       л плн
+    Вл ллмммлВлллппппппппппппппппппппппппппппппппппппппппппппплллВлмммлл лВ
+    он Вп         * Join our PUBLIC IRC channel on EFNET #RDE*                                              пВ он
+     пм                                                                 мп
+                      кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП               
+  кФФФФФФФФФФФФФФФФФФФДВБААА А TYPES.REQUiREMENTS А АААБВУФФФФФФФФФФФФФФФФФФФП 
+  Г                   РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй                   Г
+  Г                                                                          Г
+  Г   GSM TYPE:                    GSM REQUIREMENTS:                         Г
+  Г            [   ]:... Unlocker                   [ x ]:... Cable          Г
+  Г            [ x ]:... Flasher                    [   ]:... EEprom Reader  Г
+  Г            [   ]:... EEprom Dump                [   ]:... BDM            Г
+  Г            [   ]:... Solution                   [   ]:... EMMI Box       Г
+  Г            [   ]:... Service Software           [   ]:... Security Box   Г
+  Г            [   ]:... Other                      [   ]:... Other.         Г
+  Г                                                                          Г
+  Г   SHEMATICS INCLUDED: [   ]                                              Г
+  Г                                                                          Г
+  Г                                                                          Г
+  Г                   кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП                   Г
+  РФФФФФФФФФФФФФФФФФФФ ВБААААА А RELEASE NOTES А ААААААБВУФФФФФФФФФФФФФФФФФФФй
+                      РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
+      
+        This Nokia 3310 Flash Pack was released to be use with Nokia 
+        Interface Flasher By Dejan Kaljevic. This Flashes files will help 
+        u to make ur new version nokias 3310 phones. It WoRkZ 100%
+
+                                                                                
+                      кФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФП
+                       ВБААААА А INSTALL NOTES А ААААААБВ
+                      РФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФФй
+
+        Connect your nokia interface flasher to the computer via COM 1, run
+        "flasher.com" and follow the instructions. When the program is running
+        then u must espicify the memory adress where u want to start flashing.
+
+
+
+                               +---------+-------+
+                               |Model&ver|Address|
+                               +---------+-------+
+                               |3310 3.24|270000h|
+                               |3310 4.02|270000h|
+                               |3310 4.06|280000h|
+                               +---------+-------+
+
+   
+
+
+
+
+ пмм          *Another Great Release Brought to you by RADiANCE*          ммп
+  плллмм                 ммммммммммммммммммммммммммммм                ммлллп
+   плпм  мллллллллллллллллппппппппппппппппппппппппппплллллллллллллллм  мплп
+    п  пм                                                            мп  п
+      лм лм  А news А                                              мл мл
+      ллм лВ                                                      Вл млл
+      пп млп     Finnaly our ISP problems are resolved!           плм пп
+     ммлпп                                                           пплмм
+   млп мм                                                            мм плм
+  олн ллл                                                            ллл олн
+  оВ  ллл                                                            ллл  Вн
+  олн Влл    А applying А                                            ллВ олн
+   пл ВВВ                                                            ВВВ лп
+      лВВом   We are always looking for new talented members, if   мнВВл
+      ллл Вн youre interested in one (or more :) of the following оВ ллл
+      ллнолн positions,  do not hesitate to get in touch with us. олнолл
+      п млп                                                        плм п
+     млпп      RADiANCE IS LOOKiNG FOR:                              пплм
+    лп мл            * SOFTWARE SUPPLIERS (GSM and OTHER STUFF)      лм пл
+   он ллл            * EXPERIENCED CRACKERS (Dongle Capabiliti)      ллл он
+   Вн ллл            * SHELL BOX OWNERS                              ллл оВ
+   лн ллл            * SITEOPS WITH DECENT SPEED AND AFFILS          ллл ол
+   ол Влл                                                            ллВ лн
+    пнВВВ       NOTE: we don't need any couriers/prehunters.         ВВВоп
+      ллВом                                                        мнВлл
+      ллл лВ А contactz А                                         Вл ллл
+      пп млп                                                      плм пп
+     ммлпп        WEBPAGE.......: www.xxxxxxxxxxxx.com              пплмм
+   млп мм         EMAIL.........: apply@teamradiance.com             мм плм
+  олн ллл         IRC (EFnet)...: #RDE                               ллл олн
+  оВ  ллл                                                            ллл  Вн
+  олн Влл    А greets А                                              ллВ олн
+   пл ВВВ                                                            ВВВ лп
+      ллл                      TFE - IMG - ROYAL                     ллл
+      ллл пплВммммммммм                                мммммммммВлпп ллл
+      ллп         пппппппппппппппппппппппппппппппппппппппп           плл
+      п           HEADER AND LAYOUT BY fnuk OF [i]MAGE (IMG)           п
+

@@ -1,0 +1,34 @@
+#
+# Operator data validation file format version
+#
+Module_Code_File_Format_Version="1.0" 
+#
+###################################################
+#
+# The following entries take the form of
+#
+# <Entry_Name>="<Valid_Entry>","<Entry_Description>"
+#
+# Entry_Name -        Name of entry in Faultlog.
+# Valid_Entry -       Valid entry within the Entry_Name field
+#                     in the Faultlog.
+# Entry_Description - The meaning of Valid_Entry
+#                     ( max. length 25 characters )
+###################################################
+#
+# Valid Module Codes ( code , description )
+#
+#Changed by Kim Juhl HD8445
+#Module_Code="GT8","NHE-5* GSM radiomodule"
+#Module_Code="GT9","NHK-5* PCN radiomodule"
+#Module_Code="GJ8","NHE-5* GSM radiomodule"
+#Module_Code="GJ9","NHK-6* GSM radiomodule"
+#Module_Code="GU8","NHE-6* UIF module"
+#Module_Code="GU8","NHK-6* UIF module"
+#
+Module_Code="GT8","NHE-8* GSM radiomodule"
+Module_Code="GT9","NHK-8* PCN radiomodule"
+Module_Code="GJ8","NHE-8* GSM radiomodule"
+Module_Code="GJ9","NHK-9* GSM radiomodule"
+Module_Code="GU8","NHE-9* UIF module"
+Module_Code="GU8","NHK-9* UIF module"

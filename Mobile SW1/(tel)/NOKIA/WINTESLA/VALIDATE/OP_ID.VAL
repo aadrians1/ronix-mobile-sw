@@ -1,0 +1,36 @@
+#
+# Operator data validation file format version
+#
+Operator_ID_File_Format_Version="1.0" 
+#
+###################################################
+#
+# The following entries take the form of
+#
+# <Entry_Name>="<Valid_Entry>","<Entry_Description>"
+#
+# Entry_Name -        Name of entry in Faultlog.
+# Valid_Entry -       Valid entry within the Entry_Name field
+#                     in the Faultlog.
+# Entry_Description - The meaning of Valid_Entry
+#                     ( max. length 25 characters )
+###################################################
+#
+# These codes copied from 
+# "Fault and Symptom Codes for Faultlogger"
+# Draft v0.1, 24 Apr 95; Keith Littler
+# /user/littler/desktop/faultlogcodes.nmp
+#
+###################################################
+#
+# Valid Operator's ID Codes ( Op_ID , Person's Name )
+# Operator_ID maximum length - 3 character
+#
+Operator_ID="CJA","Cliff Anderson"
+Operator_ID="KR","Keith Rimes"
+Operator_ID="010","Simon Gates"
+Operator_ID="475","Keith Littler"
+Operator_ID="JLP","Jonathan Pound"
+Operator_ID="RA","Robert Abbott"
+Operator_ID="TM","Trevor Moseley"
+

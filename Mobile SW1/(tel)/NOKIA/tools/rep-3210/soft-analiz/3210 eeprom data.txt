@@ -1,0 +1,17 @@
+000-00b ???
+00c-013 IMEI number
+014 	FF
+015-01f ???
+020-038 SP lock data
+039-10f IMEI Coded (maybe)?? 9*24 byte
+010-11c 12 34 50 FF FF FF FF FF FF FF FF FF 00 00
+11e-11f 1 checksum
+12b-130 Production code
+13c-143 original IMEI number
+144-145 MANUFACTURE DATE 
+244-245 2 checksum
+
+If you change a value from 0-0245h you have to recalculate cheksum.
+
+Please send me e-mail if you know somthing else or have 3210 eeprom dumps.
+E-mail: peti_@freemail.hu

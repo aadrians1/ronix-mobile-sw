@@ -1,0 +1,391 @@
+Nokia Data Suite 3.0
+(c) 1999 Nokia Mobile Phones. All rights reserved. 	
+
+=================================================================
+TABLE OF CONTENTS (TROUBLESHOOTING.TXT)
+=================================================================
+
+1.  Introduction
+2.  Abbreviations used in this document
+3.  Connection Problems and Explanations
+4.  IR connections
+5.  Other Information
+
+
+=================================================================
+1.  INTRODUCTION
+=================================================================
+
+This document aims at providing solutions for the most common
+problems that you might encounter while using Nokia Data 
+Suite 3.0. 
+
+
+=================================================================
+2.  ABBREVIATIONS USED IN THIS DOCUMENT
+=================================================================
+
+APM		Advanced Power Management
+bps		Bits per second
+FIFO		First In First Out
+NDS		Nokia Data Suite
+SIM		Subscriber Identification Module
+TSR		Terminate and Stay Resident
+TAPI		Telephone Application Programming Interface
+UART		Universal Asynchronous Receiver/Transmitter
+IR		Infrared
+IrDA		Infrared Data Association
+
+
+=================================================================
+3. CONNECTION PROBLEMS AND EXPLANATIONS
+=================================================================
+
+3.1  "I HAVE SUSPENDED MY LAPTOP AND HAVE WOKEN IT UP AGAIN, BUT
+NOW IT IS DIFFICULT OR IMPOSSIBLE TO ESTABLISH A CONNECTION."
+
+NDS requires that your BIOS supports APM 1.1. Please ensure also
+that your communication ports are always enabled (device power
+management), irrespective of whether they are being used or not.
+If you still experience problems after a suspend
+operation, simply exit NDS and restart it.
+-----------------------------------------------------------------  
+
+3.2  "I HAVE DISCONNECTED AND RECONNECTED MY PHONE WITHOUT
+WAITING FOR NDS TO RECOGNISE THAT THE PHONE HAS BEEN
+DISCONNECTED AND NOW NDS DOES NOT RESPOND ANYMORE."
+
+Please remember to wait until NDS recognises that you have
+disconnected the phone, before reconnecting it. This process
+may take a few seconds and when the "No device connected" text 
+appears in the NDS Monitor window, the phone can be connected 
+again. If you have accidentally reconnected your phone too early
+and experience problems, switch off your phone and then switch it 
+on again (reset) and restart NDS.
+----------------------------------------------------------------- 
+
+3.3 "I WOULD LIKE TO USE A 16-BIT COMMUNICATION APPLICATION WITH
+NDS, BUT I DON'T KNOW HOW TO CONFIGURE THE COMMUNICATION
+APPLICATION."
+ 
+16-bit applications do not support Unimodem/TAPI, so you have to
+specify manually the communication port which NDS is using.
+To find out which port NDS is using, open the Windows 95/98 
+Device Manager (Start -> Settings -> Control Panel -> System -> 
+Device Manager) and look at the Ports (COM&LPT) entries. You 
+may have to double-click Ports (COM&LPT) to see all ports.
+Specify the Nokia GSM Data 3.0 Port's communication port number
+in your communication application. 
+Example: If  the Device Manager displays "Nokia GSM Data 3.0 Port
+(COM3)" then you should specify COM3 as the modem port in your
+communication application.
+----------------------------------------------------------------- 
+ 
+3.4 "I WOULD LIKE TO DIAL VOICE CALLS FROM MY APPLICATION, BUT
+CALLS ARE ALWAYS DIALLED AS DATA CALLS."
+
+During the NDS installation, two modems are installed on your
+computer, one called "Nokia GSM Data 3.0" and the other "Nokia
+GSM Voice 3.0".
+If you would like to use applications to dial voice calls instead
+of data calls, then remember to specify the "Nokia GSM Voice 3.0"
+as the modem to be used in your application. Specify the "Nokia
+GSM Data 3.0" as the modem in all data and fax applications.
+----------------------------------------------------------------- 
+
+3.5 "I HAVE CONFIGURED MY DATA APPLICATION TO USE 7 DATA BITS
+INSTEAD OF 8, BUT NOW I HAVE TROUBLE ESTABLISHING A CONNECTION."
+
+Certain cellular networks do not support 7-bit data calls and 
+connection problems may occur if applications have been
+configured for 7-bit use.
+Before configuring any application to use 7-bit data, make sure
+that your network supports this. If not supported, then the only
+remedy in case of problems experienced, is to re-configure the 
+application to use 8-bit data (8N1) instead.
+----------------------------------------------------------------- 
+
+3.6 "I WOULD LIKE TO USE DATA TRANSFER SPEEDS OTHER THAN 9600 
+BPS, BUT WHENEVER I SPECIFY THIS IN MY DATA APPLICATION, I
+EXPERIENCE CONNECTION PROBLEMS."
+
+Configuring data applications to use transfer speeds other than
+9600 bps (default) may cause data transfer or connection
+problems, if other speeds are not supported by your SIM and 
+network operator. Therefore, before changing the default data 
+transfer speed, make sure that your SIM has been configured by 
+your network operator to support speeds other than 9600 bps. If 
+other speeds are not supported, you should always use the data 
+transfer speed of 9600 bps.
+----------------------------------------------------------------- 
+
+3.7 "I EXPERIENCE VERY BAD DATA THROUGHPUT SPEEDS."
+
+Make sure that the serial port to which your phone is connected
+uses FIFO buffering. You can enable this within the serial port
+settings, but only if your communication port is equipped with a
+16550 or compatible UART.
+----------------------------------------------------------------- 
+
+3.8 "WHENEVER I DIAL A NUMBER, THE WRONG AREA AND COUNTRY CODES 
+ARE DIALLED."
+
+Make sure that these have been specified correctly in the modem's 
+dialling properties. You can inspect and change them in 
+Settings -> Control Panel -> Modems -> Dialling Properties.
+Make sure that the settings are displayed/changed for
+the correct modem (either Nokia GSM Data 3.0 or Nokia GSM Voice
+3.0) if you happen to have other modems installed as well.
+
+----------------------------------------------------------------- 
+ 
+3.9 "WINDOWS INFORMED ME ABOUT ANOTHER PROGRAM USING MY MODEM, 
+BUT I DID NOT HAVE ANY OTHER PROGRAM LOADED."
+
+If Windows informs that "Another program is using the modem, 
+close the other program...." and no other program is actually 
+using the modem, then reboot the computer to recover from this 
+situation.
+
+Also when setting up a remote connection with MS Exchange, it
+might occasionally complain about the modem port being already in
+use, without establishing any connections. If this happens,
+re-start MS Exchange.
+----------------------------------------------------------------- 
+
+3.10 "I AM EXPERIENCING PROBLEMS WITH ESTABLISHING A CONNECTION
+WITH NDS."
+
+Ensure that the phone is connected to a communication port that
+is not used by another device.
+
+Certain 16-bit drivers remaining in the CONFIG.SYS file from
+previous Windows installations, such as 3.11 or Windows for
+Workgroups, have been found to conflict with the NDS. If you
+have upgraded to Windows 95/98 from an earlier Windows version, 
+you are likely to have some of these drivers in your CONFIG.SYS 
+file. Make sure that they are either disabled or removed before 
+you start NDS.
+
+Avoid using Scandisk and Defrag while NDS is running, as this
+might cause connection problems.
+----------------------------------------------------------------- 
+
+3.11 "DRIVER INSTALLATION TESTS FAILED"
+
+If automatic driver installation fails and you cannot find 
+Nokia Data Suite 3.0 port and/or modems from Device Manager they 
+can be installed manually like any other new Windows 95/98 
+hardware. To install NDS port and modem manually do the 
+following:
+
+Install virtual port as follows:
+
+1. Open Windows Control Panel (by selecting it from Start menu).
+2. Run the Add New Hardware wizard by double-clicking its icon.
+3. Click the Next button until the wizard asks whether you want 
+   Windows to search for new hardware. Answer "No" to this 
+   question and click the Next button to proceed to the next step.
+4. Select Ports (COM & LPT) and click the Next button.
+5. Click Have Disk... and select the folder where inf files 
+   are, e.g. c:\windows\inf.
+6. Select Nokia Mobile Phones from the Manufacturers list and 
+   Data Suite 3.0 from the Models and click Next.
+7. Click Next.
+8. If Windows doesn't find ncds3.vxd, select the folder where it
+   was copied by the setup program (normally c:\windows\system) 
+   and click Next.
+9. Click Finish to end the installation.
+10. Select "No" when Windows prompts to restart computer.
+
+Install modems as follows:
+
+1. Open Windows Control Panel (by selecting it from Start menu).
+2. Select Modems by double-clicking its icon. 
+3. Click Add...
+4. Select Other in the question what type of modem you want 
+   to install and click Next (Windows 95 only).
+5. Select Don't detect my modem; I will select it from a list.
+   and click Next.
+6. Select Nokia Mobile Phones from the Manufacturers list and 
+   Nokia GSM Data 3.0 from the Models and click Next.
+7. Select Data Suite 3.0 (COMx) from the list where you select 
+   the port to be used with this modem and click Next.
+8. Click Finish to end the installation.
+
+Repeat the same steps to install also Nokia GSM Voice 3.0 
+modem.
+
+----------------------------------------------------------------- 
+
+3.12 "ERROR MESSAGE 'CANNOT OPEN PHYSICAL COMMUNICATION PORT'
+APPEARS WHEN LAUNCHING NDS."
+
+This error message is given when some other application has 
+reserved the same communication port that NDS is configured to 
+use. To solve this problem, close the other application using the
+port.
+----------------------------------------------------------------- 
+
+3.13 "WHEN INSTALLING NDS, A PHONE WAS SELECTED MANUALLY, NOT 
+DETECTED AUTOMATICALLY. WHEN RUNNING NDS AFTER INSTALLATION, IT
+STILL DOES NOT WORK."
+
+Check that the communication port number you specified is the 
+right one. If a wrong port number is specified, reinstall NDS and 
+specify the right communcation port.
+-----------------------------------------------------------------
+
+3.14 "DURING THE INSTALLATION A WARNING ABOUT TSP OTHER THAN
+UNIMODEM IS GIVEN", "COM PORT IS RESERVED BY OTHER TSP"
+
+This warning message is given if installation detects some other
+TSP than UNIMODEM. If the detected TSP uses the same physical COM
+port that NDS should use, conflicting applications have to be
+reconfigured so that they use different communication ports.
+For example, if some other TSP uses COM1 and during the NDS 
+installation this TSP is loaded, the installation cannot detect 
+a phone and it warns about that. The installation proceeds in the
+normal way but when starting NDS, the phone can be neither 
+detected nor used. The situation is the same if some other 
+application using TSP is installed after NDS to use the same COM 
+port. To avoid this situation remove or reconfigure other 
+applications that use a TSP other than UNIMODEM. 
+-----------------------------------------------------------------
+
+3.15 "DRIVER CHECK FAILS, AND YOU GET THE "NOT ALL APPLICATION
+COMPONENTS FOUND" -MESSAGE WHEN STARTING NOKIA DATA SUITE, THERE 
+MAY BE AN IRQ-CONFLICT WITH YOUR COM-PORTS".
+
+Do the following:
+
+1. Open Control Panel, and System Applet.
+2. Select the Device Manager tab, and click Properties.
+3. Check if there are devices with the same IRQ as the 
+   Communication Port(s). For example, there may be "COM1" and
+   "Infrared Serial Port" which both use IRQ 04.
+4. Close Computer Properties and locate the conflicting device 
+   from the Device Manager tab. For example, IR serial port may 
+   be under "Network Adapters"-node, or "Ports"-node.
+5. Double-click the device (or choose properties), and select 
+   the Resources tab. 
+6. Clear the "Use automatic settings" check box. Then choose
+   a configuration (Basic Configuration xxxx) that has a different 
+   IRQ, and doesn't have any other (I/O Range) conflicts.
+7. Windows warns you about using manual configuration settings, 
+   but ignore this warning and click Yes.
+8. Reboot might be required before starting NDS.
+
+-----------------------------------------------------------------
+3.16 ERROR MESSAGE "Slave Port directed to master port" APPEARS 
+WHEN LAUNCHING NDS."
+
+Physical communications port and Data Suite 3.0 virtual port are 
+the same in the Windows system registry. Reinstall Nokia Data 
+Suite 3.0.
+
+-----------------------------------------------------------------
+3.17 ERROR MESSAGE "Cannot setup physical communication port. 
+Slow UART?" APPEARS WHEN LAUNCHING NDS.
+
+The physical communications port characteristics cannot be set 
+to 115200 bps. The UART used in the computer may not support 
+these baud rates. Check your computer documentation for details.
+
+-----------------------------------------------------------------
+3.18 ERROR MESSAGE "Physical communication port failure" APPEARS 
+WHEN LAUNCHING NDS.
+
+The requested port is not operational. Check the functionality of 
+the physical communications port where NDS is connected.
+
+-----------------------------------------------------------------
+3.20 ERROR MESSAGE "Illegal UART" APPEARS WHEN LAUNCHING NDS.
+
+UART in the computer is not compatible with the standard 16550
+UART. Check your computer documentation for details.
+
+-----------------------------------------------------------------
+3.21  NDS MONITOR DOES NOT FIND THE CONNECTED PHONE, OR SHOW 
+INFORMATION ON PHONE CALLS.
+
+Make sure that your phone is switched on. Reconnect the phone to 
+the PC and restart Nokia Data Suite 3.0. It is recommended that 
+you should switch on the phone before connecting the cable.
+
+Note that Nokia Data Suite 3.0 cannot show information on calls 
+that are established before connecting the phone to the PC.
+
+
+=================================================================
+4. IR CONNECTIONS (Windows 95)
+=================================================================
+
+4.1 " HOW CAN I ACTIVATE THE IR CONNECTION "
+
+Before using NS via IR, you can test the IR port functionality
+with following way :
+  * open the Microsoft IRmon and activate it from Control Panel
+  * check that the Nokia 6110, Nokia 6130 or Nokia 6150 is found 
+    with this Irmon (follow the instruction of activating the 
+    infrared in your Nokia phones's User Guide)
+  * before using NDS via IR remember to close the IRmon
+
+Install NDS as it is told in installation guide. After that run
+the infrared setup program and follow the instructions.
+ 
+-----------------------------------------------------------------
+
+4.2 "I CANNOT USE NDS WITH IR,INFRARED SETUP PROGRAM DOES NOT
+FIND THE IR PORT AND DRIVER TESTS FAILS"
+
+- Check that IR port is activated in your machine
+- Check that the IR port is not configured as communication port
+- Check that the IRmon (version 2) is not activated and
+  running in your machine (it reserves the port) 
+- check that the infrared is activated in your Nokia 6110 
+  (follow the instructions from the user guide of your phone)
+-----------------------------------------------------------------
+
+4.3 " IR COMPATIBILITY "
+
+The NDS is compatible only with Microsoft IR stack (Generic IR 
+port). The functionality of IR depends on your PC's hardware 
+compatibility. It is recommended to use cable in data and fax 
+connections for reliability and practical issues. IR can be used 
+only with Windows 95
+-----------------------------------------------------------------
+
+4.4  "INFRARED CONNECTION SETUP SUGGESTS WRONG PHYSICAL INFRARED
+PORT."
+
+If you make changes to the serial port configurations of your PC, 
+for example with the PC's own features program, you should also 
+change the physical infrared port with the Infrared Monitor, or 
+you should set the correct port manually during the setup.
+
+
+=================================================================
+5. OTHER INFORMATION
+=================================================================
+
+More infromation about this product can be founded from web pages; 
+WWW.FORUM.NOKIA.COM or WWW.NOKIA.COM. You can also register 
+yourself to the club Nokia from WWW.CLUB.NOKIA.COM.
+-----------------------------------------------------------------
+
+(c) 1997-1999 Nokia Mobile Phones. All rights reserved.
+
+Nokia and Nokia Connecting People are registered trademarks of 
+Nokia Corporation. Windows 95, Windows 98 and Windows NT 4.0 are 
+registered trademarks of Microsoft Corporation.
+Other products and company names mentioned herein may be 
+registered trademarks or trade names of their respective owners.
+
+Nokia Mobile Phones operates on a policy of continuous 
+improvement. Therefore we reserve the right to make changes and 
+improvements to any of the products described in this guide 
+without prior notice.
+
+Nokia Mobile Phones is not responsible for any loss of data,
+income or any consequential damage howsoever caused.

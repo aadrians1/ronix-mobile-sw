@@ -1,0 +1,147 @@
+#
+# Operator data validation file format version
+#
+Fault_Symptom_File_Format_Version="1.0"
+#
+###################################################
+#
+# The following entries take the form of
+#
+# <Entry_Name>="<Valid_Entry>","<Entry_Description>"
+#
+# Entry_Name -        Name of entry in Faultlog.
+# Valid_Entry -       Valid entry within the Entry_Name field
+#                     in the Faultlog.
+# Entry_Description - The meaning of Valid_Entry
+#                     ( max. length 25 characters )
+###################################################
+#
+# PCMS Part:     WIN_TESLA:APPLICATION.BASE;1
+#
+# PCMS Item:     WIN_TESLA:FAULT.VAL.BASE
+#
+# PCMS File:     applic\bin\validate\faulten.val
+#
+# PCMS Version:  4
+#
+# PCMS Status:   See PCMS
+#
+###################################################
+#
+# These codes copied from
+# "Fault and Symptom Codes for Faultlogger"
+# Draft v0.5, 12 Dec 95; Keith Littler
+# /user/littler/desktop/faultlogcodes.nmp
+#
+###################################################
+#
+# Valid Symptom Codes ( Global to NMP )
+# Symptom Code maximum length - 4 character
+#
+Symptom_Code="1000","Out of zone announcement"
+Symptom_Code="1010","Fails outgoing call"
+Symptom_Code="1020","Fails incoming call"
+Symptom_Code="1030","No ring back tone"
+Symptom_Code="1040","Busy tone after on-hook"
+Symptom_Code="1050","Busy tone after dialling"
+Symptom_Code="1060","No tone after dialling"
+Symptom_Code="1070","Poor receiver sensitivity"
+Symptom_Code="0080","Interference from other phone or device"
+Symptom_Code="1090","Erroneous connection"
+Symptom_Code="1100","Fails outgoing and incoming calls"
+Symptom_Code="1110","Calling party hears NAT announcement"
+Symptom_Code="1120","Calling party hears busy tone"
+Symptom_Code="1130","Not connected after ringing"
+Symptom_Code="0140","No/poor ringer sound"
+Symptom_Code="0150","One way communication"
+Symptom_Code="1190","Other connection failure"
+Symptom_Code="1200","Drops calls"
+Symptom_Code="1210","Low/poor/no speech"
+Symptom_Code="1220","Interrupted speech"
+Symptom_Code="1230","Noise"
+Symptom_Code="1240","Interference"
+Symptom_Code="1250","Distorted sound"
+Symptom_Code="1260","Echo"
+Symptom_Code="1270","Howling"
+Symptom_Code="0280","Cannot change audio level"
+Symptom_Code="1290","Other audio problem"
+Symptom_Code="1300","Radio equipment failure"
+Symptom_Code="1310","Transceiver failure"
+Symptom_Code="1320","Battery failure"
+Symptom_Code="1340","Antenna failure"
+Symptom_Code="1350","Failed indication on phone's display"
+Symptom_Code="0360","Display/LCD failure"
+Symptom_Code="0370","Backlighting failure"
+Symptom_Code="1390","Other equipment failure"
+Symptom_Code="1400","Can't power up/phone powers down"
+Symptom_Code="1410","Can't charge"
+Symptom_Code="1420","Short battery life"
+Symptom_Code="1430","Heating"
+Symptom_Code="0440","Poor battery fit"
+Symptom_Code="1490","Other power failure"
+Symptom_Code="1500","Keypad failure"
+Symptom_Code="1510","Dial lock failure"
+Symptom_Code="1520","Memory dialling failure"
+Symptom_Code="1530","Privacy function failure"
+Symptom_Code="1540","In-call dialling failure"
+Symptom_Code="1560","Speed dialling failure"
+Symptom_Code="1570","Call waiting failure"
+Symptom_Code="1580","Voicemail failure"
+Symptom_Code="1591","Clock function failure"
+Symptom_Code="1592","Can't adjust volume"
+Symptom_Code="1593","Recording function failure"
+Symptom_Code="0594","Can't enter / retrieve memory"
+Symptom_Code="1599","Other functional failure"
+Symptom_Code="1600","Charge section malfunction"
+Symptom_Code="1610","Charge meter malfunction"
+Symptom_Code="1620","Fax malfunction"
+Symptom_Code="1630","PC malfunction"
+Symptom_Code="1640","NCU malfunction"
+Symptom_Code="1650","Auxiliary speaker malfunction"
+Symptom_Code="1660","Headset malfunction"
+Symptom_Code="1670","Handsfree malfunction"
+Symptom_Code="0680","ID write failure"
+Symptom_Code="1690","Other equipment failure"
+Symptom_Code="1700","Damaged, mishandled equipment"
+Symptom_Code="0710","Label incorrect/missing/damaged"
+Symptom_Code="0720","Screw missing/loose"
+Symptom_Code="0730","Water damage"
+Symptom_Code="0740","Other cosmetic/mechanical failure"
+Symptom_Code="0750","Cosmetic renewal requested"
+#
+# Valid Fault Codes ( Global to NMP )
+# Fault Code maximum length - 3 character
+#
+Fault_Code="001","TUNING OUT OF SPECIFICATION"
+Fault_Code="002","DRY JOINT/COLD SOLDER"
+Fault_Code="003","SHORT CIRCUIT/SOLDER SHORT"
+Fault_Code="004","BROKEN TRACE"
+Fault_Code="005","BURNT TRACE"
+Fault_Code="006","SHORTED TRACES"
+Fault_Code="016","MODULE BURNT OUT/BURNT UP"
+Fault_Code="017","ELECTRICAL FAILURE (COMPONENT)"
+Fault_Code="018","MECHANICAL FAILURE (COMPONENT)"
+Fault_Code="019","ASSEMBLY ERROR"
+Fault_Code="020","FASTENING WORKED LOOSE"
+Fault_Code="030","INCORRECT COMPONENT/WRONG PART FITTED"
+Fault_Code="031","MISSING PART (FROM PRODUCTION)"
+Fault_Code="032","HARDWARE MODIFICATION"
+Fault_Code="033","ESN ERROR"
+Fault_Code="034","MEMORY CORRUPTION"
+Fault_Code="045","SOFTWARE FAULT"
+Fault_Code="046","DIRTY (KEYPAD CONTACTS, DUST ETC)"
+Fault_Code="047","SCRATCHED/WORN COSMETICS"
+Fault_Code="048","UNAUTHORISED REWORK"
+Fault_Code="049","PHYSICAL DAMAGE"
+Fault_Code="060","LIQUID DAMAGE"
+Fault_Code="061","UNKNOWN CAUSE"
+Fault_Code="062","BEYOND ECONOMICAL REPAIR"
+Fault_Code="063","UNIT EXCHANGED"
+Fault_Code="064","ITEM FAILED IN NORMAL USE (BATTERIES/PHONES)"
+Fault_Code="075","DEFECTIVE BATTERY"
+Fault_Code="076","NAM PROGRAMMING ERROR"
+Fault_Code="077","NETWORK ID PROGRAMMING ERROR"
+Fault_Code="078","NO FAULT FOUND"
+Fault_Code="079","OTHER"
+Fault_Code="080","OPERATOR ERROR"
+
