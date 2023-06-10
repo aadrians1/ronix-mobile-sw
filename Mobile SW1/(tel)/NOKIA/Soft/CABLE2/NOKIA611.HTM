@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=windows-1250">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Nokia 6110 CDS</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p align="center"><font size="5"><strong>Nokia 6110 Cellular Data
+Suite interface</strong></font></p>
+
+<p><font size="2">Zde je zapojení interface pro telefony N6110.
+Pokud chcete schéma ve vìtším rozlišení, </font><a
+href="bitmap_images/ncds6110large.gif"><font size="2">je zde</font></a><font
+size="2">.</font></p>
+
+<p><a href="bitmap_images/ncds6110large.gif"><img
+src="bitmap_images/ncds6110small.gif" border="0" width="562"
+height="311"></a></p>
+
+<p><font size="2">Celı interface je napájen signály RTS a DTR.
+Diody D1 a D5 doporuèuji v Shottkyho provedení kvùli
+niším proudovım nárokùm. Rovnì 5V stabilizátor by mìl
+bıt v &quot;L&quot; provedení, aby jeho odbìr byl co
+nejmenší. Jeliko je obtíné sehnat 3.3V stabilizátor a
+zenerova dioda v tomto pøípadì není vhodná (nebo log. 1 na
+COM portu mùe bıt tuším a 15V a úbytek na ní by byl
+velikı), stabilizece napájecího napìtí (které by mìlo bıt
+3.3V) je zde øešena 5V stabilizátorem, za ním je úbytek
+napìtí na D3 a D5 cca 1.8V, t.j. vısledné napìtí cca
+3.2V. Pokud pouijete normální diody a obyèejnı
+stabilizátor, mùe se stát, e interface bude napájen o
+nìco niším napìtím ne 3.3V (v závislosti na COM portu
+poèítaèe - logická 1. na RS232 je definovaná od +5V do
+tuším +15V, ale zvlášte u notebookù se pohybuje na spodní
+hranici 5V, na diodì je úbytek zhruba 0.6V, tzn. napìtí pøed
+stabilizátorem mùe bıt i 4.4V a stabilizované v tomto
+pøípadì kolem 4.1V, úbytek na D3 a D5 je cca 1.8, t.j.
+napájecí napìtí mùe bıt i 2.3V), co by nemuselo ani tak
+moc vadit (po testech jsem zjistil, e MAX3232 funguje
+spolehlivì ješte na hranici 2V), ale proudová zátì COM
+portu bude zbyteènì vìtší.</font></p>
+
+<p><font size="2">Zenerovy diody DZ1 a DZ2 jsou VELMI dùleité
+pro bezpeènost vašeho telefonu. Normálnì jsou napìové
+ùrovnì log. 1. na hranici 3.3V, ale i mírné pøekroèení
+této hranice mùe vést ke znièení telefonu nehledì na
+proudové nárazy pøi zapnutí poèítaèe nebo pøi zasouvání
+interface do poèítaèe. Diody DZ1 a DZ2 toto napìtí omezují
+na 2.7V co bohatì staèí na hodnotu log. 1. a zárovìò je
+to hluboko pod maximální pøípustnou hodnotou.</font></p>
+
+<p><font size="2">Jinak se jedná o standartní zapojení
+MAX3232. Piny è.8 (R2IN) a è.9 (T2IN) není bezpodmíneènì
+nutné zemnit.</font></p>
+
+<p><font size="2"><img src="images/line.gif" width="623"
+height="7"></font></p>
+
+<p>&nbsp;</p>
+
+<p><font size="2">Zde je popis zapojení konektoru telefonu,
+toté ve vìtším rozlišení a s </font><a
+href="bitmap_images/konektor6110large.gif"><font size="2">popisem
+signálù zde</font></a><font size="2">.</font></p>
+
+<p><a href="bitmap_images/konektor6110large.gif"><img
+src="bitmap_images/konektor6110small.gif" border="0" width="432"
+height="118"></a></p>
+
+<p><font size="2">Popisy signálù nemá smysl pøekládat,
+take jen anglickı originál :-)</font></p>
+
+<p><font size="2"><img src="images/line.gif" width="623"
+height="7"></font></p>
+
+<p><font size="2">Zde je nákres </font><a
+href="bitmap_images/2_pl_spoj6110small.gif"><font size="2">OBOUSTRANNÉHO
+plošného spoje</font></a><font size="2">, popø. toté ve </font><a
+href="bitmap_images/2_pl_spoj6110large.gif"><font size="2">vìtším
+rozlišení</font></a><font size="2">. Tato varianta je urèena k
+napájení pøímo na Cannon DB 9 female konektor, </font><a
+href="bitmap_images/osazeni_konektor.gif"><font size="2">viz obr</font></a><font
+size="2">.</font></p>
+
+<p><font size="2">Pokud dáte pøednost </font><a
+href="bitmap_images/1_pl_spoj6110small.gif"><font size="2">JEDNOSTRANNÉMU
+plošnému spoji</font></a><font size="2">, (zde i ve </font><a
+href="bitmap_images/1_pl_spoj6110large.gif"><font size="2">vìtším
+rozlišení</font></a><font size="2">), budete mít uprostøed
+kabelu &quot;bublinu&quot;, </font><a
+href="bitmap_images/osazeni_kabel.gif"><font size="2">viz obr</font></a><font
+size="2">.</font></p>
+
+<p><font size="2">Jen upozoròuji, e obrázky NEJSOU v
+mìøítku 1:1 a proto je nutno je pøekreslit. Jestlie máte
+zájem o originály (ty ve správném mìøítku jsou) v
+CorelDRAW 8, </font><a href="vector_images/"><font size="2">jsou
+zde</font></a><font size="2">.</font></p>
+
+<p><img src="images/line.gif" width="623" height="7"></p>
+
+<p><a href="mailto:l92048@decsys.vsb.cz"><font size="2"><img
+src="images/bird_icon.gif" border="0" width="50" height="50"></font></a><font
+size="2">Pokud máte nìjaké další dotazy nebo pøipomínky, </font><a
+href="mailto:l92048@decsys.vsb.cz"><font size="2">pošlete mi
+prosím mail</font></a><font size="2"> nebo </font><a
+href="mailto:adam.vlcek@sms.paegas.cz"><font size="2">SMS</font></a><font
+size="2"> (jen 140 znakù).</font></p>
+</body>
+</html>

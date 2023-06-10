@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=windows-1250">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Nokia CDS</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p align="center"><font size="5"><strong>Nokia Cellular Data
+Suite interface</strong></font></p>
+
+<p><font size="2">Všechny informace, které zde naleznete jsou
+vısledkem mého vlastního bádání nebo jsou nalezeny kdesi na
+internetu. V ádném pøípadì se nejedná o oficiální
+schéma a informace a pokud se rozhodnete je realizovat, </font><font
+color="#FF0000" size="2">ÈINÍTE TAK NA VLASTNÍ RIZIKO</font><font
+size="2"> a za pøípadné škody </font><font color="#FF0000"
+size="2">NENESU ÁDNOU ODPOVÌDNOST</font><font size="2">.</font></p>
+
+<p><font size="2">A ještì jedna rada - pokud tomu nerozumíte,
+nebo si nìèím nejste jisti, radìji se do toho nepouštìjte a
+pøenechte to nìkomu zkušenìjšímu. Porty všech telefonù
+jsou velice náchylné k vyhoøení a není nijak tìké
+znièit si telefon !!!</font></p>
+
+<p><font size="2"><img src="images/line.gif" width="623"
+height="7"></font></p>
+
+<p><font size="2">Interface (kabel) je urèen pro telefony
+N8110i, N8110, N3110 a N6110. Funguje-li s N2110 mi není známo.
+Jedná se pouze o pøevodník RS232/TTL, všechny funkce (napø.
+modem) jsou realizovány softwarovì.</font></p>
+
+<p><font size="2">Telefony N8110i, N8110 a N3110 pracují s 5V
+technologií, telefon N6110 s 3V technologií. Z toho vyplıvají
+i drobné rozdíly v zapojení interface a NEJSOU vzájemnì
+kompatibilní - POZOR !!! pokud pouijete 5V interface pro
+N6110, témìø stoprocentnì ji znièíte.</font></p>
+
+<p><font size="2">Zde je popis jednotlivıch zapojení a vše
+okolo této problematiky, popø. další informace, které jsou
+mi známy:</font></p>
+
+<table border="0">
+    <tr>
+        <td><font size="2"><img src="images/squiggle.gif"
+        width="15" height="11"></font></td>
+        <td><a href="nokia8110.htm#Nokia 8110 CDS"><font size="2">Nokia
+        8110i, 8110 a 3110</font></a></td>
+    </tr>
+    <tr>
+        <td><font size="2"><img src="images/squiggle.gif"
+        width="15" height="11"></font></td>
+        <td><a href="nokia6110.htm#Nokia 6110 CDS"><font size="2">Nokia
+        6110</font></a></td>
+    </tr>
+</table>
+
+<p><font size="2">Tento interface je vyzkoušen s Nokia Cellular
+Data Suite v1.0 (resp. v1.0a) a v1.2. Teoreticky by mìl fungovat
+i s Nokia CellularWare (zde moná i pro N2110?)</font></p>
+
+<p><font size="2">Celkové náklady se pohybují mezi 600,- a
+1500,- Kè podle pouitıch souèástek. Nejvìtší problém je
+sehnat vlastní konektor telefonu - to je témìø nemoné,
+proto je nutné koupit napø. externí anténu nebo
+&quot;bondovku&quot; a konektor vypájet. Jen dejte pozor, aby
+obsahoval všechny piny - nìkteøí vırobci do konektoru
+osazují jen ty piny, které sami pouívají.</font></p>
+
+<p><font size="2">Celé zaøízení se dá celkem pohodlnì
+vestavìt do Cannon 25 konektoru. Protoe se ale jedná o
+interface kterı bude zøejmì hlavnì pouíván u notebookù,
+které zpravidla 25 pinovı COM port nemají a také je-li v
+poèítaèi jen jeden COM port, bıvá to 9 pinovı, je návrh
+oboustranného plošného spoje právì pro tento Cannon DB 9
+female konektor. Do toho se ovšem nevejde (tedy pokud si dáte
+práci a pouijete SMD provedení souèástek, tak to tam
+nacpete - já to zkoušel - ale v domácích podmínkách to dá
+døinu nakreslit a vyleptat pøesnì a za tu práci to nestojí),
+ale pokud toto celé zalejete epoxidem, vznikne vám jen o nìco
+málo vetší &quot;bublina&quot; ne je originální kryt na
+konektor (viz obr).</font></p>
+
+<p><font size="2"><img src="bitmap_images/osazeni_konektor.gif"
+width="582" height="130"></font></p>
+
+<p><font size="2">Pokud nechcete dìlat oboustrannı plošnı
+spoj, také je uveden návrh jednostranného, pøièem ten ale
+není napájen na konektoru a &quot;bublina&quot; bude uprostøed
+kabelu (viz obr.).</font></p>
+
+<p><font size="2"><img src="bitmap_images/osazeni_kabel.gif"
+width="582" height="107"></font></p>
+
+<p><font size="2">Èísla pinù na schématu jsou uvedena
+rovnì pro 9 pinovı COM a NEODPOVÍDAJÍ rozloení signálu
+na 25 pinovém COMu.</font></p>
+
+<p><font size="2"><img src="images/line.gif" width="623"
+height="7"></font></p>
+
+<p><font size="2">Zapojení by mìlo bıt témìø urèitì
+pouitelné i pro telefony Siemens S10 a Ericcson a pro všechny
+další telefony, které umoòují nìjaké pøipojení k PC.
+Pak je ovšem nutno upravit napìové úrovnì na stranì
+telefonu a samozøejmì èísla pinù na konektoru telefonu.</font></p>
+
+<p><font size="2"><img src="images/line.gif" width="623"
+height="7"></font></p>
+
+<p><font size="2">Všechny obrázky jsou nakresleny v CorelDRAW 8
+(nákresy plošnıch spojù jsou v mìøítku 1:1) a máte-li o
+nì zájem, </font><a href="vector_images/"><font size="2">jsou
+zde</font></a><font size="2">. Tyto stránky (zapakované ve
+WinZipu) jsou celé </font><a
+href="http://darksys.vsb.cz/~l92048/ncds/other/ncds_web.zip"><font
+size="2">k dispozici zde</font></a><font size="2">.</font></p>
+
+<p><font size="2">Ještì jednou podotıkám, e uvedenı
+interface je vyzkoušen s Nokia Cellular Data Suite, kterı si
+mùete prohlédnout, stáhnete-li si jeho </font><a
+href="http://darksys.vsb.cz/~l92048/ncds/other/ncds_demo.exe"><font
+size="2">demo verzi</font></a><font size="2">.</font></p>
+
+<p><font size="2"><img src="images/line.gif" width="623"
+height="7"></font></p>
+
+<p><a href="mailto:l92048@decsys.vsb.cz"><font size="2"><img
+src="images/bird_icon.gif" border="0" width="50" height="50"></font></a><font
+size="2">Pokud máte nìjaké další dotazy nebo pøipomínky, </font><a
+href="mailto:l92048@decsys.vsb.cz"><font size="2">pošlete mi
+prosím mail</font></a><font size="2"> nebo </font><a
+href="mailto:adam.vlcek@sms.paegas.cz"><font size="2">SMS</font></a><font
+size="2"> (jen 140 znakù).</font></p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+[BootStrap]
+File1=1,,setup1.ex_,setup1.exe,$(WinPath),,,2/3/1999 20:15:36,166912,5.0.0.3716,"","",""
+File2=1,,VB5StKit.dl_,VB5StKit.dll,$(WinSysPath),,$(Shared),1/16/1997 0:00:00,29696,5.0.37.16,"","",""
+
+[Files]
+File1=1,,MSCOMM32.OC_,MSCOMM32.OCX,$(WinSysPath),$(DLLSelfRegister),$(Shared),7/19/1997 16:00:42,97552,5.1.43.19,"","",""
+File2=1,,COMDLG32.OC_,COMDLG32.OCX,$(WinSysPath),$(DLLSelfRegister),$(Shared),7/19/1997 17:00:32,129808,5.1.43.19,"","",""
+File3=1,,COMCTL32.OC_,COMCTL32.OCX,$(WinSysPath),$(DLLSelfRegister),$(Shared),7/19/1997 16:00:28,604432,5.1.43.19,"","",""
+File4=1,,NGGEdit.ex_,NGGEdit.exe,$(AppPath),,,6/8/1999 23:58:54,283648,1.1.0.0,"","Group-Graphic Editor","$(AppPath)\NGGEdit.exe"
+File5=1,,readme.txt,readme.txt,$(AppPath),,,6/9/1999 0:06:56,3381,,"","Readme","$(AppPath)\readme.txt"
+File6=1,,register.tx_,register.txt,$(AppPath),,,6/9/1999 0:08:50,1988,,"","Register","$(AppPath)\register.txt"
+File7=1,,reg_de.tx_,reg_de.txt,$(AppPath),,,6/9/1999 0:08:56,1859,,"","",""
+File8=1,,samples.ur_,samples.url,$(AppPath),,,6/9/1999 0:07:44,131,,"","",""
+File9=1,,5smilies.ng_,5smilies.ngg,$(AppPath),,,8/21/1998 23:09:08,1151,,"","",""
+File10=1,,adults.ng_,adults.ngg,$(AppPath),,,8/21/1998 23:09:12,1151,,"","",""
+File11=1,,graphics.ng_,graphics.ngg,$(AppPath),,,8/21/1998 23:09:16,1151,,"","",""
+File12=1,,music.ng_,music.ngg,$(AppPath),,,8/21/1998 23:09:20,1151,,"","",""
+File13=1,,mylove.ng_,mylove.ngg,$(AppPath),,,8/21/1998 23:09:24,1151,,"","",""
+File14=1,,suns.ng_,suns.ngg,$(AppPath),,,8/21/1998 23:09:28,1151,,"","",""
+
+[Setup]
+Title=Group-Graphic Editor 1.1
+DefProgramGroup=Nokia Group-Graphic Editor
+DefaultDir=$(ProgramFiles)\Group-Graphic Editor
+Setup=setup1.exe
+AppExe=NGGEdit.exe
+AppToUninstall=NGGEdit.exe
+AppPath=

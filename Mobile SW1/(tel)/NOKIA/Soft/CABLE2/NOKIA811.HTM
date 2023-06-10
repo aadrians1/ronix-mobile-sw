@@ -1,0 +1,329 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=windows-1250">
+<meta name="GENERATOR" content="Microsoft FrontPage 2.0">
+<title>Nokia 8110 CDS</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+
+<p align="center"><font size="5"><strong>Nokia 8110 Cellular Data
+Suite interface</strong></font></p>
+
+<p><font size="2">Zde je zapojení interface pro telefony N8110i,
+N8110 a N3110. Pokud chcete schéma ve vìtším rozlišení, </font><a
+href="bitmap_images/ncds8110large.gif"><font size="2">je zde</font></a><font
+size="2">.</font></p>
+
+<p><a href="bitmap_images/ncds8110large.gif"><font size="2"><img
+src="bitmap_images/ncds8110small.gif" border="0" width="568"
+height="311"></font></a></p>
+
+<p><font size="2">Celı interface je napájen signály RTS a DTR.
+Diody D1 a D2 doporuèuji v Shottkyho provedení kvùli niším
+proudovım nárokùm. Rovnì 5V stabilizátor by mìl bıt v
+&quot;L&quot; provedení, aby jeho odbìr byl co nejmenší.
+Pokud pouijete normální diody a obyèejnı stabilizátor,
+mùe se stát, e interface bude napájen o nìco niším
+napìtím ne 5V (v závislosti na COM portu poèítaèe -
+logická 1. na RS232 je definovaná od +5V do tuším +15V, ale
+zvlášte u notebookù se pohybuje na spodní hranici 5V, na
+diodì je úbytek zhruba 0.6V, tzn. napìtí pøed
+stabilizátorem mùe bıt i 4.4V a stabilizované v tomto
+pøípadì kolem 4.1V), co by nemuselo ani tak moc vadit (po
+testech jsem zjistil, e MAX232 funguje spolehlivì ješte na
+hranici 3.5V), ale proudová zátì COM portu bude zbyteènì
+vìtší.</font></p>
+
+<p><font size="2">Zenerovy diody DZ1 a DZ2 jsou VELMI dùleité
+pro bezpeènost vašeho telefonu. Normálnì jsou napìové
+ùrovnì log. 1. na hranici 5V (nebo 3.3V ???), ale i mírné
+pøekroèení této hranice mùe vést ke znièení telefonu
+nehledì na proudové nárazy pøi zapnutí poèítaèe nebo pøi
+zasouvání interface do poèítaèe. Napìtí 5.1V spolehlivì
+znièí sbìrnici telefonu - vyzkoušeno :-((( !!! Diody DZ1 a
+DZ2 toto napìtí omezují na 3.3V co bohatì staèí na
+hodnotu log. 1. a zárovìò je to hluboko pod maximální
+pøípustnou hodnotou (nebo akorát, pokud je log. 1. 3.3V ???).</font></p>
+
+<p><font size="2">Jinak se jedná o standartní zapojení MAX232.
+Piny è.8 (R2IN) a è.9 (T2IN) není bezpodmíneènì nutné
+zemnit.</font></p>
+
+<p><font size="2"><img src="images/line.gif" width="623"
+height="7"></font></p>
+
+<p><font size="2">Zde je popis zapojení konektoru telefonu,
+toté ve vìtším rozlišení a s </font><a
+href="bitmap_images/konektor8110large.gif"><font size="2">popisem
+signálù zde</font></a><font size="2">.</font></p>
+
+<p><a href="bitmap_images/konektor8110large.gif"><img
+src="bitmap_images/konektor8110small.gif" border="0" width="402"
+height="129"></a></p>
+
+<p><font size="2">Popisy signálù nemá smysl pøekládat,
+take jen anglickı originál :-)</font></p>
+
+<p><font size="2"><img src="images/line.gif" width="623"
+height="7"></font></p>
+
+<p><font size="2">Zde je nákres </font><a
+href="bitmap_images/2_pl_spoj8110small.gif"><font size="2">OBOUSTRANNÉHO
+plošného spoje</font></a><font size="2">, popø. toté ve </font><a
+href="bitmap_images/2_pl_spoj8110large.gif"><font size="2">vìtším
+rozlišení</font></a><font size="2">. Tato varianta je urèena k
+napájení pøímo na Cannon DB 9 female konektor, </font><a
+href="bitmap_images/osazeni_konektor.gif"><font size="2">viz obr</font></a><font
+size="2">.</font></p>
+
+<p><font size="2">Pokud dáte pøednost </font><a
+href="bitmap_images/1_pl_spoj8110small.gif"><font size="2">JEDNOSTRANNÉMU
+plošnému spoji</font></a><font size="2">, (zde i ve </font><a
+href="bitmap_images/1_pl_spoj8110large.gif"><font size="2">vìtším
+rozlišení</font></a><font size="2">), budete mít uprostøed
+kabelu &quot;bublinu&quot;, </font><a
+href="bitmap_images/osazeni_kabel.gif"><font size="2">viz obr</font></a><font
+size="2">.</font></p>
+
+<p><font size="2">Jen upozoròuji, e obrázky NEJSOU v
+mìøítku 1:1 a proto je nutno je pøekreslit. Jestlie máte
+zájem o originály (ty ve správném mìøítku jsou) v
+CorelDRAW 8, </font><a href="vector_images/"><font size="2">jsou
+zde</font></a><font size="2">.</font></p>
+
+<p><img src="images/line.gif" width="623" height="7"></p>
+
+<p align="left"><font size="3"><strong>Komunikaèní protokol</strong></font></p>
+
+<p align="left"><font size="2">Popis vlastního protokolu
+nechávám v angliètinì, nebo je zabìhnutı a srozumitelnı.</font></p>
+<div align="left">
+
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr>
+        <td><font size="3"><strong>PC -&gt; Nokia</strong></font><font
+        size="2"><em> (Rychlost 115200 bps, N-8-1)</em></font></td>
+    </tr>
+    <tr>
+        <td><div align="left"><table border="0" cellpadding="5"
+        cellspacing="0">
+            <tr>
+                <td align="right"><font size="2">First</font></td>
+                <td><font size="2">byte</font></td>
+                <td>&nbsp;</td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Always '1'</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Second</font></td>
+                <td><font size="2">byte</font></td>
+                <td>&nbsp;</td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Length of data</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Third</font></td>
+                <td><font size="2">byte</font></td>
+                <td><font size="2">(data)</font></td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Command (or acknowledge euqals
+                command which is ack'd)</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Fourth</font></td>
+                <td><font size="2">byte</font></td>
+                <td><font size="2">(command)</font></td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Serial number 3 low bits
+                circle, other bits unknown</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Fourth</font></td>
+                <td><font size="2">byte</font></td>
+                <td><font size="2">(ack)</font></td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">(eqals Fourth byte of command
+                +8)</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Last</font></td>
+                <td><font size="2">byte</font></td>
+                <td>&nbsp;</td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Checksum Modulo 2</font></td>
+            </tr>
+        </table>
+        </div></td>
+    </tr>
+</table>
+</div>
+
+<p align="left">&nbsp;</p>
+<div align="left">
+
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr>
+        <td colspan="2"><font size="3"><strong>Nokia -&gt; Pc</strong></font><font
+        size="2"><em> (Rychlost 115200 bps, N-8-1)</em></font></td>
+    </tr>
+    <tr>
+        <td colspan="2"><div align="left"><table border="0"
+        cellpadding="5" cellspacing="0">
+            <tr>
+                <td align="right"><font size="2">First</font></td>
+                <td><font size="2">byte</font></td>
+                <td>&nbsp;</td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Always '4'</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Second</font></td>
+                <td><font size="2">byte</font></td>
+                <td>&nbsp;</td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Length of data</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Third</font></td>
+                <td><font size="2">byte</font></td>
+                <td><font size="2">(data)</font></td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Command (or acknowledge euqals
+                command which is ack'd)</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Fourth</font></td>
+                <td><font size="2">byte</font></td>
+                <td><font size="2">(command)</font></td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Serial number 3 low bits
+                circle, other bits unknown</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Fourth</font></td>
+                <td><font size="2">byte</font></td>
+                <td><font size="2">(ack)</font></td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">(eqals Fourth byte of command
+                -8, if not possible +8 )</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">Last</font></td>
+                <td><font size="2">byte</font></td>
+                <td>&nbsp;</td>
+                <td><font size="2"><img
+                src="images/red_arrow.gif" width="13" height="13"></font></td>
+                <td><font size="2">Checksum Modulo 2</font></td>
+            </tr>
+        </table>
+        </div></td>
+    </tr>
+</table>
+</div>
+
+<p>&nbsp;</p>
+<div align="left">
+
+<table border="0" cellpadding="5" cellspacing="0">
+    <tr>
+        <td><font size="3"><strong>Commands</strong></font></td>
+    </tr>
+    <tr>
+        <td><div align="left"><table border="0" cellpadding="5"
+        cellspacing="0">
+            <tr>
+                <td align="right"><font size="2">10</font></td>
+                <td><font size="2">(PC -&gt; Nokia)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td><font size="2">Dial a number</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">11</font></td>
+                <td><font size="2">(Nokia -&gt; PC)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td><font size="2">Ring, Caller ID</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">17</font></td>
+                <td><font size="2">(Nokia -&gt; PC)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">19</font></td>
+                <td><font size="2">(Nokia -&gt; PC)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">48</font></td>
+                <td><font size="2">(Nokia -&gt; PC)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">10</font></td>
+                <td><font size="2">(PC -&gt; Nokia)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td><font size="2">??? Ask for 65 status ???</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">65</font></td>
+                <td><font size="2">(Nokia -&gt; PC)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td><font size="2">??? Status ???</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">74</font></td>
+                <td><font size="2">(PC -&gt; Nokia)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td><font size="2">??? Ask for 75 status ???</font></td>
+            </tr>
+            <tr>
+                <td align="right"><font size="2">75</font></td>
+                <td><font size="2">(Nokia -&gt; PC)</font></td>
+                <td><img src="images/red_arrow.gif" width="13"
+                height="13"></td>
+                <td><font size="2">??? Status ??? RF-level, batt
+                level ???</font></td>
+            </tr>
+        </table>
+        </div></td>
+    </tr>
+</table>
+</div>
+
+<p><img src="images/line.gif" width="623" height="7"></p>
+
+<p><a href="mailto:l92048@decsys.vsb.cz"><font size="2"><img
+src="images/bird_icon.gif" border="0" width="50" height="50"></font></a><font
+size="2">Pokud máte nìjaké další dotazy nebo pøipomínky, </font><a
+href="mailto:l92048@decsys.vsb.cz"><font size="2">pošlete mi
+prosím mail</font></a><font size="2"> nebo </font><a
+href="mailto:adam.vlcek@sms.paegas.cz"><font size="2">SMS</font></a><font
+size="2"> (jen 140 znakù).</font></p>
+</body>
+</html>
