@@ -1,0 +1,386 @@
+#!/bin/sh
+perl=/usr/local/www/scenix.com/ews4sxs2/perl
+eval "exec $perl -x $0 $*"
+#!perl
+
+## Copyright Architext Software, 1995 (c)
+##
+## This program is a flexible wrapper for the index program. For
+## maximum efficiency, you might want to invoke the executable
+## directly, pointing it to the proper info file with "-C".
+##
+## The supported command-line options are:
+##     -f	 Force overwrites of existing .cgi files.
+##     -a	 Accept all input files, not just .html files.
+
+  $root = "/usr/local/www/scenix.com/ews4sxs2";
+
+unshift(@INC, "$root/perllib");
+require 'architext.pl';
+require 'architextConf.pl';
+
+@badfiles = ();
+$printedInit = 0;
+
+## Get all the options and stick them in $opt. Options are a single
+## letter, and either '-abc' or '-a -b -c' means options a, b, and c.
+@opts = grep(/^-/, @ARGV);
+@ARGV = grep(!/^-/, @ARGV);
+$opt = join("", grep(s/^-//, @opts));
+
+## If no file arguments, use STDIN
+if (!@ARGV) {
+   &parseFile(STDIN, STDOUT);
+   exit 0;
+}
+
+## Parse each file specified on STDIN
+for $file (@ARGV) {
+    if (($file !~ /\.html$/) && ($opt !~ /a/)) {
+	push(@badfiles, $file);
+	next;
+    }
+    ($outfile = $file) =~ s/\.html$/.cgi/;
+    if (-e $outfile && ($opt !~ /f/)) {
+	print STDERR "Warning: will not overwrite $outfile.\n";
+	# next;
+    }
+
+    open(FILE, $file)
+	|| die "Failed to open $file for reading\n";
+    open(OUTFILE, ">$outfile")
+	|| die "Failed to open $outfile for writing\n";
+
+    &parseFile(FILE, OUTFILE);
+    close(OUTFILE);
+    chmod 0755, $outfile;
+}
+
+if (@badfiles) {
+    print STDERR "
+Warning: specify -a to parse files that do not end in .html.
+These files were ignored:
+";
+    for (@badfiles) {
+	print STDERR "  $_\n";
+    }
+}
+
+## This rather complicated nonsense is to deal with various
+## potentially convoluted tag specifications. For example, we need to
+## properly handle <ARCHITEXT-QUERY FORMAT="<blah>"> -- we don't want
+## the ">" in quotes to prematurely close the tag. We also need to
+## handle multiple tags on the same line, etc.
+sub parseFile {
+    local($infile, $outfile) = @_;
+    local($stuff);
+    local(%conf);
+
+    ## get info from Architext.conf so we know where perl is.
+    %conf = &ArchitextConf'readConfig("$root/Architext.conf");
+
+    ## First, print out the necessary header, which gives the script
+    ## type and includes the proper library files. We also need to
+    ## print out the Content-type: line.
+    $stuff = <<EOF;
+\#!/bin/sh
+perl=/usr/local/www/scenix.com/ews4sxs2/perl
+eval "exec \$perl -x \$0 \$*"
+\#!perl
+
+\$root = "$root";
+unshift(\@INC, "\$root/perllib");
+require 'architext.pl';
+
+## Text in {} comes from the original .html file.
+print q{Content-type: text/html
+
+EOF
+    ;
+    print $outfile $stuff;
+
+    ## Now, parse the input file.
+    while (<$infile>) {
+	if (!/<ARCHITEXT-/i) {
+	    ## If we don't have any ARCHITEXT tags in the line, we're
+	    ## home free. Skip to the next line...
+	    print $outfile &quotifyText($_);
+	    next;
+        }
+
+	## If we're here, we must have a valid tag. So: put the stuff
+	## before the tag into $pre, and put the tag text and
+	## everything after it into $_. Set $tag to empty for now.
+	$pre = $`;
+	$_ = $& . $';
+	$tag = "";
+
+	## Loop until we've read a good tag.
+        READTAG: while (1) {
+	    ## These next two lines hide quoted text so that we can
+	    ## parse the tag easier. Later, we'll expand the quoted
+	    ## text back into the tag.
+	    s/\\\"/\377/g;
+	    s/\"[^"]+\"/(($quote{++$qc}=$&),"\376$qc\376")/ge; #";
+
+	    if (/>/) {
+	    	## If we have a closing brace for the tag, we're
+	    	## done. The tag is everything up to the brace, and we
+	    	## keep the rest of the text in $post.
+		$tag = $` . $&;
+		$post = $';
+		last READTAG;
+	    } else {
+	        ## Otherwise, we need to read more text to see if we
+	        ## can close the tag.
+	        $nl = <$infile>;
+		last unless $nl;
+		$_ .= $nl;
+	    }
+	}
+
+	if (!$tag) {
+	    ## We got an error. Expand out the quoted mess, and quit.
+	    s/\376(\d+)\376/$quote{$1}/g;
+	    s/\377/\\"/g;
+            die "Tag was not closed: '$_'\n";
+	}
+
+	## We don't want newlines in our tag.
+	$tag =~ s/\n/ /g;
+
+	## Clean up the post-tag text.
+	$post =~ s/\376(\d+)\376/$quote{$1}/g;
+	$post =~ s/\377/\\"/g;
+
+	## Now we can print out all the pre-tag text.
+	print $outfile &quotifyText($pre), "};\n\n";
+
+	## Parse the tag itself.
+	&parseTag($outfile, $tag);
+
+	## Start a new print section.
+	print $outfile "\n## Text in {} is from the original .html file.\n";
+	print $outfile "print q{";
+
+	## Redo the parsing, with the post-tag text as our new line.
+	$_ = $post;
+	redo if $_;
+    }
+
+    ## Print out any text that we have left.
+    print $outfile &quotifyText($_), "};\n";
+}
+
+## We use '{' and '}' as our delimiters, so we need to escape them
+## inside those delimiters.
+sub quotifyText {
+    $_[0] =~ s/\{/\\{/g;
+    $_[0] =~ s/\}/\\}/g;
+    $_[0];
+}
+
+## This function actually parses the <ARCHITEXT-blah blah blah> tag
+## that we found.
+sub parseTag {
+    local($outfile, $tag) = @_;
+    $tag =~ s/\n/ /g;
+    local($type, $args) = ($tag =~ /^<ARCHITEXT-([\-\w]+)\s+(.*)>$/i);
+    local(%opts);
+
+    ## Trim spaces around the =
+    $args =~ s/\s+=\s+/=/g;
+
+    ## Get the key=val pairs.
+    for (split(' ', $args)) {
+	($key, $val) = split(/=/, $_);
+
+	## Silently ignore keys with quotes, etc.
+	next if ($key =~ /[\376\377]/);
+
+	## Downcase keys.
+	$key =~ y/A-Z/a-z/;
+
+	## Expand the quotes in the option values. We're relying on
+	## the dynamically scoped %quote array.
+	$val =~ s/\376(\d+)\376/$quote{$1}/g;
+	$val =~ s/\377/\\"/g;
+
+	## Trim opening and closing quotes.
+	$val =~ s/^\"//;
+	$val =~ s/\"$//;
+
+	$opts{$key} = $val;
+    }
+
+    ## Get the database, and read the appropriate configuration
+    ## information.
+    $db = $opts{'db'};
+    if (! $readConfFile) {
+        %conf = &ArchitextConf'readConfig("$root/Architext.conf", $db);
+        $readConfFile = 1;
+    }
+
+
+    ## Convert UNPREFIX="/usr/local/www/html" into a URLEDIT option
+    if ($opts{'unprefix'}) {
+        $opts{'unprefix'} =~ s/(\W)/\\$1/g;
+        $opts{'urledit'} = "s|^$opts{'unprefix'}||";
+	delete $opts{'unprefix'};
+    }
+
+    $optstr = "";
+    for (keys %opts) {
+	($key = $_) =~ s/\'/\\'/g;
+	($val = $opts{$_}) =~ s/\'/\\'/g;
+	$optstr .= ", '$key', '$val'";
+    }
+
+    if ($type =~ /^result/i) {
+        &PrintHtmlList;
+    } elsif ($type =~ /^make-gather/i) {
+	&PrintGatherList;
+    } elsif ($type =~ /^gather/i) {
+        &PrintGather;
+    } elsif ($type =~ /^legend/i) {
+        &PrintLegend;
+    } elsif ($type =~ /^index-check/i) {
+        &PrintIndexCheck;
+    } else {
+        die "Unknown Architext tag 'architext-$type'\n";
+    }
+}
+
+## If it's an ARCHITEXT-RESULT tag, then we need to print a list of
+## results.
+sub PrintHtmlList {
+    &maybePrintInit;
+    &maybePrintQueryInit;
+
+    ## Invoke &HtmlList.
+    $stuff = <<"EOF";
+
+        &Architext'showSearchString(\%form);
+        ## If the query was a success, make an HTML list out of the results.
+        ## Otherwise, print an error message.
+	if (\$errstr eq 'success') {
+	    &Architext'HtmlList(*query_results $optstr);
+	} elsif (\$errstr eq 'summary') {
+	    &Architext'SummaryOutput(*query_results);
+	} elsif (\$errstr eq 'dump') {
+	    &Architext'DocumentOutput(*query_results);
+	} else {
+	    print &Architext'queryError(\$errstr);;
+	}
+EOF
+    $stuff =~ s/\t/        /g;
+    $stuff =~ s/ {8}//g;
+    print $outfile $stuff;
+}
+
+## If it's an ARCHITEXT-MAKE-GATHER tag, then we need to print out the
+## input field of a form.
+sub PrintGatherList {
+    &maybePrintInit;
+    &maybePrintQueryInit;
+
+    $stuff = <<"EOF";
+
+	## If the query was a success, print a "Gather" button for the
+	## results. Otherwise, print an error message.
+        if (\$errstr eq 'success') {
+	    &Architext'PrepareGather(*query_results $optstr);
+	} else {
+	    &Architext'queryError(\$errstr) unless ((\$errstr eq 'summary')
+						    || (\$errstr eq 'dump'));
+	}
+EOF
+    $stuff =~ s/\t/        /g;
+    $stuff =~ s/ {8}//g;
+    print $outfile $stuff;    
+}
+
+## if it is an ARCHITEXT-LEGEND tag, print a legend at the end of
+## the query page.
+sub PrintLegend {
+    &maybePrintInit;
+    $stuff = <<"EOF";
+
+    ## If the query was a success, print a "Gather" button for the
+    ## results. Otherwise, print an error message.
+    if (\$errstr eq 'success') {
+	    &Architext'printLegend('place', 'holder' $optstr);
+    } 
+EOF
+    $stuff =~ s/\t/        /g;
+    $stuff =~ s/ {8}//g;
+    print $outfile $stuff;    
+}
+
+sub PrintIndexCheck {
+    &maybePrintInit;
+    $stuff = <<"EOF";
+
+    \$errstr = 'success';
+    ## This call checks to make sure that an index has been built for 
+    ## this collection.
+    &Architext'checkForIndex('place', 'holder' $optstr);
+EOF
+    $stuff =~ s/\t/        /g;
+    $stuff =~ s/ {8}//g;
+    print $outfile $stuff;    
+}
+
+sub PrintGather {
+    local(@docs);
+    &maybePrintInit;
+    print $outfile qq|
+&Architext'showSearchString(\%form);
+\$errstr = &Architext'MakeGather("$conf{'SearchExecutable'}",
+				 "$conf{'CollectionInfo'}", \$form{'docs'} $optstr);
+|;
+
+}
+
+## This function prints the initialization code for a database. It
+## assumes the %conf array has been set. It will only print the
+## initialization code once, so it's OK to call the function multiple
+## times. (This also means that a single script supports only one set
+## of query results. Bug or feature?)
+sub maybePrintInit {
+    return if $printedInit;
+
+    ## First we need to get configuration information.
+    $conf{'SearchExecutable'} ||
+        die "Invalid SearchExecutable (empty)\n";
+
+    $conf{'CollectionInfo'} ||
+        die "Invalid CollectionInfo (empty)\n";
+
+    print $outfile "## Read the arguments to the form\n";
+    print $outfile "%form = &Architext'readFormArgs;\n";
+    ##print $outfile "&Architext'showSearchString(%form);\n";
+    print $outfile "\$search = &Architext'setSearchString(%form);\n";
+
+    $printedInit = 1;    
+}
+
+sub maybePrintQueryInit {
+    return if $printedQueryInit;
+
+    print $outfile qq|
+## Perform the query. This function doesn't print anything. Later commands
+## will display the results.
+(\$errstr, \@query_results) = &Architext'MakeQuery(
+	   "$conf{'SearchExecutable'}",
+	   "$conf{'CollectionInfo'}",
+           \$search);
+|;
+
+    $printedQueryInit = 1;
+}
+
+
+
+
+

@@ -1,0 +1,1287 @@
+; to test different modules, set the corresponding test to 1 and reset all others to 0
+
+addsub_test	equ	0
+bcd_test	equ	0
+mul88_test	equ	0
+mul1616_test	equ	0
+div1616_test	equ	1
+;		mathpak for SX
+;
+IF mul88_test=1
+		device	pins28,pages4,banks8,turbo,oschs,optionx,stackx
+ELSE
+		device	pins28,pages4,banks8,turbo,oschs,optionx,carryx,stackx
+ENDIF
+
+		; use oschs only for debugging
+		; frequency does not matter much here except when incorporating these routines
+		; into a real program
+
+
+		;32 bit addition
+		org 	8
+IF addsub_test=1 OR bcd_test=1
+		;8,9,a,b=1000,1001,1010,1011=10xx
+operand1	ds	4
+		;c,d,e,f=1100,1101,1110,1111=11xx
+operand2	ds	4
+bin_number	ds	4
+bcd_number	ds	5
+count		equ	operand1	; share storage in other routines
+temp		equ	operand1+1	; share 1 more
+
+ENDIF
+IF mul88_test=1
+		; for 8 bit x 8 bit multiplication
+count		ds	1
+multiplier	ds	1
+upper_prdt	ds	1
+ENDIF
+
+IF mul1616_test=1
+		; for 16 bit x 16 bit multiplication
+md16		ds	2
+mr16		ds	2
+upper_prdt	ds	2
+count		ds	1
+ENDIF
+
+IF div1616_test=1
+		; for 16 bit / 16 bit division
+a		ds	2
+b		ds	2
+rlo		ds	1
+rhi		ds	1
+d		ds	2
+count		ds	1
+ENDIF
+
+load32		MACRO	8		; macro used to load the operands
+		mov	operand1,#\1
+		mov	operand1+1,#\2
+		mov	operand1+2,#\3
+		mov	operand1+3,#\4
+		mov	operand2,#\5
+		mov	operand2+1,#\6
+		mov	operand2+2,#\7
+		mov	operand2+3,#\8
+		ENDM
+
+		reset	start			; goto 'start' on reset
+
+		org	0
+start		;test procedures
+
+IF addsub_test=1
+		; $7fffffff+$01ffffff
+		load32 $ff,$ff,$ff,$01,$ff,$ff,$ff,$7f
+		call	add32			;result=$81fffffe
+
+		; $8ffffffe-$01ffffff
+		call	sub32			;result=$7fffffff, carry=1-> result is positive
+
+		; $01ffffff-$7fffffff
+		load32 $ff,$ff,$ff,$7f,$ff,$ff,$ff,$01
+		call	sub32			;result=$82000000, carry=0-> result is negative and in
+						;2's complement form, =-$7e000000
+
+ENDIF
+IF bcd_test=1
+		load32 $78,$56,$89,$67,$78,$56,$89,$67
+		call	badd32			;result=35791356 carry=1 (overflow)
+
+		load32 $12,$34,$56,$78,$78,$56,$34,$21
+		call	badd32			;result=99909090 
+
+		; 87654321-90123456= -2469135 
+		load32 $56,$34,$12,$90,$21,$43,$65,$87
+		call	bsub32			; result= 2469135, no carry means result is negative
+
+		; 90123456-87654321
+		load32 $21,$43,$65,$87,$56,$34,$12,$90
+		call	bsub32			;result=02469135 carry=1 (no borrow), result is positive
+
+
+		mov	bin_number,#$ff		; largest 32 bit number
+		mov	bin_number+1,#$ff	; $ffffffff
+		mov	bin_number+2,#$ff	; let's see how big the number will be
+		mov	bin_number+3,#$ff	; in decimal
+		call	bindec			; result = 4,294,967,295
+		call	decbin			; result = $ffffffff
+ENDIF
+IF mul88_test=1
+		mov	multiplier,#$ff		; largest number
+		mov	W,#$ff			; largest 8 bit no. as multiplicand
+		call	mul88			; result=$fe01
+
+		; test fast 8 x 8 multiplication
+		mov	multiplier,#$ff		; largest number
+		mov	W,#$ff			; largest 8 bit no. as multiplicand
+		call	fmul88			; result=$fe01
+ENDIF
+
+IF mul1616_test=1
+		mov	md16,#$ff		; largest 16 bit number
+		mov	md16+1,#$ff
+		mov	mr16,#$ff		; multiplied with largest 16 bit number
+		mov	mr16+1,#$ff
+		call	mul1616			; result = fffe0001
+	
+		mov	md16,#$ff		; largest 16 bit number
+		mov	md16+1,#$01
+		mov	mr16,#$ff		; multiplied with largest 16 bit number
+		mov	mr16+1,#$7f
+		call	mul1616			; result = 00ff7e01
+
+		mov	md16,#$ff		; largest 16 bit number
+		mov	md16+1,#$ff
+		mov	mr16,#$ff		; multiplied with largest 16 bit number
+		mov	mr16+1,#$ff
+		call	fmul1616		; result = fffe0001
+	
+		mov	md16,#$ff		; largest 16 bit number
+		mov	md16+1,#$01
+		mov	mr16,#$ff		; multiplied with largest 16 bit number
+		mov	mr16+1,#$7f
+		call	fmul1616		; result = 00ff7e01
+
+
+
+		
+ENDIF
+
+IF div1616_test=1
+		mov	a+1,#$01
+		mov	a,#$ff			; 01ff
+		mov	b+1,#$7f		
+		mov	b,#$ff			; 7fff
+		call	div1616			; 7fff/01ff=$40 remainder $3f
+	
+		mov	a+1,#$00
+		mov	a,#$ff			; 00ff
+		mov	b+1,#$ff		
+		mov	b,#$ff			; ffff
+		call	div1616			; ffff/00ff=$101 remainder 0
+
+		mov	a+1,#$01
+		mov	a,#$ff			; 01ff
+		mov	b+1,#$7f		
+		mov	b,#$ff			; 7fff
+		call	fdiv1616		; 7fff/01ff=$40 remainder $3f
+	
+		mov	a+1,#$00
+		mov	a,#$ff			; 00ff
+		mov	b+1,#$ff		
+		mov	b,#$ff			; ffff
+		call	fdiv1616		; ffff/00ff=$101 remainder 0
+
+ENDIF
+
+
+loop		jmp	loop
+IF addsub_test=1
+		;32 bit addition
+		;entry = 32 bit operand1 and 32 bit operand2 in binary form
+		;exit  = operand2 become operand2+operand1, carry flag=1 for overflow from MSB
+add32		clc				; clear carry, prepare for addition
+		mov	fsr,#operand1		; points to operand 1 first
+add_more	clrb	fsr.2			; toggle back to operand 1
+		mov	w,ind			; get contents into the work register
+		setb	fsr.2			; points to operand 2
+		add	ind,w			; operand2=operand2+operand1
+		inc	fsr			; next byte
+		sb	fsr.4			; done? (fsr=$10?)
+		jmp	add_more		; not yet
+		ret				; done, return to calling routine
+
+		;32 bit subtraction
+		;entry = 32 bit operand1 and 32 bit operand2 in binary form
+		;exit  = operand2 become operand2-operand1, carry flag=0 for underflow from MSB
+sub32		stc				; set carry, prepare for subtraction
+		mov	fsr,#operand1		; points to operand 1 first
+sub_more	clrb	fsr.2			; toggle back to operand 1
+		mov	w,ind			; get contents into the work register
+		setb	fsr.2			; points to operand 2
+		sub	ind,w			; operand2=operand2-operand1
+		inc	fsr			; next byte
+		sb	fsr.4			; done? (fsr=$10?)
+		jmp	sub_more		; not yet
+		ret				; done, return to calling routine
+ENDIF
+IF bcd_test=1
+		;8 BCD digit addition
+		;entry = 8 BCD digit operand1 and 8 BCD digit operand2 in BCD form
+		;exit  = operand2 become operand2+operand1, carry flag=1 for overflow from MSB
+		;	 operand1 will be DESTROYED
+badd32		clc				; clear carry, prepare for addition
+		mov	fsr,#operand1		; points to operand 1 first
+badd_more
+		mov	w,ind			; get contents into the working register
+		clr	ind
+		setb	fsr.2			; points to operand 2
+		add	ind,w			; operand2=operand2+operand1
+		clrb	fsr.2
+		rl	ind			; store carry bit which will be altered by decimal
+						; adjustment (adding 6)
+		setb	fsr.2			; points back to operand 2
+		snb	status.1		; digit carry set? if so, need decimal correction
+		jmp	dcor
+		
+		jnb	ind.3,ck_overflow	; if 0xxx, check MSD
+		jb	ind.2,dcor		; if 11xx, it's >9, thus need correction
+		jnb	ind.1,ck_overflow	; 100x, number is 8 or 9, no decimal correction
+
+		; here if 101x, decimal adjust	
+dcor		clc				; clear effect of previous carry
+		add	ind,#6			; decimal correction by adding 6
+	
+		; finish dealing with least significant digit, proceed to MSD
+ck_overflow 	clrb	fsr.2			; points to operand1
+		jb	ind.0,dcor_msd		; stored carry=1, decimal correct
+		; test if MSD > 9
+		setb	fsr.2			; points back to operand2
+		jnb	ind.7,next_badd		; if 0xxx, it's <9, add next byte
+		jb	ind.6,dcor_msd		; if 11xx, it's >9, thus need correction
+		jnb	ind.5,next_badd		; if 100x, it's <9
+		
+		;here if 101x, decimal adjust
+dcor_msd	clc				; clear effect of carry
+		setb	fsr.2			; make sure that it's pointing at the result
+		add	ind,#$60		; decimal correct
+
+
+next_badd	clrb	fsr.2			; points to stored carry
+		snb	ind.0			; skip if not set
+		stc				; restore stored carry
+		inc	fsr			; next byte
+		sb	fsr.2			; done? (fsr=$0c?)
+		jmp	badd_more		; not yet
+		ret				; done, return to calling routine
+
+		;8 BCD digit subtraction
+		;entry = 8 BCD digit operand1 and 8 BCD digit operand2 in BCD form
+		;exit  = operand2 become operand2-operand1, carry flag=0 for underflow from MSB
+		;					    carry flag=1 for positive result
+		;	 operand1 will be DESTROYED
+bsub32		call 	bs32			; do subtraction
+		snc				; no carry=underflow?
+		jmp	bs_done			; carry=1 positive, done
+		call 	neg_result		; yes, get the magnitude, 0-result
+		call	bs32			; keep in mind that this result is a negative number (carry=0)
+bs_done		ret
+
+bs32		stc				; set carry, prepare for subtraction
+		mov	fsr,#operand1		; points to operand 1 first
+bsub_more
+		mov	w,ind			; get contents into the working register
+		clr	ind
+		setb	ind.7			; set to 1 so that carry=1 after rl instruction
+		setb	fsr.2			; points to operand 2
+		sub	ind,w			; operand2=operand2+operand1
+		clrb	fsr.2
+		rl	ind			; store carry bit which will be altered by decimal
+						; adjustment (adding 6)
+		setb	fsr.2			; points back to operand 2
+		sb	status.1		; digit carry set? if so, need decimal correction
+		jmp	dec_cor
+	
+		jnb	ind.3,ck_underflow	; if 0xxx, check MSD
+		jb	ind.2,dec_cor		; if 11xx, it's >9, thus need correction
+		jnb	ind.1,ck_underflow	; 100x, number is 8 or 9, no decimal correction
+
+		; here if 101x, decimal adjust	
+dec_cor		stc				; clear effect of previous carry
+		sub	ind,#6			; decimal correction by subtracting 6
+	
+		; finish dealing with least significant digit, proceed to MSD
+ck_underflow 	clrb	fsr.2			; points to operand1
+		jnb	ind.0,dadj_msd		; stored carry=0, decimal adjust
+		; test if MSD > 9
+		setb	fsr.2			; points back to operand2
+		jnb	ind.7,next_bsub		; if 0xxx, it's <9, add next byte
+		jb	ind.6,dadj_msd		; if 11xx, it's >9, thus need correction
+		jnb	ind.5,next_bsub		; if 100x, it's <9
+		
+		;here if 101x, decimal adjust
+dadj_msd	stc				; clear effect of carry
+		setb	fsr.2			; make sure that it's pointing at the result
+		sub	ind,#$60		; decimal correct
+
+
+next_bsub	clrb	fsr.2			; points to stored carry
+		sb	ind.0			; skip if not set
+		clc				; restore stored carry
+		inc	fsr			; next byte
+		sb	fsr.2			; done? (fsr=$0c?)
+		jmp	bsub_more		; not yet
+		ret				; done, return to calling routine
+
+
+		; move the result to operand1 and change operand2 to 0
+		; the intention is prepare for 0-result or getting the magnitude of a 
+		; negative BCD number which is in complement form
+neg_result	mov	fsr,#operand2		; points to
+mov_more	setb	fsr.2			; operand2
+		mov	w,ind			; temp. storage
+		clr	ind			; clear operand2
+		clrb	fsr.2			; points to operand1
+		mov	ind,w			; store result
+		inc	fsr			; next byte
+		sb	fsr.2			; done?
+		jmp	mov_more		; no
+		ret				; yes, finish
+
+
+		; 32 bit binary to BCD conversion
+		; entry: 32 bit binary number in $10-13
+		; exit: 10 digit BCD number in $14-18
+		; algorithm= shift the bits of binary number into the BCD number and decimal
+		; 	     correct on the way
+bindec		mov	count,#32
+		mov	fsr,#bcd_number		; points to the BCD result
+		
+clr_bcd		clr	ind			; clear BCD number
+		snb	fsr.3			; reached $18?
+		jmp	shift_both		; yes, begin algorithm
+		inc	fsr			; no, continue on next byte
+		jmp	clr_bcd			; loop to clear
+		
+shift_both	mov	fsr,#bin_number		; points to the binary number input
+		clc				; clear carry, prepare for shifting
+		
+shift_loop	rl 	ind			; shift the number left
+		snb	fsr.3			; reached $18? (finish shifting both numbers)
+		jmp	check_adj		; yes, check if end of everything
+		inc	fsr			; no, next byte
+		jmp	shift_loop		; not yet
+
+check_adj	decsz	count			; end of 32 bit operation?
+		jmp	bcd_adj			; no, do bcd adj
+		ret
+
+bcd_adj		mov	fsr,#bcd_number		; points to first byte of the BCD result
+
+bcd_adj_loop	call	digit_adj		; decimal adjust
+		snb	fsr.3			; reached last byte?
+		jmp	shift_both		; yes, go to shift both number left again
+		inc	fsr			; no, next byte
+		jmp	bcd_adj_loop		; looping for decimal adjust
+
+		; prepare for next shift    
+		; 0000  --> 0000	0 -->0
+		; 0001	--> 0010	1 -->2
+		; 0010 	--> 0100	2 -->4
+		; 0011	--> 0110	3 -->6
+		; 0100	--> 1000	4 -->8
+		; 0101	--> 1010	5 -->A, correct result is 10, so need to add 3
+		;			so that 5+3=8, and 1000 will be shifted to be 1 0000
+		; the same is true for 6-9
+digit_adj	; consider LSD first
+		mov	w,#3			; 3 will become 6 on next shift
+		add	w,ind			; which is the decimal correct factor to be added
+		mov	temp,w
+		snb	temp.3			; > 7? if bit 3 not set, then must be <=7, no adj.
+		mov	ind,w			; yes, decimal adjust needed, so store it
+		
+		; now for the MSD
+		mov	w,#$30			; 3 for MSD is $30
+		add	w,ind			; add for testing
+		mov	temp,w
+		snb	temp.7			; > 7?
+		mov	ind,w			; yes, store it
+		
+		ret
+
+		; 10 digit BCD to 32 bit binary conversion
+		; entry: 10 digit BCD number in $14-18
+		; exit: 32 bit binary number in $10-13
+		; algorithm= shift the bits of BCD number into the binary number and decimal
+		; 	     correct on the way
+decbin		mov	count,#32		; 32 bit number
+		mov	fsr,#bin_number		; points to the binary result
+		
+clr_bin		clr	ind			; clear binary number
+		inc	fsr			; no, continue on next byte
+		snb	fsr.2			; reached $13? (then fsr will be $14 here)
+		jmp	shift_b			; yes, begin algorithm
+		jmp	clr_bin			; loop to clear
+		
+shift_b		mov	fsr,#bcd_number+4	; points to the last BCD number 
+		clc				; clear carry, prepare for shifting right
+		
+shft_loop	rr 	ind			; shift the number right
+		dec	fsr			; reached $10? (finish shifting both numbers)
+		sb	fsr.4			; then fsr will be $0f
+		jmp	chk_adj			; yes, check if end of everything
+		jmp	shft_loop		; not yet
+
+chk_adj		decsz	count			; end of 32 bit operation?
+		jmp	bd_adj			; no, do bcd adj
+		ret
+
+bd_adj		mov	fsr,#bcd_number		; points to first byte of the BCD result
+
+bd_adj_loop	call	dgt_adj			; decimal adjust
+		snb	fsr.3			; reached last byte?
+		jmp	shift_b			; yes, go to shift both number right again
+		inc	fsr			; no, next byte
+		jmp	bd_adj_loop		; looping for decimal adjust
+
+		; prepare for next shift right   
+		; 0000  --> 0000	0 -->0
+		; 0010	--> 0001	2 -->1
+		; 0100 	--> 0010	4 -->2
+		; 0110	--> 0011	6 -->3
+		; 1000	--> 0100	8 -->4
+		; 1 0000 --> 1000	10-->8 !! it should be 5, so -3
+		; 1 0010 --> 1001	12-->9 !! it should be 6, so -3
+		; in general when the highest bit in a nibble is 1, it should be subtracted with 3
+dgt_adj		; consider LSD first
+		sb	ind.3			; check highest bit in LSD, =1?
+		jmp	ck_msd			; no, check MSD
+		stc				; prepare for subtraction, no borrow
+		sub	ind,#3			; yes, adjust
+			
+		; now for the MSD
+ck_msd		sb	ind.7			; highest bit in MSD, =1?
+		ret				; no
+
+		; yes, do correction
+		stc				; no borrow
+		sub	ind,#$30		; this is  a 2 word instruction, and cannot be skipped
+		ret
+ENDIF
+IF mul88_test=1
+		; 8 bit x 8 bit multiplication (RAM efficient, 2 bytes only)
+		; entry: multiplicand in W, multiplier at 09
+		; exit : product at $0a,09
+						; cycles
+mul88		mov	upper_prdt,w		; 1 	store W
+		mov	count,#9		; 2	set number of times to shift
+		mov	w,upper_prdt		; 1 	restore W (multiplicand)		
+		clr	upper_prdt		; 1	clear upper product
+		clc				; 1	clear carry
+						; the following are executed [count] times
+m88loop		rr	upper_prdt		; 1	rotate right the whole product
+		rr	multiplier		; 1	check lsb
+		snc				; 1	skip addition if no carry
+		add	upper_prdt,w		; 1	add multiplicand to upper product
+no_add		decsz	count			; 1/2	loop 9 times to get proper product
+		jmp	m88loop			; 3	jmp to rotate the next half of product
+
+		ret				; 3	done...
+						; one time instructions = 1+2+1+1+1+3= 9 cycles
+						; repetitive ones	= (1+1+1+1+1+3)9-3+2=71
+						; total worst case cycles=80 cycles
+
+		; fast 8 bit x 8 bit multiplication (RAM efficient, 2 bytes only)
+		; entry: multiplicand in W, multiplier at 09
+		; exit : product at $0a,09
+
+		; macro to rotate product right and add
+rra		MACRO
+		rr	upper_prdt		; 1	rotate right the whole product
+		rr	multiplier		; 1	check lsb
+		snc				; 1	skip addition if no carry
+		add	upper_prdt,w		; 1	add multiplicand to upper product
+		ENDM
+						; cycles
+fmul88		clr	upper_prdt		; 1	clear upper product
+		clc				; 1	clear carry
+						; the following are executed [count] times
+		rra				; call the macro 9 times
+		rra
+		rra
+		rra
+		rra
+		rra
+		rra
+		rra
+		rra
+
+		ret				; 3	done...
+						; one time instructions = 1+1+3= 5 cycles
+						; repetitive ones	= (1+1+1+1)9=36
+						; total worst case cycles=41 cycles
+ENDIF
+IF mul1616_test=1
+		; 16 bit x 16 bit multiplication 
+		; entry: multiplicand in $09,08, multiplier at $0b,$0a
+		; exit : 32 bit product at $0d,$0c,$b,$a
+						; cycles
+mul1616	
+		mov	count,#17		; 2	set number of times to shift
+		clr	upper_prdt		; 1	clear upper product
+		clr	upper_prdt+1		; 1	higher byte of the 16 bit upeper product
+		clc				; 1	clear carry
+						; the following are executed [count] times
+m1616loop	rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add		decsz	count			; 1/2	loop [count] times to get proper product
+		jmp	m1616loop		; 3	jmp to rotate the next half of product
+
+		ret				; 3	done...
+						; one time instructions = 8 cycles
+						; repetitive ones	= 15*16+11+2=253
+						; total worst case cycles=261 cycles
+
+		; fast 16 bit x 16 bit multiplication 
+		; entry: multiplicand in $09,08, multiplier at $0b,$0a
+		; exit : 32 bit product at $0d,$0c,$b,$a
+						; cycles
+						; one time instructions = 6
+						; repetitive ones = 11*17=187
+						; total = 193 cycles
+fmul1616	
+		clr	upper_prdt		; 1	clear upper product
+		clr	upper_prdt+1		; 1	higher byte of the 16 bit upeper product
+		clc				; 1	clear carry
+					
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add1			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add1		
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add2			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add2				
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add3			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add3
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add4			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add4
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add5			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add5
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add6			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add6
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add7			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add7
+					
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add8			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add8
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add9			; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add9					
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add10		; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add10
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add11		; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add11
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add12		; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add12
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add13		; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add13
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add14		; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add14
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add15		; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add15
+					
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add16		; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add16
+		rr	upper_prdt+1		; 1	rotate right the whole product
+		rr	upper_prdt		; 1 	lower byte of the 16 bit upper product
+		rr	mr16+1			; 1	high byte of the multiplier
+		rr	mr16			; 1	check lsb
+		sc				; 1	skip addition if no carry
+		jmp	no_add17		; 3     no addition since lsb=0
+		clc				; 1	clear carry
+		add	upper_prdt,md16		; 1	add multiplicand to upper product
+		add	upper_prdt+1,md16+1	; 1	add the next 16 bit of multiplicand
+no_add17
+		ret				; 3	done...
+					
+ENDIF
+IF div1616_test=1
+		; 16 bit by 16 bit division (b/a)
+		; entry: 16 bit b, 16 bit a
+		; exit : result in b, remainder in remainder
+						; cycles
+div1616		mov	count,#16 		; 2	no. of time to shift
+		mov	d,b			; 2	move b to make space
+		mov	d+1,b+1			; 2	for result
+		clr	b			; 1	clear the result fields
+		clr 	b+1			; 1	one more byte
+		clr	rlo			; 1	clear remainder low byte
+		clr	rhi			; 1	clear remainder high byte
+						; subtotal=10
+divloop		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+		decsz	count			; 1/2
+		jmp	divloop			; 3
+						; subtotal=6, 4 on last count
+		ret				; 3
+						; one time instructions=13
+						; repetitive ones=(19+6)*15+19+4=398
+						; total=411
+
+		; fast 16 bit by 16 bit division (b/a)
+		; entry: 16 bit b, 16 bit a
+		; exit : result in b, remainder in remainder
+						; cycles=347
+						; one time=11
+						; repetitive=21*16=336
+fdiv1616
+		mov	d,b			; 2	move b to make space
+		mov	d+1,b+1			; 2	for result
+		clr	b			; 1	clear the result fields
+		clr 	b+1			; 1	one more byte
+		clr	rlo			; 1	clear remainder low byte
+		clr	rhi			; 1	clear remainder high byte
+						; subtotal=8
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry1		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry1	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot1		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot1	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+		
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry2		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry2	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot2		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot2	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+		
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry3		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry3	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot3		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot3	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+	
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry4		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry4	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot4		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot4	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+	
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry5		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry5	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot5		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot5	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry6		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry6	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot6		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot6	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry7		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry7	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot7		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot7	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry8		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry8	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot8		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot8	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry9		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry9	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot9		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot9	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry10		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry10	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot10		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot10	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry11		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry11	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot11		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot11	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry12		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry12	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot12		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot12	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry13		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry13	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot13		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot13	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry14		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry14	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot14		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot14	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry15		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry15	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot15		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot15	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+
+		clc				; 1	clear carry before shift	
+		rl	d			; 1	check the dividend
+		rl	d+1			; 1	bit by bit
+		rl	rlo			; 1	put it in the remainder for 
+		rl	rhi			; 1	trial subtraction
+						; subtotal=5
+		stc				; 1	prepare for subtraction, no borrow
+		mov	w,a+1			; 1	do trial subtraction
+		mov	w,rhi-w			; 1	from MSB first
+		sz				; 1/2	if two MSB equal, need to check LSB
+		jmp	chk_carry16		; 3	not equal, check which one is bigger
+						; 
+		; if we are here, then z=1, so c must be 1 too, since there is no 
+		; underflow, so we save a stc instruction
+		
+		mov	w,a			; 1	equal MSB, check LSB
+		mov	w,rlo-w			; 1	which one is bigger?
+						; subtotal=7
+chk_carry16	sc				; 1/2	partial dividend >a?
+		jmp	shft_quot16		; 3	no, partial dividend < a, set a 0 into quotient
+
+		; if we are here, then c must be 1, again, we save another stc instruction
+
+						; yes, part. dividend > a, subtract a from it
+		sub	rlo,a			; 2	store part. dividend-a into a
+		sub	rhi,a+1			; 2	2 bytes
+		stc				; 1	shift a 1 into quotient
+						; subtotal=7 worst case
+shft_quot16	rl	b			; 1	store into result
+		rl	b+1			; 1	16 bit result, thus 2 rotates
+	
+					
+		ret				; 3
+					
+		
+ENDIF		

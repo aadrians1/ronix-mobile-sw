@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+    <TITLE>EWS_TITLE</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000" ALINK="#0000FF">
+<img src="EWS_SPIDER_BANNER">
+<FORM ACTION=AT-spider.cgi ENCTYPE=x-www-form-encoded METHOD=POST><B>Excite
+for Web Server Spider Site Configuration<BR>
+<INPUT TYPE="hidden" NAME="collection" VALUE="EWS_COLLECTION">
+<INPUT TYPE="hidden" NAME="ews_site" VALUE="EWS_SITE">
+<BR>
+Configuration for Site: EWS_SITE</B><BR>
+<BR>
+Domain name for this site: <INPUT NAME="DOMAIN_NAME" TYPE="text" SIZE="30"
+VALUE = "EWS_DOMAIN_NAME"><BR>
+Maximum Number of Pages From This Site: <INPUT NAME="MAX_PAGES" TYPE="text" 
+SIZE="30" VALUE=EWS_MAX_PAGES><BR>
+
+Starting Point URLs:
+(be sure to include "http://")<BR>
+<TEXTAREA NAME="STARTING_POINTS" ROWS="5" COLS="70">
+EWS_STARTING_POINTS</TEXTAREA><BR>
+<BR>
+
+Do NOT fetch pages with the follwing suffixes: <INPUT NAME="AVOID_SUFFIX"
+TYPE="text" SIZE=30 VALUE="EWS_AVOID_SUFFIX"><BR><BR>
+
+Do NOT fetch URLs on this site containing the following strings:<BR>
+(separate each string by a newline)<BR>
+<TEXTAREA NAME="AVOID_STRING" ROWS="7" COLS="70">
+EWS_AVOID_STRING
+</TEXTAREA><BR>
+<BR>
+<HR><B>Possible Actions</B><BR>
+<BR>
+<INPUT NAME="action" TYPE="submit" VALUE="Save Site Info">
+<INPUT NAME="action" TYPE="submit" VALUE="Cancel Changes"><BR>
+EWS_PASSWORD
+</FORM>

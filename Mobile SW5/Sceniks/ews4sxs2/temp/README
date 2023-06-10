@@ -1,0 +1,34 @@
+Installing Excite for Web Servers
+---------------------------------
+
+Thank you for downloading Excite for Web Servers!
+
+NOTE: This distribution contains the patch for the CGI security hole
+described in CERT* Vendor Initiated Bulletin VB-98.01.  For more
+information, please see ftp.cert.org/pub/cert_bulletins/VB-98.01.excite
+
+To begin the installation process, you must be logged in as root (or
+superuser).
+
+*** Installation will NOT change any of your system configuration files. ***
+ 
+Installation will create two directories.  One will be a directory you
+specify in which the index and search applications and the index files
+will be stored, and the second will be a directory you specify that
+must be beneath your Web server's HTML root, in which documentation
+and icons will be stored.  Finally, several scripts prefixed with 'AT-'
+will be installed into your cgi-bin directory.
+
+To get started, invoke the script 'sh ./install-Excite' from the directory 
+containing the compressed archive file 'Excite.tar.Z'
+
+The installation script will lead you step-by-step through
+the process.
+
+Thank You,
+Excite, Inc.
+
+NOTE:  If you are installing over an old version of the software,
+be advised that the format for the 'ExclusionRules' file has 
+changed.  However, your old ExclusionRules file will continue
+to function properly.

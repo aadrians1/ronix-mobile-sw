@@ -1,0 +1,37 @@
+; This is a simple program to demonstrate how to configure
+; port I/O operation on a 28-pin SX28AC device. The program
+; reads inputs on port RA and outputs the result on port RB
+; in a continuous loop.
+;
+; For initialization, the program configures Port C as an input
+; port and enables the pull-up resistors, and sets Port B as an
+; output port. With a simple 8 dip switch on Port C and LEDs on port B, you
+; can 
+;
+; Configuration data
+; The Chip's configuration is  28 pin, 2K EEPROM, 136 byte RAM,
+; internal 4MHz RC driven, single clock per instruction.
+		device	pins28,pages4,banks8,osc4mhz,turbo
+;
+; User ID is programmed to ASCII "Portswch"
+		id	'Portswch'
+;
+; Reset Pointer
+		reset	start		; After Reset, it begins from "start"
+;
+		org	0		; Puts instruction words in page 0 of
+					; program memory.
+;
+start		mov	w,#$0F
+		mov	m,w		; Points mode register to set data direction
+		mov 	!rc,#%11111111	; Configure PORT C as input port
+		mov 	!rb,#%00000000	; Configure PORT B as output port
+		mov	w,#$0E		
+		mov	m,w		; Points mode register to pull-up enable
+		mov	!rc,#%00000000	; Enable pull-ups on Port C inputs
+
+;
+; poll inputs on Port C and output onto Port B
+;
+	:loop	mov	rb,rc	
+		jmp	:loop

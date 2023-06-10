@@ -1,0 +1,72 @@
+=head3 Thu May  2 18:09:01 1996: C<Module CGI>
+
+=over 4
+
+=item *
+
+C<installed into: /usr/local/lib/perl5/site_perl>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.19>
+
+=back
+
+=head3 Thu May  2 18:48:47 1996: C<Module CGI>
+
+=over 4
+
+=item *
+
+C<installed into: /usr/local/lib/perl5/site_perl>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.13>
+
+=back
+
+=head3 Thu May  2 18:49:38 1996: C<Module CGI>
+
+=over 4
+
+=item *
+
+C<installed into: /usr/local/lib/perl5/site_perl>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.19>
+
+=back
+
+=head3 Fri May 10 17:49:30 1996: C<Module CGI>
+
+=over 4
+
+=item *
+
+C<installed into: /usr/local/lib/perl5/site_perl>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 2.19>
+
+=back
+

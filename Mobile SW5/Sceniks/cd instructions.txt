@@ -1,0 +1,11 @@
+-To use this CD, diuble-click the index.html file in the root directory of the CD.
+
+
+-The HTML documents on this CD are supported by the following browswers...
+
+   Netscape Navigator 3.0 Gold, Netscape Communicator 4.01, 4.05, and 4.5 
+
+   Microsoft Internet Explorer 4.0 or 5.0
+
+-Netscape Communicator 4.5 is available for install from this CD for PC and Mac systems.  These
+ files are located in the /install directory on this CD.

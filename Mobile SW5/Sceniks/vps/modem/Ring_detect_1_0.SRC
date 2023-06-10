@@ -1,0 +1,230 @@
+;******************************************************************************
+; Copyright © [01/14/1999] Scenix Semiconductor, Inc. All rights reserved.
+;
+ ;Scenix Semiconductor, Inc. assumes no responsibility or liability for
+; the use of this [product, application, software, any of these products].
+; Scenix Semiconductor conveys no license, implicitly or otherwise, under
+; any intellectual property rights.
+; Information contained in this publication regarding (e.g.: application,
+; implementation) and the like is intended through suggestion only and may
+; be superseded by updates. Scenix Semiconductor makes no representation
+; or warranties with respect to the accuracy or use of these information,
+; or infringement of patents arising from such use or otherwise.
+;******************************************************************************
+; Filename:	Ring_detect.src
+; Author:	Stephen Holland
+;		Applications Engineers
+;		Scenix Semiconductor Inc.
+; Revision:	1.0
+; Date:		Jan. 14, 1999
+; Part:		SX28AC rev. 2.5
+; Freq:		50Mhz
+; Compiled using Parallax SX-Key software v1.01
+;    
+;
+; Ring detection routine for Scenix SX Microcontrollers. This code is 
+; designed to be used in the interrupt ervice routine for passive detection of
+; a ring event.  A ring detection is indicated by the setting of the 'ringing'
+; flag.
+;
+;*************************************************************
+; Device
+;*************************************************************
+		device	pins28,pages4,banks8,oschs
+		device	turbo,stackx,optionx
+		id	'Ring_Det'
+		reset	reset_entry
+		freq	50_000_000
+;
+; Watches
+;
+		watch	ring,1,ubin
+		watch	ringing,1,ubin
+
+		watch	ring_count,16,uhex
+
+;*************************************************************
+; Variables
+;*************************************************************
+
+
+
+;*************************************************************
+; Global variables
+;*************************************************************
+		org	8
+
+temp		ds	1
+flags		ds	1
+
+timer_flag	=	flags.0		;Indicates timer expired
+ring_det_en	=	flags.1		;Enables ring detection
+ringing		=	flags.2		;Indicates a (confirmed) ring is happening 
+ring_lo_det	=	flags.3		;Indicates that the ring line has been low recently
+
+;*************************************************************
+; Bank 0 variables
+;*************************************************************
+		org	$10	
+
+timers		=	$
+timer_accl	ds	1
+timer_acch	ds	1
+
+ring_bank	=	$
+ring_count	ds	2
+
+;*************************************************************
+; Bank 1 variables
+;*************************************************************
+		org	$30
+
+
+
+;*************************************************************
+; Bank 2 variables
+;*************************************************************
+		org	$50
+
+
+
+
+;*************************************************************
+; Declarations
+;*************************************************************
+
+int_period	=	163			;period between interrupts
+
+; Pin assignments
+led_pin		=	rb.0
+ring		=	rb.3
+
+;*************************************************************
+; Interrupt routine - virtual peripherals
+;*************************************************************
+			org	0
+interrupt					;3 it takes 3 cycles to get an interrupt
+
+;*************************************************************
+; Timers
+;*************************************************************
+; Timer 1
+timer		bank	timers			;1
+		add	timer_accl,#1		;2 add timer_accl+carry(=1)
+		sc
+		jmp	:timer_out
+
+		add	timer_acch,#1
+		sc				;1
+		jmp	:timer_out
+		setb	timer_flag		;1
+:timer_out					;=7
+;*************************************************************
+; Ring Detection
+;*************************************************************
+	;	jnb	ring_det_en,ring_det_out
+		jb	ring,:ring_high
+
+:ring_low	setb	ring_lo_det		;Set ring_lo_det to indicate that a ring event has started
+		inc	ring_count+0		;Increment 16-bit ring_count register
+		snz
+		inc	ring_count+1
+		jmp	ring_det_out		; exit
+
+:ring_high	;After a ring has been high for a specified amount of time,
+		; check to see if ring_count is above a specified count.
+		; This is to resist the detection of noise or off-hook glitches.
+
+		jnb	ring_lo_det,ring_det_out
+		cjb	ring_count+1,#$50,ring_det_out
+		setb	ringing
+		clrb	ring_lo_det		;Reset ring_lo_det
+		clr	ring_count		;Reset ring_count
+		clr	ring_count+1
+ring_det_out
+;*************************************************************
+interrupt_out
+		mov     w,#-int_period     	;1	;interrupt every 'int_period' clocks
+		retiw                      	;3	;exit interrupt
+;*************************************************************
+
+
+;*************************************************************
+; Reset entry
+;*************************************************************
+reset_entry	mov	m,#$0f
+		mov	 ra,#%0110		;init ra
+		mov	!ra,#%0010		;ra0-1 = input, ra2-3 = output
+		mov	 rb,#%00000000		;init rb
+		mov	!rb,#%00001110		;rb1-3 = input, rb0,rb4-7 = output
+		mov	 rc,#%00000000		;init rc
+		mov	!rc,#%01111101		;rc0,rc2-7 = input, rc1 = output
+		mov	m,#$0f			;Point MODE register back to ports
+
+		clr	fsr			;reset all ram banks
+:loop		setb	fsr.4
+		clr	ind
+		ijnz	fsr,:loop
+
+		clr	flags			;Clear flags registers
+
+		mov	!option,#%00011111	;enable wreg and rtcc interrupt
+
+		jmp	@main			;Jump to main code
+
+;*************************************************************
+; Subroutines 
+;*************************************************************
+		org	$200
+;*************************************************************
+
+
+;*************************************************************
+		org	$400
+;*************************************************************
+
+
+;*************************************************************
+		org	$600
+;*************************************************************
+;*************************************************************
+; Main 
+;*************************************************************
+main
+		bank	ring_bank
+		clr	ring_count
+		clr	ring_count+1
+		clrb	ring_lo_det
+		clrb	ringing
+; Main loop
+main_loop
+
+;*************************************************************
+get_ring	bank	ring_bank
+		jb	ringing,:send_ring
+		jmp	get_ring_done
+
+:send_ring	;This is where ring event would be announced
+		;In this example, we just flash the LED to indicate which ring pattern was detected
+
+		mov	temp,#10
+:again		setb	led_pin
+		bank	timers
+		mov	timer_accl,#$00		;200mS		
+		mov	timer_acch,#$85		;--//--
+		clrb	timer_flag
+		jnb	timer_flag,$
+		clrb	led_pin
+		bank	timers
+		mov	timer_accl,#$00		;200mS		
+		mov	timer_acch,#$85		;--//--
+		clrb	timer_flag
+		jnb	timer_flag,$
+		djnz	temp,:again
+
+:send_done	clrb	ringing
+get_ring_done 
+
+		jmp	main_loop
+;*************************************************************
+; End

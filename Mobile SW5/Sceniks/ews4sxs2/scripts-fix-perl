@@ -1,0 +1,75 @@
+#!/bin/sh
+eval "exec ./perl -x $0 $*"
+    if $running_under_some_shell;
+#!perl
+    ;
+
+## Copyright (c) 1996 Excite, Inc.
+##
+## This script will fix the invocation path on any perl scripts specified
+## on the command line.  The intended use of this is to allow the 
+## configuration scripts (AT-index.cgi, AT-generate.cgi, and AT-config.cgi)
+## to be modified at install time or at a later
+## point if the location of the user's perl interpreter is something
+## other than /usr/local/bin/perl.  This script merley changes the
+## #!/usr/local/bin/perl at the head of each of the scripts to a new
+## path.
+
+## Get any options
+$opt = "";
+while ($ARGV[0] =~ s/^-//) {
+    $opt .= shift;
+}
+
+## First argument is root directory
+$perlloc = shift;
+$perlloc
+    || die "Usage: $0 [opts] <perl location> [files-to-convert...]\n";
+
+(-x $perlloc)
+    || die "'$perlloc' is not executable.  Please verify location of perl interpreter.\n";
+
+chop($perlloc) if $perlloc =~ m|/$|;
+
+MAIN: for $file (@ARGV) {
+    if (! -r $file) {
+	warn "Error reading file '$file'\n";
+	next MAIN;
+    }
+
+    ## If the file ends in .tmpl, assume it's a template; the new file
+    ## should be the name without the .tmpl suffix. Otherwise, move
+    ## the new file to .bak; the new file is the original name of the
+    ## old file.
+    $newfile = $file;
+    if ($newfile =~ /\.tmpl$/) {
+	$newfile =~ s/\.tmpl$//;
+	if ((-e $newfile) && ($opt !~ /f/)) {
+	    warn "File '$newfile' already exists\n";
+	    next MAIN;
+	}
+    } else {
+	if (-e "$file.bak" && $opt !~ /f/) {
+	    warn "File '$file.bak' already exists\n";
+	    next MAIN;
+	}
+	$result = system("/bin/mv", $file, "$file.bak");
+	$result <<= 8;
+	die "Failed to move '$file' to '$file.bak'\n" if $result;
+	$file = "$file.bak";
+    }
+
+    open(FILE, $file) || die "Couldn't open '$file'\n";
+    open(NEW, ">$newfile") || die "Couldn't open '$newfile' for writing\n";
+    while (<FILE>) {
+	if (/^perl=\S+$/) {
+	    print NEW qq(perl=$perlloc\n);
+	} else {
+	    print NEW;
+	}
+    }
+}
+
+
+
+

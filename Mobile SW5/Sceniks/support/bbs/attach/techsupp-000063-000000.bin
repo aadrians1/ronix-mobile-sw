@@ -1,0 +1,120 @@
+;**************************** 
+;***  Configuration data  ***
+;****************************
+		DEVICE	PINS18,PAGES4,BANKS8,OSC4MHZ,TURBO,WATCHDOG,BROWNOUT
+;
+; PROGRAM USER ID LOCATION
+;		ID	'CODE#24I'
+
+;
+; RESET POINTER
+		RESET	COLD_START
+
+
+;*******************************
+;***  DEFINE REGISTER NAMES  ***
+;*******************************
+
+PORTA	EQU	05H	;PORT A DATA REGISTER
+PORTB	EQU	06H	;PORT B DATA REGISTER
+
+TACHO		=	PORTA.1
+LED		=	PORTA.2		;LED INDICATOR 
+TRIGGER2	=	PORTB.1		;TRIGGER NUMBER 2
+TRIGGER1	=	PORTB.2		;TRIGGER NUMBER 1
+FIREA		=	PORTB.3		;FIRE OUTPUT A
+FIREB		=	PORTB.4		;FIRE OUTPUT B
+
+
+;******************************
+;***  DEFINE RAM VARIABLES  ***
+;******************************
+
+	ORG	8
+
+LED_COUNTER	DS	1
+INT_COUNT	DS	1
+
+
+;*****************************
+;***  DEFINE SUB ROUTINES  ***
+;*****************************
+
+	ORG	000
+
+INTERRUPT		
+		MOV	M,#$09
+		CLR	W
+		MOV	!RB,W			;EXCHANGE WKPND_B AND W
+		
+FIRE_A	
+		SETB	TACHO	;FIREA			;FIRE COIL A
+		MOV	W,#30
+		MOV	INT_COUNT,W
+:LOOP		CLR	!WDT
+		DJNZ	INT_COUNT,:LOOP
+	
+		
+
+
+		CLRB	TACHO	
+	
+		RETI
+
+
+
+;***********************
+;***  START OF CODE  ***
+;***********************
+
+
+COLD_START
+	
+		MOV 	!PORTA,#%00000000	; Configure PORT A
+ 		MOV	!PORTB,#%00000110	; Configure PORT B 
+	
+		MOV	M, #$0C			;SCHMITT TRIGGER ENABLE REGISTER
+		MOV	W, #%11111001		;ENABLE ST ON TRIGGER INPUT PINS
+		MOV	!RB, W			;WRITE TO PORT
+
+		CLR	PORTA			;SET PORT A LOW
+		CLR	PORTB			;SET PORT B LOW
+		
+		MOV	M,#$09			;WKPND_B REGISTER (INTERRUPT PENDING)
+		CLR	W
+		MOV	!RB,W			;CLEAR REGISTER
+		
+		MOV	M,#$0A			;WKED_B REGISTER (EDGE FOR DETECTION)
+		MOV	W,#$FF			;1 = FALLING EDGE, 0 = RISING EDGE
+		MOV 	!RB,W			;SET PORT
+		
+		MOV	M,#$0B			;WKEN_B REGISTER (ENABLE PINS)
+		CLR	w
+		MOV	W,#%11111001		;1 = DISABLED, 0 = ENABLED
+		MOV	!RB,W			;
+
+	
+
+	
+POLLED_LOOP	CLR	!WDT
+		;JMP	POLLED_LOOP
+
+		SETB	LED
+		MOV	W,#255
+		MOV	LED_COUNTER,W
+:LOOP1		DECSZ	LED_COUNTER
+		JMP	:LOOP1
+		
+		CLRB	LED
+		CLR	!WDT
+		MOV	W,#255
+		MOV	LED_COUNTER,W
+:LOOP2	;	CALL	DELAY
+		DECSZ	LED_COUNTER
+		JMP	:LOOP2
+		JMP	POLLED_LOOP
+
+
+
+
+;END OF PROGRAM

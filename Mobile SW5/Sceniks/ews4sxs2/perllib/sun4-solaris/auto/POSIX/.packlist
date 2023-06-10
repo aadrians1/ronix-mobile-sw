@@ -1,0 +1,4 @@
+POSIX.bs
+../../lib/auto/POSIX/POSIX.so
+../../lib/auto/POSIX/POSIX.bs
+../../lib/POSIX.pm

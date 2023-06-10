@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+    <TITLE>Excite for Web Servers Spider Configuration</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000" ALINK="#0000FF">
+<img src="EWS_SPIDER_BANNER">
+<FORM ACTION="EWS_SPIDER_CGI" ENCTYPE=x-www-form-encoded METHOD=POST><B>Spider
+Status for collection: EWS_COLLECTION</B><BR>
+<INPUT TYPE="hidden" NAME="collection" VALUE="EWS_COLLECTION">
+  <BR>
+Spider is depositing files to the following directory:  EWS_SPIDER_DIR<BR>
+Spider is EWS_SPIDER_RUNNING.<BR>
+X Documents have been collected, consuming X K of disk space.<BR>
+<BR>
+<hr>
+<b>Required Information</b>
+<ul>
+User Agent (Provide a name for your spider):  <INPUT NAME="user_agent" TYPE="text" SIZE=30 VALUE="EWS_USER_AGENT">
+<br>
+From Agent (Provide an email address): <INPUT NAME="from_agent" TYPE="text" SIZE=30 VALUE="EWS_FROM_AGENT">
+<br>
+Polite Time (in seconds): <INPUT NAME="polite_time" TYPE="text" SIZE=5 VALUE="EWS_POLITE_TIME">
+<br>
+</ul>
+<INPUT TYPE="checkbox" NAME="use_as_global" VALUE="update_global">
+Click here to make this information the default across all spider
+collections. 
+
+<HR><B>Collection-Wide Configuration Options</b>
+<BR>
+Maximum Size of Fetched Pages (in KB?): <INPUT NAME="MAX_SIZE" TYPE="text"
+SIZE=14 VALUE="EWS_MAX_SIZE"><BR>
+Maximum Number of Pages to Fetch: <INPUT NAME="MAX_PAGES" TYPE="text"
+SIZE=17 VALUE="EWS_MAX_PAGES"><BR>
+
+Do NOT fetch pages with the follwing suffixes: <INPUT NAME="AVOID_SUFFIX"
+TYPE="text" SIZE=30 VALUE="EWS_AVOID_SUFFIX"><BR><BR>
+
+Do NOT fetch URLs containing the following strings:<BR>
+(separate each string by a newline)<BR>
+<TEXTAREA NAME="AVOID_STRING" ROWS=7 COLS=70>
+EWS_AVOID_STRING
+</TEXTAREA><BR>
+<BR>
+<INPUT NAME="action" TYPE="submit" VALUE="Update Spider Configuration"><BR>
+
+<HR><B>Site Specific Configuration</B><BR>
+<BR>
+Select a site to Configure: <SELECT NAME="ews_site">
+<OPTION SELECTED>New Site
+EWS_SITE_LIST
+</SELECT><BR>
+<BR>
+<INPUT NAME="action" TYPE="submit" VALUE="Configure Site">
+<INPUT NAME="action" TYPE="submit" VALUE="Delete Site"><BR>
+
+<HR><B>Possible Actions</B><BR>
+<BR>
+<INPUT NAME="action" TYPE="submit" VALUE="Start Spider">Start a spider process
+for this collection.<BR>
+<INPUT NAME="action" TYPE="submit" VALUE="Stop Spider">Stop the spider process
+that is currently running for this collection.<BR>
+EWS_PASSWORD
+</FORM>
+</BODY>
+</HTML>

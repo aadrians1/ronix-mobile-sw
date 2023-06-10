@@ -1,0 +1,820 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>Scenix Semiconductor QuickTour</title>
+<!-- macro quicktour_header start -->
+</head>
+
+<body background="/gifs/bg.gif" text="#000000" link="#006699"
+vlink="#006342" onload="defaultStatus=''">
+<script language="JavaScript">
+
+       if (document.images) {            
+       img1on = new Image();   img1on.src = "/gifs/home2.gif";  
+       img2on = new Image();   img2on.src = "/gifs/search2.gif";
+       img3on = new Image();   img3on.src = "/gifs/sitemap2.gif";
+       img4on = new Image();   img4on.src = "/gifs/feedback2.gif";
+       img1off = new Image();  img1off.src = "/gifs/home1.gif";
+       img2off = new Image();  img2off.src = "/gifs/search1.gif";
+       img3off = new Image();  img3off.src = "/gifs/sitemap1.gif";
+       img4off = new Image();  img4off.src = "/gifs/feedback1.gif";
+       }
+
+    function imgOn(imgName) {
+            if (document.images) {
+                document[imgName].src = eval(imgName + "on.src");       
+            }
+    }
+
+    function imgOff(imgName) {
+            if (document.images) {
+                document[imgName].src = eval(imgName + "off.src");        
+            }
+    }
+// -->
+</script><script
+language="JavaScript">
+
+<!-- HIDE JAVASCRIPT
+<!-- Web development & programming by Westridge Technologies Inc. -->
+<!-- www.wridge.com           info@wridge.com        650 529-1005 -->
+<!-- --><h1>The Scenix QuickTour requires JavaScript</h1>
+<!-- --><h3>Your web browser is not capable of running JavaScript programs
+<!-- -->Please consider upgrading to the latest version (3.0 at least)
+<!-- -->of either Netscape Navigator or Microsoft Explorer</h3>
+
+function analyze(form) {
+
+    var CPU = form.CPU.options[form.CPU.selectedIndex].value
+    var Silicon = form.Silicon.options[form.Silicon.selectedIndex].value
+    var OS = form.OS.options[form.OS.selectedIndex].value
+    var CPU_t = form.CPU.options[form.CPU.selectedIndex].text
+    var Silicon_t = form.Silicon.options[form.Silicon.selectedIndex].text
+    var OS_t = form.OS.options[form.OS.selectedIndex].text
+
+document.writeln("<HTML><HEAD><TITLE>Begin the Scenix QuickTour!</TITLE></HEAD>")
+document.writeln("<BODY BACKGROUND=/gifs/bg.gif TEXT=#000000 LINK=##006699 VLINK=#006342 onLoad=defaultStatus=''>")
+
+document.writeln("<table border=0 cellpadding=0 cellspacing=0 width=630>")
+document.writeln("<tr>")
+document.writeln("<td width=115 align=center valign=top>")
+document.writeln("<a href=/index.html><img src=/gifs/sxlogo.gif border=0></a></td>")
+document.writeln("<td align=right valign=top>")
+document.writeln("<img src=/gifs/scenix.gif><img src=/gifs/home1.gif><img src=/gifs/search1.gif><img src=/gifs/sitemap1.gif><img src=/gifs/feedback1.gif><br>")
+document.writeln("<p><img src=/gifs/products.gif>")
+document.writeln("<img src=/gifs/img.gif width=228 height=42 border=0 alt=Circuit Board></td>")
+document.writeln("</tr>")
+
+document.writeln("<tr>")
+document.writeln("<td align=center valign=top width=112>")
+
+document.writeln("<applet code=\"ime\" codebase=\"/java\" align=\"baseline\" height=\"350\" width=\"112\">")
+document.writeln("<!--TAG GENERATOR: OpenCube - Applet Composer, (www.opencube.com)-->")
+
+document.writeln("<!--OpenCube Copyright Notice Parameter-->")
+document.writeln("<param name=\"Notice\" value=\"Infinite Menus, Copyright (c) 1998, OpenCube Inc.\">")
+
+document.writeln("<!--General / Default Settings-->")
+document.writeln("<param name=\"bgcolor\" value=\"255,255,255\">")
+document.writeln("<param name=\"onsbtext\" value=\"Cost Effective Microcontrollers\">")
+document.writeln("<param name=\"offsbtext\" value=\"Scenix Semiconductor, Inc.\">")
+document.writeln("<param name=\"bgxy\" value=\"0,0\">")
+document.writeln("<param name=\"font\" value=\"Helvetica,Bold,11\">")
+document.writeln("<param name=\"menutextcolor\" value=\"8,0,2\">")
+document.writeln("<param name=\"lrmargin\" value=\"5\">")
+document.writeln("<param name=\"halign\" value=\"left\">")
+document.writeln("<param name=\"menucolor\" value=\"180,222,242\">")
+document.writeln("<param name=\"menuoutlinecolor\" value=\"0,0,0\">")
+document.writeln("<param name=\"menuhlcolor\" value=\"66,128,163\">")
+document.writeln("<param name=\"menuhltextcolor\" value=\"0,0,0\">")
+document.writeln("<param name=\"loadwhere\" value=\"_self\">")
+
+document.writeln("<!--Specific Settings-->")
+document.writeln("<param name=\"imagefile0\" value=\"/gifs/company1.gif\">")
+document.writeln("<param name=\"imagexy0\" value=\"0,10\">")
+document.writeln("<param name=\"switchfile0\" value=\"/gifs/company2.gif\">")
+document.writeln("<param name=\"imagedesturl0\" value=\"/company/index.html\">")
+document.writeln("<param name=\"imagefile1\" value=\"/gifs/products2.gif\">")
+document.writeln("<param name=\"imagexy1\" value=\"0,40\">")
+document.writeln("<param name=\"switchfile1\" value=\"/gifs/products1.gif\">")
+document.writeln("<param name=\"imagedesturl1\" value=\"/products/index.html\">")
+document.writeln("<param name=\"imagefile2\" value=\"/gifs/tools1.gif\">")
+document.writeln("<param name=\"imagexy2\" value=\"0,70\">")
+document.writeln("<param name=\"switchfile2\" value=\"/gifs/tools2.gif\">")
+document.writeln("<param name=\"imagedesturl2\" value=\"/tools/index.html\">")
+document.writeln("<param name=\"imagefile3\" value=\"/gifs/virtual1.gif\">")
+document.writeln("<param name=\"imagexy3\" value=\"0,100\">")
+document.writeln("<param name=\"switchfile3\" value=\"/gifs/virtual2.gif\">")
+document.writeln("<param name=\"imagedesturl3\" value=\"/virtual/index.html\">")
+document.writeln("<param name=\"imagefile4\" value=\"/gifs/news1.gif\">")
+document.writeln("<param name=\"imagexy4\" value=\"0,130\">")
+document.writeln("<param name=\"switchfile4\" value=\"/gifs/news2.gif\">")
+document.writeln("<param name=\"imagedesturl4\" value=\"/news/index.html\">")
+document.writeln("<param name=\"imagefile5\" value=\"/gifs/support1.gif\">")
+document.writeln("<param name=\"imagexy5\" value=\"0,160\">")
+document.writeln("<param name=\"switchfile5\" value=\"/gifs/support2.gif\">")
+document.writeln("<param name=\"imagedesturl5\" value=\"/support/index.html\">")
+document.writeln("<param name=\"imagefile6\" value=\"/gifs/partners1.gif\">")
+document.writeln("<param name=\"imagexy6\" value=\"0,190\">")
+document.writeln("<param name=\"switchfile6\" value=\"/gifs/partners2.gif\">")
+document.writeln("<param name=\"imagedesturl6\" value=\"/partners/index.html\">")
+document.writeln("<param name=\"imagefile7\" value=\"/gifs/sales1.gif\">")
+document.writeln("<param name=\"imagexy7\" value=\"0,220\">")
+document.writeln("<param name=\"switchfile7\" value=\"/gifs/sales2.gif\">")
+document.writeln("<param name=\"imagedesturl7\" value=\"/sales/index.html\">")
+document.writeln("<param name=\"imagefile8\" value=\"/gifs/jobs1.gif\">")
+document.writeln("<param name=\"imagexy8\" value=\"0,250\">")
+document.writeln("<param name=\"switchfile8\" value=\"/gifs/jobs2.gif\">")
+document.writeln("<param name=\"imagedesturl8\" value=\"/jobs/index.html\">")
+document.writeln("<param name=\"desc0-0\" value=\"Background\">")
+document.writeln("<param name=\"desturl0-0\" value=\"/company/background/index.html\">")
+document.writeln("<param name=\"loadwhere0-0\" value=\"_self\">")
+document.writeln("<param name=\"desc0-1\" value=\"Team\">")
+document.writeln("<param name=\"desturl0-1\" value=\"/company/management/index.html\">")
+document.writeln("<param name=\"loadwhere0-1\" value=\"_self\">")
+document.writeln("<param name=\"desc0-2\" value=\"FAQs\">")
+document.writeln("<param name=\"desturl0-2\" value=\"/company/faq/index.html\">")
+document.writeln("<param name=\"loadwhere0-2\" value=\"_self\">")
+document.writeln("<param name=\"desc0-3\" value=\"Contact\">")
+document.writeln("<param name=\"desturl0-3\" value=\"/company/contact/index.html\">")
+document.writeln("<param name=\"loadwhere0-3\" value=\"_self\">")
+document.writeln("<param name=\"desc0-4\" value=\"Directions\">")
+document.writeln("<param name=\"desturl0-4\" value=\"/company/directions/index.html\">")
+document.writeln("<param name=\"loadwhere0-4\" value=\"_self\">")
+document.writeln("<param name=\"desc1-0\" value=\"Datasheets\">")
+document.writeln("<param name=\"desturl1-0\" value=\"/products/datasheets/index.html\">")
+document.writeln("<param name=\"loadwhere1-0\" value=\"_self\">")
+document.writeln("<param name=\"desc1-1\" value=\"Briefs\">")
+document.writeln("<param name=\"desturl1-1\" value=\"/products/briefs/index.html\">")
+document.writeln("<param name=\"loadwhere1-1\" value=\"_self\">")
+document.writeln("<param name=\"desc1-2\" value=\"Quick Tour\">")
+document.writeln("<param name=\"desturl1-2\" value=\"/products/quicktour/index.html\">")
+document.writeln("<param name=\"loadwhere1-2\" value=\"_self\">")
+document.writeln("<param name=\"desc1-3\" value=\"Mailing List\">")
+document.writeln("<param name=\"desturl1-3\" value=\"/products/mailing/index.html\">")
+document.writeln("<param name=\"loadwhere1-3\" value=\"_self\">")
+document.writeln("<param name=\"desc1-4\" value=\"Successes\">")
+document.writeln("<param name=\"desturl1-4\" value=\"/products/success/index.html\">")
+document.writeln("<param name=\"loadwhere1-4\" value=\"_self\">")
+document.writeln("<param name=\"desc1-5\" value=\"Feedback\">")
+document.writeln("<param name=\"desturl1-5\" value=\"/products/feedback/index.html\">")
+document.writeln("<param name=\"loadwhere1-5\" value=\"_self\">")
+document.writeln("<param name=\"desc3-0\" value=\"Tested\">")
+document.writeln("<param name=\"desturl3-0\" value=\"/virtual/tested/index.html\">")
+document.writeln("<param name=\"loadwhere3-0\" value=\"_self\">")
+document.writeln("<param name=\"desc3-1\" value=\"Untested\">")
+document.writeln("<param name=\"desturl3-1\" value=\"/virtual/untested/index.html\">")
+document.writeln("<param name=\"loadwhere3-1\" value=\"_self\">")
+document.writeln("<param name=\"desc3-2\" value=\"Feedback\">")
+document.writeln("<param name=\"desturl3-2\" value=\"/virtual/feedback/index.html\">")
+document.writeln("<param name=\"loadwhere3-2\" value=\"_self\">")
+document.writeln("<param name=\"desc4-0\" value=\"Press\">")
+document.writeln("<param name=\"desturl4-0\" value=\"/news/press/index.html\">")
+document.writeln("<param name=\"loadwhere4-0\" value=\"_self\">")
+document.writeln("<param name=\"desc4-1\" value=\"Articles\">")
+document.writeln("<param name=\"desturl4-1\" value=\"/news/articles/index.html\">")
+document.writeln("<param name=\"loadwhere4-1\" value=\"_self\">")
+document.writeln("<param name=\"desc4-2\" value=\"Analysts Kit\">")
+document.writeln("<param name=\"desturl4-2\" value=\"/news/analysts/index.html\">")
+document.writeln("<param name=\"loadwhere4-2\" value=\"_self\">")
+document.writeln("<param name=\"desc4-3\" value=\"Press Kit\">")
+document.writeln("<param name=\"desturl4-3\" value=\"/news/presskit/index.html\">")
+document.writeln("<param name=\"loadwhere4-3\" value=\"_self\">")
+document.writeln("<param name=\"desc4-4\" value=\"White Papers\">")
+document.writeln("<param name=\"desturl4-4\" value=\"/news/wpapers/index.html\">")
+document.writeln("<param name=\"loadwhere4-4\" value=\"_self\">")
+document.writeln("<param name=\"desc4-5\" value=\"Sucesses\">")
+document.writeln("<param name=\"desturl4-5\" value=\"/news/success/index.html\">")
+document.writeln("<param name=\"loadwhere4-5\" value=\"_self\">")
+document.writeln("<param name=\"desc5-0\" value=\"Training\">")
+document.writeln("<param name=\"desturl5-0\" value=\"/support/training/index.html\">")
+document.writeln("<param name=\"loadwhere5-0\" value=\"_self\">")
+document.writeln("<param name=\"desc5-1\" value=\"Newsgroups\">")
+document.writeln("<param name=\"desturl5-1\" value=\"/support/bbs/index.html\">")
+document.writeln("<param name=\"loadwhere5-1\" value=\"_self\">")
+document.writeln("<param name=\"desc5-2\" value=\"Manuals\">")
+document.writeln("<param name=\"desturl5-2\" value=\"/support/manuals/index.html\">")
+document.writeln("<param name=\"loadwhere5-2\" value=\"_self\">")
+document.writeln("<param name=\"desc5-3\" value=\"FAQs\">")
+document.writeln("<param name=\"desturl5-3\" value=\"/support/faq/index.html\">")
+document.writeln("<param name=\"loadwhere5-3\" value=\"_self\">")
+document.writeln("<param name=\"desc5-4\" value=\"Errata\">")
+document.writeln("<param name=\"desturl5-4\" value=\"/support/errata/index.html\">")
+document.writeln("<param name=\"loadwhere5-4\" value=\"_self\">")
+document.writeln("<param name=\"desc5-5\" value=\"Suggestions\">")
+document.writeln("<param name=\"desturl5-5\" value=\"/support/box/index.html\">")
+document.writeln("<param name=\"loadwhere5-5\" value=\"_self\">")
+document.writeln("<param name=\"desc5-6\" value=\"App Notes\">")
+document.writeln("<param name=\"desturl5-6\" value=\"/support/appnotes/index.html\">")
+document.writeln("<param name=\"loadwhere5-6\" value=\"_self\">")
+document.writeln("<param name=\"desc5-7\" value=\"Search\">")
+document.writeln("<param name=\"desturl5-7\" value=\"/support/search/index.html\">")
+document.writeln("<param name=\"loadwhere5-7\" value=\"_self\">")
+document.writeln("<param name=\"desc5-8\" value=\"Links\">")
+document.writeln("<param name=\"desturl5-8\" value=\"/support/links/index.html\">")
+document.writeln("<param name=\"loadwhere5-8\" value=\"_self\">")
+document.writeln("<param name=\"desc5-9\" value=\"Contact\">")
+document.writeln("<param name=\"desturl5-9\" value=\"/support/contact/index.html\">")
+document.writeln("<param name=\"loadwhere5-9\" value=\"_self\">")
+document.writeln("<param name=\"desc6-0\" value=\"Tools\">")
+document.writeln("<param name=\"desturl6-0\" value=\"/partners/tools/index.html\">")
+document.writeln("<param name=\"loadwhere6-0\" value=\"_self\">")
+document.writeln("<param name=\"desc6-1\" value=\"Consultants\">")
+document.writeln("<param name=\"desturl6-1\" value=\"/partners/consultants/index.html\">")
+document.writeln("<param name=\"loadwhere6-1\" value=\"_self\">")
+document.writeln("<param name=\"desc6-2\" value=\"Links\">")
+document.writeln("<param name=\"desturl6-2\" value=\"/partners/links/index.html\">")
+document.writeln("<param name=\"loadwhere6-2\" value=\"_self\">")
+document.writeln("<param name=\"desc6-3\" value=\"Successes\">")
+document.writeln("<param name=\"desturl6-3\" value=\"/partners/success/index.html\">")
+document.writeln("<param name=\"loadwhere6-3\" value=\"_self\">")
+document.writeln("<param name=\"desc7-0\" value=\"Consultants\">")
+document.writeln("<param name=\"desturl7-0\" value=\"/sales/consultants/index.html\">")
+document.writeln("<param name=\"loadwhere7-0\" value=\"_self\">")
+document.writeln("<param name=\"desc7-1\" value=\"Tools\">")
+document.writeln("<param name=\"desturl7-1\" value=\"/sales/tools/index.html\">")
+document.writeln("<param name=\"loadwhere7-1\" value=\"_self\">")
+document.writeln("<param name=\"desc7-2\" value=\"Sales Reps\">")
+document.writeln("<param name=\"desturl7-2\" value=\"/sales/reps/index.html\">")
+document.writeln("<param name=\"loadwhere7-2\" value=\"_self\">")
+document.writeln("<param name=\"desc7-3\" value=\"Contact\">")
+document.writeln("<param name=\"desturl7-3\" value=\"/sales/contact/index.html\">")
+document.writeln("<param name=\"loadwhere7-3\" value=\"_self\">")
+document.writeln("<param name=\"desc8-0\" value=\"Listings\">")
+document.writeln("<param name=\"desturl8-0\" value=\"/jobs/listing/index.html\">")
+document.writeln("<param name=\"loadwhere8-0\" value=\"_self\">")
+document.writeln("<param name=\"desc8-1\" value=\"Send Resume\">")
+document.writeln("<param name=\"desturl8-1\" value=\"/jobs/resume/index.html\">")
+document.writeln("<param name=\"loadwhere8-1\" value=\"_self\">")
+
+document.writeln("</applet>")
+
+document.writeln("</td>")
+
+document.writeln("<td align=left valign=top><br>")
+
+document.writeln("<P><h4><FONT FACE=Arial,Helvetica>Based on your input, here's your customized Scenix Quick Tour:</FONT></h4><p>") 
+
+ if (CPU == "cyrix") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica><A HREF=/quicktour/cyrix.html>Cyrix Summary</A>")
+ document.writeln("<P>CYRIX - bla bla bla.......................................................</FONT>")
+    }
+
+ if (CPU == "k6") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica><A HREF=/quicktour/k6.html>K6 Summary</A>")
+ document.writeln("<P>K6 - bla bla bla.......................................................</FONT>")
+ }
+
+ if (CPU == "pentium") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica><A HREF=/quicktour/pentium.html>Pentium Summary</A>")
+ document.writeln("<P>Pentium - bla bla bla.......................................................</FONT>")
+ }
+
+ if (CPU == "pentium2") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica><A HREF=/quicktour/pentium2.html>Pentium II Summary</A>")
+ document.writeln("<P>Pentium II - bla bla bla.......................................................</FONT>")
+ }
+
+ if (CPU == "other") {
+ document.writeln("<p><FONT SIZE=3 FACE=Arial,Helvetica>Scenix software can be used for a wide variety of other CPUs.</FONT>")
+    }
+
+ if (Silicon == "intel") {
+ document.writeln("<p><FONT SIZE=3 FACE=Arial,Helvetica>Since your Silicon is Intel, you should know that Scenix microcontrollers offer the following features:<p><ul>")
+ document.writeln("<li><a href=intel1.html>Intel - Feature #1</a><p>")
+ document.writeln("<li><a href=intel2.html>Intel - Feature #2</a><p>")
+ document.writeln("<li><a href=intel3.html>Intel - Feature #3</a><p>")
+ document.writeln("<li><a href=intel4.html>Intel - Feature #4</a><p>")
+ document.writeln("<li><a href=intel5.html>Intel - Feature #5</a><p></ul></FONT>")
+    }
+
+ if (Silicon == "matsushita") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica>Since your Silicon is Matsushita, you should know that Scenix microcontrollers offer the following features:<p><ul>")
+ document.writeln("<li><a href=matsushita1.html>Matsushita - Feature #1</a><p>")
+ document.writeln("<li><a href=matsushita2.html>Matsushita - Feature #2</a><p>")
+ document.writeln("<li><a href=matsushita3.html>Matsushita - Feature #3</a><p>")
+ document.writeln("<li><a href=matsushita4.html>Matsushita - Feature #4</a><p>")
+ document.writeln("<li><a href=matsushita5.html>Matsushita - Feature #5</a></ul><p></FONT>")
+    }
+
+ if (Silicon == "nec") {    
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica>Since your Silicon is NEC, you should know that Scenix microcontrollers offer the following features:<p><ul>")
+ document.writeln("<li><a href=NEC1.html>NEC - Feature #1</a><p>")
+ document.writeln("<li><a href=NEC2.html>NEC - Feature #2</a><p>")
+ document.writeln("<li><a href=NEC3.html>NEC - Feature #3</a><p>")
+ document.writeln("<li><a href=NEC4.html>NEC - Feature #4</a><p>")
+ document.writeln("<li><a href=NEC5.html>NEC - Feature #5</a></ul><p></FONT>")
+    }
+
+ if (Silicon == "opti") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica>Since your Silicon is OPTi, you should know that Scenix microcontrollers offer the following features:<p><ul>")
+ document.writeln("<li><a href=opti1.html>Opti - Feature #1</a><p>")
+ document.writeln("<li><a href=opti2.html>Opti - Feature #2</a><p>")
+ document.writeln("<li><a href=opti3.html>Opti - Feature #3</a><p>")
+ document.writeln("<li><a href=opti4.html>Opti - Feature #4</a><p>")
+ document.writeln("<li><a href=opti5.html>Opti - Feature #5</a><p></ul><p><FONT>")
+    }
+
+ if (Silicon == "national") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica>Since your Silicon is National Semiconductor, you should know that Scenix microcontrollers offer the following features:<p><ul>")
+ document.writeln("<li><a href=national1.html>National - Feature #1</a><p>")
+ document.writeln("<li><a href=national2.html>National - Feature #2</a><p>")
+ document.writeln("<li><a href=national3.html>National - Feature #3</a><p>")
+ document.writeln("<li><a href=national4.html>National - Feature #4</a><p>")
+ document.writeln("<li><a href=national5.html>National - Feature #5</a><p></ul><p><FONT>")
+    }
+
+ if (Silicon == "radisys") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica>Since your Silicon is Radisys, you should know that Scenix microcontrollers offer the following features:<p><ul>")
+ document.writeln("<li><a href=Radisys1.html>Radisys - Feature #1</a><p>")
+ document.writeln("<li><a href=Radisys2.html>Radisys - Feature #2</a><p>")
+ document.writeln("<li><a href=Radisys3.html>Radisys - Feature #3</a><p>")
+ document.writeln("<li><a href=Radisys4.html>Radisys - Feature #4</a><p>")
+ document.writeln("<li><a href=Radisys5.html>Radisys - Feature #5</a><p></ul><p><FONT>")
+    }
+
+ if (Silicon == "other") {
+ document.writeln("<P><FONT SIZE=3 FACE=Arial,Helvetica>You should know that Scenix microcontrollers offer the following features for other Silicon:<p><ul>")
+ document.writeln("<li><a href=other1.html>Other - Feature #1</a><p>")
+ document.writeln("<li><a href=other2.html>Other - Feature #2</a><p>")
+ document.writeln("<li><a href=other3.html>Other - Feature #3</a><p>")
+ document.writeln("<li><a href=other4.html>Other - Feature #4</a><p>")
+ document.writeln("<li><a href=other5.html>Other - Feature #5</a><p></ul><p><FONT>")
+    }
+
+ document.writeln("<font face=Arial,Helvetica size=3>")
+ document.writeln("")
+
+ if (OS == "msdos") {
+ document.writeln("<font face=Arial,Helvetica size=3>We recommend the following application notes for MSDOS applications:<P><blockquote>")
+ document.writeln("<a href=appnote_msdos.html>Application Notes - MSDOS</a><p>")
+ document.writeln("<p></blockquote></font>")
+    }
+
+ if (OS == "os2") {
+ document.writeln("<font face=Arial,Helvetica size=3>We recommend the following application notes for OS2 applications:<P><blockquote>")
+ document.writeln("<a href=appnote_os2.html>Application Notes - OS2</a><p>")
+ document.writeln("<p></blockquote></font>")
+    }
+
+ if (OS == "win95") {
+ document.writeln("<font face=Arial,Helvetica size=3>We recommend the following application notes for Windows 95 applications:<P><blockquote>")
+ document.writeln("<a href=appnote_win95.html>Application Notes - Windows 95</a><p>")
+ document.writeln("<p></blockquote></font>")
+    }
+
+ if (OS == "win98") {
+ document.writeln("<font face=Arial,Helvetica size=3>We recommend the following application notes for Windows 98 applications:<P><blockquote>")
+ document.writeln("<a href=appnote_win98.html>Application Notes - Windows 98</a><p>")
+ document.writeln("<p></blockquote></font>")
+    }
+
+ if (OS == "winnt") {
+ document.writeln("<font face=Arial,Helvetica size=3>We recommend the following application notes for Windows NT applications:<P><blockquote>")
+ document.writeln("<a href=appnote_winnt.html>Application Notes - Windows NT</a><p>")
+ document.writeln("<p></blockquote></font>")
+    }
+
+ document.writeln("<P><b>For more information contact Scenix at <a href=mailto:info@scenix.com>info@scenix.com</a>")
+
+ document.writeln("</td></tr><tr>")
+ document.writeln("<td width=112></td>")
+ document.writeln("<td><center>")
+ document.writeln("<hr>")
+ document.writeln("<table border=0>")
+ document.writeln("<tr><td><a href=/company/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Company]</FONT></a></td><td><a href=/products/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Products]</FONT></a></td>")
+ document.writeln("<td><a href=/tools/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Tools]</FONT></a></td>")
+ document.writeln("<td><a href=/virtual/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Peripherals]</FONT></a></td>")
+ document.writeln("<td><a href=/news/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[News]</FONT></a></td>")
+ document.writeln("<td><a href=/support/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Support]</FONT></a></td>")
+ document.writeln("<td><a href=/partners/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Partners]</FONT></a></td>")
+ document.writeln("<td><a href=/sales/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Sales]</FONT></a></td>")
+ document.writeln("<td><a href=/jobs/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Jobs]</FONT></a></td>")
+ document.writeln("<td><a href=/search/index.html><FONT SIZE=1 FACE=Arial,Helvetica>[Search]</FONT></a></td>")
+ document.writeln("</tr></table>")
+ document.writeln("<hr>")
+ document.writeln("<font face=Arial,Helvetica size=2>")
+ document.writeln("Scenix Semiconductor, Inc.| 3160 De La Cruz Blvd., Ste. 200 | Santa Clara, CA 95054<br>")
+ document.writeln("Tel: 408.327.8888 | Fax: 408.327.8880 | Technical Support Hotline: 800.556.0225</font>")
+ document.writeln("<hr>")
+ document.writeln("<font face=Arial,Helvetica size=1 color=#006699>&copy; <a href=/copyright.html>Copyright 1998</a>, All Rights Reserved  | <a href=mailto:info@scenix.com>info@scenix.com</a> | <a href=/feedback/index.html>Feedback</a></font>")
+ document.writeln("</center></td>")
+ document.writeln("</tr>")
+ document.writeln("</table>")
+
+ document.writeln("</body>")
+ document.writeln("</html>")
+
+
+ document.close()
+}
+
+function send(g) {
+
+  var form
+  g.submit()
+}
+  
+function validate(form) {
+    var msg
+    var empty_fields = ""
+            
+    if ((form.Last_Name.value == null) || (form.Last_Name.value == "")) {
+    empty_fields += "\n        " + form.Last_Name.name
+    }
+    if ((form.First_Name.value == null) || (form.First_Name.value == "")) {
+    empty_fields += "\n        " + form.First_Name.name
+    }
+    if ((form.Company.value == null) || (form.Company.value == "")) {
+    empty_fields += "\n        " + form.Company.name
+    }
+    if ((form.Address.value == null) || (form.Address.value == "")) {
+    empty_fields += "\n        " + form.Address.name
+    }
+    if ((form.City.value == null) || (form.City.value == "")) {
+    empty_fields += "\n        " + form.City.name
+    }
+    if ((form.Zip.value == null) || (form.Zip.value == "")) {
+    empty_fields += "\n        " + form.Zip.name
+    }
+    if ((form.Country.value == null) || (form.Country.value == "")) {
+    empty_fields += "\n        " + form.Country.name
+    }
+    if ((form.Telephone.value == null) || (form.Telephone.value == "")) {
+    empty_fields += "\n        " + form.Telephone.name
+    }
+    if ((form.Fax.value == null) || (form.Fax.value == "")) {
+    empty_fields += "\n        " + form.Fax.name
+    }
+    if ((form.Email.value == null) || (form.Email.value == "")) {
+    empty_fields += "\n        " + form.Email.name
+    }
+    if (empty_fields) {
+    msg = "Please fill out the following mandatory fields:\n" + empty_fields +"\n"
+    alert (msg)
+    return false
+    }
+    analyze(form)
+    return true
+}
+//END HIDE JAVASCRIPT-->
+
+</script>
+
+<table border="0" cellpadding="0" cellspacing="0" width="630">
+    <tr>
+        <td align="center" valign="top" width="115"><a
+        href="/index.html"><img src="/gifs/sxlogo.gif"
+        alt="Scenix Logo" border="0" width="78" height="71"></a></td>
+        <td align="right" valign="top"><nobr><img
+        src="/gifs/scenix.gif" alt="Scenix Banner" width="269"
+        height="28"></nobr><a href="/index.html"><nobr></a><a
+        href="/index.html" onmouseover="imgOn('img1')"
+        onmouseout="imgOff('img1')"><img src="/gifs/home1.gif"
+        alt="Home" border="0" width="52" height="28" name="img1"></a><a
+        href="/index.html"></nobr></a><a href="/search/index.html"><nobr></a><a
+        href="/search/index.html" onmouseover="imgOn('img2')"
+        onmouseout="imgOff('img2')"><img src="/gifs/search1.gif"
+        alt="Search" border="0" width="52" height="28"
+        name="img2"></a><a href="/search/index.html"></nobr></a><a
+        href="/search/sitemap.html"><nobr></a><a
+        href="/search/sitemap.html" onmouseover="imgOn('img3')"
+        onmouseout="imgOff('img3')"><img src="/gifs/sitemap1.gif"
+        alt="Sitemap" border="0" width="58" height="28"
+        name="img3"></a><a href="/search/sitemap.html"></nobr></a><a
+        href="/products/feedback/index.html"><nobr></a><a
+        href="/products/feedback/index.html"
+        onmouseover="imgOn('img4')" onmouseout="imgOff('img4')"><img
+        src="/gifs/feedback1.gif" alt="Contact" border="0"
+        width="58" height="28" name="img4"></a><a
+        href="/products/feedback/index.html"></nobr></a><br>
+        <p><nobr><img src="/gifs/products.gif" alt="Products"
+        width="244" height="42"><img src="/gifs/img.gif"
+        alt="Circuit Board" width="228" height="42"></nobr></p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" width="112"><applet
+        code="ime" codebase="/java" align="baseline" width="112"
+        height="350"><param name="Notice"
+        value="Infinite Menus, Copyright (c) 1998, OpenCube Inc."><param
+        name="bgcolor" value="255,255,255"><param name="onsbtext"
+        value="Cost Effective Microcontrollers"><param
+        name="offsbtext" value="Scenix Semiconductor, Inc."><param
+        name="bgxy" value="0,0"><param name="font"
+        value="Helvetica,Bold,11"><param name="menutextcolor"
+        value="8,0,2"><param name="lrmargin" value="5"><param
+        name="halign" value="left"><param name="menucolor"
+        value="180,222,242"><param name="menuoutlinecolor"
+        value="0,0,0"><param name="menuhlcolor"
+        value="66,128,163"><param name="menuhltextcolor"
+        value="0,0,0"><param name="loadwhere" value="_self"><param
+        name="imagefile0" value="/gifs/company1.gif"><param
+        name="imagexy0" value="0,10"><param name="switchfile0"
+        value="/gifs/company2.gif"><param name="imagedesturl0"
+        value="/company/index.html"><param name="imagefile1"
+        value="/gifs/products2.gif"><param name="imagexy1"
+        value="0,40"><param name="switchfile1"
+        value="/gifs/products1.gif"><param name="imagedesturl1"
+        value="/products/index.html"><param name="imagefile2"
+        value="/gifs/tools1.gif"><param name="imagexy2"
+        value="0,70"><param name="switchfile2"
+        value="/gifs/tools2.gif"><param name="imagedesturl2"
+        value="/tools/index.html"><param name="imagefile3"
+        value="/gifs/virtual1.gif"><param name="imagexy3"
+        value="0,100"><param name="switchfile3"
+        value="/gifs/virtual2.gif"><param name="imagedesturl3"
+        value="/virtual/index.html"><param name="imagefile4"
+        value="/gifs/news1.gif"><param name="imagexy4"
+        value="0,130"><param name="switchfile4"
+        value="/gifs/news2.gif"><param name="imagedesturl4"
+        value="/news/index.html"><param name="imagefile5"
+        value="/gifs/support1.gif"><param name="imagexy5"
+        value="0,160"><param name="switchfile5"
+        value="/gifs/support2.gif"><param name="imagedesturl5"
+        value="/support/index.html"><param name="imagefile6"
+        value="/gifs/partners1.gif"><param name="imagexy6"
+        value="0,190"><param name="switchfile6"
+        value="/gifs/partners2.gif"><param name="imagedesturl6"
+        value="/partners/index.html"><param name="imagefile7"
+        value="/gifs/sales1.gif"><param name="imagexy7"
+        value="0,220"><param name="switchfile7"
+        value="/gifs/sales2.gif"><param name="imagedesturl7"
+        value="/sales/index.html"><param name="imagefile8"
+        value="/gifs/jobs1.gif"><param name="imagexy8"
+        value="0,250"><param name="switchfile8"
+        value="/gifs/jobs2.gif"><param name="imagedesturl8"
+        value="/jobs/index.html"><param name="desc0-0"
+        value="Background"><param name="desturl0-0"
+        value="/company/background/index.html"><param
+        name="loadwhere0-0" value="_self"><param name="desc0-1"
+        value="FAQs"><param name="desturl0-1"
+        value="/company/faq/index.html"><param
+        name="loadwhere0-1" value="_self"><param name="desc0-2"
+        value="Contact"><param name="desturl0-2"
+        value="/company/contact/index.html"><param
+        name="loadwhere0-2" value="_self"><param name="desc0-3"
+        value="Directions"><param name="desturl0-3"
+        value="/company/directions/index.html"><param
+        name="loadwhere0-3" value="_self"><param name="desc1-0"
+        value="Datasheets"><param name="desturl1-0"
+        value="/products/datasheets/index.html"><param
+        name="loadwhere1-0" value="_self"><param name="desc1-1"
+        value="Manuals"><param name="desturl1-1"
+        value="/support/manuals/index.html"><param
+        name="loadwhere1-1" value="_self"><param name="desc1-2"
+        value="Briefs"><param name="desturl1-2"
+        value="/products/briefs/index.html"><param
+        name="loadwhere1-2" value="_self"><param name="desc1-3"
+        value="Quick Tour"><param name="desturl1-3"
+        value="/products/quicktour/index.html"><param
+        name="loadwhere1-3" value="_self"><param name="desc1-4"
+        value="Feedback"><param name="desturl1-4"
+        value="/products/feedback/index.html"><param
+        name="loadwhere1-4" value="_self"><param name="desc3-0"
+        value="Concept"><param name="desturl3-0"
+        value="/virtual/wpapers/index.html"><param
+        name="loadwhere3-0" value="_self"><param name="desc3-1"
+        value="Modules"><param name="desturl3-1"
+        value="/virtual/vp/index.html"><param
+        name="loadwhere3-1" value="_self"><param name="desc3-2"
+        value="App Notes"><param name="desturl3-2"
+        value="/support/appnotes/index.html"><param
+        name="loadwhere3-2" value="_self"><param name="desc4-0"
+        value="Press"><param name="desturl4-0"
+        value="/news/press/index.html"><param
+        name="loadwhere4-0" value="_self"><param name="desc4-1"
+        value="Articles"><param name="desturl4-1"
+        value="/news/articles/index.html"><param
+        name="loadwhere4-1" value="_self"><param name="desc4-2"
+        value="Analysts Kit"><param name="desturl4-2"
+        value="/news/analysts/index.html"><param
+        name="loadwhere4-2" value="_self"><param name="desc4-3"
+        value="Press Kit"><param name="desturl4-3"
+        value="/news/presskit/index.html"><param
+        name="loadwhere4-3" value="_self"><param name="desc5-0"
+        value="App Notes"><param name="desturl5-0"
+        value="/support/appnotes/index.html"><param
+        name="loadwhere5-0" value="_self"><param name="desc5-1"
+        value="Design Hints"><param name="desturl5-1"
+        value="/support/hints/index.html"><param
+        name="loadwhere5-1" value="_self"><param name="desc5-2"
+        value="Specifications"><param name="desturl5-2"
+        value="/support/specs/index.html"><param
+        name="loadwhere5-2" value="_self"><param name="desc5-3"
+        value="Errata"><param name="desturl5-3"
+        value="/support/errata/index.html"><param
+        name="loadwhere5-3" value="_self"><param name="desc5-4"
+        value="Training"><param name="desturl5-4"
+        value="/support/training/index.html"><param
+        name="loadwhere5-4" value="_self"><param name="desc5-5"
+        value="Newsgroups"><param name="desturl5-5"
+        value="/support/bbs/index.html"><param
+        name="loadwhere5-5" value="_self"><param name="desc5-6"
+        value="Manuals"><param name="desturl5-6"
+        value="/support/manuals/index.html"><param
+        name="loadwhere5-6" value="_self"><param name="desc5-7"
+        value="FAQs"><param name="desturl5-7"
+        value="/support/faq/index.html"><param
+        name="loadwhere5-7" value="_self"><param name="desc5-8"
+        value="Feedback"><param name="desturl5-8"
+        value="/support/box/index.html"><param
+        name="loadwhere5-8" value="_self"><param name="desc5-9"
+        value="Search"><param name="desturl5-9"
+        value="/support/search/index.html"><param
+        name="loadwhere5-9" value="_self"><param name="desc5-10"
+        value="Links"><param name="desturl5-10"
+        value="/support/links/index.html"><param
+        name="loadwhere5-10" value="_self"><param name="desc5-11"
+        value="Contact"><param name="desturl5-11"
+        value="/support/contact/index.html"><param
+        name="loadwhere5-11" value="_self"><param name="desc6-0"
+        value="Tools"><param name="desturl6-0"
+        value="/tools/index.html"><param
+        name="loadwhere6-0" value="_self"><param name="desc6-1"
+        value="Links"><param name="desturl6-1"
+        value="/partners/links/index.html"><param
+        name="loadwhere6-1" value="_self"><param name="desc6-2"
+        value="Consultants"><param name="desturl6-2"
+        value="/partners/consultants/index.html"><param
+        name="loadwhere6-2" value="_self"><param name="desc7-0"
+        value="Sales Reps"><param name="desturl7-0"
+        value="/sales/reps/index.html"><param
+        name="loadwhere7-0" value="_self"><param name="desc7-1"
+        value="Distributors"><param name="desturl7-1"
+        value="/sales/reps/index.html"><param
+        name="loadwhere7-1" value="_self"><param name="desc7-2"
+        value="Tools"><param name="desturl7-2"
+        value="/tools/index.html"><param
+        name="loadwhere7-2" value="_self"><param name="desc7-3"
+        value="Contact"><param name="desturl7-3"
+        value="/sales/contact/index.html"><param
+        name="loadwhere7-3" value="_self"><param name="desc8-0"
+        value="Listings"><param name="desturl8-0"
+        value="/jobs/listing/index.html"><param
+        name="loadwhere8-0" value="_self"><param name="desc8-1"
+        value="Send Resume"><param name="desturl8-1"
+        value="/jobs/resume/index.html"><param
+        name="loadwhere8-1" value="_self"><param name="desc5-7-5"
+        value="Search"><param name="desturl5-7-5"
+        value="/support/manuals/search/index.html"><param
+        name="loadwhere5-7-5" value="_self"><param name="desc3-3"
+        value="Partners"><param name="desturl3-3"
+        value="/virtual/application/index.html"><param
+        name="loadwhere3-3" value="_self"><param name="desc3-4"
+        value="Search"><param name="desturl3-4"
+        value="/virtual/search/index.html"><param
+        name="loadwhere3-4" value="_self"><param name="desc3-5"
+        value="Links"><param name="desturl3-5"
+        value="/virtual/links/index.html"><param
+        name="loadwhere3-5" value="_self"><param name="desc3-6"
+        value="Feedback"><param name="desturl3-6"
+        value="/virtual/feedback/index.html"><param
+        name="loadwhere3-6" value="_self"><param name="desc1-5"
+        value="Mailing List"><param name="desturl1-5"
+        value="/products/mailing/index.html"><param
+        name="loadwhere1-5" value="_self"><param name="desc5-6-0"
+        value="Search"><param name="desturl5-6-0"
+        value="/support/manuals/search/index.html"><param
+        name="loadwhere5-6-0" value="_self"><param
+        name="subxy5-2" value="-30,14"><param name="subxy5-6"
+        value="-12,72"><!--TAG GENERATOR: OpenCube - Applet Composer, (www.opencube.com)--><!--OpenCube Copyright Notice Parameter--><!--General / Default Settings--><!--Specific Settings--></applet> </td>
+        <td valign="top"><br>
+      <!-- macro quicktour_header stop --> <font size="2" face="Arial, Helvetica, sans-serif">Please 
+      visit the Scenix website at <font color="#CC0000"> <a href="http://www.scenix.com"><font color="#FF0000">www.scenix.com</font></a></font> 
+      for this information.</font><!-- 
+<font size="2" face="Arial"><b>Tell us a little bit about yourself and we will
+customize a the Scenix product presentation to specifically answer your needs</b></font>
+
+<form action="http://www.scenix.com/bin/quicktour.cgi" method="POST" name="form">
+    <table border="0">
+        <tr>
+            <td><font size="2" face="Arial"><b>First Name:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="First_Name"></font></td></tr>
+        <tr>
+	    <td><font size="2" face="Arial"><b>Last Name:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="Last_Name"></font></td></tr>
+	<tr>    
+	    <td><font size="2" face="Arial"><b>Company:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="Company"></font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial"><b>Address:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="Address"></font></td></tr>
+	<tr>
+            <td></td>
+            <td><font face="Arial"><input type="text" size="25" name="Address2"></font></td></tr>
+	<tr>
+            <td><font size="2" face="Arial"><b>City:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="City"></font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial"><b>State:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="State"></font></td></tr>
+	<tr>
+	<td><font size="2" face="Arial"><b>Zip Code:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="Zip"></font></td>
+        </tr>
+        <tr>
+            <td><font size="2" face="Arial"><b>Country:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="Country"></font></td></tr>
+	<tr>
+            <td><font size="2" face="Arial"><b>Tel:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="Telephone"></font></td></tr>
+	<tr>
+            <td><font size="2" face="Arial"><b>Fax:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="Fax"></font></td>
+        </tr>
+	<tr>
+            <td><font size="2" face="Arial"><b>Email:</b></font></td>
+            <td><font face="Arial"><input type="text" size="25" name="Email" onchange="send(form)"></font></td>
+        </tr>
+	</table>
+    <hr>
+    <p align="left"><font face="Arial"><select name="CPU">
+        <option value="na">What CPU are you using?</option>
+        <option value="cyrix">Cyrix</option>
+        <option value="k6">AMD K6</option>
+        <option value="pentium">Intel Pentium</option>
+        <option value="pentium2">Intel Pentium II</option>
+        <option value="other">Other </option>
+    </select></font>
+    <p align="left"><font face="Arial"><select name="Silicon">
+        <option value="na">What Additional Silicon Are You Using?</option>
+       <option value="none">None</option>
+       <option value="intel">Intel</option>
+       <option value="matsushita">Matsushita</option>
+       <option value="nec">NEC</option>
+       <option value="opti">OPTi</option>
+       <option value="national">National Semiconductor</option>
+       <option value="radisys">Radisys</option>
+       <option value="other">Other</option>
+    </select></font>
+    <p align="left"><font face="Arial"><select name="OS">
+        <option value="na">What OS Are You Using?</option>
+       <option value="msdos">MSDOS</option>
+       <option value="os2">IBM OS/2 Warp</option>
+       <option value="win95">MS Windows 95</option>
+       <option value="win98">MS Windows 98</option>
+       <option value="winnt">MS Windows NT</option>
+       <option value="other">Other</option>
+    </select></font>
+    <hr>
+
+    <p align="center">
+    <font face="Arial"><input type="button" value="Start the Scenix QuickTour!"
+    onclick="validate(form)"> <input type="reset" value="Clear This Form"> </font>
+    </form>
+--> <!-- macro main_footer start --> </td>
+    </tr>
+    <tr>
+        <td width="112">&nbsp;</td>
+        <td><hr>
+        <div align="center"><center><table border="0">
+            <tr>
+                <td><a href="/company/index.html"><font size="1"
+                face="Arial,Helvetica">[Company]</font></a></td>
+                <td><a href="/products/index.html"><font size="1"
+                face="Arial,Helvetica">[Products]</font></a></td>
+                <td><a href="/tools/index.html"><font size="1"
+                face="Arial,Helvetica">[Tools]</font></a></td>
+                <td><a href="/virtual/index.html"><font size="1"
+                face="Arial,Helvetica">[Peripherals]</font></a></td>
+                <td><a href="/news/index.html"><font size="1"
+                face="Arial,Helvetica">[News]</font></a></td>
+                <td><a href="/support/index.html"><font size="1"
+                face="Arial,Helvetica">[Support]</font></a></td>
+                <td><a href="/partners/index.html"><font size="1"
+                face="Arial,Helvetica">[Partners]</font></a></td>
+                <td><a href="/sales/index.html"><font size="1"
+                face="Arial,Helvetica">[Sales]</font></a></td>
+                <td><a href="/jobs/index.html"><font size="1"
+                face="Arial,Helvetica">[Jobs]</font></a></td>
+                <td><a href="/search/index.html"><font size="1"
+                face="Arial,Helvetica">[Search]</font></a></td>
+            </tr>
+        </table>
+        </center></div><hr>
+        <p><font size="2" face="Arial,Helvetica">Scenix
+        Semiconductor, Inc.| 3160 De La Cruz Blvd., Ste. 200 |
+        Santa Clara, CA 95054<br>
+        Tel: 408.327.8888 | Fax: 408.327.8880 | Technical Support
+        Hotline: 800.556.0225</font> </p>
+        <hr>
+        <p><font color="#006699" size="1" face="Arial,Helvetica">©
+        </font><a href="/copyright.html"><font color="#006699"
+        size="1" face="Arial,Helvetica">Copyright 1998</font></a><font
+        color="#006699" size="1" face="Arial,Helvetica">, All
+        Rights Reserved | </font><a href="mailto:info@scenix.com"><font
+        color="#006699" size="1" face="Arial,Helvetica">info@scenix.com</font></a><font
+        color="#006699" size="1" face="Arial,Helvetica"> | </font><a
+        href="/feedback/index.html"><font color="#006699"
+        size="1" face="Arial,Helvetica">Feedback</font></a> </p>
+        </td>
+    </tr>
+</table>
+<!-- macro main_footer stop --></body>
+</html>

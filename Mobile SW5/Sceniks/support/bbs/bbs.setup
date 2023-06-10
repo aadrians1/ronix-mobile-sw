@@ -1,0 +1,188 @@
+###########################################################
+#                          BBS.SETUP
+# This script was written by Gunther Birznieks.
+# Date Created: 4-18-96
+#
+#   You may copy this under the terms of the GNU General Public
+#   License or the Artistic License which is distributed with
+#   copies of Perl v5.x for UNIX.
+#
+# Purpose:
+#   Set up global variables for running the BBS
+# 
+# Special Notes:
+#   This script uses the authentication library and also
+#   sets up variables for the auth library.  The
+#   authentication variables are described as part of the
+#   comments for that library.
+# 
+############################################################
+ 
+#
+# @forums is a list of forum names. 
+# @forum_directories is a list of directories relative to the
+#   current one where the forums reside
+# @forum_variable is a list of forum id's that are
+#   used to reference the forum names.  For example,
+#   if @forum_variable = ("cgi") and @forums=("CGI Programming")
+#   then calling the script as "bbs_forum.cgi?forum=cgi" will
+#   reference the "CGI Programming" forum.
+#
+
+@forums = ("Technical Support");
+@forum_directories = ("techsupp");
+@forum_variable = ("techsupp");
+
+#
+# $bbs_script  allows you to change the name reference of the
+# script.  The default is "bbs_forum.cgi".  For servers such as
+# NT Netscape v1.12 that really requires the program to be encapsulated
+# in anther one such as a .bat file, this is where you would
+# change the references to the CGI program.
+#
+
+$bbs_script = "bbs_forum.cgi";
+
+# 
+# $allow_user_attachments = "on" to give users the option
+#   of uploading messages.
+# 
+# $maximum_attachment_size = 500k for each upload.  You 
+#   may want to set this lower unless you trust your users.
+#   
+# $attach_dir = directory to store attachment files.
+#
+# $attach_url = URL directory
+#    to use for referencing attachment.  Use a full
+#    URL if the attachments directory is not
+#    directly relative to the CGI scripts directory
+#    the BBS is running from.
+#   
+
+$allow_user_attachments = "on";
+$maximum_attachment_size = "50000";
+$attach_dir = "/usr/local/www/scenix.com/support/bbs/attach";
+$attach_url = "http://www.scenix.com/support/bbs/attach";
+
+# $display_only_new_messages = "on" keeps track of the 
+#   last new message that the user had read.  The requirements
+#   for this to take place are that (A) You have to use
+#   authentication (how else would you get a username to 
+#   track new messages for) AND (B) the form variable 
+#   "use_last_read=on" has to be in the first URL call to the
+#   bbs_forum.cgi.  This is because it may be possible to track
+#   last_read but the user may want to see the whole thing.
+#
+#   A sample URL when using new messages is
+#
+#   "bbs_forum.cgi?forum=cgi&use_last_read=on"
+#
+# $display_thread_depth = deepest thread depth
+# 
+# $prune_how_many_days > 0 means delete messages older
+#   than this many days.
+# 
+# $prune_how_many_sequences > 0 means delete old messages
+#   if there are more than this many sequence numbers in
+#   the directory.
+#
+# $bbs_buttons is a directory that contains the bbs_button images.
+#
+
+$display_only_new_messages = 	"on";
+$display_thread_depth = 	"8";
+$prune_how_many_days = 		"";
+$prune_how_many_sequences = 	"";
+$bbs_buttons = "gifs";
+
+# 
+# $no_html = off turns off HTML when the message is displayed
+# $no_html_images = off turns off HTML references to images
+#   when the messages are displayed.
+#
+
+$no_html = "on";
+$no_html_images = "on";
+
+#
+# $use_list_element = "on" for listing messages with little
+#   HTML style bullets.
+#
+# $allow_reply_email = "on", allows a user to choose to get
+#   email notifications of replies to their post
+#
+# $force_reply_email = "on" if we want to force the user to
+#   get email notifications of replies to their post
+#
+# $send_reply_email = "on" allows the email notifications to
+#   be sent if the option has been set in the message.  If this
+#   is "Off", it overrides the top two variables.
+# 
+
+$use_list_element = "on";
+$allow_reply_email = "on";
+$force_reply_email = "on";
+$send_reply_email = "on";
+
+
+
+#
+# The following are fields 
+# the make it so the user can not
+# override the default first and last
+# name or email address in the post.
+#
+# This is used if authentication is turned on.
+# When authentication is on, First and last name
+# as well as email are read in from a user file.
+#
+$force_first_name = "on";
+$force_last_name = "on";
+$force_email = "on";
+#
+# The following makes it so that certain fields 
+# are required
+#
+$require_subject = "on";
+$require_first_name = "on";
+$require_last_name = "on";
+$require_email = "on";
+
+# Email Replies Automatically..
+# Generally replies would come from the Web Admin
+#
+
+$from_email = "sales\@scenix.com";
+
+#
+# Authorization Library Variables
+#
+$auth_lib = 			"./Library";
+$auth_server = 			"off";
+$auth_cgi =                     "off";
+$auth_user_file =               "Users/user.dat";
+$auth_alt_user_file =           "";
+$auth_allow_register =          "on";
+$auth_allow_search =            "on";
+$auth_default_group =           "normal";
+$auth_generate_password =       "off";
+$auth_check_duplicates =        "on";
+$auth_add_register =            "on";  
+$auth_email_register =          "off";
+$auth_admin_from_address =      "sales\@scenix.com";
+$auth_admin_email_address =     "sales\@scenix.com";
+$auth_session_length = 2;
+$auth_session_dir = "./Sessions";
+$auth_register_message =
+        "Thanks, you may now logon with your new username
+        and password.";
+$auth_password_message =
+        "Thanks for applying to our site, your password is";
+@auth_extra_fields = ("auth_first_name",
+                      "auth_last_name",
+                      "auth_email");  
+@auth_extra_desc = ("First Name",
+                    "Last Name",
+                    "Email"); 
+$auth_logon_title = "Submit BBS Logon";
+$auth_logon_header = "Enter Logon Information For The BBS"; 

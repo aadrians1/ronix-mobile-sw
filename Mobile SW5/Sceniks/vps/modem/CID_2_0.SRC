@@ -1,0 +1,869 @@
+;******************************************************************************
+; Copyright © [02/08/1999] Scenix Semiconductor, Inc. All rights reserved.
+;
+ ;Scenix Semiconductor, Inc. assumes no responsibility or liability for
+; the use of this [product, application, software, any of these products].
+; Scenix Semiconductor conveys no license, implicitly or otherwise, under
+; any intellectual property rights.
+; Information contained in this publication regarding (e.g.: application,
+; implementation) and the like is intended through suggestion only and may
+; be superseded by updates. Scenix Semiconductor makes no representation
+; or warranties with respect to the accuracy or use of these information,
+; or infringement of patents arising from such use or otherwise.
+;******************************************************************************
+; Filename:	CID_2_0.src
+;
+; Author:	Chris Fogelklou
+;		Applications Engineer
+;		Scenix Semiconductor Inc.
+;
+; Revision:	2.0
+;
+; Date:		February 8, 1999.
+;
+; Part:		SX28AC rev. 2.5
+;
+; Freq:		50Mhz
+;
+; Compiled using Parallax SX-Key software v1.0
+;
+; Version:	2.0
+;
+; Program Description:	
+;	This program demonstrates the reception of Caller-ID signals using an
+;	FSK-receive routine in addition to a 48-byte circular buffer for
+;	storage of the Caller-ID string.
+;
+;       Authors: Chris Fogelklou, Scenix Semiconductor Inc.
+;       Written: 99/2/8
+;	Version: 2.0
+;	Revisions: 2.0 Began with sx_modem_3_61.src and removed all unnecessary
+;	 	   components, such as FSK transmit, DTMF transmit, AT command set,
+;		   ring detection, etc...
+;			
+;	I/O USAGE: INPUTS:
+;
+;	rx_pin		equ	ra.1	; RS-232 input pin
+;	fsk_in		equ	rb.1	; FSK input pin
+;
+;		   OUTPUTS:
+;
+;	PWM_pin		equ	ra.0	; PWM output for D/A
+;	tx_pin		equ	ra.2	; RS-232 output pin
+;	in_out		equ	ra.3	; Enables/Disables output
+;					; on SX DTMF DEMO boards.
+;	led_pin		equ	rb.0	; LED output pin
+;	hook		equ	rb.4	; Selects on-hook/off-hook
+;
+;	RESOURCES:
+;	Program Memory:
+;	Data Memory:	38 bytes RAM
+;******************************************************************************
+; Device Directives
+;******************************************************************************
+		device	pins28,pages4,banks8		; 28-pin device, 4 pages, 8 banks of RAM
+		device	oschs,turbo,optionx,stackx	; High speed oscillator, turbo mode,
+							; option register extend, 8-level stack
+		freq	50_000_000			; default run speed = 50MHz
+		ID	'CID_2_0'			; Version = 2.0
+
+		reset	start				; JUMP to start label on reset
+;**************************************************************************
+; Watches (For Debug in SX_Key software V.1.0 +)
+;**************************************************************************
+		watch	byte,1,fstr
+		watch	timer_flag,1,ubin
+		watch	timer_l,16,uhex
+		watch	temp,8,uhex
+		watch	fsk_rx_en,1,ubin
+		watch	flags,8,ubin
+		watch	ascii_buffer,16,fstr
+		watch	ascii_buffer2,16,fstr
+		watch	ascii_buffer3,16,fstr
+		watch	ascii_buffer4,16,fstr
+		watch	ascii_index,8,udec
+		watch	fsr,8,udec
+		watch	indf,1,fstr
+		watch	wreg,1,fstr
+		watch	char_count,8,udec
+		watch	fsk_rx_byte,8,udec
+		
+
+;*************************************************************
+; Macros
+;*************************************************************
+;*************************************************************
+; IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+; uncomment the following line if using this code with old boards.
+; old boards are not labelled Rev 1.4
+;*************************************************************
+;	old_board	=	1
+;*************************************************************
+
+enable_o	macro	0		; This macro enables the output
+
+ifdef		old_board
+		clrb	in_out		; switch on the new modem boards.
+  else		
+		setb	in_out
+endif
+		clr	flags
+
+		endm
+
+;*************************************************************
+; Equates for the FSK receive part of the modem
+;*************************************************************
+glitch_th		equ	10	; The threshold which defines a glitch (small spike which should be ignored)
+low_count_error_th	equ	30	; The lowest count allowed for a high frequency
+low_high_th		equ	95	; The lowest count allowed for a low frequency
+high_count_error_th	equ	150	; The highest count allowed for a low frequency
+
+; *** 1200 baud using a 1/2 counter.
+baud_bit	=       7                       ;for 1200 baud fsk
+start_delay	=       128+64+1                ; "    "    "
+divider_bit	=	1			;1 for 1200 baud, 2 for 600 baud, 3 for 300 baud.
+
+;**************************************************************************
+; Pin Definitions
+;**************************************************************************
+PWM_pin		equ	ra.0		; PWM output for D/A
+rx_pin		equ	ra.1		; RS-232 Input pin
+tx_pin		equ	ra.2		; RS-232 Output pin
+in_out		equ	ra.3		; Switches between output
+					; and input on SX DTMF DEMO boards.
+led_pin		equ	rb.0		; Flashes while characters are
+					; being received.
+ring		equ	rb.3		; Ring detection pin
+hook		equ	rb.4		; Goes on/off-hook.
+;**************************************************************************
+
+;**************************************************************************
+; Global Variables
+;**************************************************************************
+		org	$8		; Global registers
+
+flags			ds	1
+	rx_flag		equ	flags.0	; Signifies a bit recieved via. RS-232
+	timer_flag	equ	flags.4	; Flags a rollover of the timers.
+	fsk_rx_en	equ	flags.5 ; Enables the FSK receiver.
+	fsk_rx_flag	equ	flags.6 ; Signifies reception of FSK
+
+temp			ds	1	; Temporary storage register for use by the main program
+divider			ds	1	; used to divide down the UART to 1200 baud
+IRQ_temp		ds	1	; Temporary register for use by the interrupt service routine
+ascii_index		ds	1	; Register used for the ascii buffering
+command_index		ds	1	; Register used as an index to the command to compare to.
+
+
+;*************************************************************
+; Bank 0 Variables
+;*************************************************************
+		org	$10
+
+timers		=	$
+
+timer_l			ds	1
+timer_h			ds	1
+
+serial		=       $                       ;UART bank
+
+tx_high		ds      1                       ;hi byte to transmit
+tx_low		ds      1                       ;low byte to transmit
+tx_count	ds      1                       ;number of bits sent
+tx_divide	ds      1                       ;xmit timing (/16) counter
+rx_count	ds      1                       ;number of bits received
+rx_divide	ds      1                       ;receive timing counter
+rx_byte		ds      1                       ;buffer for incoming byte
+string		ds	1
+byte		ds	1
+char_count	ds	1
+
+;*************************************************************
+; Bank 1 Variables
+;*************************************************************
+		org     $30                     ;bank3 variables
+
+fsk_receive_bank	=	$
+fsk_trans_count	ds	1			; This register counts the number of counts 
+						; between transitions at the pin
+rb_past_state	ds	1			; This register keeps track of the previous 
+
+fsk_rx_count	ds      1                       ; number of bits received
+fsk_rx_divide	ds	1			; bit delay
+fsk_rx_byte	ds      1                       ; buffer for incoming byte
+fsk_flags	ds	1
+	fsk_current_in	equ	fsk_flags.1	; The bit represented by the current input frequency
+	fsk_trans	equ	fsk_flags.2
+;*************************************************************
+; Bank 2 Variables
+;*************************************************************
+		org	$50
+
+
+;*************************************************************
+; Bank 3 Variables
+;*************************************************************
+		org	$70
+
+;*************************************************************
+; Bank 4, 5, 6 & 7 Variables
+; This bank is reserved for the 48-byte ascii-buffer.
+; It can be re-used.
+;*************************************************************
+		org	$90
+
+	ascii_buffer_bank	=	$
+
+	ascii_buffer	ds	16
+
+		org	$b0
+
+	ascii_buffer_bank2	=	$
+
+	ascii_buffer2	ds	16
+
+		org	$d0
+
+	ascii_buffer_bank3	=	$
+
+	ascii_buffer3	ds	16
+
+		org	$f0
+
+	ascii_buffer_bank4	=	$
+
+	ascii_buffer4	ds	16
+
+;******************************************************************************
+; Interrupt
+; 
+; With a retiw value of -163 and an oscillator frequency of 50MHz, this
+; code runs every 3.26us.
+;******************************************************************************
+		org	$0			; The interrupt Service routine starts at location zero.
+;**************************************************************************
+TASK_SWITCHER
+; Now decide which task to do... we may only do one, and the transmit
+; takes priority over the receive functions.
+; INPUTS:
+;	flags - Depending on which of the flags are set in the flags register,
+;		either FSK transmission, FSK reception, or DTMF generation
+;		will occur.
+;**************************************************************************
+
+
+		snb	fsk_rx_en			; skip out if the FSK receiver is not enabled
+		call	@FSK_RECEIVE
+:fsk_rx_out
+:TASK_OUT
+;**************************************************************************
+:transmit
+; This is an asynchronous transmitter for RS-232 transmission
+; INPUTS:
+;	divider.divider_bit -	Transmitter/receiver only executes when this bit is = 1
+;	tx_divide.baud_bit  -	Transmitter only executes when this bit is = 1
+;	tx_high		    -	Part of the data to be transmitted
+;	tx_low		    -	Some more of the data to be transmitted
+;	tx_count	    -	Counter which counts the number of bits transmitted.
+; OUTPUTS:
+;	tx_pin		    -	Sets/Clears this pin to accomplish the transmission.
+;**************************************************************************
+		jnb	divider.divider_bit,:rxdone	; cut the UART speed down to 1200/600/300
+							; depending on divider bit
+		bank	serial
+		clrb    tx_divide.baud_bit      ;clear xmit timing count flag
+		inc     tx_divide               ;only execute the transmit routine
+		STZ                             ;set zero flag for test
+		SNB     tx_divide.baud_bit      ; every 2^baud_bit interrupt
+		test    tx_count                ;are we sending?
+		JZ      :receive                ;if not, go to :receive
+		clc                             ;yes, ready stop bit
+		rr      tx_high                 ; and shift to next bit
+		rr      tx_low                  ;
+		dec     tx_count                ;decrement bit counter
+		movb    tx_pin,/tx_low.6        ;output next bit
+
+;**************************************************************************
+:receive
+; This is an asynchronous receiver for RS-232 reception
+; INPUTS:
+;	rx_pin		   -	Pin which RS-232 is received on.
+; OUTPUTS:
+;	rx_byte		   -	The byte received
+;	rx_flag		   -	Set when a byte is received.
+;**************************************************************************
+		movb    c,rx_pin                ;get current rx bit
+		test    rx_count                ;currently receiving byte?
+		jnz     :rxbit                  ;if so, jump ahead
+		mov     w,#9                    ;in case start, ready 9 bits
+		sc                              ;skip ahead if not start bit
+		mov     rx_count,w              ;it is, so renew bit count
+		mov     rx_divide,#start_delay  ;ready 1.5 bit periods
+:rxbit		djnz    rx_divide,:rxdone       ;middle of next bit?
+		setb    rx_divide.baud_bit      ;yes, ready 1 bit period
+		dec     rx_count                ;last bit?
+		sz                              ;if not
+		rr      rx_byte                 ;  then save bit
+		snz                             ;if so
+		setb    rx_flag                 ;  then set flag
+:rxdone
+
+;**************************************************************************
+do_timers	
+; The timer will tick at the interrupt rate (3.26us for 50MHz.)  To set up
+; the timers, move in FFFFh - (value that corresponds to the time.)  Example:
+; for 1ms = 1ms/3.26us = 306 dec = 132 hex so move in $FFFF - $0132 = $FECD
+;**************************************************************************
+
+		bank	timers			; Switch to the timer bank
+		mov	w,#1
+		add	timer_l,w		; add 1 to timer_l
+		jnc	:timer_out		; if it's not zero, then 
+		add	timer_h,w		; don't increment timer_h
+		snc
+		setb	timer_flag		
+		movb	led_pin,timer_h.6	; once timer_h is changed, update the LED
+:timer_out
+		clrb	divider.divider_bit
+		inc	divider			; do nothing unless divider_bit is a '1'
+
+;******************************************************************************
+:ISR_DONE
+; This is the end of the interrupt service routine.  Now load 163 into w and
+; perform a retiw to interrupt 163 cycles from the start of this one.  
+; (3.26us@50MHz)
+;******************************************************************************
+		mov	w,#-163		;1	; interrupt 163 cycles after this interrupt
+		retiw			;3	; return from the interrupt
+;******************************************************************************
+; End of the Interrupt Service Routine
+;******************************************************************************
+
+
+
+
+
+
+;******************************************************************************
+start
+; Program Starts Here on Power Up
+;******************************************************************************
+		
+		call	@zero_ram
+		call	@init
+
+	;**************************************************************************
+	; Main Code:
+	; -Sends Prompt
+	; -Waits for input from UART
+	; -Responds to these commands:
+	; 	D	- Dial Mode
+	; 	F	- FSK Input/Output mode.
+	;	T	- FSK Transmit only (Voltage --> Frequency conversion)
+	;	R	- FSK Receive only (Frequency --> Voltage conversion)
+	;**************************************************************************
+		mov	w,#_hello			; send hello string
+		call	@send_string
+
+		mov	w,#_instructions		; send instructions
+		call	@send_string
+
+
+CID
+		call	GET_CID					; fill buffer with CALLER_ID
+		test	w					; GET_CID returns with 0 if no CID captured
+		sz						; if no CID, don't call output_CID
+		call	output_CID				; else, output the CID
+		jmp	CID
+;**************************************************************************
+; END OF MAINLINE ROUTINE
+;**************************************************************************
+
+
+
+
+
+
+
+;**************************************************************************
+output_CID
+;	This routine outputs a 'CID Captured...' string, and proceeds
+;	to fetch the stored caller-ID strings from the ascii-buffer
+;	and output them to the screen.  It parses the buffer into NAME,
+;	NUMBER, DATE, and TIME.  It uses the headers $01, $04, $02, and $07
+;	as indications of what string is being retrieved.  These headers 
+;	were decoded from a PARTY-LINE phoneline simulator, and from a 
+;	Pacific Bell telephone line.
+;**************************************************************************
+		mov	w,#_CID				; Send 'CID Captured'
+		call	@send_string
+		clr	ascii_index			; Clear the index into the ascii buffer
+:output_loop
+		call	@buffer_get			; Get a byte from the ascii buffer.
+		call	@inc_ascii_index		; Increment the index into the buffer
+		cje	byte,#$01,:output_date_time 	; If the byte = 01, the following string is the date/time
+		cje	byte,#$04,:output_date_time 	; If the byte = 04, the following string is the date/time
+		cje	byte,#$02,:output_number	; If the byte = 02, the following string is the number
+		cje	byte,#$07,:output_name		; if the byte = 07, the following string is the name
+		test	ascii_index			; Keep searching through the buffer until the ascii_index
+		jnz	:output_loop			;   rolls over to zero.
+		retw	0				;   and return.
+
+
+:output_date_time					; OUTPUT DATE/TIME
+		mov	w,#_DATE			; Output 'DATE: '
+		call	@send_string
+		call	output_2			; Output 2 bytes of the buffer
+		mov	w,#'/'				; Output '/'
+		call	@send_byte
+		call	output_2			; Output 2 bytes of the buffer
+		mov	w,#_TIME			; Output 'TIME'
+		call	@send_string
+		call	output_2			; Output 2 bytes of the buffer
+		mov	w,#':'				; Output ':'
+		call	@send_byte
+		call	output_2			; Output 2 bytes of the buffer
+		call	@buffer_get			; Get a value from the buffer
+		mov	w,byte				; If the value <> 0
+		jz	:output_loop			;   output the phone number
+
+:output_number						; OUTPUT PHONE NUMBER
+		mov	w,#_NUMBER			; Output 'NUMBER: '
+		call	@send_string			
+		call	output_null			; Output the null-terminated string from the buffer
+		jmp	:output_loop			; go back for more
+
+:output_name						; OUTPUT NAME
+		mov	w,#_NAME			; Output 'Name: '
+		call	@send_string				
+		call	output_null			; Output the null-terminated string from the buffer
+		jmp	:output_loop			; go back for more
+
+	;**************************************************************************
+	output_2
+	; Outputs 2 bytes from the ascii-buffer.  Outputs the value at which the ascii_index is pointing,
+	; the value following it, and returns with the ascii_index pointing to the next byte in the 
+	; buffer.
+	;**************************************************************************
+		mov	temp,#2
+
+:loop		call	@buffer_get			; Get the byte which the index points to.
+		mov	w,byte				
+		call	@send_byte			; Send it to the terminal
+		call	@inc_ascii_index		; Increment the index into the buffer
+		decsz	temp				; Decrement temp.  When temp hits zero, exit.
+		jmp	:loop
+		ret
+
+	;**************************************************************************
+	output_null
+	; Outputs a null-terminated string from the buffer.  Begins with the byte which the index
+	; currently points to, and stops when it encounters a null termination in the buffer.  
+	; Exits with the index pointing at the first byte past the null.
+	;**************************************************************************
+:loop
+		call	@buffer_get			; Get the byte which the index points to.
+		mov	w,byte
+		jz	:null_done			; If it is not = null
+		call	@send_byte			;  send it to the terminal.
+		call	@inc_ascii_index		;  and increment the index
+		jmp	:loop				
+:null_done
+		call	@inc_ascii_index		; Make the pointer point to the byte following
+		ret					; the null.
+		
+
+
+;**************************************************************************
+; CALLER-ID RETRIEVAL ROUTINES...
+;**************************************************************************
+	;**************************************************************************
+	fsk_wait
+	; This routine waits until an FSK character is received.  If an FSK character is
+	; received, it exits with a 1 in W.  If a ring is detected while waiting for FSK,
+	; it exits with a 0 in W.
+	;**************************************************************************
+		jnb	ring,:got_RING		; If the RING line goes low, exit.
+		jnb	fsk_rx_flag,fsk_wait	; wait until an FSK byte is received
+		clrb	fsk_rx_flag		; clear the flag
+		bank	fsk_receive_bank
+		mov	w,fsk_rx_byte
+		bank	serial
+		mov	byte,w			; move fsk_rx_byte into byte.
+		retw	1
+
+:got_RING
+		retw	0		
+
+;**************************************************************************
+GET_CID
+; This routine returns when the line rings.  If caller-ID was received successfully, 
+; it returns with a 1 in W, otherwise it returns with a 0 in W.
+;**************************************************************************
+		clr	ascii_index			; clear the index into the ascii table
+		bank	ascii_buffer_bank		; and put a null into the first character
+		clr	ascii_buffer			; of the ascii buffer.
+
+		setb	fsk_rx_en			; enable the FSK receivers
+		bank	serial		
+		mov	char_count,#11			; load 11 into char_count.  This will make
+							; the code count 10 U's
+
+	;**************************************************************************
+	; First, wait until 10 U's are received by FSK.  Exit unsuccessfully if the line
+	; rings.
+	;**************************************************************************
+:got_U		dec	char_count			; decrement char_count (U received)
+		jz	:get_start_loop			; if we have received 10 U's, start looking
+							; for header bytes
+:U_LOOP		call	fsk_wait			; wait until an FSK byte is received
+		test	w
+		jz	:no_CID
+		cje	byte,#'U',:got_U		; if a U is received, go to :got_U to indicate this
+		jmp	:U_LOOP				; else wait for another FSK byte.
+		
+
+	;**************************************************************************
+	; Now that we have received the CALLER-ID pre-amble, try to get the header
+	; strings.  Exit successfully if a ring is encountered.
+	;**************************************************************************
+:get_start_loop
+
+		call	fsk_wait
+		test	w
+		jz	:got_CID			; if the line rang, exit successfully.
+
+		cje	byte,#$01,:get_string		; if the received byte = any of these bytes, it is a
+							; header ( Indicating the beginning of a CID string)
+		cje	byte,#$04,:get_string		; so get the rest of the string.
+		cje	byte,#$02,:get_string
+		cje	byte,#$07,:get_string
+		jmp	:get_start_loop			; if it did not = any of these strings, wait...
+
+:get_string
+		call	@buffer_push			; save the header for this particular string.
+		call	fsk_wait
+		test	w
+		jz	:got_CID			; If the line rang, exit successfully.
+		mov	char_count,byte			; store the size of the string in char_count
+
+:loop		call	fsk_wait
+		test	w
+		jz	:got_CID			; If the line rang, exit successfully
+		call	@buffer_push			; save the byte received.
+		decsz	char_count			; decrement the size counter.  If zero, we are done.
+		jmp	:loop
+		clr	byte				; once done the entire string, null terminate it.
+		call	@buffer_push
+		jmp	:get_start_loop
+
+:got_CID
+		retw	1				; Successful exit
+:no_CID
+		retw	0				; Unsuccessful exit
+
+;**************************************************************************
+;	END OF CALLER-ID RETREIVAL ROUTINES
+;**************************************************************************
+org	$200
+;**************************************************************************
+;	Miscellaneous subroutines
+;**************************************************************************
+;**************************************************************************
+; Initialization Code
+;**************************************************************************
+init	
+		call	@zero_ram
+		call	@disable_o
+
+		mov	m,#$0c	
+		mov	!rb,#%11111101			; enable Schmidt trigger on rb1 (for FSK receive)
+		mov	m,#$D				; make ra0 cmos-level
+		mov	!ra,#%1110
+		mov	m,#$F
+
+		mov	rb,#%11101110			; on-hook,led off.
+		mov	!ra,#%0010			; ra0 = PWM output, ra1 = rx_pin, ra2 = tx_pin, ra3 = in_out
+		mov	!rb,#%00101110			; rb4 = hook, rb0 = led pin, rb7,6 is used for debugging
+
+		mov	!option,#%00011111		; enable wreg and rtcc interrupt
+
+retp
+;**************************************************************************
+buffer_push
+; This subroutine pushes the contents of byte onto the 32-byte ascii buffer. 
+;**************************************************************************
+	bank	serial			; Move the byte into the buffer
+	mov	temp,byte
+	mov	fsr,#ascii_buffer_bank
+	add	fsr,ascii_index
+	mov	indf,temp
+					; Increment index and keep it in range
+	call	@inc_ascii_index
+	mov	fsr,#ascii_buffer_bank	; Null terminate the buffer.
+	add	fsr,ascii_index
+	clr	indf
+	bank	serial
+	retp
+;**************************************************************************
+;**************************************************************************
+buffer_backspace
+; This subroutine deletes one value of the buffer and decrements the index 
+;**************************************************************************
+	dec	ascii_index
+	and	ascii_index,#%01101111
+
+	mov	fsr,#ascii_buffer_bank
+	add	fsr,ascii_index
+	clr	indf
+	bank	serial
+	retp
+;**************************************************************************
+inc_ascii_index
+; This subroutine increments the index into the buffer
+;**************************************************************************
+	mov	w,ascii_index
+	and	w,#%00001111
+	xor	w,#%00001111
+	jnz	:not_on_verge
+	inc	ascii_index
+	mov	w,#16
+	add	w,ascii_index
+	and	w,#$7f
+	mov	ascii_index,w
+	retp
+:not_on_verge
+	inc	ascii_index
+	retp
+;**************************************************************************
+buffer_get
+; This subroutine retrieves the buffered value at index
+;**************************************************************************
+	mov	fsr,#ascii_buffer_bank
+	add	fsr,ascii_index
+	mov	w,indf
+	bank	serial
+	mov	byte,w
+	
+	retp
+;**************************************************************************
+;**************************************************************************
+delay_10n_ms
+; This subroutine delays 'w'*10 milliseconds. 
+; This subroutine uses the TEMP register
+; INPUT		w	-	# of milliseconds to delay for.
+; OUTPUT	Returns after 10 * n milliseconds.
+;**************************************************************************
+	mov	temp,w
+	bank	timers
+:loop	clrb	timer_flag	; This loop delays for 10ms
+	mov	timer_h,#$0f4
+	mov	timer_l,#$004
+	jnb	timer_flag,$
+	dec	temp		; do it w-1 times.
+	jnz	:loop
+	clrb	timer_flag
+	retp
+;**************************************************************************
+delay_n_ms
+; This subroutine delays 'w' milliseconds. 
+; This subroutine uses the TEMP register
+; INPUT		w	-	# of milliseconds to delay for.
+; OUTPUT	Returns after n milliseconds.
+;**************************************************************************
+	mov	temp,w
+	bank	timers
+:loop	clrb	timer_flag	; This loop delays for 1ms
+	mov	timer_h,#$0fe
+	mov	timer_l,#$0cd
+	jnb	timer_flag,$
+	dec	temp		; do it w-1 times.
+	jnz	:loop
+	clrb	timer_flag
+	retp
+;**************************************************************************
+zero_ram
+; Subroutine - Zero all ram.
+; INPUTS:	None
+; OUTPUTS:	All ram locations (except special function registers) are = 0
+;**************************************************************************
+		CLR	FSR
+:loop	    	SB      FSR.4                   ;are we on low half of bank?
+		SETB    FSR.3                   ;If so, don't touch regs 0-7
+		CLR     IND                     ;clear using indirect addressing
+		IJNZ    FSR,:loop	        ;repeat until done
+		retp
+;**************************************************************************
+; Subroutine - Get byte via serial port
+; INPUTS:
+;	-NONE
+; OUTPUTS:
+;	-received byte in rx_byte
+;**************************************************************************
+get_byte     	jnb     rx_flag,$		;wait till byte is received
+		clrb    rx_flag		;reset the receive flag
+		bank	serial
+		mov     byte,rx_byte		;store byte (copy using W)
+						; & fall through to echo char back
+		retp
+;**************************************************************************
+; Subroutine - Get byte via Bell202 FSK and send it to the serial port
+; INPUTS:
+;	-NONE
+; OUTPUTS:
+;	-received byte in fsk_rx_byte
+;**************************************************************************
+fsk_get_byte   	jnb     fsk_rx_flag,$		;wait till byte is received
+		clrb    fsk_rx_flag		;reset the receive flag
+		bank	fsk_receive_bank
+		mov     byte,fsk_rx_byte	;store byte (copy using W)
+						; & fall through to echo char back
+;**************************************************************************
+; Subroutine - Send byte via serial port
+; INPUTS:
+;	w 	-	The byte to be sent via RS-232
+;**************************************************************************
+send_byte    	bank    serial
+
+:wait        	test    tx_count                ;wait for not busy
+		jnz     :wait                   ;
+
+		not     w                       ;ready bits (inverse logic)
+		mov     tx_high,w               ; store data byte
+		setb    tx_low.7                ; set up start bit
+		mov     tx_count,#10            ;1 start + 8 data + 1 stop bit
+		RETP                            ;leave and fix page bits
+
+;**************************************************************************
+; Subroutine - Send string pointed to by address in W register
+; INPUTS:
+;	w	-	The address of a null-terminated string in program
+;			memory
+; OUTPUTS:
+; 	outputs the string via. RS-232
+;**************************************************************************
+send_string	bank	serial
+ 		mov     string,w                ;store string address
+:loop        	mov     w,string                ;read next string character
+		mov     m,#4                    ; with indirect addressing
+		iread                           ; using the mode register
+		mov     m,#$F                   ;reset the mode register
+		test    w                       ;are we at the last char?
+		snz                             ;if not=0, skip ahead
+		RETP                            ;yes, leave & fix page bits
+		call    send_byte               ;not 0, so send character
+		inc     string                  ;point to next character
+		jmp     :loop                   ;loop until done
+
+;**************************************************************************
+; Subroutine - Make byte uppercase
+; INPUTS:
+;	byte	-	The byte to be converted
+;**************************************************************************
+uppercase    	csae	  byte,#'a'            	;if byte is lowercase, then skip ahead
+		RETP
+
+		sub     byte,#'a'-'A'           ;change byte to uppercase
+		RETP                            ;leave and fix page bits
+;**************************************************************************
+; Subroutine - Disable the output (Enable the input)
+;**************************************************************************
+disable_o
+ifdef		old_board
+		setb	in_out		; set the analogue switch for
+  else		
+		clrb	in_out
+endif
+		retp
+org	$400
+;**************************************************************************
+; Jump table for page 2
+;**************************************************************************
+;**************************************************************************
+; String data (for RS-232 output) and tables
+;**************************************************************************
+_hello          dw      13,10,13,10,'Caller ID 2.0',0
+_instructions	dw	13,10,'- Connect to phone line and call modem for CALLER-ID',13,10,0
+_DATE		dw	13,10,'DATE:   ',0
+_TIME		dw	13,10,'TIME:   ',0
+_NAME		dw	13,10,'NAME:   ',0
+_NUMBER		dw	13,10,'NUMBER: ',0
+_CID		dw	13,10,'Incoming Call...',0
+;**************************************************************************
+; FSK transmit/receive functions
+;**************************************************************************
+;*************************************************************
+;
+FSK_RECEIVE					; FSK receiver starts here.
+;
+;*************************************************************
+		bank	fsk_receive_bank
+		add	fsk_trans_count,#1	; Regardless of what is going on, increment the 
+		snc				; transition timer.  These get cleared when a transition 
+		jmp	:roll_over_error	; takes place.
+		cjb	fsk_trans_count,#low_high_th,:fsk_timer_out	; as soon as it takes longer than 95 counts
+		setb	fsk_current_in					; to transition, this must be a low frequency
+:fsk_timer_out
+		mov	w,rb
+		and	w,#%00000010		; get the current state of rb.
+		xor	w,rb_past_state		; compare it with the previous state of the pin
+		jz	fsk_rx_out		; if there was no change, then jump out, there is nothing to do.
+						; Now it is time to determine if the transition that took place indicates a bit was received
+						; (it must be within some thresholds... below 20, ignore it, below 40, what???,
+						; below 95, high frequency, below 140, low frequency (already set), above 140,
+						; what???)
+		cjb	fsk_trans_count,#glitch_th,:glitch_so_ignore		; pulse was below specs, ignore it... probably noise
+		cjb	fsk_trans_count,#low_count_error_th,:error		; pulse was not a glitch but wasn't long enough to mean anything... huh?
+		cjb	fsk_trans_count,#low_high_th,:high_frequency		; pulse was within specs for a high frequency...
+		cjb	fsk_trans_count,#high_count_error_th,:fsk_receive_done	; pulse was within specs for a low frequency (don't do anything)
+		jmp	:error							; pulse was too long to mean anything, so do nothing.
+:high_frequency						; a high frequency corresponds to low data.
+		clrb	fsk_current_in
+		jmp	:fsk_receive_done
+
+:roll_over_error					; if the counter rolls over, keep it in range.
+;--------------- PUT ERROR HANDLING CODE IN HERE -----------------
+		mov	fsk_trans_count,#high_count_error_th
+		clr	fsk_rx_count
+		jmp	:glitch_so_ignore			
+:error							; if there is another type of error, just clear 
+							; any UART receive.
+;--------------- PUT ERROR HANDLING CODE IN HERE -----------------
+		clr	fsk_rx_count
+		
+:fsk_receive_done			
+		clr	fsk_trans_count			; clear the bit counter.
+:glitch_so_ignore					; don't clear the counter if the data was a glitch
+		mov	w,rb				; save the new state of RB.
+		and	w,#%00000010
+		mov	rb_past_state,w
+fsk_rx_out
+;**************************************************************************
+:fsk_uart
+; This is an asynchronous receiver.  Written by Craig Webb.  Modified by
+; Chris Fogelklou for use with FSK receive routine.
+;**************************************************************************
+		bank	fsk_receive_bank
+		jnb	divider.divider_bit,fsk_rx_done	; (Divide operation frequency by divider_bit)
+		movb    c,fsk_current_in               	; get current rx bit
+		test    fsk_rx_count            	; currently receiving byte?
+		jnz     :rxbit                  	; if so, jump ahead
+		mov     w,#9                    	; in case start, ready 9 bits
+		sc                              	; skip ahead if not start bit
+		mov     fsk_rx_count,w              	; it is, so renew bit count
+		mov     fsk_rx_divide,#start_delay  ; ready 1.5 bit periods
+:rxbit		djnz    fsk_rx_divide,fsk_rx_done      	; middle of next bit?
+		setb    fsk_rx_divide.baud_bit     	; yes, ready 1 bit period
+		dec     fsk_rx_count                	; last bit?
+		sz                              	; if not
+		rr      fsk_rx_byte                 	;  then save bit
+		snz                             	; if so
+		setb    fsk_rx_flag                 	;  then set flag
+fsk_rx_done
+		RETP
+;**************************************************************************
+; END FSK ROUTINES
+;**************************************************************************
+
+

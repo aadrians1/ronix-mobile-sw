@@ -1,0 +1,37 @@
+dir     /usr/local/www/scenix.com/adminK98
+dir     /usr/local/www/scenix.com/java
+dir     /usr/local/www/scenix.com/tech_sup
+dir     /usr/local/www/scenix.com/app_note
+dir     /usr/local/www/scenix.com/bin
+dir     /usr/local/www/scenix.com/button
+dir     /usr/local/www/scenix.com/employ
+dir     /usr/local/www/scenix.com/ews4sxs2
+dir     /usr/local/www/scenix.com/Excite
+dir     /usr/local/www/scenix.com/gif
+dir     /usr/local/www/scenix.com/gifs
+dir     /usr/local/www/scenix.com/header
+dir     /usr/local/www/scenix.com/imgsx
+dir     /usr/local/www/scenix.com/imgsys
+dir     /usr/local/www/scenix.com/logs
+dir     /usr/local/www/scenix.com/macros
+dir     /usr/local/www/scenix.com/newsgroup
+dir     /usr/local/www/scenix.com/party
+dir     /usr/local/www/scenix.com/prepub
+dir     /usr/local/www/scenix.com/press
+dir     /usr/local/www/scenix.com/pro_info
+dir     /usr/local/www/scenix.com/sale_inf
+dir     /usr/local/www/scenix.com/seminar
+dir     /usr/local/www/scenix.com/company
+dir     /usr/local/www/scenix.com/products
+dir     /usr/local/www/scenix.com/tools
+dir     /usr/local/www/scenix.com/virtual
+dir     /usr/local/www/scenix.com/news
+dir     /usr/local/www/scenix.com/partners
+dir     /usr/local/www/scenix.com/sales
+dir     /usr/local/www/scenix.com/jobs
+dir     /usr/local/www/scenix.com/search
+dir     /usr/local/www/scenix.com/feedback
+dir     /usr/local/www/scenix.com/tech_supp
+file	*.htm	HTML
+file	*.html	HTML
+

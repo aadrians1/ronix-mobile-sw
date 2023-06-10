@@ -1,0 +1,195 @@
+;******************************************************************************
+;       Virtual Peripheral: Analog to Digital Converters
+;
+;
+;       Length: 36 bytes (total)
+;       Authors: Chip Gracey, President, Parallax Inc.
+;		   modified by Craig Webb, Consultant to Scenix Semiconductor, Inc.
+;       Written: 97/03/10 to 98/6/03
+;
+;******************************************************************************
+;
+;****** Assembler directives
+;
+; uses: SX28AC, 2 pages of program memory, 8 banks of RAM, high speed osc.
+;       operating in turbo mode, with 8-level stack & extended option reg.
+;                
+		DEVICE  pins28,pages2,banks8,oschs
+		DEVICE  turbo,stackx,optionx
+		ID      'ADCS'			;program ID label
+		RESET   reset_entry             ;set reset/boot address
+;
+;******************************* Program Variables ***************************
+;
+; Port Assignment: Bit variables
+;
+adc0_out_pin    EQU     rc.4                    ;ADC0 input pin
+adc0_in_pin     EQU     rc.5                    ;ADC0 output/calibrate pin
+adc1_out_pin    EQU     rc.6                    ;ADC1 input pin
+adc1_in_pin     EQU     rc.7                    ;ADC1 output/calibrate pin
+;
+;
+;****** Register definitions (bank 0)
+;
+		org     8                       ;start of program registers
+main            =       $                       ;main bank
+;
+temp            ds      1                       ;temporary storage
+byte            ds      1                       ;temporary UART/I2C shift reg.
+flags           DS      1                       ;program flags register
+;
+delay1		DS	1			;temporary delay variable
+delay2		DS	1			;temporary delay variable
+;
+		org     50h                     ;bank2 variables
+analog          =       $                       ;pwm and ADC bank
+;
+port_buff       ds      1                       ;buffer - used by all
+adc0            ds      1                       ;adc0 - value
+adc0_count      ds      1                       ;     - real-time count
+adc0_acc        ds      1                       ;     - accumulator
+adc1            ds      1                       ;adc1 - value
+;adc1_count     ds      1                       ;     - real-time count
+adc1_acc        ds      1                       ;     - accumulator
+;
+;
+int_period	=       163                     ;period between interrupts
+;
+;**************************** INTERRUPT CODE *******************************
+;
+; Note: The interrupt code must always originate at 0h.
+;       Care should be taken to see that any very timing sensitive routines
+;       (such as adcs, etc.) are placed before other peripherals or code
+;       which may have varying execution rates (like the UART, for example).
+;
+interrupt       ORG     0                       ;interrupt starts at 0h
+;
+;
+;***** Virtual Peripheral: Bitstream Analog to Digital Converters
+;
+; These routines allow an 8-bit value to be calculated which corresponds
+; directly (within noise variation limits) with the voltage (0-5V) present
+; at the respective adc port input pins. These routines are timing critical
+; and must be placed before any variable-execution-rate code (like the UART,
+; for example). The currently enabled routine (version A) has been optimized
+; for size and speed, and RAM register usage, however a fixed execution rate,
+; yet slightly larger/slower routine (version B) is provided in commented
+; (disabled) form to simplify building other timing-critical virtual
+; peripheral combinations (i.e. that require fixed rate preceeding code).
+;    Note: if version B is selected, version A must be disabled (commented)
+;
+;       Input variable(s) : adc0,adc0_acc,adc0_count,adc1,adc1_acc,adc1_count
+;       Output variable(s) : pwm port pins
+;       Variable(s) affected : port_buff, pwm0_acc, pwm1_acc
+;       Flag(s) affected : none
+;	Size (version A) : 9 bytes + 7 bytes (per pwm)
+;			   + 2 bytes shared with adc code (see below)
+;	Size (version B) : 6 bytes + 10 bytes (per pwm)
+;			   + 2 bytes shared with pwm code (see below)
+;       Timing (turbo)
+;		version A : 2 cycles shared with pwm code (see below) +
+;			   (a) [>99% of time] 11 cycles + 4 cycles (per adc)
+;			   (b) [<1% of time] 9 cycles + 7 cycles (per adc)
+;		version B : 6 cycles + 10 cycles (per adc)
+;			    + 2 cycles shared with pwm code (see below)
+;
+:set_analog	bank    analog                  ;switch to adc/pwm bank
+		clr     port_buff               ;clear pwm/adc port buffer
+:adcs           mov     w,>>rc                  ;get current status of adc's
+		not     w                       ;complement inputs to outputs
+		and     w,#%01010000            ;keep only adc0 & adc1
+		or      port_buff,w             ;store new value into buffer
+:update_RC	mov     rc,port_buff            ;update cap. discharge pins
+
+;
+; VERSION A - smaller, quicker but with variable execution rate
+;
+:adc0           sb      port_buff.4             ;check if adc0 triggered?
+		INCSZ   adc0_acc                ;if so, increment accumulator
+		INC     adc0_acc                ; and prevent overflowing
+		DEC     adc0_acc                ; by skipping second 'INC'
+
+:adc1           sb      port_buff.6             ;check if adc1 triggered
+		INCSZ   adc1_acc                ;if so, increment accumulator
+		INC     adc1_acc                ; and prevent overflowing
+		DEC     adc1_acc                ; by skipping second 'INC'
+
+		INC     adc0_count              ;adjust adc0 timing count
+		JNZ     :done_adcs              ;if not done, jump ahead
+:update_adc0	MOV     adc0,adc0_acc           ;samples ready, update adc0
+:update_adc1	MOV     adc1,adc1_acc           ; update adc1
+:clear_adc0	CLR     adc0_acc                ; reset adc0 accumulator
+:clear_adc1	CLR     adc1_acc                ; reset adc1 accumulator
+;
+; <end of version A>
+;
+; VERSION B - fixed execution rate
+;
+;*** The "adc1_count" register definition in the analog bank definition 
+;*** section must be enabled (uncommented) for this routine to work properly
+;
+;:adc0		sb	port_buff.4		;check if adc0 triggered
+;		INCSZ   adc0_acc                ;if so, increment accumulator
+;		INC     adc0_acc                ; and prevent overflowing
+;		DEC     adc0_acc                ; by skipping second 'INC'
+;		mov	w,adc0_acc		;load W from accumulator
+;		inc	adc0_count		;adjust adc0 timing count
+;		snz				;are we done taking reading?
+;		mov	adc0,w			;if so, update adc0
+;		snz				;
+;		clr	adc0_acc		;if so, reset accumulator
+;
+;:adc1		sb	port_buff.6		;check if adc1 triggered
+;		INCSZ   adc1_acc                ;if so, increment accumulator
+;		INC     adc1_acc                ; and prevent overflowing
+;		DEC     adc1_acc                ; by skipping second 'INC'
+;		mov	w,adc1_acc		;load W from accumulator
+;		inc	adc1_count		;adjust adc1 timing count
+;		snz				;are we done taking reading?
+;		mov	adc1,w			;if so, update adc1
+;		snz				;
+;		clr	adc1_acc		;if so, reset accumulator
+;
+; <end of version B>
+;
+
+:done_adcs
+
+		mov     w,#-int_period          ;interrupt every 'int_period' clocks
+:end_int	retiw                           ;exit interrupt
+;
+;******	End of interrupt sequence
+;
+;***************************** SUBROUTINES *********************************
+;
+;***************************** MAIN PROGRAM CODE ******************************
+;
+;		ORG     100h
+;
+; Program execution begins here on power-up or after a reset
+;
+reset_entry
+		clr     rc                      ;initialize port RC
+		mov     !rc,#%10101010          ;Set RC in/out directions
+		mov     m,#$D                   ;set input levels
+		mov     !rc,#0                  ; to cmos on port C
+		mov     m,#$F                   ;reset mode register
+		CLR     FSR                     ;reset all ram starting at 08h
+:zero_ram       SB      FSR.4                   ;are we on low half of bank?
+		SETB    FSR.3                   ;If so, don't touch regs 0-7
+		CLR     IND                     ;clear using indirect addressing
+		IJNZ    FSR,:zero_ram           ;repeat until done
+
+		mov     !option,#%10011111      ;enable rtcc interrupt
+;
+; Main Program Loop
+;
+:loop		MOV	W,adc0			;get adc0 value
+;
+; <program code goes here>
+;
+		JMP     :loop                   ;back to main loop
+;
+;***************
+		END                             ;End of program code
+

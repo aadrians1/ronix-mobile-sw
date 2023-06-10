@@ -1,0 +1,437 @@
+; Filename:	FSK_TX.SRC
+; Author:	Stephen Holland
+;		Applications Engineer
+;		Scenix Semiconductor Inc.
+; Revision:	1.0
+; Date:		July 05, 1998
+; Part:		SX28AC rev. 2.5
+; Freq:		50Mhz
+; Compiled using Parallax SX-Key software v0.8
+;    
+; *This virtual peripheral relies on an external RC filter to generate complete
+;  FSK signal.
+;
+;
+; Using a PC terminal program, all data received by the UART is sent out via
+; FSK transmission
+;
+		device	pins28,pages4,banks8,oschs
+		device	turbo,stackx,optionx,carryx
+		id	'FSK_TX'
+		reset	reset_entry
+;
+;
+; Equates
+;
+rx_pin		=	ra.1
+tx_pin		=	ra.2
+
+pwm0_pin	=	ra.0
+
+;
+;
+; Variables
+;
+			org	8
+
+temp			ds	1
+byte			ds	1
+string			ds	1
+
+
+			org	10h			;bank0 variables
+
+timers			=	$
+
+							;timer
+timer_accl		ds	1
+timer_acch		ds	1
+timer_flag		ds	1
+
+bit_cnt			ds	1
+
+
+			org	30h			;bank1 variables
+
+serial			=	$
+
+tx_high			ds	1			;tx
+tx_low			ds	1
+tx_count		ds	1
+tx_divide		ds	1
+tx_flag			ds	1			;flag-byte
+							;bit 0, busy transmitting, 0=no, 1=yes
+tx_dly_count		ds	1
+
+
+rx_count		ds	1			;rx
+rx_divide		ds	1
+rx_byte			ds	1
+rx_flag			ds	1
+rx_dly_count		ds	1
+
+
+			org	50h			;bank3 variables
+
+pwm			=	$
+
+pwm_duty_1		ds	1
+pwm_period_1		ds	1
+lo_or_hi		ds	1
+
+counter_fsk		ds	1
+
+row			ds	1
+col			ds	1
+
+FSK_trm_byte		ds	1
+
+;
+;
+; Interrupt routine - virtual peripherals
+;
+			org	0
+interrupt					;3 it takes 3 cycles to get an interrupt
+		bank	timers			;1
+						;timer
+		stc				;1 set carry
+		add	timer_accl,#1		;2 add timer_accl+carry(=1)
+		sc
+		jmp	:timer_out
+
+		add	timer_acch,#0
+		snc				;1
+		setb	timer_flag.0		;1
+:timer_out					;=7
+
+;********D/A CONVERSIONS*************
+da_conv		bank	pwm			;1
+		dec	pwm_duty_1		;1 decrement port_duty
+		movb	pwm0_pin,/pwm_duty_1.7	;4 move complement of most significant bit to output
+
+		decsz	pwm_period_1		;1
+		jmp	da_conv_out		;3
+		mov	pwm_duty_1,#5		;2
+		jb	lo_or_hi.0,:period_1200	;1 hi for 1200, lo for 2200
+:period_2200	mov	pwm_period_1,#10	;1 this is for phase coherence in freq shifts
+		jmp	:continue
+:period_1200	mov	pwm_period_1,#9		;2
+:continue
+
+make_fsk
+make1200	csae	counter_fsk,#end1200	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_fsk,#sine1200	;1 reload table-counter
+:continue	mov	w,counter_fsk		;1
+		mov	m,#6			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_1,w		;1 = 21
+		inc	counter_fsk		;1
+		sb	lo_or_hi.0		;1 hi for 1200, lo for 2200
+		inc	counter_fsk		;1 this is for phase coherence in freq shifts
+		jmp	da_conv_out
+
+
+da_conv_out	
+
+;********SERIAL COMMUNICATIONS*************
+:ser_comm	bank	serial			;1
+
+		inc	tx_dly_count		;1
+		inc	rx_dly_count		;1
+		snb	rx_dly_count.2		;1 divide by 4
+		jmp	:tst_rx			;3
+		sb	tx_dly_count.4		;1 = 8 ;divide by 16
+		jmp	interrupt_out		;3
+
+:tst_tx		clr	tx_dly_count		;1
+		jnb	tx_flag.0,interrupt_out	;2
+
+		test	tx_count		;1 busy?
+		clc				;1 ready stop bit
+		snz				;1
+		clrb	tx_flag.0		;1
+		sz				;1 if busy, shift bits
+		rr	tx_high			;1
+		sz				;1
+		rr	tx_low			;1
+		sz				;1	;if busy, dec counter
+		dec	tx_count		;1
+		movb	tx_pin,/tx_low.6	;4 =18	;output next bit
+		jmp	interrupt_out		;3
+
+
+:tst_rx		clr	rx_dly_count		;1
+		movb	c,rx_pin		;4	;serial receive
+		test	rx_count		;1	;waiting for stop bit?
+		jnz	:rxbit			;3,2	;if not, :bit
+		mov	w,#9			;1	;in case start, ready 9 bits
+		sc				;1	;if start, set rx_count
+		mov	rx_count,w		;1
+		mov	rx_divide,#7		;2	;ready 1.5 bit periods
+:rxbit		djnz	rx_divide,:rxdone	;3,2	;8th time through?
+		setb	rx_divide.2		;1	;yes, ready 1 bit period
+		dec	rx_count		;1	;last bit?
+		sz				;1	;if not, save bit
+		rr	rx_byte			;1
+		snz				;1	;if so, set flag
+		setb	rx_flag.1		;1 =23
+:rxdone
+interrupt_out	mov	w,#-163			;1	;interrupt every 159 clocks
+		retiw				;3
+
+
+;
+;
+; Reset entry
+;
+reset_entry	mov	 ra,#%0110		;init ra
+		mov	!ra,#%0011		;Set ra data direction register
+
+		mov	m,#$F
+
+		bank	serial
+		inc	rx_dly_count		;just to create a slight time-shift
+
+		clr	fsr			;reset all ram banks
+:loop		setb	fsr.4
+		clr	ind
+		ijnz	fsr,:loop
+
+		bank	pwm			;adc set speed/resolution
+		mov	pwm_period_1,#9
+		mov	pwm_duty_1,#5
+
+		bank	serial
+		clr	bit_cnt
+
+		mov	!option,#%10011111	;enable rtcc interrupt
+
+;
+;*************************************************************
+; Main 
+;*************************************************************
+;
+;
+; Terminal - main loop
+;
+main
+		mov	w,#_hello		;send hello string
+		page	send_string
+		call	send_string
+
+		mov	w,#_prompt		;send prompt string
+		page	send_string
+		call	send_string
+
+main_loop
+		page	get_byte
+		call	get_byte
+
+; This is where the line could be tested if it clear to send, if not then jump to :send_later
+
+		bank	serial
+		jnb	rx_flag.7,:send_later		;If bit not set then nothing to send
+
+		page	FSK_send
+		call	FSK_send
+
+:send_later
+; This is where a FSK_receive function would be called
+
+		jmp	main_loop
+;*************************************************************
+;*************************************************************
+; Subroutines 
+;*************************************************************
+		org	$200
+;*************************************************************
+; Jump table for page 1
+;*************************************************************
+FSK_send	jmp	FSK_send_byte
+FSK_send_return
+		retp
+;*************************************************************
+;
+; Get byte via serial port
+;
+get_byte	bank	serial
+		sb	rx_flag.1
+		retp
+
+		clrb	rx_flag.1
+		setb	rx_flag.7		;Tell FSK module to send
+		mov	w,rx_byte		;followed by send_byte
+		bank	pwm
+		mov	FSK_trm_byte,w
+
+		mov	w,#_sending		;send 'sending' string
+		page	send_string
+		call	send_string
+
+		bank	pwm
+		mov	w,FSK_trm_byte
+
+		call	send_byte
+		
+		mov	w,#_prompt		;send prompt string
+		page	send_string
+		call	send_string
+
+		retp
+;
+; Send byte via serial port
+;
+send_byte	bank	serial
+
+:wait		test	tx_count		;wait for not busy
+		jnz	:wait
+
+		not	w			;ready bits
+		mov	tx_high,w
+		setb	tx_low.7
+
+		mov	tx_count,#10		;1 start + 8 data + 1 stop bit
+		setb	tx_flag.0
+
+		retp
+;
+;
+; Send string at w
+;
+send_string	mov	string,w		;send string at w
+
+:loop		mov	w,string		;read chr at w
+		mov	m,#1
+
+		iread
+		mov	m,#$F
+
+		test	w			;if 0, exit
+		snz
+		retp
+
+		page	send_byte
+		call	send_byte		;not 0, send chr
+
+		inc	string			;next chr
+		jmp	:loop
+;
+;
+; Make byte uppercase
+;
+uppercase	csae	byte,#'a'
+		ret
+
+		sub	byte,#'a'-'A'
+		ret
+;*************************************************************
+FSK_send_byte
+		setb	ra.3			;Enable output
+		mov	!ra,#%0010		;Enable pwm output
+
+; This is where channel seizure or handshaking generation would be inserted.
+
+		bank	pwm
+		setb	lo_or_hi.0		;Set PWM to transmit 1200Hz for start bit
+
+		bank	timers
+		mov	!option,#%11011111	;disable rtcc interrupt
+		mov	timer_accl,#$5d		;1250uS		
+		mov	timer_acch,#$fd		;--//--
+		mov	!option,#%10011111	;enable rtcc interrupt
+		clrb	timer_flag.0		;Clear overflow-flag
+
+		jnb	timer_flag.0,$		;Is overflow-flag set?
+
+		mov	bit_cnt,#8		;Initialize bit_cnt
+
+:next_bit	bank	pwm
+		jnb	FSK_trm_byte.0,:set_2200_pwm
+
+:set_1200_pwm	setb	lo_or_hi.0		;Set PWM to transmit 1200Hz
+		jmp	:set_timer_833u
+
+:set_2200_pwm	clrb	lo_or_hi.0		;Set PWM to transmit 2200Hz
+
+:set_timer_833u
+		bank	timers
+		mov	!option,#%11011111	;disable rtcc interrupt
+		mov	timer_accl,#$00		;833uS		
+		mov	timer_acch,#$fe		;--//--
+		mov	!option,#%10011111	;enable rtcc interrupt
+		clrb	timer_flag.0		;Clear overflow-flag
+
+		jnb	timer_flag.0,$		;Is overflow-flag set?
+
+		bank	pwm
+		rr	FSK_trm_byte
+		bank	timers
+		djnz	bit_cnt,:next_bit
+
+		bank	pwm
+		clrb	lo_or_hi.0		;Set PWM to transmit 2200Hz for stop bit
+		bank	timers
+		mov	!option,#%11011111	;disable rtcc interrupt
+		mov	timer_accl,#$00		;833uS		
+		mov	timer_acch,#$fe		;--//--
+		mov	!option,#%10011111	;enable rtcc interrupt
+		clrb	timer_flag.0		;Clear overflow-flag
+
+		jnb	timer_flag.0,$		;Is overflow-flag set?		
+:FSK_transmit_out
+		mov	!ra,#%0011		;Disable pwm output
+		clrb	ra.3			;Disable output
+		bank	serial
+		clrb	rx_flag.7
+
+		jmp	FSK_send_return
+;*************************************************************
+;*************************************************************
+;
+		org	$1a0
+;
+; Data
+;
+_hello		dw	13,10,13,10,'SX Modem Demo...',13,10,0
+_cr		dw	13,10,0
+_prompt		dw	13,10,'>',0
+_sending	dw	13,10,'Sending...',32,0
+_hex		dw	'0123456789ABCDEF'
+
+
+				
+		org	$600
+
+sine1200	=	$
+		DW	5	; 1
+		DW	7	; 2
+		DW	8	; 3
+		DW	8	; 4
+		DW	9	; 5
+		DW	9	; 6
+		DW	10	; 7
+		DW	9	; 8
+		DW	9	; 9
+		DW	8	;10
+		DW	8	;11
+		DW	7	;12
+		DW	6	;13
+		DW	5	;14
+		DW	3	;15
+		DW	2	;16
+		DW	1	;17
+		DW	1	;18
+		DW	0	;19
+		DW	0	;20
+		DW	0	;21
+		DW	0	;22
+		DW	0	;23
+		DW	1	;24
+		DW	1	;25
+		DW	2	;26
+		DW	3	;27
+end1200		=	$
+		DW	4	;28
+

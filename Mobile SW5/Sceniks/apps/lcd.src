@@ -1,0 +1,444 @@
+;;;OK
+;;;; last modified : 98-3-2,16:00:00
+;
+;This example implement a simple ohm-measure with MCU ,
+;demonstrating how to utilise SX18/28's:
+;   I/O operation
+;
+;Hardware:
+;  Display:              8 segment LCD(working in scaning mode)
+;  Volatile Resistance:  0--10K
+;  Immutable Resistance: 10K,series connected with the former
+;  Standard Resistance:  10K
+;  Capacitor:            104:   0.01uF
+; 
+;  I/O connection:
+;      ra0--------COM1
+;      ra1--------COM2
+;      ra2--------COM3
+;      ra3--------COM4
+;      
+;      rc0--------LCD.a
+;      rc1--------LCD.b
+;      rc2--------LCD.c
+;      rc3--------LCD.d
+;      rc4--------LCD.e
+;      rc5--------LCD.f
+;      rc6--------LCD.g
+;
+;      rb3--------LCD control
+;      rb5--------Volatile Resistance
+;      rb6--------Standard Resistance
+;      rb7--------Detected Pin
+; Configuration data
+; The Chip's configuration is  28 pin, 2K EEPROM, 136 byte RAM,
+; internal 4MHz internal RC driven, single clock per instruction.
+;	device pins28,pages4,banks8,osc4mhz,turbo,stackx,optionx
+
+RA        equ	  05h
+RB	  equ	  06h
+RC	  equ	  07h
+PORTA     EQU     05H
+PORTB     EQU     06H
+PORTC     EQU     07H
+INDF      EQU     0
+TMR0      EQU     1
+PCL       EQU     2
+STATUS    EQU     3
+FSR       EQU     4
+RTCC      EQU     1H
+WREG      EQU     1H
+PC        EQU     2H
+C         EQU     STATUS.0
+DC        EQU     STATUS.1
+Z         EQU     STATUS.2
+PD        EQU     STATUS.3
+TO        EQU     STATUS.4
+PA0       EQU     STATUS.5
+PA1       EQU     STATUS.6
+PA2       EQU     STATUS.7
+
+;port define
+common		equ	ra
+com1		equ	ra.0
+com2		equ	ra.1
+com3		equ	ra.2
+com4		equ	ra.3
+lcd_control	equ	rb.3
+lcd_data 	equ	rc
+
+;Varialbes
+
+temp			equ	10h		;1 byte
+second			equ       0eh
+minute			equ	0fh
+databyte_1		equ	11h
+databyte_2		equ	12h
+databyte_3		equ	13h
+databyte_4		equ	14h
+lcd_data_pointer		equ	15h
+lcd_common_pointer		equ	16h
+lcd_phase			equ	17h
+lcd_odd_phase		equ	18h
+
+time_countl		equ	19h
+time_counth		equ	1ah
+
+rm_countl			equ	1bh
+rm_counth			equ	1ch
+
+rc_countl			equ	1dh
+rc_counth			equ	1eh
+
+ohm_measure_delay		equ	1fh
+
+dec_l	equ	0eh
+dec_h	equ	0fh
+dec_u	equ	23h
+
+
+	device pins28,pages4,banks8,osc4mhz,turbo,stackx,optionx
+	
+	reset start
+
+	org	0
+		
+	;jmp InitProg
+	
+ 	
+InitProg  ;
+;	inc second
+;	sb Z	
+;	jmp InitEnd
+;	jmp Measure1
+	 
+InitEnd	;	
+ 	reti
+
+Measure1	inc databyte_1
+	mov w,#0fh
+	and databyte_1,w
+	mov w,#3
+	mov databyte_2,w
+;	call	Measure
+	jmp InitEnd	
+
+	org	$40
+	
+start
+	mov	w,#0		;rc all out
+	mov	!rc,w
+	mov	w,#0		;ra0..3 out
+	mov	!ra,w
+	mov	w,#%0		;rb3 out
+ 	mov	!rb,w
+;	mov	w,#0eh
+;	mov	m,w
+
+	mov	w,#0e2h		;1110 0010
+	mov	!option,w		;      ^^^PS2 PS1 PS0------1:8
+				;     ^--------------------PSA=0      prescaler assigned to RTCC   
+				;   ^----------------------RTE_ES=0   RTCC   L->H
+				;  ^-----------------------RTS=0      RTCC internal inc
+				; ^------------------------RTE_IE=0   RTCC interrupt is enabled
+				;^-------------------------RTW=1      register 01h addresses RTCC
+	
+	clr	ra	
+	clr	rb
+	clr	rc
+	clr	rm_countl
+	clr	rm_counth
+	clr	rc_countl
+	clr	rc_counth
+	call	Proc_Init_LCD_Display
+loop0
+	mov	w,#0
+	mov	ohm_measure_delay,w
+:loop1
+	call	Display	;1
+	call	Proc_Delay
+	decsz	ohm_measure_delay
+	jmp	:loop1
+	call	Measure
+	jmp	loop0
+	ret
+
+Proc_Delay
+	mov	w,#54	;67;#100;#135;#100;90;#77;#67;#54;#30;#10;#19
+	mov	time_counth,w
+Proc_Delay_1
+	mov	w,#25;#32
+	mov	time_countl,w
+;	clr	time_countl
+Proc_Delay_2
+	decsz	time_countl
+	jmp	Proc_Delay_2
+	decsz	time_counth
+	jmp	Proc_Delay_1
+	ret
+proc_read_rtcc
+	mov	w,rtcc
+	mov	rm_countl,w
+	mov	w,#0
+	mov	w,rm_countl-w
+	sb	3.2	;z=0
+	inc	rm_counth
+	ret
+
+Measure
+	call	proc_encharge_rm
+	call	proc_discharge
+	call	proc_bin_bcd
+	call	proc_update_display	
+
+Measure_end
+	ret
+
+
+proc_discharge
+	mov	w,#000h	;0000 0000
+			;  ^---------------------rb.5 input to detecte Cap is discharged
+			; ^----------------------rb.6 ouput to discharge the Cap
+			;^-----------------------rb.7 input to disable
+	mov	!rb,w
+
+:waitdischarge	
+	clrb	rb.6
+	clrb	rb.5
+	clrb	rb.7
+;	snb	rb.5
+	;jmp	:waitdischarge
+	;call	proc_delay			;here will restore the portb status
+	ret
+
+
+;;;measure the rm value
+proc_encharge_rm
+	mov	w,#60h	;0110 0000
+			;  ^---------------------rb.5-input -- detecte
+			; ^----------------------rb.6 input --disable
+			;^-----------------------rb.7 output--encharge
+	mov	!rb,w
+
+
+	clr	rm_countl
+	clr	rm_counth
+	mov	w,#80h
+	mov	rm_countl,w
+	setb	rb.7	;begin encharge
+wait_encharge_rm
+	inc	rm_countl
+	snb	z	;overflow?
+	jmp	encharge_rm_1
+	inc	rm_counth
+	snb	z	;rm_counth overflow?
+	dec	rm_counth
+	mov	w,#80h
+	mov	rm_countl,w
+encharge_rm_1
+	snb	rb.5	;encharged?
+	jmp	encharge_rm_end
+	jmp	wait_encharge_rm
+encharge_rm_end
+
+	mov	w,#0f0h
+	sub	rm_counth,w
+	mov	w,#020h
+	sub	rm_counth,w
+	ret
+
+proc_bin_bcd
+	mov	w,rm_counth
+	clr	dec_h
+	mov	dec_l,w
+bin_bcd_1
+	mov	w,#10
+	mov	w,dec_l-w
+	sb	3.0
+	jmp	bin_bcd_end
+	mov	dec_l,w
+	inc	dec_h
+	jmp	bin_bcd_1
+bin_bcd_end	
+;	mov	w,#9
+;	mov	w,dec_h-w
+;	snb	3.0
+;	jmp	bin_bcd_end_1
+;	mov	w,#0fh
+;	mov	dec_h,w
+;	mov	dec_l,w
+bin_bcd_end_1
+	clrb	3.0
+	rl	dec_h
+	rl	dec_h
+	rl	dec_h
+	rl	dec_h
+	mov	w,#0f0h
+	and	dec_h,w
+	mov	w,#0fh
+	and	dec_l,w
+	mov	w,dec_l
+	or	w,dec_h
+	mov	rm_counth,w
+
+;	mov	w,#099h
+;	mov	w,rm_counth-w
+;	snb	3.0
+;	jmp	bin_bcd_end_2
+;	mov	w,#0ffh
+;	mov	rm_counth,w
+bin_bcd_end_2
+	retw	0
+
+
+;;;measure the rc value
+proc_encharge_rc
+	mov	w,#0a0h	;1010 0000
+			;  ^---------------------rb.5 input-- detecte
+			; ^----------------------rb.6 ouput-- encharge
+			;^-----------------------rb.7	input-- disable
+	mov	!rb,w
+
+	clr	rc_countl
+	clr	rc_counth
+	mov	w,#080h
+	mov	rc_countl,w
+	setb	rb.6	;begin encharge
+wait_encharge_rc
+	inc	rc_countl
+	snb	z	;overflow?
+	jmp	encharge_rc_1
+	inc	rc_counth
+	mov	w,#080h
+	mov	rc_countl,w
+encharge_rc_1
+	snb	rb.6
+	jmp	encharge_rc_end
+	jmp	wait_encharge_rc
+encharge_rc_end
+	ret
+proc_freq_ohm
+	mov	w,#0b0h
+	mov	w,rc_counth-w
+	snb	3.0		;c
+	clr	w
+	mov	temp,w
+	clrc
+	rr	temp
+	mov	w,temp
+	mov	rc_counth,w
+	ret
+	
+
+proc_update_display
+	mov	w,rm_counth
+	mov	temp,w
+	and	w,#0fh
+	mov	databyte_1,w
+	mov	w,#0f0h
+	and	temp,w
+	clrb	3.0
+	rl	temp
+	rl	temp
+	rl	temp
+	rl	temp
+	mov	w,temp
+	and	w,#0fh
+	mov	databyte_2,w
+
+	ret
+
+Proc_Init_LCD_Display
+;clear buffer
+	mov	w,#$a
+	mov	databyte_1,w
+	mov	w,#$b
+	mov	databyte_2,w
+	mov	w,#$c
+	mov	databyte_3,w
+	mov	w,#$11
+	mov	databyte_4,w
+	
+	clrb	rb.3
+	mov	w,#0
+	mov	lcd_data,w
+	mov	w,#%1111
+	mov	common,w
+	
+	mov	w,#databyte_1
+	mov	lcd_data_pointer,w
+	mov	w,#%0001
+	mov	lcd_phase,w
+	mov	w,#1
+	mov	lcd_odd_phase,w
+	ret
+;LCD SEGMENT CODE TABLE
+;	org	$30
+
+Proc_Seg_Table
+		jmp	pc+w
+		retw	$3f	;0
+		retw	$06	;1
+		retw	$5b	;2
+		retw	$4f	;3
+		retw	$66	;4
+		retw	$6d	;5
+		retw	$7d	;6
+		retw	$07	;7
+		retw	$7f	;8
+		retw	$6f	;9
+		retw	$77	;A
+		retw	$7c	;b
+		retw	$58	;c
+		retw	$5e	;d
+		retw	$79	;E
+		retw	$71	;F
+		retw	$76	;H
+		retw	$01	;1--Com4
+		retw	$02	;AM
+		retw	$04	;oo
+		retw	$08	;TEMP
+		retw	$10	;PM
+		retw	$20	;TIMER
+		retw	$40	;KEEP WARM
+
+
+Display
+	mov	w,lcd_data_pointer
+	mov	fsr,w
+	mov	w,indf
+	call	Proc_Seg_Table
+	
+	sb	lcd_odd_phase.0
+	jmp	Display_1		;2468
+	not	w		;1357
+	mov	rc,w
+	mov	w,lcd_phase
+	mov	ra,w
+	setb	rb.3
+	jmp	Display_2
+Display_1
+	mov	rc,w		;2468
+	mov	w,lcd_phase
+	not	w
+	and	w,#0fh
+	mov	ra,w
+	clrb	rb.3
+	inc	lcd_data_pointer
+	mov	w,#0fh
+	and	lcd_phase,w
+	clrb	3.0		;clear c
+	rl	lcd_phase
+	mov	w,#databyte_2
+	mov	w,lcd_data_pointer-w
+	sb	3.2
+	jmp	Display_2
+	mov	w,#databyte_1
+	mov	lcd_data_pointer,w
+	mov	w,#%0001
+	mov	lcd_phase,w
+
+Display_2
+	inc	lcd_odd_phase
+	ret 
+

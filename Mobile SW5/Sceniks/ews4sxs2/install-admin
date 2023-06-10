@@ -1,0 +1,174 @@
+#!/bin/sh
+perl=/usr/local/www/scenix.com/ews4sxs2/perl
+eval "exec $perl -x $0 $*"
+#!perl
+    
+umask 022;
+$| = 1;
+  $root = "/usr/local/www/scenix.com/ews4sxs2";
+
+
+## Copyright (c) 1996 Excite, Inc.
+##
+## This script installs the scripts and documentation needed for web-based 
+## administration of architext databases into a specified
+## directory that is intended to reside under the parent directory
+## of html documents, so that they can be accessed from a web browser.
+## It is also intended that this directory be password protected from
+## access by the httpd, so that only authorized users can configure
+## and manage an Architext database.
+
+$destination = shift;
+$cgibin = shift;
+$destination || $cgibin
+    || die "Usage: $0 <excite config directory> <cgi-bin dir> [<html root dir>]\n";
+
+$htmlroot = shift;
+$autoinstall = shift;
+
+## This next section checks to see what directories need to be created
+## to make the path that the user specified.
+$newroot = $destination;
+$newroot .= "/" unless ($destination =~ /\/$/);
+$newroot .= "pictures";
+$base = ($destination =~ m|^/|) ? "/" : "";
+for $part (split(/\//, $newroot)) {
+    if (!$base || $base eq "/") {
+	$base .= $part;
+    } else {
+	$base = "$base/$part";
+    }
+    if (! -d $base) {
+	push(@mkdir, $base);
+    }
+}
+
+
+for (@mkdir) {
+    system "mkdir", $_;
+    &Abort("Couldn't create directory '$_'") if ($? >> 8);
+}
+
+if ((! -w $destination) || (! -d $destination)) {
+    &Abort("'$destination' is not writable by you, or it is not a directory");
+}
+
+$exit = system("chmod 777 $destination");
+$exit2 = system("chmod 777 $newroot");
+print "WARNING: could not chmod '$destination' or '$newroot'.  They must be writeable\nby all in order to avoid permissions problems with httpd." 
+    if ($exit || $exit2);
+
+if ((! -w $cgibin) || (! -d $cgibin)) {
+    &Abort("'$cgibin' is not writable by you, or it is not a directory");
+}
+
+
+## so this script doesn't need to be invoked from Architext install home
+chdir($root);
+
+$url = $destination;
+$url =~ s|$htmlroot||;
+
+## creates an html file that user can access information on
+## which options he chose during installation.
+&createAdminInfo();
+
+## copy scripts to cgi bin, html to config directory
+$scripts = "AT-admin.cgi AT-config.cgi AT-index.cgi AT-generate.cgi AT-fetch.cgi AT-lsbuild.cgi";
+$files = "AT-start.html AT-queryhelp.html AT-helpdoc.html AT-helpdoc1.html AT-helpdoc2.html AT-helpdoc3.html AT-ad.html AT-ad2.html AT-admininfo.html AT-about.html AT-help.html AT-feedback.html AT-license.html AT-release.html AT-decline.html";
+$pictures = "pictures/*.gif";
+$cmd="/bin/cp $files $destination";
+$exit = system($cmd);
+die "Failure copying html documentation to $destination -- $!\n" if $exit;
+$cmd = "/bin/cp $pictures $destination/pictures";
+$exit = system($cmd);
+die "Failure copying pictures to $destination/pictures -- $!\n" if $exit;
+$cmd = "/bin/cp $scripts $cgibin";
+$exit = system($cmd);
+die "Failure copying cgi scripts to $cgibin -- $!\n" if $exit;
+$cmd = "/bin/chmod a+rw $destination/pictures/* $destination/*";
+$exit = system($cmd);
+#die "Failure changing permissions on documentation and graphics -- $!\n" 
+#    if $exit;
+
+##put Config root on to end of Architext.conf
+$cmd = "echo ConfigRoot $destination >> Architext.conf";
+$exit = system($cmd);
+die "Failure updating $root/Architext.conf -- $!\n" if $exit;
+
+$hostname = &fullHostName();
+
+## put hostname in config file too, in case we need it.
+$cmd = "echo Hostname $hostname >> Architext.conf";
+$exit = system($cmd);
+die "Failure updating $root/Architext.conf -- $!\n" if $exit;
+
+## make sure Architext.conf is still readwriteadble by all
+$cmd = "/bin/chmod a+rw Architext.conf";
+system($cmd);
+
+print "\nInstallation of documentation to\n$destination successful.\n";
+
+$url = $destination;
+$url =~ s|$htmlroot||;
+print "\nTo get started, use your web-browser to open the URL:\n";
+print "\n\nhttp://$hostname/cgi-bin/AT-admin.cgi\n\n\n";
+print <<EOF;
+CAUTION:  The URL provided above is based on the install software's
+best guess, given the information provided so far.  It is possible
+that you will need to change the server name, the port number
+(if you are running your server on a port other than 80), or the
+name of the /cgi-bin directory (if you have a different alias
+for your Web server's /cgi-bin directory).
+
+EOF
+    ;
+exit 0;
+
+sub Abort {
+    print "Error: @_\n";
+    die "Installation aborted\n";
+}
+
+## finds out the host and domain name from /etc/hosts
+sub fullHostName {
+	local($hostline, $host, $dummy, $fullhost, $fullname);
+	chop($hostline = `uname -a`);
+	($dummy, $host) = split(/\s/, $hostline);
+	$host =~ /^(\w+)/;
+	$host =~ $1;
+	chop($fullhost = `grep '$host.' /etc/hosts`);
+	($dummy, $fullname) = split(' ', $fullhost);
+	$fullname = $host unless $fullname;
+	return ($fullname);
+}
+
+
+sub createAdminInfo {
+    local($ainfo);    
+    $ainfo = "AT-admininfo.html";
+    open (AINFO, ">$ainfo") ||
+	&Abort("'$ainfo' could not be opened for writing.");
+    print AINFO "<html><head><title>Excite Admin Information</title></head>\n";
+    print AINFO qq(<body><h1><img src="pictures/AT-admin_banner.gif"></h1>\n);
+    print AINFO "<p><h1>Admin Info Page</h1>\n";
+    print AINFO "<p>This page was created at install time and serves as\n";
+    print AINFO "a reminder to the administrator as to where things were\n";
+    print AINFO "put at install time, in case you have forgotten.";
+    print AINFO "<DL><P><DT><B>Excite Install Home:</b> $root\n";
+    print AINFO "<DD>This is where the Excite executables, indexes, stem and stop tables, document collection <b>.conf</b> files, and perl library routines that are invoked when you do searches are stored.  You were asked to designate this directory at install time, and it is where the tar file you received was unpacked into.\n";
+    print AINFO "<P><DT><B> Excite Admin Home:</B> $destination\n";
+    print AINFO "<DD> This directory contains the Excite HTML documentation, Excite logo GIF files, and is the destination directory for the HTML files and CGI scripts that are generated by AT-generate.cgi.\n";
+    print AINFO "<P><DT><B> HTML Root:</b> $htmlroot\n";
+    print AINFO "<DD> This is the directory you specified at install time as the directory that your <b>HTTP</b> server looks under for all of the HTML documents it serves.  It is important that any documents that you index that you wish to serve over the Web be located somewhere under this directory, so that they are accessible by your browser.\n";
+    print AINFO "<P><DT><B>cgi-bin:</b> $cgibin\n";
+    print AINFO "<DD> This is where the CGI aministration and query scripts that Excite for Web Servers uses are stored (AT-admin, AT-config.cgi, AT-index.cgi, and AT-generate.cgi)  Note that these scripts can be run from any location visible to your HTML browser, so if you wish to move them out of your cgi-bin directory, you may do so.  Of course, if you do move them, you may have to configure your server to recognize the .cgi suffix in places other than cgi-bin.\n";
+
+    print AINFO "</DL></body></html>\n";
+    close(AINFO);
+    $exit = system("/bin/chmod a+rw $ainfo");
+    &Abort("Couldn't change permissions on $ainfo.") if $exit;
+}
+
+
+

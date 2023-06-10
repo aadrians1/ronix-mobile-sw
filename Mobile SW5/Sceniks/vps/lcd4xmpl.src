@@ -1,0 +1,389 @@
+;**************************************************************************
+; Copyright © 1998 Scenix Semiconductor, Inc. All rights reserved.
+;
+; Liability disclaimer:
+;
+; Scenix Semiconductor, Inc. assumes no responsibility or liability for
+; the use of this [product, application, software, any of these products].
+;
+; Scenix Semiconductor conveys no license, implicitly or otherwise, under
+; any intellectual property rights.
+; Information contained in this publication regarding (e.g.: application,
+; implementation) and the like is intended through suggestion only and may
+; be superseded by updates. Scenix Semiconductor makes no representation
+; or warranties with respect to the accuracy or use of these information,
+; or infringement of patents arising from such use or otherwise.
+;
+; Scenix Semiconductor products are not authorized for use in life support
+; systems or under conditions where failure of the product would endanger
+; the life or safety of the user, except when prior written approval is
+; obtained from Scenix Semiconductor.
+;**************************************************************************
+;*************************************************************************
+;
+; Author:  Chris Fogelklou at Scenix Semiconductor(chris.fogel@scenix.com)
+; Written:  Thursday, August 27, 1998.
+;
+; This is simple code to demonstrate how to use an SX chip to interface 
+; with an LCD display using a 4-bit data bus.  It initializes the display 
+; and infinitely loops, printing "Hi. " to the display.  This code will 
+; work with any type of HITACHI HD44780 driven display (1*16, 2*16, 1*20, 
+; etc...).  This example code is simply a good program to build upon.  
+; There is an interrupt-driven virtual peripheral for driving an LCD under
+; development, which will use the MCU efficiently.  (Check www.scenix.com
+; for updates.)  Also, check the web for the .pdf file with a block diagram
+; of the connections required for this circuit.
+;
+;
+; lcd_init
+; Because the LCD should only need to be initialized once, the LCD_Init 
+; routine does not return until it is fully completed.  Comments in
+; LCD_Init suggest changes for any number of different settings.  
+; (eg. more/fewer display lines, cursor direction, display shifting...)
+; CALLS:
+;  -lcd_write_command
+;  -lcd_write_data
+;  -lcd_wait_busy
+;  -delay	
+;
+; 
+; lcd_write_command
+; This subroutine is called to write a command to the LCD, such as 
+; 'clear screen and return home'.  The command to be written is passed to
+; the subroutine inside the W register.
+; CALLS:
+;  -nopdel
+;
+;
+; lcd_write_data
+; This subroutine is called to write data to the LCD, such as a character
+; to be displayed.  Like lcd_write_command, lcd_write_data accepts the
+; data in the W register.
+; CALLS:
+;  -nopdel
+;
+;
+; lcd_wait_busy
+; This subroutine does not return until the LCD is ready to accept more
+; data/commands.  
+; CALLS:
+;  -nopdel
+;
+;
+; nopdel
+; A simple subroutine containing 8 nops, returning after the nops.  
+;
+;
+; delay
+; This subroutine delays for (w-1)*20us at 50MIPS, (w-1)*1ms at 1MIPS
+;
+; 
+; REGISTER USAGE
+; The only registers used in this program are
+; dlycnt1
+; dlycnt2
+; in the "delay_regs" bank
+;
+;*************************************************************************
+;*************************************************************************
+; Assembler Directives...
+;*************************************************************************
+		device	pins28,pages1,banks8,oschs 	; 28 pin package,
+							; 1 page program,
+							; 8 banks RAM,
+							; HS oscillator.
+		device	stackx,optionx,turbo 		; stack extend, 
+							; option extend, turbo.
+		id	'LCD VP'
+		reset	reset_entry		; Jump to reset_entry on reset.
+		FREQ	50000000		; 50MHz target frequency.
+
+;*************************************************************************
+; Pin Definitions
+;*************************************************************************
+
+lcd_control	=	ra
+
+lcd_		=	ra.0		; This ra output could be used
+					; for backlight or contrast.
+lcd_RS		=	ra.1		; 0 = instruction, 1 = data
+lcd_RW		=	ra.2		; 0 = write, 1 = read
+lcd_E		=	ra.3		; 1,1-->0 is the LCD enable
+
+lcd_data	= 	rb
+
+lcd_DB4		=	rb.4		; DB4 = Data bus line 4 (LSB)
+lcd_DB5		=	rb.5
+lcd_DB6		=	rb.6
+lcd_DB7		=	rb.7		; DB7 = Data bus line 7 (MSB)
+
+
+
+;------------------------------------------------------------------------------------------------------
+; Variables
+;------------------------------------------------------------------------------------------------------
+		org	8
+
+		org	10h
+
+		org	30h		;LCD Virtual Peripheral variables
+
+lcd_regs	=	$
+lcd_temp	ds	1		; Temporary register
+lcd_count	ds	1		; Temporary register
+
+delay_regs	=	$
+
+dlycnt1		ds	1		; register used by delay routine
+dlycnt2		ds	1		; register used by delay routine
+
+		org	0
+
+;------------------------------------------------------------------------------------------------------
+; Interrupt routine - virtual peripherals
+;------------------------------------------------------------------------------------------------------
+		
+interrupt
+	reti
+;------------------------------------------------------------------------------------------------------
+
+
+;*************************************************************************
+; LCD initialization code.
+; This code should be called at the beginning of the program to 
+; initialize the LCD display.  It only needs to be called once.
+;*************************************************************************
+lcd_init
+
+	mov 	W,#0			; Delays for 5.1ms at 50MIPS
+	call 	delay
+
+; Set up the LCD I/O first.  RA0-RA3 are all outputs, as are RB0-RB7
+
+	mov 	W, #00h
+	mov 	lcd_control, W		; Set up the latches for when this register is switched to output.
+	mov 	!lcd_control, W		; Switch RA to all outputs, with a 0000 appearing on the pins (Enable is low)
+
+; First, set the data length, number of display lines, and character font.
+;------------------------------------------------------------------------------------------------------
+;	RS-RA2 R/!W-RA3 DB7-RB7	DB6-RB6	DB5-RB5	DB4-RB4	DB3-RB3	DB2-RB2	DB1-RB1	DB0-RB0	Execution Time
+;	0	0	0	0	1	DL	N	F	*	*	40us
+;------------------------------------------------------------------------------------------------------
+; DL--Interface Data Length  		0 = 4-bit interface		1 = 8-bit interface
+; N --Number of Display Lines		0 = 1 line			1 = 2 lines
+; F --Character Font			0 = 5*7 dots			1 = 5*10 dots
+
+	call	lcd_wait_busy		; wait until the LCD is done initializing.
+	mov 	W, #00100010b		; to be sure, duplicate command to change to 4 bits on lower 4.
+	call	lcd_write_command
+	call	nopdel
+	call	nopdel
+	setb 	lcd_E		; Pulse LCD's enable pin.
+	call	nopdel
+	call	nopdel
+	clrb 	lcd_E		; Force LCD to latch the data present on the data bus.
+
+
+	call 	lcd_wait_busy		; Wait until the LCD is finished processing.
+
+	mov 	W, #00101000b		; 
+	call 	lcd_write_command 	; set for for 4 bits, 2 lines, and 5*7 dots
+	call 	lcd_wait_busy		; Wait until the LCD is finished processing.
+
+
+; Next, turn the display on, turn the cursor on, and turn cursor blink on (so we know LCD is alive)
+;------------------------------------------------------------------------------------------------------
+;	RS-RA2 R/!W-RA3 DB7-RB7	DB6-RB6	DB5-RB5	DB4-RB4	DB3-RB3	DB2-RB2	DB1-RB1	DB0-RB0	Execution Time
+;	0	0	0	0	0	0	1	D	C	B	40us
+;------------------------------------------------------------------------------------------------------
+; D --Display ON/OFF control		0 = Display OFF			1 = Display ON
+; C --Cursor ON/OFF control		0 = Cursor OFF			1 = Cursor ON
+; B --Blink ON/OFF control		0 = Blink OFF			1 = Blink ON
+
+	clr	W
+	call 	lcd_write_command
+	call	lcd_wait_busy		; Display off
+
+	mov 	W, #00001111b 
+	call 	lcd_write_command 	; turn display on, cursor on, and blink on..
+	call 	lcd_wait_busy		; Wait until the LCD is finished processing.
+
+; Next, set display so that the cursor moves as characters are entered.
+;------------------------------------------------------------------------------------------------------
+;	RS-RA2 R/!W-RA3 DB7-RB7	DB6-RB6	DB5-RB5	DB4-RB4	DB3-RB3	DB2-RB2	DB1-RB1	DB0-RB0	Execution Time
+;	0	0	0	0	0	1	S/C	R/L	*	*	40us
+;------------------------------------------------------------------------------------------------------
+; S/C--Cursor move/Display Shift	0 = Cursor Move			1 = Shift Display 
+; R/L--Shift Direction			0 = Shift left			1 = Shift right
+
+	mov 	W, #00010000b
+	call 	lcd_write_command 	; set for cursor move and display shift.
+	call 	lcd_wait_busy		; Wait until the LCD is finished processing.
+
+; Next, set entry mode (cursor move direction, shift or no shift).
+;------------------------------------------------------------------------------------------------------
+;	RS-RA2 R/!W-RA3 DB7-RB7	DB6-RB6	DB5-RB5	DB4-RB4	DB3-RB3	DB2-RB2	DB1-RB1	DB0-RB0	Execution Time
+;	0	0	0	0	0	0	0	1	I/D	S	40us ~ 1.64ms
+;------------------------------------------------------------------------------------------------------
+; I/D--Increment/Decrement address	0 = Decrement Cursor Address	1 = Increment Cursor Address 
+; S  --Display shift			0 = No shift			1 = Shift
+
+	mov 	W, #00000110b
+	call 	lcd_write_command 	; set for incrementing address and no shift..
+	call 	lcd_wait_busy		; Wait until the LCD is finished processing.
+	
+	ret	; Return from lcd_init subroutine.
+
+;*************************************************************************
+; End of lcd_init subroutine.
+;*************************************************************************
+
+
+
+;------------------------------------------------------------------------------------------------------
+lcd_write_command
+;------------------------------------------------------------------------------------------------------
+; This function writes the command in W to the LCD display, using the 8-bit interface.  The procedure is:
+; 1.  Clear RS
+; 2.  Set up R/!W
+; 3.  Write the data to the port
+;------------------------------------------------------------------------------------------------------
+	clrb 	lcd_RS		; Drive RS low so LCD knows to write COMMAND.
+	jmp 	lcd_write	; goto WRITE code
+
+lcd_write_data
+;------------------------------------------------------------------------------------------------------
+; This function writes the data in W to the LCD display, using the 8-bit interface.
+; 1.  Set RS
+; 2.  Set up R/!W
+; 3.  Write the data to the port
+;------------------------------------------------------------------------------------------------------
+
+	setb 	lcd_RS		; Drive RS high so LCD knows to write DATA.
+
+lcd_write	
+	bank	lcd_regs	; Switch banks
+	mov	lcd_temp,W	
+	mov	lcd_count,#2
+	clrb 	lcd_RW 		; Drive R/!W low so LCD knows to WRITE.
+	mov	!lcd_data,#00h	; Switch the data pins to outputs
+lcd_write_loop
+	and	lcd_data,#0Fh	; don't destroy the data in the lower 4 latches
+	mov	W,lcd_temp
+	and	W,#0f0h
+	or	lcd_data,W	; Write the data in W to the port latches.
+	call	nopdel
+	call	nopdel
+	setb 	lcd_E		; Pulse LCD's enable pin.
+	call	nopdel
+	call	nopdel
+	clrb 	lcd_E		; Force LCD to latch the data present on the data bus.
+	call	nopdel
+	call	nopdel
+	swap	lcd_temp
+	decsz	lcd_count
+	jmp	lcd_write_loop
+	ret	
+;------------------------------------------------------------------------------------------------------
+;------------------------------------------------------------------------------------------------------
+
+lcd_wait_busy
+; waits until the LCD is ready to accept a command.
+;------------------------------------------------------------------------------------------------------
+;	RS-RA2 R/!W-RA3 DB7-RB7	DB6-RB6	DB5-RB5	DB4-RB4	DB3-RB3	DB2-RB2	DB1-RB1	DB0-RB0	Execution Time
+;	0	1	BF	* ------------------DDRAM Address-------------- *	1us
+;------------------------------------------------------------------------------------------------------
+
+	or	W,#0f0h
+	mov	!lcd_data,W
+	clrb 	lcd_RS		; clear RS for instruction
+	setb 	lcd_RW		; set for READ.	
+	call	nopdel
+	call	nopdel
+	setb 	lcd_E		; set enable high to read busy flag
+	call	nopdel	
+	call	nopdel		; wait for the LCD to tx data.	
+	mov	W,lcd_data	; move the contents of the port to the W register
+	clrb 	lcd_E		; clear LCD enable
+	call	nopdel
+	call	nopdel
+	call	nopdel		; wait for the LCD to tx data.	
+	setb 	lcd_E		; set enable high to read busy flag
+	call	nopdel	
+	call	nopdel		; wait for the LCD to tx data.	
+	clrb 	lcd_E		; clear LCD enable
+	call	nopdel		; Give the LCD some time to itself.
+	call	nopdel
+	call	nopdel
+	call	nopdel
+	call	nopdel
+	and 	W, #080h	; test W for zero (Z is cleared if LCD is busy)
+	sb	Z		; Busy Flag is MSB of data bus
+	jmp	lcd_wait_busy	; loop through again if the LCD is still busy
+	setb	lcd_RW
+	ret			; return from subroutine 
+	
+nopdel	;	returns to main program in 11 cycles (11us@1MIPS) from call
+;------------------------------------------------------------------------------------------------------
+	nop
+	nop 
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	ret
+;------------------------------------------------------------------------------------------------------
+
+delay; (delays for [((w-1) * 1ms )] at 1MIPS, or [((w-1) * 20us)] at 50MIPS ... 0<=W<=255) 
+;****************************************************************************************************** 
+; This function delays for ((W-1)*20us), plus/minus a few ns 
+;****************************************************************************************************** 
+	bank	delay_regs
+	mov 	dlycnt1,W 
+; 
+delay1 
+	decsz 	dlycnt1; 
+	jmp 	loop1; 
+	ret	;	 
+ 
+	loop1 
+	mov 	w,#166; 
+	mov 	dlycnt2,W; 
+
+loop; 
+	nop 
+	nop 
+	nop 
+	decsz 	dlycnt2; 
+	jmp 	loop; 
+	jmp 	delay1; 
+;*************************************************************************************************** 
+	
+;	Main Code
+reset_entry
+main2	
+	call 	lcd_init
+	mov 	W, #001h		; Clear the screen
+	call 	lcd_write_command	
+	call 	lcd_wait_busy		; Wait for the LCD
+Hiloop
+	mov 	W, #'H'			; Write "H"	
+	call 	lcd_write_data
+	call 	lcd_wait_busy		; Wait
+
+	mov 	W, #'i'			; Write "i"	
+	call 	lcd_write_data
+	call 	lcd_wait_busy		; Wait
+
+	mov 	W, #'.'			; Write "."	
+	call 	lcd_write_data
+	call 	lcd_wait_busy		; Wait
+
+	mov 	W, #' '			; Write " "	
+	call 	lcd_write_data
+	call 	lcd_wait_busy		; Wait
+
+	jmp 	Hiloop
+

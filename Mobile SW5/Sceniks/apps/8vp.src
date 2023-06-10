@@ -1,0 +1,2326 @@
+;******************************************************************************
+
+;       SX Demo Enhanced 2.0
+
+;
+
+;
+
+;       Length: 666 bytes (total)
+
+;       Authors: Parallax Inc., Craig Webb
+
+;       Written: 97/03/10 to 98/6/08
+
+;
+
+;       This program implements eight virtual peripherals on Parallax, Inc.'s
+
+;       SX DEMO board. The various virtual peripherals are as follows:
+
+;       
+
+;       1) 16-bit timer/frequency outputs (2)
+
+;       2) Pulse-Width Modulated outputs (2)
+
+;       3) Analog-to-Digital Converter(s) (ADC) (2)
+
+;       4) Universal Asynchronous Receiver Transmitter (UART)
+
+;	5) Time clock (keeps count in msec)
+
+;       6) Software execution path switcher
+
+;	7) Push button detection & debounce (4)
+
+;       8) I2C serial (EEPROM) interface
+
+;
+
+;       All of these peripherals (except the I2C interface) take advantage
+
+;       of the SX's internal RTCC-driven interrupt so that they can operate
+
+;       in the background while the main program loop is executing.
+
+;
+
+;	Improvements over SX Demo original version:
+
+;		- I2C protocol EEPROM store/retrieve subroutines added
+
+;		- push button detection, debounce, and action vectors added
+
+;		- button presses signaled through UART interface
+
+;		- time clock (counts in msec) added with path switcher
+
+;		- 3 new UART user-interface functions added to access EEPROM
+
+;		- faster, shorter timer/freqency output code
+
+;		- faster, shorter analog to digital converter code
+
+;		- bug removed from adc code (adc value=0FFh when input=5V)
+
+;		- faster, shorter UART transmit code
+
+;		- interrupt vector example added
+
+;		- byte received flag (rx_flag) moved to common register bank
+
+;
+
+;******************************************************************************
+
+;
+
+;****** Assembler directives
+
+;
+
+; uses: SX28AC, 2 pages of program memory, 8 banks of RAM, high speed osc.
+
+;       operating in turbo mode, with 8-level stack & extended option reg.
+
+;                
+
+		DEVICE  pins28,pages2,banks8,oschs
+
+		DEVICE  turbo,stackx,optionx
+
+		ID      'SXDemo20'		;program ID label
+
+		RESET   reset_entry             ;set reset/boot address
+
+;
+
+;******************************* Program Variables ***************************
+
+;
+
+; Port Assignment: Bit variables
+
+;
+
+scl             EQU     RA.0                    ;I2C clock
+
+sda             EQU     RA.1                    ;I2C data I/O
+
+rx_pin          EQU     ra.2                    ;UART receive input
+
+tx_pin          EQU     ra.3                    ;UART transmit output
+
+led_pin         EQU     rb.6                    ;LED output
+
+spkr_pin        EQU     rb.7                    ;Speaker output
+
+pwm0_pin        EQU     rc.0                    ;Pulse width mod. PWM0 output
+
+pwm1_pin        EQU     rc.2                    ;Pulse width mod. PWM1 output
+
+adc0_out_pin    EQU     rc.4                    ;ADC0 input pin
+
+adc0_in_pin     EQU     rc.5                    ;ADC0 output/calibrate pin
+
+adc1_out_pin    EQU     rc.6                    ;ADC1 input pin
+
+adc1_in_pin     EQU     rc.7                    ;ADC1 output/calibrate pin
+
+button0		EQU	RB.0			;Push button 0
+
+button1		EQU	RB.1			;Push button 1
+
+button2		EQU	RB.2			;Push button 2
+
+button3		EQU	RB.3			;Push button 3
+
+;
+
+;
+
+;****** Register definitions (bank 0)
+
+;
+
+		org     8                       ;start of program registers
+
+main            =       $                       ;main bank
+
+;
+
+temp            ds      1                       ;temporary storage
+
+byte            ds      1                       ;temporary UART/I2C shift reg.
+
+cmd             ds      1
+
+number_low      ds      1                       ;low byte of rec'd value
+
+number_high     ds      1                       ;high byte of rec'd value
+
+hex             ds      1                       ;value of rec'd hex number
+
+string          ds      1                       ;indirect ptr to output string
+
+flags           DS      1                       ;program flags register
+
+;
+
+got_hex         EQU     flags.0                 ;=1 if hex value after command
+
+seq_flag        EQU     flags.1                 ;I2C: R/W mode (if sequential=1)
+
+got_ack         EQU     flags.2                 ;     if we got ack signal
+
+erasing         EQU     flags.3                 ;     high while erasing eeprom
+
+rx_flag         EQU	flags.4			;signals when a byte is received
+
+;
+
+		org     30h                     ;bank1 variables
+
+timers          =       $                       ;timer bank
+
+;
+
+timer_low       ds      1                       ;timer value low byte
+
+timer_high      ds      1                       ;timer value high byte
+
+timer_accl      ds      1                       ;timer accumulator low byte
+
+timer_acch      ds      1                       ;timer accumulator high byte
+
+
+
+freq_low        ds      1                       ;frequency value low byte
+
+freq_high       ds      1                       ;frequency value high byte
+
+freq_accl       ds      1                       ;frequency accumulator low byte
+
+freq_acch       ds      1                       ;frequency accumulator high byte
+
+;
+
+;
+
+		org     50h                     ;bank2 variables
+
+analog          =       $                       ;pwm and ADC bank
+
+;
+
+port_buff       ds      1                       ;buffer - used by all
+
+pwm0            ds      1                       ;pwm0 - value
+
+pwm0_acc        ds      1                       ;     - accumulator
+
+pwm1            ds      1                       ;pwm1 - value
+
+pwm1_acc        ds      1                       ;     - accumulator
+
+adc0            ds      1                       ;adc0 - value
+
+adc0_count      ds      1                       ;     - real-time count
+
+adc0_acc        ds      1                       ;     - accumulator
+
+adc1            ds      1                       ;adc1 - value
+
+;adc1_count     ds      1                       ;     - real-time count
+
+adc1_acc        ds      1                       ;     - accumulator
+
+;
+
+;
+
+		org     70h                     ;bank3 variables
+
+serial          =       $                       ;UART bank
+
+;
+
+tx_high         ds      1                       ;hi byte to transmit
+
+tx_low          ds      1                       ;low byte to transmit
+
+tx_count        ds      1                       ;number of bits sent
+
+tx_divide       ds      1                       ;xmit timing (/16) counter
+
+rx_count        ds      1                       ;number of bits received
+
+rx_divide       ds      1                       ;receive timing counter
+
+rx_byte         ds      1                       ;buffer for incoming byte
+
+;
+
+; The following three values determine the UART baud rate.
+
+; The value of baud_bit and int_period affect the baud rate as follows:
+
+;  Baud rate = 50MHz/(2^baud_bit * int_period * RTCC_prescaler)
+
+;       Note:   1 =< baud_bit =< 7
+
+;               *int_period must <256 and longer than the length of the slowest
+
+;                       possible interrupt sequence in instruction cycles.
+
+;                       Changing the value of int_period will affect the
+
+;                       rest of the virtual peripherals due to timing issues.
+
+; The start delay value must be set equal to (2^baud_bit)*1.5 + 1
+
+;
+
+; *** 19200 baud
+
+baud_bit        =       4                       ;for 19200 baud
+
+start_delay     =       16+8+1                  ; "    "     "
+
+int_period      =       163                     ; "    "     "
+
+;
+
+; *** 2400 baud (for slower baud rates, increase the RTCC prescaler)
+
+;baud_bit       =       7                       ;for 2400 baud
+
+;start_delay    =       128+64+1                ; "    "    "
+
+;int_period     =       163                     ; "    "    "
+
+;
+
+; *** 115.2k baud (for faster rates, reduce int_period - see above*)
+
+;baud_bit       =       1                       ;for 115.2K baud
+
+;start_delay    =       2+1+1                   ; "    "     "
+
+;int_period     =       217                     ; "    "     "
+
+;
+
+		org     90H                     ;bank4 variables
+
+I2C             EQU     $                       ;I2C bank
+
+;
+
+data            DS      1                       ;data byte from/for R/W
+
+address         DS      1                       ;byte address
+
+count           DS      1                       ;bit count for R/W
+
+delay           DS      1                       ;timing delay for write cycle
+
+byte_count      DS      1                       ;number of bytes in R/W
+
+num_bytes       DS      1                       ;number of byte to view at once
+
+save_addr       DS      1                       ;backup location for address
+
+;
+
+in_bit          EQU     byte.0                  ;bit to receive on I2C
+
+out_bit         EQU     byte.7                  ;bit to transmit on I2C 
+
+;
+
+control_r       =       10100001b               ;control byte: read E2PROM
+
+control_w       =       10100000b               ;control byte: write E2PROM
+
+portsetup_r     =       00000110b               ;Port A config: read bit
+
+portsetup_w     =       00000100b               ;Port A config: write bit
+
+eeprom_size     =       128                     ;storage space of EEPROM
+
+;
+
+t_all           =       31                      ;bit cycle delay (62=5 usec)
+
+;
+
+		org     0B0H			;bank5 variables
+
+clock		EQU     $                       ;clock bank
+
+buttons		EQU     $                       ;push button bank
+
+;
+
+time_base_lo	DS	1			;time base delay (low byte)
+
+time_base_hi	DS	1			;time base delay (high byte)
+
+msec_lo		DS	1			;millisecond count (low)
+
+msec_hi		DS	1			;millisecond count (high)
+
+;
+
+tick_lo		=	80			;instruction count for
+
+tick_hi		=	195			; 50MHz xtal, turbo, prescaler=1
+
+;
+
+debounce0	DS	1			;push button 0 debounce count
+
+debounce1	DS	1			;push button 1 debounce count
+
+debounce2	DS	1			;push button 2 debounce count
+
+debounce3	DS	1			;push button 3 debounce count
+
+pbflags		DS	1			;push button status flags
+
+pb0_pressed	EQU	pbflags.0		;push button 0 action status
+
+pb1_pressed	EQU	pbflags.1		;push button 1 action status
+
+pb2_pressed	EQU	pbflags.2		;push button 2 action status
+
+pb3_pressed	EQU	pbflags.3		;push button 3 action status
+
+pb0_down	EQU	pbflags.4		;push button 0 down status
+
+pb1_down	EQU	pbflags.5		;push button 1 down status
+
+pb2_down	EQU	pbflags.6		;push button 2 down status
+
+pb3_down	EQU	pbflags.7		;push button 3 down status
+
+;
+
+hold_bit	=	3			;debounce period = 2^hold_bit msec
+
+;
+
+;*************************** INTERRUPT VECTOR ******************************
+
+;
+
+; Note: The interrupt code must always originate at 0h.
+
+;	A jump vector is not needed if there is no program data that needs
+
+;	to be accessed by the IREAD instruction, or if it can all fit into
+
+;	the lower half of page 0 with the interrupt routine.
+
+;
+
+		ORG     0                       ;interrupt always at 0h
+
+;		JMP	interrupt		;interrupt vector
+
+;
+
+;***************************** PROGRAM DATA ********************************
+
+;
+
+; String data for user interface (must be in lower half of memory page 0)
+
+;
+
+; <this data has been strategically placed within the interrupt routine,
+
+;  after the path switch VP in order to save the interrupt jump vector byte
+
+;  and the three required instruction cycles.>
+
+;
+
+;**************************** INTERRUPT CODE *******************************
+
+;
+
+; Note: Care should be taken to see that any very timing sensitive routines
+
+;       (such as adcs, etc.) are placed before other peripherals or code
+
+;       which may have varying execution rates (like the UART, for example).
+
+;
+
+interrupt					;beginning of interrupt code
+
+;
+
+;****** Virtual Peripheral: TIMERS (including frequency output)
+
+;
+
+; This routine adds a programmable value to a 16-bit accumulator (a pair of
+
+;  two 8-bit registers) during each pass through the interrupt. It then
+
+;  copies the value from the high bit of the accumulator to the
+
+;  appropriate output port pin (LED, speaker, etc.)
+
+;
+
+;       Input variable(s) : timer_low,timer_high,timer_accl,timer_acch
+
+;       		    freq_low,freq_high,freq_accl,freq_acch
+
+;       Output variable(s) : LED port pin, speaker port pin
+
+;       Variable(s) affected : timer_accl, timer_acch, freq_accl, freq_acch
+
+;       Flag(s) affected : none
+
+;	Size : 1 byte + 10 bytes (per timer)
+
+;       Timing (turbo) : 1 cycle + 10 cycles (per timer)
+
+;
+
+		bank    timers                  ;switch to timer reg. bank
+
+:timer
+
+;               clc                             ;only needed if CARRYX=ON
+
+		add     timer_accl,timer_low    ;adjust timer's accumulator
+
+		addb    timer_acch,c            ; including carry bit
+
+		add     timer_acch,timer_high   ; (timer = 16 bits long)        
+
+		movb    led_pin,timer_acch.7    ;toggle LED (square wave)
+
+:frequency
+
+;               clc                             ;only needed if CARRYX=ON
+
+		add     freq_accl,freq_low      ;adjust freq's accumulator
+
+		addb    freq_acch,c             ; including carry bit
+
+		add     freq_acch,freq_high     ; (freq = 16 bits long) 
+
+		movb    spkr_pin,freq_acch.7    ;toggle speaker(square wave)
+
+;
+
+;
+
+;***** Virtual Peripheral: Pulse Width Modulators
+
+;
+
+; These routines create an 8-bit programmable duty cycle output at the
+
+; respective pwm port output pins whose duty cycle is directly proportional
+
+; to the value in the corresponding pwm register. This value is added to an
+
+; accumulator on each interrupt pass interrupt. When the addition causes a
+
+; carry overflow, the ouput is set to the high part of its duty cycle.
+
+; These routines are timing critical and must be placed before any
+
+; variable-execution-rate code (like the UART, for example).
+
+;
+
+;       Input variable(s) : pwm0,pwm0_acc,pwm1,pwm1_acc
+
+;       Output variable(s) : pwm port pins
+
+;       Variable(s) affected : port_buff, pwm0_acc, pwm1_acc
+
+;       Flag(s) affected : none
+
+;	Size : 2 bytes + 4 bytes (per pwm)
+
+;		+ 2 bytes shared with adc code (see below)
+
+;       Timing (turbo) : 2 cycles + 4 cycles (per pwm)
+
+;			 + 2 cycles shared with adc code (see below)
+
+;
+
+		bank    analog                  ;switch to adc/pwm bank
+
+		clr     port_buff               ;clear pwm/adc port buffer
+
+;
+
+:pwm0           add     pwm0_acc,pwm0           ;adjust pwm0 accumulator
+
+		snc                             ;did it trigger?
+
+		setb    port_buff.0             ;yes, toggle pwm0 high
+
+:pwm1           add     pwm1_acc,pwm1           ;adjust pwm1 accumulator
+
+		snc                             ;did it trigger?
+
+		setb    port_buff.2             ;yes, toggle pwm1 high
+
+;
+
+;*** If the ADC routines are removed, the following instruction must be
+
+;*** enabled (uncommented) for the PWM routine to function properly:
+
+;:update_RC	mov     rc,port_buff            ;update cap. discharge pins
+
+;
+
+;
+
+;***** Virtual Peripheral: Bitstream Analog to Digital Converters
+
+;
+
+; These routines allow an 8-bit value to be calculated which corresponds
+
+; directly (within noise variation limits) with the voltage (0-5V) present
+
+; at the respective adc port input pins. These routines are timing critical
+
+; and must be placed before any variable-execution-rate code (like the UART,
+
+; for example). The currently enabled routine (version A) has been optimized
+
+; for size and speed, and RAM register usage, however a fixed execution rate,
+
+; yet slightly larger/slower routine (version B) is provided in commented
+
+; (disabled) form to simplify building other timing-critical virtual
+
+; peripheral combinations (i.e. that require fixed rate preceeding code).
+
+;    Note: if version B is selected, version A must be disabled (commented)
+
+;
+
+;       Input variable(s) : adc0,adc0_acc,adc0_count,adc1,adc1_acc,adc1_count
+
+;       Output variable(s) : pwm port pins
+
+;       Variable(s) affected : port_buff, pwm0_acc, pwm1_acc
+
+;       Flag(s) affected : none
+
+;	Size (version A) : 9 bytes + 7 bytes (per pwm)
+
+;			   + 2 bytes shared with adc code (see below)
+
+;	Size (version B) : 6 bytes + 10 bytes (per pwm)
+
+;			   + 2 bytes shared with pwm code (see below)
+
+;       Timing (turbo)
+
+;		version A : 2 cycles shared with pwm code (see below) +
+
+;			   (a) [>99% of time] 11 cycles + 4 cycles (per adc)
+
+;			   (b) [<1% of time] 9 cycles + 7 cycles (per adc)
+
+;		version B : 6 cycles + 10 cycles (per adc)
+
+;			    + 2 cycles shared with pwm code (see below)
+
+;
+
+;*** If the PWM routines are removed, the following 2 instructions must
+
+;*** be enabled (uncommented) for the ADC routine to function properly:
+
+;		bank    analog                  ;switch to adc/pwm bank
+
+;		clr     port_buff               ;clear pwm/adc port buffer
+
+
+
+:adcs           mov     w,>>rc                  ;get current status of adc's
+
+		not     w                       ;complement inputs to outputs
+
+		and     w,#%01010000            ;keep only adc0 & adc1
+
+		or      port_buff,w             ;store new value into buffer
+
+:update_RC	mov     rc,port_buff            ;update cap. discharge pins
+
+
+
+;
+
+; VERSION A - smaller, quicker but with variable execution rate
+
+;
+
+:adc0           sb      port_buff.4             ;check if adc0 triggered?
+
+		INCSZ   adc0_acc                ;if so, increment accumulator
+
+		INC     adc0_acc                ; and prevent overflowing
+
+		DEC     adc0_acc                ; by skipping second 'INC'
+
+
+
+:adc1           sb      port_buff.6             ;check if adc1 triggered
+
+		INCSZ   adc1_acc                ;if so, increment accumulator
+
+		INC     adc1_acc                ; and prevent overflowing
+
+		DEC     adc1_acc                ; by skipping second 'INC'
+
+
+
+		INC     adc0_count              ;adjust adc0 timing count
+
+		JNZ     :done_adcs              ;if not done, jump ahead
+
+:update_adc0	MOV     adc0,adc0_acc           ;samples ready, update adc0
+
+:update_adc1	MOV     adc1,adc1_acc           ; update adc1
+
+:clear_adc0	CLR     adc0_acc                ; reset adc0 accumulator
+
+:clear_adc1	CLR     adc1_acc                ; reset adc1 accumulator
+
+;
+
+; <end of version A>
+
+;
+
+; VERSION B - fixed execution rate
+
+;
+
+;*** The "adc1_count" register definition in the analog bank definition 
+
+;*** section must be enabled (uncommented) for this routine to work properly
+
+;
+
+;:adc0		sb	port_buff.4		;check if adc0 triggered
+
+;		INCSZ   adc0_acc                ;if so, increment accumulator
+
+;		INC     adc0_acc                ; and prevent overflowing
+
+;		DEC     adc0_acc                ; by skipping second 'INC'
+
+;		mov	w,adc0_acc		;load W from accumulator
+
+;		inc	adc0_count		;adjust adc0 timing count
+
+;		snz				;are we done taking reading?
+
+;		mov	adc0,w			;if so, update adc0
+
+;		snz				;
+
+;		clr	adc0_acc		;if so, reset accumulator
+
+;
+
+;:adc1		sb	port_buff.6		;check if adc1 triggered
+
+;		INCSZ   adc1_acc                ;if so, increment accumulator
+
+;		INC     adc1_acc                ; and prevent overflowing
+
+;		DEC     adc1_acc                ; by skipping second 'INC'
+
+;		mov	w,adc1_acc		;load W from accumulator
+
+;		inc	adc1_count		;adjust adc1 timing count
+
+;		snz				;are we done taking reading?
+
+;		mov	adc1,w			;if so, update adc1
+
+;		snz				;
+
+;		clr	adc1_acc		;if so, reset accumulator
+
+;
+
+; <end of version B>
+
+;
+
+
+
+:done_adcs
+
+
+
+;
+
+;**** Virtual Peripheral: Universal Asynchronous Receiver Transmitter (UART)
+
+;
+
+; This routine sends and receives RS232C serial data, and is currently
+
+; configured (though modifications can be made) for the popular
+
+; "No parity-checking, 8 data bit, 1 stop bit" (N,8,1) data format.
+
+; RECEIVING: The rx_flag is set high whenever a valid byte of data has been
+
+; received and it the calling routine's responsibility to reset this flag
+
+; once the incoming data has been collected.
+
+; TRANSMITTING: The transmit routine requires the data to be inverted
+
+; and loaded (tx_high+tx_low) register pair (with the inverted 8 data bits
+
+; stored in tx_high and tx_low bit 7 set high to act as a start bit). Then
+
+; the number of bits ready for transmission (10=1 start + 8 data + 1 stop)
+
+; must be loaded into the tx_count register. As soon as this latter is done,
+
+; the transmit routine immediately begins sending the data.
+
+; This routine has a varying execution rate and therefore should always be
+
+; placed after any timing-critical virtual peripherals such as timers,
+
+; adcs, pwms, etc.
+
+; Note: The transmit and receive routines are independent and either may be
+
+;	removed, if not needed, to reduce execution time and memory usage,
+
+;	as long as the initial "BANK serial" (common) instruction is kept.
+
+;
+
+;       Input variable(s) : tx_low (only high bit used), tx_high, tx_count
+
+;       Output variable(s) : rx_flag, rx_byte
+
+;       Variable(s) affected : tx_divide, rx_divide, rx_count
+
+;       Flag(s) affected : rx_flag
+
+;	Size : Transmit - 15 bytes + 1 byte shared with receive code
+
+;		Receive - 20 bytes + 1 byte shared with transmit code
+
+;       Timing (turbo) : 
+
+;	       Transmit - (a) [not sending] 9 cycles
+
+;			  (b) [sending] 19 cycles
+
+;			  + 1 cycle shared with RX code ("bank" instr.)
+
+;		Receive - (a) [not receiving] 9 cycles
+
+;			  (b) [start receiving] 16 cycles
+
+;			  (c) [receiving, awaiting bit] 13 cycles
+
+;			  (d) [receiving, bit ready] 17 cycles
+
+;
+
+;
+
+		bank    serial                  ;switch to serial register bank
+
+
+
+:transmit       clrb    tx_divide.baud_bit      ;clear xmit timing count flag
+
+		inc     tx_divide               ;only execute the transmit routine
+
+		STZ                             ;set zero flag for test
+
+		SNB     tx_divide.baud_bit      ; every 2^baud_bit interrupt
+
+		test    tx_count                ;are we sending?
+
+		JZ      :receive                ;if not, go to :receive
+
+		clc                             ;yes, ready stop bit
+
+		rr      tx_high                 ; and shift to next bit
+
+		rr      tx_low                  ;
+
+		dec     tx_count                ;decrement bit counter
+
+		movb    tx_pin,/tx_low.6        ;output next bit
+
+;
+
+:receive        movb    c,rx_pin                ;get current rx bit
+
+		test    rx_count                ;currently receiving byte?
+
+		jnz     :rxbit                  ;if so, jump ahead
+
+		mov     w,#9                    ;in case start, ready 9 bits
+
+		sc                              ;skip ahead if not start bit
+
+		mov     rx_count,w              ;it is, so renew bit count
+
+		mov     rx_divide,#start_delay  ;ready 1.5 bit periods
+
+:rxbit          djnz    rx_divide,:rxdone       ;middle of next bit?
+
+		setb    rx_divide.baud_bit      ;yes, ready 1 bit period
+
+		dec     rx_count                ;last bit?
+
+		sz                              ;if not
+
+		rr      rx_byte                 ;  then save bit
+
+		snz                             ;if so
+
+		setb    rx_flag                 ;  then set flag
+
+:rxdone
+
+;
+
+;****** Virtual Peripheral: Time Clock
+
+;
+
+; This routine maintains a real-time clock count (in msec) and allows processing
+
+; of routines which only need to be run once every millisecond.
+
+;
+
+;       Input variable(s) : time_base_lo,time_base_hi,msec_lo,msec_hi
+
+;       Output variable(s) : msec_lo,msec_hi
+
+;       Variable(s) affected : time_base_lo,time_base_hi,msec_lo,msec_hi
+
+;       Flag(s) affected : 
+
+;	Size : 18 bytes
+
+;       Timing (turbo) : [99.9% of time] 15 cycles
+
+;			 [0.1% of time] 18 cycles
+
+;
+
+		BANK	clock			;select clock register bank
+
+		MOV	W,#int_period		;load period between interrupts
+
+		ADD	time_base_lo,W		;add it to time base
+
+		SNC				;skip ahead if no underflow
+
+		INC	time_base_hi		;yes overflow, adjust high byte
+
+		MOV	W,#tick_hi		;check for 1 msec click
+
+		MOV	W,time_base_hi-W	;Is high byte above or equal?
+
+		MOV	W,#tick_lo		;load instr. count low byte
+
+		SNZ				;If hi byte equal, skip ahead
+
+		MOV	W,time_base_lo-W	;check low byte vs. time base
+
+		SC				;skip ahead if low
+
+		JMP	done_int		;If not, end interrupt
+
+:got_tick	CLR	time_base_hi		;Yes, adjust time_base reg.'s
+
+		SUB	time_base_lo,#tick_lo	; leaving time remainder
+
+		INCSZ	msec_lo			;And adjust msec count
+
+		DEC	msec_hi			; making sure to adjust high
+
+		INC	msec_hi			; byte as necessary
+
+:done_clock
+
+
+
+
+
+;this next line is needed only to allow flashing the pb0 & pb1 LEDs
+
+		MOV	!RB,#00001111b		;set up pb's as inputs
+
+
+
+
+
+;****** Virtual Peripheral: Path Switch
+
+;
+
+; This routine allows alternating execution of multiple modules which don't
+
+; need to be run during every interrupt pass in order to reduce the overall
+
+; execution time of the interrupt on any given pass (i.e. it helps the code
+
+; run faster).
+
+; This version runs with the software clock virtual peripheral msec_lo variable
+
+; allowing altenation between the switch positions once each millisecond.
+
+;
+
+;       Input variable(s) : msec_lo
+
+;       Output variable(s) : 
+
+;       Variable(s) affected : 
+
+;       Flag(s) affected : 
+
+;	Size : 3 bytes + 1 bytes per jump location
+
+;       Timing (turbo) : 8 cycles
+
+;
+
+:path_switch	MOV	W,msec_lo		;load switch selector byte
+
+		AND	W,#00000011b		;keep low 2 bits - 4 position
+
+		JMP	PC+W			;jump to switch position pointer
+
+:pos0		JMP	pb0			;pushbutton 0 checking routine
+
+:pos1		JMP	pb1			;pushbutton 1 checking routine
+
+:pos2		JMP	pb2			;pushbutton 2 checking routine
+
+:pos3		JMP	pb3			;pushbutton 3 checking routine
+
+;
+
+;
+
+;***************************** PROGRAM DATA ********************************
+
+;
+
+; String data for user interface (must be in lower half of memory page 0)
+
+;
+
+_hello          dw      13,10,13,10,'SX Virtual Peripheral Demo 2.0'
+
+_cr             DW      13,10,0
+
+_prompt         dw      13,10,'>',0
+
+_error          dw      'Error!',13,10,0
+
+_hex            dw      '0123456789ABCDEF'
+
+_space          DW      ' ',0
+
+_sample         DW      13,10,'Sample=',0
+
+_view           DW      13,10,'Bytes stored:',0
+
+_pressed	DW	13,10,'Pressed: button ',0
+
+;
+
+;
+
+;****** Virtual Peripheral: Push Buttons*
+
+;
+
+; This routine monitors any number of pushbuttons, debounces them properly
+
+; as needed, and flags the main program code as valid presses are received.
+
+; *Note: this routine requires the Time Clock virtual peripheral or similar
+
+;	 pre-processing timer routine.
+
+;
+
+;       Input variable(s) : pb0_down,pb1_down,debounce0,debounce1
+
+;       		    pb2_down,pb3_down,debounce2,debounce3
+
+;       Output variable(s) : pb0_pressed, pb1_pressed, pb2_pressed, pb3_pressed
+
+;       Variable(s) affected : debounce0, debounce1, debounce2, debounce3
+
+;       Flag(s) affected : pb0_down,pb1_down,pb0_pressed,pb1_pressed
+
+;       		   pb2_down,pb3_down,pb2_pressed,pb3_pressed
+
+;	Size : 12 bytes per pushbutton + actions (see below**)
+
+;		+ 1 byte if path switch not used
+
+;       Timing (turbo) : 7,10, or 12 cycles/pushbutton (unless path switch used)
+
+;			 + actions (see below**)
+
+;
+
+pb0		
+
+;		BANK	buttons			;select bank (if not done elsewhere)
+
+		JB	button0,:pb0_up		;button0 pressed?
+
+		JB	pb0_down,:done_pb0	;yes, but is it new press?
+
+		INC	debounce0		; and adjust debounce count
+
+		JNB	debounce0.hold_bit,:done_pb0	;wait till long enough
+
+		SETB	pb0_down		;yes, flag that button is down
+
+
+
+;**If the button activity is short (a few bytes), it can fit here, though be
+
+; careful that longest possible interrupt doesn't exceed int_period # of cycles.
+
+;
+
+; <short code segment can go here>
+
+;
+
+;**Otherwise, use this flag to process button press in main code (and don't
+
+; forget to reset the flag once the button activity is complete).
+
+		SETB	pb0_pressed		; and set pb0 action flag
+
+
+
+		SKIP				;skip next instruction
+
+:pb0_up		CLRB	pb0_down		;button up, clear flag
+
+		CLR	debounce0		; and clear debounce count
+
+:done_pb0
+
+;
+
+		JMP	done_int		;this needed only if path switch used
+
+
+
+
+
+pb1		
+
+;		BANK	buttons			;do bank select (if not done elsewhere)
+
+		JB	button1,:pb1_up		;button1 pressed?
+
+		JB	pb1_down,:done_pb1	;yes, but is it new press?
+
+		INC	debounce1		; and adjust debounce count
+
+		JNB	debounce1.hold_bit,:done_pb1	;wait till long enough
+
+		SETB	pb1_down		;yes, flag that button is down
+
+
+
+;**If the button activity is short (a few bytes), it can fit here, though be
+
+; careful that longest possible interrupt doesn't exceed int_period # of cycles.
+
+;
+
+; <short code segment can go here>
+
+;
+
+;**Otherwise, use this flag to process button press in main code (and don't
+
+; forget to reset the flag once the button activity is complete).
+
+		SETB	pb1_pressed		; and set pb1 action flag
+
+
+
+		SKIP				;skip next instruction
+
+:pb1_up		CLRB	pb1_down		;button up, clear flag
+
+		CLR	debounce1		; and clear debounce count
+
+:done_pb1
+
+;
+
+		JMP	done_int		;this needed only if path switch used
+
+
+
+
+
+pb2
+
+;		BANK	buttons			;do bank select (if not done elsewhere)
+
+		JB	button2,:pb2_up		;button2 pressed?
+
+		JB	pb2_down,:done_pb2	;yes, but is it new press?
+
+		INC	debounce2		; and adjust debounce count
+
+		JNB	debounce2.hold_bit,:done_pb2	;wait till long enough
+
+		SETB	pb2_down		;yes, flag that button is down
+
+
+
+;**If the button activity is short (a few bytes), it can fit here, though be
+
+; careful that longest possible interrupt doesn't exceed int_period # of cycles.
+
+;
+
+;**Otherwise, use this flag to process button press in main code (and don't
+
+;  orget to reset the flag once the button activity is complete).
+
+		SETB	pb2_pressed		; and set pb2 action flag
+
+
+
+		SKIP				;skip next instruction
+
+:pb2_up		CLRB	pb2_down		;button up, clear flag
+
+		CLR	debounce2		; and clear debounce count
+
+:done_pb2
+
+;
+
+
+
+		JMP	done_int		;this needed only if path switch used
+
+
+
+pb3		
+
+;		BANK	buttons			;do bank select (if not done elsewhere)
+
+		JB	button3,:pb3_up		;button3 pressed?
+
+		JB	pb3_down,:done_pb3	;yes, but is it new press?
+
+		INC	debounce3		; and adjust debounce count
+
+		JNB	debounce3.hold_bit,:done_pb3	;wait till long enough
+
+		SETB	pb3_down		;yes, flag that button is down
+
+
+
+;**If the button activity is short (a few bytes), it can fit here, though be
+
+;  careful that longest possible interrupt doesn't exceed int_period # of cycles.
+
+;
+
+;**Otherwise, use this flag to process button press in main code (and don't
+
+;  forget to reset the flag once the button activity is complete).
+
+		SETB	pb3_pressed		; and set pb3 action flag
+
+
+
+		SKIP				;skip next instruction
+
+:pb3_up		CLRB	pb3_down		;button up, clear flag
+
+		CLR	debounce3		; and clear debounce count
+
+:done_pb3
+
+;
+
+
+
+
+
+;***these next 7 lines are needed only to allow flashing the pb0 & pb1 LEDs
+
+		MOV	!RB,#00001100b		;return pb's to LED outputs
+
+		SETB	button0			;flash pb0 LED
+
+		SB	msec_hi.1		; roughly once/sec
+
+		CLRB	button0			;
+
+		CLRB	button1			; alternating with pb1 LED
+
+		SB	msec_hi.1		;
+
+		SETB	button1			;	
+
+
+
+done_int					;interrupt routines complete
+
+;
+
+; Maximum interrupt length = 21 (timers:2) + 12 (PWMs:2) + 23 (ADCs:2) + 37 (UART)
+
+;				+ 18 (clock) + 8 (switch) + (12) (PBs) + 10 (leds)
+
+;				+ 4 (next two instr.) + 6 (RTCC interrupt processing)
+
+;			   = 163 cycles  (must be =< int_period)
+
+		mov     w,#-int_period          ;interrupt every 'int_period' clocks
+
+		retiw                           ;exit interrupt
+
+;
+
+;******	End of interrupt sequence
+
+;
+
+;************************** RESET ENTRY POINT *****************************
+
+;
+
+reset_entry	PAGE	start			;Set page bits and then
+
+		JMP	start			; jump to start of code
+
+
+
+;***************************** SUBROUTINES *********************************
+
+;
+
+; Note: These subroutines must appear in the lower 256 bytes of any given
+
+;       memory page. Here, page 1 (=200h) is used. Remember to set page bits
+
+;        when accessing them from other than page 2 of program memory.
+
+		ORG     200h
+
+;
+
+;
+
+; Subroutine - Get byte via serial port
+
+;
+
+get_byte
+
+;the following code watches pb0-pb3 for presses and acts on them
+
+		BANK	buttons			;select clock/pb bank
+
+		MOV	W,pbflags		;load pushbutton flags
+
+		BANK	serial			;re-select serial bank
+
+		AND	W,#00001111b		;keep only 'pressed' flags
+
+		JZ	:no_press		;jump ahead if not pressed
+
+		MOV	temp,W			;store flags temporarily
+
+		MOV	W,#_pressed		;point to "pressed" string
+
+		CALL	send_string		;send it out via UART	
+
+		CLR	string			;clear 2nd temp storage reg.
+
+:which_pb	INC	string			;increment 2nd temp value
+
+		RR	temp			;check which button
+
+		SC				;skip ahead if not this one
+
+		JMP	:which_pb		;keep looping
+
+		MOV	W,--string		;get 2nd temp value (less 1)
+
+		MOV	temp,W			;save it in temp
+
+		MOV	W,#'0'			;get the '0' character
+
+		ADD	W,temp			;and adjust it as needed
+
+		CALL	send_byte		;and send it out via UART
+
+		BANK	buttons			;select button bank
+
+		MOV	W,#11110000b		;get clear mask for pbflags
+
+		AND	pbflags,W		;clear all "pressed" flags
+
+		MOV	W,temp			;get which button pressed
+
+		JMP	PC+W			;Go do PB routines
+
+:pb0		JMP	pb0_action		;do pb0 action	
+
+:pb1		JMP	pb1_action		;do pb1 action	
+
+:pb2		JMP	pb2_action		;do pb2 action	
+
+:pb3		JMP	pb3_action		;do pb3 action	
+
+
+
+:no_press	jnb     rx_flag,get_byte	;wait till byte is received
+
+		clrb    rx_flag                 ;reset the receive flag
+
+		mov     byte,rx_byte            ;store byte (copy using W)
+
+						; & fall through to echo char back
+
+;
+
+; Subroutine - Send byte via serial port
+
+;
+
+send_byte       bank    serial
+
+
+
+:wait           test    tx_count                ;wait for not busy
+
+		jnz     :wait                   ;
+
+
+
+		not     w                       ;ready bits (inverse logic)
+
+		mov     tx_high,w               ; store data byte
+
+		setb    tx_low.7                ; set up start bit
+
+		mov     tx_count,#10            ;1 start + 8 data + 1 stop bit
+
+		RETP                            ;leave and fix page bits
+
+;
+
+; Subroutine - Send hex byte (2 digits)
+
+;
+
+send_hex        mov     w,#_cr                  ;get <cr> with <lf>
+
+		call    send_string             ; and send it
+
+:num_only       mov     w,<>number_low          ;get first digit
+
+		call    :digit                  ; and send it
+
+		mov     w,number_low            ;load 2nd digit
+
+
+
+:digit          and     w,#$F                   ;read hex chr
+
+		mov     temp,w                  ; and store it temporarily
+
+		mov     w,#_hex                 ;load hex table address
+
+;               clc                             ;only needed if CARRYX used
+
+		add     w,temp                  ;calculate hex table offset
+
+		mov     m,#0                    ; and go get the appropriate
+
+		iread                           ; character with indirect
+
+		mov     m,#$F                   ; addressing using MODE reg.
+
+		jmp     send_byte               ;go send hex character
+
+;
+
+;
+
+; Subroutine - Send string pointed to by address in W register
+
+;
+
+send_string     mov     string,w                ;store string address
+
+:loop           mov     w,string                ;read next string character
+
+		mov     m,#0                    ; with indirect addressing
+
+		iread                           ; using the mode register
+
+		mov     m,#$F                   ;reset the mode register
+
+		test    w                       ;are we at the last char?
+
+		snz                             ;if not=0, skip ahead
+
+		RETP                            ;yes, leave & fix page bits
+
+		call    send_byte               ;not 0, so send character
+
+		inc     string                  ;point to next character
+
+		jmp     :loop                   ;loop until done
+
+;
+
+;
+
+; Subroutine - Make byte uppercase
+
+;
+
+uppercase       csae    byte,#'a'               ;if byte is lowercase, then skip ahead
+
+		ret
+
+
+
+		sub     byte,#'a'-'A'           ;change byte to uppercase
+
+		RETP                            ;leave and fix page bits
+
+;
+
+; Subroutine - Convert hex number from ascii
+
+;
+
+get_hex         clr     number_low              ;reset number
+
+		clr     number_high
+
+		CLRB    got_hex                 ;reset hex value flag
+
+:loop           call    get_byte                ;get digit
+
+		cje     byte,#' ',:loop         ;ignore spaces
+
+		mov     w,<>byte                ;get nibble-swapped byte
+
+		mov     hex,w                   ; into hex register
+
+		cjb     byte,#'0',:done         ;if below '0', done
+
+		cjbe    byte,#'9',:got          ;if '0'-'9', got hex digit
+
+		call    uppercase               ;make byte uppercase
+
+		cjb     byte,#'A',:done         ;if below 'A', done
+
+		cja     byte,#'F',:done         ;if above 'F', done
+
+		add     hex,#$90                ;'A'-'F', adjust hex digit
+
+:got            mov     temp,#4                 ;shift digit into number
+
+:shift          rl      hex                     ; by rotating
+
+		rl      number_low              ; all three registers
+
+		rl      number_high             ; left 4 times
+
+		djnz    temp,:shift             ;
+
+		SETB    got_hex                 ;flag that we got a value
+
+		jmp     :loop                   ;go get next digit
+
+:cr             call    get_byte                ;get a byte via serial port
+
+:done           cjne    byte,#13,:cr            ;loop until it's a <cr>
+
+		RETP                            ;leave and fix page bits
+
+;
+
+;
+
+;******************************** I2C Subroutines *****************************
+
+;
+
+; These routines write/read data to/from the 24LCxx EEPROM at a rate of approx.
+
+; 200kHz. For faster* reads (up to 400 kHz max), read, write, start amd stop
+
+; bit cycles and time between each bus access must be individually tailored
+
+; using the CALL Bus_delay:custom entry point with appropriate values in the W
+
+; register - in turbo mode: delay[usec] = 1/xtal[MHz] * (6 + 4 * (W-1)).
+
+; Acknowledge polling is used to reduce delays between successive operations 
+
+; where the first of the two is a write operation. In this case, the speed
+
+; is limited by the EEPROM's storage time.
+
+;
+
+;
+
+;****** Subroutine(s) : Write to I2C EEPROM
+
+; These routines write a byte to the 24LCxxB EEPROM. Before calling this
+
+; subroutine, the address and data registers should be loaded accordingly. The
+
+; sequential mode flag should be clear for normal byte writing operation.
+
+; To write in sequential/page mode, please see application note. 
+
+;
+
+;       Input variable(s) : data, address, seq_flag
+
+;       Output variable(s) : none
+
+;       Variable(s) affected : byte, temp, count, delay
+
+;       Flag(s) affected : none
+
+;       Timing (turbo) : approx. 200 Kbps write rate
+
+;                      : approx. 10 msec between successive writes
+
+;
+
+I2C_write       CALL    Set_address             ;write address to slave
+
+:page_mode      MOV     W,data                  ;get byte to be sent
+
+		CALL    Write_byte              ;Send data byte
+
+		JB      seq_flag,:done          ;is this a page write?
+
+		CALL    Send_stop               ;no, signal stop condition
+
+:done           RETP                            ;leave and fix page bits
+
+;
+
+Set_address     CALL    Send_start              ;send start bit
+
+		MOV     W,#control_w            ;get write control byte
+
+		CALL    Write_byte              ;Write it & use ack polling
+
+		JNB     got_ack,Set_address     ; until EEPROM ready
+
+		MOV     W,address               ;get EEPROM address pointer
+
+		CALL    Write_byte              ; and send it
+
+		RETP                            ;leave and fix page bits
+
+;
+
+Write_byte      MOV     byte,W                  ;store byte to send
+
+		MOV     count,#8                ;set up to write 8 bits
+
+:next_bit       CALL    Write_bit               ;write next bit
+
+		RL      byte                    ;shift over to next bit
+
+		DJNZ    count,:next_bit         ;whole byte written yet?
+
+		CALL    Read_bit                ;yes, get acknowledge bit
+
+		SETB    got_ack                 ;assume we got it
+
+		SNB     in_bit                  ;did we get ack (low=yes)?
+
+		CLRB    got_ack                 ;if not, flag it
+
+;
+
+; to use the LED as a 'no_ack' signal, the ':toggle_led' line in the interrupt
+
+;  section must be commented out, and the next 3 instructions uncommented.
+
+;               CLRB    led_pin                 ;default: LED off
+
+;               SNB     in_bit                  ;did we get ack (low=yes)?
+
+;               SETB    led_pin                 ; if not, flag it with LED
+
+;
+
+		RETP                            ;leave and fix page bits
+
+;
+
+Write_bit       MOVB    sda,out_bit             ;put tx bit on data line
+
+		MOV     !ra,#portsetup_w        ;set Port A up to write
+
+		JMP     :delay1                 ;100ns data setup delay
+
+:delay1         JMP     :delay2                 ; (note: 250ns at low power)
+
+:delay2         SETB    scl                     ;flip I2C clock to high
+
+;               MOV     W,#t_high                       ;get write cycle timing*
+
+		CALL    Bus_delay               ;do delay while bus settles
+
+		CLRB    scl                     ;return I2C clock low
+
+		MOV     !ra,#portsetup_r        ;set sda->input in case ack
+
+;               MOV     W,#t_low                ;get clock=low cycle timing*
+
+		CALL    Bus_delay               ;allow for clock=low cycle
+
+		RETP                            ;leave and fix page bits
+
+;
+
+Send_start      SETB    sda                     ;pull data line high
+
+		MOV     !ra,#portsetup_w        ;setup I2C to write bit
+
+		JMP     :delay1                 ;100ns data setup delay
+
+:delay1         JMP     :delay2                 ; (note: 250ns at low power)
+
+:delay2         SETB    scl                     ;pull I2C clock high
+
+;               MOV     W,#t_su_sta             ;get setup cycle timing*
+
+		CALL    Bus_delay               ;allow start setup time
+
+:new            CLRB    sda                     ;data line goes high->low
+
+;               MOV     W,#t_hd_sta             ;get start hold cycle timing*
+
+		CALL    Bus_delay               ;allow start hold time          
+
+		CLRB    scl                     ;pull I2C clock low
+
+;               MOV     W,#t_buf                ;get bus=free cycle timing*
+
+		CALL    Bus_delay               ;pause before next function             
+
+		RETP                            ;leave and fix page bits
+
+;
+
+Send_stop       CLRB    sda                     ;pull data line low
+
+		MOV     !ra,#portsetup_w        ;setup I2C to write bit
+
+		JMP     :delay1                 ;100ns data setup delay
+
+:delay1         JMP     :delay2                 ; (note: 250ns at low power)
+
+:delay2         SETB    scl                     ;pull I2C clock high
+
+;               MOV     W,#t_su_sto             ;get setup cycle timing*
+
+		CALL    Bus_delay               ;allow stop setup time
+
+		SETB    sda                     ;data line goes low->high
+
+;               MOV     W,#t_low                ;get stop cycle timing*
+
+		CALL    Bus_delay               ;allow start/stop hold time             
+
+		RETP                            ;leave and fix page bits
+
+;
+
+Bus_delay       MOV     W,#t_all                ;get timing for delay loop
+
+:custom         MOV     temp,W                  ;save it
+
+:loop           DJNZ    temp,:loop              ;do delay
+
+		RETP                            ;leave and fix page bits
+
+;
+
+;****** Subroutine(s) : Read from I2C EEPROM
+
+; These routines read a byte from a 24LCXXB E2PROM either from a new address
+
+; (random access mode), from the current address in the EEPROM's internal
+
+; address pointer (CALL Read_byte:current), or as a sequential read. In either
+
+; the random access or current address mode, seq_flag should be clear. Please
+
+; refer to the application note on how to access the sequential read mode.
+
+;
+
+;       Input variable(s) : address, seq_flag
+
+;       Output variable(s) : data
+
+;       Variable(s) affected : byte, temp, count, delay
+
+;       Flag(s) affected : none
+
+;       Timing (turbo) : reads at approx. 200Kbps 
+
+;
+
+I2C_read        CALL    Set_address             ;write address to slave
+
+:current        CALL    Send_start              ;signal start of read
+
+		MOV     W,#control_r            ; get read control byte
+
+		CALL    Write_byte              ; and send it
+
+:sequential     MOV     count,#8                ;set up for 8 bits
+
+		CLR     byte                    ;zero result holder
+
+:next_bit       RL      byte                    ;shift result for next bit
+
+		CALL    Read_bit                ;get next bit
+
+		DJNZ    count,:next_bit         ;got whole byte yet?
+
+		MOV     data,byte               ;yes, store what was read
+
+		SB      seq_flag                ;is this a sequential read?
+
+:non_seq        JMP     Send_stop               ; no, signal stop & exit
+
+		CLRB    out_bit                 ; yes, setup acknowledge bit
+
+		CALL    Write_bit               ;   and send it
+
+		RETP                            ;leave and fix page bits
+
+;
+
+Read_bit        CLRB    in_bit                  ;assume input bit low
+
+		MOV     !ra,#portsetup_r        ;set Port A up to read
+
+		SETB    scl                     ;flip I2C clock to high
+
+;               MOV     W,#t_high               ;get read cycle timing*
+
+		CALL    Bus_delay               ;Go do delay
+
+		SNB     sda                     ;is data line high?
+
+		SETB    in_bit                  ;yes, switch input bit high
+
+		CLRB    scl                     ;return I2C clock low
+
+;               MOV     W,#t_buf                ;get bus=free cycle timing*
+
+		CALL    Bus_delay               ;Go do delay
+
+		RETP                            ;leave and fix page bits
+
+;
+
+;
+
+Take_sample     BANK    analog                  ;switch to analog bank
+
+		MOV     W,ADC1                  ;get ADC1 value
+
+		BANK    I2C                     ;switch to EEPROM bank
+
+		SNB     got_hex                 ;did user enter a value?
+
+		MOV     W,number_low            ;yes, load it instead
+
+		MOV     data,W                  ;save ADC1 value
+
+		CALL    I2C_Write               ;store it in EEPROM
+
+		INC     address                 ;move to next address
+
+		INC     byte_count              ;adjust # bytes stored
+
+		MOV     W,eeprom_size           ;get memory size
+
+		MOV     W,address-W             ;are we past end?
+
+		SNZ                             ;if not, skip ahead
+
+		CLR     address                 ;if so, reset it
+
+:done           RETP                            ;leave and fix page bits
+
+;
+
+Erase_Mem       CLR     address                 ;restore address pointer
+
+		SETB    erasing                 ;flag erase operation
+
+		MOV     num_bytes,#eeprom_size  ;wipe whole mem
+
+:wipeloop       CLR     data                    ;byte to wipe with=0
+
+;               MOV     data,address            ;byte to wipe with=addr
+
+		CALL    I2C_write               ;wipe EEPROM byte
+
+		INC     address                 ;move to next address
+
+		DJNZ    num_bytes,:wipeloop     ;Erased enough yet?
+
+		CLR     byte_count              ;done, reset stored count
+
+		CLR     save_addr               ;reset backup address
+
+		MOV     W,#eeprom_size          ;load mem size into W
+
+		CALL    View_mem:all            ; and view cleared memory
+
+		CLRB    erasing                 ;flag operation done    
+
+		RETP                            ;leave and fix page bits
+
+;
+
+View_Mem        MOV     W,byte_count            ;get # bytes stored
+
+:all            MOV     num_bytes,W             ;store it into view count
+
+		MOV     W,#_view                ;get view message
+
+		CALL    send_string             ;dump it
+
+		BANK    I2C                     ;switch to EEPROM bank
+
+		MOV     number_low,byte_count   ;get byte storage count
+
+		CALL    send_hex:num_only       ;dump it
+
+		BANK    I2C                     ;switch to I2C bank
+
+		MOV     W,#0                    ;Address = start of EEPROM
+
+		JMP     :address                ;Go store address
+
+:single         MOV     num_bytes,#1            ;only a single byte
+
+		MOV     W,number_low            ;get the address pointer
+
+:address        MOV     address,W               ;store requested address
+
+		MOV     W,#_cr                  ;get carriage return
+
+:dump		CALL    send_string             ;send it
+
+		BANK    I2C                     ;Switch to I2C bank
+
+		SB      erasing                 ;viewing after erase cycle
+
+		SNB     got_hex                 ; or special hex value?
+
+		JMP     :viewloop               ;yes, go dump it
+
+		TEST    save_addr               ;no, is EEPROM empty?
+
+		SNZ                             ;if not, skip ahead
+
+		JMP     :done                   ;yes, so leave
+
+:viewloop       CALL    I2C_read                ;fetch byte from EEPROM
+
+		MOV     number_low,data         ;setup to send it
+
+		CALL    send_hex:num_only       ;transmit it (RS232)
+
+		BANK    I2C                     ;switch to I2C bank
+
+		DEC     num_bytes               ;decrement byte count
+
+		SNZ                             ;skip ahead if not done
+
+		JMP     :done                   ;all bytes dumped, exit
+
+		INC     address                 ;move to next address
+
+		MOV     W,#00001111b            ;keep low nibble
+
+		AND     W,address               ; of address pointer
+
+		MOV     W,#_space               ;default=send a space
+
+		SNZ                             ;have we done 16 bytes?
+
+		MOV     W,#_cr                  ;yes, point to a <cr>
+
+		JMP     :dump                   ;go dump it and continue
+
+:done           MOV     address,save_addr       ;restore address pointer
+
+		RETP                            ;leave and fix page bits
+
+;
+
+;************************** End of I2C Subroutines ****************************
+
+;
+
+;********
+
+;* Main *
+
+;********
+
+;
+
+start		mov      ra,#%1011              ;initialize port RA
+
+		mov     !ra,#%0100              ;Set RA in/out directions
+
+		mov      rb,#%10000000          ;initialize port RB
+
+		mov     !rb,#%00001111          ;Set RB in/out directions
+
+		clr     rc                      ;initialize port RC
+
+		mov     !rc,#%10101010          ;Set RC in/out directions
+
+		mov     m,#$D                   ;set input levels
+
+		mov     !rc,#0                  ; to cmos on port C
+
+		mov     m,#$F                   ;reset mode register
+
+		CLR     FSR                     ;reset all ram starting at 08h
+
+:zero_ram       SB      FSR.4                   ;are we on low half of bank?
+
+		SETB    FSR.3                   ;If so, don't touch regs 0-7
+
+		CLR     IND                     ;clear using indirect addressing
+
+		IJNZ    FSR,:zero_ram           ;repeat until done
+
+
+
+		bank    timers                  ;set defaults
+
+		setb    timer_low.0             ;LED off
+
+		setb    freq_low.0              ;speaker off
+
+
+
+		mov     !option,#%10011111      ;enable rtcc interrupt
+
+;
+
+; Terminal - main loop
+
+;
+
+terminal        mov     w,#_hello               ;send hello string
+
+		call    send_string
+
+:loop           mov     w,#_prompt              ;send prompt string
+
+		call    send_string
+
+
+
+		call    get_byte                ;get command via UART
+
+		call    uppercase               ; make it uppercase
+
+		mov     cmd,byte                ; and store it
+
+		call    get_hex                 ; get hex number (if present)
+
+:check_cmds                                     ;note: below, xx=hex value
+
+		cje     cmd,#'T',:timer         ;T xxxx
+
+		cje     cmd,#'F',:freq          ;F xxxx
+
+		cje     cmd,#'A',:pwm0          ;A xx
+
+		cje     cmd,#'B',:pwm1          ;B xx
+
+		cje     cmd,#'C',:adc0          ;C
+
+		cje     cmd,#'D',:adc1          ;D
+
+; Command: S [xx] - Store sample (if xx is left out, ADC1 is sampled)
+
+;                 - if xx is left out, adc1 value is stored
+
+;
+
+		cje     cmd,#'S',:sample        ;S [xx] =store sample
+
+;
+
+; Command: V [xx] - View stored byte(s)
+
+;                 - if xx is left out, all stored byted are shown
+
+;                 - if xx=ff then whole eeprom is dumped
+
+;
+
+		cje     cmd,#'V',:view          ;V [xx] =View EEPROM contents
+
+;
+
+; Command: E - Erase EEPROM contents and reset storage pointer
+
+;
+
+		cje     cmd,#'E',:erase         ;E = Erase whole EEPROM
+
+
+
+		mov     w,#_error               ;bad command
+
+		call    send_string             ;send error string
+
+		jmp     :loop                   ;try again
+
+
+
+:timer          bank    timers                  ;timer write
+
+		mov     timer_low,number_low    ;store new timer value
+
+		mov     timer_high,number_high  ; (16 bits)
+
+		jmp     :loop
+
+
+
+:freq           bank    timers                  ;freq write
+
+		mov     freq_low,number_low     ;store new frequency value
+
+		mov     freq_high,number_high   ; (16 bits)
+
+		jmp     :loop
+
+
+
+:pwm0           bank    analog                  ;pwm0 write
+
+		mov     pwm0,number_low         ;store new pwm0 value
+
+		jmp     :loop
+
+
+
+:pwm1           bank    analog                  ;pwm1 write
+
+		mov     pwm1,number_low         ;store new pwm0 value
+
+		jmp     :loop
+
+
+
+:adc0           bank    analog                  ;adc0 read
+
+		mov     number_low,adc0         ;get current adc0 value
+
+		call    send_hex                ;transmit it (via UART)
+
+		jmp     :loop
+
+
+
+:adc1           bank    analog                  ;adc1 read
+
+		mov     number_low,adc1         ;get current adc1 value
+
+		call    send_hex                ; transmit it (via UART)
+
+		jmp     :loop
+
+
+
+:sample         BANK    I2C                     ;Switch to I2C bank
+
+		CALL    Take_sample             ;Go take a sample
+
+		MOV     W,#_sample              ;get sample message
+
+		CALL    send_string             ;dump it
+
+		BANK    I2C                     ;switch to EEPROM bank
+
+		MOV     number_low,data         ;byte sent
+
+		CALL    send_hex:num_only       ;dump it
+
+		JMP     :loop                   ;back to main loop
+
+;
+
+:view           BANK    I2C                     ;switch to I2C bank
+
+		MOV     save_addr,address       ;backup address pointer
+
+		SNB     got_hex                 ;Was this "V xx" command?
+
+		JMP     :v_special              ;if so, jump
+
+		CALL    View_mem                ;no, view all stored data
+
+		JMP     :loop                   ;back to main loop
+
+:v_special      MOV     W,++number_low          ;View whole mem=> "V ff"
+
+		JZ      :v_whole                ;Was this requested?
+
+		CALL    View_mem:single         ;yes, go dump it
+
+		JMP     :loop                   ;back to main loop
+
+:v_whole        MOV     W,#eeprom_size          ;Get eeprom mem size
+
+		CALL    View_mem:all            ;Go dump the whole thing
+
+		JMP     :loop                   ;back to main loop
+
+;
+
+:erase          BANK    I2C                     ;switch to I2C bank
+
+		CALL    Erase_mem               ;no, wipe whole EEPROM
+
+		JMP     :loop                   ;back to main loop
+
+;***************
+
+pb0_action
+
+		BANK	timers			;select timers bank
+
+		INC	timer_low		;increase LED flash rate
+
+		INC	freq_low		;increase frequency
+
+		BANK	clock			;re-select clock bank
+
+
+
+		JMP	terminal:loop
+
+;
+
+pb1_action
+
+		BANK	timers			;select timers bank
+
+		DEC	timer_low		;reduce LED flash rate
+
+		DEC	freq_low		;reduce frequency
+
+		BANK	clock			;re-select clock bank
+
+
+
+		JMP	terminal:loop
+
+;
+
+pb2_action
+
+;
+
+; <button 2 action goes here>
+
+;
+
+		JMP	terminal:loop
+
+;
+
+pb3_action
+
+;
+
+; <button 3 action goes here>
+
+;
+
+		JMP	terminal:loop
+
+;
+
+;***************
+
+		END                             ;End of program code
+

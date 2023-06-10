@@ -1,0 +1,132 @@
+;******************************************************************************
+;       Virtual Peripheral TIMER/FREQUENCY OUTPUTS
+;
+;
+;       Length: 42 bytes (total)
+;       Authors: Chip Gracey, President, Parallax Inc.
+;		   modified by Craig Webb, Consultant to Scenix Semiconductor, Inc.
+;       Written: 97/03/10 to 98/6/03
+;
+;******************************************************************************
+;
+;****** Assembler directives
+;
+; uses: SX28AC, 2 pages of program memory, 8 banks of RAM, high speed osc.
+;       operating in turbo mode, with 8-level stack & extended option reg.
+;                
+		DEVICE  pins28,pages2,banks8,oschs
+		DEVICE  turbo,stackx,optionx
+		ID      'timer'			;program ID label
+		RESET   reset_entry             ;set reset/boot address
+;
+;******************************* Program Variables ***************************
+;
+; Port Assignment: Bit variables
+;
+timer_pin	EQU     rb.6                    ;timer output
+freq_pin	EQU     rb.7                    ;freq output
+;
+;****** Register definitions (bank 0)
+;
+		org     8                       ;start of program registers
+main            =       $                       ;main bank
+;
+temp            ds      1                       ;temporary storage
+byte            ds      1                       ;temporary UART/I2C shift reg.
+flags           DS      1                       ;program flags register
+;
+		org     30h                     ;bank1 variables
+timers          =       $                       ;timer bank
+;
+timer_low       ds      1                       ;timer value low byte
+timer_high      ds      1                       ;timer value high byte
+timer_accl      ds      1                       ;timer accumulator low byte
+timer_acch      ds      1                       ;timer accumulator high byte
+
+freq_low        ds      1                       ;frequency value low byte
+freq_high       ds      1                       ;frequency value high byte
+freq_accl       ds      1                       ;frequency accumulator low byte
+freq_acch       ds      1                       ;frequency accumulator high byte
+;
+int_period	=	163			;period between interrupts
+;
+;**************************** INTERRUPT CODE *******************************
+;
+; Note: The interrupt code must always originate at 0h.
+;       Care should be taken to see that any very timing sensitive routines
+;       (such as adcs, etc.) are placed before other peripherals or code
+;       which may have varying execution rates (like the UART, for example).
+;
+interrupt       ORG     0                       ;interrupt starts at 0h
+;
+;
+;****** Virtual Peripheral: TIMERS (including frequency output)
+;
+; This routine adds a programmable value to a 16-bit accumulator (a pair of
+;  two 8-bit registers) during each pass through the interrupt. It then
+;  copies the value from the high bit of the accumulator to the
+;  appropriate output port pin (LED, speaker, etc.)
+;
+;       Input variable(s) : timer_low,timer_high,timer_accl,timer_acch
+;       		    freq_low,freq_high,freq_accl,freq_acch
+;       Output variable(s) : LED port pin, speaker port pin
+;       Variable(s) affected : timer_accl, timer_acch, freq_accl, freq_acch
+;       Flag(s) affected : none
+;	Size : 1 byte + 10 bytes (per timer)
+;       Timing (turbo) : 1 cycle + 10 cycles (per timer)
+;
+		bank    timers                  ;switch to timer reg. bank
+:timer
+;               clc                             ;only needed if CARRYX=ON
+		add     timer_accl,timer_low    ;adjust timer's accumulator
+		addb    timer_acch,c            ; including carry bit
+		add     timer_acch,timer_high   ; (timer = 16 bits long)        
+		movb    timer_pin,timer_acch.7	;toggle timer (square wave)
+:frequency
+;               clc                             ;only needed if CARRYX=ON
+		add     freq_accl,freq_low      ;adjust freq's accumulator
+		addb    freq_acch,c             ; including carry bit
+		add     freq_acch,freq_high     ; (freq = 16 bits long) 
+		movb    freq_pin,freq_acch.7    ;toggle freq (square wave)
+;
+		mov     w,#-int_period          ;interrupt every 'int_period' clocks
+:end_int	retiw                           ;exit interrupt
+;
+;******	End of interrupt sequence
+;
+;***************************** SUBROUTINES *********************************
+;
+;***************************** MAIN PROGRAM CODE ******************************
+;
+;		ORG     100h
+;
+; Program execution begins here on power-up or after a reset
+;
+reset_entry
+;
+		mov      rb,#%10000000          ;initialize port RB
+		mov     !rb,#%00001111          ;Set RB in/out directions
+		CLR     FSR                     ;reset all ram starting at 08h
+:zero_ram       SB      FSR.4                   ;are we on low half of bank?
+		SETB    FSR.3                   ;If so, don't touch regs 0-7
+		CLR     IND                     ;clear using indirect addressing
+		IJNZ    FSR,:zero_ram           ;repeat until done
+
+		bank    timers                  ;set defaults
+		MOV	timer_low,#1            ;timer initial value
+		MOV	freq_low,#1		;freq initial value
+
+		mov     !option,#%10011111      ;enable rtcc interrupt
+;
+;
+; Main Program Loop
+;
+:loop		NOP
+;
+; <program code goes here>
+;
+		JMP     :loop                   ;back to main loop
+;
+;***************
+		END                             ;End of program code
+

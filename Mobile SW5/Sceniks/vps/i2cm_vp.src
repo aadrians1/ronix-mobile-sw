@@ -1,0 +1,263 @@
+;******************************************************************************
+;       Virtual Peripheral: I2C Subroutines
+;
+;       Length: 133 bytes (total)
+;       Authors: Chip Gracey, President, Parallax Inc.
+;		   modified by Craig Webb, Consultant to Scenix Semiconductor, Inc.
+;       Written: 97/03/10 to 98/6/03
+;
+;******************************************************************************
+;
+;****** Assembler directives
+;
+; uses: SX28AC, 2 pages of program memory, 8 banks of RAM, high speed osc.
+;       operating in turbo mode, with 8-level stack & extended option reg.
+;                
+		DEVICE  pins28,pages2,banks8,oschs
+		DEVICE  turbo,stackx,optionx
+		ID      'I2C'			;program ID label
+		RESET   reset_entry             ;set reset/boot address
+;
+;******************************* Program Variables ***************************
+;
+; Port Assignment: Bit variables
+;
+scl             EQU     RA.0                    ;I2C clock
+sda             EQU     RA.1                    ;I2C data I/O
+;
+;
+;****** Register definitions (bank 0)
+;
+		org     8                       ;start of program registers
+main            =       $                       ;main bank
+;
+temp            ds      1                       ;temporary storage
+byte            ds      1                       ;temporary UART/I2C shift reg.
+flags           DS      1                       ;program flags register
+;
+seq_flag        EQU     flags.1                 ;I2C: R/W mode (if sequential=1)
+got_ack         EQU     flags.2                 ;     if we got ack signal
+;
+		org     90H                     ;bank4 variables
+I2C             EQU     $                       ;I2C bank
+;
+data            DS      1                       ;data byte from/for R/W
+address         DS      1                       ;byte address
+count           DS      1                       ;bit count for R/W
+delay           DS      1                       ;timing delay for write cycle
+byte_count      DS      1                       ;number of bytes in R/W
+num_bytes       DS      1                       ;number of byte to view at once
+save_addr       DS      1                       ;backup location for address
+;
+in_bit          EQU     byte.0                  ;bit to receive on I2C
+out_bit         EQU     byte.7                  ;bit to transmit on I2C 
+;
+control_r       =       10100001b               ;control byte: read E2PROM
+control_w       =       10100000b               ;control byte: write E2PROM
+portsetup_r     =       00000110b               ;Port A config: read bit
+portsetup_w     =       00000100b               ;Port A config: write bit
+eeprom_size     =       128                     ;storage space of EEPROM
+;
+t_all           =       31                      ;bit cycle delay (62=5 usec)
+;
+;
+		ORG	0h			;Program Start adress
+;
+;******************************** I2C Subroutines *****************************
+;
+; These routines write/read data to/from the 24LCxx EEPROM at a rate of approx.
+; 200kHz. For faster* reads (up to 400 kHz max), read, write, start amd stop
+; bit cycles and time between each bus access must be individually tailored
+; using the CALL Bus_delay:custom entry point with appropriate values in the W
+; register - in turbo mode: delay[usec] = 1/xtal[MHz] * (6 + 4 * (W-1)).
+; Acknowledge polling is used to reduce delays between successive operations 
+; where the first of the two is a write operation. In this case, the speed
+; is limited by the EEPROM's storage time.
+;
+;****** Subroutine(s) : Write to I2C EEPROM
+; These routines write a byte to the 24LCxxB EEPROM. Before calling this
+; subroutine, the address and data registers should be loaded accordingly. The
+; sequential mode flag should be clear for normal byte writing operation.
+; To write in sequential/page mode, please see application note. 
+;
+;       Input variable(s) : data, address, seq_flag
+;       Output variable(s) : none
+;       Variable(s) affected : byte, temp, count, delay
+;       Flag(s) affected : none
+;       Timing (turbo) : approx. 200 Kbps write rate
+;                      : approx. 10 msec between successive writes
+;
+I2C_write       CALL    Set_address             ;write address to slave
+:page_mode      MOV     W,data                  ;get byte to be sent
+		CALL    Write_byte              ;Send data byte
+		JB      seq_flag,:done          ;is this a page write?
+		CALL    Send_stop               ;no, signal stop condition
+:done           RETP                            ;leave and fix page bits
+;
+Set_address     CALL    Send_start              ;send start bit
+		MOV     W,#control_w            ;get write control byte
+		CALL    Write_byte              ;Write it & use ack polling
+		JNB     got_ack,Set_address     ; until EEPROM ready
+		MOV     W,address               ;get EEPROM address pointer
+		CALL    Write_byte              ; and send it
+		RETP                            ;leave and fix page bits
+;
+Write_byte      MOV     byte,W                  ;store byte to send
+		MOV     count,#8                ;set up to write 8 bits
+:next_bit       CALL    Write_bit               ;write next bit
+		RL      byte                    ;shift over to next bit
+		DJNZ    count,:next_bit         ;whole byte written yet?
+		CALL    Read_bit                ;yes, get acknowledge bit
+		SETB    got_ack                 ;assume we got it
+		SNB     in_bit                  ;did we get ack (low=yes)?
+		CLRB    got_ack                 ;if not, flag it
+;
+; to use the LED as a 'no_ack' signal, the ':toggle_led' line in the interrupt
+;  section must be commented out, and the next 3 instructions uncommented.
+;               CLRB    led_pin                 ;default: LED off
+;               SNB     in_bit                  ;did we get ack (low=yes)?
+;               SETB    led_pin                 ; if not, flag it with LED
+;
+		RETP                            ;leave and fix page bits
+;
+Write_bit       MOVB    sda,out_bit             ;put tx bit on data line
+		MOV     !ra,#portsetup_w        ;set Port A up to write
+		JMP     :delay1                 ;100ns data setup delay
+:delay1         JMP     :delay2                 ; (note: 250ns at low power)
+:delay2         SETB    scl                     ;flip I2C clock to high
+;               MOV     W,#t_high                       ;get write cycle timing*
+		CALL    Bus_delay               ;do delay while bus settles
+		CLRB    scl                     ;return I2C clock low
+		MOV     !ra,#portsetup_r        ;set sda->input in case ack
+;               MOV     W,#t_low                ;get clock=low cycle timing*
+		CALL    Bus_delay               ;allow for clock=low cycle
+		RETP                            ;leave and fix page bits
+;
+Send_start      SETB    sda                     ;pull data line high
+		MOV     !ra,#portsetup_w        ;setup I2C to write bit
+		JMP     :delay1                 ;100ns data setup delay
+:delay1         JMP     :delay2                 ; (note: 250ns at low power)
+:delay2         SETB    scl                     ;pull I2C clock high
+;               MOV     W,#t_su_sta             ;get setup cycle timing*
+		CALL    Bus_delay               ;allow start setup time
+:new            CLRB    sda                     ;data line goes high->low
+;               MOV     W,#t_hd_sta             ;get start hold cycle timing*
+		CALL    Bus_delay               ;allow start hold time          
+		CLRB    scl                     ;pull I2C clock low
+;               MOV     W,#t_buf                ;get bus=free cycle timing*
+		CALL    Bus_delay               ;pause before next function             
+		RETP                            ;leave and fix page bits
+;
+Send_stop       CLRB    sda                     ;pull data line low
+		MOV     !ra,#portsetup_w        ;setup I2C to write bit
+		JMP     :delay1                 ;100ns data setup delay
+:delay1         JMP     :delay2                 ; (note: 250ns at low power)
+:delay2         SETB    scl                     ;pull I2C clock high
+;               MOV     W,#t_su_sto             ;get setup cycle timing*
+		CALL    Bus_delay               ;allow stop setup time
+		SETB    sda                     ;data line goes low->high
+;               MOV     W,#t_low                ;get stop cycle timing*
+		CALL    Bus_delay               ;allow start/stop hold time             
+		RETP                            ;leave and fix page bits
+;
+Bus_delay       MOV     W,#t_all                ;get timing for delay loop
+:custom         MOV     temp,W                  ;save it
+:loop           DJNZ    temp,:loop              ;do delay
+		RETP                            ;leave and fix page bits
+;
+;****** Subroutine(s) : Read from I2C EEPROM
+; These routines read a byte from a 24LCXXB E2PROM either from a new address
+; (random access mode), from the current address in the EEPROM's internal
+; address pointer (CALL Read_byte:current), or as a sequential read. In either
+; the random access or current address mode, seq_flag should be clear. Please
+; refer to the application note on how to access the sequential read mode.
+;
+;       Input variable(s) : address, seq_flag
+;       Output variable(s) : data
+;       Variable(s) affected : byte, temp, count, delay
+;       Flag(s) affected : none
+;       Timing (turbo) : reads at approx. 200Kbps 
+;
+I2C_read        CALL    Set_address             ;write address to slave
+:current        CALL    Send_start              ;signal start of read
+		MOV     W,#control_r            ; get read control byte
+		CALL    Write_byte              ; and send it
+:sequential     MOV     count,#8                ;set up for 8 bits
+		CLR     byte                    ;zero result holder
+:next_bit       RL      byte                    ;shift result for next bit
+		CALL    Read_bit                ;get next bit
+		DJNZ    count,:next_bit         ;got whole byte yet?
+		MOV     data,byte               ;yes, store what was read
+		SB      seq_flag                ;is this a sequential read?
+:non_seq        JMP     Send_stop               ; no, signal stop & exit
+		CLRB    out_bit                 ; yes, setup acknowledge bit
+		CALL    Write_bit               ;   and send it
+		RETP                            ;leave and fix page bits
+;
+Read_bit        CLRB    in_bit                  ;assume input bit low
+		MOV     !ra,#portsetup_r        ;set Port A up to read
+		SETB    scl                     ;flip I2C clock to high
+;               MOV     W,#t_high               ;get read cycle timing*
+		CALL    Bus_delay               ;Go do delay
+		SNB     sda                     ;is data line high?
+		SETB    in_bit                  ;yes, switch input bit high
+		CLRB    scl                     ;return I2C clock low
+;               MOV     W,#t_buf                ;get bus=free cycle timing*
+		CALL    Bus_delay               ;Go do delay
+		RETP                            ;leave and fix page bits
+;
+; *****	High level functions: Store byte & Erase
+;
+Store_W		BANK    I2C                     ;switch to EEPROM bank
+		MOV     data,W                  ;save incoming value
+		CALL    I2C_Write               ;store it in EEPROM
+		INC     address                 ;move to next address
+		INC     byte_count              ;adjust # bytes stored
+		MOV     W,eeprom_size           ;get memory size
+		MOV     W,address-W             ;are we past end?
+		SNZ                             ;if not, skip ahead
+		CLR     address                 ;if so, reset it
+:done           RETP                            ;leave and fix page bits
+;
+Erase_Mem       CLR     address                 ;restore address pointer
+		MOV     num_bytes,#eeprom_size  ;wipe whole mem
+:wipeloop       CLR     data                    ;byte to wipe with=0
+;               MOV     data,address            ;byte to wipe with=addr
+		CALL    I2C_write               ;wipe EEPROM byte
+		INC     address                 ;move to next address
+		DJNZ    num_bytes,:wipeloop     ;Erased enough yet?
+		CLR     byte_count              ;done, reset stored count
+		CLR     save_addr               ;reset backup address
+		RETP                            ;leave and fix page bits
+;
+;************************** End of I2C Subroutines ****************************
+;
+;***************************** MAIN PROGRAM CODE ******************************
+;
+;		ORG     100h
+;
+; Program execution begins here on power-up or after a reset
+;
+reset_entry
+		mov      ra,#%1011              ;initialize port RA
+		mov     !ra,#%0100              ;Set RA in/out directions
+		CLR     FSR                     ;reset all ram starting at 08h
+:zero_ram       SB      FSR.4                   ;are we on low half of bank?
+		SETB    FSR.3                   ;If so, don't touch regs 0-7
+		CLR     IND                     ;clear using indirect addressing
+		IJNZ    FSR,:zero_ram           ;repeat until done
+
+		mov     !option,#%11011111      ;disable rtcc interrupt
+;
+; Main Program Loop
+;
+:loop		MOV	W,#55			;example byte
+		CALL    Store_W                 ;Store byte in next I2c address
+;
+; <program code goes here>
+;
+		JMP     :loop                   ;back to main loop
+;
+;***************
+		END                             ;End of program code
+

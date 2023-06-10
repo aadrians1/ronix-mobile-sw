@@ -1,0 +1,772 @@
+#!/bin/sh
+## Copyright Excite, Inc., 1996 (c)
+##
+## This is the installation script for the Excite for Web Servers product.
+## It will unpack our distribution tar file, install some files in
+## the appropriate places, and create scripts that will make it easier
+## for you to use our software.
+##
+## The installation process will not run without perl. Perl isn't
+## strictly required for doing the actual installation -- we could
+## have done it in /bin/sh -- but perl *is* required for the various
+## scripts we use to translate the output of our programs into HTML.
+## So we may as well check for it here.
+##
+PATH=${PATH}:/bin:/usr/bin/:/usr/local/bin:/usr/5bin:/usr/sbin:/usr/ucb
+
+user_id=`id | sed -e 's/uid=//' | sed -e 's/(.*$//'`
+
+if [ $# -ne 0 ]
+then
+  if [ $1 -eq '-noroot' ]
+  then
+    user_id=0
+  fi
+fi
+
+if [ $user_id -ne 0 ]
+then
+    echo
+    echo "Sorry, you must be running as 'root' in order to install this software."
+    echo
+    echo "*** Installation will NOT change any of your system configuration files. ***"
+    echo
+    echo "Installation will create two directories.  One will be a directory you"
+    echo "specify in which the index and search applications and the index files"
+    echo "will be stored, and the second will be a directory you specify that"
+    echo "must be beneath your Web server's HTML root, in which documentation"
+    echo "and icons will be stored.  Finally, several scripts prefixed with 'AT-'"
+    echo "will be installed into your cgi-bin directory."
+    echo
+    echo "Contact ewssupport@excite.com for install questions."
+    echo
+    echo "If you wish to disable the root install requirement, invoke install-Excite"
+    echo "with the '-noroot' argument, which will allow you to continue without super-"
+    echo "user access.  Be advised that this may cause problems with the software that"
+    echo "may prevent it from running properly."
+    echo 
+    echo "If you choose the '-noroot' method, please be sure that the directory you"
+    echo "install Excite for Web Servers into is writeable by the userid your web server"
+    echo "runs under.  Also make sure the Excite documentation directory under"
+    echo "the document root is writeable by the web server user."
+    echo 
+    exit 255
+fi
+
+perl_loc=.
+current_dir=`pwd`
+test -w $current_dir
+if [ $? -ne 0 ]
+then
+    perl_loc=/tmp
+    test -w /tmp
+    if [ $? -ne 0 ]
+    then 
+      echo "Neither the current directory nor /tmp is writeable."
+      echo "Installation aborted."
+      echo "You must have write permission on the current directory or /tmp"
+      echo "in order to install this software."
+      exit 255
+    fi
+fi
+
+cat_command="uncompress -c"
+
+## Unpack perl from the tar file, use it to bootstrap the install process
+## Check if location of Excite.tar.Z is given on command line
+
+dist_file=Excite.tar.Z
+
+test -s $dist_file
+if [ $? -ne 0 ] 
+then
+    dist_file_u=`echo $dist_file | sed -e 's/\.Z//g'`
+    test -s $dist_file_u
+    if [ $? -ne 0 ]
+    then
+        echo Unable to find the distribution file $dist_file or $dist_file_u
+        echo You must invoke install-Excite from the directory
+        echo that contains $dist_file or $dist_file_u , or you must specify the
+        echo location of $dist_file or $dist_file_u as a command line argument
+        echo when you invoke install-Excite.
+        exit 255
+    else
+        cat_command=cat
+	dist_file=$dist_file_u
+    fi
+fi
+
+tar_opt=xof
+
+echo "Starting installation.  This may take a few seconds..."
+if [ `uname -s` = "AIX" ]
+then
+    tar_opt=xf
+    test -s /usr/lpp/xlC/lib/libC.a
+    if [ $? -ne 0 ]
+    then
+       echo "The library /usr/lpp/xlC/lib/libC.a is not installed on"
+       echo "your system.  Please go to Excite's ftp site and"
+       echo "download and install it before you continue."
+       echo
+       echo "ftp://ftp.excite.com/ews/1.1/aix"
+       echo "Anonymous ftp is allowed."
+       echo
+       echo "Thank You,"
+       echo "Excite, Inc."
+       exit 255
+    fi
+fi
+
+if [ `uname -s` = "BSD/OS" ]
+then
+  tar_opt=xf
+fi
+
+pname=./perl
+if [ `uname -s` = "HP-UX" ]
+then
+  pname=perl
+fi
+if [ `uname -s` = "AIX" ]
+then
+  pname=perl
+fi
+if [ `uname -s` = "SunOS" ]
+then
+  test -s /vmunix
+  if [ $? -eq 0 ]
+  then
+    pname=perl
+  fi 
+fi
+
+if [ `uname -s` = "IRIX" ]
+then
+	$cat_command $dist_file | (cd $perl_loc ; tar xofB - perl)
+else
+	$cat_command $dist_file | (cd $perl_loc ; tar $tar_opt - $pname)
+fi
+if [ $? = 0 ] 
+then
+    chmod +x $perl_loc/perl
+    eval "exec $perl_loc/perl -x $0 $*"
+else
+    echo Problem encountered unpacking perl from the distribution file
+    echo $dist_file.  Check for existence of $dist_file and the
+    echo tools 'tar' and 'uncompress'.
+fi
+exit 255
+
+## This script can either be run in interactive or autoinstall
+## mode.  To invoke interactive mode, just invoke with no command
+## line arguments.  If you wish to use autoinstall mode, it is
+## necessary to pass the following six single letter flag arguments
+## to the installer.  If you leave any of them out, then you
+## will be brought to interactive install mode.
+## Example autoinstall usage:
+##
+## install-Excite    -h /usr/local/www/html \
+##			-c /usr/local/www/cgi-bin \
+## 			-a /etc/excite \
+##			-t Excite.tar.Z
+##
+## The mnemonics for the flags are as follows:
+##
+## -h <html root>
+## -c <cgi-bin>
+## -a <excite install home>
+## -t <name of compressed tar file containing excite software.>
+##
+## Note that all but the -t flag specify directories.  The installer
+## will output progress to stdout.  If any of the arguments are incorrect,
+## or there are permissions problems with the directories, the install
+## script will die and report where it encountered problems.
+
+#!perl 
+## Everything below is a perl script. The preceding line tells perl -x
+## where to start reading code.
+
+umask 022;
+$| = 1;	 
+$SIG{'INT'} = catcher;
+chop($perldir = `pwd`);
+$perlloc = "$perldir/perl";
+$exec_perl = $^X;
+$exec_perl =~ s|^\.\/|$perldir\/|;
+
+## grab command line flags to see if we need to do autoinstall
+do Getopt('hcat');
+if ($opt_h && $opt_c && $opt_a && $opt_t) {
+	$autoinstall = "autoinstall";
+	$htmlroot = $opt_h;
+	$cgibin = $opt_c;
+	$root = $opt_a;
+	$configroot = $opt_d;
+	$package = $opt_t;
+	$perlroot = $opt_p;
+	$password = $opt_s;
+} 
+chop($current_dir = `pwd`);
+
+if (&FindExecutable("uncompress")) {
+    $zcat = "uncompress -c";
+} else {
+    &Abort("Can't find 'uncompress' to unpack the file");
+}
+if (&FindExecutable("tar")) {
+    $tar = "tar";
+} else {
+    &Abort("Can't find 'tar' to unpack the file");
+}
+
+if (!$autoinstall) {
+print <<EOP;
+
+In order to install this software, you will need to know the following:
+* Where you want to install Excite for Web Servers
+* The location of your Web server's document root (where html files reside)
+* The location of your Web server's cgi-bin directory
+
+Please observe the following conventions used by the installer:
+* Pressing the return key will accept the defaults displayed in parentheses.
+* Absolute pathnames should be used when supplying directory names.
+
+Also note:
+* The software must be installed on the same machine that your 
+  Web server is running on. 
+
+Install Questions:
+* Contact ewssupport\@excite.com
+
+Please hit <return> to continue...
+EOP
+;
+}
+
+$dumb = <STDIN>;
+
+print <<EOF;
+IMPORTANT: By default, indexes that are created will be stored in
+this directory, so you will need enough space to store indexes
+on the directory you install the software.  Typically, indexes
+are about 15% of the total size of the collection you index.
+However, it is also possible to store indexes in a location
+different from where the software is installed.  (You can
+configure this at any time after install.)
+
+EOF
+;
+
+$package = "Excite.tar.Z";
+if (! $autoinstall) {
+	$package = $ARGV[1] if $ARGV[1];
+}
+if (! -e $package) {
+	$package =~ s/\.Z$//;
+	if (! -e $package) {
+	  print "Where is Excite.tar.Z? " unless $autoinstall;
+	  chop($package = <STDIN>) unless $autoinstall;
+        }
+}
+
+if (! -e $package) {
+    &Abort("Sorry, '$package' does not exist.");
+}
+
+$zcat = 'cat' unless ($package =~ /\.Z$/);
+
+print <<EOF;
+Where do you want to install this software?  If the directory you
+specify does not exist, the installer will create it for you.
+
+EOF
+;
+while (!$root) {
+	print "\nExcite Install Directory? (/usr/local/etc/excite) " unless $autoinstall;
+	chop($root = <STDIN>) unless $autoinstall;
+	$root = "/usr/local/etc/excite" unless $root;
+	$root =~ s/\s+//g;
+	$root = $current_dir if ($root =~ /^\.$/);
+	if (! ($root =~ /^\//)) {
+		print "\nError: please use absolute pathnames!  Try again.\n";
+		$root = "";
+	}
+
+}
+print <<EOP;
+
+Installing from $package into $root
+EOP
+    ;
+
+&Continue("OK? [y/n] ") unless $autoinstall;
+
+## This next section checks to see what directories need to be created
+## to make the path that the user specified.
+
+## these two lines add the collections/new subdirectories
+## to the excite install home
+$newroot = $root;
+$newroot .= "/" unless ($root =~ /\/$/);
+$newroot .= "collections/new";
+$base = ($root =~ m|^/|) ? "/" : "";
+for $part (split(/\//, $newroot)) {
+    if (!$base || $base eq "/") {
+	$base .= $part;
+    } else {
+	$base = "$base/$part";
+    }
+    if (! -d $base) {
+	push(@mkdir, $base);
+    }
+}
+
+
+for (@mkdir) {
+    system "mkdir", $_;
+    &Abort("Couldn't create directory '$_'") if ($? >> 8);
+    }
+
+## these two lines add the collections/summary subdirectories
+## to the excite install home
+undef @mkdir;
+$newroot = $root;
+$newroot .= "/" unless ($root =~ /\/$/);
+$newroot .= "collections/summary";
+$base = ($root =~ m|^/|) ? "/" : "";
+for $part (split(/\//, $newroot)) {
+    if (!$base || $base eq "/") {
+	$base .= $part;
+    } else {
+	$base = "$base/$part";
+    }
+    if (! -d $base) {
+	push(@mkdir, $base);
+    }
+}
+
+
+for (@mkdir) {
+    system "mkdir", $_;
+    &Abort("Couldn't create directory '$_'") if ($? >> 8);
+    }
+
+
+if ((! -w $root) || (! -d $root)) {
+    &Abort("'$root' is not writable by you, or it is not a directory");
+}
+
+## open up permissions on root, collections, and new directories
+$exit = system("/bin/chmod a+rw $root");
+    &Abort("Could not chmod '$root'.") if $exit;
+$exit = system("/bin/chmod a+rw $root/collections");
+    &Abort("Could not chmod '$root/collections'.") if $exit;
+$exit = system("/bin/chmod a+rw $root/collections/new");
+    &Abort("Could not chmod '$root/collections/new'.") if $exit;
+$exit = system("/bin/chmod a+rw $root/collections/summary");
+    &Abort("Could not chmod '$root/collections/summary'.") if $exit;
+
+
+## check for sufficient disk space.
+print "\nChecking for sufficient disk space..." unless $autoinstall;
+&Abort("Not enough room for installation to '$root'.") if 
+	(! &roomOnDevice($root));
+print " OK\n" unless $autoinstall;
+
+##check for existing afeatures.pl file, and move it out of the way if there
+if (-e "$root/perllib/afeatures.pl") {
+$exit = system("/bin/mv $root/perllib/afeatures.pl $root/perllib/afeatures.pl.OLD");
+&Abort("Error renaming '$root/perllib/afeatures.pl'.") if $exit;
+print <<EOF;
+
+*******************************************************************
+ATTENTION: Apparently, you are doing an install over a pre-existing
+installation.  In case you have made any customization changes to 
+'$root/perllib/afeatures.pl', 
+it has been renamed to
+'$root/perllib/afeatures.pl.OLD', 
+to protect any changes you may have made to it.  After the install
+has completed, feel free to replace the new file with the old if
+you wish to preserve any customizations you may have enabled.
+*******************************************************************
+
+EOF
+;
+}
+
+$tar_opt = 'xof';
+$tar_opt = 'xf' if (`uname -s` =~ /AIX/i);
+$tar_opt = 'xf' if (`uname -s` =~ /BSD/i);
+
+print "Unpacking '$package'...";
+if (`uname -s` =~ /IRIX/i) {
+  system("$zcat $package | (cd $root; $tar xofB -)");
+} else {
+  system("$zcat $package | (cd $root; $tar $tar_opt -)");	
+}
+&Abort("Uncompress failed.") if ($? >> 8);
+print " OK\n";
+
+chdir($root) || &Abort("Couldn't change to directory '$root'");
+
+## Check our packing list -- did we get everything?
+&Abort("Can't find packing list") unless -r "PackingList";
+open(PACK, "PackingList") || &Abort("Can't open packing list");
+while (<PACK>) {
+    ($file, $size) = split(' ');
+    $pack{$file} = $size;
+}
+
+for (keys %pack) {
+    if (! -e $_) {
+	$pack{$_} = "can't find";
+    } elsif (-s $_ != $pack{$_}) {
+	$pack{$_} = "wrong size";
+    } else {
+	delete $pack{$_};
+    }
+}
+
+if (%pack) {
+    print "Some files were missing or had an incorrect size:\n";
+    for (sort keys %pack) {
+	($file = $_) =~ s|^\./||;
+	print "  $file ... $pack{$_}\n";
+    }
+    &Abort("Unpacking failed");
+}
+close(PACK);
+
+$cmd = "/bin/chmod a+x $root/architextSearch $root/architextIndex $root/scripts-fix-root $root/scripts-fix-perl";
+$exit = system($cmd);
+die "Error changing permissions on architextSearch and architextIndex. -- $!\n" if $exit;
+
+## now that we have unpacked, do a sanity check to make sure
+## binaries work...
+$arsearch = `$root/architextSearch -v`;
+if ($arsearch !~ /Excite/) {
+	&Abort("$root/architextSearch does not work.  Contact Excite Support.");
+}
+$arindex = `$root/architextIndex -v`;
+if ($arindex !~ /Excite/) {
+	&Abort("$root/architextIndex does not work.  Contact Excite Support.");
+}
+## OK, binaries work.  Continue...
+
+## discover and store html root in Architext.conf
+if (!$autoinstall) {
+print "----------------------------\n";
+print <<EOF;
+Excite needs to know where your Web server's document root and
+cgi-bin directories are located.  Please enter this information below.
+
+EOF
+;
+while (! $htmlroot) {
+  print "Html Document Root? (/usr/local/www/html) " unless $autoinstall;
+  chop($htmlroot = <STDIN>) unless $autoinstall;
+  $htmlroot = "/usr/local/www/html" unless $htmlroot;
+  $htmlroot =~ s/\s+//g;
+  if (! ($htmlroot =~ /^\//)) {
+	print "\nError: please use absolute pathnames!  Try again.\n";
+	$htmlroot = "";
+  }
+  if (! -d $htmlroot) {
+	print "\nError: $htmlroot is not a directory.  Try again.\n";
+	$htmlroot = "";
+  }
+}
+
+$cgiguess = $htmlroot;
+$cgiguess =~ s|[^\/]*$||;
+$cgiguess = $cgiguess . "cgi-bin";
+while (! $cgibin) {
+  print "\ncgi-bin? ($cgiguess) " unless $autoinstall;
+  chop($cgibin = <STDIN>) unless $autoinstall;
+  $cgibin = $cgiguess unless $cgibin;
+  $cgibin =~ s/\s+//g;
+  if (! ($cgibin =~ /^\//)) {
+	print "\nError: please use absolute pathnames. Try again.\n";
+  }
+  if (! -d $cgibin) {
+	print "\nError: $cgibin is not a directory.  Try again.\n";
+	$cgibin = "";
+  }
+}
+
+print <<EOF;
+
+Documentation files need to be installed in a directory
+beneath your document root in order to be visible to your Web server.
+Please supply this this directory name below.
+
+EOF
+;
+
+$archDocGuess = $htmlroot;
+$archDocGuess .= "/" unless ($archDoc =~ /\/$/);
+$archDocGuess .= "Excite";
+while (! $archDoc) {
+  print "\nExcite Html Directory? ($archDocGuess) " unless $autoinstall;
+  chop($archDoc = <STDIN>) unless $autoinstall;
+  $archDoc = $archDocGuess unless $archDoc;
+  $archDoc =~ s/\s+//g;
+  if (! ($archDoc =~ /^\//)) {
+	print "\nError: please use absolute pathnames. Try again.\n";
+	$archDoc = "";
+  }
+  if (! &isUnder($archDoc, $htmlroot)) {
+	print "\nError: Excite Html Directory must be beneath the document root.  Try again.\n";
+	$archDoc = "";
+  }
+}
+
+}
+if (!$autoinstall) {
+## discover and store optional password in Architext.conf
+print <<EOP
+
+SECURITY ISSUE: Since Excite's administrative scripts are installed
+into cgi-bin, it is possible that an unauthorized user could configure
+document collections and start indexing processes.  Excite suggests
+that you supply a password at this point to limit access to the
+administrative tools.  You are free to enter nothing if you do not
+wish to use a password, but be aware that that will allow any user of
+your Web site to access the administration scripts.  If you do enter a
+password, please be sure to record it somewhere, or you will not be
+able to access the administration tools.  
+
+When you enter your password, it will not appear on the screen, so
+you will asked to enter it twice to ensure that you entered it
+correctly.  Simply press the return key if you do not wish to 
+define a password.
+EOP
+;
+
+$pass1 = "bobo";
+$pass2 = "bobo2";
+
+system 'stty', '-echo';
+while (($pass1 ne $pass2) && (! $space) && (! $pound))
+{
+	print "\nPasswords didn't match.  Try again.\n\n" if $pass;
+	print "\nPassword cannot contain the '#' character.  Try again.\n\n"
+		if $pound;
+	print "\nPassword cannot contain whitespace characters.  Try again.\n\n" if $space;
+	print "\nEnter admin password: ";
+	chop($pass1 = <STDIN>);
+	print "\nRe-enter admin password: ";
+	chop($pass2 = <STDIN>);
+	$pass = 1;
+	$pound = 1 if ($pass1 =~ /#/);
+	$space = 1 if ($pass1 =~ /\s/);
+}
+$password = crypt($pass1,$pass1);
+
+system 'stty', 'echo';
+}
+
+print "\n\n";
+$perlroot = "$root/perl";
+if (! -x $perlroot) {
+	&Abort("'$perlroot' is not executable.");
+}
+
+## invoke scripts-fix-root on each perl script that needs it.
+$fix = "./scripts-fix-root";
+$filestofix = "AT-admin.cgi AT-index.cgi AT-config.cgi AT-generate.cgi aquery.pl aindex.pl architextify-html install-admin AT-fetch.cgi AT-lsbuild.cgi perllib/architextNotify.pl";
+$cmd = "$fix $root $filestofix";
+$exit = system($cmd);
+die "Updating scripts failed in 'scripts-fix-root'. -- $!" if $exit;
+$cmd = "rm -f *.bak perllib/*.bak";
+$exit = system($cmd);
+die "Error removing backup scripts." if $exit;
+
+
+## backdoor here to let user choose an existing perl interpreter
+## a file called '.perl' in the directory the installer is
+## invoked from can contain the location of the perl interpreter 
+## the user wants to use
+if (-e "$current_dir/.perl") {
+  open(PERL, "$current_dir/.perl");
+  while (<PERL>) {
+    $perlroot = $_;
+  }
+  close(PERL);
+  $perlroot =~ s/\s//g;
+}
+
+## update AT-config.cgi AT-index.cgi and AT-generate.cgi to have
+## correct path to perl interpreter at the start of the script
+$fix = "./scripts-fix-perl";
+$filestofix = "AT-admin.cgi AT-index.cgi AT-config.cgi AT-generate.cgi aquery.pl aindex.pl architextify-html install-admin AT-fetch.cgi AT-lsbuild.cgi";
+$cmd = "$fix $perlroot $filestofix";
+$exit = system($cmd);
+die "Updating scripts failed in 'scripts-fix-perl'. -- $!" if $exit;
+$cmd = "rm -f *.bak";
+$exit = system($cmd);
+die "Error removing backup scripts." if $exit;
+
+$filestoex = "AT-lsbuild.cgi AT-fetch.cgi AT-admin.cgi AT-index.cgi AT-config.cgi AT-generate.cgi architextify-html install-admin aindex.pl aquery.pl architextIndex architextSearch";
+$cmd = "chmod a+x $filestoex";
+$exit = system($cmd);
+die "Error changing permissions on updated scripts. -- $!\n" if $exit;
+
+## stem and stop tables must be writeable by all.
+$cmd = "chmod a+w stem.tbl stop.tbl.key stop.tbl.ptr";
+$exit = system($cmd);
+die "Error changing permissions on stem.tbl, stop.tbl.ptr, or stop.tbl.key -- $!\n" if $exit;
+
+print "----------------------------\n";
+
+print "\nInstalling cgi scripts and documentation...\n" if $autoinstall;
+$configroot = $archDoc;
+
+##figure out ArchitextURL here
+$aurl = $configroot;
+$aurl =~ s|$htmlroot||;
+## ArchitextURL must begin and end with slashes
+$aurl .= "/" unless ($aurl =~ /\/$/);
+$aurl = "/$aurl" unless ($aurl =~ /^\//);
+
+## create Architext.conf file here.
+&createConf();
+## get rid of temporary perl executable, unless we installed
+## into current directory, in which case we should leave it alone.
+unlink($exec_perl) unless ($root eq $current_dir);
+## kick admin installation part of install process
+exec "./install-admin", $configroot, $cgibin, $htmlroot, $autoinstall;
+
+die "Error encountered invoking 'install-admin'";
+
+## See if we can find a given program in our path
+sub FindExecutable {
+    local($prog) = @_;
+    for (split(/:/, $ENV{'PATH'})) {
+	if (-x "$_/$prog") {
+	    return "$_/$prog";
+	}
+    }
+    return "";
+}
+
+## Wait for user OK.
+sub Continue {
+    local($ok);
+    while (1) {
+    	print $_[0] if $_[0];	
+    	chop($ok = <STDIN>);
+	last if $ok =~ /^y/i;
+    	die "Installation aborted\n" if $ok =~ /^n/i;
+    }
+}
+
+sub Abort {
+    print "\n\nError: @_\n";
+    die "Installation aborted\n";
+}
+
+
+## catches signals and reports them and then exits.
+sub catcher {
+	&Abort("Caught an INTERRUPT signal.");
+}
+
+
+## generates a default Architext.conf file under the root directory
+sub createConf {
+    local($aconf, $exit);
+    local($port) = `/bin/cat OS_VERSION`;
+    $aconf = "Architext.conf";
+    open (ARCH, ">$aconf") ||
+	&Abort("'$aconf' could not be opened for writing.");
+    print ARCH "ArchitextRoot $root\n";	
+    print ARCH "IndexExecutable $root/architextIndex\n";		
+    print ARCH "SearchExecutable $root/architextSearch\n";		
+    print ARCH "StemTable $root/stem.tbl\n";	
+    print ARCH "StopTable $root/stop.tbl\n";	
+    print ARCH "CollectionContents $htmlroot\n";	
+    print ARCH "CollectionIndex $root/collections/index\n";	
+    print ARCH "CollectionInfo $root/collections/index.cf\n";	
+    print ARCH "PerlRoot $perlroot\n";
+    print ARCH "HtmlRoot $htmlroot\n";
+    print ARCH "CgiBin $cgibin\n";
+    print ARCH "ArchitextURL $aurl\n";
+    print ARCH "OSType $port\n";
+    print ARCH "register yes\n";
+    if ($password) {
+    	print ARCH "Password $password\n" 
+    }
+    close(ARCH);
+    system("/bin/chmod a+rw Architext.conf");
+}
+
+## checks to see if there will be enough room on the destination
+## directory to handle the install.  Returns 0 if there is not
+## enough room to accomodate the install
+sub roomOnDevice {
+    local($destdir) = @_;
+    local($totalwrite, $size, $tempfile, $exit, $bigline);
+    $size = 8 * 1024 * 1024; ## 8 megs is a good rough estimate.
+    $tempfile = "$destdir/AT-temp";
+    open(TEMP, ">$tempfile") || 
+	&Abort("Unable to create tempfile in $destdir");
+    $bigline = pack("A10240", "Architext");
+    while ($totalwrite < $size) {
+        $exit = print TEMP $bigline;
+        if (! $exit) { close(TEMP); unlink($tempfile); return(0); }
+        $totalwrite+=length($bigline);
+    }
+    close(TEMP);
+    unlink($tempfile);
+    return(1);
+
+}
+
+## this function is taken from the getopt.pl library file included
+## with the standard perl distribution.
+sub Getopt {
+    local($argumentative) = @_;
+    local($_,$first,$rest);
+    local($[) = 0;
+
+    while (@ARGV && ($_ = $ARGV[0]) =~ /^-(.)(.*)/) {
+	($first,$rest) = ($1,$2);
+	if (index($argumentative,$first) >= $[) {
+	    if ($rest ne '') {
+		shift(@ARGV);
+	    }
+	    else {
+		shift(@ARGV);
+		$rest = shift(@ARGV);
+	    }
+	    eval "\$opt_$first = \$rest;";
+	}
+	else {
+	    eval "\$opt_$first = 1;";
+	    if ($rest ne '') {
+		$ARGV[0] = "-$rest";
+	    }
+	    else {
+		shift(@ARGV);
+	    }
+	}
+    }
+}
+
+
+## returns true if dir1 is underneath dir2
+sub isUnder {
+   local($dir1, $dir2) = @_;
+   local($trunk);
+   $trunk = substr($dir1, 0, length($dir2));
+   return($trunk eq $dir2);
+}
+
+
+
+
+
+
+

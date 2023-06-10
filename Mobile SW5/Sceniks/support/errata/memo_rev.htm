@@ -1,0 +1,300 @@
+<HTML>
+<HEAD>
+<TITLE> memo_rev </TITLE>
+<META NAME="GENERATOR" CONTENT="HTML Transit 3.0 by InfoAccess Inc. www.infoaccess.com">
+</HEAD>
+<BODY><A NAME="TopOfPage"> </A>
+
+<!-- TRANSIT - TEXTBAR -->
+
+<BODY BACKGROUND="/gifs/bg.gif" TEXT="#000000" LINK="#0000FF" VLINK="#0FD075" onLoad="defaultStatus=''">
+<P><IMG SRC="memo_rev-1.gif" WIDTH=105 HEIGHT=94></P>
+
+<P ALIGN=RIGHT><FONT FACE="Arial">August 10, 1998</FONT></P>
+
+<P><FONT FACE="Arial">Contact:</FONT></P>
+
+<P><FONT FACE="Arial">Zafar Ullah</FONT></P>
+
+<P><FONT FACE="Arial">Scenix Semiconductor Inc.</FONT></P>
+
+<P><U><FONT FACE="Arial" COLOR="#0000ff"><A HREF="mailto:Zafar.ullah@scenix.com" TARGET="_top">Zafar.ullah@scenix.com</A></FONT></U></P>
+
+<P><FONT FACE="Arial">(408) 327-8888 ext.111</FONT></P>
+
+<H6 ALIGN=CENTER><B><U><FONT FACE="Arial" SIZE="+0">Design Requirement to Move From SX Rev.2.1 to Rev.2.5</FONT></U></B></H6>
+
+<P><FONT FACE="Arial">This memo talks about the necessary board design change to move from SX Rev.2.1 to SX Rev.2.5 parts.</FONT></P>
+
+<P><FONT FACE="Arial">Date codes for Rev.2.1 part: 9747, 9749, 9750, 9810, 9811, and 9812</FONT></P>
+
+<P><FONT FACE="Arial">Date codes for Rev.2.5 part: 9814, 9815, 9818, and 9819</FONT></P>
+
+<P ALIGN=CENTER><B><U><FONT FACE="Arial">Differences Between Rev. 2.1 and Rev. 2.5 parts:</FONT></U></B></P>
+
+<P><FONT FACE="Arial">1. Rev 2.1 has internal feedback resistor between OSC1 and OSC2 pins. To switch to Rev. 2.5 parts the feedback resistor for the oscillator circuit should be provided externally. The following tables give the values of the resistors and capacitors for the clock oscillator circuit for Rev. 2.5 parts.</FONT></P>
+
+<P><FONT FACE="Arial">2. In-system Debugging (ISD) is not supported with Rev.2.1 parts, but it is supported with Rev.2.5 parts. To do ISD with SX-key and Rev. 2.5 parts, it is required to remove the clock circuit from the board. In-system programming (ISP) is supported with both 2.1 and 2.5 Revs, and no clock circuit removal is necessary.  </FONT></P>
+
+<P><FONT FACE="Arial"> </FONT></P>
+
+<P><FONT FACE="Arial"><B>Resistor &amp; Capacitor Selection for Ceramic Resonator</B>  <B>(RF = 1M)</B></FONT></P>
+<P>
+<TABLE>
+<TR>
+<TD VALIGN="TOP" WIDTH=75><P ALIGN=CENTER><B><FONT FACE="Arial">Osc Type</FONT></B></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><B><FONT FACE="Arial">Resonator Frequency (MHz)</FONT></B></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><B><FONT FACE="Arial">C1(pF)</FONT></B></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><B><FONT FACE="Arial">C2(pF)</FONT></B></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75><P ALIGN=CENTER><FONT FACE="Arial">XT</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">455 kHz</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">100</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">2</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">47</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">4</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">47</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75><P ALIGN=CENTER><FONT FACE="Arial">HS</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">8</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">47</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">10</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">47</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">12</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">47</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">5</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">15</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">50.0 without Caps</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">5</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">10</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">50.0 with Caps</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">No Cap</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">No Cap</FONT></P>
+</TD></TR></TABLE>
+
+<P><U><FONT FACE="Arial">Suggested Circuit:</FONT></U></P>
+
+<P align=center><IMG SRC="memo_rev-2.gif" WIDTH=400 HEIGHT=300></center></P>
+
+<P><B><FONT FACE="Arial">Resistor &amp; Capacitor Selection for Crystal</FONT></B></P>
+<P>
+<TABLE>
+<TR>
+<TD VALIGN="TOP" WIDTH=75><P ALIGN=CENTER><B><FONT FACE="Arial">Osc Type</FONT></B></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><B><FONT FACE="Arial">Crystal Frequency (MHz)</FONT></B></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><B><FONT FACE="Arial">C1(pF)</FONT></B></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><B><FONT FACE="Arial">C2(pF)</FONT></B></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><B><FONT FACE="Arial">RF</FONT></B></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75><P ALIGN=CENTER><FONT FACE="Arial">XT</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">4</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">47</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">1M</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75><P ALIGN=CENTER><FONT FACE="Arial">HS</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">8</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">47</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">1M</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">12</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">47</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">1M</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">16</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">15</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">30</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">1M</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">15</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">30</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">1M</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">25</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">5</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">10K</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">30</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">5</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">20</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">4.7K</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">36</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">5</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">15</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">3.3K</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">40</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">5</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">15</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">3.3K</FONT></P>
+</TD></TR>
+<TR>
+<TD VALIGN="TOP" WIDTH=75>&#160;
+</TD>
+<TD VALIGN="TOP" WIDTH=152><P ALIGN=CENTER><FONT FACE="Arial">50</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">5</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">10</FONT></P>
+</TD>
+<TD VALIGN="TOP" WIDTH=93><P ALIGN=CENTER><FONT FACE="Arial">3.3K</FONT></P>
+</TD></TR></TABLE>
+
+<P><U><FONT FACE="Arial">Suggested Circuit:</FONT></U></P>
+
+<P align=center><IMG SRC="memo_rev-3.gif" WIDTH=400 HEIGHT=300></center></P>
+<P>
+<table border="5">
+<tr>
+                <td colspan="3"> <ol><h4>Download a PDF version of the <a
+
+                href="/support/errata/memo_rev.pdf">Designer's Guide</a> for migrating
+                 from rev 2.1 to 2.5 SX Silicon (.pdf). 
+            </ol></h4>
+            </td>
+            </tr>  
+
+ <tr>
+             <td colspan="3"><ol><h4> Browse the <a
+
+                 href="errata2.html">Errata Sheet</a> for previous SX silicon revisions (html) </ol></h4>
+            </td>
+            </tr>
+            <tr>
+                <td colspan="3"> <ol><h4>Download the complete SX Silicon <a
+
+                href=" /errata2.pdf">Errata Sheet</a> (.pdf)
+            </ol></h4>
+            </td>
+            </tr>   
+
+             
+<P>              
+</Table>
+
+
+<!-- TRANSIT - TEXTBAR -->
+
+</BODY>
+</HTML>

@@ -1,0 +1,170 @@
+;******************************************************************************
+;       Artificial SIN wave generator (no lookup table)
+;
+;
+;       Length: 
+;       Authors: Chris Fogelklou, Scenix Semiconductor Inc.
+;		 Chip Gracey, President, Parallax Inc
+;       Written: 98/12/08 to 98/12/08
+;
+;	This program demonstrates the generation of an artificial SINE wave using
+; 	the properties of gravity.  The sine wave starts at a defined point in
+; 	time with a defined velocity.  The main program loops indefinetely, after
+; 	initializing some registers.  A PWM output outputs the current value of 
+; 	the sine wave.  Because of properties inherent in the design of the 
+; 	Scenix PWM, the resolution of the output SINE wave varies inversely
+;	with frequency.
+;
+;******************************************************************************
+		device	pins28,pages1,banks8,oschs,turbo,optionx
+		freq	50_000_000
+
+		reset	start
+;**************************************************************************
+; Watches (For Debug in SX_Key software V.1.0 +)
+;**************************************************************************
+		watch	freq_acc_low,16,uhex
+		watch	freq_count_low,16,uhex
+		watch	sin,8,sdec
+		watch	sinvel,8,sdec
+		watch	pwm0,8,udec
+		watch	pwm0_acc,8,udec
+
+;**************************************************************************
+; Equates for common data comm frequencies
+;**************************************************************************
+f697_h		equ	$012	; DTMF Frequency
+f697_l		equ	$09d
+
+f770_h		equ	$014	; DTMF Frequency
+f770_l		equ	$090
+
+f852_h		equ	$016	; DTMF Frequency
+f852_l		equ	$0c0
+
+f941_h		equ	$019	; DTMF Frequency
+f941_l		equ	$021
+
+f1209_h		equ	$020	; DTMF Frequency
+f1209_l		equ	$049
+
+f1336_h		equ	$023	; DTMF Frequency
+f1336_l		equ	$0ad
+
+f1477_h		equ	$027	; DTMF Frequency
+f1477_l		equ	$071
+
+f1633_h		equ	$02b	; DTMF Frequency
+f1633_l		equ	$09c
+
+f1300_h		equ	$022	; 1300Hz Signifies HIGH data in Bell202 Spec
+f1300_l		equ	$0b7
+
+f2100_h		equ	$038	; 2100Hz Signifies LOW data in Bell202 Spec
+f2100_l		equ	$015
+
+;**************************************************************************
+; Pin Definitions
+;**************************************************************************
+PWM_pin		equ	ra.0
+
+;**************************************************************************
+; Variables
+;**************************************************************************
+		org	$10
+
+sin_gen_bank	=	$
+
+freq_acc_low	ds	1	; 16-bit accumulator which decides when to increment the sine wave
+freq_acc_high	ds	1	; 
+freq_count_low	ds	1	; 16-bit counter which decides which frequency for the sine wave
+freq_count_high	ds	1	; freq_count = Frequency * 6.83671552
+sin		ds	1	; The current value of the imitation sin wave
+sinvel		ds	1	; The velocity of the sin wave
+
+PWM_bank	=	$
+
+pwm0_acc	ds	1	; PWM accumulator
+pwm0		ds	1	; current PWM output
+
+;**************************************************************************
+; Interrupt
+;**************************************************************************
+		org	0		
+;**************************************************************************
+PWM_OUTPUT
+; This outputs the current value of pwm0 to the PWM_pin.  This generates
+; an analog voltage at PWM_pin after filtering
+;**************************************************************************
+		bank	PWM_bank
+		add	pwm0_acc,pwm0			; add the PWM output to the accumulator
+		snc				
+		jmp	:carry				; if there was no carry, then clear 
+							; the PWM_pin
+		clrb	PWM_pin
+		jmp	PWM_out			 
+:carry
+		setb	PWM_pin				; otherwise set the PWM_pin
+PWM_out
+;**************************************************************************
+sine_generator
+; This routine generates a synthetic sine wave with values ranging
+; from -32 to 32.  Frequency is specified by the counter.  To set the
+; frequency, put this value into the 16-bit freq_count register:
+; freq_count = FREQUENCY * 6.83671552 (@50MHz)
+;**************************************************************************
+
+		bank	sin_gen_bank
+		add	freq_acc_low,freq_count_low;2	;advance sine at frequency
+		jnc	:no_carry		;2,4	; if lower byte rolls over
+		inc	freq_acc_high			; carry over to upper byte
+		jnz	:no_carry			; if carry causes roll-over
+		mov	freq_acc_high,freq_count_high	; then add freq counter to accumulator (which should be zero,
+							; so move will work)
+							; and update sine wave
+		jmp	:change_sin
+:no_carry
+		add	freq_acc_high,freq_count_high	; add the upper bytes of the accumulators
+		jnc	:no_change
+:change_sin
+
+		mov	w,++sinvel	;1		; if the velocity of sine
+		sb	sin.7		;1		; is positive, accelerate
+		mov	w,--sinvel	;1		; it.  Otherwise, decelerate it.
+		mov	sinvel,w	;1	
+		add	sin,w		;1		; add the velocity to sin
+
+		mov	pwm0,sin			; mov the value of SIN into the PWM output
+		add	pwm0,#128			; add 128 to put it in the center of the PWM output
+
+:no_change
+
+sine_generator_out
+
+		mov	w,#-163		;1		; interrupt 163 cycles after this interrupt
+		retiw			;3		; return from the interrupt
+;**************************************************************************
+;
+;
+; Main program
+;
+start		bank	sin_gen_bank
+		mov	sin,#32				;init variables.  A sine starts at 1, a cos wave starts at 0. 
+		mov	sinvel,#0		
+;		mov	sin,#-4				; use these values for a wave which is 90 degrees out of phase.
+;		mov	sinvel,#-8
+
+
+		mov	!option,#%00011111		;enable wreg and rtcc interrupt
+
+		mov	!ra,#%1110			;ra0 = input, ra1 = output
+
+		mov	m,#$D				;make ra0 cmos-level
+		mov	!ra,#%1110
+		mov	m,#$F
+
+		mov	freq_count_high,#f1300_h
+		mov	freq_count_low,#f1300_l		;set up variables for 1300 Hz.  
+		
+
+		jmp	$				;do nothing (interrupts will handle the rest)

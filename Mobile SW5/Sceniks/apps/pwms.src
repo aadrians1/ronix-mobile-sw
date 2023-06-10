@@ -1,0 +1,72 @@
+;pwm.src
+;
+; Device data
+;
+		device	pins28,pages4,banks8
+		device	turbo,optionx,oschs
+
+		reset	start			;set reset jump address
+;
+;
+; Variables
+;
+		org	$08
+
+temp		ds	1			;temporary workspace
+
+		org	$10
+
+acc0		ds	1			;pwm accumulators
+acc1		ds	1
+acc2		ds	1
+acc3		ds	1
+acc4		ds	1
+acc5		ds	1
+acc6		ds	1
+acc7		ds	1
+
+duty0		ds	1			;pwm duty cycles
+duty1		ds	1
+duty2		ds	1
+duty3		ds	1
+duty4		ds	1
+duty5		ds	1
+duty6		ds	1
+duty7		ds	1
+;
+;
+; Interrupt routine
+; update eight 8-bit pwm's on rb pins at 1MHz
+; total service time is 32 clocks
+; at 50MHz, 18 MIPS are left over for main app
+;
+		org	0
+					;3	;interrupt entry
+		add	acc0,duty0	;2	;update pwm0
+		rl	temp		;1
+		add	acc1,duty1	;2	;update pwm1
+		rl	temp		;1
+		add	acc2,duty2	;2	;update pwm2
+		rl	temp		;1
+		add	acc3,duty3	;2	;update pwm3
+		rl	temp		;1
+		add	acc4,duty4	;2	;update pwm4
+		rl	temp		;1
+		add	acc5,duty5	;2	;update pwm5
+		rl	temp		;1
+		add	acc6,duty6	;2	;update pwm6
+		rl	temp		;1
+		add	acc7,duty7	;2	;update pwm7
+		mov	w,<<temp	;1
+		mov	rb,w		;1!	;output pwm states
+		mov	w,#-50		;1	;repeat every 1us
+		retiw			;3 /32	;interrupt exit
+;
+;
+; Main program
+;
+start		mov	!rb,#%00000000		;make rb outputs
+		mov	!option,#%10011111	;enable rtcc interrupt
+
+:loop		;(update duty0-duty7)
+		jmp	:loop

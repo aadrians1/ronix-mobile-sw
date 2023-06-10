@@ -1,0 +1,310 @@
+;=======================================================================
+;=======================================================================
+;	SERIAL PERIPHERAL INTERFACE (SPI) VIRTUAL PERIPHERALS
+;	SPIM (Authentic SPI Master) Virtual Peripheral Demo Program
+;	Revision 1.02, 07.21.98
+;	Developed by Authentic Engineering for Scenix Semiconductor, Inc.
+;	Authentic Engineering // www.authenticeng.com // ak@silcom.com
+;=======================================================================
+;
+;
+;	
+;	Authentic SPIM (SPI Master) Virtual Peripheral
+;
+;	SPIM is a part of the Authetic SPI virtual peripherals for SX micro.
+;	This VP provides simple and efficient way to send/get one word of 
+;	data to/from SPI compatible Slave device.
+;	
+;	SPIM Clock rate can be selected starting from 1.72 MHz (max). 
+;	Corresponding minimum clock period is 580 ns. Clock period can be
+;	incremented with 160 nsec increment. It is possible to achive faster
+;	data transfer rates sacrifising the rate programmability. Maximum 
+;	clock rate of 2.5MHz can be achived by removing part of the program, 
+;	responsible for programmable clock rate. Minimum clock rate is
+;	prctically unlimited, however, for clock rates lower than 500KHz
+;	we recommend to use Authentic SPIML (low rate SPI Master VP).
+;	
+;	Word length can be set to anywhere from 1 to 16 bits. Longer word 
+;	lengths could be easily implemented if needed.
+;
+;	Clock polarity is configurable by using the appropriate command byte.
+;
+;	Four I/O signal lines are associated with any SPI communication:
+;		
+;		Master-Out-Slave-In		MOSI signal line
+;		Master-In-Slave_Out		MISO signal line
+;		Serial Clock			SCLK signal line
+;		Slave Select			SS signal line
+; 
+;	SPIM does not make any diffenece between read and write cycles.
+;	The data is clocked in and out simultaneously. 
+;
+;	If necessary, user may want to add more sophistication to the data 
+;	transfer by adding Read/Write and handshaking signals. All that 
+;	can be easily implemented without affecting the core SPIM program.
+;
+;	SPIM controlls MOSI; MISO; SCLK lines. User program must provide 
+;	appropriate control for SS lines.
+;
+;	Arbitrary pins of the SX-28/SX-18 can be assigned for SPIM.
+;	
+;	To initialize SPIM user must: disable the interrupts; initilize
+;	SX I/O ports (calling SPIM_INIT); place	the outgoing data into 
+;	the I/O buffer, set SS signal and call SPIM_EXECUTE. Since SPIM 
+;	is not using any interrupts, it will transfer the data and return 
+;	control to user program.
+;	
+;	The two-byte (16 bits) send/receive buffer is allocated in 
+;	memory as SPIM_LSB and SPIM_MSB. Data are shifted starting 
+;	from the most significant bit. 
+;	In case of less than 16-bit long data word, the SPIM will 
+;	automatically align the MSBit of the word to the MSBit of 
+;	the buffer before shifting. No user intervention is required. 
+;	The contents of SPIM_LSB and SPIM_MSB are not preserved 
+;	during the driver operation since the bits are always shifted in.
+;
+;	-- SPIM control, status and I/O DATA registers --
+;	
+;	SPIM_RATE. This byte defines the clock rate. When set to 1 it 
+;	defines	maximum clock rate of 1.72 MHz (580 nsec period). 
+;	The actual clock period can be calculated as 420 nsec plus
+;	160 nsec, multiplied by the SPIM_RATE. SPIM_RATE equal to
+;	zero will define maximun clock period of 41.380 usec.
+;
+;	SPIM_PORT must be defined by user to point to the SX Port 
+;	- A,B or C, which will generate SPI Clock signal. 
+;	For instance: spim_port 	=	rb.
+;
+;	SPIM_PORTA_MASK, SPIM_PORTB_MASK, SPIM_PORTC_MASK. These
+;	bytes are the images of SX I/O ports direction registers.
+;	They are written to corresponding ports direction registers
+;	during the initialisation of SPIM.
+; 
+;	SPIM_CLK_MASK defines the SPI Clock pin. The pin is defined by
+;	setting corresponding bit of SPIM_CLK_MASK.
+;	For instance:
+;	spim_portc_mask	=	$fd
+;	spim_port	=	rc
+;	spim_clk_mask	=	$02
+;	will define rc.1 as SPI Clock pin.
+;	
+;	SPIM_CMD - command and configuration byte. This byte defines:
+;			- SPI Clock polarity
+;			- direction (Read/Write)
+;			- number of bits to send/receive
+;
+;	SPIM supports 4 commands, specified by the 4 MSBits of the 
+;	SPIM_CMD byte
+;
+;		$3	- GET WORD in MASTER FAST mode, define FALLING edge;
+;		$7	- GET WORD in MASTER FAST mode, define RISING edge;
+;		$B	- SEND WORD in MASTER FAST mode, define FALLING edge;
+;		$F	- SEND WORD in MASTER FAST mode, define RISING edge.
+;
+;	Practically there is no difference between the GET and SEND commands. 
+;	When the I/O buffer is shifted out, the input data is always 
+;	shifted in. The different commands are provided for user convinience 
+;	and confusion. The contents of SPIM_LSB and SPIM_MSB are 
+;	not preserved during the driver operation since the bits are 
+;	always shifted in even if they don't make any sense.
+;
+;	Four LSBits of the command byte define the word length. 
+;	$00 sets the length to 16 bits
+;	$01 sets the length to 1 bit 
+;	 ...
+;	$0F sets the length to 15 bits
+;
+;	The SPIM_CMD byte also serves as a ready flag. SPIM will clear this 
+;	byte upon the success of data transfer.
+;
+;	SPIM_STATUS byte provides the error status information to the user
+;	program. It has 1 error flag:
+;	 bit 4 - set to 1 when the SPIS_CMD byte contains an unsupported command 
+;
+;	-- SPIS ENTRY POINTS --
+;
+;	SPIM_INIT - Initialization subroutine. It provides appropriate configuration
+;	for SX I/O ports ports
+;	
+;	SPIM_EXECUTE - This is the actual VP entry point which may be
+;	called either from the interrupt service routine or from MAIN program.
+;
+;	SPIM_SS_SET - user defined subroutine to set active level on SS pin.
+;	SPIM_SS_RESET - user defined subroutine to set passive level on SS pin.
+;	In the case of multiple devices on SPI bus, user must provide appropriate
+;	control over SS signals.
+;
+;	SPI_ORG. This is the base address of SPIM VP. Typically it will be
+;	next ROM location, after the user program.  
+;
+;	-- How to use SPIM from the user program --
+;
+;	1. Make sure that no interrupt is allowed during execution of SPIM.
+;   
+;	2. Verify that the execution parameters are configured properly:
+;		SPIM_RATE 
+;		SPIM_PORT_A_MASK
+;		SPIM_PORT_B_MASK
+;		SPIM_PORT_C_MASK
+;		SPIM_PORT
+;		SPIM_CLK_MASK
+;		SPIM_CMD
+;
+;	3. Configure I/O ports by calling SPIM_INIT.
+;
+;	4. Verify that SPIM is ready for execution by testing the SPIM_CMD byte.
+;
+;	5. Place the outgoing data into SPIM_LSB and SPIM_MSB 
+;
+;	6. Call SPIM_EXECUTE from the interrupt.
+;	
+;	7. Test SPIM_CMD for completion and SPIM_STATUS for errors. 
+;          Unload the data from SPIM_LSB and SPIM_MSB
+;	
+;	Your SPIM is now ready for reuse. Repeat from step 4.
+;
+;=======================================================================
+									
+	
+;**************************** CODE START *******************************
+;;recommended SX device confoguration 
+;			device	pins28, pages4,banks8,oschs	;This is the SX-28 device configuration 
+;			device	turbo, stackx, optionx 		;data which should be used to run this VP
+;			id	'DEMO3M'
+;
+;reset				reset_entry
+;
+;***************************** I/O PINS ********************************
+;;example of SX pin assingment
+;spim_port			=	rb	;SPI port for clock pin
+;
+;spim_clk_pin			=	rb.0	;SPI clock line
+;spim_out_pin			=	rb.1	;master_in slave_out line
+;spim_in_pin			=	rb.2	;master_out slave_in line 
+;spim_MCU_cs_pin			=	rb.3	;slave select/slave request micro
+;					
+;************************ SS CONTROL SUBROUTINES **********************
+;;user defined subroutines to generate SPI SS signal
+;spim_SS_set		clrb	spim_MCU_cs_pin		;set MCU__SS active (low)
+;			ret
+;
+;spim_SS_reset		setb	spim_MCU_cs_pin		;set MCU__SS passive (high)
+;			ret
+;
+;***********************************************************************
+
+;************************** Authentic SPI MASTER VP ********************
+
+			org	10h
+spim_ram_bank		=	$
+
+;SPIM control data
+
+spim_cmd		ds	1		;SPIM command byte
+
+fast_ON			equ	spim_cmd.4	;set to 1 for SPIM mode is used
+
+master_ON		equ	spim_cmd.5	;set to 1 if MASTER
+rising_ON		equ	spim_cmd.6	;set to 1 if RISING
+transmit_ON		equ	spim_cmd.7	;set to 1 if TRANSMIT
+
+spim_clk_mask		ds	1		;defines SPI Clock pin
+spim_porta_mask	ds	1			;PortA direction register image
+spim_portb_mask	ds	1			;PortB direction register image
+spim_portc_mask	ds	1			;PortC direction register image
+
+;SPIM status data
+
+spim_status		ds	1		;SPIM status byte
+
+spim_cmd_error		equ	spim_status.4	;error - unsupported comand
+	
+;SPIS I/O buffer
+
+spim_msb		ds	1		;I/O data buffer
+spim_lsb		ds	1
+
+;SPIS private data
+
+spim_shift_counter	ds	1		;I/O shift counter
+
+spim_bits_total		ds	1		;number of bits to transfer
+spim_shifts_init	ds	1		;number of bits for initial shift
+	
+spim_rate		ds	1		;clock rate factor
+spim_rate_counter	ds	1		;clock rate delay counter
+
+			org	spi_org		;defined in user program
+
+;********************* SPIM INITIALIZATION ROUTINE *********************
+
+spim_init		mov	m,#$0f			;set up data direction registers
+			mov	!rb,spim_portb_mask	;configure ports
+			mov	!ra,spim_porta_mask
+			mov	!rc,spim_portc_mask
+			ret
+									
+;************************* SPIM DATA TRANSFER **************************
+
+spim_execute		bank	spim_ram_bank		;set SPIM RAM bank
+			snb	master_ON
+			jb	fast_ON,spim_cmd_proc	;begin decoding SPIM_CMD
+			setb	spim_cmd_error		;unsupported command
+	
+spim_exit		clr	spim_cmd		;SPIM exit
+			ret
+;decode SPIM_CMD 
+spim_cmd_proc	
+			sb	rising_ON		;set the SPI_CLK polarity
+			clrb	spim_clk_pin
+			snb	rising_ON
+			setb	spim_clk_pin
+
+			mov	w,spim_cmd		;set number of bits to transfer	
+			and	w,#$0f			;decode four LSBits of SPIM_CMD
+			mov	spim_bits_total,w	
+			test	spim_bits_total
+			snz
+			mov	spim_bits_total,#$10
+
+			mov	spim_shift_counter,spim_bits_total	;set shift bit counter
+			mov	spim_shifts_init,#$10
+			sub	spim_shifts_init,spim_bits_total	;set initial shifts counter
+
+			call	spim_SS_set		;activate user defined SS lines
+
+			test	spim_shifts_init	;initial shift needed? 
+			jz	:spim
+
+;prepare data for transfer
+:set_bit_position	clc				;initial shift for the data < 16 bit long
+			rl	spim_lsb
+			rl	spim_msb
+			djnz	spim_shifts_init,:set_bit_position
+
+;data transfer
+:spim			test	spim_shift_counter	
+			jz	:spim_execute_exit
+;shift bit out
+			mov	spim_rate_counter,spim_rate	;define transfer rate
+			djnz	spim_rate_counter,$		;in shift data out cycle
+
+			movb	spim_out_pin,spim_msb.7		;shift data out
+			xor	spim_port,spim_clk_mask		;change SPI Clock state
+			dec	spim_shift_counter	
+			rl	spim_lsb
+			rl	spim_msb
+;shift bit in
+			mov	spim_rate_counter,spim_rate	;define transfer rate
+			djnz	spim_rate_counter,$		;in shift data in cycle
+
+			movb	spim_lsb,spim_in_pin		;shift bit in
+			xor	spim_port,spim_clk_mask		;change SPI clock state
+			jmp	:spim
+
+:spim_execute_exit	call	spim_SS_reset			;disable SS
+			jmp	spim_exit			;exit
+	
+			ret					;TO CLOSE THE LABEL SCOPE
+									
+;***************************** END OF SPIM VP **************************

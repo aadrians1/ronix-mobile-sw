@@ -1,0 +1,100 @@
+#!/usr/bin/perl
+#
+# Program to modify in-place HTML macros
+# Macro Format:
+#  <!-- macro macro-name start -->
+#   Macro Contents
+#  <!-- macro macro-name stop -->
+
+$ARG_MSG = <<"ENDMSG";
+
+ Arguments:
+ This program requires 2 (no more, no less) arguments -
+  1) the macro directory name
+  2) the name of a file containing a list of files to be processed
+
+ENDMSG
+
+# must have 2 arguments on the command line
+unless ($#ARGV == 1) {
+   die $ARG_MSG;
+}
+
+$MACRO_DIR = $ARGV[0];
+$FILELIST = $ARGV[1];
+
+# check the macro directory
+unless (-r $MACRO_DIR && -d _) {
+   die "Cannot locate macro directory $MACRO_DIR";
+}     
+
+# open up the file list
+open (FILELIST, "<$FILELIST") ||
+   die "Cannot open the list file";
+
+# loop thru the file list
+while (<FILELIST>) {
+  $FILE = $_;
+  print "Processing file $FILE";
+  chop($FILE);
+  # must be able to open the html file
+  unless (open (HTMLFILE, "< $FILE")) {
+      print STDERR "Cannot open $FILE \n";
+  } else  {
+      unless (open (NEWHTMLFILE, "> $FILE.new")) {
+         print STDERR "Cannot write $FILE.new \n";
+     } else  {
+         $in_macro = 0;
+         # loop thru the HTML file      
+         while (<HTMLFILE>) {
+           unless ( $in_macro) {
+              print NEWHTMLFILE ;
+              if (/<!\-\-\s*macro\s+(\w+)\s+start\s*\-\->/i) {
+                 $MACRO = $1;
+                 print "  Found Macro $MACRO\n";
+                 # open the macro file, if possible
+                 unless (open (MACROFILE, "< $MACRO_DIR/$MACRO")) {
+                    print STDERR "Cannot open macro $MACRO_DIR/$MACRO\n";
+                 } else {
+                    # set the macro flag and output the new macro
+                    $in_macro = 1;
+                    while (<MACROFILE>) {
+                      print NEWHTMLFILE ;
+                    }
+                    print NEWHTMLFILE "\n";
+                    close (MACROFILE);
+                 }
+              } elsif  (/<!\-\-\s*macro\s+(\w+)\s+stop\s*\-\->/i) {          
+                 if ($1 ne $MACRO) {
+                    print STDERR "Error - macro $1 stop found without matching start\n";
+                 }
+              }
+           } else { #in_macro
+               if  (/<!\-\-\s*macro\s+(\w+)\s+stop\s*\-\->/i) {
+                  if ($1 ne $MACRO) {
+                     print STDERR "Error - macro stop ($1) does not match start ($MACRO)\n";
+                  } else {
+                     $in_macro = 0;
+                  }
+                  print NEWHTMLFILE ;
+               } elsif  (/<!\-\-\s*macro\s+(\w+)\s+start\s*\-\->/i) {
+                    print STDERR "Error - macro $1 found nested within macro $MACRO\n";
+                    print NEWHTMLFILE ;
+               }
+           }
+         } #while HTMLFILE 
+         if ($in_macro) {
+            print STDERR "Warning - macro $MACRO has no stop\n";
+         }
+         close (NEWHTMLFILE);
+         close (HTMLFILE);
+#         rename($FILE, "$FILE.bak") ||
+#                print STDERR "Cannot rename $FILE\n";
+         rename ("$FILE.new", $FILE) ||
+                print STDERR "Cannot rename $FILE.new\n";
+    } #else open
+  } #else open
+} #while FILELIST
+
+exit
+

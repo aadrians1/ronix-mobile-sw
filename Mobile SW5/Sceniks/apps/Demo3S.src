@@ -1,0 +1,424 @@
+;=======================================================================
+;=======================================================================
+;	SERIAL PERIPHERAL INTERFACE (SPI) VIRTUAL PERIPHERALS
+;	DEMO3S.SRC -- Demo #3 Slave SX Software
+;	SPIS (Authentic SPI Slave) Virtual Peripheral Demo Program
+;	Revision 1.02, 07.21.98
+;	Developed by Authentic Engineering for Scenix Semiconductor, Inc.
+;	Authentic Engineering // www.authenticeng.com // ak@silcom.com
+;	
+;=======================================================================
+;=======================================================================
+;
+;	DEMO#3 provides an example of data transfer between two 
+;       SX microcontrollers through the SPI data bus. 
+;	DEMO#3 consists of two programs - DEMO3M.SRC and DEMO3S.SRC, 
+;	which correspond to the SPI Master and SPI Slave sides accordingly.
+;       The are 4 signal lines that connect the Master to the Slave:
+;
+;		Master-Out-Slave-In		MOSI signal line
+;		Master-In-Slave_Out		MISO signal line
+;		Serial Clock			SCLK signal line
+;		Slave Select			SS signal line
+;
+;	The Slave Select (SS) Line from Master to Slave signals the 
+;	latter to start sending/receiving data. The word length is set 
+;	to 16 bits in this demo (VP permits 1 to 16 bits). 
+;
+;	Authentic SPI virtual perphirals perform shifting in and out at 
+;	the same time, as most hardware SPI implemetations do. 
+;
+;	The demo works as follows:
+;       - Assuming that Slave has been initialized prior to Master,
+;	  the Master sends The Predefined Word 256 times.
+;       - The Slave SX is configured to perform the loopback function, 
+;	  that is, every time Slave sends to the Master whatever it has 
+;	  received from the Master during the previous transmission.
+;       - After the initial 256 transmissions Master switches into 
+;	  the loopback mode.
+;	- The data transfer of Predefined Word can be easily observed 
+;	  with the help of oscilloscope. 
+;
+;	SPI clock period for this demo is 900 nsec - maximum clock 
+;	rate supported	by the SPIS (SPI Slave VP).
+;
+;	Data transfer from Master side is triggered by RTCC interrupt with
+;	a period of 25.6 microseconds.
+;
+;=======================================================================
+;
+;	Authentic SPIS (SPI Slave) Virtual Peripheral
+;
+;	SPIS is a part of the Authetic SPI virtual peripherals for SX micro.
+;	This VP provides simple and efficient way to send/get one word of 
+;	data to/from SPI compatible MASTER device.
+;
+;	SPIS is developed to work with relatively fast SPI devices. It 
+;	occupies the CPU during the entire data transfer. 
+;	Maximum clock rate is 1.1 MHz (900 nsec clock period). The clock 
+;	rate may vary during data transfer cycle. The minimum clock rate 
+;	is limited by the watchdog timer if it's enabled; or is unlimited 
+;	otherwise. 
+;
+;	Word length can be set to anywhere from 1 to 16 bits. Longer word 
+;	lengths could be easily implemented if needed.
+;
+;	Clock polarity is configurable by using the appropriate command byte.
+;
+;	Four I/O signal lines are associated with any SPI communication:
+;		
+;		Master-Out-Slave-In		MOSI signal line
+;		Master-In-Slave_Out		MISO signal line
+;		Serial Clock			SCLK signal line
+;		Slave Select			SS signal line
+; 
+;	SPIS does not make any diffenece between read and write cycles.
+;	The data is clocked in and out simultaneously. 
+;
+;	If necessary, user may want to add more sophistication to the data 
+;	transfer by adding Read/Write and handshaking signals. All that 
+;	can be easily implemented without affecting the core SPIS program. 
+;
+;	SPIS makes use of the Wake-UP interrupt from the SS signal, 
+;	for this reason the SS signal must be assigned to one of the 
+;	Port B pins. Other signals may use any pins of SX-28. 
+;
+;	To initialize the SPIS user must disable the RTCC interrupt and 
+;	enable the appropriate edge wakeup interrupt from the SS pin.
+;	SPIS will then wait for the the interrupt from the SS input. 
+;	When the interrupt occures, SPIS will start execution of the 
+;	send/receive loop, waiting for SPI Clock signals and processing
+;	the incoming and outgoing data lines. After the predefined number 
+;	of clock pulses SPIS will finish the communication cycle and 
+;	exit the interrupt. In order to prevent locking of the driver 
+;	in case of communication error, SPIS uses it's internal 
+;	SPIS_WATCHDOG counter, which would expire if SPIS has not 
+;	received the clock pulse for too long and the data transfer 
+;	will be aborted.
+;
+;	The two-byte (16 bits) send/receive buffer is allocated in 
+;	memory as SPIS_LSB and SPIS_MSB. Data are shifted starting 
+;	from the most significant bit. 
+;	In case of less than 16-bit long data word, the SPIS will 
+;	automatically align the MSBit of the word to the MSBit of 
+;	the buffer before shifting. No user intervention is required. 
+;	The contents of SPIS_LSB and SPIS_MSB are not preserved 
+;	during the driver operation since the bits are always shifted in.
+;
+;
+;	-- SPIS control, status and I/O DATA registers --
+;	
+;	SPIS_WATCHDOG. This byte defines the timeout period for 
+;	the SPI slave (see above). If SPIS will not receive the clock signal
+;	within this waiting period, the communication will be aborted and the 
+;	error flag will be set. The actual timeout can be calculated as 
+;	160 nsec multiplied by SPIS_WATCHDOG.
+;
+;	SPIS_PORTA_MASK, SPIS_PORTB_MASK, SPIS_PORTC_MASK. These
+;	bytes are the images of SX I/O ports direction registers.
+;	They are written to corresponding ports direction registers
+;	during SPIS initialisation. 
+;	
+;	SPIS_WKUP_MASK - SPIS writes SPIS_WKUP_MASK into Wakeup Enable 
+;	register of PortB 
+;
+;	SPIS_CMD - command and configuration byte. This byte defines:
+;			- SPI Clock polarity
+;			- direction (Read/Write)
+;			- number of bits to send/receive
+;
+;	SPIS supports 4 commands, specified by the 4 MSBits of the 
+;	SPIS_CMD byte:
+;
+;		$1	- GET BYTE in SLAVE mode, define FALLING edge
+;		$5	- GET BYTE in SLAVE mode, define RISING edge
+;		$9	- SEND BYTE in SLAVE mode, define FALLING edge
+;		$D	- SEND BYTE in SLAVE mode, define RISING edge
+;
+;	Practically there is no difference between the GET and SEND commands. 
+;	When the I/O buffer is shifted out, the input data is always 
+;	shifted in. The different commands are provided for user convinience 
+;	and confusion. The contents of SPIS_LSB and SPIS_MSB are 
+;	not preserved during the driver operation since the bits are 
+;	always shifted in even if they don't make any sense.
+;
+;	Four LSBits of the command byte define the word length. 
+;	$00 sets the length to 16 bits
+;	$01 sets the length to 1 bit 
+;	 ...
+;	$0F sets the length to 15 bits
+;
+;	The SPIS_CMD byte also serves as a ready flag. SPIS will clear this 
+;	byte upon the success of data transfer.
+;
+;	SPIS_STATUS byte provides the error status information to the user
+;	program. It has 2 error flags:
+;	 bit 4 - set to 1 when the SPIS_CMD byte contains an unsupported command 
+;        bit 7 - set to 1 when the data transfer was not completed successfully
+;
+;	-- SPIS ENTRY POINTS --
+;
+;	SPIS_INIT - Initialization subroutine.It provides appropriate configuration
+;	for SX I/O ports.
+;	
+;	SPIS_EXECUTE - This is the actual VP entry point which is normally 
+;	called from the interrupt service routine.
+;
+;	SPIS_ORG. This is the base address of SPIM VP. Typically it will be
+;	next ROM location, after the user program.  
+;
+;	-- How to use SPIS from the user program --
+;
+;	1. Verify that the execution parameters are configured properly:
+;		SPIS_WATCHDOG 
+;		SPIS_PORT_A_MASK
+;		SPIS_PORT_B_MASK
+;		SPIS_PORT_C_MASK
+;		SPIS_WKUP_MASK
+;		SPIS_CMD
+;
+;	2. Call SPIS_INIT
+;
+;	2. Verify that SPIS is ready for execution by testing the SPIS_CMD byte.
+;    
+;	4. Place the outgoing data into SPIS_LSB and SPIS_MSB 
+;
+;	5. Disable the RTCC interrupt and enable the SS interrupt from Port B.
+;
+;	6. Call SPIS_EXECUTE from the interrupt.
+;	
+;	7. Test SPIS_CMD for completion and SPIS_STATUS for errors. 
+;          Unload the data from SPIS_LSB and SPIS_MSB
+;	
+;	Your SPIS is now ready for reuse. Repeat from step 4.
+;
+;=======================================================================
+
+
+;**************************** CODE START *******************************
+
+			device	pins28, pages4, banks8,oschs
+			device	turbo, stackx, optionx 
+			id	'SPIS_D3'
+
+reset			reset_entry
+
+;***************************** I/O PINS ********************************
+
+spis_clk_pin		=	rb.0	;SPI clock line
+spis_out_pin		=	rb.1	;master_in slave_out line
+spis_in_pin		=	rb.2	;master_out slave_in line 
+spis_MCU_cs_pin		=	rb.3	;slave select/slave request micro
+
+;******************************* RAM ***********************************
+;SPIS DEMO#3 Variables. 
+			org	8
+
+spis_demo_watchdog	ds	1			;DEMO#3 watchdog value ($04)
+spis_demo_cmd		ds	1    			;DEMO#3 SPIS_CMD ($50)
+
+;************************* INTERRUPT HANDLER ***************************
+;Calls the SPIS_S driver and exits
+
+			org	0
+
+			call	spis_execute
+			reti
+
+;************************ DEMO#3 MAIN PROGRAM **************************
+
+reset_entry		mov	!option,#$40		;disable RTCC interrupt
+
+			clr	fsr			;clear RAM  
+:loop			setb	fsr.4			
+			clr	ind						
+			ijnz	fsr,:loop
+
+;Set SPIS control registers and reset the driver
+
+			bank	spis_ram_bank
+			mov	spis_port_b_mask,#$fd	
+			mov	spis_wkup_mask,#$f7
+
+			mov	spis_demo_watchdog,#$4
+
+			mov	spis_demo_cmd,#$50	;GET RISING  16 BIT
+;			mov	spis_demo_cmd,#$1c	;GET FALLING 12 BIT
+		
+				
+			call	spis_init	
+;initialize WATCHDOG	
+			mov	spis_watchdog,spis_demo_watchdog 
+
+;Main loop
+
+main_slave		call	:spis_transfer		;main program loop
+			jmp	main_slave
+;SPIS restart 
+:spis_transfer		test	spis_cmd		;wait for SPIM to be ready
+			jnz	:spis_transfer		;for next transfer
+
+			mov	spis_cmd,spis_demo_cmd	;initialize SPI_CMD	
+			ret
+
+spis_org		equ	$
+									
+;***********************************************************************
+;************************** Authentic SPI SLAVE VP *********************
+
+			org	10h
+spis_ram_bank		=	$
+
+;SPIS control data
+
+spis_cmd		ds	1		;SPIS command byte
+
+fast_ON			equ	spis_cmd.4	;always set to 1 for SPIS
+master_ON		equ	spis_cmd.5	;set to 1 if MASTER
+rising_ON		equ	spis_cmd.6	;set to 1 if RISING
+transmit_ON		equ	spis_cmd.7	;set to 1 if TRANSMIT
+
+spis_watchdog		ds	1		;clock receive timeout
+spis_port_b_mask	ds	1		;PortA direction register image
+spis_port_a_mask	ds	1		;PortB direction register image
+spis_port_c_mask	ds	1		;PortC direction register image
+spis_wkup_mask		ds	1		;
+
+;SPIS status data
+
+spis_status		ds	1		;SPIS status byte
+
+spis_cmd_error		equ	spis_status.4	;error - unsupported command 
+spis_transfer_error	equ	spis_status.7	;error - transfer aborted
+
+;SPIS I/O buffer
+
+spis_msb		ds	1 		;I/O buffer MSByte
+spis_lsb		ds	1		;I/O buffer LSByte
+
+;SPIS private data
+
+spis_bits_total		ds	1            	;number of bits to transfer
+spis_shift_counter	ds	1		;bit shift counter
+	
+spis_shifts_init	ds	1		;number or alignment shifts for the buffer
+spis_watch_counter	ds	1               ;watchdog counter
+
+			org	spis_org
+
+;********************* SPIS INITIALIZATION ROUTINE *********************
+
+spis_init		mov	m,#$0f			;set up data direction registers
+			mov	!rb,spis_port_b_mask	;configure ports
+			mov	!ra,spis_port_a_mask
+			mov	!rc,spis_port_c_mask
+
+;configure the wakeup interrupt
+			mov	m,#$0a			;set WKUP interrupt to FALLING edge
+			mov	w,spis_wkup_mask
+			not	w
+			mov	!rb,w
+			mov	m,#$0b			;enable interrupt
+			mov	!rb,spis_wkup_mask
+
+			mov	m,#$0f
+			ret
+									
+;************************* SPIS DATA TRANSFER **************************
+
+spis_execute		bank	spis_ram_bank			;set SPIS RAM bank
+
+			mov	m,#$09				;clear pending interrupts
+			clr	w					
+			mov	!rb,w	
+	
+			sb	master_ON			;decode SPIS_CMD	
+			jb	fast_ON,spis_cmd_proc
+
+			setb	spis_cmd_error       		;set command error flag and exit
+spis_exit		clr	spis_cmd			;clear SPIS_CMD and exit 
+			ret
+
+spis_cmd_proc				
+			mov	w,spis_cmd			;decode number of bits to transfer
+			and	w,#$0f
+			mov	spis_bits_total,w			
+			test	spis_bits_total
+			snz
+			mov	spis_bits_total,#$10
+			mov	spis_shift_counter,spis_bits_total
+	
+			mov	spis_shifts_init,#$10           ;decode number of bits to transfer
+			sub	spis_shifts_init,spis_bits_total	
+			test	spis_shifts_init
+			jz	:spis				;no initial shifts required
+
+:set_bit_position						;align the word
+			clc            				
+			rl	spis_lsb
+			rl	spis_msb
+			djnz	spis_shifts_init,:set_bit_position
+									
+:spis		
+			test	spis_shift_counter		;data transfer loop
+			jz	:spis_execute_exit
+
+			jb	rising_ON,:slave_rising		;jmp to rizing edge clock detection
+
+:slave_falling          	  		            	;falling edge active transfer
+			mov	spis_watch_counter,spis_watchdog
+:falling_send	
+			jb	spis_clk_pin,:shift_bit_out_on_fall
+			djnz	spis_watch_counter,:falling_send
+			jmp	:spis_error_exit		;exit when watchdog is zero
+
+:shift_bit_out_on_fall						;shift bit out	
+			movb	spis_out_pin,spis_msb.7
+			rl	spis_lsb
+			rl	spis_msb
+
+			mov	spis_watch_counter,spis_watchdog
+:falling_get							;wait for falling edge to shift bit in
+			jnb	spis_clk_pin,:shift_bit_in_on_fall
+			djnz	spis_watch_counter,:falling_get
+			jmp	:spis_error_exit		;exit when watchdog is zero
+
+:shift_bit_in_on_fall	
+			movb	spis_lsb,spis_in_pin          	;shift bit in
+
+			dec	spis_shift_counter
+			jmp	:spis				;next clock pulse
+
+:slave_rising							;rising edge active data transfer
+			mov	spis_watch_counter,spis_watchdog		
+:rising_send							;wait for falling edge to shift bit out
+			jnb	spis_clk_pin,:shift_bit_out_on_rise
+			djnz	spis_watch_counter,:rising_send			
+			jmp	:spis_error_exit		;exit when watchdog is zero
+
+:shift_bit_out_on_rise	
+			movb	spis_out_pin,spis_msb.7		;shift bit out
+			rl	spis_lsb
+			rl	spis_msb
+
+			mov	spis_watch_counter,spis_watchdog
+:rising_get							;wait for rising edge to shift bit in
+			jb	spis_clk_pin,:shift_bit_in_on_rise
+			djnz	spis_watch_counter,:rising_get
+			jmp	:spis_error_exit		;exit when watchdog is zero
+
+:shift_bit_in_on_rise		
+			movb	spis_lsb,spis_in_pin		;shift bit in
+			dec	spis_shift_counter
+			jmp	:spis				;next clock pulse
+
+:spis_error_exit	
+			setb	spis_transfer_error		;exit on transfer error
+			mov	w,#$01				;error code is set 
+:spis_execute_exit	
+			jmp	spis_exit			;normal exit
+			
+			ret					;TO CLOSE THE LABEL SCOPE
+
+;***************************** END OF SPIS VP **************************
+

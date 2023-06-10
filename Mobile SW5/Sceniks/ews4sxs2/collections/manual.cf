@@ -1,0 +1,4 @@
+-R /usr/local/www/scenix.com/ews4sxs2/collections/manual
+-stem /usr/local/www/scenix.com/ews4sxs2/stem.tbl
+-stop /usr/local/www/scenix.com/ews4sxs2/stop.tbl
+-pidfile /usr/local/www/scenix.com/ews4sxs2/collections/manual.pid

@@ -1,0 +1,207 @@
+;******************************************************************************
+;	Pulse Width Modulated 'Linear' LED Bar Graph Display  -  (c) 1998
+;
+;
+;	Length: 87 bytes
+;	Author:	Craig Webb
+;	Written: 97/02/26
+;
+;	This program implements two virtual peripherals using interrupts.
+;	It shows to read a potentiometer as an 8 bit value and pulse width
+;	modulate a bar-graph of 16 LEDs arranged in a 4x4 matrix on port B
+;	in order to provide a smooth 'sliding' signal effect by varying the
+;	brightness of adjacent LEDs when the potentiometer 8 bit value lies
+;	somewhere between them.
+;	
+;
+;******************************************************************************
+;
+;******	Assembler directives
+;
+		DEVICE		pins18,pages1,banks8,stackx,optionx
+		DEVICE		osc4mhz,turbo
+		ID		'16 LEDs'
+		RESET		Start			;set reset/boot address
+;
+;******************************* Program Variables ***************************
+;
+;******	Register definitions (bank 0)
+;
+		ORG	08h			;global variables 08-0Fh
+reading		DS	1			;potentiometer reading
+display		DS	1			;LED display output level
+flags		DS	1			;program flags
+;
+; variables for LED interrupt routine
+;
+		ORG	10h			;bank 0 variables
+mainbank	EQU	$
+;
+LED_bank	EQU	$			;(can be other than bank 0)
+LED		DS	1			;holds which LED to light
+cycle_count	DS	1			;pwm cycle count
+pot_count	DS	1			;temporary pot timing count
+clear_delay	DS	1			;delay period to clear cap.
+sample_delay	DS	1			;delay period per sample
+						; (reduces power consumption)
+;
+;******	Bit variable definitions
+;
+pot		EQU	RA.0			;potentiometer in RC (input)
+triggered	EQU	flags.0			;status of pot. reading
+clearing	EQU	flags.1			;hi while cap. is clearing
+;
+;******	Constants
+;
+sample_time	=	2			;time between pot. readings
+clear_time	=	45			;delay value for clearing
+						; the capacitor (>=2)
+int_period	=	200			;interrupt period (based
+						;          on RTCC counts)
+IO_portA	=	00001111b		;Port A input/output setup
+LEDs_off	=	0Fh			;RB value for LEDs=off
+;
+;************************* Interrupt Routines ****************************
+;	
+		ORG	0
+;
+;*****	Virtual Peripheral : Read potentiometer
+;
+; This routine reads the value of the potentiometer by clearing the
+; capacitor in the RC timing circuit and then measuring the time it takes
+; the capacitor to charge until the port input goes high. To avoid high
+; current draws at low potentiometer values, the routine only resamples
+; after (256*sample_time) interrupt cycles. The maximum potentiometer
+; reading is 255.
+;
+;	Input variable(s) : none
+;	Output variable(s) : reading
+;	Variable(s) affected : pot_count, clear_delay, sample_delay
+;	Flag(s) affected : clearing, triggered
+;	Timing cycles (turbo) : 12-charging, 14-triggered, 14-clearing
+;
+		JNB	clearing,:charge	;are we clearing cap.?
+		MOV	W,#11111111b		;get port mask (=done)
+		DECSZ	clear_delay		;is count done?
+		MOV	W,#11111110b		;no, get port mask (=clearing)
+		TEST	clear_delay		;is count done?
+		SNZ				;if not, skip ahead
+		CLRB	clearing		;yes, reset clearing flag
+		AND	W,#IO_portA		;get port setup byte
+		MOV	!RA,W			;adjust pot port status
+		CLR	pot_count		;clear timing count
+		JMP	:done_pot		;jump past checking routine
+:charge		JNB	pot,:adjust_count	;triggered yet?
+		MOV	W,pot_count		;get timing count
+		SB	triggered		;is this first trigger cycle?
+		MOV	reading,W		;yes, store result
+		SETB	triggered		;set trigger flag
+:adjust_count	INCSZ	pot_count		;adjust reading counter
+		JMP	:done_pot		;was counter at maximum?
+		MOV	W,#255			;no, store max. value
+		SB	triggered		;did we already get reading?
+		MOV	reading,W		;no, so set it to max.
+		SETB	triggered		; and flag that we got value
+		DECSZ	sample_delay		;time for new sample?
+		JMP	:done_pot		;if not, keep cycling
+:trig		CLRB	triggered		;yes, reset trigger flag
+		SETB	clearing		;set flag to clear cap.
+		MOV	sample_delay,#sample_time	;load sample and
+		MOV	clear_delay,#clear_time	; clear delay time counts
+:done_pot					;end of pot. reading routine
+;
+;
+;*****	Virtual Peripheral : LED driver
+;
+; This routine drives the LED bar-graph array, providing 16 levels
+; of brightness to allow an output slide effect between adjacent LEDs
+; It must be called fairly often, otherwise the pulsing effect will
+; become noticeable.
+;
+;	Input variable(s) : display
+;	Output variable(s) : none
+;	Variable(s) affected : cycle_count, LED
+;	Timing cycles (turbo) : 21
+;
+;next instruction needed only if multiple variable banks are used
+;
+		MOV	W,<>display		;get input (nibble-swapped)
+		AND	W,#0Fh			;keep high 4 bits (which LED)
+		MOV	LED,W			;save it
+		MOV	W,display		;get input level again
+		AND	W,#00001111b		;keep lower 4 bits for PWM
+		MOV	W,cycle_count-W		;calculate which LED to have on
+:zero_point	SZ				;adjust zero baseline up one*
+		SC				;next one up? If not skip ahead
+		INC	LED			;yes, increment to next LED
+		MOV	W,LED			;get LED number
+		CALL	LED_Table		;fetch LED value
+		MOV	RB,W			;light LED
+		INC	cycle_count		;adjust PWM cycle
+		SNB	cycle_count.4		;time to reset (16 cycles)?
+		CLR	cycle_count		;yes, start new cycle
+;
+;*this instruction shifts the whole display range up by one, thus making the
+;  first LED dimly lit on a reading of 0, and the last lit fully on a reading
+;  of 255. If it's preferable that all LEDs be off on a reading of 0, this
+;  instruction may be removed or commented out.
+;
+;
+		MOV	W,#-int_period		;interrupt again after
+		RETIW				;   'int_period' RTCC counts
+;
+;******************************* Subroutines *********************************
+;	
+;
+;*****	Subroutine : LED_Table
+;
+; This is a look-up table that returns the output port value to light the LED
+; contained in the W register. If W holds 0, then all LEDs are turned off.
+;	
+LED_Table	ADD	PCL,W			;get RB value for LED1-16
+		RETW	0Fh			;LEDs all off
+		RETW	1Eh			;LED1
+		RETW	2Eh			;LED2
+		RETW	4Eh			;LED3
+		RETW	8Eh			;LED4
+		RETW	1Dh			;LED5
+		RETW	2Dh			;LED6
+		RETW	4Dh			;LED7
+		RETW	8Dh			;LED8
+		RETW	1Bh			;LED9
+		RETW	2Bh			;LED10
+		RETW	4Bh			;LED11
+		RETW	8Bh			;LED12
+		RETW	17h			;LED13
+		RETW	27h			;LED14
+		RETW	47h			;LED15
+		RETW	87h			;LED16
+;
+;
+;********************************* Main Program *******************************
+;
+;*****	Initialization routine
+;
+Start		CLR	RA			;clear port A
+		MOV	!RA,#IO_portA		;set up port A
+		MOV	RB,#LEDs_off		;set all LEDs off
+		MOV	!RB,#0			;configure port B as outputs
+		CLR	FSR			;reset all ram starting at 08h
+:zero_ram	SB	FSR.4			;are we on low half of bank?
+		SETB	FSR.3			;If so, don't touch regs 0-7
+		CLR	IND			;clear using indirect addressing
+		IJNZ	FSR,:zero_ram		;repeat until done
+		MOV	!OPTION,#10001000b	;enable interrupt on rtcc=xtal/1
+		MOV	sample_delay,#sample_time	;load sampling period
+;
+;***** Main program loop
+;
+Mainloop
+;
+		MOV	display,reading		;copy pot. to LED ouput
+;
+;		<program code goes here>
+;
+		JMP	Mainloop		;keep looping
+;
+		END

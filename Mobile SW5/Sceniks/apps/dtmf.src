@@ -1,0 +1,645 @@
+; Filename: DTMF_GEN.SRC
+; Author:	Stephen Holland
+;		Applications Engineer
+;		Scenix Semiconductor Inc.
+; Revision:	1.0
+; Date:		July 05, 1998
+; Part:		SX28AC rev. 2.5
+; Freq:		50Mhz
+; Compiled using Parallax SX-Key software v0.8
+;    
+; *This virtual peripheral relies on external RC filters to generate complete
+;  DTMF tones.
+;
+;
+; The DTMF number string to be dialed is defined by the label _dialnum.
+; Each key can be defined as an 8-bit hex value where the upper and
+; lower nibbles repesent the keypad bitwise row and column ($RRRRCCCC).
+;
+; example: _dialnum	dw	$11,$21,$82,$42,$14,$12,$41,$42,$42,$42,$42,0
+; represents the number 14083278888.
+;
+;		Keypad
+;
+;		 1209	 1336	 1477	 1633 
+;		________________________________
+;		|	|	|	|	|
+;	 697	| $11	| $12	| $14	| $18	|
+;		| (1)	| (2)	| (3)	| (A)	|
+;		________________________________
+;		|	|	|	|	|
+;	 770	| $21	| $22	| $24	| $28	|
+;		| (4)	| (5)	| (6)	| (B)	|
+;		________________________________
+;		|	|	|	|	|
+;	 852	| $41	| $42	| $44	| $48	|
+;		| (7)	| (8)	| (9)	| (C)	|
+;		________________________________
+;		|	|	|	|	|
+;	 941	| $81	| $82	| $84	| $88	|
+;		| (*)	| (0)	| (#)	| (D)	|
+;		________________________________
+;	
+;*************************************************************
+; Device
+;*************************************************************
+		device	pins28,pages4,banks8,oschs
+		device	turbo,stackx,optionx
+		id	'DTMF_GEN'
+		reset	reset_entry
+;*************************************************************
+; Equates
+;*************************************************************
+pwm0_pin	=	rb.4
+pwm1_pin	=	rb.5
+;*************************************************************
+; Variables
+;*************************************************************
+			org	8
+
+temp			ds	1
+string			ds	1
+
+;*************************************************************
+; Bank 0 variables
+;*************************************************************
+			org	10h	
+
+timers			=	$
+
+							;timer
+timer_accl		ds	1
+timer_acch		ds	1
+timer_flag		ds	1
+;*************************************************************
+; Bank 1 variables
+;*************************************************************
+			org	30h	
+
+pwm			=	$
+
+pwm_duty_1		ds	1
+pwm_duty_1_buf		ds	1
+pwm_duty_2		ds	1
+pwm_duty_2_buf		ds	1
+pwm_period_1		ds	1
+pwm_period_1_buf	ds	1
+pwm_period_2		ds	1
+pwm_period_2_buf	ds	1
+
+counter_low		ds	1
+counter_high		ds	1
+
+row			ds	1
+col			ds	1
+;*************************************************************
+; Interrupt routine - virtual peripherals
+;*************************************************************
+			org	0
+interrupt					;3 it takes 3 cycles to get an interrupt
+		bank	timers			;1
+						;timer
+		stc				;1 set carry
+		add	timer_accl,#1		;2 add timer_accl+carry(=1)
+		sc
+		jmp	:timer_out
+
+		add	timer_acch,#0
+		snc				;1
+		setb	timer_flag.0		;1
+:timer_out					;=7
+;*************************************************************
+; D/A Conversions
+;*************************************************************
+da_conv		bank	pwm			;1
+		dec	pwm_duty_1		;1 decrement port_duty
+		movb	pwm0_pin,/pwm_duty_1.7	;4 move complement of most significant bit to output
+		dec	pwm_duty_2		;1 decrement port_duty
+		movb	pwm1_pin,/pwm_duty_2.7	;4 move complement of most significant bit to output
+
+		decsz	pwm_period_1		;1
+		jmp	interrupt_out		;3
+		mov	pwm_duty_1,#5		;2
+		mov	pwm_duty_2,#5		;2
+		mov	pwm_period_1,#9		;2
+
+make_dtmf
+get_row
+		jb	row.0,make697		;4/6
+		jb	row.1,make770		;4/6
+		jb	row.2,make852		;4/6
+		jb	row.3,make941		;4/6
+
+make697		csae	counter_low,#end697	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_low,#sine697	;1 reload table-counter
+:continue	mov	w,counter_low		;1
+		mov	m,#6			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_1,w		;1
+		inc	counter_low		;1
+		jmp	get_col
+
+make770		csae	counter_low,#end770	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_low,#sine770	;1 reload table-counter
+:continue	mov	w,counter_low		;1
+		mov	m,#6			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_1,w		;1
+		inc	counter_low		;1
+		jmp	get_col
+
+make852		csae	counter_low,#end852	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_low,#sine852	;1 reload table-counter
+:continue	mov	w,counter_low		;1
+		mov	m,#6			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_1,w		;1
+		inc	counter_low		;1
+		jmp	get_col
+
+make941		csae	counter_low,#end941	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_low,#sine941	;1 reload table-counter
+:continue	mov	w,counter_low		;1
+		mov	m,#6			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_1,w		;1
+		inc	counter_low		;1
+
+get_col
+		jb	col.0,make1209		;4/6
+		jb	col.1,make1336		;4/6
+		jb	col.2,make1477		;4/6
+		jb	col.3,make1633		;4/6
+
+make1209	csae	counter_high,#end1200	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_high,#sine1200	;1 reload table-counter
+:continue	mov	w,counter_high		;1
+		mov	m,#6			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_2,w		;1 = 21
+		inc	counter_high		;1
+		jmp	da_out
+
+make1336	csae	counter_high,#end1336	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_high,#sine1336	;1 reload table-counter
+:continue	mov	w,counter_high		;1
+		mov	m,#6			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_2,w		;1 = 21
+		inc	counter_high		;1
+		jmp	da_out
+
+make1477	csae	counter_high,#end1477	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_high,#sine1477	;1 reload table-counter
+:continue	mov	w,counter_high		;1
+		mov	m,#7			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_2,w		;1 = 21
+		inc	counter_high		;1
+		jmp	da_out
+
+make1633	csae	counter_high,#end1633	;1 take new table value
+		jmp	:continue		;1 
+		mov	counter_high,#sine1633	;1 reload table-counter
+:continue	mov	w,counter_high		;1
+		mov	m,#7			;1 set page
+		iread				;1 get table_data
+		mov	m,#$F			;1
+		mov	pwm_duty_2,w		;1 = 21
+		inc	counter_high		;1
+da_out
+
+interrupt_out	mov	w,#-163			;1	;interrupt every 159 clocks
+		retiw				;3
+;*************************************************************
+; Reset entry
+;*************************************************************
+reset_entry	mov	!ra,#%0000		;set ra data direction register
+		mov	!rb,#%00110000		;set rb data direction register
+
+		mov	m,#$F
+
+		clr	fsr			;reset all ram banks
+:loop		setb	fsr.4
+		clr	ind
+		ijnz	fsr,:loop
+
+		bank	pwm			
+		mov	pwm_period_1,#9		;set initial periods
+		mov	pwm_period_2,#9
+
+		mov	pwm_duty_1,#5		;set initial duty cycles
+		mov	pwm_duty_2,#5
+
+		mov	!option,#%10011111	;enable rtcc interrupt
+;*************************************************************
+; Main 
+;*************************************************************
+main_loop
+		mov	w,#_dialnum		;send phone number string
+		page	DTMF_generation
+		call	DTMF_generation
+
+here		jmp	here
+
+		jmp	main_loop
+;*************************************************************
+; Subroutines 
+;*************************************************************
+		org	$200
+;*************************************************************
+; Jump table for page 1
+;*************************************************************
+DTMF_generation
+		jmp	DTMF_generation_jump
+DTMF_generation_jump_out
+		retp
+;*************************************************************
+DTMF_generation_jump
+		mov	string,w		;send string at w
+loop	
+		mov	w,string		;read chr at w
+		mov	m,#1
+
+		iread
+		mov	m,#$F
+
+		test	w			;if 0, exit
+		snz
+		jmp	DTMF_generation_jump_out
+
+		bank	pwm
+		mov	temp,w
+
+		and	w,#$0f			;Keep only the lower 4 bits
+		mov	col,w			;This is the column
+		swap	temp
+		mov	w,temp
+		and	w,#$0f			;Keep only the lower 4 bits
+		mov	row,w			;This is the row
+
+		setb	ra.3			;Enable output
+
+		mov	m,#$F
+		mov	!rb,#%00000000		;1 Enable PWM outputs
+
+		bank	timers			;Send tone for 300ms
+		mov	!option,#%11011111	;disable rtcc interrupt
+		mov	timer_accl,#$ff		;100mS		
+		mov	timer_acch,#$0f		;--//--
+		mov	!option,#%10011111	;enable rtcc interrupt
+		clrb	timer_flag.0		;Clear overflow-flag
+		jnb	timer_flag.0,$		;Is overflow-flag set?
+
+		bank	timers			
+		mov	!option,#%11011111	;disable rtcc interrupt
+		mov	timer_accl,#$ff		;100mS		
+		mov	timer_acch,#$0f		;--//--
+		mov	!option,#%10011111	;enable rtcc interrupt
+		clrb	timer_flag.0		;Clear overflow-flag
+		jnb	timer_flag.0,$		;Is overflow-flag set?
+
+		bank	timers			
+		mov	!option,#%11011111	;disable rtcc interrupt
+		mov	timer_accl,#$ff		;100mS		
+		mov	timer_acch,#$0f		;--//--
+		mov	!option,#%10011111	;enable rtcc interrupt
+		clrb	timer_flag.0		;Clear overflow-flag
+		jnb	timer_flag.0,$		;Is overflow-flag set?
+
+:interdigit	inc	string			;next chr
+
+		clrb	ra.3			;Disable output
+
+		mov	m,#$0f
+		mov	!rb,#%00110000		;1 Disable PWM outputs
+
+		bank	timers			;Send tone for 100ms
+		mov	!option,#%11011111	;disable rtcc interrupt
+		mov	timer_accl,#$ff		;50mS		
+		mov	timer_acch,#$7f		;--//--
+		mov	!option,#%10011111	;enable rtcc interrupt
+		clrb	timer_flag.0		;Clear overflow-flag
+		jnb	timer_flag.0,$		;Is overflow-flag set?
+
+		jmp	loop
+;*************************************************************
+; Data
+;*************************************************************
+		org	$1a0
+
+_dialnum	dw	$22,0
+
+		org	$600
+
+sine697		=	$
+		dw	5	; 1
+		dw	6	; 2
+		dw	7	; 3
+		dw	7	; 4
+		dw	8	; 5
+		dw	8	; 6
+		dw	8	; 7
+		dw	8	; 8
+		dw	9	; 9
+		dw	9	;10
+		dw	9	;11
+		dw	9	;12
+		dw	9	;13
+		dw	9	;14
+		dw	9	;15
+		dw	9	;16
+		dw	9	;17
+		dw	8	;18
+		dw	8	;19
+		dw	8	;20
+		dw	8	;21
+		dw	7	;22
+		dw	7	;23
+		dw	6	;24
+		dw	5	;25
+		dw	4	;26
+		dw	3	;27
+		dw	2	;28
+		dw	2	;29
+		dw	2	;30
+		dw	1	;31
+		dw	1	;32
+		dw	1	;33
+		dw	1	;34
+		dw	0	;35
+		dw	0	;36
+		dw	0	;37
+		dw	0	;38
+		dw	0	;39
+		dw	0	;40
+		dw	0	;41
+		dw	1	;42
+		dw	1	;43
+		dw	1	;44
+		dw	1	;45
+		dw	2	;46
+		dw	2	;47
+		dw	3	;48
+end697		=	$
+		dw	4	;49
+
+sine770		=	$
+		dw	5	; 1
+		dw	6	; 2
+		dw	7	; 3
+		dw	7	; 4
+		dw	7	; 5
+		dw	8	; 6
+		dw	8	; 7
+		dw	8	; 8
+		dw	9	; 9
+		dw	9	;10
+		dw	9	;11
+		dw	9	;12
+		dw	9	;13
+		dw	8	;14
+		dw	8	;15
+		dw	8	;16
+		dw	7	;17
+		dw	7	;18
+		dw	7	;19
+		dw	6	;20
+		dw	5	;21
+		dw	4	;22
+		dw	3	;23
+		dw	2	;24
+		dw	2	;25
+		dw	2	;26
+		dw	1	;27
+		dw	1	;28
+		dw	1	;29
+		dw	1	;30
+		dw	0	;31
+		dw	0	;32
+		dw	0	;33
+		dw	0	;34
+		dw	0	;35
+		dw	0	;36
+		dw	1	;37
+		dw	1	;38
+		dw	1	;39
+		dw	1	;40
+		dw	2	;41
+		dw	2	;42
+		dw	3	;43
+end770		=	$
+		dw	4	;44
+
+sine852		=	$
+		dw	5	; 1
+		dw	6	; 2
+		dw	7	; 3
+		dw	7	; 4
+		dw	7	; 5
+		dw	8	; 6
+		dw	8	; 7
+		dw	8	; 8
+		dw	9	; 9
+		dw	9	;10
+		dw	9	;11
+		dw	9	;12
+		dw	9	;13
+		dw	8	;14
+		dw	8	;15
+		dw	8	;16
+		dw	7	;17
+		dw	7	;18
+		dw	7	;19
+		dw	6	;20
+		dw	5	;21
+		dw	4	;22
+		dw	3	;23
+		dw	2	;24
+		dw	2	;25
+		dw	2	;26
+		dw	1	;27
+		dw	1	;28
+		dw	1	;29
+		dw	0	;30
+		dw	0	;31
+		dw	0	;32
+		dw	0	;33
+		dw	0	;34
+		dw	1	;35
+		dw	1	;36
+		dw	1	;37
+		dw	2	;38
+		dw	2	;39
+		dw	3	;40
+end852		=	$
+		dw	4	;41
+
+sine941		=	$
+		dw	5	; 1
+		dw	6	; 2
+		dw	7	; 3
+		dw	7	; 4
+		dw	8	; 5
+		dw	8	; 6
+		dw	8	; 7
+		dw	9	; 8
+		dw	9	; 9
+		dw	9	;10
+		dw	9	;11
+		dw	8	;12
+		dw	8	;13
+		dw	8	;14
+		dw	7	;15
+		dw	7	;16
+		dw	6	;17
+		dw	5	;18
+		dw	4	;19
+		dw	3	;20
+		dw	2	;21
+		dw	2	;22
+		dw	1	;23
+		dw	1	;24
+		dw	1	;25
+		dw	0	;26
+		dw	0	;27
+		dw	0	;28
+		dw	0	;29
+		dw	0	;30
+		dw	1	;31
+		dw	1	;32
+		dw	1	;33
+		dw	2	;34
+		dw	2	;35
+		dw	3	;36
+end941		=	$
+		dw	4	;37
+
+sine1200	=	$
+		dw	5	; 1
+		dw	7	; 2
+		dw	8	; 3
+		dw	8	; 4
+		dw	9	; 5
+		dw	9	; 6
+		dw	10	; 7
+		dw	9	; 8
+		dw	9	; 9
+		dw	8	;10
+		dw	8	;11
+		dw	7	;12
+		dw	6	;13
+		dw	5	;14
+		dw	4	;15
+		dw	3	;16
+		dw	2	;17
+		dw	1	;18
+		dw	1	;19
+		dw	0	;20
+		dw	0	;21
+		dw	0	;22
+		dw	0	;23
+		dw	0	;24
+		dw	1	;25
+		dw	1	;26
+		dw	2	;27
+		dw	3	;28
+end1200		=	$
+		dw	4	;29
+
+sine1336	=	$
+		dw	5	; 1
+		dw	7	; 2
+		dw	8	; 3
+		dw	8	; 4
+		dw	9	; 5
+		dw	9	; 6
+		dw	9	; 7
+		dw	9	; 8
+		dw	8	; 9
+		dw	8	;10
+		dw	7	;11
+		dw	6	;12
+		dw	5	;13
+		dw	3	;14
+		dw	2	;15
+		dw	1	;16
+		dw	1	;17
+		dw	0	;18
+		dw	0	;19
+		dw	0	;20
+		dw	0	;21
+		dw	1	;22
+		dw	1	;23
+		dw	2	;24
+		dw	3	;25
+end1336		=	$
+		dw	4	;26
+
+		org	$700
+
+sine1477	=	$
+		dw	5	; 1
+		dw	7	; 2
+		dw	8	; 3
+		dw	8	; 4
+		dw	9	; 5
+		dw	9	; 6
+		dw	9	; 7
+		dw	8	; 8
+		dw	8	; 9
+		dw	7	;10
+		dw	6	;11
+		dw	5	;12
+		dw	3	;13
+		dw	2	;14
+		dw	1	;15
+		dw	1	;16
+		dw	0	;17
+		dw	0	;18
+		dw	0	;19
+		dw	0	;20
+		dw	1	;21
+		dw	2	;22
+		dw	3	;23
+end1477		=	$
+		dw	4	;24
+
+sine1633	=	$
+		dw	5	; 1
+		dw	7	; 2
+		dw	8	; 3
+		dw	8	; 4
+		dw	9	; 5
+		dw	9	; 6
+		dw	9	; 7
+		dw	8	; 8
+		dw	7	; 9
+		dw	6	;10
+		dw	5	;11
+		dw	3	;12
+		dw	2	;13
+		dw	1	;14
+		dw	1	;15
+		dw	0	;16
+		dw	0	;17
+		dw	0	;18
+		dw	1	;19
+		dw	2	;20
+		dw	3	;21
+end1633		=	$
+		dw	4	;22

@@ -1,0 +1,134 @@
+;******************************************************************************
+;       Virtual Peripheral: Pulse Width Modulators
+;
+;
+;       Length: 36 bytes (total)
+;       Authors: Chip Gracey, President, Parallax Inc.
+;		   modified by Craig Webb, Consultant to Scenix Semiconductor, Inc.
+;       Written: 97/03/10 to 98/6/03
+;
+;******************************************************************************
+;
+;****** Assembler directives
+;
+; uses: SX28AC, 2 pages of program memory, 8 banks of RAM, high speed osc.
+;       operating in turbo mode, with 8-level stack & extended option reg.
+;                
+		DEVICE  pins28,pages2,banks8,oschs
+		DEVICE  turbo,stackx,optionx
+		ID      'PWMS'			;program ID label
+		RESET   reset_entry             ;set reset/boot address
+;
+;******************************* Program Variables ***************************
+;
+; Port Assignment: Bit variables
+;
+pwm0_pin        EQU     rc.0                    ;Pulse width mod. PWM0 output
+pwm1_pin        EQU     rc.2                    ;Pulse width mod. PWM1 output
+;
+;****** Register definitions (bank 0)
+;
+		org     8                       ;start of program registers
+main            =       $                       ;main bank
+;
+temp            ds      1                       ;temporary storage
+byte            ds      1                       ;temporary UART/I2C shift reg.
+flags           DS      1                       ;program flags register
+;
+delay1		DS	1			;temporary delay variable
+delay2		DS	1			;temporary delay variable
+;
+		org     50h                     ;bank2 variables
+analog          =       $                       ;pwm and ADC bank
+;
+port_buff       ds      1                       ;buffer - used by all
+pwm0            ds      1                       ;pwm0 - value
+pwm0_acc        ds      1                       ;     - accumulator
+pwm1            ds      1                       ;pwm1 - value
+pwm1_acc        ds      1                       ;     - accumulator
+;
+;
+int_period	=       163                     ;period between interrupts
+;
+;**************************** INTERRUPT CODE *******************************
+;
+; Note: The interrupt code must always originate at 0h.
+;       Care should be taken to see that any very timing sensitive routines
+;       (such as adcs, etc.) are placed before other peripherals or code
+;       which may have varying execution rates (like the UART, for example).
+;
+interrupt       ORG     0                       ;interrupt starts at 0h
+;
+;
+;***** Virtual Peripheral: Pulse Width Modulators
+;
+; These routines create an 8-bit programmable duty cycle output at the
+; respective pwm port output pins whose duty cycle is directly proportional
+; to the value in the corresponding pwm register. This value is added to an
+; accumulator on each interrupt pass interrupt. When the addition causes a
+; carry overflow, the ouput is set to the high part of its duty cycle.
+; These routines are timing critical and must be placed before any
+; variable-execution-rate code (like the UART, for example).
+;
+;       Input variable(s) : pwm0,pwm0_acc,pwm1,pwm1_acc
+;       Output variable(s) : pwm port pins
+;       Variable(s) affected : port_buff, pwm0_acc, pwm1_acc
+;       Flag(s) affected : none
+;	Size : 2 bytes + 4 bytes (per pwm)
+;		+ 2 bytes shared with adc code (see below)
+;       Timing (turbo) : 2 cycles + 4 cycles (per pwm)
+;			 + 2 cycles shared with adc code (see below)
+;
+:set_analog	bank    analog                  ;switch to adc/pwm bank
+		clr     port_buff               ;clear pwm/adc port buffer
+;
+:pwm0           add     pwm0_acc,pwm0           ;adjust pwm0 accumulator
+		snc                             ;did it trigger?
+		setb    port_buff.0             ;yes, toggle pwm0 high
+:pwm1           add     pwm1_acc,pwm1           ;adjust pwm1 accumulator
+		snc                             ;did it trigger?
+		setb    port_buff.2             ;yes, toggle pwm1 high
+
+:update_RC	mov     rc,port_buff            ;update cap. discharge pins
+;
+		mov     w,#-int_period          ;interrupt every 'int_period' clocks
+:end_int	retiw                           ;exit interrupt
+;
+;******	End of interrupt sequence
+;
+;***************************** SUBROUTINES *********************************
+;
+;***************************** MAIN PROGRAM CODE ******************************
+;
+;		ORG     100h
+;
+; Program execution begins here on power-up or after a reset
+;
+reset_entry
+		clr     rc                      ;initialize port RC
+		mov     !rc,#%10101010          ;Set RC in/out directions
+		mov     m,#$D                   ;set input levels
+		mov     !rc,#0                  ; to cmos on port C
+		mov     m,#$F                   ;reset mode register
+		CLR     FSR                     ;reset all ram starting at 08h
+:zero_ram       SB      FSR.4                   ;are we on low half of bank?
+		SETB    FSR.3                   ;If so, don't touch regs 0-7
+		CLR     IND                     ;clear using indirect addressing
+		IJNZ    FSR,:zero_ram           ;repeat until done
+
+		mov     !option,#%10011111      ;enable rtcc interrupt
+;
+; Main Program Loop
+;
+:loop		DJNZ	delay1,:loop		;do inner delay loop
+		DJNZ	delay2,:loop		;do outer delay loop
+		INC	pwm0			;increase pwm0 - ramp output
+		DEC	pwm1			;decrease pwm1 - sawtooth output
+;
+; <program code goes here>
+;
+		JMP     :loop                   ;back to main loop
+;
+;***************
+		END                             ;End of program code
+

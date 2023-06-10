@@ -1,0 +1,170 @@
+
+
+;		Key scan Virtual Periperal
+;
+		device	pins28,pages4,banks8,turbo,oschs,stackx,optionx
+		; use oschs only for debugging
+		; set to 4MHz internal RC for actual operation
+
+		org 	8
+key_val		ds	1			; contains the key value in 2's complement
+						; this is for ease of display routine only
+						; to get real value, please remove the ~ signs in
+						; the virtual matrix
+scanb		ds	1			; scan mask, the column to scan will have a zero
+scan_result	ds	1			; result of scanning
+cnt1		ds	1			; column count (3 2 1 0, 3 being leftmost)
+cnt2		ds	1			; row count (3 2 1 0, 3 being the top row)
+						; virtual matrix index is computed as 4*cnt2+cnt1
+key_state	ds	1			; store the states of the keyboard scan
+debounce_cnt	ds	1			; debouncing count
+temp	 	equ	cnt1			; store the key scanned until key is released
+
+		; key scan states
+fast_scan	equ	7			; scan all columns at once
+debounce	equ	6			; debounce state
+detailed_scan	equ	5			; scan a column at a time
+release		equ	4			; wait until key is released
+
+		reset	start			; goto 'start' on reset
+
+		org	0			; interrupt routine 
+
+		sb	key_state.fast_scan	; current state=fast scan?
+		jmp	chk_debounce		; no, check if debounce state
+
+		;do fast scan
+		mov	rb,#%11110000		; set all scan lines to low
+	
+		mov	scan_result,rb		; store result
+		and	scan_result,#%11110000	; mask all output lines 
+		csne	scan_result,#%11110000	; to examine only inputs
+		jmp	key_done		; no key pressed if results is 11110000		
+
+		; key pressed, go to debounce state	
+
+		clrb	key_state.fast_scan	; clear current state
+		setb	key_state.debounce	; next state= debounce
+		mov	debounce_cnt,#20	; 20 ms debouncing time
+                jmp	key_done		; change state on next interrupt
+
+chk_debounce
+		sb	key_state.debounce	; current state=debouncing?
+		jmp	chk_rescan		; no, check if detailed scan
+		;do debounce
+	        decsz	debounce_cnt		; count down
+		jmp	key_done		; and continue on next interrupt if not done
+		
+		; 20 ms elapsed
+		clrb	key_state.debounce	; clear current state
+		setb	key_state.detailed_scan	; next state=detailed scan
+
+		jmp	key_done		; state transition on next interrupt
+	
+chk_rescan	sb	key_state.detailed_scan	; current state=detailed scan?
+		jmp	chk_release		; no, check if it is key release check
+		
+		mov	cnt1,#3			; leftmost column=3
+		;detailed scan
+		mov	scanb,#%11110111	; scan leftmost column first
+detail_scan	mov	rb,scanb		; send scan mask out
+		mov	scan_result,rb		; store result
+		and	scan_result,#%11110000	; examine only inputs
+		cse	scan_result,#%11110000	; any key?
+		jmp	encode			; yes, encode it
+		dec	cnt1			; scan next column
+		stc				; maintain the 1's
+		rr	scanb			; scan next column by moving the 0 to the right
+		snc				; no carry means last column has been scanned
+		jmp 	detail_scan		; still more to scan
+		; no key detected after scanning all columns, may be just noise on port
+		clrb	key_state.detailed_scan	; clear current state
+		setb	key_state.fast_scan	; return to fast scan
+		jmp	key_done		; on next interrupt
+
+encode		mov	cnt2,#0			; find out on which row the key is pressed
+		stc				; we are looking for a zero so set carry to 1 first			
+cont_enc	rl	scan_result		; put the scan result in carry bit
+		
+		sc				; skip if zero is not there
+		jmp	lookup			; zero found, look up for value
+		inc	cnt2			; increment the row number
+		jmp	cont_enc		; and continue
+
+		;virtual matrix offset=4 cnt2+cnt1
+lookup		clc				; clear carry to prepare for multiplication
+		rl 	cnt2			; multiply by 2
+		rl	cnt2			; multiply by 4 and
+		add	cnt2,cnt1		; +cnt1
+		mov	w,#virtual_matrix	; start of table	
+		add	w,cnt2			; index into table
+		mov	m,#0			; prepare for iread which load the value at m:w
+		iread				; read the value into m:w
+		mov	temp,w			; store
+		mov	m,#$f			; restore m to eliminate side effects
+		clrb	key_state.detailed_scan ; clear current state
+		setb	key_state.release	; next state=check key release
+		jmp	key_done		; on next interrupt
+	
+virtual_matrix	dw	~$f
+		dw	~$0
+		dw	~$f
+		dw	~$f
+		dw	~9
+		dw	~8
+		dw	~7
+		dw	~$f
+		dw	~6
+		dw	~5
+		dw	~4
+		dw	~$f
+		dw	~3
+		dw	~2
+		dw	~1
+		dw	~$f
+chk_release
+		sb	key_state.release	; check key release state?
+		jmp	key_done		; no
+
+		mov	rb,scanb		; use last scanned column mask
+		mov	scan_result,rb		; get key
+		and	scan_result,#%11110000	; mask outputs
+		cse	scan_result,#%11110000	; equ to $F0 if no key pressed anymore
+		jmp	key_done		; key still pressed
+
+		; key released
+		
+		mov	key_val,temp		; store final value
+		clrb	key_state.release	; state transition
+		setb	key_state.fast_scan	; next state is scan again
+			
+key_done
+		
+		mov	w,#-250			; 1 ms per interrupt at 4MHz, prescaler is /8
+		retiw	 			; return from interrupt now
+start	
+		;initialize port B
+		mov	m,#$0f			; Points mode register to set data direction
+		mov 	!rb,#%11110000		; RB0-3 will be outputs, and RB4-7 will be inputs
+
+		;set inputs with weak pull ups
+		mov	m,#$0e			; points mode register to pull-up enable
+		mov	!rb,#%00001111		; Enable pull-ups on Port B inputs
+
+		
+		mov	m,#$0c			; set Schmitt-trigger to increase noise immunity
+		mov	!rb,#%00001111  	; on RB4-7
+		
+		mov	m,#$F			; restore mode register 
+          
+		mov	!option,#%10000010	; RTCC divide rate=8
+		setb	key_state.fast_scan	; initial state is fast scan
+		mov	key_val,#0		; no key pressed initially
+
+loop		
+		mov	rb,key_val		; put key pressed on LEDs
+		jmp	loop			; loop forever
+
+	
+	
+

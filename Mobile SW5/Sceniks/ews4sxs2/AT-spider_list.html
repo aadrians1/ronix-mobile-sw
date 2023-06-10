@@ -1,0 +1,33 @@
+<HTML>
+<HEAD>
+    <TITLE>Excite for Web Servers Spider Administration</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000" ALINK="#0000FF">
+<FORM ACTION="EWS_SPIDER_CGI" ENCTYPE=x-www-form-encoded METHOD=POST>
+<img src="EWS_SPIDER_BANNER">
+<H2>Excite for Web Servers Spider Administration</H2>
+<BR>
+Please Choose a Collection to Administer:<BR>
+<BR>
+<SELECT NAME="EWS_COLLECTION" SIZE="5">
+EWS_COLLECTION_LIST
+</SELECT><BR>
+<BR>
+<HR><B>Possible Actions</B><BR>
+<BR>
+<INPUT NAME="action" TYPE="submit" VALUE="Configure Collection">
+Configure the spider collection selected above.<BR>
+<INPUT NAME="action" TYPE="submit" VALUE="Delete Collection">
+Delete the spider collection selected above.
+EWS_PASSWORD
+<BR>
+<INPUT NAME="action" TYPE="submit" VALUE="New Collection">
+Start a new spider collection.
+</FORM><BR>
+<FORM ACTION="EWS_ADMIN_CGI" METHOD=POST>
+EWS_PASSWORD
+<INPUT NAME="name" TYPE="submit" VALUE="Main Admin">Don't configure.  Go
+back to the main administration page.<BR>
+</FORM>
+</BODY>
+</HTML>

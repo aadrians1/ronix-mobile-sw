@@ -1,0 +1,523 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>DTMF Generation</title>
+<!-- macro support_header start -->
+</head>
+
+<body background="/gifs/bg.gif" text="#000000" link="#006699"
+vlink="#006342" onload="defaultStatus=''">
+<script language="JavaScript">
+
+       if (document.images) {            
+       img1on = new Image();   img1on.src = "/gifs/home2.gif";  
+       img2on = new Image();   img2on.src = "/gifs/search2.gif";
+       img3on = new Image();   img3on.src = "/gifs/sitemap2.gif";
+       img4on = new Image();   img4on.src = "/gifs/feedback2.gif";
+       img1off = new Image();  img1off.src = "/gifs/home1.gif";
+       img2off = new Image();  img2off.src = "/gifs/search1.gif";
+       img3off = new Image();  img3off.src = "/gifs/sitemap1.gif";
+       img4off = new Image();  img4off.src = "/gifs/feedback1.gif";
+       }
+
+    function imgOn(imgName) {
+            if (document.images) {
+                document[imgName].src = eval(imgName + "on.src");       
+            }
+    }
+
+    function imgOff(imgName) {
+            if (document.images) {
+                document[imgName].src = eval(imgName + "off.src");        
+            }
+    }
+// -->
+</script>
+
+<table border="0" cellpadding="0" cellspacing="0" width="630">
+    <tr>
+        <td align="center" valign="top" width="115"><a
+        href="/index.html"><img src="/gifs/sxlogo.gif"
+        alt="Scenix Logo" border="0" width="78" height="71"></a></td>
+        <td align="right" valign="top"><nobr><img
+        src="/gifs/scenix.gif" alt="Scenix Banner" width="269"
+        height="28"></nobr><a href="/index.html"><nobr></a><a
+        href="/index.html"><img src="/gifs/home1.gif" alt="Home"
+        border="0" width="52" height="28" name="img1"></a><a
+        href="/index.html"></nobr></a><a
+        href="/support/search/index.html"><nobr></a><a
+        href="/support/search/index.html"><img
+        src="/gifs/search1.gif" alt="Search" border="0"
+        width="52" height="28" name="img2"></a><a
+        href="/support/search/index.html"></nobr></a><a
+        href="/search/sitemap.html"><nobr></a><a
+        href="/search/sitemap.html"><img src="/gifs/sitemap1.gif"
+        alt="Sitemap" border="0" width="58" height="28"
+        name="img3"></a><a href="/search/sitemap.html"></nobr></a><a
+        href="/support/feedback/index.html"><nobr></a><a
+        href="/support/feedback/index.html"><img
+        src="/gifs/feedback1.gif" alt="Contact" border="0"
+        width="58" height="28" name="img4"></a><a
+        href="/support/feedback/index.html"></nobr></a><br>
+        <p><nobr><img src="/gifs/support.gif" alt="Support" width="244"
+        height="42"><img src="/gifs/img.gif" alt="Circuit Board"
+        width="228" height="42"></nobr></p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" width="112"><applet
+        code="ime" codebase="/java" align="baseline" width="112"
+        height="350"><param name="Notice"
+        value="Infinite Menus, Copyright (c) 1998, OpenCube Inc."><param
+        name="bgcolor" value="255,255,255"><param name="onsbtext"
+        value="Cost Effective Microcontrollers"><param
+        name="offsbtext" value="Scenix Semiconductor, Inc."><param
+        name="bgxy" value="0,0"><param name="font"
+        value="Helvetica,Bold,11"><param name="menutextcolor"
+        value="8,0,2"><param name="lrmargin" value="5"><param
+        name="halign" value="left"><param name="menucolor"
+        value="180,222,242"><param name="menuoutlinecolor"
+        value="0,0,0"><param name="menuhlcolor"
+        value="66,128,163"><param name="menuhltextcolor"
+        value="0,0,0"><param name="loadwhere" value="_self"><param
+        name="imagefile0" value="/gifs/company1.gif"><param
+        name="imagexy0" value="0,10"><param name="switchfile0"
+        value="/gifs/company2.gif"><param name="imagedesturl0"
+        value="http://www.scenix.com/company/index.html"><param
+        name="imagefile1" value="/gifs/products1.gif"><param
+        name="imagexy1" value="0,40"><param name="switchfile1"
+        value="/gifs/products2.gif"><param name="imagedesturl1"
+        value="http://www.scenix.com/products/index.html"><param
+        name="imagefile2" value="/gifs/tools1.gif"><param
+        name="imagexy2" value="0,70"><param name="switchfile2"
+        value="/gifs/tools2.gif"><param name="imagedesturl2"
+        value="http://www.scenix.com/tools/index.html"><param
+        name="imagefile3" value="/gifs/virtual1.gif"><param
+        name="imagexy3" value="0,100"><param name="switchfile3"
+        value="/gifs/virtual2.gif"><param name="imagedesturl3"
+        value="http://www.scenix.com/virtual/index.html"><param
+        name="imagefile4" value="/gifs/news1.gif"><param
+        name="imagexy4" value="0,130"><param name="switchfile4"
+        value="/gifs/news2.gif"><param name="imagedesturl4"
+        value="http://www.scenix.com/news/index.html"><param
+        name="imagefile5" value="/gifs/support2.gif"><param
+        name="imagexy5" value="0,160"><param name="switchfile5"
+        value="/gifs/support1.gif"><param name="imagedesturl5"
+        value="http://www.scenix.com/support/index.html"><param
+        name="imagefile6" value="/gifs/partners1.gif"><param
+        name="imagexy6" value="0,190"><param name="switchfile6"
+        value="/gifs/partners2.gif"><param name="imagedesturl6"
+        value="http://www.scenix.com/partners/index.html"><param
+        name="imagefile7" value="/gifs/sales1.gif"><param
+        name="imagexy7" value="0,220"><param name="switchfile7"
+        value="/gifs/sales2.gif"><param name="imagedesturl7"
+        value="http://www.scenix.com/sales/index.html"><param
+        name="imagefile8" value="/gifs/jobs1.gif"><param
+        name="imagexy8" value="0,250"><param name="switchfile8"
+        value="/gifs/jobs2.gif"><param name="imagedesturl8"
+        value="http://www.scenix.com/jobs/index.html"><param
+        name="desc0-0" value="Background"><param
+        name="desturl0-0"
+        value="http://www.scenix.com/company/background/index.html"><param
+        name="loadwhere0-0" value="_self"><param name="desc0-1"
+        value="Team"><param name="desturl0-1"
+        value="http://www.scenix.com/company/management/index.html"><param
+        name="loadwhere0-1" value="_self"><param name="desc0-2"
+        value="FAQs"><param name="desturl0-2"
+        value="http://www.scenix.com/company/faq/index.html"><param
+        name="loadwhere0-2" value="_self"><param name="desc0-3"
+        value="Contact"><param name="desturl0-3"
+        value="http://www.scenix.com/company/contact/index.html"><param
+        name="loadwhere0-3" value="_self"><param name="desc0-4"
+        value="Directions"><param name="desturl0-4"
+        value="http://www.scenix.com/company/directions/index.html"><param
+        name="loadwhere0-4" value="_self"><param name="desc1-0"
+        value="Datasheets"><param name="desturl1-0"
+        value="http://www.scenix.com/products/datasheets/index.html"><param
+        name="loadwhere1-0" value="_self"><param name="desc1-1"
+        value="Briefs"><param name="desturl1-1"
+        value="http://www.scenix.com/products/briefs/index.html"><param
+        name="loadwhere1-1" value="_self"><param name="desc1-2"
+        value="Quick Tour"><param name="desturl1-2"
+        value="http://www.scenix.com/products/quicktour/index.html"><param
+        name="loadwhere1-2" value="_self"><param name="desc1-3"
+        value="Mailing List"><param name="desturl1-3"
+        value="http://www.scenix.com/products/mailing/index.html"><param
+        name="loadwhere1-3" value="_self"><param name="desc1-4"
+        value="Sucesses"><param name="desturl1-4"
+        value="http://www.scenix.com/products/success/index.html"><param
+        name="loadwhere1-4" value="_self"><param name="desc1-5"
+        value="Feedback"><param name="desturl1-5"
+        value="http://www.scenix.com/products/feedback/index.html"><param
+        name="loadwhere1-5" value="_self"><param name="desc3-0"
+        value="Tested"><param name="desturl3-0"
+        value="http://www.scenix.com/virtual/tested/index.html"><param
+        name="loadwhere3-0" value="_self"><param name="desc3-1"
+        value="Untested"><param name="desturl3-1"
+        value="http://www.scenix.com/virtual/untested/index.html"><param
+        name="loadwhere3-1" value="_self"><param name="desc3-2"
+        value="Feedback"><param name="desturl3-2"
+        value="http://www.scenix.com/virtual/feedback/index.html"><param
+        name="loadwhere3-2" value="_self"><param name="desc4-0"
+        value="Press"><param name="desturl4-0"
+        value="http://www.scenix.com/news/press/index.html"><param
+        name="loadwhere4-0" value="_self"><param name="desc4-1"
+        value="Articles"><param name="desturl4-1"
+        value="http://www.scenix.com/news/articles/index.html"><param
+        name="loadwhere4-1" value="_self"><param name="desc4-2"
+        value="Analysts Kit"><param name="desturl4-2"
+        value="http://www.scenix.com/news/analysts/index.html"><param
+        name="loadwhere4-2" value="_self"><param name="desc4-3"
+        value="Press Kit"><param name="desturl4-3"
+        value="http://www.scenix.com/news/presskit/index.html"><param
+        name="loadwhere4-3" value="_self"><param name="desc4-4"
+        value="White Papers"><param name="desturl4-4"
+        value="http://www.scenix.com/news/wpapers/index.html"><param
+        name="loadwhere4-4" value="_self"><param name="desc4-5"
+        value="Sucesses"><param name="desturl4-5"
+        value="http://www.scenix.com/news/success/index.html"><param
+        name="loadwhere4-5" value="_self"><param name="desc5-0"
+        value="Training"><param name="desturl5-0"
+        value="http://www.scenix.com/support/training/index.html"><param
+        name="loadwhere5-0" value="_self"><param name="desc5-1"
+        value="Newsgroups"><param name="desturl5-1"
+        value="http://www.scenix.com/support/bbs/index.html"><param
+        name="loadwhere5-1" value="_self"><param name="desc5-2"
+        value="Manuals"><param name="desturl5-2"
+        value="http://www.scenix.com/support/manuals/index.html"><param
+        name="loadwhere5-2" value="_self"><param name="desc5-3"
+        value="FAQs"><param name="desturl5-3"
+        value="http://www.scenix.com/support/faq/index.html"><param
+        name="loadwhere5-3" value="_self"><param name="desc5-4"
+        value="Errata"><param name="desturl5-4"
+        value="http://www.scenix.com/support/errata/index.html"><param
+        name="loadwhere5-4" value="_self"><param name="desc5-5"
+        value="Suggestions"><param name="desturl5-5"
+        value="http://www.scenix.com/support/box/index.html"><param
+        name="loadwhere5-5" value="_self"><param name="desc5-6"
+        value="App Notes"><param name="desturl5-6"
+        value="http://www.scenix.com/support/appnotes/index.html"><param
+        name="loadwhere5-6" value="_self"><param name="desc5-7"
+        value="Search"><param name="desturl5-7"
+        value="http://www.scenix.com/support/search/index.html"><param
+        name="loadwhere5-7" value="_self"><param name="desc5-8"
+        value="Links"><param name="desturl5-8"
+        value="http://www.scenix.com/support/links/index.html"><param
+        name="loadwhere5-8" value="_self"><param name="desc5-9"
+        value="Contact"><param name="desturl5-9"
+        value="http://www.scenix.com/support/contact/index.html"><param
+        name="loadwhere5-9" value="_self"><param name="desc6-0"
+        value="Tools"><param name="desturl6-0"
+        value="http://www.scenix.com/partners/tools/index.html"><param
+        name="loadwhere6-0" value="_self"><param name="desc6-1"
+        value="Consultants"><param name="desturl6-1"
+        value="http://www.scenix.com/partners/consultants/index.html"><param
+        name="loadwhere6-1" value="_self"><param name="desc6-2"
+        value="Links"><param name="desturl6-2"
+        value="http://www.scenix.com/partners/links/index.html"><param
+        name="loadwhere6-2" value="_self"><param name="desc6-3"
+        value="Successes"><param name="desturl6-3"
+        value="http://www.scenix.com/partners/success/index.html"><param
+        name="loadwhere6-3" value="_self"><param name="desc7-0"
+        value="Consultants"><param name="desturl7-0"
+        value="http://www.scenix.com/sales/consultants/index.html"><param
+        name="loadwhere7-0" value="_self"><param name="desc7-1"
+        value="Tools"><param name="desturl7-1"
+        value="http://www.scenix.com/sales/tools/index.html"><param
+        name="loadwhere7-1" value="_self"><param name="desc7-2"
+        value="Sales Reps"><param name="desturl7-2"
+        value="http://www.scenix.com/sales/reps/index.html"><param
+        name="loadwhere7-2" value="_self"><param name="desc7-3"
+        value="Contact"><param name="desturl7-3"
+        value="http://www.scenix.com/sales/contact/index.html"><param
+        name="loadwhere7-3" value="_self"><param name="desc8-0"
+        value="Listings"><param name="desturl8-0"
+        value="http://www.scenix.com/jobs/listing/index.html"><param
+        name="loadwhere8-0" value="_self"><param name="desc8-1"
+        value="Send Resume"><param name="desturl8-1"
+        value="http://www.scenix.com/jobs/resume/index.html"><param
+        name="loadwhere8-1" value="_self"><!--TAG GENERATOR: OpenCube - Applet Composer, (www.opencube.com)--><!--OpenCube Copyright Notice Parameter--><!--General / Default Settings--><!--Specific Settings--></applet> </td>
+        <td valign="top"><br>
+<!-- macro support_header stop -->        <div align="center"><center><table border="0"
+        cellpadding="10" width="85%">
+            <tr>
+                <td><h2 align="center">Pulse Width Modulated
+                'Linear' LED Bar Graph Display </h2>
+                </td>
+            </tr>
+            <tr>
+                <td><b><u>Introduction</u></b><br>
+                <br>
+                This application note presents a circuit which
+                implements two design and programming techniques
+                for SX virtual peripherals. The first technique
+                is for reading the value of a potentiometer by
+                measuring the time it takes to partially charge a
+                capacitor through the potentiometer. The second
+                technique is for displaying the eight bit result
+                in a simulated linear manner using pulse width
+                modulation to proportionally vary brightness of
+                adjacent LEDs on a bar graph composed of sixteen
+                LEDs. The result is a signal that 'slides'
+                smoothly up and down the bar graph as the
+                potentiometer is rotated instead of hopping from
+                one LED to the next.</td>
+            </tr>
+            <tr>
+                <td><img src="bargraph1.gif" width="619"
+                height="687"></td>
+            </tr>
+            <tr>
+                <td><b><u>How the circuit and program work</u></b><br>
+                <br>
+                Both sections of the circuit are set up as
+                virtual peripherals which take advantage of the
+                SX's internal interrupts to simplify programming
+                and timing issues. The interrupt is triggered
+                each time the RTCC rolls over (counts past 255
+                and restarts at 0). By loading the OPTION
+                register with the appropriate value, the RTCC
+                count rate is set equal to the oscillator
+                frequency, which is the internal 4MHz oscillator
+                in this case. At the close of the interrupt
+                sequence, a predefined value is loaded into the W
+                register using the RETIW instruction which
+                determines the period of the interrupt in RTCC
+                cycles.</td>
+            </tr>
+            <tr>
+                <td><b>1) Reading the potentiometer</b><br>
+                To read the value of the potentiometer, we
+                measure the partial charging time (until the port
+                input triggers high) of a simple RC circuit,
+                which is directly proportional to the
+                potentiometer value. The SX begins the timing
+                measurement by discharging capacitor C1 through
+                port RA bit 0 by setting the port to an output
+                and driving it low, thereby essentially shorting
+                the capacitor to ground through the
+                current-limiting resistor R5 which prevents
+                damage1 to the SX port. The program code leaves
+                port RA.0 low long enough to assure that the
+                capacitor is discharged enough not to affect the
+                next reading by more than 1/256th = 0.4% to
+                maintain resolution on the order of 8 bits. It
+                then clears the charge time counter register and
+                switches port RA.0 to an input to begin charging
+                the capacitor through the potentiometer. It
+                increments the charge time register until the
+                capacitor charges enough to trigger an input
+                reading of high on the port. To reduce power
+                consumption and avoid high current draws through
+                the potentiometer when it is set near its lower
+                limit, the program waits a specified time between
+                potentiometer samples before clearing and taking
+                another reading.</td>
+            </tr>
+            <tr>
+                <td>The capacitor and potentiometer values are
+                chosen so that if the potentiometer is at its
+                maximum value, the time to charge the capacitor
+                enough to trigger the input to high and provide 8
+                bit timing resolution will be just slightly above
+                2<sup>8</sup> (= 256) interrupt cycles since each
+                interrupt cycle corresponds to one pass through
+                the count loop. By using the 'RETIW <i>int_period'</i>
+                instruction to end the interrupt, the RTCC rolls
+                over and an interrupt is triggered every <i>int_period</i><sup><i>2</i></sup>
+                RTCC cycles<sup>3</sup>. With the SX running on
+                the internal 4MHz oscillator in turbo mode (i.e.
+                1 RTCC count/hardware clock count), the interrupt
+                timing is:</td>
+            </tr>
+            <tr>
+                <td><i>t</i><font size="2"><sub>interrupt</sub></font>
+                = <i>int_period</i> / 4MHz = 200 / 4 x 10<sup>6</sup>
+                = 50 µ, so: <i>t</i><font size="2"><sub>256
+                loops</sub></font> = 12.8 msec</td>
+            </tr>
+            <tr>
+                <td>Starting with a potentiometer of 1M Ohm, and
+                knowing that the SX port input triggers high at
+                about 0.25V<sub>cc</sub>, we can use the formula
+                V=V<sub>cc</sub>(1-e<sup>-<i>t</i>/RC</sup>) for
+                the charging voltage on the capacitor after time <i>t</i>
+                to calculate the required capacitor value:</td>
+            </tr>
+            <tr>
+                <td>0.25V<font size="2"><sub>dd</sub></font> = V<font
+                size="2"><sub>dd</sub></font> · (1 - e<sup>-<i>t</i>/RC</sup>)</td>
+            </tr>
+            <tr>
+                <td>hence: C = -<i>t</i> / (R · ln(1 - 0.25)) =
+                - 12.8 x 10<sup>-3</sup> / (1 x 10<sup>6</sup> ·
+                ln(0.75)) = 0.044 µ</td>
+            </tr>
+            <tr>
+                <td>We want to be sure to use the whole 8 bit
+                counter range, so we choose C a little large in
+                order that the charge time extends slightly
+                beyond 256 iterations of the count loop when the
+                potentiometer is at its maximum, hence the value
+                of C1 = 0.047uF<sup>4</sup>. Then, within the
+                capacitor charge counting loop, we also watch the
+                charge time counter for overflow and skip ahead
+                with a charge time value set to maximum when this
+                occurs (so that the bar graph doesn't loop around
+                and display low values again if the potentiometer
+                is near its maximum). To allow for tolerance
+                values of the capacitor and potentiometer, final
+                adjustments can be made to the <i>int_period</i>
+                variable to assure that the whole 0-255 range is
+                properly spanned by the potentiometer.</td>
+            </tr>
+            <tr>
+                <td><b>2) The LED bar graph output and
+                pulse-width modulation</b><br>
+                <br>
+                It is often desirable to minimize the number of
+                pins used on the SX while maximizing the number
+                of devices accessed. An effective and
+                cost-efficient manner of doing this is to set the
+                pins up as a matrix to read devices such as
+                switch/keypad inputs or, as in this case, as
+                outputs to access an array of 16 LEDs. While the
+                LEDs are physically positioned one after another
+                in a line as a bar graph, the circuit connections
+                are made in a 4x4 matrix using only 8 SX port
+                pins rather than 16. The program code then
+                controls which LED row and column is active which
+                then lights the corresponding LED. Here we have
+                used the 4 high bits of port B as the source
+                output rows for the LEDs and the lower 4 bits as
+                sink (output=low) input columns.</td>
+            </tr>
+            <tr>
+                <td>Since we have 16 LEDs and a value for the
+                potentiometer input of 0-255 (8 bits), we can
+                create a smooth linear signal 'slide' effect by
+                using pulse width modulation to partially and
+                proportionally light adjacent LEDs when the
+                output value lies between them. For example,
+                assume we read a potentiometer value of 44. Since
+                there are 16 LEDs, this value would correspond to
+                LED number 44/16=2.75. Normally in this case,
+                we'd have to choose between the 2nd and 3rd LEDs,
+                but using pulse width modulation we can resolve
+                the fraction after the decimal point by sending a
+                25% duty cycle to the second LED and a 75% duty
+                cycle to the third one, providing the visual
+                effect that the signal is somewhere between the
+                two LEDs, and closer (3/4 way) to the 3rd one. We
+                use the higher nibble of the potentiometer
+                reading to select which of the 16 LED(s) will be
+                lit, and the lower nibble for the pulse width
+                modulation duty cycle calculation, which makes
+                possible 16 levels of brightness. During each
+                interrupt cycle, the pulse width modulation duty
+                cycle count is incremented, and with the aid of a
+                lookup table, the matrix on port B is set up to
+                light the appropriate LED. In this way, each
+                reading value from 0-255 is given a unique output
+                pattern the LED bar graph.</td>
+            </tr>
+            <tr>
+                <td>Resistors R1-4 limit current to the LEDs,
+                which at 100% duty cycle draw an I<font size="2"><sub>LED</sub></font>
+                = V<font size="2"><sub>dd</sub></font>/R = 5V/220
+                Ohm = 23mA. The values of R1-4 may be adjusted to
+                reduce/increase the overall brightness, though
+                the 30 mA source/sink maximum port current limit
+                should be kept in mind.</td>
+            </tr>
+            <tr>
+                <td><hr size="-1">
+                </td>
+            </tr>
+            <tr>
+                <td><font size="2"><sup>1</sup>R5 limits the
+                maximum discharge current through the I/O port to
+                under 30mA (i.e. R</font><font size="1"><sub>discharge</sub></font><font
+                size="2"> &gt;=</font><font size="1"><sub>Vdd</sub></font><font
+                size="2"> / I<sub>max</sub> = 5V / 30mA = 167
+                Ohms). In practice, for small capacitor values
+                (on the order of 0.01µF or less), R5 can
+                probably even be omitted, since the total charge
+                stored on the capacitor is minimal and shouldn't
+                damage the SX.<br>
+                <br>
+                <sup>2</sup>The value for the <i>int_period</i>
+                variable controls the interrupt period. It is
+                suggested that the minimum value for this
+                variable be kept longer than the longest possible
+                interrupt routine duration (converted to RTCC
+                counts), and the maximum value should be 256, in
+                which case <i>int_period=0</i>. Values less than
+                the execution time of the interrupt routine will
+                cause interrupt periods longer than 256 RTCC
+                counts.<br>
+                <br>
+                <sup>3</sup>Actual CPU cycle count may be
+                multiples of <i>int_period</i> if the RTCC is
+                operating with a prescaler other than 1.<br>
+                <br>
+                <sup>4</sup>If the value of C1 is changed, the <i>clear_time</i>
+                constant for discharging it should also be
+                adjusted appropriately.</font></td>
+            </tr>
+        </table>
+        </center></div><p align="center"><!-- macro main_footer start --> </p>
+        </td>
+    </tr>
+    <tr>
+        <td width="112">&nbsp;</td>
+        <td><hr>
+        <div align="center"><center><table border="0">
+            <tr>
+                <td><a href="/company/index.html"><font size="1"
+                face="Arial,Helvetica">[Company]</font></a></td>
+                <td><a href="/products/index.html"><font size="1"
+                face="Arial,Helvetica">[Products]</font></a></td>
+                <td><a href="/tools/index.html"><font size="1"
+                face="Arial,Helvetica">[Tools]</font></a></td>
+                <td><a href="/virtual/index.html"><font size="1"
+                face="Arial,Helvetica">[Peripherals]</font></a></td>
+                <td><a href="/news/index.html"><font size="1"
+                face="Arial,Helvetica">[News]</font></a></td>
+                <td><a href="/support/index.html"><font size="1"
+                face="Arial,Helvetica">[Support]</font></a></td>
+                <td><a href="/partners/index.html"><font size="1"
+                face="Arial,Helvetica">[Partners]</font></a></td>
+                <td><a href="/sales/index.html"><font size="1"
+                face="Arial,Helvetica">[Sales]</font></a></td>
+                <td><a href="/jobs/index.html"><font size="1"
+                face="Arial,Helvetica">[Jobs]</font></a></td>
+                <td><a href="/search/index.html"><font size="1"
+                face="Arial,Helvetica">[Search]</font></a></td>
+            </tr>
+        </table>
+        </center></div><hr>
+        <p align="center"><font size="2" face="Arial,Helvetica">Scenix
+        Semiconductor, Inc.| 3160 De La Cruz Blvd., Ste. 200 |
+        Santa Clara, CA 95054<br>
+        Tel: 408.327.8888 | Fax: 408.327.8880 | Technical Support
+        Hotline: 800.556.0225</font> </p>
+        <hr>
+        <p align="center"><font color="#006699" size="1"
+        face="Arial,Helvetica">© </font><a
+        href="/copyright.html"><font color="#006699" size="1"
+        face="Arial,Helvetica">Copyright 1998</font></a><font
+        color="#006699" size="1" face="Arial,Helvetica">, All
+        Rights Reserved | </font><a href="mailto:info@scenix.com"><font
+        color="#006699" size="1" face="Arial,Helvetica">info@scenix.com</font></a><font
+        color="#006699" size="1" face="Arial,Helvetica"> | </font><a
+        href="/feedback/index.html"><font color="#006699"
+        size="1" face="Arial,Helvetica">Feedback</font></a> </p>
+        </td>
+    </tr>
+</table>
+<!-- macro main_footer stop --></body>
+</html>

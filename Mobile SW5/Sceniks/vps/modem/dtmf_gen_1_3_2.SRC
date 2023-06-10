@@ -1,0 +1,636 @@
+;******************************************************************************
+; Copyright © [09/12/1998] Scenix Semiconductor, Inc. All rights reserved.
+;
+ ;Scenix Semiconductor, Inc. assumes no responsibility or liability for
+; the use of this [product, application, software, any of these products].
+; Scenix Semiconductor conveys no license, implicitly or otherwise, under
+; any intellectual property rights.
+; Information contained in this publication regarding (e.g.: application,
+; implementation) and the like is intended through suggestion only and may
+; be superseded by updates. Scenix Semiconductor makes no representation
+; or warranties with respect to the accuracy or use of these information,
+; or infringement of patents arising from such use or otherwise.
+;******************************************************************************
+;       DTMF generation utilizing 2 artificial sine wave generators in conjunction
+;	and summed internally.  The user presses 'd' on the keyboard to start. 
+;	The program goes off-hook and dials numbers as the user presses them
+;	on the keyboard.
+;
+;       Length: 
+;       Authors: Chris Fogelklou, Scenix Semiconductor Inc.
+;       Written: 98/12/09 to 98/12/10
+;	Version: 1.3.2
+;	Revisions:
+;	98/12/14	Fixed bug in uppercase routine.  Changed 'ret' to retp.
+;	98/12/14	Added stack extend directive.  Put more functions in 
+;			subroutines for easy expansion.  Operation remains the same.
+;	98/12/14	Changed 'Delaynms' subroutine to 'Delay_10n_ms' for longer delays.
+;	99/01/04	Made high frequency amplitude 1.25 times greater than low 
+;			frequency amplitude. (Called "Twist") (v.1.3)
+;	99/01/04	Made "twist" code at end of sine generators more efficient.(v.1.3.1)
+;	99/01/22	Documentation!  Documentation!  Documentation (V. 1.3.2)
+;
+;	INPUTS:
+;	RS-232 input on rx_pin (ra.1)
+;
+;	OUTPUTS:
+;	PWM DTMF signal on pwm_pin (ra.0)
+;	Echoed rs_232 characters on tx_pin (ra.2)
+;	LED flashes while transmitting on led_pin (rb.0)
+;	in_out enables/disables analog switch on SX DTMF DEMO boards.
+;	hook goes on-hook/off-hook
+;
+;	RESOURCES:
+;       Program memory: 475 Words (Includes UARTS, RS-232 Strings, and other miscellaneous
+				   routines.)
+;       Data memory:	28 bytes
+;       I/O Count:	6 
+;
+;	 PWM_pin	equ	ra.0		; DTMF output
+;	 rx_pin		equ	ra.1		; RS-232 Receive
+;	 tx_pin		equ	ra.2		; RS-232 Transmit
+;	 in_out		equ	ra.3		; Enable/Disable output
+;	 led_pin	equ	rb.0		; LED output
+;	 hook		equ	rb.4		; Set to go off-hook
+;
+;******************************************************************************
+		device	pins28,pages4,banks8		; 28-pin device, 4 pages, 8 banks of RAM
+		device	oschs,turbo,optionx,stackx	; High speed oscillator, turbo mode,
+							; option register extend, 8-level stack
+		freq	50_000_000			; default run speed = 50MHz
+		ID	'DTMFG_13'			; Version = 1.3.2
+
+		reset	start				; JUMP to start label on reset
+
+;**************************************************************************
+; Watches (For Debug in SX_Key software V.1.0 +)
+;**************************************************************************
+		watch	freq_acc_high,16,uhex
+		watch	freq_count_high,16,uhex
+		watch	freq_count_high2,16,uhex
+		watch	byte,1,fstr
+		watch	byte,8,udec
+		watch	curr_sin,8,sdec
+		watch	sinvel,8,sdec
+		watch	pwm0,8,udec
+		watch	pwm0_acc,8,udec
+		watch	timer_flag,1,ubin
+		watch	timer_l,16,uhex
+		watch	temp,8,uhex
+
+;*************************************************************
+; Macros
+;*************************************************************
+enable_o	macro	0		; This macro enables the output
+		clrb	in_out		; switch on the new modem boards.
+		clr	flags
+
+		endm
+
+;**************************************************************************
+; Equates for common data comm frequencies
+;**************************************************************************
+f697_h		equ	$012	; DTMF Frequency
+f697_l		equ	$09d
+
+f770_h		equ	$014	; DTMF Frequency
+f770_l		equ	$090
+
+f852_h		equ	$016	; DTMF Frequency
+f852_l		equ	$0c0
+
+f941_h		equ	$019	; DTMF Frequency
+f941_l		equ	$021
+
+f1209_h		equ	$020	; DTMF Frequency
+f1209_l		equ	$049
+
+f1336_h		equ	$023	; DTMF Frequency
+f1336_l		equ	$0ad
+
+f1477_h		equ	$027	; DTMF Frequency
+f1477_l		equ	$071
+
+f1633_h		equ	$02b	; DTMF Frequency
+f1633_l		equ	$09c
+
+;**************************************************************************
+; Equates for certain baud rates: 19200 baud
+;**************************************************************************
+baud_bit	=       4                       ;for 19200 baud
+start_delay	=       16+8+1                  ; "    "     "
+int_period	=       163                     ; "    "     "
+
+;**************************************************************************
+; Pin Definitions
+;**************************************************************************
+PWM_pin		equ	ra.0		; DTMF output
+rx_pin		equ	ra.1		; RS-232 Receive
+tx_pin		equ	ra.2		; RS-232 Transmit
+in_out		equ	ra.3		; Enable/Disable output
+
+led_pin		equ	rb.0		; LED output
+hook		equ	rb.4		; Set to go off-hook
+
+;******************************************************************************
+;	Global Variables
+;******************************************************************************
+		org	$8		; Global registers
+
+flags			ds	1
+	rx_flag		equ	flags.0	; Signifies a bit recieved via. RS-232
+	dtmf_gen_en		equ	flags.1	; Signifies whether or not DTMF output is enabled
+	timer_flag	equ	flags.2	; Flags a rollover of the timers.
+
+temp			ds	1	; Temporary storage register
+
+;******************************************************************************
+;	Bank 0 Variables
+;******************************************************************************
+		org	$10
+
+sin_gen_bank	=	$
+
+freq_acc_high		ds	1	; 
+freq_acc_low		ds	1	; 16-bit accumulator which decides when to increment the sine wave
+
+freq_acc_high2		ds	1	; 
+freq_acc_low2		ds	1	; 16-bit accumulator which decides when to increment the sine wave
+
+freq_count_high		ds	1	; freq_count = Frequency * 6.83671552
+freq_count_low		ds	1	; 16-bit counter which decides which frequency for the sine wave
+
+freq_count_high2	ds	1	; freq_count = Frequency * 6.83671552
+freq_count_low2		ds	1	; 16-bit counter which decides which frequency for the sine wave
+
+curr_sin		ds	1	; The current value of the imitation sin wave
+sinvel			ds	1	; The velocity of the sin wave
+
+curr_sin2		ds	1	; The current value of the imitation sin wave
+sinvel2			ds	1	; The velocity of the sin wave
+
+sin2_temp		ds	1	; This register is used to do a temporary shift/add register
+
+PWM_bank		=	$
+
+pwm0_acc		ds	1		; PWM accumulator
+pwm0			ds	1		; current PWM output
+
+;******************************************************************************
+;	Bank 1 Variables
+;******************************************************************************
+		org     $30                     ;bank3 variables
+timers		=	$
+timer_l		ds	1
+timer_h		ds	1
+serial		=       $                       ;UART bank
+
+tx_high		ds      1                       ;hi byte to transmit
+tx_low		ds      1                       ;low byte to transmit
+tx_count	ds      1                       ;number of bits sent
+tx_divide	ds      1                       ;xmit timing (/16) counter
+rx_count	ds      1                       ;number of bits received
+rx_divide	ds      1                       ;receive timing counter
+rx_byte		ds      1                       ;buffer for incoming byte
+string		ds	1
+byte		ds	1
+
+;**************************************************************************
+; Interrupt
+; 
+; With a retiw value of -163 and an oscillator frequency of 50MHz, this
+; code runs every 3.26us.
+;**************************************************************************
+		org	0		
+;**************************************************************************
+PWM_OUTPUT
+; This outputs the current value of pwm0 to the PWM_pin.  This generates
+; an analog voltage at PWM_pin after filtering
+;**************************************************************************
+		bank	PWM_bank
+		add	pwm0_acc,pwm0			; add the PWM output to the accumulator
+		snc				
+		jmp	:carry				; if there was no carry, then clear 
+							; the PWM_pin
+		clrb	PWM_pin
+		jmp	PWM_out			 
+:carry
+		setb	PWM_pin				; otherwise set the PWM_pin
+PWM_out
+;**************************************************************************
+		jnb	dtmf_gen_en,sine_gen_out
+		call	@sine_generator1
+sine_gen_out
+
+;**************************************************************************
+:transmit
+; This is an asynchronous RS-232 transmitter
+; INPUTS:
+;	tx_divide.baud_bit  -	Transmitter only executes when this bit is = 1
+;	tx_high		    -	Part of the data to be transmitted
+;	tx_low		    -	Some more of the data to be transmitted
+;	tx_count	    -	Counter which counts the number of bits transmitted.
+; OUTPUTS:
+;	tx_pin		    -	Sets/Clears this pin to accomplish the transmission.
+;**************************************************************************		bank	serial
+		bank	serial
+		clrb    tx_divide.baud_bit      ;clear xmit timing count flag
+		inc     tx_divide               ;only execute the transmit routine
+		STZ                             ;set zero flag for test
+		SNB     tx_divide.baud_bit      ; every 2^baud_bit interrupt
+		test    tx_count                ;are we sending?
+		JZ      :receive                ;if not, go to :receive
+		clc                             ;yes, ready stop bit
+		rr      tx_high                 ; and shift to next bit
+		rr      tx_low                  ;
+		dec     tx_count                ;decrement bit counter
+		movb    tx_pin,/tx_low.6        ;output next bit
+
+;**************************************************************************
+:receive
+; This is an asynchronous receiver for RS-232 reception
+; INPUTS:
+;	rx_pin		   -	Pin which RS-232 is received on.
+; OUTPUTS:
+;	rx_byte		   -	The byte received
+;	rx_flag		   -	Set when a byte is received.
+;**************************************************************************
+		movb    c,rx_pin                ;get current rx bit
+		test    rx_count                ;currently receiving byte?
+		jnz     :rxbit                  ;if so, jump ahead
+		mov     w,#9                    ;in case start, ready 9 bits
+		sc                              ;skip ahead if not start bit
+		mov     rx_count,w              ;it is, so renew bit count
+		mov     rx_divide,#start_delay  ;ready 1.5 bit periods
+:rxbit		djnz    rx_divide,:rxdone       ;middle of next bit?
+		setb    rx_divide.baud_bit      ;yes, ready 1 bit period
+		dec     rx_count                ;last bit?
+		sz                              ;if not
+		rr      rx_byte                 ;  then save bit
+		snz                             ;if so
+		setb    rx_flag                 ;  then set flag
+:rxdone
+
+;**************************************************************************
+do_timers	
+; The timer will tick at the interrupt rate (3.26us for 50MHz.)  To set up
+; the timers, move in FFFFh - (value that corresponds to the time.)  Example:
+; for 1ms = 1ms/3.26us = 306 dec = 132 hex so move in $FFFF - $0132 = $FECD
+;**************************************************************************
+
+		bank	timers			; Switch to the timer bank
+		mov	w,#1
+		add	timer_l,w		; add 1 to timer_l
+		jnc	:timer_out		; if it's not zero, then 
+		add	timer_h,w		; don't increment timer_h
+		snc
+		setb	timer_flag		
+		movb	led_pin,timer_h.6	; once timer_h is changed, update the LED
+:timer_out
+;**************************************************************************
+:ISR_DONE
+; This is the end of the interrupt service routine.  Now load 163 into w and
+; perform a retiw to interrupt 163 cycles from the start of this one.  
+; (3.26us@50MHz)
+;**************************************************************************
+		break
+		mov	w,#-163		;1	; interrupt 163 cycles after this interrupt
+		retiw			;3	; return from the interrupt
+;**************************************************************************
+;
+;**************************************************************************
+; Main program
+;**************************************************************************
+start		bank	sin_gen_bank			; Program starts here on power up
+
+	;******************************************************************
+	; Initialize ports and registers
+	;******************************************************************
+
+;		mov	curr_sin,#32			; init variables.  A sine starts at 1, a cos wave starts at 0. 
+;		mov	sinvel,#0
+		mov	curr_sin,#-4			; use these values for a wave which is 90 degrees out of phase.
+		mov	sinvel,#-8
+		mov	curr_sin2,#-4			; use these values for a wave which is 90 degrees out of phase.
+		mov	sinvel2,#-8
+		call	@disable_o
+
+		mov	!option,#%00011111		; enable wreg and rtcc interrupt
+		mov	rb,#%11101110			; on-hook,led off.
+		mov	!ra,#%0010			; ra0 = PWM output, ra1 = rx_pin, ra2 = tx_pin, ra3 = in_out
+		mov	!rb,#%11101110			; rb4 = hook, rb0 = led pin
+
+		mov	m,#$D				; make ra0 cmos-level
+		mov	!ra,#%1110
+		mov	m,#$F
+
+	;******************************************************************
+	; Send prompt via RS-232
+	;******************************************************************
+		mov	w,#_hello			; send hello string
+		call	@send_string
+		mov	w,#_instructions		; send instructions
+		call	@send_string
+		mov	w,#_instructions2		; send more instructions
+		call	@send_string
+	;******************************************************************
+	; Get characters from keyboard until user presses 'D'
+	;******************************************************************
+:_cmd_loop	call	@get_byte			; wait for an input character
+		call	@uppercase			; convert it to uppercase
+		cjne	byte,#'D',:_cmd_loop		; if it is not = 'D', wait for it.
+
+	;******************************************************************
+	; Go off-hook
+	;******************************************************************
+		setb	hook				; pick up the line
+
+:dial_loop	call	@get_byte			; wait for an input character
+		call	@digit_2_index			; convert the ascii digit to an 
+							; index value
+		call	@load_frequencies		; load the frequency registers
+		call	@dial_it			; dial the number for 60ms and return.
+		jmp	:dial_loop
+
+org	$200			; Start this code on page 1
+;**************************************************************************
+;	Miscellaneous subroutines
+;**************************************************************************
+delay_10n_ms
+; This subroutine delays 'w'*10 milliseconds. 
+; This subroutine uses the TEMP register
+; INPUT		w	-	# of milliseconds to delay for.
+; OUTPUT	Returns after n milliseconds.
+;**************************************************************************
+	mov	temp,w
+	bank	timers
+:loop	clrb	timer_flag	; This loop delays for 10ms
+	mov	timer_h,#$0f4
+	mov	timer_l,#$004
+	jnb	timer_flag,$
+	dec	temp		; do it w-1 times.
+	jnz	:loop
+	clrb	timer_flag
+	retp
+;**************************************************************************
+; Subroutine - Get byte via serial port and echo it back to the serial port
+; INPUTS:
+;	-NONE
+; OUTPUTS:
+;	-received byte in rx_byte
+;**************************************************************************
+get_byte     	jnb     rx_flag,$		;wait till byte is received
+		clrb    rx_flag		;reset the receive flag
+		bank	serial
+		mov     byte,rx_byte		;store byte (copy using W)
+						; & fall through to echo char back
+;**************************************************************************
+; Subroutine - Send byte via serial port
+; INPUTS:
+;	w 	-	The byte to be sent via RS-232
+;**************************************************************************
+send_byte    	bank    serial
+
+:wait        	test    tx_count                ;wait for not busy
+		jnz     :wait                   ;
+
+		not     w                       ;ready bits (inverse logic)
+		mov     tx_high,w               ; store data byte
+		setb    tx_low.7                ; set up start bit
+		mov     tx_count,#10            ;1 start + 8 data + 1 stop bit
+		RETP                            ;leave and fix page bits
+
+;**************************************************************************
+; Subroutine - Send string pointed to by address in W register
+; INPUTS:
+;	w	-	The address of a null-terminated string in program
+;			memory
+; OUTPUTS:
+; 	outputs the string via. RS-232
+;**************************************************************************
+send_string	bank	serial
+ 		mov     string,w                ;store string address
+:loop        	mov     w,string                ;read next string character
+		mov     m,#4                    ; with indirect addressing
+		iread                           ; using the mode register
+		mov     m,#$F                   ;reset the mode register
+		test    w                       ;are we at the last char?
+		snz                             ;if not=0, skip ahead
+		RETP                            ;yes, leave & fix page bits
+		call    send_byte               ;not 0, so send character
+		inc     string                  ;point to next character
+		jmp     :loop                   ;loop until done
+
+;**************************************************************************
+; Subroutine - Make byte uppercase
+; INPUTS:
+;	byte	-	The byte to be converted
+; OUTPUTS:
+;	byte	-	The uppercase byte
+;**************************************************************************
+uppercase    	csae	  byte,#'a'            	;if byte is lowercase, then skip ahead
+		RETP
+
+		sub     byte,#'a'-'A'           ;change byte to uppercase
+		RETP                            ;leave and fix page bits
+;**************************************************************************
+; Subroutine - Disable the outputs
+; Load DC value into PWM and disable the output switch.
+;**************************************************************************
+disable_o	setb	in_out		; set the analogue switch for
+		bank	PWM_bank	; input mode.
+		mov	pwm0,#128	; put 2.5V DC on PWM output pin
+		retp
+
+org	$400			; This table is on page 2.
+;**************************************************************************
+; String data (for RS-232 output) and tables
+;**************************************************************************
+_hello          dw      13,10,13,10,'DTMF Transmit V. 1.3.1',13,10,13,10,0
+_instructions	dw	'-Press D to begin dialing.',13,10,'-Type the number to dial.',13,10,0
+_instructions2	dw	'-Numbers will be dialed as you type.',13,10,13,10,0
+_0_		dw	f941_h,f941_l,f1336_h,f1336_l
+_1_		dw	f697_h,f697_l,f1209_h,f1209_l
+_2_		dw	f697_h,f697_l,f1336_h,f1336_l
+_3_		dw	f697_h,f697_l,f1477_h,f1477_l
+_4_		dw	f770_h,f770_l,f1209_h,f1209_l
+_5_		dw	f770_h,f770_l,f1336_h,f1336_l
+_6_		dw	f770_h,f770_l,f1477_h,f1477_l
+_7_		dw	f852_h,f852_l,f1209_h,f1209_l
+_8_		dw	f852_h,f852_l,f1336_h,f1336_l
+_9_		dw	f852_h,f852_l,f1477_h,f1477_l
+_star_		dw	f941_h,f941_l,f1209_h,f1209_l
+_pound_		dw	f941_h,f941_l,f1477_h,f1477_l
+
+
+org	$600			; These subroutines are on page 3.
+;**************************************************************************
+; DTMF transmit functions/subroutines
+;**************************************************************************
+;**************************************************************************
+digit_2_index
+; This subroutine converts a digit from 0-9 or a '*' or a '#' to a table 
+; lookup index which can be used by the load_frequencies subroutine.  To use
+; this routine, pass it a value in the 'byte' register.  No invalid digits
+; are used. (A, B, C, or D)
+;**************************************************************************
+
+		bank	serial
+		cja	byte,#'9',:error		; if the character is above 9, then error (get another char)
+		cje	byte,#'*',:star
+		cje	byte,#'#',:pound
+		cjb	byte,#'0',:error
+		sub	byte,#'0'			; convert to decimal number
+		jmp	:got_it
+:star		mov	byte,#10
+		jmp	:got_it
+:pound		mov	byte,#11
+		
+:got_it		retp
+:error
+		mov	byte,#$0FF
+		retp
+;**************************************************************************
+load_frequencies
+; This subroutine loads the frequencies using a table lookup approach.
+; The index into the table is passed in the byte register.  The DTMF table
+; must be in the range of $400 to $500.
+;**************************************************************************
+		bank	serial
+		cje	byte,#$0FF,:end_load_it
+		clc
+		rl	byte
+		rl	byte				; multiply byte by 4 to get offset
+		add	byte,#_0_			; add in the offset of the first digit
+		mov	temp,#4
+		mov	fsr,#freq_count_high
+		bank	serial
+
+:dtmf_load_loop	mov	m,#4				; mov 4 to m (table is in $400)
+		mov	w,byte
+		IREAD					; get the value from the table
+		bank	sin_gen_bank			; and load it into the frequency 
+		mov	indf,w				; register
+		bank	serial
+		inc	byte
+		inc	fsr
+		decsz	temp
+		jmp	:dtmf_load_loop			; when all 4 values have been loaded,
+:end_load_it	retp					; return
+;**************************************************************************
+dial_it		; This subroutine puts out whatever frequencies were loaded
+		; for 1000ms, and then stops outputting the frequencies.
+;**************************************************************************
+		bank	serial
+		cje	byte,#$0FF,:end_dial_it
+		bank	sin_gen_bank
+		mov	curr_sin,#-4		; use these values to start the wave at close to zero crossing.
+		mov	sinvel,#-8
+		mov	curr_sin2,#-4		; use these values to start the wave at close to zero crossing.
+		mov	sinvel2,#-8
+		enable_o 			; enable the output
+		mov	w,#3
+		call	@delay_10n_ms		; delay 30ms
+		setb	dtmf_gen_en
+		mov	w,#10
+		call	@delay_10n_ms		; delay 100ms
+		clrb	dtmf_gen_en
+		call	@disable_o		; now disable the outputs
+:end_dial_it	retp
+;**************************************************************************
+sine_generator1				;(Part of interrupt service routine)
+; This routine generates a synthetic sine wave with values ranging
+; from -32 to 32.  Frequency is specified by the counter.  To set the
+; frequency, put this value into the 16-bit freq_count register:
+; freq_count = FREQUENCY * 6.83671552 (@50MHz)
+;**************************************************************************
+		bank	sin_gen_bank
+		add	freq_acc_low,freq_count_low;2	; advance sine at frequency
+		jnc	:no_carry		;2,4	; if lower byte rolls over
+		inc	freq_acc_high			; carry over to upper byte
+		jnz	:no_carry			; if carry causes roll-over
+		mov	freq_acc_high,freq_count_high	; then add freq counter to accumulator (which should be zero,
+							; so move will work)
+							; and update sine wave
+		jmp	:change_sin
+:no_carry
+		add	freq_acc_high,freq_count_high	; add the upper bytes of the accumulators
+		jnc	:no_change
+:change_sin
+
+		mov	w,++sinvel	;1		; if the sine wave
+		sb	curr_sin.7		;1		; is positive, decelerate 
+		mov	w,--sinvel	;1		; it.  Otherwise, accelerate it.
+		mov	sinvel,w	;1	
+		add	curr_sin,w		;1		; add the velocity to sin
+
+
+:no_change
+
+;**************************************************************************
+sine_generator2						;(Part of interrupt service routine)
+; This routine generates a synthetic sine wave with values ranging
+; from -32 to 32.  Frequency is specified by the counter.  To set the
+; frequency, put this value into the 16-bit freq_count register:
+; freq_count = FREQUENCY * 6.83671552 (@50MHz)
+;**************************************************************************
+
+		add	freq_acc_low2,freq_count_low2;2	;advance sine at frequency
+		jnc	:no_carry		;2,4	; if lower byte rolls over
+		inc	freq_acc_high2			; carry over to upper byte
+		jnz	:no_carry			; if carry causes roll-over
+		mov	freq_acc_high2,freq_count_high2	; then add freq counter to accumulator (which should be zero,
+							; so move will work)
+							; and update sine wave
+		jmp	:change_sin
+:no_carry
+		add	freq_acc_high2,freq_count_high2	; add the upper bytes of the accumulators
+		jnc	:no_change
+:change_sin
+
+		mov	w,++sinvel2	;1		; if the sine wave
+		sb	curr_sin2.7	;1		; is positive, decelerate it
+		mov	w,--sinvel2	;1		; it.  Otherwise, accelerate it.
+		mov	sinvel2,w	;1	
+		add	curr_sin2,w	;1		; add the velocity to sin
+
+
+:no_change
+		mov	pwm0,curr_sin2			; mov sin2 into pwm0
+		mov	sin2_temp,w			; mov the high_frequency sin wave's current value
+		clc					 ; into a temporary register
+		snb	sin2_temp.7			; divide temporary register by four by shifting right
+		stc					 ; (for result = (0.25)(sin2))
+		rr	sin2_temp
+		clc
+		snb	sin2_temp.7
+		stc
+		mov	w,>>sin2_temp
+		add	pwm0,w				; (1.25)(sin2) = sin2 + (0.25)(sin2)
+		add	pwm0,curr_sin			; add the value of SIN into the PWM output
+							; for result = pwm0 = 1.25*sin2 + 1*sin
+		add	pwm0,#128			; put pwm0 in the middle of the output range (get rid of negative values)
+		retp					; return with page bits intact
+
+;******************************************************************************
+; END OF PROGRAM FOR DTMF GENERATION.
+;******************************************************************************
+;        Copyright © 1999 Scenix Semiconductor, Inc. All rights
+;        reserved.
+;        
+;        Scenix Semiconductor, Inc. assumes no responsibility or liability for
+;        the use of this [product, application, software, any of these products].
+;        
+;        Scenix Semiconductor conveys no license, implicitly or otherwise, under
+;        any intellectual property rights.
+;        Information contained in this publication regarding (e.g.: application,
+;        implementation) and the like is intended through suggestion only and may
+;        be superseded by updates. Scenix Semiconductor makes no representation
+;        or warranties with respect to the accuracy or use of these information,
+;        or infringement of patents arising from such use or otherwise.
+;        
+;        Scenix Semiconductor products are not authorized for use in life support
+;        systems or under conditions where failure of the product would endanger
+;        the life or safety of the user, except when prior written approval is
+;        obtained from Scenix Semiconductor.
+;******************************************************************************

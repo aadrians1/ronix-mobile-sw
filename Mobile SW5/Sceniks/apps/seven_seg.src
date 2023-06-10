@@ -1,0 +1,46 @@
+;******************************************************************************
+;       Binary to Seven-Segment display routine
+;       Author:Zafar Ullah
+;       Written: 98/7/30
+;
+;******************************************************************************
+;
+;****** Assembler directives
+;
+; uses: SX28AC, 2 pages of program memory, 8 banks of RAM, high speed osc.
+;       operating in turbo mode, with 8-level stack & extended option reg.
+;                
+		DEVICE  pins28,pages2,banks8,oschs
+		DEVICE  turbo,stackx,optionx
+		ID      'Seven-Se'			;program ID label
+		RESET   reset_entry             ;set reset/boot address
+
+		FREQ	50000000
+;
+;
+;
+;
+		ORG     100h
+;
+; Program execution begins here on power-up or after a reset
+;
+reset_entry
+	
+	 MOV	M, #$0F            ;set the mode registar.
+	 MOV	!RB, #$FF		 ; Set Port B as Input
+	 MOV	!RC, #$00		 ; Set the port C as Output
+	 
+:LOOP
+	 MOV	W, RB			; Read Port B
+	 AND	W, #$0F		; Masking significant bits
+	 CALL  CHECK_TABLE	; Go to look up table
+	 MOV	RC, W			; Output the value to port C
+	 NOP
+	 NOP
+	 JMP :LOOP
+
+	ORG	10h
+
+CHECK_TABLE        JMP	PC+W	; Look up table 	
+	RETW 	$40,$F9,$24,$30,$19,$12,$02,$78,$00,$18,$08,$03,$46,$21,$06,$0E
+

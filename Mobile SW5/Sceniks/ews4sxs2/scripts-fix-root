@@ -1,0 +1,74 @@
+#!/bin/sh
+eval "exec ./perl -x $0 $*"
+    if $running_under_some_shell;
+#!perl
+    ;
+
+## Copyright (c) 1996 Excite, Inc.
+##
+## This script will fix the $root=<path> on any files specified
+## on the command line.  The intended use of this is to allow the 
+## configuration scripts (db-index.cgi, db-generate.cgi, and db-config.cgi)
+## and any of the supporting scripts to be modified at install time 
+## or at a later point if the location of the user's Architext install
+## directory changes for any reason.  Since all of the Architext
+## scripts rely on the accuracy of the $root variable, scripts
+## must be modifed whenever the location of the Architext install
+## directory changes in order to run properly.
+
+
+## Get any options
+$opt = "";
+while ($ARGV[0] =~ s/^-//) {
+    $opt .= shift;
+}
+
+## First argument is root directory
+$rootdir = shift;
+$rootdir
+    || die "Usage: $0 [opts] <root-dir> [files-to-convert...]\n";
+
+(-d $rootdir)
+    || die "'$rootdir' is not a directory\n";
+
+$rootdir =~ s/\\/\\\\/g;
+
+chop($rootdir) if $rootdir =~ m|/$|;
+
+MAIN: for $file (@ARGV) {
+    if (! -r $file) {
+	warn "Error reading file '$file'\n";
+	next MAIN;
+    }
+
+    ## If the file ends in .tmpl, assume it's a template; the new file
+    ## should be the name without the .tmpl suffix. Otherwise, move
+    ## the new file to .bak; the new file is the original name of the
+    ## old file.
+    $newfile = $file;
+    if ($newfile =~ /\.tmpl$/) {
+	$newfile =~ s/\.tmpl$//;
+	if ((-e $newfile) && ($opt !~ /f/)) {
+	    warn "File '$newfile' already exists\n";
+	    next MAIN;
+	}
+    } else {
+	if (-e "$file.bak" && $opt !~ /f/) {
+	    warn "File '$file.bak' already exists\n";
+	    next MAIN;
+	}
+	$result = rename($file, "$file.bak");
+	die "Failed to move '$file' to '$file.bak'\n" unless $result;
+	$file = "$file.bak";
+    }
+
+    open(FILE, $file) || die "Couldn't open '$file'\n";
+    open(NEW, ">$newfile") || die "Couldn't open '$newfile' for writing\n";
+    while (<FILE>) {
+	if (/^\s*\$root\s+=/) {
+	    print NEW qq(  \$root = "$rootdir";\n);
+	} else {
+	    print NEW;
+	}
+    }
+}

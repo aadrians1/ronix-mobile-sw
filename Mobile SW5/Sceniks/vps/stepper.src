@@ -1,0 +1,250 @@
+; Filename: 	STEPPER.SRC
+
+; Author:	Stephen Holland
+;		Applications Engineer
+;		Scenix Semiconductor Inc.
+; Revision:	1.0
+; Date:		July 24, 1998
+; Part:		SX28AC rev. 2.5
+; Freq:		50Mhz
+; Compiled using Parallax SX-Key software v0.84
+;    
+;
+;*************************************************************
+; Device
+;*************************************************************
+		device	pins18,pages4,banks8,oschs
+		device	turbo,stackx,optionx,carryx
+		id	'STEPPER'
+		reset	reset_entry
+
+		freq	50_000_000
+
+;*************************************************************
+; Equates
+;*************************************************************
+step_out	=	rb
+led_pin         =       ra.3
+
+;*************************************************************
+; Variables
+;*************************************************************
+			org	8
+
+temp		ds	1
+string		ds	1
+counter		ds	1
+
+;*************************************************************
+; Bank 0 variables
+;*************************************************************
+		org	10h	
+
+timers		=	$		;Timer variables
+
+timer_low	ds	1	
+timer_mid	ds	1
+timer_high	ds	1
+timer_accl	ds	1
+timer_accm	ds	1
+timer_acch	ds	1
+timer_flag	ds	1
+
+;*************************************************************
+; Bank 1 variables
+;*************************************************************
+		org	30h	
+
+motors		=	$
+
+step_con	ds	1
+step_dividel	ds	1
+step_divideh	ds	1
+
+step_lo		ds	1
+step_hi		ds	1
+
+;*************************************************************
+; Interrupt routine - virtual peripherals
+;*************************************************************
+
+		org	0
+interrupt					;3 it takes 3 cycles to get an interrupt
+
+;*************************************************************
+; Timers
+;*************************************************************
+		bank	timers			;1 24-bit timer
+
+		clc				;1	
+		add	timer_accl,timer_low	;2
+		sc				;1
+		jmp	:timer_out
+		setb	timer_flag.0		;1 ;834us delay timer
+		add	timer_accm,timer_mid	;2
+		sc				;1
+		jmp	:timer_out
+		setb	timer_flag.1		;1 ;213ms delay timer
+		add	timer_acch,timer_high	;2	
+		snc				;1
+		setb	timer_flag.2		;1 ;54.6s delay timer
+
+		movb	led_pin,timer_acch.1	;4 =10
+:timer_out					;=7
+
+;*************************************************************
+; Stepper Motor
+;
+; This routine excites the stepper motor using half-step sequence. 
+; The excitiation method can be changed by modifying the startstep
+; lookuptable with the appropriate sequence of excite output.
+;
+; The stepper motor can be connected to portb via the following circuit:
+;
+;               ULN2003
+;              __________                   To stepper
+;     rb.0----|1       16|-------------------coil 1
+;     rb.1----|2       15|-------------------coil 2
+;     rb.2----|3       14|-------------------coil 3
+;     rb.3----|4       13|-------------------coil 4
+;            -|5       12|-
+;            -|6       11|-
+;            -|7       10|-
+;        -----|8________9|---|<|-------------common
+;        |               12V Zener |
+;      -----                       |
+;       ---                        ---- +12V
+;        -
+;
+; The stepper is controlled via the step_con register. The motor can
+; be single stepped by setting the step_con.0 bit and run continuously
+; by setting the step_con.1 bit. The rotation rate is set by modifying 
+; the step_lo and step_hi registers. To set the rotation rate, the
+; following equation can be used:
+;
+; delay = desired rev per second/(RTCC*CLK^-1*steps)
+; 	where:
+;		CLK = SX clock frequency
+;		steps = number of steps/rotation for stepper used
+;			(ie. 360degrees/7.5degrees per step = 48)
+;
+; step_lo * step_hi = delay
+;
+;*************************************************************
+stepper	
+		bank	motors
+		clc
+		snb	step_con.1
+		jmp	:run
+		sb	step_con.0
+		jmp	:stepper_out
+						
+:run		djnz	step_dividel,:stepper_out ;3,2	;64th time through?
+		djnz	step_divideh,:stepper_out ;3,2	;127th time through?
+
+		csae	counter,#endstep	;1 take new table value
+		jmp	:continue1		;1 
+		mov	counter,#startstep	;1 reload table-counter
+:continue1	mov	w,counter		;1
+		mov	m,#6			;1 set page
+		iread				;1 get table_data
+		mov	m,#$0f			;1
+		mov	step_out,w		;1
+		inc	counter			;1
+
+		mov	step_dividel,step_lo
+		mov	step_divideh,step_hi
+		clrb	step_con.0
+:stepper_out
+
+;*************************************************************
+; End of interrupt routine
+;*************************************************************
+interrupt_out	mov	w,#-163			;1	;interrupt every 163 clocks
+
+		retiw				;3
+
+;*************************************************************
+; Reset entry
+;*************************************************************
+
+reset_entry	mov	m,#$0f
+		mov	!ra,#%0100		;set ra data direction register
+		mov	!rb,#%11110000		;set rb data direction register
+
+		clr	fsr			;reset all ram banks
+:loop		setb	fsr.4
+		clr	ind
+		ijnz	fsr,:loop
+
+		bank	timers			;set defaults
+		setb	timer_low.0
+
+		bank	motors
+		clr	step_con
+
+		mov	!option,#%10011111	;enable rtcc interrupt
+
+;*************************************************************
+; Main 
+;*************************************************************
+main
+		mov	temp,#6		;Single step the motor 6 times
+main_loop
+
+		bank	motors			
+		setb	step_con.0
+
+		bank	timers		;Delay for approx. 1 second between steps
+		clrb	timer_flag.1
+		jnb	timer_flag.1,$
+		clrb	timer_flag.1
+		jnb	timer_flag.1,$
+		clrb	timer_flag.1
+		jnb	timer_flag.1,$
+		clrb	timer_flag.1
+		jnb	timer_flag.1,$
+		clrb	timer_flag.1
+		jnb	timer_flag.1,$
+
+		djnz	temp,main_loop
+
+		bank	motors		;Set revolutions for approx. 1 rev/s
+		mov	step_lo,#$ff
+		mov	step_hi,#$19
+		setb	step_con.1
+
+		jmp	$
+
+;*************************************************************
+; Subroutines 
+;*************************************************************
+		org	$200
+
+
+
+
+
+
+
+
+
+;*************************************************************
+; Data
+;*************************************************************
+
+		org	$620
+
+startstep	=	$
+		dw	1	; 1
+		dw	3	; 2
+		dw	2	; 3
+		dw	6	; 4
+		dw	4	; 5
+		dw	12	; 6
+		dw	8	; 7
+endstep		=	$
+		dw	9	; 8
+
+
+

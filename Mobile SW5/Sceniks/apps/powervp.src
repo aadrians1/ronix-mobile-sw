@@ -1,0 +1,562 @@
+;sxdemo.src
+;
+; Device
+;
+		device	pins28,pages1,banks8,oschs
+		device	turbo,stackx,optionx
+		id	'SX Demo'
+		reset	reset_entry
+;
+;						This code demonstrates the ability of the SX28AC to use software
+;						Virtual Peripherals to implement the following:
+;							4 PWM outputs (RA0 - RA3)
+;							6 UARTS	      (RB0-RB5, RC0-RC5)
+;							4 16 bit TIMERS
+;							2 8 bit A/D Converters (RB6-RB7, RC6-RC7)
+;
+; Equates
+;
+ra_dir		=	%0000
+pwm0_pin	=	ra.0
+pwm1_pin	=	ra.1
+pwm2_pin	=	ra.2
+pwm3_pin	=	ra.3
+
+rb_dir		=	%00111111
+rx0_pin		=	rb.0
+rx1_pin		=	rb.1
+rx2_pin		=	rb.2
+rx3_pin		=	rb.3
+rx4_pin		=	rb.4
+rx5_pin		=	rb.5
+adc0_out_pin	=	rb.6
+adc1_out_pin	=	rb.7
+
+rc_dir		=	%11000000
+tx0_pin		=	rc.0
+tx1_pin		=	rc.1
+tx2_pin		=	rc.2
+tx3_pin		=	rc.3
+tx4_pin		=	rc.4
+tx5_pin		=	rc.5
+adc0_in_pin	=	rc.6
+adc1_in_pin	=	rc.7
+;
+;
+; Variables
+;
+		org	8			;common-bank variables
+
+master_count	ds	1
+master_mask	ds	1
+
+itemp		ds	1
+
+rx_flags	ds	1
+rx0_full	=	rx_flags.0
+rx1_full	=	rx_flags.1
+rx2_full	=	rx_flags.2
+rx3_full	=	rx_flags.3
+rx4_full	=	rx_flags.4
+rx5_full	=	rx_flags.5
+
+		org	$10			;bank0 variables
+
+timer_low	ds	1			;timer write buffer
+timer_high	ds	1
+
+timer_flags	ds	1
+timer0_flag	=	timer_flags.0
+timer1_flag	=	timer_flags.1
+timer2_flag	=	timer_flags.2
+timer3_flag	=	timer_flags.3
+
+		org	$30			;bank1 variables
+
+timers		=	$
+
+timer0_low	ds	1			;timer0
+timer0_high	ds	1
+timer0_l	ds	1
+timer0_h	ds	1
+
+timer1_low	ds	1			;timer1
+timer1_high	ds	1
+timer1_l	ds	1
+timer1_h	ds	1
+
+timer2_low	ds	1			;timer2
+timer2_high	ds	1
+timer2_l	ds	1
+timer2_h	ds	1
+
+timer3_low	ds	1			;timer3
+timer3_high	ds	1
+timer3_l	ds	1
+timer3_h	ds	1
+
+
+		org	$50			;bank2 variables
+
+analog		=	$
+
+pwm0		ds	1			;pwm0
+pwm0_acc	ds	1
+
+pwm1		ds	1			;pwm1
+pwm1_acc	ds	1
+
+pwm2		ds	1			;pwm2
+pwm2_acc	ds	1
+
+pwm3		ds	1			;pwm3
+pwm3_acc	ds	1
+
+adc0		ds	1			;adc0
+adc0_acc	ds	1
+adc0_count	ds	1
+
+adc1		ds	1			;adc1
+adc1_acc	ds	1
+adc1_count	ds	1
+
+		org	$70			;bank3 variables
+
+serial_out	=	$
+
+tx0_flag	ds	1			;tx0
+tx0_data	ds	1
+
+tx1_flag	ds	1			;tx1
+tx1_data	ds	1
+
+tx2_flag	ds	1			;tx2
+tx2_data	ds	1
+
+tx3_flag	ds	1			;tx3
+tx3_data	ds	1
+
+tx4_flag	ds	1			;tx4
+tx4_data	ds	1
+
+tx5_flag	ds	1			;tx5
+tx5_data	ds	1
+
+tx6_flag	ds	1			;tx6
+tx6_data	ds	1
+
+tx7_flag	ds	1			;tx7
+tx7_data	ds	1
+
+		org	$90			;bank4 variables
+
+serial_in	=	$
+
+rx0_flag	ds	1			;rx0
+rx0_data	ds	1
+
+rx1_flag	ds	1			;rx1
+rx1_data	ds	1
+
+rx2_flag	ds	1			;rx2
+rx2_data	ds	1
+
+rx3_flag	ds	1			;rx3
+rx3_data	ds	1
+
+rx4_flag	ds	1			;rx4
+rx4_data	ds	1
+
+rx5_flag	ds	1			;rx5
+rx5_data	ds	1
+
+rx6_flag	ds	1			;rx6
+rx6_data	ds	1
+
+rx7_flag	ds	1			;rx7
+rx7_data	ds	1
+
+		org	0
+		jmp	interrupt
+;
+;
+;***************
+;* Subroutines *
+;***************
+;
+;
+; Set up timer W [0-3] - timer_low and timer_high must hold value
+;
+timer_setup	not	timer_low	;get swapped 2's complement of value
+		not	timer_high
+		inc	timer_low
+		snz
+		inc	timer_high
+		swap	timer_low
+		swap	timer_high
+
+		and	w,#$03		;point fsr to timer [W] data
+		clc
+		rl	wreg
+		rl	wreg
+		or	w,#timers
+		mov	fsr,w
+
+		mov	ind,timer_low	;init timer [W]
+		inc	fsr
+		mov	ind,timer_high
+		inc	fsr
+		mov	ind,#$FE
+		inc	fsr
+		mov	ind,#$FF
+
+		ret
+;
+;
+;********
+;* Main *
+;********
+;
+; Reset entry
+;
+reset_entry	clr	ra			;init ra
+		mov	!ra,#ra_dir
+
+		clr	rb			;init rb
+		mov	!rb,#rb_dir
+
+		clr	rc			;init rc
+		mov	!rc,#rc_dir
+
+		mov	m,#$D			;set cmos input levels on rc
+		mov	!rc,#0
+		mov	m,#$F
+
+		mov	fsr,#$08		;reset all ram registers
+:loop		sb	fsr.3
+		setb	fsr.4
+		clr	ind
+		ijnz	fsr,:loop
+
+		mov	master_mask,#$01	;init master_mask
+
+		mov	!option,#%00000000	;enable rtcc interrupt
+;
+;
+; User's program
+;
+; To setup timer, write value to timer_low and timer_high,
+; load W with timer# (0-3), and call set_timer.  the corresponding
+; timerX_flag will be set.  It must be reset in software.
+;
+; To set a pwm channel, write an 8-bit value to pwmX.
+;
+; To read an adc, simple read adcX.
+;
+; To output serial, wait for the particular txX_flag to contain 0,
+; then write the byte to transmit to txX_data and write 10h to txX_flag.
+;
+; To input serial, check for an rxX_full flag set.  Then get the
+; byte from the associated rxX_data register.  Clear the rxX_full
+; flag afterwards. 
+;
+main		bank	analog			;select analog bank
+		mov	w,adc0			;read adc
+		mov	pwm0,w			;write value to pwm
+
+		bank	serial_out		;select serial out bank
+		test	tx0_flag		;if tx0 is ready, output byte
+		jnz	:tx0_busy
+		mov	tx0_data,w
+		mov	tx0_flag,#$10		
+:tx0_busy
+		test	tx1_flag		;if tx1 is ready, check rx0
+		jnz	:tx1_busy
+		jnb	rx0_full,:tx1_busy	;if rx0 not full, skip
+		bank	serial_in		;select serial in bank
+		mov	w,rx0_data		;get byte received from rx0
+		bank	serial_out		;select serial out bank
+		mov	tx1_data,w		;write byte to tx0
+		mov	tx1_flag,#$10
+		clrb	rx0_full
+:tx1_busy
+		jmp	main
+;
+;
+; Interrupt routine - virtual peripherals
+;
+interrupt	inc	master_count	;1	;update timing data
+		mov	w,<<master_mask	;1
+		rl	master_mask	;1
+
+		bank	timers		;1	;timers
+
+		inc	timer0_l	;1	;16-bit timer0
+		snz			;1
+		inc	timer0_h	;1
+		mov	w,<>timer0_low	;1
+		snz			;1
+		mov	timer0_l,w	;1
+		mov	w,<>timer0_high	;1
+		snz			;1
+		mov	timer0_h,w	;1
+		snz			;1
+		setb	timer0_flag	;1 =11
+
+		inc	timer1_l	;1	;16-bit timer1
+		snz			;1
+		inc	timer1_h	;1
+		mov	w,<>timer1_low	;1
+		snz			;1
+		mov	timer1_l,w	;1
+		mov	w,<>timer1_high	;1
+		snz			;1
+		mov	timer1_h,w	;1
+		snz			;1
+		setb	timer1_flag	;1 =11
+
+		inc	timer2_l	;1	;16-bit timer2
+		snz			;1
+		inc	timer2_h	;1
+		mov	w,<>timer2_low	;1
+		snz			;1
+		mov	timer2_l,w	;1
+		mov	w,<>timer2_high	;1
+		snz			;1
+		mov	timer2_h,w	;1
+		snz			;1
+		setb	timer2_flag	;1 =11
+
+		inc	timer3_l	;1	;16-bit timer3
+		snz			;1
+		inc	timer3_h	;1
+		mov	w,<>timer3_low	;1
+		snz			;1
+		mov	timer3_l,w	;1
+		mov	w,<>timer3_high	;1
+		snz			;1
+		mov	timer3_h,w	;1
+		snz			;1
+		setb	timer3_flag	;1 =11
+
+		bank	analog		;1	;pwm's and adc's
+
+		clr	itemp		;1
+
+		add	pwm0_acc,pwm0	;2	;pwm0
+		snc			;1
+		setb	itemp.0		;1 =4
+
+		add	pwm1_acc,pwm1	;2	;pwm1
+		snc			;1
+		setb	itemp.1		;1 =4
+
+		add	pwm2_acc,pwm2	;2	;pwm2
+		snc			;1
+		setb	itemp.2		;1 =4
+
+		add	pwm3_acc,pwm3	;2	;pwm3
+		snc			;1
+		setb	itemp.3		;1 =4
+
+		mov	ra,itemp	;2
+
+		mov	w,/rc		;1	;adc0/adc1
+		mov	rb,w		;1	;complement inputs to outputs
+
+		rl	wreg		;1	;get adc0 into w.7 and adc1 into c
+
+		sb	wreg.7		;1	;adc0
+		inc	adc0_acc	;1	;if was high, inc acc
+		mov	w,adc0_acc	;1	;get acc into w
+		inc	adc0_count	;1	;done?
+		snz			;1	;if so, update adc0
+		mov	adc0,w		;1
+		snz			;1	;if so, reset acc
+		clr	adc0_acc	;1 =8
+
+		sc			;1	;adc1
+		inc	adc1_acc	;1	;if was high, inc acc
+		mov	w,adc1_acc	;1	;get acc into w
+		inc	adc1_count	;1	;done?
+		snz			;1	;if so, update adc0
+		mov	adc1,w		;1
+		snz			;1	;if so, reset acc
+		clr	adc1_acc	;1 =8
+
+		bank	serial_out	;1
+
+		mov	w,<<master_count;1	;8 serial outputs
+		and	w,#$0E		;1
+		or	w,#serial_out	;1
+		mov	fsr,w		;1
+		mov	w,rc		;1
+		or	w,master_mask	;1
+		snb	ind.7		;1
+		xor	w,master_mask	;1
+		mov	rc,w		;1
+		test	ind		;1
+		rl	ind		;1
+		clc			;1
+		setb	fsr.0		;1
+		sz			;1
+		rr	ind		;1
+		clrb	fsr.0		;1
+		rr	ind		;1
+		sz			;1
+		dec	ind		;1 =19
+
+		bank	serial_in	;1
+
+rx0		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx0_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx0_flag,w	;1
+:busy		mov	w,rx0_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx0_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx0_data	;1	;data bit, save
+		add	rx0_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx0_full	;1	;if done, set flag
+		xor	rx0_flag,#$08	;1	;set 1 bit delay
+:not
+rx1		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx1_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx1_flag,w	;1
+:busy		mov	w,rx1_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx1_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx1_data	;1	;data bit, save
+		add	rx1_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx1_full	;1	;if done, set flag
+		xor	rx1_flag,#$08	;1	;set 1 bit delay
+:not
+rx2		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx2_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx2_flag,w	;1
+:busy		mov	w,rx2_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx2_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx2_data	;1	;data bit, save
+		add	rx2_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx2_full	;1	;if done, set flag
+		xor	rx2_flag,#$08	;1	;set 1 bit delay
+:not
+rx3		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx3_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx3_flag,w	;1
+:busy		mov	w,rx3_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx3_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx3_data	;1	;data bit, save
+		add	rx3_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx3_full	;1	;if done, set flag
+		xor	rx3_flag,#$08	;1	;set 1 bit delay
+:not
+rx4		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx4_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx4_flag,w	;1
+:busy		mov	w,rx4_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx4_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx4_data	;1	;data bit, save
+		add	rx4_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx4_full	;1	;if done, set flag
+		xor	rx4_flag,#$08	;1	;set 1 bit delay
+:not
+rx5		clc			;1	;serial input
+		snb	rb.5		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx5_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx5_flag,w	;1
+:busy		mov	w,rx5_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx5_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx5_data	;1	;data bit, save
+		add	rx5_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx5_full	;1	;if done, set flag
+		xor	rx5_flag,#$08	;1	;set 1 bit delay
+:not
+		mov	w,#-163		;1	;interrupt every 163*2 clocks
+		retiw			;3	;(2 is from prescaler, rate=8*19.2KHz)

@@ -1,0 +1,31 @@
+
+<p> It is possible to set up a recurring indexing process using
+the <code>cron</code> facility, which allows you to run a command
+at specific times.  To invoke an indexing process, 
+use the <b>aindex.pl</b> script, which
+can be found in the directory in which you installed Excite for Web Servers.
+<p> The usage for <b>aindex.pl</b> is as follows:
+<ul>
+<pre>
+aindex.pl [collection name]
+</pre>
+</ul>
+
+<p> So, for example, if you wanted to index the collection
+'webdata' every night at midnight, and your software was
+installed in <b>/usr/local/etc/architext</b>, you would need
+to add the following line to your crontab file using the
+<code>crontab</code> command:
+<ul>
+<pre>
+0 0 * * * /usr/local/etc/architext/aindex.pl webdata
+</pre>
+</ul>
+
+Be sure that the <code>cron</code> job will be run under a user
+id that has read and write privileges to the directory that 
+your indexes are stored in.
+
+<p> For more detailed information on the use of <code>cron</code>
+and <code>crontab</code>, check your system's <code>man</code>
+pages using the <code>man</code> command.

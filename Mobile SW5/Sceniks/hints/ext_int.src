@@ -1,0 +1,137 @@
+; Filename: 	extint.src
+; Author:	Stephen Holland
+;		Applications Engineer
+;		Scenix Semiconductor Inc.
+; Revision:	1.1
+; Date:		August 6, 1998
+; Part:		SX28AC rev. 2.5
+; Freq:		50Mhz
+; Compiled using Parallax SX-Key software v0.8
+;    
+; The following code demonstrates the use of external interrupts.
+; Interrupts are enabled from 4 sources - bits 0-3 of Port B. If an 
+; interrupt is detected on any of these four bits a corresponding # 
+; of pulses is given on bit 6 of port B. This code has been written
+; to work on the Parallax Demo Board.
+;
+; *The software does not provide any debounce on the input bits.
+;
+; Modifications:
+;	August 6/98 	- removed (unnecessary) disabling and re-enabling of interrupts 
+;			upon entry and exit from ISR
+;
+;
+
+
+		device	pins28,pages4,banks8,oschs
+		device	turbo,stackx,optionx
+	
+		reset	reset_entry
+;
+;Variables
+		org	$10
+
+temp		ds	1
+temp2		ds	1
+loops		ds	1
+loops2		ds	1
+loops3		ds	1
+loops4		ds	1
+
+; Interrupt routine
+
+		org	$0
+
+interrupt	
+		mov	m,#$09		;Set up to read wake up pending register
+		clr	w
+		mov	!rb,w		;Swap w with WKPND_B register
+		mov	temp,w
+		mov	m,#$0f		;Point mode back to ports
+
+; Check temp to see which button pressed
+
+:test_button
+		and	temp,#$0f
+		mov	temp2,temp
+
+	if	temp
+		jmp	send_bit
+	endif
+
+		jmp	interrupt_out
+
+send_bit
+:again		mov	loops,#2
+		call	WAIT
+		setb	rb.6		;Send a 200ms pulse on rb.6
+		mov	loops,#2
+		call	WAIT
+		clrb	rb.6
+		mov	loops,#2
+		call	WAIT
+
+		rr	temp		;Repeat pulses to show the interrupt #
+		test	temp
+		jnz	:again
+
+interrupt_out
+		reti			;Return from interrupt
+;**************************************************************
+; Reset Entry
+;
+; This is entry point upon reset
+;**************************************************************
+reset_entry	mov	m,#$0f		;Setup data direction registers
+		mov	rb,#$0f		;Set initial value
+		mov	!rb,#$0f	; Make rb.0-3 inputs, rb.4-7 outputs
+
+		mov	m,#$0a		;Sets interrupt to falling edge
+		mov	!rb,#$0f	; Set falling edge on rb.0-3
+
+		mov	m,#$0b		;Enable Port B interrupts
+		mov	!rb,#$f0	; Enable interrupts on rb.0-3
+
+		mov	m,#$0f		;Point mode back to ports
+
+		mov	!option,#%11011111 ;Setup OPTION register
+
+;**************************************************************
+; Main
+;**************************************************************
+main_loop
+		sleep
+		jmp	main_loop	; Loop indefinitely
+;**************************************************************
+; Subroutines
+;**************************************************************
+wait				; 100ms delay routine
+top1
+	mov	loops4,#10		; 
+	nop
+top2
+	mov	loops3,#250		; 
+	nop
+
+top3	mov	loops2,#200		; 
+
+top4	nop				; sit and wait
+	nop
+	nop
+	nop
+	nop
+	nop
+	decsz	loops2			; inner loops complete?
+	jmp	top4			; no, go again
+
+	decsz	loops3			; outer loops complete?
+	jmp	top3			; no, go again
+
+	decsz	loops4			; outer loops complete?
+	jmp	top2			; no, go again
+
+	decsz 	loops			; outer loops complete?
+	jmp	top1			; no, go again
+
+	ret				; Return from sub
+

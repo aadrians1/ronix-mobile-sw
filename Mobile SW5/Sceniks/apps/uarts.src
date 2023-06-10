@@ -1,0 +1,463 @@
+;uart_demo.src
+;
+; Device
+;
+		device	pins28,pages1,banks8,oschs
+		device	turbo,stackx,optionx
+		id	'SX Demo'
+		reset	reset_entry
+;
+;
+; Equates
+;
+ra_dir		=	%0000
+rb_dir		=	%00111111
+rx0_pin		=	rb.0
+rx1_pin		=	rb.1
+rx2_pin		=	rb.2
+rx3_pin		=	rb.3
+rx4_pin		=	rb.4
+rx5_pin		=	rb.5
+rx6_pin		=	rb.6
+rx7_pin		=	rb.7
+
+rc_dir		=	%11000000
+tx0_pin		=	rc.0
+tx1_pin		=	rc.1
+tx2_pin		=	rc.2
+tx3_pin		=	rc.3
+tx4_pin		=	rc.4
+tx5_pin		=	rc.5
+tx6_pin		=	rc.6
+tx7_pin		=	rc.7
+;
+;
+; Variables
+;
+		org	8			;common-bank variables
+
+master_count	ds	1
+master_mask	ds	1
+
+itemp		ds	1
+
+rx_flags	ds	1
+rx0_full	=	rx_flags.0
+rx1_full	=	rx_flags.1
+rx2_full	=	rx_flags.2
+rx3_full	=	rx_flags.3
+rx4_full	=	rx_flags.4
+rx5_full	=	rx_flags.5
+rx6_full	=	rx_flags.6
+rx7_full	=	rx_flags.7
+
+		org	$10			;bank0 variables
+
+timer_low	ds	1			;timer write buffer
+timer_high	ds	1
+
+timer_flags	ds	1
+timer0_flag	=	timer_flags.0
+timer1_flag	=	timer_flags.1
+timer2_flag	=	timer_flags.2
+timer3_flag	=	timer_flags.3
+
+		org	$30			;bank1 variables
+
+timers		=	$
+
+timer0_low	ds	1			;timer0
+timer0_high	ds	1
+timer0_l	ds	1
+timer0_h	ds	1
+
+timer1_low	ds	1			;timer1
+timer1_high	ds	1
+timer1_l	ds	1
+timer1_h	ds	1
+
+timer2_low	ds	1			;timer2
+timer2_high	ds	1
+timer2_l	ds	1
+timer2_h	ds	1
+
+timer3_low	ds	1			;timer3
+timer3_high	ds	1
+timer3_l	ds	1
+timer3_h	ds	1
+
+
+		org	$50			;bank2 variables
+
+
+		org	$70			;bank3 variables
+
+serial_out	=	$
+
+tx0_flag	ds	1			;tx0
+tx0_data	ds	1
+
+tx1_flag	ds	1			;tx1
+tx1_data	ds	1
+
+tx2_flag	ds	1			;tx2
+tx2_data	ds	1
+
+tx3_flag	ds	1			;tx3
+tx3_data	ds	1
+
+tx4_flag	ds	1			;tx4
+tx4_data	ds	1
+
+tx5_flag	ds	1			;tx5
+tx5_data	ds	1
+
+tx6_flag	ds	1			;tx6
+tx6_data	ds	1
+
+tx7_flag	ds	1			;tx7
+tx7_data	ds	1
+
+		org	$90			;bank4 variables
+
+serial_in	=	$
+
+rx0_flag	ds	1			;rx0
+rx0_data	ds	1
+
+rx1_flag	ds	1			;rx1
+rx1_data	ds	1
+
+rx2_flag	ds	1			;rx2
+rx2_data	ds	1
+
+rx3_flag	ds	1			;rx3
+rx3_data	ds	1
+
+rx4_flag	ds	1			;rx4
+rx4_data	ds	1
+
+rx5_flag	ds	1			;rx5
+rx5_data	ds	1
+
+rx6_flag	ds	1			;rx6
+rx6_data	ds	1
+
+rx7_flag	ds	1			;rx7
+rx7_data	ds	1
+
+		org	0
+		jmp	interrupt
+;
+;
+;***************
+;* Subroutines *
+;***************
+;
+;
+; Set up timer W [0-3] - timer_low and timer_high must hold value
+;
+timer_setup	not	timer_low	;get swapped 2's complement of value
+		not	timer_high
+		inc	timer_low
+		snz
+		inc	timer_high
+		swap	timer_low
+		swap	timer_high
+
+		and	w,#$03		;point fsr to timer [W] data
+		clc
+		rl	wreg
+		rl	wreg
+		or	w,#timers
+		mov	fsr,w
+
+		mov	ind,timer_low	;init timer [W]
+		inc	fsr
+		mov	ind,timer_high
+		inc	fsr
+		mov	ind,#$FE
+		inc	fsr
+		mov	ind,#$FF
+
+		ret
+;
+;
+;********
+;* Main *
+;********
+;
+; Reset entry
+;
+reset_entry	clr	ra			;init ra
+		mov	!ra,#ra_dir
+
+		clr	rb			;init rb
+		mov	!rb,#rb_dir
+
+		clr	rc			;init rc
+		mov	!rc,#rc_dir
+
+		mov	m,#$D			;set cmos input levels on rc
+		mov	!rc,#0
+		mov	m,#$F
+
+		mov	fsr,#$08		;reset all ram registers
+:loop		sb	fsr.3
+		setb	fsr.4
+		clr	ind
+		ijnz	fsr,:loop
+
+		mov	master_mask,#$01	;init master_mask
+
+		mov	!option,#%00000000	;enable rtcc interrupt
+;
+;
+; User's program
+;
+; To setup timer, write value to timer_low and timer_high,
+; load W with timer# (0-3), and call set_timer.  the corresponding
+; timerX_flag will be set.  It must be reset in software.
+;
+; To output serial, wait for the particular txX_flag to contain 0,
+; then write the byte to transmit to txX_data and write 10h to txX_flag.
+;
+; To input serial, check for an rxX_full flag set.  Then get the
+; byte from the associated txX_data register.  Clear the rxX_full
+; flag afterwards. 
+;
+		jmp	$
+;
+;
+; Interrupt routine - virtual peripherals
+;
+interrupt	inc	master_count	;1	;update timing data
+		mov	w,<<master_mask	;1
+		rl	master_mask	;1
+
+
+		bank	serial_out	;1
+
+		mov	w,<<master_count;1	;8 serial outputs
+		and	w,#$0E		;1
+		or	w,#serial_out	;1
+		mov	fsr,w		;1
+		mov	w,rc		;1
+		or	w,master_mask	;1
+		snb	ind.7		;1
+		xor	w,master_mask	;1
+		mov	rc,w		;1
+		test	ind		;1
+		rl	ind		;1
+		clc			;1
+		setb	fsr.0		;1
+		sz			;1
+		rr	ind		;1
+		clrb	fsr.0		;1
+		rr	ind		;1
+		sz			;1
+		dec	ind		;1 =19
+
+		bank	serial_in	;1
+
+rx0		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx0_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx0_flag,w	;1
+:busy		mov	w,rx0_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx0_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx0_data	;1	;data bit, save
+		add	rx0_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx0_full	;1	;if done, set flag
+		xor	rx0_flag,#$08	;1	;set 1 bit delay
+:not
+rx1		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx1_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx1_flag,w	;1
+:busy		mov	w,rx1_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx1_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx1_data	;1	;data bit, save
+		add	rx1_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx1_full	;1	;if done, set flag
+		xor	rx1_flag,#$08	;1	;set 1 bit delay
+:not
+rx2		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx2_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx2_flag,w	;1
+:busy		mov	w,rx2_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx2_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx2_data	;1	;data bit, save
+		add	rx2_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx2_full	;1	;if done, set flag
+		xor	rx2_flag,#$08	;1	;set 1 bit delay
+:not
+rx3		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx3_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx3_flag,w	;1
+:busy		mov	w,rx3_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx3_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx3_data	;1	;data bit, save
+		add	rx3_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx3_full	;1	;if done, set flag
+		xor	rx3_flag,#$08	;1	;set 1 bit delay
+:not
+rx4		clc			;1	;serial input
+		snb	rb.0		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx4_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx4_flag,w	;1
+:busy		mov	w,rx4_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx4_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx4_data	;1	;data bit, save
+		add	rx4_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx4_full	;1	;if done, set flag
+		xor	rx4_flag,#$08	;1	;set 1 bit delay
+:not
+rx5		clc			;1	;serial input
+		snb	rb.5		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx5_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx5_flag,w	;1
+:busy		mov	w,rx5_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx5_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx5_data	;1	;data bit, save
+		add	rx5_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx5_full	;1	;if done, set flag
+		xor	rx5_flag,#$08	;1	;set 1 bit delay
+:not
+rx6		clc			;1	;serial input
+		snb	rb.6		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx6_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.6 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx6_flag,w	;1
+:busy		mov	w,rx6_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx6_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx6_data	;1	;data bit, save
+		add	rx6_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx6_full	;1	;if done, set flag
+		xor	rx6_flag,#$08	;1	;set 1 bit delay
+:not
+rx7		clc			;1	;serial input
+		snb	rb.7		;1	;get rx pin into c
+		stc			;1
+		mov	w,#$F0		;1	;busy?
+		and	w,rx7_flag	;1
+		jnz	:busy		;2,4	;(jitter okay)
+		jc	:not		;2,3	;start bit?
+		mov	w,#$0C		;1	;got start
+		add	w,master_count	;1	;set 1.5 bit delay
+		and	w,#$0F		;1
+		or	w,#$60		;1
+		mov	rx7_flag,w	;1
+:busy		mov	w,rx7_flag	;1	;busy, bit ready?
+		xor	w,master_count	;1
+		and	w,#$0F		;1
+		jnz	:not		;2,4	;(jitter okay)
+		mov	w,rx7_flag	;1	;if stop bit, don't save
+		or	w,#$0F		;1
+		incsz	wreg		;1
+		rr	rx7_data	;1	;data bit, save
+		add	rx7_flag,#$10	;2	;inc bit counter
+		snc			;1
+		setb	rx7_full	;1	;if done, set flag
+		xor	rx7_flag,#$08	;1	;set 1 bit delay
+		mov	w,#-189		;1	;interrupt every 189*2 clocks
+		retiw			;3	;(2 is from prescaler, rate=8*19.2KHz)

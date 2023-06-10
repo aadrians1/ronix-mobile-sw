@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+<TITLE>Scenix Semiconductor, Inc. Company Profile</TITLE></HEAD>
+<BODY BACKGROUND="../imgsys/ppatz.gif">
+
+<CENTER>  
+<TABLE BORDER="0" WIDTH=630>
+<TR>
+
+<TD>
+<TABLE BORDER="0" ALIGN=LEFT>
+<TR ALIGN=LEFT>
+<TD><A HREF="../sale_inf/europe.htm"><IMG SRC="../gif/ani_euro.gif" BORDER="0"></A></TD>
+</TR>
+<TR ALIGN=LEFT>
+<TD><CENTER><FONT FACE="ARIAL BLACK" COLOR="FF0000" SIZE=-1>(Click Here for Details)</FONT></CENTER></TD>
+</TR>
+</TABLE>
+</TD>
+
+<TD>
+<TABLE BORDER="0" CELLPADDING="5" ALIGN=RIGHT>
+<TR>
+<TD ALIGN=RIGHT><CENTER><A HREF="../index.htm"><IMG BORDER="0" SRC="../gif/scenix.gif" ALIGN="MIDDLE" WIDTH="100" HEIGHT="91"></A><BR>
+<FONT SIZE=-1>(Click Here to Return HOME)</FONT></CENTER></TD>
+</TR>
+<TR>
+<TD ALIGN=RIGHT><CENTER><IMG SRC="../header2/company.gif" ALIGN="MIDDLE"></CENTER></TD>
+</TR>
+</TABLE>
+</TD>
+
+</TR>
+</TABLE>
+</CENTER>
+
+<CENTER>
+<TABLE BORDER="0" WIDTH="640">
+<TR>
+<TD><A HREF="../index.htm"><IMG SRC="../button/back.gif" BORDER="0"></A></TD>
+<TD VALIGN=MIDDLE><IMG SRC="../gif/hr_blue.gif"></TD>
+</TR>
+</TABLE>
+</CENTER>
+
+<BR>
+<BR>
+
+<H3 ALIGN=RIGHT>COMPANY PROFILE</H3>
+<H4 ALIGN = RIGHT>February, 1998</H4>
+
+<P>
+<B><U>Summary</U></B><BR>
+Scenix Semiconductor, Inc. designs and markets high-performance microcontrollers (MCUs) for embedded system applications. The company's flagship product is the SX Series microcontroller family, the world's fastest and most flexible 8-bit MCU platform. Designed for high-volume digital electronic systems, including consumer, automotive and industrial products, the SX Series combines unprecedented performance with features enabling extremely affordable system costs.
+
+<P>
+<B><U>Differentiation</U></B><BR>
+Running at up to 50 MHz and able to execute most program instructions in a single clock cycle, the SX Series delivers up to 50 MIPS (million instructions per second) of computing power. This is 10 to 50 times greater performance than typical 8-bit MCUs. Fast processing speed and jitter-free interrupts, combined with on-chip programmable Flash memory (EEPROM), enable users to create "virtual peripherals" running on the SX. Implementation of peripheral functions in software significantly reduces the need for dedicated, cost-adding hardware typically required in embedded designs, and brings designers closer to the goal of single-chip systems.  
+
+<P>
+The performance-enhancing features of the SX Series also support customer efforts to streamline development and speed time-to-market. With in-system programmability, software revisions can take place at any point in the application development or system production cycle. Programming can
+be updated quickly to accommodate changes in product features or customer requirements.  Additionally, large systems houses can standardize on the SX Series MCU, implementing a wide variety of systems using the same platform. This in-system programmability extends to remote locations, with updated or modified software downloaded via modem or even wireless links.  Consequently, product development teams can respond to market requirements for "mass customization" by extending final programming and subsequent system updates closer to the end-customer.
+
+<P>
+<B><U>Advanced Technologies</U></B><BR>
+Most of the two billion 8-bit MCUs manufactured annually are commodity products, designed to be manufactured using low-cost technologies capable of only single-digit MIPS performance. Scenix achieved breakthrough performance by designing a new 8-bit family specifically for fabrication using deep-sub-micron process technologies. It also developed the industry's fastest embedded nonvolatile memory (EEPROM/Flash) to support the performance of the CPU. Scenix' high-level integration capabilities enable it to deliver SX Series MCUs incorporating on-chip CPU, 2K X 12 bits of EEPROM, 136 bytes of SRAM, and commonly used oscillators, timers, power-on and brown-out resets, and multi-input wakeups. The advanced design is small, with high manufacturing yields, to achieve a competitive average cost of $3.50 (in 1,000 unit quantities) for SX Series products.
+
+<P>
+To provide a smooth transition for designers already working in the 8-bit embedded arena, the SX architecture includes 33 instructions designed to be object-code compatible with the PIC16C5X&#174 series of MCUs. The unique performance of the SX Series, and ten additional instructions in the architecture, defines an entirely new MCU that is optimized for performance, C-compiler support, and full UL1998 compliance. Applications extend well beyond the traditional 8-bit market, to include systems now thought to require 16- or 32-bit MCUs, simple digital signal processors or even custom ASIC and FPGA designs.
+
+<P>
+<B><U>Whole Product Delivery</U></B><BR>
+Scenix Semiconductor has partnered with leading providers of design tools and one of the top value-added electronics distributors in North America to deliver a complete family of MCU products, software and programming tools, and customer support.
+  
+<P>
+The SX-Key, from Parallax, Inc., is a complete program development and in-circuit programming system. Byte Craft, Limited provides a code development system with a C Compiler and Macro Assembler to generate small, fast code. For distribution, Scenix has teamed with EBV Electronics, a full-service distributor that provides engineering support services to customers from its sites throughout North America. In addition, it has a network of 14 sales representative organizations bringing significant technical knowledge and customer orientation to the Scenix sales team throughout the U.S. An international structure is also being built, with leading distributors Ciponic Industrial Ltd. in Hong Kong and Sumisho Electronic Devices in Japan as the first members of that organization.  
+
+<P>
+In the first half of 1998, Scenix will work with its development system partners to develop and release virtual peripheral program code for use by system designers. The company expects that key functions implemented in software will include wired and wireless communication interfaces and protocols, standard interfaces to other electronic devices and frequency generation/analysis functions.
+
+<P>
+<B><U>History</U></B><BR>
+Scenix Semiconductor was founded in January 1996 by Steve Leung, who is president and CEO. In November 1997, it received $3.85 million as the initial part of its first round of venture capital funding; that round was completed in early 1998 with the receipt of another $3.85 million. 
+
+<P>
+The company announced the SX Series of microcontrollers in August 1997 and shipped its first production units in December 1997. The MCUs are produced by world-class manufacturing partners, under contract to Scenix Semiconductor.
+
+<BR>
+
+<HR=5 WIDTH=640>
+
+<CENTER>
+<TABLE BORDER="0" WIDTH="640">
+
+<TR>
+<TD>Information Contacts: </TD>
+<TD>Stephan Thaler</TD>
+<TD>Joe Fowler, Wendy Lewis</TD>
+</TR>
+
+<TR>
+<TD> </TD>
+<TD>Vice President, Marketing</TD>
+<TD>Public Relations</TD>
+</TR>
+
+<TR>
+<TD> </TD>
+<TD>Scenix Semiconductor</TD>
+<TD>FS Communications</TD>
+</TR>
+
+<TR>
+<TD> </TD>
+<TD>408-327-8888</TD>
+<TD>650-691-1488</TD>
+</TR>
+
+</TABLE>
+</CENTER>
+
+<P>
+<CENTER>Note: All trademarks used herein are the property of their respective owners.</CENTER>
+
+<BR>
+
+<CENTER>
+<TABLE CELLPADDING="10" BORDER="0">
+
+<TR>
+<TD>Download the <A HREF="ftp://ftp.scenix.com/company.pdf">Company Profile</A> in .pdf format.
+<BR><IMG BORDER="0" VALIGN="MIDDLE" HSPACE="5" SRC="../gif/ftp.gif">ftp://ftp.scenix.com/company.pdf</A></TD>
+</TR>
+ 
+</TABLE>
+</CENTER>
+
+<BR>
+
+<CENTER>
+<P><A HREF="../feedback/feedback.htm"><IMG SRC="../imgsys/fedbkbtn.gif" BORDER="0" WIDTH="60" HEIGHT="60" ALIGN="MIDDLE"></A><A HREF="../feedback/feedback.htm">&nbsp;Request for additional information or comments</A>.
+</P>
+</CENTER>
+
+<BR>
+
+<HR SIZE="5" WIDTH="640">
+
+<CENTER><FONT SIZE="+1">Scenix Semiconductor, Inc.<BR> 
+3160 De La Cruz Blvd., Suite 200<BR> 
+Santa Clara, California 95054<BR> 
+Tel: (408)327-8888, Fax: (408)327-8880<BR>
+Technical Support Hotline: (800)556-0225<BR>
+Email: <A HREF="mailto:sales@scenix.com">sales@scenix.com</A></FONT> 
+<P><FONT SIZE="-1"> &copy; Copyright 1997, All Rights Reserved<BR>
+Last Update: 06/02/98 </FONT></CENTER>
+
+</BODY></HTML>

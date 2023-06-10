@@ -1,0 +1,886 @@
+;FILE
+;	iir_filter.src
+;DESCRIPTION
+;	IIR filtering on a sampled squarewave.
+;	We are using a second order filter defined by the following:
+;	  y(n) = b0*x(n)+b1*x(n-1)+b2*x(n-2)+a1*y(n-1)+a2*y(n-2)
+;	rb.0 is an input being sampled during a RTCC IRQ.
+;	  If rb.0=1 -> x(n)=0xff, else x(n)=0.
+;	Sampling freq is set by freq_2x_instr_count.
+;	Coefficients are determined using various filter design techniques.
+;	As an example, we have calculated coeficients based on the following:
+;	  We are trying to demod an FSK signal.
+;	  Fs = 20KHz
+;	  F1 = 2100Hz
+;	  F2 = 2300Hz
+;	  F3 = 1100Hz
+;	  F4 = 1300Hz
+;	  2nd order Butterworth filter
+;	rb.1 is the output of this program.
+;	  If y(n)>0x7f -> rb.1=1, else rb.1=0.
+;	With the proper coefficients, only the two FSK frequencies will
+;	  produce an output.
+;	rb.2 toggles via main code just for a foreground process.
+;PERFORMANCE
+;	It takes 40MIPS with 16-bit filter I/O.
+; DATE		BY		MODIFICATIONS
+; ----		--		-------------
+; 1/1/98	RC		Started
+;
+	device	pins28,pages4,banks8,oschs,bor40,turbo,stackx,optionx
+
+	id 'iirflter'
+
+;#define
+	freq_2x_instr_count	equ	0	;other test freq
+;		freq_2x_instr_count	equ	-xxx	;sample freq~20KHz
+
+;Variable declarations
+;Reserve SRAM space for coefficients
+;Reserve SRAM space for x(n), x(n-1), x(n-2), y(n), y(n-1), y(n-2)
+;Each coefficient/sample is 16-bits = 2 bytes
+A1_L	equ	1
+A1_H	equ	1
+A2_L	equ	1
+A2_H	equ	1
+B0_L	equ	1
+B0_H	equ	1
+B1_L	equ	1
+B1_H	equ	1
+B2_L	equ	1
+B2_H	equ	1
+;bits            x_n;            /* input sample x(n) */
+;unsigned long   y_n;            /* output sample y(n) */
+;unsigned long   x_n_1;          /* x(n-1) */
+;unsigned long   x_n_2;          /* x(n-2) */
+;unsigned long   y_n_1;          /* y(n-1) */
+;unsigned long   y_n_2;          /* y(n-2) */
+y_n	ds	2
+y_n_1	ds	2
+y_n_2	ds	2
+x_n	ds	1
+x_n_1	ds	2
+x_n_2	ds	2
+
+rmndr_l	ds	1
+rmndr_h	ds	1
+
+		reset	start			;goto 'start' on reset
+
+		org	0		;3	;interrupt routine (3 cycles in)
+		mov	w,#freq_2x_instr_count	;1	;load interrupt freq
+;Look at rb0 and set x(n)
+		sb	rb.0		;what is on rb.0
+		jmp	:clr_rb0		;leave x(n)=0 if rb.0=0
+		or	x_n, #%11111111		;x(n)=0xffff if rb.0=1
+		jmp	filter
+:clr_rb0	clr	x_n		;zero out x(n)
+				
+;Insert filtering code here.
+;For accuracy, we will use 0xffff for a sample of 1
+;x(n)=0xffff if rb.0=1, else x(n)=0
+;rb.1=1 if y(n)>0xff, else rb.1=0
+;Filtering code starts
+
+;/******************************************************************************
+;* Filter function - filter takes current input sample, x(n), and outputs next 
+;* output sample, y(n).
+;*
+;* usage: 
+;*       - write sample to be filtered to x_n
+;*       - call filter
+;*       - output is in MSB of y_n (y_n=MSB, y_n+1=LSB)
+;*
+;******************************************************************************/
+filter
+
+	        clr     y_n             ; clear y(n) before starting
+	        clr     y_n+1           ;
+
+	        clr     ACCbLO          ; move x(n) to ACCbHI
+	        mov     W,x_n           ; (scale 8 bit - 16 bit input)
+	        mov     ACCbHI,W          ;
+		                                                
+	        mov     W,B0_H            ; get coefficient b0
+	        mov     ACCaHI,W          ; y(n)=b0*x(n)
+	        mov     W,B0_L            ;
+	        mov     ACCaLO,W          ;
+		page	D_mpyF		;math routines in different page
+debug: are we in the wrong page after the call returns?
+		call	D_mpyF		;
+	        mov     W,ACCcHI 	; save remainder from multiply
+	        mov     rmndr_h,W         ;  
+	        mov     W,ACCcLO		 ;
+	        mov     rmndr_l,W         ;
+	        call    dec_adjust      ;
+	        mov     W,ACCbHI        ;
+	        mov     y_n+1,W           ;
+	        mov     W,ACCbLO        ;
+	        mov     y_n,W             ;
+
+	        mov     W,B1_H            ; get coefficient b1
+	        mov     ACCaHI,W          ; y(n)=y(n)+b1*x(n-1)
+	        mov     W,B1_L            ;
+	        mov     ACCaLO,W          ;
+	        mov     W,x_n_1+1       ;
+	        mov     ACCbHI,W          ;
+	        mov     W,x_n_1         ;
+	        mov     ACCbLO,W          ;
+	call	D_mpyF		;
+		call    add_rmndr       ; add in remainder from previous multiply
+	        mov     W,ACCcHI        ; and save new remainder
+	        mov     rmndr_h,W         ;
+	        mov     W,ACCcLO	;
+	        mov     rmndr_l,W         ;
+	        call    dec_adjust      ;
+	        mov     W,y_n+1         ;
+	        mov     ACCaHI,W          ;
+	        mov     W,y_n           ;
+	        mov     ACCaLO,W          ;
+	        call    D_add           ;
+	        mov     W,ACCbHI        ;
+	        mov     y_n+1,W           ;
+	        mov     W,ACCbLO        ;
+	        mov     y_n,W             ;
+		        
+	        mov     W,B2_H            ; get coefficient b2
+	        mov     ACCaHI,W          ; y(n)=y(n)+b2*x(n-2)
+	        mov     W,B2_L            ;
+	        mov     ACCaLO,W          ;  
+	        mov     W,x_n_2+1       ;
+	        mov     ACCbHI,W          ;
+	        mov     W,x_n_2         ;
+	        mov     ACCbLO,W          ;
+	        call    D_mpyF          ;
+	        call    add_rmndr       ; add in remainder from previous multiply
+	 	mov     W,ACCcHI        ; and save new remainder
+	        mov     rmndr_h,W         ;
+	        mov     W,ACCcLO        ;
+	        mov     rmndr_l,W         ;
+	        call    dec_adjust      ;
+	        mov     W,y_n+1         ;
+	        mov     ACCaHI,W          ;
+	        mov     W,y_n           ;
+	        mov     ACCaLO,W          ;
+	        call    D_add           ;
+	        mov     W,ACCbHI        ;
+	        mov     y_n+1,W           ;
+	        mov     W,ACCbLO        ;
+	        mov     y_n,W             ;
+
+	        mov     W,A1_H            ; get coefficient a1
+	        mov     ACCaHI,W          ; y(n)=y(n)+a1*y(n-1)
+	        mov     W,A1_L            ;
+	        mov     ACCaLO,W          ;
+	        mov     W,y_n_1+1       ;
+	        mov     ACCbHI,W          ;
+	        mov     W,y_n_1         ;
+	        mov     ACCbLO,W          ;
+	        call    D_mpyF          ;
+	        call    add_rmndr       ; add in remainder from previous multiply
+	        mov     W,ACCcHI        ; and save new remainder
+	        mov     rmndr_h,W         ;
+	        mov     W,ACCcLO        ;
+	        mov     rmndr_l,W         ;
+	        call    dec_adjust      ;
+	        mov     W,y_n+1         ;
+	        mov     ACCaHI,W          ;
+	        mov     W,y_n           ;
+	        mov     ACCaLO,W          ;
+	        call    D_sub           ;
+	        mov     W,ACCbHI        ;    
+	        mov     y_n+1,W           ;
+	        mov     W,ACCbLO        ;
+	        mov     y_n,W             ;
+
+	        mov     W,A2_H            ; get coefficient a2
+	        mov     ACCaHI,W          ; y(n)=y(n)+a2*y(n-2)
+	        mov     W,A2_L            ;
+	        mov     ACCaLO,W          ;
+	        mov     W,y_n_2+1       ;
+	        mov     ACCbHI,W          ;
+	        mov     W,y_n_2         ;
+	        mov     ACCbLO,W          ;
+	        call    D_mpyF          ;
+	        call    add_rmndr       ;
+	        call    dec_adjust      ;
+	        mov     W,y_n+1         ;
+	        mov     ACCaHI,W          ;
+	        mov     W,y_n           ;
+	        mov     ACCaLO,W          ;
+	        call    D_sub           ;
+	        mov     W,ACCbHI        ;
+	        mov     y_n+1,W           ;
+	        mov     W,ACCbLO        ;  
+	        mov     y_n,W             ;
+
+	        mov     W,x_n_1         ; x(n-2)=x(n-1)
+	        mov     x_n_2,W           ;
+	        mov     W,x_n_1+1       ;
+	        mov     x_n_2+1,W         ;
+	        mov     W,x_n           ; x(n-1)=x(n)
+	        mov     x_n_1+1,W         ;
+	        clr     x_n_1           ;
+
+	        mov     W,y_n_1         ; y(n-2)=y(n-1)
+	        mov     y_n_2,W           ;
+	        mov     W,y_n_1+1       ;
+	        mov     y_n_2+1,W         ;
+	        mov     W,y_n           ; y(n-1)=y(n)
+	        mov     y_n_1,W           ;
+	        mov     W,y_n+1         ;
+	        mov     y_n_1+1,W         ;
+
+	        call    scale_y_n       ;
+
+	        mov     W,y_n+1         ; shift lsb of y_n to msb
+	        mov     y_n,W             ;
+		jmp	filter_output	; done
+
+;
+; Add Remainder subroutine - adds remainder from multiplies to ACCc
+;
+
+add_rmndr      
+	        sb       sign.7          ; check if number is negative
+	        jmp      add_r_start     ; go to add_r_start if not
+	        not      ACCcLO          ; if so, negate number in ACC
+	        inc      ACCcLO          ;
+	        snb      STATUS.Z        ;
+	        dec      ACCcHI          ;
+	        not      ACCcHI          ;
+	        snb      STATUS.Z        ;
+	        not      ACCbLO          ;
+	        inc      ACCbLO          ;
+	        snb      STATUS.Z        ;
+	        dec      ACCbHI          ;
+	        not      ACCbHI          ;
+
+add_r_start
+	        mov      W,rmndr_l       ;  get low byte of remainder
+	        add      ACCcLO,W	;  and add to ACCcLO
+	        snb      STATUS.C        ;  check for overflow
+	        inc      ACCcHI          ;  if overflow, increment ACCcHI
+	        mov      W,rmndr_h       ;  get high byte of remainder
+	        add      ACCcHI,W	;  and add to ACCcHI
+	        snb      STATUS.C        ;  check for overflow
+	        inc      ACCbLO          ;  if overflow, increment ACCbLO
+
+	        sb       sign.7          ; check if result negative
+	        jmp      add_r_done      ; if not, go to add_r_done
+	        not      ACCcLO          ; if so, negate result
+	        inc      ACCcLO          ;
+	        snb      STATUS.Z        ;
+	        dec      ACCcHI          ;
+	        not      ACCcHI          ;
+	        snb      STATUS.Z        ;
+	        not      ACCbLO          ;
+	        inc      ACCbLO          ;
+	        snb      STATUS.Z        ;
+	        dec      ACCbHI          ;
+		not      ACCbHI          ;
+
+add_r_done                     ; 
+	        retw     0               ; done
+
+;
+; Decimal Adjust Subroutine - used after each Q15 multiply to convert Q30 result
+; to Q15 number
+
+dec_adjust      
+	        clrb     sign.7          ; clear sign
+	        sb       ACCbHI.7        ; test if number is negative
+	        jmp      adjust          ; go to adjust if not
+	        setb     sign.7          ; set sign if negative
+
+	        not      ACCcLO          ; and negate number
+	        inc      ACCcLO
+	        snb      STATUS.Z
+	        dec      ACCcHI
+	        not      ACCcHI
+	        snb      STATUS.Z
+	        not      ACCbLO          
+	        inc      ACCbLO
+	        snb      STATUS.Z
+	        dec      ACCbHI
+	        not      ACCbHI
+
+adjust
+	        rl       ACCcHI          ; rotate ACC left 1 bit
+	        rl       ACCbLO          ;
+	        rl       ACCbHI          ;
+
+	        sb       sign.7          ; check if result should be negative
+	        jmp      adj_done        ; if not, done
+	        not      ACCbLO          ; if result negative, negate ACC
+	        inc      ACCbLO
+	        snb      STATUS.Z
+	        dec      ACCbHI
+	        not      ACCbHI
+
+adj_done
+	        retw     0               ; done
+
+;
+; Output Scaling Routine - used to scale output samples by factors of
+; 2, 4, or 8 at end of filter routine
+;
+scale_y_n      
+	        clrb     sign.7            ; clear sign,7
+	        sb       y_n+1.7           ; test if y(n) negative
+	        jmp      start_scale       ; go to start_scale if not
+	        setb     sign.7            ; set sign,7 if negative
+	        not      y_n               ; and compliment y(n)
+	        inc      y_n               ;
+	        snb      STATUS.Z          ;
+	        dec      y_n+1             ;
+	        not      y_n+1             ;
+
+start_scale
+	        clrb     STATUS.C          ; clear carry
+	        rl       y_n+1             ; and rotate y(n) left
+	        rl       y_n               ;
+	        clrb     STATUS.C          ;
+	        rl       y_n+1             ;
+	        rl       y_n               ;
+	        clrb     STATUS.C          ;
+	        rl       y_n+1             ;
+	        rl       y_n               ;
+
+;        sb       sign,7            ; test if result is negative
+		sb	sign.7		; test if result is negative
+	        jmp      scale_y_done      ; go to scale_y_done if not
+	        not      y_n               ; negate y(n) if result is negative
+	        inc      y_n               ;
+	        snb      STATUS.Z          ;
+	        dec      y_n+1             ;
+	        not      y_n+1             ;
+
+scale_y_done
+	        retw     0                 ; done
+
+;Filtering code ends
+
+;Send output and return from interrupt
+filter_output	cje	y_n+1,0,:clr_rb1	;test hi byte of y(n)
+		or	rb, #%00000010		;set rb.1=1
+		jmp	:exit_irq
+:clr_rb1	and	rb, #%11111101		;set rb.1=0
+:exit_irq	retiw			;3	;xxx cycles total interrupt time
+
+start		mov	!option,#%00000111	;start, enable rtcc interrupt
+								;using the slowest O/P of prescaler
+;Initialize filter states
+init_filter	clr	y_n		; clear output value
+		clr	y_n+1		;
+		clr	y_n_1		; and all filter "taps"
+		clr	y_n_1+1		;
+		clr	y_n_2		;
+		clr	y_n_2+1		;
+		clr	x_n_1		;
+		clr	x_n_1+1		;
+		clr	x_n_2		;
+		clr	x_n_2+1		;
+;Initialize filter states finished
+
+		mov	!ra,#%00000000		;make ra outputs
+		mov	!rb,#%11111001		;make rb.1 and rb.2 outputs
+		mov	w,#%00000100		;ready to toggle rb.2
+:loop		xor	rb,w		;1	;toggle rb.2
+		jmp	:loop		;3	;4 cycles total loop time
+
+		org	512		;	;new page
+;*******************************************************************
+;* Double Precision Math Routines
+;*******************************************************************
+
+;*******************************************************************
+;                 Double Precision Addition & Subtraction
+;
+;*******************************************************************;
+;   Addition :  ACCb(16 bits) + ACCa(16 bits) -> ACCb(16 bits)
+;      (a) Load the 1st operand in location ACCaLO & ACCaHI ( 16 bits )
+;      (b) Load the 2nd operand in location ACCbLO & ACCbHI ( 16 bits )
+;      (c) CALL D_add
+;      (d) The result is in location ACCbLO & ACCbHI ( 16 bits )
+;
+;   Performance :
+;               Program Memory  :       07
+;               Clock Cycles    :       08
+;*******************************************************************;
+;   Subtraction : ACCb(16 bits) - ACCa(16 bits) -> ACCb(16 bits)
+;      (a) Load the 1st operand in location ACCaLO & ACCaHI ( 16 bits )
+;      (b) Load the 2nd operand in location ACCbLO & ACCbHI ( 16 bits )
+;      (c) CALL D_sub
+;      (d) The result is in location ACCbLO & ACCbHI ( 16 bits )
+;
+;   Performance :
+;               Program Memory  :       14
+;               Clock Cycles    :       17
+;*******************************************************************;
+;
+
+;char ACCaLO;  //equ     10   changed equ statements to C char variables
+	ACCaLO	equ	10	;changed equ statements from C char variables
+;char ACCaHI;  //equ     11
+	ACCaHI	equ	11
+;char ACCbLO;  //equ     12
+	ACCbLO	equ	12
+;char ACCbHI;  //equ     13
+	ACCbHI	equ	13
+;
+
+;#asm            /* start of in-line assembly code */
+
+;        include "mpreg.h"     commented out these
+;        org     0             two lines (MPASM specific)
+
+;*******************************************************************
+;         Double Precision Subtraction ( ACCb - ACCa -> ACCb )
+;
+D_sub   call    neg_A2           ; At first negate ACCa; Then add
+;
+;*******************************************************************
+;       Double Precision  Addition ( ACCb + ACCa -> ACCb )
+;
+D_add   mov     W,ACCaLO
+		add     ACCbLO,W        ;add lsb
+		snb     STATUS.C        ;add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add     ACCbHI,W        ;add msb
+		retw    0
+
+neg_A2  not     ACCaLO          ; negate ACCa ( -ACCa -> ACCa )
+		inc     ACCaLO
+		snb     STATUS.Z
+		dec     ACCaHI
+		not     ACCaHI
+		retw    0
+
+
+;*******************************************************************
+;                       Double Precision Multiplication
+;
+;               ( Optimized for Speed : straight Line Code )
+;
+;*******************************************************************;
+;   Multiplication : ACCb(16 bits) * ACCa(16 bits) -> ACCb,ACCc ( 32 bits )
+;      (a) Load the 1st operand in location ACCaLO & ACCaHI ( 16 bits )
+;      (b) Load the 2nd operand in location ACCbLO & ACCbHI ( 16 bits )
+;      (c) CALL D_mpy
+;      (d) The 32 bit result is in location ( ACCbHI,ACCbLO,ACCcHI,ACCcLO )
+;
+;   Performance :
+;               Program Memory  :       240
+;               Clock Cycles    :       233
+;
+;       Note : The above timing is the worst case timing, when the
+;               register ACCb = FFFF. The speed may be improved if
+;               the register ACCb contains a number ( out of the two
+;               numbers ) with less number of 1s.
+;
+;               The performance specs are for Unsigned arithmetic ( i.e,
+;               with "SIGNED equ  FALSE ").
+
+;*******************************************************************;
+;
+
+;//char ACCaLO;  equ     10   Commented out - already defined in Dbl_add
+;//char ACCaHI;  equ     11
+;//char ACCbLO;  equ     12
+;//char ACCbHI;  equ     13
+;char ACCcLO;  //equ     14   changed equ statements to C char variables 
+;char ACCcHI;  //equ     15
+;char ACCdLO;  //equ     16
+;char ACCdHI;  //equ     17
+;char temp;    //equ     18
+;char sign;    //equ     19
+;changed equ statements from C char variables 
+	ACCcLO	equ	14
+	ACCcHI	equ	15
+	ACCdLO	equ	16
+	ACCdHI	equ	17
+	temp	equ	18
+	sign	equ	19
+
+;
+;        include "mpreg.h"       commented out these 
+;        org     0               two lines (MPASM specific)
+;*******************************************************************
+	SIGNED  equ     1               ; Set This To 'TRUE' if the routines
+;                               ; for Multiplication & Division needs
+;                               ; to be assembled as Signed Integer
+;                               ; Routines. If 'FALSE' the above two
+;                               ; routines ( D_mpy & D_div ) use
+;                               ; unsigned arithmetic.
+;*******************************************************************
+;       multiplication macro
+;
+; .MACRO mulMac                  ; changed macro to conform to MPC macro
+; Need Modifications
+;mulMac	MACRO                  ; changed macro to conform to MPC macro
+;        LOCAL   NO_ADD         ; language - declaration is different
+;                               ; and macro labels are preceded by "/"
+
+;		rr      ACCdHI          ; rotate d right
+;		rr      ACCdLO
+;		sb      STATUS.C        ; need to add?
+;		jmp     NO_ADD          ; no addition necessary
+;		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+;		add     ACCbLO,W        ; add lsb
+;		snb     STATUS.C        ; add in carry
+;		inc     ACCbHI
+;		mov     W,ACCaHI
+;		add    ACCbHI,W          ;add msb
+;NO_ADD  rr      ACCbHI
+;		rr      ACCbLO
+;		rr      ACCcHI
+;		rr      ACCcLO
+;
+;	.ENDM                   ; end of modified macro
+;	END                   ; end of modified macro
+;
+;*******************************************************************;
+;               Double Precision Multiply ( 16x16 -> 32 )
+;         ( ACCb*ACCa -> ACCb,ACCc ) : 32 bit output with high word
+;  in ACCb ( ACCbHI,ACCbLO ) and low word in ACCc ( ACCcHI,ACCcLO ).
+;
+D_mpyF                          ;results in ACCb(16 msb's) and ACCc(16 lsb's)
+;
+;     .IF   SIGNED
+; Need Modifications
+;	IF SIGNED=1	;the IF directive is not working!!!
+	CALL	S_SIGN
+;     .ENDIF
+;	END		;the IF directive is not working!!!
+;
+	call	setup
+;
+; use the mulMac macro 16 times
+;
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD1          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD1  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD2          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD2  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD3          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD3  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD4          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD4  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD5          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD5  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD6          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD6  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD7          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD7  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD8          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD8  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD9          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD9  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD10          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD10  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD11          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD11  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD12          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD12  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD13          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD13  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD14          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD14  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+		rr      ACCdHI          ; rotate d right
+		rr      ACCdLO
+		sb      STATUS.C        ; need to add?
+		jmp     :NO_ADD15          ; no addition necessary
+		mov     W,ACCaLO        ; Addition ( ACCb + ACCa -> ACCb )
+		add     ACCbLO,W        ; add lsb
+		snb     STATUS.C        ; add in carry
+		inc     ACCbHI
+		mov     W,ACCaHI
+		add    ACCbHI,W          ;add msb
+:NO_ADD15  rr      ACCbHI
+		rr      ACCbLO
+		rr      ACCcHI
+		rr      ACCcLO
+
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;		mulMac	MACRO
+;
+;    .IF    SIGNED
+;IF SIGNED = 1	;the IF directive is not working!!!
+		sb      sign.7
+		retw    0
+		not     ACCcLO          ; negate ACCa ( -ACCa -> ACCa )
+		inc     ACCcLO
+		snb     STATUS.Z
+		dec     ACCcHI
+		not     ACCcHI
+		snb     STATUS.Z
+neg_B   not     ACCbLO          ; negate ACCb
+		inc     ACCbLO
+		snb     STATUS.Z
+		dec     ACCbHI
+		not     ACCbHI
+		retw    0
+;    .ELSE
+;	ELSE	;the IF directive is not working!!!
+;	retw    0	;the IF directive is not working!!!
+;    .ENDIF
+;	END	;the IF directive is not working!!!
+;
+;*******************************************************************
+;
+setup   mov     W,16             ; for 16 shifts
+		mov     temp,W
+		mov     W,ACCbHI          ;move ACCb to ACCd
+		mov     ACCdHI,W
+		mov     W,ACCbLO
+		mov     ACCdLO,W
+		clr     ACCbHI
+		clr     ACCbLO
+		retw    0
+;
+;*******************************************************************
+;
+neg_A   	not     ACCaLO          ; negate ACCa ( -ACCa -> ACCa )
+		inc     ACCaLO
+		snb     STATUS.Z
+		dec     ACCaHI
+		not     ACCaHI
+		retw    0
+;
+
+		org	1024		;new page for signed math routines
+;*******************************************************************
+;  Assemble this section only if Signed Arithmetic Needed
+;
+;     .IF    SIGNED	;the IF directive is not working!!!
+;
+S_SIGN  	mov     W,ACCaHI
+		xor     W,ACCbHI
+		mov     sign,W
+		sb      ACCbHI.7        ; if MSB set go & negate ACCb
+		jmp     chek_A
+;
+		not     ACCbLO          ; negate ACCb
+		inc     ACCbLO
+		snb     STATUS.Z
+		dec     ACCbHI
+		not     ACCbHI
+;
+chek_A		sb      ACCaHI.7        ; if MSB set go & negate ACCa
+		retw    0
+		jmp     neg_A
+;
+;     .ENDIF	;the IF directive is not working!!!
+

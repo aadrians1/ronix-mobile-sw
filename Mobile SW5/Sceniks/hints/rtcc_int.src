@@ -1,0 +1,19 @@
+;
+; Simple program using rtcc-rollover interrupt
+; rb.0 toggles via main code and rb.1 toggles via interrupt
+; (see sxkey.txt for complete list of instructions)
+;
+		device	pages4,banks8,turbo,optionx,osc4mhz,bor40
+
+		reset	start			;goto 'start' on reset
+
+		org	0		;3	;interrupt routine (3 cycles in)
+		xor	rb,#%00000010	;2	;toggle rb.1
+		mov	w,#-20		;1	;interrupt every 20 cycles
+		retiw			;3	;9 cycles total interrupt time
+
+start		mov	!option,#%00000000	;start, enable rtcc interrupt
+		mov	!rb,#%11111100		;make rb.0 and rb.1 outputs
+		mov	w,#%00000001		;ready to toggle rb.0
+:loop		xor	rb,w		;1	;toggle rb.0
+		jmp	:loop		;3	;4 cycles total loop time
