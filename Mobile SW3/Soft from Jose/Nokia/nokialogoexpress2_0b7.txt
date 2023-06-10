@@ -1,0 +1,49 @@
+To install
+
+Unzip the archive you downloaded into a temp directory, run setup.exe and
+follow the installation instruction then.
+
+
+
+--------------------------------------------------------------------------------
+
+
+How to use
+
+1 Major functions can be accesed both from toolbar and pull-down menu.  All toolbar buttons have tooltip text.  Bottom-left drive list and treeview list can be used to browsing folders,  all valid logo files will be loaded as preview icon into bottom-right preview pane.  Click the logo preview icon in preview pane will load the selected logo for editing or save/sent to phone. 
+
+2. All upload logo to phone feature need a DAU-9P (F-BUS cable)
+
+3. Attach the cable to your phone and your computer com port.  Before you can upload logo, set the com port you connect on your computer in
+ 
+Setup -> Properties dialog.
+
+If you want to send the logo via SMS , please set the SMSC  number first.  If you don't know your SMSC number,  press "Read from phone" button or see it on your phone in 
+
+Messages->Message setting->Set 1->Message centre number (1-4-1-1 for 61xx & 2-4-1-1 for 51xx). 
+
+3. When uploading the Operator logo, you have to select the system operator you are using. You can simply leave the selection in "Auto detect" and the program will read your operator MCC, MNC code from phone. The operator list can also be customized by chosing Operator List file in properties page.  The default operator list file, operatorlist.txt, provide most system operators in the world.  You can editing this file and delete all record not in your country,  this file is tab-delimited format.
+
+NOTE:
+4. There are 3 methods to upload the logo to the phone. 
+
+a Direct save to phone [Only applies to 61xx phones]
+
+b Save logo SMS on SIM and the use 
+
+options->forward->
+
+to yourself phone number or sent to others' nokia phone to their phone number. 
+
+This feature may let you save different Operator logos for different operators and can change logo without having a computer.  
+
+c Send logo via SMS by setting the SMSC number first and then enter the destination phone number.  
+
+NOTE:
+b and c methods need your SMSC to support DHMI flag when sending logos.
+
+This unique freeware application is written by Jeremy Wu. 
+
+
+
+
