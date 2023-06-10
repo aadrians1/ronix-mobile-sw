@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<XML_DIZ_INFO>
+<MASTER_PAD_VERSION_INFO>
+    <MASTER_PAD_VERSION>1.00</MASTER_PAD_VERSION>
+    <MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to dissemminate information to anyone interested in their software products.  To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
+</MASTER_PAD_VERSION_INFO>
+<Company_Info>
+        <Company_Name>C. Ghisler &amp; Co.</Company_Name>
+        <Address_1>P.O. Box</Address_1>
+        <Address_2 />
+        <City_Town>Bolligen</City_Town>
+        <State_Province />
+        <Zip_Postal_Code>CH-3065</Zip_Postal_Code>
+        <Country>Switzerland</Country>
+        <ASP_Member>Y</ASP_Member>
+        <ASP_Member_Number>03698</ASP_Member_Number>
+        <ESC_Member>N</ESC_Member>
+        <Company_WebSite_URL>http://www.ghisler.com/</Company_WebSite_URL>
+<Contact_Info>
+        <Author_First_Name>Christian</Author_First_Name>
+        <Author_Last_Name>Ghisler</Author_Last_Name>
+        <Author_Email>support@ghisler.com</Author_Email>
+        <Contact_First_Name>Christian</Contact_First_Name>
+        <Contact_Last_Name>Ghisler</Contact_Last_Name>
+        <Contact_Email>support@ghisler.com</Contact_Email>
+    </Contact_Info>
+<Support_Info>
+        <Sales_Email>sales@ghisler.com</Sales_Email>
+        <Support_Email>support@ghisler.com</Support_Email>
+        <General_Email>support@ghisler.com</General_Email>
+        <Sales_Phone />
+        <Support_Phone />
+        <General_Phone />
+        <Fax_Phone />
+    </Support_Info>
+</Company_Info>
+<Program_Info>
+        <Program_Name>Windows Commander</Program_Name>
+        <Program_Version>4.51</Program_Version>
+        <Program_Release_Month>07</Program_Release_Month>
+        <Program_Release_Day>18</Program_Release_Day>
+        <Program_Release_Year>2000</Program_Release_Year>
+        <Program_Cost_Dollars>28</Program_Cost_Dollars>
+        <Program_Cost_Other>CHF 40</Program_Cost_Other>
+        <Program_Type>Shareware</Program_Type>
+        <Program_Release_Status>Minor Update</Program_Release_Status>
+        <Program_Install_Support>Install and Uninstall</Program_Install_Support>
+        <Program_OS_Support>Win95,Win98,WinNT 4.x,Windows2000</Program_OS_Support>
+        <Program_Language>English,Dutch,French,German,Italian,Spanish</Program_Language>
+        <Program_System_Requirements>Pentium class or faster processor</Program_System_Requirements>
+        <Program_Categories>Explorer replacements, File managers, File utilties, Disk utilities</Program_Categories>
+<File_Info>
+        <Filename_Versioned>wc32v451.zip</Filename_Versioned>
+        <Filename_Previous>wc32v450.zip</Filename_Previous>
+        <Filename_Generic>wincmd32.zip</Filename_Generic>
+        <Filename_Long>wincmd32.zip</Filename_Long>
+        <File_Size_Bytes>1245410</File_Size_Bytes>
+        <File_Size_K>1216</File_Size_K>
+        <File_Size_MB>1.22</File_Size_MB>
+    </File_Info>
+<Expire_Info>
+        <Has_Expire_Info>N</Has_Expire_Info>
+        <Expire_Count />
+        <Expire_Based_On>Days</Expire_Based_On>
+        <Expire_Other_Info />
+        <Expire_Month />
+        <Expire_Day />
+        <Expire_Year />
+    </Expire_Info>
+        <Includes_VB_Runtime>N</Includes_VB_Runtime>
+        <Includes_JAVA_VM>N</Includes_JAVA_VM>
+        <Includes_DirectX>N</Includes_DirectX>
+</Program_Info>
+<Program_Descriptions>
+<English>
+        <Keywords>Windows Commander file manager explorer replacement two windows</Keywords>
+        <Char_Desc_45>Windows Commander 4.51 32bit fileman/archiver</Char_Desc_45>
+        <Char_Desc_80>Windows Commander 4.51 32bit Explorer replacement, ZIP manager and FTP client</Char_Desc_80>
+        <Char_Desc_250>Wincmd is a file manager replacement for Windows 9x and Windows NT.
+Features: Drag&amp;Drop from and to explorer/desktop. Packer shell for
+ZIP/ARJ/LHA/RAR/UC2/TAR/GZ/CAB/ACE. Command line, full text
+search also in packed files, button bar, FTP client.</Char_Desc_250>
+        <Char_Desc_450>Wincmd is a file manager replacement for Windows 9x and Windows NT.
+Features: Drag&amp;Drop from and to explorer/desktop. Packer shell for
+ZIP/ARJ/LHA/RAR/UC2/TAR/GZ/CAB/ACE. Command line, full text
+search also in packed files, button bar.  Supports 14 languages.
+FTP client, access to Network Neighborhood, Uuencode/Decode,
+compare by content, synchronize dirs.</Char_Desc_450>
+        <Char_Desc_2000>Windows Commander  is an Explorer  replacement  for  Windows.
+This is the 32 bit version for Windows 95/98 and Windows NT.
+A 16 bit version is also available as wc16v451.zip.
+Windows Commander  handles archives  like  subdirectories. It
+supports ZIP/ARJ/LHA/RAR/UC2/TAR/GZ/CAB/ACE archives, and has
+an internal ZIP-compatible packer. The search function allows
+to search for files inside archives, even for text. A command
+line helps starting  programs  with parameters,  and a  fully
+configurable button bar allows to launch  programs and inter-
+nal  commands.  The built-in  viewer can show files  in text,
+hex, binary, image and multimedia format.  The 32 bit version
+supports Drag&amp;Drop  from and to  explorer/desktop,  delete to
+the recycle bin,  and Explorer  style context  menus/property
+sheets.  FTP servers  on the  Internet  can be accessed  like
+local drives.  A configurable directory  hotlist  (bookmarks)
+and history list make directory  navigation easier.  The sync
+function allows to  synchronize two complete directory trees,
+and the compare function  shows the  difference of two binary
+or text files highlighted side by side. The new parallel port
+connection works between any combination of Windows 95/98/ME,
+Windows NT 4, and Windows 2000.
+
+Homepage: http://www.ghisler.com
+
+Special requirements: None.
+
+Changes: 4.51 is a maintenance release.
+         4.50 adds many enhancements. The most important are
+         a PC to PC link over a parallel port cable, a special
+         rename tool, and colors by file type.</Char_Desc_2000>
+</English>
+<German>
+        <Keywords>Datei: Packer / Backup, Datei: Utilities, Dateimanager, Explorer-Ersatz</Keywords>
+        <Char_Desc_45>Windows Commander 4.51 32bit Dateimanager</Char_Desc_45>
+        <Char_Desc_80>Windows Commander 4.51 32bit Dateimanager/Explorer-Ersatz, FTP-Client</Char_Desc_80>
+        <Char_Desc_250 />
+        <Char_Desc_450 />
+        <Char_Desc_2000 />
+</German>
+</Program_Descriptions>
+<Web_Info>
+<Application_URLs>
+        <Application_Info_URL>http://www.ghisler.com/</Application_Info_URL>
+        <Application_Order_URL>http://www.ghisler.com/order.htm</Application_Order_URL>
+        <Application_Screenshot_URL>http://www.ghisler.com/picture.htm</Application_Screenshot_URL>
+        <Application_Icon_URL>http://www.ghisler.com/wincmd.gif</Application_Icon_URL>
+        <Application_XML_File_URL>http://www.ghisler.com/padinfo/wincmd32.xml</Application_XML_File_URL>
+    </Application_URLs>
+<Download_URLs>
+        <Primary_Download_URL>ftp://ftp.cdrom.com/pub/simtelnet/win95/diskutl/wc32v451.zip</Primary_Download_URL>
+        <Secondary_Download_URL>ftp://ftp.demon.co.uk/pub/simtelnet/win95/diskutl/wc32v451.zip</Secondary_Download_URL>
+        <Additional_Download_URL_1>ftp://mirrors.aol.com/pub/simtelnet/win95/diskutl/wc32v451.zip</Additional_Download_URL_1>
+        <Additional_Download_URL_2>http://oak.oakland.edu/pub/simtelnet/win95/diskutl/wc32v451.zip</Additional_Download_URL_2>
+    </Download_URLs>
+</Web_Info>
+<Permissions>
+        <Distribution_Permissions>The Shareware version may be freely distributed on the Internet, on CD-ROM
+or on disks, provided that
+- the original files inside the distribution zip file are not modified
+- the program isn&apos;t bundled with illegal or offensive material
+- the Shareware isn&apos;t sold or promoted as being the registered or full product
+Differing conditions need to be negotiated. E-mail: support@ghisler.com</Distribution_Permissions>
+        <EULA>Software Licence / Copyright
+
+Software Licence
+
+Please read the following lines carefully before using this software. If you disagree with any of
+the following, you are not allowed to use this program. You MUST then delete it immediately.
+
+Shareware-version
+
+You have the right to test this program for a period of one month. You are allowed to copy this Shareware
+version (and ONLY the Shareware version) and give it to any other person, as long as it is not modified in
+any way. Under modifications is understood the changing, adding or removing of any files of this package
+without the author&apos;s written permission. You are NOT allowed to pack this program together with a
+commercial program or a book. Shareware dealers are allowed to sell the Shareware version for a small
+fee (around CHF/US$ 10.-). You are encouraged to put this program on as many BBS systems as possible.
+The distribution on CD-ROM is also permitted, as long as the original files are not changed in any way. 
+Please contact me if you want to distribute the program with a different installation program, changed files etc.
+
+Use of this software after the trial period of one month is in violation of international Copyright law! It is also
+unfair to the author, who has spent hundreds of hours developing this program.
+
+Registration
+
+This program is neither freeware nor public domain. Use after the 30 day trial period requires registration.
+The registration fee is currently only CHF 40.- incl. S&amp;H ($ 28.- US personal cheque or cash including
+handling fees) for a personal licence. See the help file for details on registration and support.
+
+Registered version (personal licence)
+
+The registered version may be installed on as many computers as desired, as long as it is ONLY running on
+one at any one time (I.e. one installation at home and one at the office used by the same person). The
+usage by multiple people at the same time (on multiple computers) requires additional licences.
+
+Additional licences (multi-user licences)
+
+Additional licences allow an institution, company or school to install the program on multiple computers or on
+a server. It must be guaranteed that the program does not run on more machines at the same time than there
+are licences purchased. All licences are issued to the same (company) name, which appears in the program&apos;s
+title bar. Additional licences cost CHF 20.- for the 2nd to 10th licence, etc. (see help file for details).
+For larger amounts than 1000 please contact the author. Each additional licence also allows a single user to
+use the program at home.
+
+Liability
+
+We try to keep our software as bug-free as possible. But it&apos;s a general rule (Murphy&apos;s), that no software ever
+is error free, and the number of errors increases with the complexity of the program. That&apos;s why we cannot
+guarantee that this software will run in every environment, on any Windows compatible machine, together
+with any other application, without producing errors. Any liability for damage of any sort is hereby denied. In
+any case, the liability is limited to the registration fee.
+
+Please test this program with non-critical data. We cannot guarantee the safety of your data. Especially new
+operating systems like Windows NT or OS/2 can cause trouble. Should you detect errors before registration,
+you accept them if you register. Any description of bugs will be accepted, but we cannot guarantee that we
+will be able to correct them.
+
+All mentioned Trademarks and Copyrights belong to their respective owners.
+
+Legal domicile is Bern, Switzerland.
+
+Christian Ghisler, C. Ghisler &amp; Co., PO Box, CH-3065 Bolligen, Switzerland, 2000</EULA>
+</Permissions>
+<MSN>
+    <MSN_FORM>Y</MSN_FORM>
+    <MSN_IS_32bit>Y</MSN_IS_32bit>
+</MSN>
+<ZDNET>
+    <ZDNET_FORM>Y</ZDNET_FORM>
+    <ZDNET_Product_ID_Code />
+</ZDNET>
+<DeuPAD>
+    <DeuPAD_Extension_Version>1.00</DeuPAD_Extension_Version>
+    <DeuPAD_Extension_Info>For information on the DeuPAD Extensions please go to http://www.o-grahl.de/deupad/</DeuPAD_Extension_Info>
+    <SAVE_Member>N</SAVE_Member>
+    <SAVE_Member_Number />
+    <Company_Unique_ID />
+    <Program_Cost_EUR />
+    <Program_Cost_DEM />
+    <Save_Prog_Num />
+    <Program_Unique_ID />
+    <Program_Categories_German />
+    <Program_System_Requirements_German />
+    <Expire_Other_Info_German />
+    <EULA_German />
+</DeuPAD>
+</XML_DIZ_INFO>

@@ -1,0 +1,7 @@
+This crack works in version 4.32 and 4.35 and maybe in new version, but never reset the key
+
+
+Copy uspu_crack.exe to c:\windows\system and run
+Restart PC
+When USPU ask for activation code press "enter activation code" button
+You don't have to put anything in the code strings

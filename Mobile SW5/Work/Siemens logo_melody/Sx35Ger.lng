@@ -1,0 +1,260 @@
+German
+1,Steuerung der Siemens-Mobiltelefon-Serie 35 und S25
+2,COM-Anschluss:
+3,Telefoninformation:
+4,*) Bereich: -113 dBm bis -51 dBm
+5,Akt&ualisieren
+6, Klingelton 
+7,Lautstärke:
+8,Melodie:
+9,Vibration
+10,stumm
+11,Telefonbuch:
+12,&Auswählen...
+13,Tastensperre
+14,&Neue SMS
+15,&SMS-Liste
+16,&Terminliste
+17,Netz-&Info
+18,Sende &Logo
+19,Lösche L&ogo
+20,Sende &Klingelton
+21,Anschluss freig.
+22,&Beenden
+23,&Funktionen
+24,&Einstellung
+25,&Über...
+26,Alle Telefonbücher alphabetisch
+27,SIM-Telefonbuch alphabetisch
+28,Geräte-Telefonbuch alphabetisch
+29,Fest. SIM-Tel.buch alphabetisch
+30,SIM-Tel.buch nach Speichernr.
+31,Geräte-Tel.buch nach Speichernr.
+32,Fest. SIM-Tel.buch nach Speichernr.
+33,zuletzt abgegangene Anrufe
+34,zuletzt eingegangene Anrufe
+35,verpasste Anrufe
+36,Sortiert nicht editierbar
+37,Sende SMS
+38,Neuer Eintrag
+39,Eintrag &bearbeiten
+40,Eintrag löschen
+41,Eintrag verschieben
+42,Anrufen
+43,Auflegen
+44,Drucke Telefonbuch
+45,Telefonbuch in Datei speichern
+46,Aus Datei zurücksichern
+47,!Telefonbuch löschen!
+48,SMS-Liste im Speicher
+49,Index=Pos. im Speicher, Typ: 0-empfangen/ungelesen, 1-empfangen/gelesen, 2-gespeichert/ungesendet, 3-gespeichert/gesendet
+50,L&esen
+51,&Löschen
+52,&Sende gespeicherte
+53,&Neue SMS
+54,Aktualisieren
+55,S&chließen
+56,An
+57,&Senden
+58,Sp&eichern
+59,Zeichen
+60,restl. Zeichen
+61, Gültigkeit 
+62,Tag(e)
+63,Stunde(n)
+64,Minute(n)
+65,Status-Report anfordern
+66,8-bit-Zeichensatz benutzen
+67,SMS anzeigen
+68,Von / An:
+69,Datum:
+70,Typ:
+71,Neuer Eintrag
+72,Nummer
+73,Name
+74, Wo speichern? 
+75,SIM-Karte
+76,Gerät
+77,SIM fest
+78,&Abbrechen
+79,Terminliste im Speicher
+80,&Neuer Eintrag
+81,&Alle löschen
+82, Termin 
+83,Verfügbare Netze nach
+84,Numm.
+85,Name
+86,Bevorzugte Netze
+87,Netzbetreiber
+88,Status:
+89,0 - unbekannt
+90,1 - Einbuchung erlaubt
+91,2 - verwendeter Betreiber
+92,3 - Einbuchung verboten
+93,Netz-Info
+94,Wähle Nummer:
+95,PIN2 eingeben
+96,Telefonbuch wird gespeichert
+97,Änderung des zu benutzenden COM-Anschlusses
+98,Neueinlesen der Telefoninformationen
+99,Lässt das Telefon klingeln. Beenden durch erneutes Klicken
+100,Öffnet ein Menü zur Auswahl des anzuzeigenden Telefonbuches
+101,Öffnet einen Dialog zum Schreiben einer neuen SMS-Nachricht
+102,Lädt die SMS-Nachrichten aus dem Telefon und zeigt sie mit Editiermöglichkeit in einer Liste an
+103,Lädt und zeigt die Termine mit Editiermöglichkeit in einer Liste an
+104,Lädt und zeigt Informationen über verfügbare, bevorzugte Netze und Netzbetreiber
+105,Nach der Wahl der Bild-Datei wird diese an das Telefon gesendet
+106,Löscht das Logo ohne erneute Sicherheitsabfrage
+107,Nach der Wahl der MIDI-Datei wird diese an das Telefon gesendet
+108,Gibt den COM-Anschluss frei, so dass andere Progr.(z.B. Fax) zur selben Zeit gestartet werden können
+109,NF-Hardware zwischen Freisprecheinrichtung und Telefon ausschalten
+110,Liest die SMS-Liste erneut aus dem Telefon ein
+111,weitere Optionen mit Rechtsklick
+112,Tipps in der Statuszeile anzeigen
+113,zu startendes Programm beim Befehl "Anschluss freig."
+114,aktivieren
+115,beim Programmstart zu ladendes Telefonbuch
+116,&Senden
+117,Breite x Höhe:
+118,Anzahl der Farben:
+119,Speichern der Nachricht
+120,Senden der Nachricht
+121,Größe:
+122,Pakete:
+123,Anschl. öffnen
+124,Hersteller
+125,Modell
+126,Software-Version
+127,Geräte-Identität IMEI
+128,Batteriezustand
+129,Empfangsqualität *)
+130,Zellen-Informationen
+131,Betreiber
+132,IMSI **)
+133,SIM-Karten-Nummer
+134,SMS-Zentrum
+135,Index
+136,Typ
+137,SMS-Zentrum
+138,Von / An
+139,Erhalt im SMS-Zentrum
+140,Text
+141,System-Fehler: Anschluss belegt
+142,Lese SMS-Liste
+143,Bitte warten...
+144,Sx35CZ - Lese Telefoninformationen
+145,Kein Mobiltelefon gefunden.
+146,Das Telefon muss mit dem richtigen seriellen Anschluss verbunden, angeschlossen
+147,und ins Netz eingebucht sein.
+148,Das Programm hat das Telefon an COM-Anschluss %s gesucht.
+149,Die Änderung des COM-Anschlusses kann im Hauptprogramm durchgeführt werden.
+150,Fehler
+151,Lese Telefonbuch, bitte warten...
+152,Speichern des Eintrag fehlgeschlagen
+153,Ändern des Eintrags fehlgeschlagen
+154,Eintrag wirklich löschen?
+155,Bestätigung
+156,Löschen des Eintrags fehlgeschlagen
+157,Verschieben des Eintrags fehlgeschlagen
+158,Löschen des Eintrags am Ursprungs-Speicherort fehlgeschlagen
+159,Diese Funktion wird alle Einträge des angezeigten Telefonbuchs löschen. Sind Sie sicher?
+160,Bereinigen der Liste fehlgeschlagen
+161,Diese Funktion wird alle drei Telefonbücher Schritt für Schritt aus dem
+162,Telefon laden und diese zusammen mit Informationen über deren Speicherposition 
+163,in einer Datei speichern. Beim Zurücksichern aus der Datei wird jeder einzelne
+164,Eintrag an der Ursprungsposition, das heißt an Ursprungsspeicherort
+165,und -nummer gespeichert. Backup durchführen?
+166,Telefonbuch
+167,Telefonbuch-Backup
+168,Lese SIM-Telefonbuch
+169,Lese Geräte-Telefonbuch
+170,Lese festes SIM-Telefonbuch
+171,Beim Zurücksichern aus der Datei wird jeder einzelne Eintrag an der Ursprungsposition, 
+172,das heißt an Ursprungsspeicherort und -nummer gespeichert. Wenn Sie seit dem letzten
+173,Backup Einträge gelöscht und durch andere überschrieben haben, werden diese durch den
+174,Eintrag der Backup-Datei ersetzt. Zum Zurücksichern des festen SIM-Telefonbuchs
+175,ist es nötig, die PIN2 einzugeben. Zurücksichern durchführen?
+176,
+177,Zurücksichern der Telefonbücher
+178,Warte auf PIN2
+179,Backup des SIM-Telefonbuchs:
+180,Backup des festen SIM-Telefonbuchs:
+181,Backup des Geräte-Telefonbuches
+182,Nicht alle Einträge zurückgesichert. Anzahl der nicht gesicherten:
+183,Backup erfolgreich.
+184,Lese Terminliste
+185,Einträge:   eingelesen: %d   aktiv: %d
+186,Anmerkung:
+187,Das Bild muss im BMP-Format oder GIF-Format vorliegen,
+188,mit mindestens 101 x 21 Pixel für C35, 101 x 43 Pixel für S35.
+189,Bild-Dateien
+190,nein
+191,unbekannt
+192,Sende Logo
+193,Sende Paket 
+194, von insgesamt  
+195,Senden der Datei fehlgeschlagen. Stellen sie sicher, dass das Dateiformat korrekt war,
+196,oder versuchen Sie das Telefon aus- und wieder einzuschalten
+197,Melodie muss in MIDI-Datei-Format 0 ohne
+198,Polyphonie vorliegen
+199,MIDI-Dateien
+200,Sende Melodie -
+201,Datei ist zu lang - %d bytes entsprechen %d Paketen
+202,Möchten Sie trotzdem senden?
+203,Lesen der Netzinformationen
+204,Lese verfügbare Netze: 
+205,Lese bevorzugte Netze: 
+206,Lese Netzbetreiberinformationen - mind. 13 s
+207,empfangene, ungelesene
+208,empfangene, gelesene
+209,gespeicherte, nicht verschickte
+210,gespeicherte, verschickte
+211,Neue SMS-Nachricht
+212,Gespeicherte SMS-Nachricht
+213,Nachricht gespeichert auf Nummer: 
+214,Speichern der Nachricht fehlgeschlagen. Speicher voll?
+215,Nachricht erfolgreich verschickt
+216,Senden der Nachricht fehlgeschlagen
+217,Liste ist voll.
+218,Schreiben auf Gerät fehlgeschlagen.
+219,Wiederhol.
+220,Alarm
+221,Datum
+222,Zeit
+223,Kategorie
+224,Beschreibung
+225,Status
+226,von
+227,einmalig
+228,täglich
+229,wöchentlich
+230,monatlich
+231,jährlich
+232,ANRUF
+233,TREFFEN
+234,GEBURTSTAG
+235,MEMO
+236,Die ganze Liste wirklich löschen?
+237,Information  
+238,ist Shareware. Sie dürfen das Programm zum Testen instal-
+239,lieren und es 30 Tage lang benutzen; anschließend müssen Sie das
+240,Programm entweder registrieren oder von der Festplatte entfernen.
+241,Für die Registr. schicken Sie bitte eine Postkarte mit Ihrem Wohnsitz an:
+242,Das ist alles. Andere Bedingungen habe ich nicht. Wenn Sie mir gleichzeitig
+243,Ihre E-Mail-Adresse mitteilen, bin ich in der Lage, Ihnen mögliche Fehler-
+244,korrekturen oder folgende Versionen zukommen zu lassen.
+245,Bemerkung:
+246,Die Funktionalität des Programms wird nach der 30-tägigen Testphase
+247,in keiner Weise eingeschränkt. Die Registrierung wird jedoch erwünscht.
+248,Dank an Daniel Kanthofer (www.s35i-world.net) für die deutschen Texte.
+249, 
+250,Sp&rache
+251,normal
+252,lang (in zwei Teilen)
+253,Freisprechen
+254,Synchronisierung Datum und Zeit mit Computer
+255,&Antworten
+256,Aus Datei LIST35CZ.txt
+257,Auswahl der Gruppe
+258,Gruppe
+259,Click - alphabetisch Sortierung nach der Kolonne

@@ -1,0 +1,96 @@
+***************************************************************************
+EEPROM repair for Nokia DCT3 phones v1.00 by Dejan Kaljevic 2002
+(Web: http://users.net.yu/~dejan)
+(eMail: dejan@net.yu)
+***************************************************************************
+
+
+
+DISTRIBUTION
+
+You can freely make copies of the archive and distribute them as 
+long as no alterations are made to the contents.
+
+
+DISCLAIMER
+
+THIS SOFTWARE AND ALL THE ACCOMPANYING FILES ARE PROVIDED "AS IS" AND 
+WITHOUT ANY WARRANTIES EXPRESSED OR IMPLIED INCLUDING BUT NOT LIMITED TO 
+IMPLIED WARRANTIES OF MERCHANT ABILITY AND FITNESS FOR A PARTICULAR 
+PURPOSE. 
+
+IN NO EVENT SHALL I BE LIABLE FOR ANY DAMAGES WHATSOEVER (INCLUDING WITHOUT 
+LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS INTERRUPTION,
+LOSS OF BUSINESS INFORMATION, OR ANY OTHER PECUNIARY LOSS) ARISING OUT OF
+THE USE OR INABILITY TO USE THIS PRODUCT.
+
+All other trademarks mentioned herein are property of their respective
+companies.
+
+
+;******************************************************************************
+
+
+EEPROM repair for Nokia DCT3 phones is software that allows you repairing
+damaged EEPROM data in Nokia DCT3 phones.
+(32xx,33xx,51xx,61xx,62xx,71xx,82xx, etc.)
+
+
+		WARNING!!!
+	 ************************
+
+USING THIS SOFTWARE YOU CAN DESTROY YOUR PHONE!
+YOU CAN USE THIS SOFTWARE ONLY ON YOUR PHONE!
+DON'T USE THIS SOFTWARE IN COMMERCIAL PURPOSE!
+
+
+
+Functions:
+**********
+
+F1 - Calc. flash ID data.
+
+Note:
+
+You can use this function after changing MCU & PPM by using
+flasher from my site!
+
+
+
+F2 - Changing and updating IMEI data.
+
+Warning!!!
+
+IMEI changing can be ILLEGAL in some countries!!!
+You can use this function ONLY on your own RISK!!!
+
+
+
+F3 - Updating SP data to factory values.
+
+Note:
+
+With this function SP data will be set to factory
+defaults:
+
+	 Lock 1: 0001    	Open
+	 Lock 2: 0000    	Open
+	 Lock 3: 0000    	Open
+	 Lock 4: 0000000001  	Open
+
+Warning!!!
+
+SP unlocking can be ILLEGAL in some countries!!!
+You can use this function ONLY on your own RISK!!!
+
+
+
+
+*********************************************************************
+Program is tested on Win95,98 and on Intel cpu's P1, Celeron.
+If you have any problem with this program then just DO NOT USE IT!!!
+*********************************************************************
+
+
+Dejan Kaljevic
+

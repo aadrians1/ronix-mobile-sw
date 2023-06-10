@@ -1,0 +1,17 @@
+LogoManager Connection Troubleshooter 1.2   10:26:45 19.06.02
+=====================================
+
+This file contains details about the last connection
+failure in LogoManager.  Please include this information
+when sending a query to technical support.
+
+Hardware type: Serial port
+Link type: MBUS   Port: COM1
+Turnaround delay: 25
+LMFBusTransport::SetPortMode()
+LMFBusTransport::SetPortMode(): OK
+CTransport::Register: Error sending GetID()
+LMFBusTransport::OpenMedia():Error registering device
+Total bytes read: 23
+Log: 0d 1f 00 1d d0 00 01 04 02 d5 1f 00 1d d1 00 05 
+     00 01 00 03 00 03 d7 

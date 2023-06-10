@@ -1,0 +1,70 @@
+Windows Commander 4.51 - 32 bit version fuer Windows 95/98 und Windows NT 3.51/4.0/2000
+Diese Version laeuft NICHT in Windows 3.1 -> 16 bit Version auf www.ghisler.com
+
+Installation: 
+Starten Sie einfach install.exe.
+Haben Sie bereits eine aeltere Version von Windows Commander installiert, so
+koennen Sie die neue Version ins gleiche Verzeichnis installieren, ohne die
+Vorversion zu entfernen.
+
+Sollte die Installation fehlschlagen, können Sie Windows Commander auch von
+Hand installieren (siehe unten).
+
+Was ist Windows Commander?
+
+Windows Commander ist ein Dateimanager fuer Windows aehnlich wie der Windows-
+eigene Dateimanager WINFILE.EXE bzw. Explorer. Windows Commander hat jedoch
+2 Dateifenster nebeneinander, das das Kopieren von Dateien viel einfacher macht.
+Wincmd gibt es in 2 Versionen: 16 und 32 bit. Waehrend die 16-bit Version
+problemlos auch im 32-bit Windows laeuft, kann die 32-bit Version nicht unter
+Windows 3.1 verwendet werden.
+
+Windows Commander ist Shareware. Die Shareware-Version darf frei verbreitet
+werden, sofern sie unveraendert bleibt!
+
+Hier einige Eigenschaften (Features) von Windows Commander:
+
+- Lange Dateinamen unter Windows 95/98 und Windows NT (16- und 32-bit Version).
+- FTP-Zugang zum Laden von Dateien über das Internet
+- Direkter Zugriff auf die Netzwerkumgebung (ohne ein Laufwerk verbinden zu müssen)
+- Liste bereits besuchter Verzeichnisse, erlaubt zurückzugehen
+- Verzeichnismenü (konfigurierbare Liste oft benutzer Verzeichnisse) - STRG+D
+- Aufspalten/Zusammenfügen von grossen Dateien
+- Codieren/Decodieren von Binärdateien ins UUE, XXE und MIME-Format (Text)
+- Drag & Drop (Ziehen und Fallenlassen) mit der Maus.
+- 32-bit: Drag&Drop vom und zum Explorer und Desktop
+- Verwendung Windows 95-spezifischer Merkmale wie Schnellansicht (quick view)
+  und Papierkorb
+- Erweitertes Kopieren, Verschieben, Umbenennen und Loeschen ganzer Verzeichnis-
+  baeume auf einmal, mit Sicherheitsabfrage.
+- Gepackte Dateien werden wie Unterverzeichnisse angesprochen. Dateien lassen 
+  sich bequem in und aus gepackten Dateien kopieren, das entsprechende Pack-
+  programm wird automatisch aufgerufen. Unterstuetzt werden pkzip, arj und lha,
+  RAR und UC2.
+- Startmenue (benutzerdefiniertes Menue).
+- Konfigurierbarer Buttonbar.
+- Kommandozeile zum einfachen und schnellen Starten von Programmen.
+- Stark ausgebaute Suchfunktion mit Volltextsuche auch in gepackten Dateien.
+- Eingebauter Dateibetrachter (F3), der Dateien beliebiger Groesse als Hex- oder
+  Text darstellen kann, sowohl im ASCII- (DOS) als auch im ANSI- (Windows)
+  Zeichensatz, zusaetzlich BMP-Dateien, andere Grafikdateien via Irfanview.
+- Internes Unzip von Info-Zip
+- Interne Entpacker fuer ARJ, LZH, TAR, GZ, CAB, RAR und ACE
+- Interner ZIP-Packer
+- PC-Direktverbindung via Parallelport
+- Leistungsfähiges Umbenennwerkzeug
+
+Die Shareware-Version von Windows Commander ist in keiner Weise eingeschraenkt,
+bis auf einen Startbildschirm, der bei jedem Programmstart erscheint und auf
+die Registrierung hinweist.
+
+Entfernen von Windows Commander: Starten Sie wcuninst.exe !
+
+Installation VON HAND: Sollte die Installation aus irgendeinem Grund fehl-
+schlagen, so entpacken Sie die Dateien INSTALL.CAB und INSTALLD.CAB mit
+einem CAB-Entpacker (z.B. CABVIEW von Microsoft) in ein leeres Verzeichnis,
+z.B. c:\wincmd. Verschieben Sie dann alle Dateien mit der Endung .pif in das
+Windows-Verzeichnis! Dies bewirkt, dass die Packprogramme im Fenster ablaufen.
+
+Christian Ghisler     e-mail: support@ghisler.com
+C. Ghisler & Co.      WWW: http://www.ghisler.com

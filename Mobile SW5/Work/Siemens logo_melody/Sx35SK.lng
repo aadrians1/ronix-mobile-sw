@@ -1,0 +1,260 @@
+Slovensky
+1,Ovládanie mobilnıch telefónov Siemens série 35 a S25
+2,Komunikaènı port:
+3,Informácie o telefóne:
+4,*) Rozsah: -113 dBm a –51 dBm
+5,&Obnovi
+6, Vyzváòanie 
+7,Hlasitos:
+8,Melódia:
+9,vibraèné zvonenie
+10,vypnutı zvuk
+11,Telefónny zoznam:
+12,&Zobrazi...
+13,zamknutie tlaèítok
+14,&Nová SMS
+15,&Zoznam SMS
+16,&Upozornenie
+17,&Info siete
+18,Nahra &logo
+19,&Vymaza logo
+20,Nahra &zvuk
+21,Uvolni port
+22,&Koniec
+23,&Funkcie
+24,Na&stavenie
+25,O p&rograme
+26,Zotriedenı celı zoznam
+27,Zotriedenı zo SIM karty
+28,Zotriedenı z telefónu
+29,Zotriedenı zo SIM - fixnı
+30,Netriedenı zo SIM karty
+31,Netriedenı z telefónu
+32,Netriedeny zo SIM - fixnı
+33,Posledné odchodzie hovory
+34,Posledné príchodzie hovory
+35,Stratené volania
+36,Zotriedenı neumoòuje opravy
+37,Posla SMS
+38,Nová poloka
+39,&Opravi
+40,Vymaza
+41,Premiestni
+42,Vola
+43,Zavesi
+44,Tlaè zoznamu
+45,Záloha na disk
+46,Obnovenie z disku
+47,!Vymaza zoznam!
+48,Zoznam textovıch zpráv (SMS) v pamäti
+49,Index = pozícia v pamäti.  Typ: 0 - prijatá nepreèítaná, 1 - prijatá preèítaná, 2 - uloená neodoslaná, 3 - uloená odoslaná
+50,&Zobrazi
+51,&Vymaza
+52,&Posla uloenú
+53,&Nová SMS
+54,Obnovi
+55,&Zavrie
+56,Komu
+57,&Posla
+58,&Uloi
+59,znakov:
+60,ešte mono
+61, Platnos 
+62,dni
+63,hodiny
+64,minúty
+65,iada potvrdenie prijatia
+66,poui 8-bitové kódovanie
+67,Zobrazenie SMS
+68,Odkia¾ / Kam:
+69,Dátum:
+70,Typ:
+71,Nové èíslo
+72,Èíslo
+73,Meno
+74, Kam uloi 
+75,SIM-karta
+76,pamä telefónu
+77,SIM fixná
+78,&Zruši
+79,Zoznam upozornení
+80,&Novı záznam
+81,Vymaza &celı
+82, Upozornenie 
+83,Dostupné siete pod¾a
+84,èísla
+85,názvu
+86,Preferované siete
+87,Operátori
+88,mód:
+89,0 - neznámy
+90,1 - uitoènı operátor
+91,2 - pouívanı operátor
+92,3 - zakázanı operátor
+93,Informácie o sieach
+94,Vytoèi èíslo:
+95,Zadajte PIN2
+96,Ukladanie zoznamu
+97,Zmena pouívaného komunikaèného portu poèítaèa
+98,Znova preèíta z telefónu základné informácie
+99,Zapne vyznáòanie, opätovnım stlaèením vypne
+100,Zobrazí menu pre vıber zoznamu, ktorı sa má z telefónu preèíta
+101,Zobrazí dialóg pre napísanie novej textovej zprávy
+102,Preèíta z mobilu uloené SMS a zobrazí ich zoznam z monosou editácie
+103,Preèíta a zobrazí zoznam upozornení s monosou editácie
+104,Zistí a zobrazí informácie o dostupnıch, preferovanıch sieach a operátoroch
+105,Po vıbere súboru BMP alebo GIF nahrá obrázok do mobilu
+106,Bez vyiadania potvrdenia vymae logo
+107,Po vıbere MIDI súboru nahrá do mobilu melódiu
+108,Uvolní komunikaènı port, môe súèasne spusti predvolenı program (napr. pre fax)
+109,Prepínanie nf hardware medzi handsfree a mobilom
+110,Znova preèíta zoznam SMS z telefónu
+111,Pravım tlaèítkom myši sa zobrazí menu funkcií
+112,zobrazova nápovedu v stavovom riadku
+113,Program spúšanı po príkaze Uvo¾ni port
+114,spúša
+115,Zoznam naèítanı pri spustení programu
+116,&Nahra
+117,Šírka x vıška:
+118,Poèet farieb:
+119,Ukladanie SMS
+120,Odosielanie SMS
+121,Ve¾kos:
+122,Paketov:
+123,Prevzia port
+124,Vırobca
+125,Model
+126,Verzia softwaru
+127,Sériové èíslo IMEI
+128,Kapacita batérie
+129,Intenzita signálu *)
+130,Registrovaná sie
+131,Operátor
+132,IMSI **)
+133,Èíslo SIM karty
+134,Stredisko SMS
+135,Index
+136,Typ
+137,Stredisko SMS
+138,Odkia¾ / Kam
+139,Prijatie v stredisku
+140,Text
+141,Systémová chyba: Port je obsadenı
+142,Èítanie zoznamu SMS
+143,èakajte, prosím …
+144,Sx35CZ – èítanie základnıch informácií
+145,Nenaviazaná komunikácia s telefónom.
+146,Telefón musí by pripojenı na správny sériovı port,
+147,zapnutı a prihlásenı k sieti (pre získanie úvodnıch informácií).
+148,Program predpokladá pripojenie na port %s,
+149,zmena nastavenia portu sa prevedie na základnej obrazovke.
+150,Chyba
+151,Èítanie zoznamu, èakajte…
+152,Poloku sa nepodarilo uloi
+153,Poloku sa nepodarilo zmeni
+154,Skutoène vymaza poloku?
+155,Potvrdenie
+156,Poloku sa nepodarilo vymaza
+157,Poloku sa nepodarilo premiestni
+158,Poloku na pôvodnom umiestnení sa nepodarilo vymaza
+159,Táto funkcia vymae všetky poloky zo zobrazeného zoznamu. Skutoène vymaza zoznam?
+160,Chyba pri mazaní zoznamu
+161,Táto funkcia postupne preèíta z telefónu všetky tri zoznamy
+162,a uloí ich do jedného súboru spolu s informáciou o umiestnení. 
+163,Pri obnovení zo súboru budú jednotlivé poloky umiestnené na
+164,pôvodné miesto, tj. do pôvodnej pamäti a na pôvodnú pozíciu.
+165,Chcete previes zálohu?
+166,Telefónny zoznam
+167,Zálohovanie telefónnych zoznamov
+168,Èítanie zoznamu zo SIM
+169,Èítanie zoznamu z telefónu
+170,Èítanie zoznamu zo SIM - fixnı
+171,Pri obnovení zoznamov zo súboru budú jednotlivé poloky 
+172,umiestnené na pôvodné miesto, tj. do pôvodnej pamäti a na
+173,pôvodnú pozíciu. Ak ste od poslednej zálohy previedli
+174,vymazanie niektorej poloky a jej prepísanie inou, bude
+175,nahradená údajom zo súboru. Pre obnovu zoznamu SIM fixnı
+176,bude treba zada PIN2. Chcete previes obnovenie?
+177,Obnovovanie telefónnych zoznamov
+178,Èakanie na PIN2
+179,Obnovovanie zoznamu SIM: 
+180,Obnovovanie zoznamu SIM fix: 
+181,Obnovovanie zoznamu v telefóne 
+182,Nepodarilo sa obnovi všetky poloky. Poèet neobnovenıch: 
+183,Obnovenie prebehlo úspešne
+184,Èítanie zoznamu upozornení
+185,Poloky:   skontrolované: %d   aktívne: %d
+186,Upozornenie:
+187,Obrázok musí by v súbore typu BMP alebo GIF,
+188,max. rozmer 101 x 21 bodov pre C35, 101 x 43 bodov pre S35.
+189,Obrázkové súbory
+190,nie
+191,neznáma
+192,Nahrávanie loga 
+193,Vysielanie paketu 
+194, z celkom  
+195,Súbor sa nepodarilo nahra. Zkontrolujte správnos
+196,vstupnıch dát, prípadne vypnite a znova zapnite telefón.
+197,Melódia musí by v MIDI súbore formátu 0,
+198,bez polyfónie
+199,MIDI súbory
+200,Nahrávanie melódie - 
+201,Súbor je ve¾kı - %d bajtov, tj. %d paketov.
+202,Chcete sa aj tak pokúsi o nahratie?
+203,Získavanie informácií o GSM sieach
+204,Èítanie dostupnıch sietí: 
+205,Èítanie preferovanıch sietí: 
+206,Získavanie informácií o operátoroch – min. 13 s
+207,prijatá nepreèítaná
+208,prijatá preèítaná
+209,uloená neodoslaná
+210,uloená odoslaná
+211,Nová textová zpráva
+212,Uloená textová zpráva
+213,Správa bola uloená na pozíciu: 
+214,Správu sa nepodarilo uloi, mono je plná pamä
+215,Správa bola úspešne odoslaná.
+216,Správu sa nepodarilo odosla
+217,Zoznam je plnı.
+218,Zápis do telefónu zlyhal.
+219,Opakovanie
+220,Alarm
+221,Dátum
+222,Èas
+223,Kategória
+224,Popis
+225,mód*
+226,z
+227,raz
+228,denne
+229,tıdenne
+230,mesaène
+231,roène
+232,VOLANIE
+233,SCHÔDZKA
+234,NARODENINY
+235,MEMO
+236,Skutoène vymaza celı zoznam?
+237,Informácia  
+238,je Shareware - môete ho volne pouíva po dobu 30 dní.
+239,Po uplynutí tejto doby sa musíte zaregistrova, alebo program zmaza.
+240, 
+241,Registrácia spoèíva v poslaní poh¾adnice vášho bydliska na moju adresu: 
+242,To je všetko, nemám ïalšie podmienky. Ak uvediete svoj e-mail, budem
+243,vám môc posla prípadné opravy chıb alebo nové verzie (ak budú).
+244, 
+245,Poznámka:
+246,Program v iadnom prípade nezmení po 30 dòoch svoje vlastnosti.
+247,Registrácia je iba slušnos.
+248,Ïakujem Milošovi Vojtíškovi za pomoc s anglickım textom.
+248,Ïakujem Danielovi Kanthoferovi (www.s35i-world.net) za nemeckı preklad.
+250,&Jazyk/Language
+251,normálny
+252,dlhı - na dvakrát
+253,handsfree
+254,Synchronizuje dátum a èas telefónu s èasom poèítaèa
+255,O&dpoveda
+256,Zo súboru LIST35CZ.txt
+257,Vıber skupiny
+258,Skupina
+259,Klik - abecedné triedenie pod¾a st¾pca

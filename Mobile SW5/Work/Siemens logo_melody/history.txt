@@ -1,0 +1,50 @@
+
+  Sx35CZ - Control of mobile phones Siemens C35i, M35, S35 (S25)
+  --------------------------------------------------------------
+
+  History of several versions:
+  ----------------------------
+
+  1.0.1   27.2.2001
+  -----------------
+  First publication version with properties described in readme.txt,
+  Czech and English operating
+
+  1.0.2    6.3.2001
+  -----------------
+  - sending long SMS - max. 320 chars - in two parts
+  - sending logo from GIF files too
+  - undone restriction of size picture-file and number of colours:
+    sending left top cut converted to B/W image
+  - possibility playing the MIDI file before sending to phone
+  - added a German and Slovak version
+
+  1.0.3   12.3.2001
+  -----------------
+  Correction of wrong presentation size of logos for phones
+  C35 and M35, assumed from Siemens documentation. At sending   
+  of logos is possible option of three dimensions:
+    - 97 x 36  for S25
+    - 101 x 21 for C35, M35
+    - 101 x 43 for S35
+ 
+  1.0.4    5.4.2001
+  -----------------
+  - reversible conversion between GSM coding and Windows coding
+    (@,$,_ etc.)
+  - automatic removing of diacritic marks at writing of texts
+    for mobil
+  - synchronization of phone date/time with a computer
+  - in window SMS list added button Respond
+  - possibility load a Phonebook from text file (necessary
+    condition is fixed name LIST35CZ.txt, format NAME;NUMBER and
+    placing in same directory as EXE). Since of version 1.0.4 
+    is file created after command "Store phonebook to file". 
+
+  1.0.5    8.5.2001
+  -----------------
+  - alphabetic sorting by column in tables (click on column title)
+  - multicast SMS (one SMS to a group)
+  - sending a colour logos from phone S25 too
+  - quicker sending of logos and ringtones
+  - extension of communication-timeout at reading a phonebooks
