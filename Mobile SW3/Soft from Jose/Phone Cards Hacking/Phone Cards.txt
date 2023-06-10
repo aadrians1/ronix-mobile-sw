@@ -1,0 +1,194 @@
+ PhoneCards  
+1997-2001 
+
+~ Everything you need to know  ~
+
+Read / Write
+Emulate a real ISO7816 memory card ...
+
+ 
+
+Disclaimer
+ 
+The information presented on this page is intended for personal use and improvement of knowledge only. I advice you not to try to get free phone calls on a real payphone. If you use what you learned on this page and got caught doing something illegal do not make me responsible. You have been warned.
+ 
+
+ 
+
+  NEWS ! 
+
+30 July 2001   Added My 2001 prototype PCB, scheme, beta HEX file and some photos.
+ 
+15 July 2001   Added new source codes and a bunch of stuff found on the internet.
+ 
+14 July 2001   Finally past 3 years I've decided to update this page !
+I'm also currently redeveloping a new version of the PIC code. The changes are: units counter will automatically reset to 0 if empty; some bugs corrected, no longer EEPROM data is lost; fast startup for recent fast machines; now follows the exact protocol so there is no way to tell if it is a real phone card or a PIC talking and more things to come like a random card ID generator with valid CRC every time the card empties.
+ 
+      
+ 
+
+ 
+
+  FORUM  
+
+    Have any doubt ? Have anything useful to say about the project ? - Then this is for you !
+    Write in the forum in Portuguese or English.
+ 
+
+
+ 
+ 
+ 
+
+  
+
+Works in the follow countries
+    French Polynesia, DisneyLand Paris, Djibouti, Senegal (Sonatel), French Cinecarte [TBC], Sweden, Argentina (Telefonica de Argentina), Norway (Telenor), New Caledonia, Cameroon, Andorra, Central African Republic (Socatel), Luxembourg, Ireland, Gambia, Guinean Equatorial Republic (Getesa), Portugal, Malta, Czech Republic / Yougoslavia, Comores, Argentina (Telecom Argentina), Burkina Faso, Mali, Gabon, Finland, Madagascar (Telecom Malagasy S.A.), Togo (OPT Togo), Slovakia, Cuba (Etecsa), Morocco (Special Operator), Israel (Bezeq), Guinea (Sotelgui), Emirates (Etisalat), Poland, Hungary, Cameroon (CamTel), Morocco (Ave Phone), Argentina (Special Cards).
+
+    On this page I have made the thing to work for Portugal. If you wish to use on other country then you have to get the first 12 bytes from a valid card for your country, that's the ID data. You can see the card data with the payphone simulator. Write the new bytes on the source code, recompile and upload to the PIC.
+
+    
+
+  First of all  
+
+
+What you need to know about electronics telecards (v2.04)
+  
+
+ 
+
+  The payphone simulator 
+
+Hardware Software 
+
+Schematics
+  
+Cartao 1.2
+  
+Cartao source code in turbo pascal
+  
+
+ 
+
+  My 2001 emulator 
+
+Hardware PIC16F84 compiled HEX and schematics zip file 
+
+Schematics
+PCB layout
+
+PCB to print
+ 
+ Version 1.11beta PT-10
+(Portuguese ID data with 10 units) 
+
+ 
+
+  My 1997 emulator 
+
+Hardware Code for PIC16F84 
+
+Schematics
+  
+Latest version and historial HEX files for Portuguese Card
+(source might not be available)
+  
+
+Compressed zip file with source and schematics
+  
+
+ 
+
+  Other emulators 
+
+Hardware Code Brain Comments 
+Schematics HEX + Source PIC16F84 Hex file and source code I discover on an argentine site, it's is indeed an improvement of phrack code like mine (same schematic), this one has a reset button and emulates 10 telecards IDs. Very good ! Just need to change the ID values for Portugal.
+ 
+PCB on ZIP file HEX + Source + PCB PIC12C508 Hex file, source code and PCB layout. Small and fast but requires an external battery. Just need to change the ID values for Portugal.
+ 
+Scheme on ZIP file Source + Scheme PIC12C509 Source code and scheme. Small but requires an external battery. Very bad commented source code. Just need to change the ID values for Portugal.
+ 
+n/a HEX + Source PIC16F84 Hex file and source code from Italy.
+ 
+
+ 
+
+  Telecards 
+
+ISO 7816 Portuguese memory dumps
+If you have memory dumps of real cards,  mail me them to add to the file 
+
+Definitions
+  
+With detailed description
+  
+Others
+  
+
+ 
+
+  Resources 
+
+Filename Comments Personal opinion
+ 
+../OTHERS Misc files I don't have time to write a comment.   
+Fotolito by Baby PCB layout of some wafer cards with PIC16x84 PDIP and SMD. Scheme doesn't work with my PIC program, just to give you ideas. 
+itt Spanish text about Spanish telecards with time diagrams. Also applies to Portugal and others, can be useful. 
+cTarjetas128bits Spanish text about the new 128 bits cards used there and 256 bits telecards with time diagrams. Could this be the next generation in Portugal ? 
+Fotolitos PCB layout of some argentine wafer cards with PIC16x84 with anti fraud bypass for some payphone protections. Can be useful, see the list resistor values vs. Mhz PIC speed.  
+LOG DUBBER V1.0 LOG grabber, interface your parallel port between a real telecard and a payphone and grab the communication. Very useful for debugging purposes. 
+Visualizador LGD 1.0 LOG viewer, load a LGD file and see the graphical time diagram like in a memory oscilloscope. Very useful for debugging purposes. 
+LogsLGD Logs files of some argentine payphones.
+128bits read, 128bits write, vcc power up, reset sequence. Interesting but doesn't apply to Portugal. 
+Loguer + Visualizador Visual Basic source code of a Logger and viewer, requires PORT32.OCX. Improve it and translate to English then send me your version. 
+LOG DUBBER V1.0 LOG grabber, interface your parallel port between a real telecard and a payphone and grab the communication. Very useful to debugging purposes. 
+
+ 
+
+  Programming PIC 16F84 
+
+Programmer Getting Started PDF Documents 
+Hardware Software 
+
+Ludipipo serial programmer
+  
+NT PIC Programmer
+  
+Getting Started with the PIC 16c84
+  
+Data Sheet
+  
+EEPROM Programming
+  
+
+ 
+
+  2001 pre-prototype pictures 
+
+Real card PCB 
+  
+PIC top side sanded to 0,8mm
+Care was taken on the upper side not to reach and break the tiny connections to the legs from the chip brain in the center of the black case. PIC bottom side
+It's on top of this piece of metal that lives the chip brain. Don't sand more when you get this aspect. 
+  
+Ower PIC after and before being run over by a truck 
+ 
+
+ 
+
+  1997 prototype pictures 
+
+Front view Rear view 
+  
+  
+  
+
+ 
+
+
+--------------------------------------------------------------------------------
+Copyright © ?hav??ro
+29/8/2001 22:07
+ This page was last edited at 30 Julho 2001 
+
+ 

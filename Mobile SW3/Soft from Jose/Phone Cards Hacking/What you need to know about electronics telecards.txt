@@ -1,0 +1,1560 @@
+===============================================================================
+             What you need to know about electronics telecards
+===============================================================================
+              Version 2.04 (Last revised: 06 March 1999)
+
+                (C) Laurent  - (1998, 1999)
+                (C) Stephane - (1993, 1994, 1995, 1996, 1997, 1998)
+
+
+-------------------------------------------------------------------------------
+>>> Any suggestions or comments about phonecards and smartcards are welcome <<<
+>> NO QUESTIONS REGARDING CLONING, RECHARGING... PHONECARDS WILL BE ANSWERED <<
+
+                  I NEED YOUR HELP TO COMPLETE THIS FILE
+
+  You can contact me at mailto:telecard@wanadoo.fr
+
+  This file is archived at http://perso.wanadoo.fr/telecard/
+-------------------------------------------------------------------------------
+
+
+
+
+Document History:
+~~~~~~~~~~~~~~~~
+   v2.04 : Modified (or added) Danmark, Mexico (Telnor), Veezuela (CANTV), 
+           Russia (MRTC replaced by MCTN), Swiss (Swisscom), Romania (512 bits),
+           Bulgaria, Republic of Moldova (MoldTelecom), Venezuela (CANTV),
+           Croatia (128 bits), Malaysia (Citifon), Slovakia, Netherland,
+           Belgium (Belgacom), Malaysia (Malaysia Telecom), Netherland (PTT
+           Telecom), Greece (OTE), Germany (Telekom).
+           Corrected Slovenske Telekomunikanie belongs to Slovakia.
+           Added: definition of Authentification and Challenge in glossary.
+   v2.03 : Added Cuba (ETECSA - 512 bits), Madagascar (Telecom Malagasy S.A.),
+           Poland, Slovenia (Slovenske Telekomunikacie), Argentina (Telefonia
+           de Argentina), Guinea (Sotelgui), Guinean Equatorial Republic
+           (Getesa), Swaziland (Phutfumani), Israel (Bezeq), Belgium (Belgacom),
+           Estonia (Eesti Telefon - T2G).
+           Modified Bulgaria,  Czech Republic / Yougoslavia (SPT Telecom, 
+           Telecom Praha), Russia (Eurochip - CNM/MRTC), Croatia (Eurochip 512
+           bits), South Africa (Telkom), Malaysia (Malaysia Telecom).
+           News for french T2G (5 units cards and "Numero Unique" cards),
+           Canada (BELL).
+           Modified Pinouts. Modified reader 1. Modified explanation of the
+           octal counter.
+   v2.02 : Corrected Estonia.
+           Modified South Africa, Russia, England, Estonia.
+           Added Venezuela (CANTV), Swiss (Swisscom), Emirates (Etisalat),
+           Ivory Coast (Publicom S.A.), Morocco (Unknown operator),
+           Danmark (Hrvatska Posta Telekomunikacije),
+           Spain (500 pta), Canada (Gemplus 512 bits - Bell),
+           Lithuania (Lieutuvos Telekomas), Croatia (HPT - 128 and 512 bits),
+           Greece (OTE - 158 and 512 bits)
+   v2.01 : Modified french T1G, french T2G, Germany, Romania, Netherlands.
+           Added DisneyLand Paris, Estonia, Australia (Telstra).
+   v2.00 : ************************************************************
+           ******* BITS AND BYTES RENUMBERED STARTING FROM ZERO *******
+           *** IN ORDER TO COMPLY WITH MANUFACTURER'S DOCUMENTATION ***
+           ************************************************************ 
+           French 25u, Senegal, Central African Republic, Togo, Cuba.
+           News for french T2G.
+           Extended glossary of terms.
+           First version maintained by Laurent.
+   v1.24 : News for Agentina, Bulgaria, South-Africa, Lithuania, french 5u,
+           Botwana, Ukrainia, Lithuania, Comores, Djibouti, Chile.
+           Last version maintained by Stephane (version not released).
+   v1.23 : Completion for french T2G, Hungary, Germany, Greek, Bulgaria,
+           Portugal and UK.
+   V1.22 : New code for Schlumberger (swedish cards), Greek card correction.
+   V1.21 : Slovenian and Canadian cards added.
+   V1.20 : Malta Cards Added.
+   V1.19 : French T2G added.
+   V1.18 : New coutries:  Argentina, Burkina Faso, Cameroon, Croatia,
+           Djibouti, Gambia, Hungary, Mali, Mexico (Telmex), Morocco,
+           French Polynesia, New Caledonia, St Maarten, Slovakia.
+   V1.17 : Greek Serial Number added.
+   V1.16 : German Telefonkarte Serial Number.
+   V1.15 : New readers (Telecards+ISO7816 cards).
+   V1.14 : New 512 bit Greek telecards + modification of Mexican cards.
+   V1.13 : Checksums for french cards + modification for 'G+D' spanish cards.
+   V1.12 : Chip builder code added.
+   V1.11 : Croatian cards added.
+   V1.10 : Romanian telecards added.
+   V1.09 : Spanish card reading.
+   V1.08 : Modification of the octal stage counter for greek cards.
+   V1.07 : Modification of the 5 stage octal counter for 128 bit cards.
+   V1.06 : Schematic of a new reader [DELETED].
+   V1.02 : Introduction of the German cards.
+   V1.00 : First version of the document.
+
+Glossary of terms:
+~~~~~~~~~~~~~~~~~~
+   [TBC]   : to be confirmed
+   [TBD]   : to be defined
+   S.N.    : Serial Number
+
+   b(i)    : bit i
+   b(i..j) : bits from i to j (if i>j then area is read in reverse)
+   B(I)    : byte I
+   B(I..J) : bytes from I to J (if I>J then area is read in reverse)
+   x^y     : x at the power y  (in mathematical expresssions)
+
+   Serial Number: Unique number assigned to a chip, this number  is  programmed
+                  in the chip by the manufacturer, you can not change it. A few
+                  cards don't have a serial number. A copy of the serial number
+                  is sometimes printed on the card itself.
+
+   Checksum     : Checksums are used in order to verify if the header of a card
+                  is not altered. One byte a the header  is  computed  using  a
+                  simple formula (ie: for a bit set  to  '1'  in  bytes 1, 2, 3
+                  substract 4 to the value 227, you must obtain  the  value set
+                  in byte 0 of the card). You  can  use  these  checksums  (and
+                  other bits in the header area) to check if a  card  is  of  a
+                  given type. This document is intended to help you doing so.
+
+   Certificate  : Certificates are used in 2nd generation telecards  to  verify
+                  if a card is not a fake one. Certificates are 16  or  32 bits 
+                  long and  are  calculated  using  a  one  way  function  (each
+                  operator has his own), a secret key (operator dependent)  and
+                  the value of the bits contained in the  header  of  the card.
+                  Because the function and the key are kept  secret  you  can't
+                  compute a certificate by yourself, nor you can't  use  it  to
+                  check if the card is of a  given  type.  In  order  to  avoid
+                  hackers doing crypto-analysis against  certificates  using  a
+                  big number of cards, it can be erased when the card is empty.
+                  Writting to this area may invalidate the card.
+
+   Counter/Unit : This area contains the number of units remaining (or used) on
+      Area        the card. It is designed so you can not increase the value of
+                  the card. How this area works (decoding and writing)  depends
+                  on the card's type. This document will help you in  determing
+                  the remaining credit of a card.
+
+
+   Anti-tearing : Anti-tearing flags (also known as pull-out flags) are used in
+                  order to ensure that the holder of the card  does  not  loose
+                  units (money) if he removes the  card  during  an  operation.
+                  Anti-tearing flags are  written  when  the  counter  area  is
+                  written to, they are erased when the operation is  completed.
+                  If the card is  removed  during  the  operation  anti-tearing
+                  are used to restore the counter area the next  time  you  use
+                  the card.
+
+Authentification: Authentification is used  in 2nd  generation  telecards,  the 
+                  reader sends a random  sequence  called  'challenge'  to  the
+                  card, this challenge is used by the card to compute an answer
+                  wich is sent back to the reader. If  the  answer  is  correct
+                  the the reader can assume that the card is a 'good' one.
+
+-------------------------------------------------------------------------------
+
+                               * Content *
+                               ~~~~~~~~~~~
+
+I ) The 1st generation Telecards:
+
+   1.1 - Introduction:
+   1.2 - SCHEMATICS of the chip:
+   1.3 - PINOUT of the connector:
+   1.4 - Main features:
+   1.5 - TIME DIAGRAMS:
+   1.6 - Memory Map for cards from FRANCE and MONACO:
+   1.7 - Memory Map for cards from other countries:
+   1.8 - Memory Map for cards from SPAIN, CROATIA and MEXICO:
+   1.9 - Memory Map for Mexican cards from Telmex:
+
+
+II ) The 2nd generations Telecards:
+
+   2.1 - Introduction:
+   2.2 - Pinout:
+   2.3 - Main features:
+   2.4 - Time Diagrams:
+   2.5 - Memory Map:
+
+     2.5.1 - Memory Map for 4 or 5 stage octal unit counter:
+     2.5.2 - 2nd Generation French Telecards (TG2) and derivates:
+
+   2.8 - Octal counter description
+   2.7 - Electrical features:
+
+
+III) Schematics of Readers:
+
+   3.1 - Reader 1 (very simple one, only for telecards)
+   3.2 - Reader 2 (for telecards and ISO7816 cards too)
+
+
+-------------------------------------------------------------------------------
+
+I ) The 1st generation Telecards:
+    ============================
+
+   1.1 - Introduction:
+         ~~~~~~~~~~~~
+
+       Since the middle of 80's have appeared a new generation of cards  ( the
+smart-cards  or  chip cards )  that have  replaced most of the magnetics cards
+applications  notably  for  telecom payement and  also for credit cards. These
+cards are far more secure than the magnetics cards, and there are several kind
+of  cards following  the application.  The simplier ones are the Simple Memory
+cards  like the  one used as  Telecard  for the telecom payement in the public
+phone-booths  ( Generaly all the memory content is  readable,  and there  is a
+maker-area that is unwritable ) , then there are  more sofisticated  cards:
+Memory Cards with some area read protected by a key, these cards  can  contain
+some  private informations in  the read-protected area.   At the end there are
+microprocessor-cards (cards working following the ISO-7816 protocol), that are
+the safiest ones  since these cards  have their own internal  Operating System
+that prevent  I/O  if the PIN (Personal Idenfication Number) has not been ent-
+-ered in the cards before ( These cards are used  when confidentiality is
+needed,  like in  credit cards (bank), crypted TV access cards, health cards,
+SIM cards for GSM, etc ... ).
+
+
+       About telecards, even if these cards are the less safe ones, don't think
+that  you  are  going  to  phone freely for that, in fact no.  All the data are
+readable since  there are  no confidential data inside, the cards are well done
+enough to be  very secure for  the payement of telecom communications in public
+booth.
+
+       So, what is a phonecard exactly ? In fact generaly it's a 256 bits EPROM
+( French like cards ),  or a 128 bits EEPROM (German like cards) with a  serial
+output and some other control pins.
+
+       Then why can it not be refilled ?   Well,  indeed to refill the card you
+will  have to erase the cards with UV,  knowing that the cards is coated in  UV
+opaqued resin that prevent  UV from reaching the silicium chip, and even if you
+could  to erase the chip  you will have to program the manufactuer area that is
+write-protected by a lock-out fuse that was fused after the card programming in
+factory.
+
+       Remember that a public booth contains a specialized computer and have  a
+direct connexion to the public telephone network, and so to other computers. In
+France public booths are connected to the telephone network using a  "Unite  de
+raccordement de publiphone (URP)" which holds a "black list"  of  stolen,  fake
+cards... A public booth first reads the card, checks if it seems OK (checksums,
+certificates...), it asks the URP to check if the card is reported stolen or is
+known as fake and then it allows you to dial a number.
+
+       DO NOT FORGET: if you try to use a fake  card, the  public booth may let
+you issue your call and the URP may alert the operator who may call the police.
+Many people in France where jailed this way. SO NO QUESTIONS REGARDING CLONING,
+RECHARGING... PHONECARDS WILL BE ANSWERED AS IT IS ILLEGAL AND MAY BE VERY  BAD
+FOR YOUR KARMA.
+
+       Neithertheless it can be very interesting to study how these cards work,
+to see  which kind of data are inside and  how the data are maped  inside or to
+see  how many units are left  inside for exemple.  Besides  there  are a  great
+number of  applications of  these cards when there  are used (only for personal
+use of course) , since  you can use them as key to open a door, or you can also
+use them as key to secure a program, etc ....
+
+       French Telecards have been created in 1984 and at this time constructors
+decided to build these cards in NMOS technology  but  now,  France Telecom  has
+changed all the readers in the public booths and use CMOS technology  for  70 %
+of the cards currently being issued (07/1997).
+ 
+       Also they plan to use EEPROM to secure the cards and to add many usefull
+informations in, and you will perhaps use phone cards  to  buy  you  bread   or
+anything else. Cards used for advertising may be programmed so the public booth
+automatically call a given number when the card is inserted (a remplacement for
+toll free number where advertiser can choose who  may  call  freely  and  where
+user do not have to bother reminding a number).
+
+       These cards are called Second Generation Telecards (T2G).
+
+
+   1.2 - SCHEMATICS of the chip:
+         ~~~~~~~~~~~~~~~~~~~~~~
+
+        .-----------------.
+      --|>_ Clk           |
+      --| R/W             |
+      --| Reset           |
+      --| Fuse            |
+      --| Vpp             |
+        '-,             ,-'
+        .-'-------------'-.
+        |             Out |-- serial output
+        '-----------------'
+
+
+   1.3 - PINOUT of the connector (synchronous cards):
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        Afnor Position                  ISO position
+   (in the left top corner)         (in the middle left)
+
+,------------+------------,      ,------------+------------,
+|  8         |         4  |      |  1         |         5  |
++------\     |     /------+      +------\     |     /------+
+|  7    +----+----+    3  |      |  2    +----+    +    6  |
++-------|         |-------+      +-------|         |-------+
+|  6    +    +----+    2  |      |  3    +----+----+    7  |
++------/     |     \------+      +------/     |     \------+
+|  5         |         1  |      |  4         |         8  |
+'------------+------------'      '------------+------------'
+
+                           6 contacts
+                          ISO POSITION
+                      (in the middle left)
+
+                  ,------------+------------,
+                  |  1         |         5  |
+                  +------\     |     /------+
+                  |  2    +----+    +    6  |
+                  +-------|         |-------+
+                  |  3    +----,----+    7  |
+                  '------------'------------'
+
+NB: only the position of the chip is ISO standardized and not the pinout.
+
+PINOUT:   1 : Vcc = 5V     5 : Gnd
+~~~~~~    2 : RESET        6 : Vpp = 5V    (*)
+          3 : Clock        7 : I/O
+          4 : RAS          8 : Fus         (**)
+
+  (*)  +21V for T1G (NMOS cards).
+  (**) Not used with the new G+D cards compatible with the 256 bit memory
+       Exemple: spannish G+D cards.
+
+
+   1.4 - Main features:
+         ~~~~~~~~~~~~~
+
+       - Synchronous protocol.
+       - N-MOS technology or CMOS for the new ones.
+       - 256x1 bit organisation.
+       - 96 written protected by a lock-out fuse.
+       - Low power 85mW in read mode.
+       - 21 V programming voltage.
+       - Access time: 500ns
+       - Operating range: -10oC +70oC
+       - Ten year data rentention.
+
+
+   1.5 - Time diagrams:
+         ~~~~~~~~~~~~~
+   a - Cards from Schlumberger, Solaic, Gemplus
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
++21V                                     _____________
++5V ____________________________________|             |_________________ VPP
+                                        :             :
++5V                  ___________________:_____________:_________________ ___
+0V  ________________|                   :             :                  RST
+                    :                   :             :
++5V     ____        :      ____         :       ______:______
+0V  ___|    |_______:_____|    |________:______|      :      |__________ CLK
+       :    :       :     :    :        :      :      :      :
++5V    :    :       :     :    :        :______:______:      :           _
+0V  ___:____:_______:_____:____:________|      :      |______:__________ R/W
+       :    :       :     :    :        :      :      :      :
++5V    :    :       :_____:    :________:      :      :      :__________
+0V  XXXXXXXXXXXXXXXXX_____XXXXXX________XXXXXXXXXXXXXXXXXXXXXX__________ OUT
+       :    :       :     :    :        :<-----><---->:      :
+       :    :       :     :    :        :10 to   10 to       :
+       :    :       :     :    :        :50 ms   50ms        :
+        Reset        Bit0         Bit1                           Bit2
+        card        reading      reading  Bit1 writing to 1     reading
+
+
+NOTE: Vpp Idle state is 5V, thus Vpp will have to be connected to Vcc to read
+      the card.
+
+
+   b - Cards from G+D (Spanish cards labeled with the 5th byte = $30)
+       ~~~~~~~~~~~~~~
+
++5V                  ___________________________________________________ ___
+0V  ________________|                                                    RST
+
++5V     ____               ____                 _____________
+0V  ___|    |_____________|    |_______________|             |__________ CLK
+       :    :             :    :               :             :
++5V    :    :             :    :         ______:______       :           _
+0V  ___:____:_____________:____:________|      :      |______:__________ R/W
+       :    :             :    :               :      :      :
++5V    :____:_____________:____:_______________:______:______:__________
+0V  XXXX    X_____________X    X_______________X      :      X__________ OUT
+       :    :             :    :               :<---->:      :
+       :    :             :    :               : 1 ms        :
+       :    :             :    :               :             :
+        Reset     Bit0               Bit1           Bit1          Bit2
+        card     reading            reading      writing to 1    reading
+
+
+   1.6 - Memory Map for cards from FRANCE, MONACO and St MAARTEN:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+              +-----+
+0 (0..7)      |     | --> Checksum for bytes 1, 2, 3 (*)
+              +-----+
+1 (8..15)     | $0s | --> French telecard
+              |     |     Serial Number (1st byte)
+              | $80 | --> St Maarten
+              +-----+
+2 (16..23)    |     | --> Serial Number (2nd byte)
+              +-----+
+3 (24..31)    |     | --> Serial Number (3rd byte)
+              +-----+
+4 (32..39)    |     | --> checksum for bytes 5, 6, 7 (*)
+              +-----+
+5 (40..47)    |     | --> Serial Number (4th byte)
+              +-----+
+6 (48..55)    |     | --> Serial Number (5th byte)
+              +-----+
+7 (56..63)    |     | --> ? [TBD]
+              | $FF | --> St Maarten
+              +-----+
+8 (64..71)    |     | --> checksum for byte 9, 10, 11 (*)
+              +-----+
+9  (72..79)   |     | --> ? [TBD]
+              | $FF | --> St Maarten
+              +-----+
+10 (80..87)   | $10 | --> France and Monaco
+              | $14 | --> St Maarten
+              +-----+
+11 (88..95)   | $13 | --> 120 units
+              | $07 | --> 60 units (St Maarten)
+              | $06 | --> 50 units
+              | $05 | --> 40 units
+              | $04 | --> 25 units
+              | $02 | --> 5 units
+              +-----+
+12 (96..103)  |     | --> The units area: each time a unit is used
+     .        |     |     then a bit is set to "1"; The 1st 10 units
+     .        |     |     are fused in factory for test (15 units for
+     .        |     |     25u and 5u cards).
+     .        |     |
+     .        |     |
+30 (240..247) |     |
+              +-----+
+31 (248..255) | $FF | --> $FF is set when all the units are used.
+              +-----+
+
+(*) checksum is calculated by the following expresion:
+
+              max                | min=32*(j-1)+8
+    $E3 - 4 * Sum b(i)     where | max=32*j-1
+             i=min               | and j is the checksum number (1, 2 or 3)
+
+NOTE: The card number is the concatenation in a single string of the 5 bytes
+      written in hexadecimal.
+
+
+
+   1.7 - Memory Map for cards from other countries:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Byte (Bit)      Hexa
+
+               +-----+                              95
+0 (0..7)       |     |  --> Check Sum Byte = $D8 - Sum b(i)
+               +-----+                             i=8
+1 (8..15)      | $83 |  --> Telecard
+               | $80 |  --> Other Applications (See below)
+               | $9A |  --> PIAF card [TBC]
+               | $C0 |  --> AVANT card [TBC]
+               +-----+-----+
+2-3 (16..31)   | $1x | $xx |  --> Units+2 (0x1152 : exemple for a 150u card).
+               + - - - - - +
+               | $10 | $00 |  --> In case of special Argentine telecard
+               | $3D | $13 |  -->  80u (Morocco)
+               | $DB | $B5 |  -->  40u (Morocco)
+               +-----+-----+
+
+               ARGENTINA
+               +-----+-----+-----+-----+
+4..7 (32..63)  | $Ta | $bc | $de | $fg | T = Manufacturer (4 Gemplus, 0 Schlumberger)
+               |     |     |     |     | S.N. = a*64 + b*32 + c*16 + d*8 + e*4 + f*2 + g 
+               +-----+-----+-----+-----+
+8..9  (64..79) |     |     | --> Don't Know
+               +-----+-----+
+
+               HUNGARY
+               +-----+-----+-----+-----+
+4..7 (32..63)  | $Ta | $B  | $C  | $D  | T = Manufacturer (4 Gemplus, C ODS)
+               |     |     |     |     | S.N. = a*2^21 + B*2^17 + C*2^9 + D
+               +-----+-----+-----+-----+
+8..9  (64..79) |     |     | --> Unit value : $0103 for 120u;  $010A for 50u
+               +-----+-----+
+
+               PORTUGAL
+               +-----+-----+-----+-----+
+4..7 (32..63)  | $00 | $A  | $B  | $C  | Portugal : S.N. = A*2^17 + B*2^9 + C
+               +-----+-----+-----+-----+
+8..9  (64..79) |     |     | --> Certificate
+               +-----+-----+
+
+               OTHERS
+               +-----+
+4 (32..39)     | $Tx | --> T = Manufacturer 0 --> Schlumberger
+               |     | -->                  1 --> Solaic [TBC]
+               |     | -->                  3 --> Gemplus [TBC] (finnish cards)
+               |     | -->                  4 --> Gemplus
+               +-----+----+----+----+----+
+5..9  (40..79) |     |    |    |    |    | --> Serial Number
+               +-----+----+----+----+----+
+
+               +-----+-----+
+10-11(80..95)  | $10 | $16 | --> French Polynesia
+               |     | $78 | --> DisneyLand Paris (see note #1)
+               | $11 | $15 | --> Djibouti
+               |     | $1C | --> Senegal (Sonatel)
+               |     | $1D | --> French Cinecarte [TBC]
+               |     | $1E | --> Sweden
+               |     | $28 | --> Argentina (Telefonica de Argentina)
+               |     | $30 | --> Norway (Telenor).
+               |     | $31 | --> New Caledonia
+               |     | $32 | --> Cameroon
+               |     | $33 | --> Andorra
+               |     | $36 | --> Central African Republic (Socatel)
+               |     | $39 | --> Luxembourg
+               |     | $3C | --> Ireland
+               |     | $3D | --> Gambia
+               |     | $3F | --> Guinean Equatorial Republic (Getesa)
+               |     | $47 | --> Portugal
+               |     | $54 | --> Malta
+               |     | $55 | --> Czech Republic / Yougoslavia
+               |     | $58 | --> Comores
+               |     | $5C | --> Argentina (Telecom Argentina)
+               |     | $5D | --> Burkina Faso
+               |     | $5E | --> Mali
+               |     | $5F | --> Gabon
+               |     | $65 | --> Finland
+               |     | $6A | --> Madagascar (Telecom Malagasy S.A.)
+               |     | $72 | --> Togo (OPT Togo)
+               |     | $86 | --> Slovakia
+               |     | $9E | --> Cuba (Etecsa)
+               |     | $B7 | --> Morocco (Special Operator)
+               |     | $BC | --> Israel (Bezeq)
+               |     | $BE | --> Guinea (Sotelgui)
+               |     | $C3 | --> Emirates (Etisalat)
+               |     | $D5 | --> Poland
+               |     | $E0 | --> Hungary
+               |     | $E1 | --> Cameroon (CamTel)
+               |     | $E2 | --> Morocco (Ave Phone)
+               | $1E | $5C | --> Argentina (Special Cards)
+               +-----+-----+
+12 (96..103)   |     | --> The units area: each time a unit
+     .         |     |     is used, then a bit is set to "1";
+     .         |     |
+     .         |     |     The first two units are fused in
+     .         |     |     factory as test.
+     .         |     |
+     .         |     |     In some countries 5 extra units are burned when the
+     .         |     |     card is empty (credit seems to be -5 units).
+     .         |     |
+     .         |     |     Hungary: Each bit set to 1 in this area is a unit used.
+     .         |     |     ~~~~~~~  10u are used in factory when the cards is new.
+31 (248..255)  |     |      
+               +-----+
+
+Note #1: For DisneyLand Paris Unit Area is b(128..239), B(30) is set to $FF to
+         mark an empty card.
+
+               ARGENTINA SPECIAL
+               +-----+
+12 (96..103)   | $C0 |  --> The first two units are fused in factory as test.
+      .        |     |
+      .        |     |
+20-21(160..175)|$XXXX|  --> User number Eg. $2456 
+22-23(176..191)|$XXXX|                      $1252  --> 2456 1252 6578
+24-25(192..207)|$XXXX|                      $6578 
+      .        |     |
+      .        |     |
+30 (240..247)  |     |
+               +-----+
+
+
+   1.8 - Memory Map for cards from Argentina, Spain, Croatia and Mexico (Telnor):
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   The spanish telecards are made from different manufacturers, and these cards
+   should be read and written with a different protocol following byte 04
+   of the memory (see subclause 1.6-a for the cards with the byte 04=$90 and
+   see the subclause 1.6-b for the cards with the byte 04=$30).
+
+
+Byte (Bit)       Binary    Hexa
+
+              +-----+                            95
+0 (0..7)      |     | ---> Checksum byte = 216 - Sum b(i)
+              +-----+                            i=8
+1 (8..15)     | $83 | ---> Telecard
+              +-----+-----+
+2-3 (16..31)  | $FF | $FF |
+              +-----+-----+
+4 (32..39)    | $30 | --> G+D
+              | $5A | --> Gemplus
+              | $90 | --> Oberthur (and F.N.M.T for Spain)
+              | $9E | --> Oberthur (Argentina)              
+              | $A0 | --> Solaic
+              +-----+-----+-----+
+5..7 (40..63) |  ss |  ss |  ss | ---> Serial Number (*)
+              +-----+-----+-----+
+8-9  (64..79) | $00 | $0A | -->  500 pesetas (Spain)
+              | $14 | $8A | --> 1000 pesetas (Spain)
+              | $25 | $04 | --> 2000 pesetas (Spain)
+              | $25 | $06 | --> 2100 pesetas (Spain)
+              |     |     |
+              | $14 | $CA | --> N$ 25.00 (Mexico)
+              | $15 | $4A | --> N$ 35.00 (Mexico)
+              | $31 | $02 | --> N$ 50.00 (Mexico)
+              |     |     |
+              | $00 | $03 | --> 25 (Argentina)
+              |     |     |
+              | $00 | $05 | --> 50u (Croatia)
+              | $00 | $0A | --> 100u (Croatia)
+              | $14 | $8A | --> 200u (Croatia)
+              | $2A | $85 | --> 1000u (Croatia)
+              +-----+-----+
+10-11 (80..95)| $1E | $22 | --> Spain
+              |     | $24 | --> Mexico (Telnor)
+              |     | $26 | --> Croatia
+              |     | $28 | --> Argentina
+              +-----+-----+-----+
+12 (96..103)  | 1111 1111 | $FF | ---> the first 10 units are fused
+    .         | 11xx xxxx | $xx |      in factory for testing.
+    .         | xxxx xxxx | $xx |
+    .         | xxxx xxxx | $xx | ---> Slow counter area
+    .         | xxxx xxxx | $xx |
+    .         +-----------+-----+
+    .         | xxxx xxxx | $xx |
+    .         | xxxx xxxx | $xx | ---> Fast counter area
+31 (248..255) | xxxx xxxx | $xx |
+              +-----------+-----+
+
+   The slow counter area:
+   ----------------------
+                o [b255 ... b156] for  500 Pta cards, Increment 5 Pta
+                o [b205 ... b106] for 1000 Pta cards, Increment 5 Pta
+                o [b165 ... b126] for 2000 Pta cards, Increment 5 Pta
+                o [b165 ... b106] for 2100 Pta cards, Increment 5 Pta
+                o [b205 ... b106] for 25.00 N$ cards, Increment 0.1 N$
+                o [b205 ... b106] for 35.00 N$ cards, Increment 0.1 N$
+                o [b135 ... b116] for 50.00 N$ cards, Increment 0.1 N$
+
+   The Fast counter area:
+   ----------------------
+                o No fast counter for 500 Pta cards
+                o [b255 ... b206] for 1000 Pta cards, Increment 10 Pta
+                o [b255 ... b166] for 2000 Pta cards, Increment 20 Pta
+                o [b255 ... b166] for 2100 Pta cards, Increment 20 Pta
+                o [b255 ... b206] for 25.00 N$ cards, Increment 0.3 N$
+                o [b255 ... b206] for 35.00 N$ cards, Increment 0.5 N$
+                o [b255 ... b136] for 50.00 N$ cards, Increment 0.4 N$
+
+   Exemple of an fast units area: (1000 Pta cards)
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                00 -,
+         0000 0000  |
+         0000 0000  |-> Unused units
+         0000 0000  |
+         0000 0000 -'
+         0011 1110 ---> 14*10 Pta are used (same as 0011 1111
+         1000 1110                                  1111 1111)
+
+   NB: Several units can be used, in this case only the last unit is set as
+       used, like in the previous exemple, where some units are set to 0 but
+       are nonetheless used.
+
+   (*) Serial Number for spanish telecards: The serial number for G+D,
+       Gemplus and Solaic telecards is directly obtained by the following formula:
+
+                 Byte[5]*$10000 + Byte[6]*$100 + Byte[7]
+
+   1.9a - Memory Map for Mexican cards from Telmex (LadaTel):
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)     Hexa
+
+              +-----+                              95
+0 (0..7)      |     | ---> Check Sum Byte = 216 - Sum b(i)
+              +-----+                             i=8
+1 (8..15)     | $80 |
+              +-----+
+2 (16..23)    |     |
+3 (24..31)    |     | --> [TBD]
+              +-----+
+4 (32..39)    | $0s | --> Schlumberger
+              | $1s | --> Solaic [TBC]
+              | $4s | --> Gemplus
+              +-----+
+5 (40..47)    |  ss |
+6 (48..55)    |  ss | --> Serial Number (*)
+7 (56..63)    |  ss |
+              +-----+-----+
+8-9  (64..79) | $sv |  vC | --> Card Value (*)
+              +-----+-----+
+10 (80..87)   | $32 |
+              | $64 | --> [TBD] 
+              +-----+
+11 (88..95)   | $59 | --> Mexico
+              +-----+
+12 (96..103)  |     | ---> The units area: each time a unit
+     .        |     |      is used, then a bit is set to "1";
+     .        |     |
+     .        |     |      The first 4 units are fused in
+     .        |     |      factory as test.
+     .        |     |
+30 (240..247) |     |
+              +-----+
+31 (248..255) | $FF | --> $FF is set when all the units are used.
+              +-----+
+
+
+Serial Number = b(34..65) displayed in decimal
+
+Card Value: Each unit has 0.5N$ worth. Units burned in factory are not counted
+            in the value (so a 40 units card has a 20N$ value and 44 units are
+            burned when card is empty).
+
+   1.9b - Memory Map for Ivory Coast cards from publicom S.A.:
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)     Hexa
+
+              +-----+                              95
+0 (0..7)      |     | ---> Check Sum Byte = 216 - Sum b(i)
+              +-----+                             i=8
+1 (8..15)     | $80 |
+              +-----+
+2 (16..23)    |     |
+3 (24..31)    |     | --> [TBD]
+              +-----+
+4 (32..39)    | $0s | --> Schlumberger
+              | $1s | --> Solaic [TBC]
+              | $4s | --> Gemplus
+              +-----+
+5 (40..47)    |  ss |
+6 (48..55)    |  ss | --> Serial Number (*)
+7 (56..63)    |  ss |
+              +-----+-----+
+8-9  (64..79) | $sv |  vC | --> Card Value (*)
+              +-----+-----+
+10 (80..87)   | $32 |
+              | $64 | --> [TBD] 
+              +-----+
+11 (88..95)   | $59 | --> Mexico
+              +-----+
+12 (96..103)  |     | ---> The units area: each time a unit
+     .        |     |      is used, then a bit is set to "1";
+     .        |     |
+     .        |     |      The first 4 units are fused in
+     .        |     |      factory as test.
+     .        |     |
+30 (240..247) |     |
+              +-----+
+31 (248..255) | $FF | --> $FF is set when all the units are used.
+              +-----+
+
+Serial Number = b(34..65) displayed in decimal
+
+Card Value: Units burned in factory are not counted in the value (so 
+            a 40 units card has a 20N$ value and 44 units are burned 
+            when card is empty).
+
+
+1.10 - Memory Map for Slovenian Cards:
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)     Hexa
+
+              +-----+
+0 (0..7)      | $5A | 
+              +-----+
+1 (8..15)     | $vv | --> Unit Value
+              |     |     $81 -> 100u
+              |     |     $82 -> 20u
+              |     |     $83 -> 300u (2 units/bit)
+              |     |     $84 -> 100u (not used)
+              |     |     $85 -> 50u 
+              |     |     $86 -> 25u 
+              +-----+-----+-----+
+2..4 (16..39) | $E9 | $B5 | $4B | --> Telekom cards
+              |     | $B4 |     | --> "Impulz" cards
+              +-----+-----+-----+
+5 (40..47)    | $00 |
+              | $01 | --> first digit of serial number
+              +-----+
+6 (48..55)    | $xx | --> Serial Number = (B(6) << 16) + (B(7)  << 8) + B(8)
+7 (56..63)    | $xx |    
+8 (64..71)    | $xx |
+              +-----+
+9  (72..79)   | $yy | --> Signature for the S.N.
+10 (80..87)   | $yy | 
+              +-----+                                             10  
+11 (88..95)   | $zz | --> Checksum for B[0] .. B[10] = 0xFF & [( Sum B(i) )-1]
+              |     |                                            i=0
+              +-----+
+12 (96..103)  |     | --> The units area: each time a unit
+     .        |     |     is used, then a bit is set to "1";
+     .        |     |
+     .        |     |
+     .        |     |    
+31 (248..255) |     |
+              +-----+
+
+
+II ) The 2nd generation Telecards:
+     ============================
+
+   2.1 - Introduction:
+         ~~~~~~~~~~~~
+
+   These cards are in fact 128 bit memory in NMOS technology, and the map of
+   these cards are the following:
+
+        64 bit EPROM written protected (manufaturer area).
+        40 bit EEPROM (5x8 bits).
+        24 bits set to "1".
+
+
+   2.2 - Pinout:
+         ~~~~~~
+
+           ISO 7816-2
+
+ ,-------------+-------------,
+ |   1         |         5   |   Pinout:
+ +-------\     |     /-------+   ~~~~~~
+ |   2    +----+    +    6   |     1 : VCC=5V    5 : Gnd
+ +--------|         |--------+     2 : Reset     6 : n.c.
+ |   3    +----+----+    7   |     3 : Clock     7 : I/O
+ +-------/     |     \-------+     4 : n.c.      8 : n.c.
+ |   4         |         8   |
+ '-------------+-------------'     (n.c. : not connected)
+
+
+   2.3 - Main features:
+         ~~~~~~~~~~~~~
+
+        - ISO 7816- 1/2 compatible.
+        - use a single 5V power supply.
+        - low power consuption.
+        - NMOS technology.
+
+   2.4 - Time Diagrams:
+         ~~~~~~~~~~~~~
+
+Reset:
+------
+  The address counter is reset to 0 when the clock line CLK is raised while
+the control line R is high {Note that the address counter can not be reset
+when it is in the range 0 to 7}.
+
+      __________________
+_____|                  |_____________________________________________ Reset
+     :                  :
+     :        _____     :  _____       _____       _____       _____
+_____:_______|     |____:_|     |_____|     |_____|     |_____|     |_ Clk
+     :       :          : :     :     :     :     :     :     :     :
+_____:_______:__________:_:_____:_____:_____:_____:_____:_____:_____:_
+_____:___n___|_____0____:_|_____1_____|_____2_____|_____3_____|___4_:_(Address)
+     :                  :       :           :           :           :
+_____:                  :_______:___________:___________:___________:_
+_____XXXXXXXXXXXXXXXXXXXX_______|___________|___________|___________|_ Data
+Bit n                      Bit 0    Bit 1        Bit2       Bit3
+
+   The address counter is incremented by 1 with each rising edge of the clock
+signal Clk, for as long as the control line R remains low. The data held in
+each addressed bit is output to I/O contact each time Clk falls. It is not
+impossible to decrement the address counter, therefore to address an earlier
+bit, the address counter must be reset then incremented to require value.
+
+
+Write:
+------
+   All unwritten or erased bits in the address 64-104 can be unwritten to.
+When a memory cell is unwritten, it is set to 0. The addressed cell is
+unwritten to by the following sequence.
+
+1- R is raised while Clk is low, to disable address counter increment for one
+clock pulse.
+
+2- Clk is then raised for a minimum of 10ms to write to the address bit.
+
+When to write operation ends, and Clk falls, the address counter is unlocked,
+and the content of the written cell, which is now 0, is output to I/O contact
+if the operation is correct.
+The next Clk pulse will increment the address by one, then the write sequence
+can be repeated to write the next bit.
+
+              _____                                _____
+_____________|     |______________________________|     |_______________  Reset
+             :                                    :
+     ___     :           _____           ___      :           _____
+____|   |____:__________|     |_________|   |_____:__________|     |____  Clk
+    :        :          :     :         :   :     :          :     :
+____:________:__________:_____:_________:___:_____:__________:_____:_____
+ n  |      n+1          |     n+2       |   :    n+3         |     :  (Address)
+----'--------:----------'-----:---------'---:-----:----------'-----:-----
+             :          :     :             :     :          :     :
+_________   _:          :     : ____________:  ___:          :     :
+_________XXX_XXXXXXXXXXXXXXXXXXX____________ XX___XXXXXXXXXXXXXXXXXXXXXXX  I/O
+   n      n+1           :     :     n+1        n+2           :     :
+                        :     :                              :     :
+                         write                                write
+
+
+WriteCarry:
+-----------
+
+   A counter is erased by performing the WRITECARRY sequence on the stage of
+the next highest weighing to that to be erased.
+
+The writecarry sequence is as follows:
+
+1 - Set the address counter to an unwritten bit in the next highest counter
+stage to that to be erased.
+
+2 - Increment is disabled on the following rising edge of R where Clk remains
+low.
+
+3 - Clk is then raised for a minimum of 10ms, while R is low, to write to the
+next address bit.
+
+4 - R is the raised again while Clk remains low to disable increment a second
+time.
+
+5 - Clk is the raised for a minimum of 1ms, while R is low, to write to the
+addressed bit a second time, erasing the counter level immediately below that
+the addressed bit.
+
+       _____                      _____
+______|     |____________________|     |_________________________________  Rst
+      :                          :
+      :            _______       :              _______        ___
+______:___________|       |______:_____________|       |______|   |______  Clk
+      :           :       :      :             :       :      :   :
+      :           :       :      :             :       :      :   :
+<------------------------- address n ------------------------>:<--- n+1 ------
+      :           :       :      :             :       :          :
+      :           :       :      :             :       :          :
+______:           :       :______:             :       :__________: _____
+______XXXXXXXXXXXXXXXXXXXXX______XXXXXXXXXXXXXXXXXXXXXXX__________XX_____  I/O
+                  :       :  n                 :       :     n        n+1
+                  :       :                    :       :
+                    Write                        Erase
+
+   2.5 - Memory Map:
+         ~~~~~~~~~~
+
+      2.5.1 - Memory Map for 4 or 5 stage octal unit counter:
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+         2.5.1.1 - Albania:
+                   ~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+-----+
+0-3    (0..31) | $98 | $20 | $33 | $38 | --> Albania
+               +-----+-----+-----+-----+
+4-7   (32..63) | $.. | $.. | $.. | $.. | --> Serial Number (see below)
+               +-----+-----+-----+-----+
+8..11 (64..95) |c512 | c64 | c8  | c1  | --> 4 stage octal counter
+               +-----+-----+-----+-----+
+12   (96..103) | $.. |
+13  (104..111) | $.. |
+14  (112..119) | $.. |
+15  (120..127) | $.. |
+               +-----+
+
+Serial Number = b(63..32)    Read in reverse binary from bit 63 to 32
+                             Displayed in 10 decimal digits.
+
+
+         2.5.1.2 - Australia:
+                   ~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+-----+
+0-3 (0..31)    | $E8 | $20 | $61 | $09 |
+               +-----+-----+-----+-----+
+4 (32..39)     |     | --> Serial Number / Manufacturer area
+5 (40..47)     |     |
+6 (48..55)     |     |
+7 (56..63)     |     |
+               +-----+-----+-----+-----+-----+
+8..12 (64..103)|c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+               +-----+-----+-----+-----+-----+
+13 (104..111)  | $FF |
+14 (112..119)  | $F0 |
+15 (120..127)  | $FF |
+               +-----+
+
+Note: Each unit is 0.01$ worth.
+
+
+         2.5.1.3 - Belgium (Belgacom):
+                   ~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+
+0..3 (0..31)      | $E9 | $30 | $35 |
+                  +-----+-----+-----+-----+-----+
+4..7 (32..63)     | $xx |  xs |  ss |  ss |     | --> xxxx : [TBD]
+                  |     |     |     |     |     |     sssss: Serial Number
+                  +-----+-----+-----+-----+-----+
+7 (56..63)        |     | --> [TBD]
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+                  +-----+-----+-----+-----+-----+
+13 (104..111)     | $FF |
+14 (112..119)     | $.. |
+15 (120..127)     | $.. |
+                  +-----+--- -+--- -+-----+
+16..63 (128..511) | $FF | . . + . . + $FF +
+                  +-----+- ---+- ---+-----+
+
+Serial Number = b(32..55) displayed in decimal.
+Each unit is 0.10 BEF worth.
+
+
+         2.5.1.4 - Botswana:
+                   ~~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+
+0-2 (0..23)    | $98 | $20 | $FF | --> Botswana
+               | $92 | $3B | $FF |
+               +-----+-----+-----+
+3 (24..31)     |     | --> Serial Number / Manufacturer area
+4 (32..39)     |     |
+5 (40..47)     |     |
+6 (48..55)     |     |
+7 (56..63)     |     |
+               +-----+-----+-----+-----+-----+
+8..12 (64..103)|     |     |     |     |     | --> octal counter
+               +-----+-----+-----+-----+-----+
+13 (104..111)  | $.. |
+14 (112..119)  | $.. |
+15 (120..127)  | $.. |
+               +-----+
+
+The number of stages (4 or 5 stages) is not known for this card.
+
+
+         2.5.1.5 - Bulgaria:
+                   ~~~~~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+-----+
+0..3 (0..31)      | $93 | $0B | $AF | $5v | --> Value : $0 = 100u
+                  | $E8 | $2B | $07 | $5v |             $4 = 50u
+                  |     |     |     |     |             $8 = 200u
+                  |     |     |     |     |             $C = 400u
+                  +-----+-----+-----+-----+
+4..7 (32..63)     |  ss |  ss |  ss |  ss | --> Serial Number
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |     |     |     |     |     | --> octal counter
+                  +-----+-----+-----+-----+-----+
+13..15 (104..127) | $.. | $.. | $.. |
+                  +-----+-----+-----+-----+
+16..19 (128..159) | $FF | $FF | $FF | $FF |
+ "   "    "    "  |   " |   " |   " |   " |
+28..31 (224..255) | $FF | $FF | $FF | $FF |
+                  +-----+-----+-----+-----+
+
+The number of stages (4 or 5 stages) is not known for this card.
+
+Serial Number = b(63..32) displayed in decimal.
+
+
+         2.5.1.6a - Canada (128 bits):
+                    ~~~~~~~~~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+
+0-2 (0..23)    | $99 | $28 | $1C | --> Canada (G+D)
+               | $99 | $28 | $BF |
+               +-----+-----+-----+
+3 (24..31)     |  VV | Card Value: $02 = $5
+               |     |             $03 = $10
+               |     |             $04 = $20
+               +-----+
+4 (32..39)     |     | --> Serial Number / Manufacturer area
+5 (40..47)     |     |
+6 (48..55)     |     |
+7 (56..63)     |     |
+               +-----+-----+-----+-----+
+8..12 (64..95) |c512 | c64 | c8  | c1  | --> 4 stage octal counter
+               +-----+-----+-----+-----+
+12  (96..103)  | $.. |
+13 (104..111)  | $.. |
+14 (112..119)  | $.. |
+15 (120..127)  | $.. |
+               +-----+
+
+
+         2.5.1.6b - Canada (512 bits):
+                    ~~~~~~~~~~~~~~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+
+0..2 (0..23)      | $93 | $AB | $1C | --> Canada (Gemplus)
+                  | $93 | $AB | $BF | --> Canada (Gemplus)
+                  +-----+-----+-----+
+3 (24..31)        | VV  | --> Value : $02 = 5$
+                  |     |             $03 = 10$
+                  |     |             $04 = 20$
+                  +-----+
+4 (32..39)        |     | --> Serial Number / Manufacturer area
+5 (40..47)        |     |
+6 (48..55)        |     |
+7 (56..63)        |     |
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |     |     |     |     |     | --> octal counter
+                  +-----+-----+-----+-----+-----+
+13..15 (104..127) | $FF | $FF | $FF |
+                  +-----+-----+-----+-----+
+16..19 (128..159) | $FF | $FF | $FF | $FF |
+ "   "    "    "  |   " |   " |   " |   " |
+28..31 (224..255) | $FF | $FF | $FF | $FF |
+                  +-----+-----+-----+-----+
+32..35 (256..287) | $0A | $00 | $0A | $00 |
+36..39 (288..319) | $0A | $00 | $0A | $00 |
+                  +-----+-----+-----+-----+
+40..43 (320..351) | $00 | $00 | $00 | $00 |
+ "   "    "    "  |   " |   " |   " |   " |
+60..63 (480..511) | $00 | $00 | $00 | $00 |
+                  +-----+- ---+- ---+-----+
+
+
+         2.5.1.7 - Chile:
+                   ~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+-----+
+0-3 (0..31)    | $10 | $2B | $5F | $06 |
+               +-----+-----+-----+-----+
+4 (32..39)     |     | --> Serial Number / Manufacturer area
+5 (40..47)     |     |
+6 (48..55)     |     |
+7 (56..63)     |     |
+               +-----+-----+-----+-----+-----+
+8..12 (64..103)|     |     |     |     |     | --> octal counter
+               +-----+-----+-----+-----+-----+
+13 (104..111)  | $.. |
+14 (112..119)  | $.. |
+15 (120..127)  | $.. |
+               +-----+
+
+The number of stages (4 or 5 stages) is not known for this card.
+
+
+         2.5.1.8a - Croatia (128 bits - HPT_B):
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+
+0-2 (0..23)    | $98 | $30 | $8F |
+               | $99 | $30 | $8F |
+               +-----+-----+-----+
+3 (24..31)     |  .v | --> v: Unit identifier $2 = 25 Units
+               |     |                        $6 = 50 Units
+               |     |                        $7 = 100 Units
+               |     |                        $3 = 200 Units
+               |     |                        $8 = 200 Units
+               |     |                        $5 = 500 Units
+               +-----|
+4 (32..39)     |     | --> Serial Number / Manufacturer area
+5 (40..47)     |     | 
+6 (48..55)     |     |
+               +-----+
+7 (56..63)     |     | --> [TBD]
+               +-----+-----+-----+-----+-----+
+8..12 (64..103)|c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+               +-----+-----+-----+-----+-----+
+13 (104..111)  | $FF |
+14 (112..119)  | $FF |
+15 (120..127)  | $FF |
+               +-----+
+
+Serial Number = b(32..55) displayed in decimal.
+
+
+
+         2.5.1.8b - Croatia (512 bits - HPT_CF):
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+
+0..2 (0..23)      | $93 | $AB | $8F | --> Croatia (Gemplus)
+                  +-----+-----+-----+
+3 (24..31)        | .V  | --> Value : $2 = 25u
+                  |     |             $6 = 50u
+                  |     |             $7 = 100u
+                  |     |             $3 = 200u
+                  |     |             $5 = 500u
+                  |     |             $8 = 1000u
+                  +-----+-----+-----+
+4..6 (32..55)     |  ss |  ss |  ss | --> Serial Number
+                  +-----+-----+-----+
+7 (56..63)        |     | --> Always $26 [TBC]
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+                  +-----+-----+-----+-----+-----+
+13..15 (104..127) | $FF | $FF | $FF |
+                  +-----+-----+-----+-----+
+16..19 (128..159) | $FF | $FF | $FF | $FF |
+ "   "    "    "  |   " |   " |   " |   " |
+28..31 (224..255) | $FF | $FF | $FF | $FF |
+                  +-----+-----+-----+-----+
+32..35 (256..287) | $0A | $00 | $0A | $00 |
+36..39 (288..319) | $0A | $00 | $0A | $00 |
+                  +-----+-----+-----+-----+
+40..43 (320..351) | $00 | $00 | $00 | $00 |
+ "   "    "    "  |   " |   " |   " |   " |
+60..63 (480..511) | $00 | $00 | $00 | $00 |
+                  +-----+- ---+- ---+-----+
+
+Serial Number = b(32..55) displayed in decimal.
+
+
+         2.5.1.8c - Croatia (512 bits - HPT_D):
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+                  +-----+-----+-----+
+0-2 (0..23)       | $E9 | $30 | $8F |
+                  +-----+-----+-----+
+3 (24..31)        |  .v | --> v: Unit identifier $2 = 25 Units
+                  |     |                        $6 = 50 Units
+                  |     |                        $7 = 100 Units
+                  |     |                        $3 = 200 Units
+                  |     |                        $5 = 500 Units
+                  +-----|
+4 (32..39)        |     | --> Serial Number / Manufacturer area
+5 (40..47)        |     | 
+6 (48..55)        |     |
+                  +-----+
+7 (56..63)        |     | --> [TBD]
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+                  +-----+-----+-----+-----+-----+
+13 (104..111)     | $FF |
+14 (112..119)     | $FF |
+15 (120..127)     | $FF |
+                  +-----+--- -+--- -+-----+
+16..63 (128..511) | $FF | . . + . . + $FF +
+                  +-----+- ---+- ---+-----+
+
+
+Serial Number = b(32..55) displayed in decimal.
+
+
+         2.5.1.8d - Croatia (128 bits - HPT_E):
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+
+0-2 (0..23)    | $10 | $2B | $8F |
+               +-----+-----+-----+
+3 (24..31)     |  .v | --> v: Unit identifier $2 = 25 Units
+               |     |                        $6 = 50 Units
+               |     |                        $7 = 100 Units
+               |     |                        $3 = 200 Units
+               |     |                        $5 = 500 Units
+               +-----|
+4 (32..39)     |     | --> Serial Number / Manufacturer area
+5 (40..47)     |     | 
+6 (48..55)     |     |
+               +-----+
+7 (56..63)     |     | --> [TBD]
+               +-----+-----+-----+-----+-----+
+8..12 (64..103)|c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+               +-----+-----+-----+-----+-----+
+13 (104..111)  | $FF |
+14 (112..119)  | $FF |
+15 (120..127)  | $FF |
+               +-----+
+
+Serial Number = b(32..55) displayed in decimal.
+
+
+         2.5.1.9 - Cuba:
+                   ~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+
+0..2 (0..23)      | $93 | $0B | $8F |
+                  +-----+-----+-----+
+3 (24..31)        | VV  | --> [TBD]
+                  |     |
+                  +-----+-----+-----+
+4..6 (32..55)     |  ss |  ss |  ss | --> Serial Number
+                  +-----+-----+-----+
+7 (56..63)        |     | --> [TBD]
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |     |     |     |     |     | --> octal counter
+                  +-----+-----+-----+-----+-----+
+13..15 (104..127) | $FF | $FF | $FF |
+                  +-----+-----+-----+-----+
+16..19 (128..159) | $FF | $FF | $FF | $FF |
+ "   "    "    "  |   " |   " |   " |   " |
+28..31 (224..255) | $FF | $FF | $FF | $FF |
+                  +-----+-----+-----+-----+
+32..35 (256..287) | $0A | $00 | $0A | $00 |
+36..39 (288..319) | $0A | $00 | $0A | $00 |
+                  +-----+-----+-----+-----+
+40..43 (320..351) | $00 | $00 | $00 | $00 |
+ "   "    "    "  |   " |   " |   " |   " |
+60..63 (480..511) | $00 | $00 | $00 | $00 |
+                  +-----+- ---+- ---+-----+
+
+Serial Number = b(32..55) displayed in decimal.
+
+The number of stages (4 or 5 stages) is not known for this card.
+
+
+         2.5.1.10 - Danmark:
+                    ~~~~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+-----+
+0..3 (0..31)      | $E8 | $20 | $FF | $00 |
+                  | $E8 | $39 | $FF | $00 |
+                  +-----+-----+-----+-----+
+4..6 (32..55)     |  ss |  ss |  ss | --> Serial Number
+                  +-----+-----+-----+
+7 (56..63)        |     | --> [TBD]
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+                  +-----+-----+-----+-----+-----+
+13 (104..111)     | $FF |
+14 (112..119)     | $.. |
+15 (120..127)     | $.. |
+                  +-----+--- -+--- -+-----+
+16..63 (128..511) | $FF | . . + . . + $FF +
+                  +-----+- ---+- ---+-----+
+
+Serial Number = b(32..55) displayed in decimal.
+
+Each unit is 0.01 Kr worth.
+
+
+         2.5.1.11 - England:
+                    ~~~~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+
+0..2 (0..23)      | $A8 | $22 | $F7 |
+                  +-----+-----+-----+
+3 (24..31)        |     | -> Manufacturer [TDC]
+                  +-----+-----+-----+-----+
+4..7 (32..63)     |  .s |  ss |  ss | ss  | --> Serial Number
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+                  +-----+-----+-----+-----+-----+
+13..15 (104..127) | $FE | $.. | $FF |
+                  +-----+--- -+--- -+-----+
+16..63 (128..511) | $FF | . . + . . + $FF +
+                  +-----+- ---+- ---+-----+
+
+Each unit is 0.01 ? worth.
+Serial Number = "2x/x/" b(51..36) "/" b(63..54)
+                        6 digits      4 digits
+
+
+        2.5.1.12 - Estonia:
+                   ~~~~~~~
+
+Byte (Bit)      Hexa
+
+                  +-----+-----+-----+-----+
+0-3 (0..31)       | $E8 | $20 | $00 | $CE |
+                  | $E8 | $20 | $FF | $CE |
+                  | $E8 | $35 | $00 | $CE |
+                  | $E9 | $30 | $00 | $CE |
+                  | $E9 | $34 | $FF | $CE |
+                  +-----+-----+-----+-----+
+4 (32..39)        |  ss | --> sssssss = Serial Number
+5 (40..47)        |  ss |
+6 (48..55)        |  ss |
+7 (56..63)        |  sv | --> v       = Value (see notes)
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+                  +-----+-----+-----+-----+-----+
+13 (104..111)     | $FF |
+14 (112..119)     | $.. |
+                  +-----+--- -+--- -+-----+
+16..63 (128..511) | $FF | . . + . . + $FF +
+                  +-----+- ---+- ---+-----+
+
+Serial Number = b(32..57) displayed in decimal.
+
+Note 1: Each unit is 0.16kr worth.
+
+Note 2: v=$0 Value = 188 Units (30 Kr)
+        v=$4 Value = 313 Units (50 Kr)
+        v=$8 Value = 625 Units (100 Kr)
+
+
+         2.5.1.13 - Germany (128 and 512 bits):
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+-----+
+0-3 (0..31)    | $80 | $6F | $FF | $mm | --> Germany ($mm : manufacturer)
+               | $A0 | $8F | $FC |     |              $mm : $1A : Orga [TBC]
+               | $C0 | $8F | $FF |     |                    $2A : Solaic
+               | $D8 | $2F | $FC |     |                    $4A : ODS
+               | $D8 | $2F | $FF |     |                    $8A : G+D
+               | $F0 | $2F | $FF |     |                    $AA : Orga
+               | $F2 | $2F | $FF |     |                    $CA : Gemplus
+               | $F4 | $2F | $FF |     |
+               +-----+-----+-----+-----+
+4 (32..39)     |     | --> Serial Number
+5 (40..47)     |     |
+6 (48..55)     |     |
+7 (56..63)     |     |
+               +-----+-----+-----+-----+-----+
+8..12 (64..103)|c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+               +-----+-----+-----+-----+-----+
+13 (104..111)  | $.. |
+14 (112..119)  | $.. |
+15 (120..127)  | $.. |
+               +-----+
+
+Serial Number:
+-------------
+
++-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+|  1  |  2  |  3     4  |  5  |  6  |  7  |  8  |  9  |  10 |  11 |
++-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+
+Digit: 1   = b(27..24) - b(67..64)
+       2   = b(39..36)
+       3&4 = b(43..40)
+       5   = b(63..60)
+       6   = b(59..56)
+       7   = b(55..52)
+       8   = b(51..48)
+       9   = b(47..44)
+
+Digits 10 & 11 are not coded in the memory [TBC].
+
+
+         2.5.1.14a - Greece (128 bits - OTE):
+                     ~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+-----+
+0-3    (0..31) | $10 | $2B | $FF | $7B | --> Greece (Gemplus)
+               | $92 | $3B | $FF | $7B | --> Greece (G+D)
+               | $94 | $3B | $FF | $7B | --> Greece (G+D)
+               | $98 | $35 | $1D | $7B | --> Greece (Solaic)
+               | $E8 | $2B | $FF | $7B | --> Greece (Gemplus - 512 bits ???)
+               +-----+-----+-----+-----+
+4-7   (32..63) | $.. | $.. | $.. | $.. | --> Serial Number (see below)
+               +-----+-----+-----+-----+
+8..11 (64..95) |c512 | c64 | c8  | c1  | --> 4 stage octal counter
+               +-----+-----+-----+-----+
+12   (96..103) | $.. |
+13  (104..111) | $.. |
+14  (112..119) | $.. |
+15  (120..127) | $.. |
+               +-----+
+
+NOTE: For Greece the counter is twice the unit value of the card (200 bits 
+      for a 100u card).
+
+Serial Number = b(63..32) displayed in decimal.
+
+Serial numbers for Solaic seems to begin by '11', Gemplus by '21', and
+Schlumberger by '31'. A new manufacturer appears with serial numbers beginning
+by '41'.
+
+        2.5.1.14b - Greece (512 bits - OTE):
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+-----+
+0..2 (0..23)      | $93 | $AB | $FF | $7B | --> Greece (Gemplus)
+                  | $E8 | $20 | $FF | $7B | --> Greece (Schlumberger)
+                  | $E9 | $22 | $80 | $7B | --> Greece (Unknown manufacturer)
+                  | $E9 | $30 | $FF | $7B | --> Greece (Schlumberger)
+                  +-----+-----+-----+-----+
+4..7 (32..63)     |  ss |  ss |  ss |  ss | --> Serial Number
+                  +-----+-----+-----+-----+
+8..11 (64..95)    |c512 | c64 | c8  | c1  | --> 4 stage octal counter
+                  +-----+-----+-----+-----+
+12..15 (96..127)  | $FF | $FF | $FF | $FF |
+                  +-----+--- -+--- -+--- -+-----+
+16..63 (128..511) | $FF | . . + . . + . . + $FF +
+                  +-----+- ---+- ---+- ---+-----+
+
+Serial Number = b(63..32) displayed in decimal.
+
+
+Serial numbers for Solaic seems to begin by '11', Gemplus by '21', and
+Schlumberger by '31'. A new manufacturer appears with serial numbers beginning
+by '41'.
+
+
+         2.5.1.15 - Lithuania:
+                    ~~~~~~~~~
+
+Byte (Bit)         Hexa
+                  +-----+-----+-----+-----+
+0..3 (0..31)      | $E8 | $39 | $13 | $41 |
+                  +-----+-----+-----+-----+
+4 (32..39)        | $vv | $07 -> 50u
+                  |     | $08 -> 50u
+                  |     | $17 -> 75u
+                  +-----+-----+-----+
+5..7 (40..63)     |  xs |  ss |  ss | --> sssss Serial Number
+                  |     |     |     |     x     [TBD]
+                  +-----+-----+-----+-----+-----+
+8..12 (64..103)   |c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+                  +-----+-----+-----+-----+-----+
+13 (104..111)     | $FF |
+14 (112..119)     | $F0 |
+15 (120..127)     | $FF |
+                  +-----+--- -+--- -+-----+
+16..63 (128..511) | $FF | . . + . . + $FF +
+                  +-----+- ---+- ---+-----+
+
+NOTE: The counter represents 1/10u
+
+Serial Number = b(44..63) displayed in hexadecimal.
+
+
+         2.5.1.16a - Malaysia (Malaysia Telecom - 128 bits):
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Byte (Bit)      Hexa
+
+               +-----+-----+-----+
+0..2 (0..23)   | $10 | $2B | $88 | 
+               | $98 | $39 | $88 |
+               +-----+-----+-----+
+3 (24..31)     | $.v | --> v: Value ($1=5 RM, $2=10 RM, $4=50 RM)
+               +-----+
+4 (32..39)     |     | --> Serial Number / Manufacturer area
+5 (40..47)     |     |
+6 (48..55)     |     |
+7 (56..63)     |     |
+               +-----+-----+-----+-----+-----+
+8..12 (64..103)|c4096|c512 | c64 | c8  | c1  | --> 5 stage octal counter
+               +-----+-----+-----+-----+-----+
+13 (104..111)  | $FF |
+14 (112..119)  | $FF |
+15 (120..127)  | $FF |
+       

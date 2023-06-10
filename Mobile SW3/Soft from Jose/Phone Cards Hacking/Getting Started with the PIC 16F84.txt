@@ -1,0 +1,54 @@
+Getting Started with the PIC 16F84
+Steve Marchant, CCC, The University of Nottingham 
+
+
+
+--------------------------------------------------------------------------------
+
+Introduction 
+Microchip's PIC16F84 is a general-purpose, low-cost, 18pin, 8bit microcontroller with the capability of in-system software downloads to its on-chip EEPROM memory. For the shoe-string-budget developer, this makes for dramatically improved ease of use over the more conventional UVEPROM based microcontrollers where you're constantly wasting time pulling out the chip, erasing it, reprogramming it, and plugging it back in again. With the PIC16F84, you won't need that expensive programmer or pin adapter and you can have your code edited, re-assembled, downloaded and running again, all within a few seconds. What's more, MicroChip have made their excellent, PC hosted, MPASM assembler and all the hardware and software manuals (in PDF) you'll ever need available free over the internet. 
+
+What you will need is a very low cost programming adapter gizmo to connect your PC's parallel port to your target board to enable the PC to re-program your PIC16F84 IN-SYSTEM. Microchip even publish a design for such an adapter in their AN589 application note, my contribution is to improve their hardware design, and produce a DOS based program to drive it. These tools are made freely available to the internet community via this page. There are several other sources for such stuff already on the web and there are a few pointers provided below, however I designed these tools specifically for: 
+
+DOS operation 
+Minimum wear on EEprom cells 
+Fast turn-around time 
+Command-line driven, no user interaction 
+Compatiblity with MPASM __CONFIG, __IDLOCS and DE statements 
+Reliable timing on all PCs from 286s to MegaMHz Pentiums 
+PP84 software
+The programming software, PP84, reads an 8-bit (INHX8M) HEX file produced by MPASM and programs only the locations that need programming, a bulk erasure is not performed unless the PIC to be programmed is code-protected. A memory location that already contains the correct data word is not programmed, empty memory locations are not programmed either. The short set-up and hold timing delays called for in the programming spec are timed using an oscillator built into the programming adapter gizmo, longer delays are timed by the PC with a software delay mechanism calibrated at start-up against the real-time clock. In this way excessive over timing on delay loops due to a requirement to cope with a range of PC performances can be avoided. These measures all result in a fast time-to-program, secure timing margins and reduced wear on EEPROM cells. 
+
+PP84 takes device config, ID information and EE data memory initialisation bytes directly from the HEX file in accordance with MPASM's specifications. In this way, all such control information can be contained, and documented, within the assembler source file and there are no interactive decisions to be made during the programming process. 
+
+PROG84 hardware
+The PROG84 hardware design is a modification and extension to MicroChip's AN589 reference design. It is 100% compatible (and other software which works with AN589 hardware will work with PROG84) but includes a 555 oscillator, running at about 250KHz, which provides a system tick to the PC software from which it derives the short-duration timing delays called for in the programming spec. It also inludes its own 12V voltage regulator making it independent of the external power supply's regulation and a couple of status LEDs give visual confirmation of activity. 
+
+Note that the BAT85 diode is a Schottky type and is used only to square up the waveform from the 555, use a 1N4148 if you can't source a BAT85. Also note that it sometimes _may_ be possible for the 12v Vpp voltage, applied to the CLR pin during programming, to source enough current into the 5v Vcc power supply rail (via the CLR pull-up resistor) to pull this rail to > 5.5v and thus prevent the PIC from programming properly. This can be cured by including a series diode with the CLR pull-up resistor to prevent current flowing into the Vcc rail. 
+
+What you need from MicroChip
+PIC16C84 Data Sheet 
+PIC16C84 EEPROM Programming Spec 
+MPASM generic assembler 
+MPASM User guide 
+AN589 programming application note 
+AN589 programming example code 
+What you need from me (updated April 97)
+PROG84 adapter gizmo schematic, PDF format, 87KB 
+PP84 programmer software, notes & sample ASM, zipped, 10KB 
+PIC84 demo target design schematic, PDF format, 75KB 
+Turbo Pascal source for PP84 is available by request. 
+Alternatively, a Linux port from Laszlo Nemeth (nemeth@eik.bme.hu)
+Linux port of PP84 software with improvements, 10KB 
+Also available from here for Red Hat Linux users. 
+Temperature Measurement Reference Material
+DS1820 temperature sensor interface PIC source code 
+Dallas DS1820 1-wire digital thermometer data sheet, 25 pages, PDF format, 150KB 
+What else is out there
+MicroChip's home page 
+Andy Errington's excellent PIC page 
+David Tait's equally excellent PIC archive 
+The PIC FAQ 
+Many other electronics-related links 
+
+--------------------------------------------------------------------------------
