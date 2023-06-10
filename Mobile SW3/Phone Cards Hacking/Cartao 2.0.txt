@@ -1,0 +1,784 @@
+{*****************************************************************************}
+{**  Cartao 2.0                                              15-Julho-2001  **}
+{**                                                                         **}
+{** http://chaveiro.cjb.net                                                 **}
+{*****************************************************************************}
+{ CONECTOR da PORTA PARALELA:            *                                    }
+{    Pino Sinal        Pino Sinal        *              CHIP ISO              }
+{  ->   1 Strobe#        14 Auto Feed#   *     _________________________      }
+{RESET =2 Data bit 0     15 Fault#       *    /            |            \     }
+{CLOCK =3 Data bit 1     16 INIT#        *  1 | Vcc=5V Ver.| Bra. Gnd   | 5   }
+{* R/W =4 Data bit 2     17 SLCT IN#     *    |-------\____|    /-------|     }
+{  +5V =5 Data bit 3     18 Ground       *  2 |R/W Cin.|       |Cas. Vpp| 6   }
+{  +5V =6 Data bit 4     19 Ground       *    |--------|       |--------|     }
+{  +5V =7 Data bit 5     20 Ground       *  3 |Clk Ver.|_______|Azu. I/O| 7   }
+{  +5V =8 Data bit 6     21 Ground       *    |-------/    |    \-------|     }
+{  +5V =9 Data bit 7     22 Ground       *  4 | Reset  Lar.| Cas.  Fuse | 8   }
+{   -> 10 ACK#           23 Ground       *    \____________|____________/     }
+{  I/O=11 Busy           24 Ground       *                                    }
+{      12 Error      GND=25 Ground       *      Adaptado por Chaveiro'97      }
+{      13 Select                         *                                    }
+{*****************************************************************************}
+{ The Reader Schematic:                                                       }
+{ ======================                                                      }
+{                                                                             }
+{    External 5V (Optional)                                                   }
+{ 5V o------,                                                                 }
+{           |                 /             T2  PNP      d13  r7 10           }
+{ 0V o--,   |                /               BC 177     |\ |  _____           }
+{       |   |      ,-------o/   o--*-------. E    C .---| >+-[_____]--------, }
+{     __+__ |      |               |        \      /    |/ |                | }
+{     \\\\\ |    __|__ Battery     |         >    /                         | }
+{           |      -   22.5V       |       ---------                        | }
+{ .......   |      |               |   _____   |   _____                    | }
+{        :  |    __+__             +--[_____]--*--[_____]-,                 | }
+{    D2  :  |    \\\\\                r6 150k     r5 15k  |                 | }
+{ 4 o-------|---------------------------*-----------------|--------------,  | }
+{        :  |                           |   r3 220k      / C             |  | }
+{    Ack :  |                           |   _____      |/    T1 - NPN    |  | }
+{ 10 o------|--------.                  '--[_____]-*---|      BC107      |  | }
+{        :  |        |                      _____  |   |>                |  | }
+{        : ,-,      ,-,                 +--[_____]-'     \ E             |  | }
+{        : | |r2    | |r1               |  r4 390k        |              |  | }
+{        : | |220   | |22k            __+__             __+__            |  | }
+{        : |_|      |_|               \\\\\             \\\\\            |  | }
+{        :  |  |\ |  |                                                   |  | }
+{        :  *--| >+--|----------------*----------------------------------|--* }
+{        :  |  |/ |  |          ,-----|-----------------------------,    |  | }
+{        :  |  d1    |          |     |   ,----------,----------,   |    |  | }
+{        :  |        |          |     *---|--*  Fuse | Reset *--|---'    |  | }
+{        :  |        |          |     |   |----------|----------|        |  | }
+{    D0  :  |        |          |   ,-|---|--*   I/O | Clk   *--|---,    |  | }
+{ 2 o-------|--------|----------'   | |   |----------|----------|   |    |  | }
+{        :  |        |              | '---|--*   Vpp | R/W   *--|---|----'  | }
+{   Busy :  |        |              |     |----------|----------|   |       | }
+{ 11 o------|--------|--------------' ,---|--*   Gnd | 5V    *  |   |       | }
+{        :  |        |                |   '----------'-------|--'   |       | }
+{    D1  :  |        |              __+__    Chip connector  |      |       | }
+{ 3 o-------|--------|--------,     \\\\\                    |      |       | }
+{        :  |        |        '------------------------------|------'       | }
+{   Str  :  |  |\ |  |                                       |              | }
+{ 1 o-------*--| >+--*----*----*----*----*-------------------'              | }
+{        :   d2|/ |  |d3  |d4  |d5  |d6  |d7                                | }
+{        :          -+-  -+-  -+-  -+-  -+-                                 | }
+{        :          /_\  /_\  /_\  /_\  /_\                                 | }
+{    D3  :           |    |    |    |    |   |\ | d8                        | }
+{ 5 o----------------*----|----|----|----|---| >+-------*-------------------' }
+{        :                |    |    |    |   |/ |       |                     }
+{        :                |    |    |    |              |                     }
+{    D4  :                |    |    |    |   |\ | d9    |                     }
+{ 6 o---------------------*----|----|----|---| >+-------*                     }
+{        :                     |    |    |   |/ |       |                     }
+{        :                     |    |    |              |                     }
+{    D5  :                     |    |    |   |\ | d10   |                     }
+{ 7 o--------------------------*----|----|---| >+-------*                     }
+{        :                          |    |   |/ |       |                     }
+{        :                          |    |              |                     }
+{    D6  :                          |    |   |\ | d11   |                     }
+{ 8 o-------------------------------*----|---| >+-------*                     }
+{        :                               |   |/ |       |                     }
+{        :                               |              |                     }
+{    D7  :                               |   |\ | d12   |                     }
+{ 9 o------------------------------------*---| >+-------'                     }
+{        :                                   |/ |                             }
+{ 25 o------.                                                                 }
+{ .......:  |                                                                 }
+{         __+__                               d1 to d13: 1N4148               }
+{         \\\\\                                                               }
+{   ^ Centronics port                                                         }
+{*****************************************************************************}
+{ Chaveiro                                                                    }
+{ 7 - Julho - 2001                  Modificado para funcionar no windows 2000 }
+{*****************************************************************************}
+{this prog will dump the memory of a telecard.                                }
+{i recomend reading Phrack 48                From: somedork@aol.com (PIC16C84)}
+{*****************************************************************************}
+{                             T E L E C A R D . PAS                           }
+{*****************************************************************************}
+{   This program enable you to dumb the memory of electronics phonecards      }
+{   from all over the world, so that you will be able to see which country    }
+{   the card is from how many units are left and so on ....                   }
+{*****************************************************************************}
+{                        Written by Stephane BAUSSON (1993)                   }
+{                         Email: sbausson@ensem.u-nancy.fr                    }
+{                       Snail Mail Address: 4, Rue de Grand                   }
+{                                           F-88630 CHERMISEY                 }
+{                                           France                            }
+{*****************************************************************************}
+{* Thanks to: Tomi Engdahl (Tomi.Engdahl@hut.fi)                             *}
+{*****************************************************************************}
+
+USES crt,dos;
+
+CONST port_address=$378;     { lpt1 chosen }
+
+TYPE string8=string[8];
+     string2=string[2];
+
+VAR reg         : registers;
+    crc,i,j,t,n       : integer;
+    Data        : array[1..32] of byte;
+    car         : char;
+    byte_number : integer;
+    displaying  : char;
+    Regs: Registers;
+
+{
+PROCEDURE Send(b:byte);
+  BEGIN port[port_address]:=b;
+  END;
+
+FUNCTION Get:byte;
+  BEGIN get:=port[port_address+1];
+  END;
+
+}
+
+procedure send(b:byte);
+
+  begin {reg.AH:=$00;
+        reg.AL:=b;
+        reg.DX:=0;
+        intr($17,reg);}
+        Port[MemW[$0040:$0008]]:=b;
+  end;
+
+{-----------------------------------------------------------------------------}
+
+function get:byte;
+
+  begin {reg.AH:=$02;
+        reg.DX:=0;
+        intr($17,reg);
+        get:=reg.AH;}
+        get:=Port[MemW[$0040:$0008]+1];
+  end;
+
+{-----------------------------------------------------------------------------}
+
+procedure delayx(b:integer);
+begin
+        BEGIN for i:=1 to b do
+              	BEGIN for j:=1 to 250 do
+                END;
+        END;
+end;
+
+{-----------------------------------------------------------------------------}
+
+Procedure CursorOff;
+Begin
+     Regs.AH := $01;
+     Regs.CH := $20;
+     Regs.CL := $20;
+     Intr($10,Regs);
+End;
+
+{-----------------------------------------------------------------------------}
+
+Procedure CursorOn;
+Begin
+     Regs.AH := $01;
+     Regs.CH := $6;
+     Regs.CL := $7;
+     Intr($10,Regs);
+End;
+
+{-----------------------------------------------------------------------------}
+{ FUNCTION dec2hexa_one(decimal_value):hexa_character_representation;         }
+{                                                                             }
+{       - convert a 4 bit long decimal number to hexadecimal.                 }
+{-----------------------------------------------------------------------------}
+
+FUNCTION dec2hexa_one(value:byte):char;
+
+  BEGIN case value of
+	  0..9   : dec2hexa_one:=chr(value+$30);
+	  10..15 : dec2hexa_one:=chr(value+$37);
+	END;
+  END;
+
+{-----------------------------------------------------------------------------}
+{ FUNCTION d2h(decimal_byte):string2;                                         }
+{                                                                             }
+{       - convert a decimal byte to its hexadecimal representation.           }
+{-----------------------------------------------------------------------------}
+
+FUNCTION d2h(value:byte):string2;
+
+  VAR msbb,lsbb:byte;
+
+  BEGIN msbb:=0;
+	if ( value >= $80 ) then
+	BEGIN msbb:=msbb+8;
+	      value:=value-$80;
+	END;
+	if ( value >= $40 ) then
+	BEGIN msbb:=msbb+4;
+	      value:=value-$40;
+	END;
+	if ( value >= $20 ) then
+	BEGIN msbb:=msbb+2;
+	      value:=value-$20;
+	END;
+	if ( value >= $10 ) then
+	BEGIN msbb:=msbb+1;
+	      value:=value-$10;
+	END;
+
+	lsbb:=0;
+	if ( value >= $08 ) then
+	BEGIN lsbb:=lsbb+8;
+	      value:=value-$08;
+	END;
+	if ( value >= $04 ) then
+	BEGIN lsbb:=lsbb+4;
+	      value:=value-$04;
+	END;
+	if ( value >= $02 ) then
+	BEGIN lsbb:=lsbb+2;
+	      value:=value-$02;
+	END;
+	if ( value >= $01 ) then
+	BEGIN lsbb:=lsbb+1;
+	      value:=value-$01;
+	END;
+	d2h := dec2hexa_one(msbb) + dec2hexa_one(lsbb);
+  END;
+
+{-----------------------------------------------------------------------------}
+
+Function Binary( b : byte):string8;
+
+  var weigth : byte;
+      s      : string8;
+
+  BEGIN weigth:=$80;
+	s:='';
+	while (weigth > 0) do
+	BEGIN if ((b and weigth) = weigth) then s:=s+'1'
+	      else s:=s+'0';
+	      weigth:=weigth div $02;
+	END;
+	Binary:=s;
+  END;
+
+{-----------------------------------------------------------------------------}
+
+FUNCTION Units:byte;
+
+  VAR  u, i : integer;
+       s    : string8;
+
+  BEGIN u:=0;
+	i:=13;
+	while (Data[i] = $FF) do
+	BEGIN u:=u+8;
+	      i:=i+1;
+	END;
+	s:=Binary(Data[i]);
+	while(s[1]='1') do
+	      BEGIN inc(u);
+	      s:=copy(s,2,length(s));
+	END;
+	units:=u;
+  END;
+
+{-----------------------------------------------------------------------------}
+
+function Units_2:LongInt;
+
+  BEGIN
+Units_2:=4096*Data[9]+512*Data[10]+64*Data[11]+8*Data[12]+Data[13];
+  END;
+
+{-----------------------------------------------------------------------------}
+
+PROCEDURE Card_Type;
+  VAR  c    : integer;
+
+  Begin
+  TextColor(lightcyan);
+  if (Data[2] <> $00) then
+  case Data[5] of
+     $00: Begin write('Schlumberger');
+     TextColor(magenta);write(' - ');
+      end;
+     $10: begin write('Solaic');
+          TextColor(magenta);write(' - ');
+      end;
+     $30: begin write('Gemplus (finnish cards)');
+          TextColor(magenta);write(' - ');
+      end;
+     $40: begin write('Gemplus');
+          TextColor(magenta);write(' - ');
+      end;
+  END;
+  TextColor(lightcyan);
+  case Data[2] of
+	 $03: BEGIN write('Telecard - France - ');
+		    case Data[12] of
+		     $13: write('120 Units - ',units-130,' Units left');
+		     $06: write('50 Units - ',units-60,' Units left');
+		     $15: write('40 Units - ',units-40,' Units left');
+		    END;
+	      END;
+	 $2F:BEGIN write('Telecard - Germany - ', Units_2, ' Units left');
+	     END;
+	 $3B:BEGIN write('Telecard - Greece - ', Units_2, ' Units left');
+	     END;
+	 $83:BEGIN write('Telecard');
+		   case Data[12] of
+		     $1E: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                          write('Sweden');
+                          end;
+		     $30: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                          write('Norway');
+                          end;
+		     $33: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                          write('Andorra');
+                          end;
+		     $3C: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                          write('Ireland');
+                          end;
+		     $47: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                          write('Portugal');
+                          end;
+		     $55: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                          write('Czech Republic');
+                          end;
+		     $5F: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                          write('Gabon');
+                          end;
+		     $65: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                          write('Finland');
+                          end;
+		   END;
+		   {if (Data[12] in [$30,$33,$3C,$47,$55,$65]) then}
+		   BEGIN case ((Data[3] and $0F)*$100+Data[4]) of
+			  $012: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('10 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-12,' Units left');
+                                      if ( units-12 > 0 ) then write(' above the normal');
+                                end;
+			  $022: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('20 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-22,' Units left');
+                                      if (units-22 > 0) then write(' above the normal');
+                                end;
+			  $027: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('25 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-27,' Units left');
+                                      if (units-27 > 0) then write(' above the normal');
+                                end;
+			  $032: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('30 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-32,' Units left');
+                                      if (units-32 > 0) then write(' above the normal');
+                                end;
+			  $052: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('50 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-52,' Units left');
+                                      if (units-52 > 0) then write(' above the normal');
+                                end;
+			  $067: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('65 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-62,' Units left');
+                                      if (units-62 > 0) then write(' above the normal');
+                                end;
+			  $070: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('70 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-70,' Units left');
+                                      if (units-70 > 0) then write(' above the normal');
+                                end;
+			  $102: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('100 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-102,' Units left');
+                                      if (units-102 > 0) then write(' above the normal');
+                                end;
+                          $122: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('120 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-122,' Units left');
+                                      if (units-122 > 0) then write(' above the normal');
+                                end;
+			  $152: begin TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write ('150 Units');
+                                      TextColor(magenta); write(' - '); textcolor(lightcyan);
+                                      write(units-152,' Units left');
+                                      if (units-152 > 0) then write(' above the normal');
+                                end;
+                          else
+                           TextColor(magenta); write(' - '); textcolor(lightcyan);
+                           if ((data[3] and $0F) = 1) then write('1');
+                           write(d2h(data[4]-2),' Units (Non Standart card)');
+                          END;
+		    END;
+                    write;
+                    TextColor(magenta); write(' - '); textcolor(cyan);
+                    write('SN:');textcolor(lightcyan);
+                    write(d2h(data[6]),d2h(data[7]),d2h(data[8]));
+                    TextColor(magenta); write('/'); textcolor(cyan);
+                    write(d2h(data[9]),d2h(data[10]));
+                    {write(' - N° ',Data[5]*$100+Data[6]);}
+                    if (216-crc = data[1])then
+                     Begin
+                     TextColor(magenta); write(' - '); textcolor(lightcyan);
+                     write('CRC Check');
+                     TextColor(lightgreen); write(' OK');
+                     end
+                    else
+                      begin
+                     TextColor(magenta); write(' - '); textcolor(cyan);write('"');textcolor(lightcyan);
+                     write(d2h(216-crc));textcolor(cyan); write('"'); textcolor(lightcyan);
+                     write(' CRC Check');textcolor(lightred);write(' Failed');
+                     sound(400);
+                     delay(500);
+                      end;
+                END;
+               $80:BEGIN write('Other Applications');
+               END;
+               $9A:BEGIN write('PIAF card [TBC]');
+               END;
+               $C0:BEGIN write('AVANT card [TBC]');
+               END;
+
+             END;
+             if (data[2] = $00) or (data[2] = $FF) then
+             begin
+             sound(750);delay(50);nosound;delay(175);sound(750);delay(50);nosound;
+             end;
+  END;
+
+{-----------------------------------------------------------------------------}
+
+PROCEDURE waiting;
+ var c: integer;
+
+  BEGIN send($00);
+        c:= wherey;
+	write('Enter a card in the reader and press a key ...');
+        window(78,3,80,4);
+        TextColor(lightcyan);
+        write(t,' ');
+        TextColor(lightgray);
+        window(1,5,80,25);
+        gotoxy(1, c);
+        repeat until keypressed;
+	clreol;
+  END;
+
+{-----------------------------------------------------------------------------}
+
+PROCEDURE Full_Displaying;
+
+  BEGIN TextColor(green);
+        write('---');
+        TextColor(cyan);
+        write(' Memory dump');
+        TextColor(green);
+        write(' ----------------------------------------------------------------');
+        TextColor(white);
+{	for i:=1 to 80 do write('-');}
+	for i:=1 to (byte_number div 6 + 1) do
+	BEGIN for j:=1 to 6 do
+	      BEGIN if j+6*(i-1) <= byte_number then
+write(binary(Data[j+6*(i-1)]):9);
+	      END;
+	      gotoxy(60,wherey);
+	      for j:=1 to 6 do
+	      if j+6*(i-1) <= byte_number then
+write(d2h(Data[j+6*(i-1)]),' ');
+	      writeln;
+	END;
+        TextColor(green);
+	for i:=1 to 80 do write('-');
+	Card_Type;
+        TextColor(lightgray);
+	writeln;
+  END;
+
+{-----------------------------------------------------------------------------}
+
+PROCEDURE Short_Displaying;
+
+  VAR j : integer;
+
+  BEGIN for j:=1 to byte_number do
+	BEGIN write(d2h(Data[j]),' ');
+	END;
+	writeln;
+  END;
+
+{-----------------------------------------------------------------------------}
+
+PROCEDURE Reading;
+
+  VAR i, j, c, rcv  : integer;
+      erro : boolean;
+      Value : byte;
+
+
+  BEGIN crc:=0;
+        c:=0;
+        erro:=false;
+        TextColor(lightgreen);
+        send($00); {00000000 <-D0 - vccs, reset, clk, r/w} 
+        delayx(t);
+        send($F8); {11111000 <-D0 - vccs, reset, clk, r/w} 
+	delayx(t);
+        send($FA); {11111010 <-D0 - vccs, reset, clk, r/w} 
+	delayx(t);
+	send($F8); {11111000 <-D0 - vccs, reset, clk, r/w} 
+	delayx(t);
+        send($FC); {11111100 <-D0 - vccs, reset, clk, r/w} 
+	delayx(t);
+        sound (2600);
+        for i:=1 to 32 do
+	BEGIN Value:=0;
+              for j:=1 to 8 do
+	      BEGIN c:=c+1;
+                    rcv:=((get and $80) div $80);
+                    Value:=Value*$02 + rcv;
+                    send($FE); {11111110 <-D0}
+		    delayx(t);
+		    send($FC); {11111100 <-D0}
+                    delayx(t);
+
+               if (i=2)or(i=3)or(i=4)or(i=5)or(i=6)or(i=7)or(i=8)or(i=9)or(i=10)or(i=11)or(i=12) then
+                begin
+                if(rcv)=0 then crc:=crc+1;
+               end;
+
+               if (c=n) and (rcv=1) then
+               begin
+               erro:=TRUE;
+               n:=0;
+               end
+
+              END;
+	      Value:=NOT Value;
+              Data[i]:=Value;
+        gotoxy(66,wherey);
+        write('Readding: ',trunc(((i)*100)/32),'%');
+        nosound;
+	END;
+        sound(5000);
+        gotoxy(66,wherey);
+        write('              ');
+        gotoxy(1,wherey);
+        if erro then
+        begin TextColor(lightred);
+        writeln('ERROR: Bit ',n,' was not changed to "1"');
+        sound (6000);
+        TextColor(lightgreen);
+        delay(250);
+        end;
+        TextColor(lightgray);
+	case displaying of
+	  'F':full_displaying;
+	  'S':short_displaying;
+	END;
+          delay(30);
+          sound (6700);
+          delay(20);
+          nosound;
+
+  END;
+
+{-----------------------------------------------------------------------------}
+
+PROCEDURE writting;
+
+  VAR i:integer;
+      car:char;
+
+  BEGIN n:=0;
+        TextColor(cyan);
+        write('Which bit do you want to set to "1" : ');
+	readln(n);
+        if (n <= 0) or (n >(byte_number*8)) then
+        begin
+        TextColor(lightred);
+        writeln('Invalid entry');
+        writting;
+        end;
+        TextColor(lightgray);
+	waiting;
+	car:=readkey;
+	send($FA); {11111010 <-D0}
+	send($F8); {11111000 <-D0}
+
+        send($00); {00000000 <-D0 - vccs, reset, clk, r/w} 
+        delayx(t);
+        send($F8); {11111000 <-D0 - vccs, reset, clk, r/w} 
+	delayx(t);
+        send($FA); {11111010 <-D0 - vccs, reset, clk, r/w} 
+	delayx(t);
+	send($F8); {11111000 <-D0 - vccs, reset, clk, r/w} 
+	delayx(t);
+        send($FC); {11111100 <-D0 - vccs, reset, clk, r/w} 
+	delayx(t);
+
+        sound (1300);
+        TextColor(yellow);
+	for i:=1 to n do
+	BEGIN send($FC); {11111100 <-D0  Clk=0;vpp=5V r/w=0}
+	      if i=n then
+	      BEGIN TextColor(lightred);
+                    gotoxy(65,wherey);
+                    write('      Writting');
+                    sound(500);
+                    send($FD); {11111101 <-D0  Clk=0; vpp=21V r/w=1}
+		    delay(10);
+		    delayx(t);
+		    send($FF); {11111111 <-D0  Clk=1; vpp=21V r/w=1}
+		    delay(10);
+    		    delayx(t);
+              END;
+	      delayx(t); {Missing by the author}
+	      send($FE); {11111110 <-D0  Clk=1; vpp=5V r/w=0}
+              delayx(t);
+        gotoxy(65,wherey);
+        write('Searching: ',trunc(((i)*100)/n),'%');
+        nosound;
+        END;
+        gotoxy(65,wherey);
+        write('               ');
+        gotoxy(1,wherey);
+        TextColor(lightgray);
+        reading;
+  END;
+
+{-----------------------------------------------------------------------------}
+PROCEDURE Saving;
+
+  VAR filename : string;
+      f        : text;
+      i        : word;
+
+  BEGIN TextColor(cyan);
+        write('Enter the filename: ');
+	readln(filename);
+        filename:=filename + '.txt';
+	assign(f, filename);
+	rewrite(f);
+	for i:=1 to byte_number do write(f,d2h(Data[i]),' ');
+	close(f);
+        TextColor(lightgray);
+  END;
+
+{-----------------------------------------------------------------------------}
+
+PROCEDURE initialize;
+
+  VAR i : integer;
+
+  BEGIN t:= 10;
+        byte_number:=32;
+	displaying:='F';
+	clrscr;
+        NormVideo; { Original attribute }
+        TextColor(lightgray);
+        writeln(' 1 - to dump a 256 bits card');
+	writeln(' 2 - to dump a 128 bits card');
+	writeln(' F - to display in full format');
+	window(41,1,80,25);
+	writeln(' W  - set bit to "1" (Fuse unit)');
+	writeln(' F2 - to save in a file');
+	writeln(' Q  - to exit the program');
+	window(1,4,80,25);
+        TextColor(blue);
+	for i:=1 to 80 do write('=');
+       	window(1,5,80,25);
+        TextColor(lightgray);
+  END;
+
+{=============================================================================}
+
+BEGIN initialize;
+      CursorOff;
+      repeat waiting;
+	     car:=upcase(readkey);
+	     case car of
+	      'W':writting;
+	      'Q':;
+	      '1':byte_number:=32;
+	      '2':byte_number:=16;
+	      'F','S':displaying:=car;
+              #27: car:='Q';
+	      #00: BEGIN car:=readkey;
+			 if car=#60 then saving;
+                         if car=#72 then
+                           begin if t < 999 then
+                                 begin t:=t+1;
+                                 end
+                                 {else
+                                 begin sound(400);
+                                 delay(100);
+                                 nosound;
+                                 end}
+                           end;
+                         if car=#80 then
+                           begin if t > 0 then
+                                 begin t:=t-1;
+                                 end
+                                 {else
+                                 begin sound(200);
+                                 delay(100);
+                                 nosound;
+                                 end;}
+                           end;
+                   END;
+
+	      else reading;
+	     END;
+      until car='Q';
+      CursorOn;
+END.
+
+
+{*****************************************************************************}
+{************************* NAO SERVE PARA ESTE PROGRAMA **********************}
+{*****************************************************************************}
+{ Parallel Port Connector:                                                    }
+{ Pin Signal Name      Pin Signal Name                                        }
+{      1 Strobe#        14 Auto Feed#                                         }
+{r CLK=2 Data bit 0     15 Fault#                                             }
+{c     3 Data bit 1     16 INIT#                                              }
+{      4 Data bit 2     17 SLCT IN#                                           }
+{+     5 Data bit 3     18 Ground                                             }
+{+ RST=6 Data bit 4     19 Ground                                             }
+{+     7 Data bit 5     20 Ground                                             }
+{+     8 Data bit 6     21 Ground                                             }
+{+ Vcc=9 Data bit 7     22 Ground                                             }
+{     10 ACK#           23 Ground                                             }
+{ I/O=11 Busy           24 Ground                                             }
+{     12 Error      GND=25 Ground                                             }
+{     13 Select                                                               }
+{ _______________                                                             }
+{/       |       \                                                            }
+{|  Vcc  |  GND  |  Vcc to parallel port pin 9, GND to pin 25,  RST to pin 4, }
+{|  RST  |   #   | CLK to pin 2,  I/O to pin 11.  Then pulse  CLK up and down }
+{|  CLK  |  I/O  | by writing 0x81 and 0x80 to the port, then read the printer}
+{|   #   |   #   | I/O error status bit to retrieve a bit at a time.          }
+{\_______|_______/  Pulse to receive another bit, etc.                        }
+{                                                                             }
+{Mensagem adaptada de:                                                        }
+{+-----------------------------+------------------------------------+         }
+{| Adrian Cable [Doom Master!] | Internet: [MeGALiTH on IRC]        |         }
+{| Fidonet: 2:252/169.3        | acable@sv.span.com                 |         }
+{+-----------------------------+------------------------------------+         }
+{| Latest ViRC '96 release: 0.92b - ViRC '97 within two weeks!!     |         }
+{| Get it from: http://www.megalith.co.uk/virc                      |         }
+{+------------------------------------------------------------------+         }
+{*****************************************************************************}
+

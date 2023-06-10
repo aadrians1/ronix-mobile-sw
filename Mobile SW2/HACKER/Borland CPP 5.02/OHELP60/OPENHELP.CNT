@@ -1,0 +1,5 @@
+:TITLE Borland C++ 5.02 Documentation
+:INDEX OpenHelp 6.0 User's Guide=OpenHelp.hlp
+:LINK OpenHelp.hlp
+:INCLUDE bc5help.cfg
+:INCLUDE openhelp.toc

@@ -1,0 +1,5 @@
+:Title Borland C++ DOS Reference
+:INDEX Borland C++ DOS Reference = bcdos.hlp
+:INDEX Borland C++ Programmer's Guide = bcpp.hlp
+:INCLUDE BC5HELP.CFG
+:INCLUDE bcdos.toc

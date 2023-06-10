@@ -1,0 +1,254 @@
+:Base together.HLP>main
+:Title Together/C++ Help
+:Index Together/C++ Help =together.hlp
+:INCLUDE BC5HELP.CFG
+:Link together.hlp
+1 Tutorial
+2 Introduction
+3 About this tutorial =About_this_tutorial
+3 Getting started =Getting_started
+2 Creating an object model
+3 Understanding the real-life situation: Wally's Warehouse =Understanding_the_real_life_situation_Wallys_Warehouse
+3 Starting the Object Model editor =Starting_the_Object_Model_Editor
+3 Bringing objects in focus =Bringing_objects_in_focus
+3 Creating classes =Creating_classes
+3 Adding attributes =Adding_attributes
+3 Adding operations =Adding_operations
+3 Creating links =Creating_links
+2 Working with the diagram
+3 Diagram layout =Diagram_layout
+3 Adding link nodes =Adding_link_nodes
+3 Saving the diagram layout =Saving_the_diagram_layout
+3 Displaying large diagrams =Displaying_large_diagrams
+3 Synchronous updating =Synchronous_updating
+3 Printing the object model =Printing_the_object_model
+2 Creating a scenario
+3 About scenarios =About_scenarios
+3 Working out the scenario =Working_out_the_scenario
+3 Starting the Scenario editor =Starting_the_Scenario_editor
+2 Using the Scenario view
+3 About the Scenario view =About_the_Scenario_view
+3 Naming a scenario=Naming_a_scenario
+3 Adding a constraint =Adding_a_constraint
+3 Creating scenario dynamics=Creating_scenario_dynamics
+3 Example code for warehouse scenario =Example_code_for_warehouse_scenario
+3 Creating more messages =Creating_more_messages
+3 Completed scenario diagram =Completed_scenario_diagram
+3 Saving the scenario =Saving_the_scenario
+3 Printing the scenario =Printing_the_scenario
+2 Exporting information
+3 About Information Export =About_Information_Export
+3 Creating documentation and Help =Creating_documentation_and_Help
+3 Creating a template file =Creating_a_template_file
+2 Using Together/C++ with existing source code
+3 Visualizing existing source code =Visualizing_existing_source_code
+3 Opening an existing project =Opening_an_existing_project
+3 Displaying the object model =Displaying_the_object_model
+3 Increasing the number of automatically recognized links =Increasing_the_number_of_automatically_recognized_links
+3 Creating custom links =Creating_custom_links
+3 Where to go from here =Where_to_go_from_here
+1 Together/C++ User's Guide
+2 Introduction
+3 What is Together/C++ ? =IDH_What_is_Together_C
+3 Together/C++ terminology =IDH_Terminology_conventions
+2 Together/C++ in the software development life cycle
+3 About the software development life cycle =IDH_Overview
+3 Analysis and design =IDH_Analysis_and_Design
+3 Implementation =IDH_Implementation
+3 Reengineering =IDH_Reengineering
+3 Documentation =IDH_Documentation
+3 Maintenance and reuse =IDH_Maintenance_and_reuse
+3 Getting Help =IDH_Getting_Help
+3 Getting started with Together/C++ =IDH_Getting_started
+3 The object model and C++ =IDH_The_Object_Model_and_C
+2 Starting projects
+3 Starting a new project with Target Expert =IDH_Starting_a_New_Project_with_Target_Expert
+3 Using the Project Manager =IDH_Using_the_Project_Manager
+3 Accessing Together/C++ =IDH_Accessing_Together_C
+2 Using the Object Model editor
+3 About the Object Model editor =IDH_About_the_Object_Model_Editor
+3 Opening the Object Model editor =IDH_Opening_the_Object_Model_Editor
+3 Object Model editor window =IDH_The_Object_Model_Editor_window
+3 Using the Icon toolbar =IDH_Using_the_Icon_Toolbar
+2 Working with classes
+3 Adding a class =IDH_Adding_a_Class
+3 Class dialog =IDH_Class_dialog
+3 Changing a class =IDH_Changing_a_Class
+3 Deleting a class =IDH_Deleting_a_Class
+3 Delete Class Dialog Box =IDH_Delete_Class_Dialog
+3 Annotating a class =IDH_Annotating_a_Class
+3 Selecting classes =IDH_Selecting_Classes
+3 Positioning classes =IDH_Positioning_Classes
+3 Resizing a class =IDH_Resizing_a_Class
+2 Working with attributes
+3 About attributes =IDH_Working_With_Attributes
+3 Adding an attribute =IDH_Adding_an_Attribute
+3 Attribute dialog =IDH_Attribute_dialog
+3 Changing an attribute =IDH_Changing_an_Attribute
+3 Copying and moving an attribute =IDH_Copying_and_moving_an_Attribute
+3 Deleting an attribute =IDH_Deleting_an_Attribute
+2 Working with Operations
+3 Adding an operation =IDH_Adding_an_Operation
+3 Operation Dialog Box =IDH_Operation_dialog
+3 Changing an operation =IDH_Changing_an_Operation
+3 Copying and moving an operation =IDH_Copying_and_moving_an_Operation
+3 Deleting an operation =IDH_Deleting_an_Operation
+2 Working with Links
+3 About Links =IDH_About_Links
+3 Creating a link =IDH_Creating_a_Link
+3 Changing a link =IDH_Changing_a_Link
+3 Inheritance dialog =IDH_Inheritance_dialog
+3 Rerouting a link =IDH_Rerouting_a_Link
+3 Creating a bending point =IDH_Creating_a_bending_point
+3 Deleting a link =IDH_Deleting_a_Link
+2 Working with the diagram
+3 Reordering members =IDH_Reordering_members
+3 Scrolling the diagram =IDH_Scrolling_the_diagram
+3 Filtering the diagram =IDH_Filtering_the_diagram
+3 Automatic layout =IDH_Automatic_layout
+3 Overview window =IDH_Overview_window
+2 Using the Scenario editor
+3 About the Scenario editor =IDH_About_the_Scenario_Editor
+3 Opening the Scenario editor =IDH_Opening_the_Scenario_Editor
+3 Scenario Editor window =IDH_The_Scenario_Editor_window
+3 Using the Scenario editor Icon toolbar =IDH_Using_the_Scenario_Editor_Icon_Toolbar
+3 Selecting classes that participate in the scenario =IDH_Selecting_Classes_which_participate_in_the_Scenario
+3 Select Classes dialog =IDH_Select_Classes_dialog
+3 Working with classes in a scenario =IDH_Working_with_Classes_in_Scenario
+3 Deleting a class from object model and scenario =IDH_Deleting_a_Class_from_Object_Model_and_Scenario
+3 Hiding a class from a scenario =IDH_Hiding_a_Class_from_Scenario
+3 Rearranging classes =IDH_Rearranging_Classes
+3 Working with operations in a scenario =IDH_Working_with_Operations_in_Scenario
+3 Working with scenario operations =IDH_Working_with_Scenario_Operations
+3 Adding a scenario operation =IDH_Adding_a_Scenario_Operation
+3 Select Operation dialog =IDH_Select_Operation_dialog
+3 Renaming a scenario operation =IDH_Renaming_a_Scenario_Operation
+3 Deleting a scenario operation =IDH_Deleting_a_Scenario_Operation
+3 Rearranging scenario operations =IDH_Rearranging_Scenario_Operations
+3 Working with messages =IDH_Working_with_Messages
+3 Adding a message =IDH_Adding_a_Message
+3 Changing a message =IDH_Changing_a_Message
+3 Deleting a message =IDH_Deleting_a_Message
+3 Working with Control Structures =IDH_Working_with_Control_Structures
+3 Adding a Control Structure =IDH_Adding_a_Control_Structure
+3 Deleting a Control Structure =IDH_Deleting_a_Control_Structure
+3 Working with scenario comments =IDH_Working_with_Scenario_Comments
+2 Working with the scenario diagram
+3 Scrolling the scenario =IDH_Scrolling_the_Scenario
+3 Diagram editors =IDH_Diagram_Editors
+3 Saving and loading a diagram =IDH_Saving_and_loading_a_diagram
+3 Zooming a diagram =IDH_Zooming_a_diagram
+3 Printing a diagram =IDH_Printing_a_diagram
+3 Searching in a diagram =IDH_Searching_in_a_diagram
+3 Undo, Redo =IDH_Undo_Redo
+3 Using hot keys =IDH_Using_hot_keys
+2 Working with blueprints
+3 About blueprints =IDH_Working_with_Blueprints
+3 Configuring blueprints for source code construction =IDH_Configuring_Blueprints_for_the_source_code_construction
+3 Configuring blueprints for reengineering =IDH_Configuring_Blueprints_for_reengineering
+3 Working with Comments =IDH_Working_with_Comments
+3 Using the Text editor =IDH_Using_the_Text_Editor
+2 Configuring Together/C++
+3 Configuring Together/C++ =IDH_Configuration
+3 Configuration dialog box =IDH_Configuration_dialog
+3 Object Model editor options dialog box =IDH_Object_Model_Editor_options_dialog
+3 Scenario editor options dialog box =IDH_Scenario_Editor_options_dialog
+3 Parser options dialog box =IDH_Parser_options_dialog
+3 Code editor options dialog box =IDH_Code_Editor_options_dialog
+3 Print server options dialog box =IDH_Print_server_options_dialog
+2 References
+3 References =IDH_References
+2 Information Export
+3 About Information Export =About_Information_Export_ie
+3 Starting Information Export =Starting_Information_Export
+3 Embedding model diagrams =Embedding_model_diagrams
+3 Understanding template file structure =Understanding_template_file_structure
+3 Documenting your project =Documenting_your_project
+3 Sample templates
+4 Using the sample templates =Using_the_sample_templates
+4 Class Catalog template =Class_Catalog_template
+4 Windows Help file template =Windows_Help_file_template
+4 HTML Hypertext template =HTML_Hypertext_template
+2 Information Export Execute language
+3 About the Information Export Execute language =InformationExportExecuteLanguage
+3 Macro variables =MacroVariables
+3 Functions =IEFunctions
+3 Macro commands =MacroCommands
+3 Information Export Execute language examples =InformationExportExecuteLanguageExamples
+2 Information Export Script language reference
+3 About the Information Export Script language =About_the_Information_Export_Script_language
+3 Script language reference
+4 Script language reference =Script_language_reference
+4 Constants =Constants
+4 Variables =Variables
+4 Expressions and operators
+5 About expressions and operators =Expressions_and_operators
+5 Arithmetic operators =Arithmetic_operators
+5 Relational operators =Relational_operators
+5 Logical operators =Logical_operators
+5 Function call operators =Function_call_operators
+5 Query operators =Query_operators
+4 Statements
+5 About statements =Statements
+5 Assignment statement =Assignment_statement
+5 Declaration statement =Declaration_statement
+5 Expression statement =Expression_statement
+5 Conditional statement =Conditional_statement
+5 Iteration statement =Iteration_statement
+5 Procedure definition statement =Procedure_definition_statement
+5 Procedure call statement =Procedure_call_statement
+4 Queries and functions
+5 Queries and functions =Queries_and_functions
+5 Queries
+6 About queries =Queries
+6 ATTRIBUTE queries =ATTRIBUTE_queries
+6 CLASS queries =CLASS_queries
+6 FILE queries =FILE_queries
+6 OPERATION queries =OPERATION_queries
+6 PROJECT queries =PROJECT_queries
+5 Functions
+6 About functions =Functions
+6 ATTRIBUTE functions =ATTRIBUTE_functions
+6 CLASS functions =CLASS_functions
+6 FILE function =FILE_function
+6 LINK functions =LINK_functions
+6 OPERATION functions =OPERATION_functions
+6 PARAGRAPH function =PARAGRAPH_function
+6 PROJECT function =PROJECT_function
+6 USAGE function =USAGE_function
+6 Special function =Special_function
+2 Information Export: Reference lists
+3 Alphabetical list of IE Script language queries
+4 Alphabetical list of IE Script language queries =Alphabetical_list_of_IE_Script_language_queries
+4 Aggregations =Aggregations_queries
+4 AllClasses =AllClasses_queries
+4 Associated =Associated_queries
+4 Associations =Associations_queries
+4 Attributes =Attributes_queries
+4 Classes =Classes_queries
+4 DeclComments =DeclComments_queries
+4 DefinitionComments =DefinitionComments_queries
+4 Files =Files_queries
+4 Generalizations =Generalizations_queries
+4 Inheritances =Inheritances_queries
+4 Links =Links_queries
+4 Messages =Messages_queries
+4 Operations =Operations_queries
+4 Parts =Parts_queries
+4 Receivers =Receivers_queries
+4 Senders =Senders_queries
+4 Specializations =Specializations_queries
+4 Usages =Usages_queries
+4 Wholes =Wholes_queries
+3 Alphabetical list of IE Script language functions
+4 Alphabetical list of IE Script language functions =Alphabetical_list_of_IE_Script_language_Functions
+4 Declaration =Declaration_Functions
+4 Destination =Destination_Functions
+4 FileCpp =FileCpp_Functions
+4 FileHpp =FileHpp_Functions
+4 GetProperty =GetProperty_Functions
+4 HasProperty =HasProperty_Functions
+4 Long =Long_Functions
+4 Unique =Unique_Functions
+1 Strategies and Patterns
+2 Strategies, patterns, and applications=IDH_CONTENTS@STRPAT.HLP

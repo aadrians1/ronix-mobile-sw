@@ -1,0 +1,37 @@
+:BASE OpenHelp.hlp
+1 About OpenHelp 6.0=IDH_OVERVIEW
+1 Starting OpenHelp=StartingOpenHelp
+1 Search ranges
+2 Search ranges=IDH_SEARCHRANGEPAGE
+2 Current search range=CreateSearchRange
+2 Search range list=IDH_RANGERANGELIST
+2 Selecting a search range=SelectSearchRange
+2 Creating a search range=CreateSearchRange
+2 Copying a search range=IDH_RANGECOPY
+2 Deleting a search range=IDH_RANGEDELETE
+2 Available help files=IDH_AVAILABLEHELPFILESLIST
+2 Adding a help file to a search range=IDH_ADDFILESBUTTON
+2 Adding all help files to a search range=IDH_ADDALLFILESBUTTON
+2 Removing a help file from a search range=IDH_REMOVEFILESBUTTON
+2 Removing all help files from a search range=IDH_REMOVEALLFILESBUTTON
+2 Help files in a search range=IDH_SELECTEDHELPFILESLIST
+2 Adding help files=AddHelpFiles
+2 Removing help files=RemoveHelpFiles
+1 Table of contents
+2 Table of contents=IDH_CONTENTSFILESPAGE
+2 Selecting a help file=IDH_HELPFILECOMBO
+2 Available contents files=IDH_AVAILABLECONTENTSFILES
+2 Making a contents file available=IDH_ADDTOCFILE
+2 Making a contents file unavailable=IDH_REMOVETOCFILE
+2 Adding a contents file to a help file=IDH_ADDTOC
+2 Adding all contents files to a help file=IDH_ADDALLTOC
+2 Removing a contents file from a help file=IDH_REMOVETOC
+2 Removing all contents files from a help file=IDH_REMOVEALLTOC
+2 Contents files in a help file=IDH_SELECTEDCONTENTSFILES
+1 Products
+2 Products=IDH_PRODUCTPAGE
+2 Currently selected product=IDH_CURRENTPRODUCT
+2 Installed products list=IDH_INSTALLEDPRODUCTS
+2 Selecting a product=IDH_SELECTPRODUCT
+2 Creating a new product=IDH_CREATEPRODUCT
+2 Deleting a product=IDH_DELETEPRODUCT
