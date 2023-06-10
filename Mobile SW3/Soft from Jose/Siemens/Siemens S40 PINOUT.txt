@@ -1,0 +1,19 @@
+                               Siemens S40 PINOUT
+
+
+                          KEYBOARD UP
+           
+           ---------------------------------------
+           I                      GND  TX        I    
+           I                                     I
+           I   O    O    O    O    O    O    O   I
+           I                                     I  
+           I                                     I
+           I                                     I           (o) ANTENA CONNECTOR
+           I   O    O    O    O    O    O    O   I
+           I                                     I
+           I                                RX   I
+           I                                     I
+           ---------------------------------------
+
+   
