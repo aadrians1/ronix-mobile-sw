@@ -1,0 +1,461 @@
+<TITLE>Excite, Inc. Excite for Web Servers Help</TITLE><BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000" ALINK="#0000FF">
+<img src="pictures/AT-help_banner.gif">
+<A NAME="Excite, Inc. Excite for Web Servers Help"></A><H1>Excite, Inc. Excite for Web Servers Help</H1>
+<A NAME="Using The Forms-Based Administration Tools"></A><H2>Using The Forms-Based Administration Tools</H2>
+<ul>
+<li><A HREF="#What Does This Software Do?">What Does This Software Do?</A>
+<li><A HREF="#Installation Information">Installation Information</A>
+<li><A HREF="#Main Administration Page">Main Administration Page</A>
+<ul>
+<li><A HREF="#Support Information">Support Information</A>
+<li><A HREF="#Changing the Password">Changing the Password</A>
+<li><A HREF="#Configuring URL Mappings">Configuring URL Mappings</A>
+</ul>
+<li><A HREF="#Document Collections">Document Collections</A>
+<ul>
+<li><A HREF="#New Collection">New Collection</A>
+<li><A HREF="#Configurable Attributes">Configurable Attributes</A>
+<ul>
+<li><A HREF="#CollectionIndex">CollectionIndex</A>	
+<li><A HREF="#CollectionContents">CollectionContents</A>
+<ul>
+<li><A HREF="#Enter the Files Directly">Enter the Files Directly</A>
+<li><A HREF="#Index Using File List">Index Using File List</A>
+<li><A HREF="#Index ~user Directories">Index ~user Directories</A>
+</ul>
+<li><A HREF="#IndexFilter">IndexFilter</A>
+<li><A HREF="#Custom Filter File">Custom Filter File</A>
+<li><A HREF="#Summary Mode">Summary Mode</A>
+<li><A HREF="#IndexingContact">IndexingContact</A>
+</ul>
+</ul>
+<li><A HREF="#Query and Query-Results Page Generation">Query and Query-Results Page Generation</A>
+<ul>
+<li><A HREF="#Banner Image">Banner Image</A>
+<li><A HREF="#Brief Description">Brief Description</A>
+<li><A HREF="#Backlink">Backlink</A>
+<li><A HREF="#Linktext">Linktext</A>
+<li><A HREF="#Query Template">Query Template</A>
+<li><A HREF="#Query-Results Template">Query-Results Template</A>
+</ul>
+<li><A HREF="AT-helpdoc1.html">Documentation about Preferences and Customization</A>
+<li><A HREF="AT-queryhelp.html">Documentation about Making Queries</A>
+<li><A HREF="AT-helpdoc2.html">Documentation about the Command Line Applications</A>
+</ul>
+<A NAME="What Does This Software Do?"></A><H2>What Does This Software Do?</H2>
+Excite for Web Servers makes it easy for you to add searching --
+Excite, Inc.'s advanced concept-based searching -- to your Web site.
+<P>
+Excite for Web Servers provides a simple Web-browser interface for
+doing all the things necessary to enable concept-based searching of
+collections of documents -- administering, indexing, and searching
+over the collections.  In particular, one can:
+<P>
+<ul>
+<li>define a document collection -- that is, specify a set of
+  documents to be considered a single collection over which one can
+  search,
+<li>design customized pages for displaying to users who wish to search
+  over that collection,
+<li>index that collection, monitoring the progress, and
+<li>search the collection.
+</ul>
+With Excite for Web Servers, it's easy to set up
+concept-based-searchable Web sites in minutes.
+<P>
+<A NAME="Installation Information"></A><H2>Installation Information</H2>
+During installation of the Excite for Web Servers software, an HTML
+file containing information about the location of certain Excite for
+Web Servers-related files is generated for you.  If you would like to
+find certain Excite for Web Servers files, you can track them down by
+looking at your <A HREF="AT-admininfo.html">installation information</A> file.
+<P>
+<A NAME="Main Administration Page"></A><H2>Main Administration Page</H2>
+The main administration page is accessible via the <B>AT-admin</B> script.
+From this main form you can create collections, configure existing
+collections, generate support information, change passwords, and 
+configure URL mappings for your Web Server.
+<P>
+<A NAME="Support Information"></A><H3>Support Information</H3>
+If you are encountering any problems with the software, this option
+will generate information about your installation that can then 
+be mailed to Excite, Inc. in order to help us better diagnose your
+problem.
+<P>
+<A NAME="Changing the Password"></A><H3>Changing the Password</H3>
+If you would like to change the password that allows access to the
+administration pages, you can do so by pressing the <B>Password</B>
+button on the main administration page.
+<P>
+<A NAME="Configuring URL Mappings"></A><H3>Configuring URL Mappings</H3>
+Pressing the <B>Configure URL Mappings</B> button on the main administration
+page allows you to tell EWS where the files that are served by
+your Web sever are stored, and how the URLs correspond to them.  This
+feature is used to ensure that URLs in your search-results-lists
+point to the right place.
+<P>
+For example, suppose you had files on your site accessed
+with the URL <B>http://foo.bar.com/root1/</B> that were
+stored in the directory <B>/usr/local/www/html</B> on your
+machine, while file accessed with the URL <B>http://foo.bar.com/root2/</B>
+were stored in <B>/usr/docs/html</B>.  You could add the following entries
+to the mappings:
+<P>
+<PRE>
+  /root1/ /usr/local/www/html/
+  /root2/ /usr/docs/html/
+</PRE>
+You can also use the URL mappings to deal with aliases to your
+server.  Suppose all the files in <B>/usr/surveys/html</B> were
+served from the same server, but you wanted the URLs to 
+appear with a different alias, <B>http://survey.bar.com/</B>.
+You could add this entry to the mappings:
+<P>
+<PRE>
+  http://survey.bar.com/ /usr/surveys/html
+</PRE>
+<B>NOTE:</B> If you are indexing user's <B>public_html</B> directories,
+it is not necessary to set up mappings by hand for those
+directories, because it is handled automatically by EWS.
+<P>
+<A NAME="Document Collections"></A><H2>Document Collections</H2>
+A document collection is the specification of a set of HTML or
+plain-text files over which one would like to do concept-based
+searches.  Or more simply, it can be thought of as the searchable
+documents themselves.
+<P>
+Besides a name, each document collection has associated with it a set
+of configurable attributes -- information about the documents in the
+collection and the index to be built on those documents.  These
+attributes, described in more detail below, include:
+<P>
+<ul>
+<li>document information -- The <B>CollectionContents</B>.  A
+  specification of which files are to be included in the collection,
+  by means of either: 
+<ul>
+<li>an explicit list of documents, or
+<li>a set of rules describing the documents.
+</ul>
+<li>index information
+<ul>
+<li>The <B>CollectionIndex</B>.  The directory in which the index for the
+    collection should be stored.
+<li><B>IndexingContact</B>.  Optionally, the email address (or hostname in NT
+    versions) of the person to be notified when indexing of this collection 
+    is complete.
+</ul>
+</ul>
+Each document collection has a <B>collection-name.conf</B> file where its
+configurable attributes are stored.  The
+<A HREF="AT-helpdoc2.html">Collection File Format</A> is described more fully in
+the documentation on the command-line applications.
+<P>
+<A NAME="New Collection"></A><H3>New Collection</H3>
+Creating a new document collection is a two-step process: naming and
+configuring.
+<P>
+First, you must give the new collection a name.  Simply enter a name
+in the field provided on the main Excite for Web Servers
+Administration page.
+<P>
+Once named, the new collection must be "configured" -- that is, have
+its other attributes defined.  Click the <B>Configure New Collection</B>
+button to bring up a page on which to provide values for those
+attributes.  (Defaults are provided, which you can change as
+appropriate.)  See the next section for more information on these
+attributes.
+<P>
+When you're done configuring the new collection, you may then index
+it, generate search/result pages for it, and then search over it.
+<P>
+<A NAME="Configurable Attributes"></A><H3>Configurable Attributes</H3>
+There are a number of attributes associated with each collection that
+you can configure using the Configure New Collection form.  These
+attributes provide information about the documents in the collection,
+the location of the index to be built on those documents, and whom to
+contact when indexing is complete.  These attributes are explained in
+detail directly below.
+<P>
+<A NAME="CollectionIndex"></A><H4>CollectionIndex</H4>
+When you index a collection for searching, Excite for Web Servers
+generates several files which make up that index.  The indexing and
+searching applications need to know where these index files are
+located.  The <B>CollectionIndex</B> is simply the name of a directory
+where the index files will be stored.  If you don't particularly care
+where the index goes, you may simply leave the default value provided.
+<P>
+<A NAME="CollectionContents"></A><H4>CollectionContents</H4>
+There are three methods available to describe the collection of files
+you wish to have included in the index: Enter the Files Directly, Index
+Using File List, and Index ~user Directories.  None of these options
+are exclusive: you can use any combination of them to pick the files
+you want to index.
+<P>
+<A NAME="Enter the Files Directly"></A><H5>Enter the Files Directly</H5>
+The first option is to <B>Enter the Files Directly</B>, and while it's a little
+more complicated than using a file list, it's more useful.  It
+allows you first to specify where the indexer should look for files to
+be indexed, and then it allows you to give the indexer rules about
+which of the files it finds there to include in or exclude from
+indexing, based on file name and content.
+<P>
+To specify where the indexer should look for files to index, you
+simply provide a list of file/directory names.  Each file listed
+will be a candidate for indexing, and each directory will be
+"expanded" so that all the files "below" it -- that is, all the files 
+contained in it and in its traversed subdirectories -- will be
+candidates for indexing as well. If a path name contains special
+non-alphanumeric characters such as whitespace, be sure to enclose
+the full path name with single quotes. Whitespace delineates 
+individual file/directory names.
+<P>
+Once a set of candidate files as described by your list is created,
+then inclusion/exclusion rules are applied to each candidate to see
+whether it will be indexed.  The set of inclusion/exclusion rules is
+the <A HREF="#IndexFilter">IndexFilter</A>, described below.
+<P>
+<A NAME="Index Using File List"></A><H5>Index Using File List</H5>
+The other option for describing the collection of files you wish to
+have indexed is to <B>Index Using (a) File List</B>.  Simply provide
+the indexer with a filename containing a list of files you wish to
+index.  Remember that you must use absolute pathnames.
+<P>
+<A NAME="Index ~user Directories"></A><H5>Index ~user Directories</H5>
+When you choose the option on the configuration page for a collection,
+the indexer will find all of the user's directories that contain
+an appropriately named directory in the home directory (usually
+called <B>public_html</B>), and index the files in each of those
+directories.
+<P>
+<A NAME="IndexFilter"></A><H4>IndexFilter</H4>
+Your means for specifying which of the candidate files to index (or
+not) is the IndexFilter.  The IndexFilter provides you with some
+generic options for inclusion and also allows you create a more
+complicated <A HREF="#Custom Filter File">Custom Filter File</A>.
+<P>
+There are three generic inclusion rules; of the files which are
+candidates for indexing, you may include:
+<P>
+<ul>
+<li>some non-binary candidate files:
+<ul>
+<li>all those files whose names match the expression <B>*.htm*</B> (and no
+    others) AND/OR
+<li>all those files whose names match either of the expressions
+<ul>
+<li>    <B>*.text</B> or <B>*.txt</B>, OR
+</ul>
+</ul>
+</ul>
+<li>all non-binary candidate files.
+</ul>
+In addition to generic inclusion rules, you may create a Custom Filter
+File to specify other inclusion rules <B>or</B> exclusion rules.
+<P>
+<A NAME="Custom Filter File"></A><H6>Custom Filter File</H6>
+If the generic IndexFilter inclusion rules aren't good enough for
+specifying which files to index how (and which not to index), you may
+optionally provide further specifications or restrictions on which
+files to index by use of a Custom Filter File.  The rules provided in
+this file override the generic rules.
+<P>
+Inclusion/exclusion rules have three columns: 
+<P>
+<ul>
+<li>the type of expression being used to match against the candidate
+  filenames (to be explained below),
+<li>the expression itself, and
+<li>the format in which to index the files which match the expression --
+  either <B>HTML</B>, <B>TEXT</B>, or nothing (don't index it).
+</ul>
+There are two different categories of expressions one can use to match
+against filenames: regular expressions and Unix-style globbing
+expressions.
+<P>
+Regular expressions are very powerful, giving you access to very
+terse, expressive rules for matching filenames.  (If you'd like to
+learn about regular expressions, there is a Unix man page on
+"regexp".)  If you'd like to use a regular expression, simply put the
+token <B>regexp</B> in the first column of that line.
+<P>
+While regular expressions are very powerful, they're often just enough
+rope to hang yourself with.  As a nice alternative, Unix-style
+globbing expressions may be less powerful, but they're relatively safe
+and comfortable.  We allow three different types of Unix-style
+expressions for matching against filenames:
+<P>
+<ul>
+<li><B>dir</B> -- will match only root-level directory names.  This is not
+  likely to be all that useful, as you're requiring that the
+  expression you give match the pathname starting from its absolute
+  beginning, but we thought we'd let you have that choice.
+<li><B>subdir</B> -- will match against any directory in the pathname.
+<li><B>file</B> -- will match only simple filenames.
+</ul>
+These three different types of Unix-style expressions should give you
+as much flexibility in specifying files as you'll need.
+<P>
+An example Custom Filter File:
+<P>
+<PRE>
+  # don't index any ".pl" files in directories called "bin"
+  regexp  \/bin\/.*\.pl$
+  # index all stuff in /usr/local/www/html/text-files as plain text.
+  # the next four lines are all equivalent.
+  dir    usr/local/www/html/text-files       TEXT
+  dir    usr/local/www/html/text-files/      TEXT
+  dir    /usr/local/www/html/text-files      TEXT
+  dir    /usr/local/www/html/text-files/     TEXT
+  # don't index anything below and directory with "old" in its name.
+  # again, the next four lines are all equivalent.
+  subdir  *old*
+  subdir  *old*/
+  subdir  /*old*
+  subdir  /*old*/
+  # override the general '*.htm*' rule.  there happen to be some
+  # files ending with '.html.C' -- index them as text instead of
+  # HTML.
+  # these two lines are equivalent.
+  file    *.html.C     TEXT
+  file    /*.html.C    TEXT
+</PRE>
+After you've created a Custom Filter File, then simply indicate in
+the entry field provided the name of this file you've created.
+<P>
+<A NAME="Summary Mode"></A><H4>Summary Mode</H4>
+Summaries are generated at indexing time, and therefore impact indexing speed.
+Fast summaries do not add any significant time to the indexing speed since 
+the first few lines from the file are used as the document summary. Quality
+summaries are calculated using Excite's summarization technology. These are 
+generally better descriptions than the first two lines of the file, but do
+slow down indexing a bit. If you would like to use your own description as
+the summary of a document, you can do so by adding the following META tag 
+to the document:
+<P>
+<CODE>
+&ltMETA NAME="DESCRIPTION" CONTENT="This is my own summary."&gt
+</CODE>
+<P>
+<A NAME="IndexingContact"></A><H4>IndexingContact</H4>
+This field is optional, and allows the adminstrator to specify an
+email address of a user or hostname for a machine which should receive
+a notification upon the completion of an indexing process for this
+document collection.  If you wish to index a collection previously
+configured by someone other than yourself, you will probably wish to
+change the configuration so that <B>you</B> are notified instead of the
+previous administrator.  <B>Important:</B> Note that this field has
+different uses, depending on your operating system.  UNIX users can
+provide an email address at which they can be reached, while NT users
+should provide the name of a machine that is running the NT Messenger
+Service, where they will receive notice when the indexing process
+finishes.
+<P>
+<A NAME="Query and Query-Results Page Generation"></A><H2>Query and Query-Results Page Generation</H2>
+Once you've configured a document collection, you can then create
+query and query-results pages to be used specifically with that
+document collection.
+<P>
+The query page is the page a user sees when searching, and,
+predictably, the query-results page is used to return the results of a
+query to a user.  In order to allow for these pages to look different
+for different document collections, a new query page and a new
+query-results page is "generated" for each document collection.
+<P>
+To generate a collection-specific query page or query-results page,
+you have two options:
+<P>
+<ul>
+<li>You may use a stock template page provided for you, changing certain
+  modifiable appearance attributes as you wish:
+<ul>
+<li>the <B>Banner Image</B> to display at the top of both the query and
+    query-results pages, and
+<li>the <B>Brief Description</B> of the contents of the document
+    collection to appear at the top of the query (but not
+    query-results) page.  OR
+</ul>
+<li>You may supply your own template page for either or both the query
+  page and query-results page.
+</ul>
+Specific information about how to generate query and query-results
+pages directly follows.
+<P>
+<A NAME="Banner Image"></A><H3>Banner Image</H3>
+If you are using either -- or both -- the stock query or query-results
+page provided for you, you may still provide your own image to be
+displayed at the top of that page.  This image is called the Banner
+Image.  (By default, it is the Excite, Inc. logo as it appears at the top
+of the admin pages.)
+<P>
+To display an image of your own design, simply put the filename of
+your image in the entry field provided on the generation form.
+<P>
+(Hint: You may also edit the generated <B>.html</B> and <B>.cgi</B> scripts if
+wish to change the appearance of those pages.  However, take care not
+to change the search form itself.  If you "break" things, just
+re-generate the pages.)
+<P>
+<A NAME="Brief Description"></A><H3>Brief Description</H3>
+Think of this description as a sub-title to the collection name.  If
+you use the stock query page provided for you, you may provide a brief
+description (size, age, contents) of the document collection to be
+displayed there.  This description will give the searcher further
+guidance as to the contents of your document collection.
+<P>
+It's good user-interface policy to tell users what they are searching
+over.  If your collection contains information on economic conditions
+in Malaysia (and that's not obvious from the collection name), tell
+them this, so they don't spend their time doing queries on "Barbie
+Dolls" or "hydroponic gardening", which would no doubt provide
+dissappointing results.
+<P>
+<A NAME="Backlink"></A><H3>Backlink</H3>
+If you generate a page that allows searches to be forwarded to
+Excite, you can provide a URL in the field provided so that the
+search results page will contain a link back to your site.
+<P>
+<A NAME="Linktext"></A><H3>Linktext</H3>
+The linktext field accompanies the backlink field and lets you provide
+text (up to 20 characters) for the URL.  If you do not provide linktext,
+the URL itself will be used as the text for the link.
+<P>
+<A NAME="Query Template"></A><H3>Query Template</H3>
+Instead of using the stock query and query-results pages provided for
+you, you may create your own, completely customized pages.  In the
+case of the query page, you create your own query page by supplying a
+Query Template file.
+<P>
+A Query Template file is a regular HTML file which contains the
+line
+<P>
+<PRE>
+  ###EXCITE###
+</PRE>
+in the place where you want the query form to be inserted.  (Put
+nothing else on this line, or it may confuse the script which
+automatically generates the new page.)
+<P>
+After creating this file, indicate its location in the field provided,
+and that will be enough to override the use of the stock query page
+template provided for you.
+<P>
+<A NAME="Query-Results Template"></A><H3>Query-Results Template</H3>
+Just as you can create your own, completely customized query page,
+you may create your own completely customized query-results page --
+the page a user sees when getting back the results of a query on a
+particular document collection.
+<P>
+To do so, you must provide a template file (known as a Query-Results
+Template file) and indicate in the field provided where this file is
+located.
+<P>
+Like the <I>Query Template</I>, the <I>Query-Results Template</I> is a normal
+HTML file which contains on a line by itself:
+<P>
+<PRE>
+  ###EXCITE###
+</PRE>
+, indicating, in this case, where you want the query results to
+appear.
+<P>

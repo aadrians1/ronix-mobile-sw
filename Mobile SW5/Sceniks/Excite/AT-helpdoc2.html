@@ -1,0 +1,483 @@
+<TITLE>Excite, Inc. Excite for Web Servers Help</TITLE><BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000" ALINK="#0000FF">
+<img src="pictures/AT-help_banner.gif">
+<A NAME="Excite, Inc. Excite for Web Servers Help"></A><H1>Excite, Inc. Excite for Web Servers Help</H1>
+<A NAME="Command-Line Applications"></A><H2>Command-Line Applications</H2>
+<A HREF="AT-helpdoc.html">Back to the Forms-based Administration documentation.</A>
+<P>
+Most of the functionality offered from the browser is also accessible
+using command-line versions of the index and query tools.
+<P>
+<ul>
+<li><A HREF="#Collection File Format">Collection File Format</A>
+<ul>
+<li><A HREF="#Attributes Accessible from Forms Interface">Attributes Accessible from Forms Interface</A>
+<li><A HREF="#Attributes Hidden from Forms Interface">Attributes Hidden from Forms Interface</A>
+<ul>
+<li><A HREF="#IndexExecutable">IndexExecutable</A>
+<li><A HREF="#SearchExecutable">SearchExecutable</A>
+<li><A HREF="#StemTable">StemTable</A>
+<li><A HREF="#StopTable">StopTable</A>
+<li><A HREF="#CollectionInfo">CollectionInfo</A>
+</ul>
+</ul>
+<li><A HREF="#Indexing from the Command Line">Indexing from the Command Line</A>
+<ul>
+<li><A HREF="#aindex.pl">aindex.pl</A>
+<li><A HREF="#architextIndex">architextIndex</A>
+</ul>
+<li><A HREF="#Searching from the Command Line">Searching from the Command Line</A>
+<ul>
+<li><A HREF="#aquery.pl">aquery.pl</A>
+<li><A HREF="#architextSearch">architextSearch</A>
+<ul>
+<li><A HREF="#Output from architextSearch">Output from architextSearch</A>
+</ul>
+<li><A HREF="#Creating a CGI Query Script">Creating a CGI Query Script</A>
+<ul>
+<li><A HREF="#architextify-html">architextify-html</A>
+<li><A HREF="#Excite Tags">Excite Tags</A>
+<li><A HREF="#Sample Query Page">Sample Query Page</A>
+<li><A HREF="#Sample Query Script">Sample Query Script</A>
+<li><A HREF="#Sample Gather Script">Sample Gather Script</A>
+</ul>
+<li><A HREF="#Moving Your Install Home">Moving Your Install Home</A>
+<ul>
+<li><A HREF="#scripts-fix-root, scripts-fix-perl">scripts-fix-root, scripts-fix-perl</A>
+<li><A HREF="#install-admin">install-admin</A>
+</ul>
+</ul>
+<A NAME="Collection File Format"></A><H2>Collection File Format</H2>
+A collection file stores all the information that is needed by the
+indexing and querying executables.  It is used by the browser tools as
+well as by the command-line scripts <B>aindex.pl</B> and <B>aquery.pl</B>,
+which allow for easy indexing and searching.
+<P>
+When you create a collection file, it is given the name
+<B>databasename.conf</B>.  (When you pass in a database name as an
+argument to either the index or query scripts, leave off the <B>.conf</B>
+suffix.)  The <B>.conf</B> file contains a list of attribute-value pairs.
+Each attribute must have a value, with the exception of the
+<CODE>ExclusionRules</CODE> attribute, which can be left blank, but which must
+appear as the last attribute line in the file.
+<P>
+The scripts that read these files do so in a case-sensitive manner, so
+be sure your <B>.conf</B> matches the case usage of the default file
+<B>Architext.conf</B> if you are creating it by hand.  
+<P>
+Below is a sample <B>.conf</B> file:
+<P>
+<PRE>
+  &lt;Collection foobar&gt;
+  IndexExecutable /usrhttp://www.scenix.com/bin/Architext/architextIndex
+  SearchExecutable /usrhttp://www.scenix.com/bin/Architext/architextSearch
+  StemTable /usrhttp://www.scenix.com/bin/Architext/stem.tbl
+  StopTable /usrhttp://www.scenix.com/bin/Architext/stop.tbl
+  CollectionContents /usr/local/www/html
+  CollectionIndex /usrhttp://www.scenix.com/bin/Architext/foobar
+  CollectionInfo /usrhttp://www.scenix.com/bin/Architext/foobar.cf
+  ExclusionRules /home/u/johndoe/exclude
+  &lt;/Collection&gt;
+</PRE>
+Note that the <CODE>Collection</CODE> and <CODE>/Collection</CODE> tags at the start and
+end of the file are also required.
+<P>
+From the browser, only a few of the attributes of a document
+collection are visible.  If you access the collection configuration
+files directly, you can see the full range of configurable attributes
+for a particular document collection.  Below are definitions of all of
+the attributes stored in collection configuration files.
+<P>
+<A NAME="Attributes Accessible from Forms Interface"></A><H2>Attributes Accessible from Forms Interface</H2>
+The following attributes are ones that you can change using 
+the admin scripts.  Only short definitions are provided, since
+they are explained more fully in the documentation for using the
+forms-based <A HREF="AT-helpdoc.html">admin tools in AT-helpdoc.html</A>.
+<P>
+Below is the list of attributes accessible from the forms interface.
+They are defined in the <A HREF="AT-helpdoc.html">admin tools in AT-helpdoc.html</A> documentation.
+<P>
+<ul>
+<li><A HREF="AT-helpdoc.html">IndexFilter</A>
+<li><A HREF="AT-helpdoc.html">CollectionContents</A>
+<li><A HREF="AT-helpdoc.html">CollectionIndex</A>
+<li><A HREF="AT-helpdoc.html">ExclusionRules</A>
+<li><A HREF="AT-helpdoc.html">AdminMail</A>
+</ul>
+<P>
+<A NAME="Attributes Hidden from Forms Interface"></A><H2>Attributes Hidden from Forms Interface</H2>
+The attributes below are not accessible using the forms tools, but
+they are stored along with the attributes visible to the forms tools
+in the configuration files.  Change these attributes of a document
+collection at your own risk!
+<P>
+<A NAME="IndexExecutable"></A><H2>IndexExecutable</H2>
+It is likely you won't have to change this option for any of your
+document collections, assuming your installation of Excite for Web
+Servers went smoothly.  If you end up changing the location of the
+Architext install home, then you would need to edit this option.  The
+index executable is <B>architextIndex</B>, which creates the indexes of a
+document collection, necessary for performing searches on a
+collection.  The collection needs to know where it resides because it
+is invoked by the <B>db-index.cgi</B> script when you have configured a
+document collection and are ready to index it.
+<P>
+<A NAME="SearchExecutable"></A><H2>SearchExecutable</H2>
+The <B>Search Executable</B> option is one you are not likely to change
+unless you move the location of your Architext install home.  Each
+document collection needs to know where the search exectuable,
+<B>architextSearch</B>, is in order to invoke it when you perform
+queries on your collection.
+<P>
+<A NAME="StemTable"></A><H2>StemTable</H2>
+The <B>Stem Table</B> contains lexical data that is used by Excite, Inc.'s
+indexing and search engines.  This attribute won't likely change very
+often, unless you move the Architext install home.
+<P>
+<A NAME="StopTable"></A><H2>StopTable</H2>
+The <B>Stop Table</B> also contains lexical data used by the index and
+search engines.  This is another attribute that you probably won't
+change unless you move the Architext install home.
+<P>
+<A NAME="CollectionInfo"></A><H2>CollectionInfo</H2>
+The <B>CollectionInfo</B> attribute is the name of the info file that is
+generated and used by the indexer.  It contains a subset of the
+information found in a document-collection <B>.conf</B> file which is
+essential to the <B>architextSearch</B> and <B>architextIndex</B> executables.
+<P>
+<A NAME="Indexing from the Command Line"></A><H2>Indexing from the Command Line</H2>
+It is possible to index from the command line using either
+<B>aindex.pl</B> or <B>architextIndex</B>.  The first is a perl script that
+invokes the <B>architextIndex</B>, which is the binary that actually does
+the indexing.  the perl script takes care of parsing the information
+in the <B>.conf</B> file and passing in the appropriate command-line
+options to the binary.
+<P>
+<A NAME="aindex.pl"></A><H3>aindex.pl</H3>
+Indexing can be invoked using this script by simply typing <CODE>aindex.pl
+databasename</CODE>.  The information about the database you wish to index
+should be stored in a file called <B>databasename.conf</B>.  The format of
+the <B>.conf</B> file is described above in the <A HREF="#Collection File Format">Collection File Format</A>
+section.
+<P>
+<A NAME="architextIndex"></A><H3>architextIndex</H3>
+This is the binary that does the actual indexing.  The syntax for the
+use of <B>architextIndex</B> is  as follows:
+<P>
+<CODE>architextIndex [flags] [index rootname] [file/dir names to index...]</CODE>
+<P>
+It is also possible to direct a list of files and directories to index
+through stdin, with files separated by newlines.  Example usages of
+<B>architextIndex</B> are given below.
+<P>
+<DL>
+<DT><CODE>-stem "stemmer name"</CODE><DD>
+specifies where to find the stemmer table, defaulted to <B>stem.tbl</B>.
+<P>
+<DT><CODE>-stop "stop name"</CODE><DD>
+is where the indexer finds the stop table files, defaulted to
+<B>stop.tbl</B>.
+<P>
+<DT><CODE>-C "config filename"</CODE><DD>
+is an optional argument that tells the indexing executable
+<B>architextIndex</B> to use a file that contains any of the arguments
+listed above.  If this option is not used, the executable will check
+the environment variable <CODE>ARCHITEXT_CONFIG</CODE> for the name of a
+configuration file.  If it is undefined, the program will look in the
+local directory for the file <B>.architextinit</B>.  Finally, if no config
+file is found, then the program will still function as expected,
+assuming that all the necessary arguments appear on the command line.
+<P>
+The intended use of the config file is to define arguments that will
+remain static across all your indexing and querying operations.  The
+<CODE>-stop</CODE> and <CODE>-stem</CODE> arguments definitely fall into this category,
+and the <CODE>-R</CODE> argument could arguably be placed in a config file as
+well.
+<P>
+Any operators repeated on the command line will override those that
+appear in a config file.  
+<P>
+<DT><CODE>-R "rootname"</CODE><DD>
+specifies the basename that will be given to the index files.  This is
+where architextIndex stores the inverted indices and other associated
+data files.  For example, if rootname is <B>dir/foo</B>, the datafiles
+will be stored as <B>dir/foo.idx</B>, <B>dir/foo.dat</B>, etc.  
+<P>
+This flag is optional.  If none is given, the indexing or searching
+executable assumes that the first non-flag argument that appears on
+the command line is meant to be the rootname.  Thus, the following
+commands are semantically identical, and all cause each file under the
+directory <B>/data/literature</B> to be indexed, with the index files
+given the rootname of <B>foo</B>:
+<P>
+<CODE>echo "/data/literature" | architextIndex foo</CODE>
+<P>
+<CODE>echo "/data/literature" | architextIndex -R foo</CODE>
+<P>
+<CODE>architextIndex -R foo /data/literature</CODE>
+<P>
+<CODE>architextIndex foo /data/literature</CODE>
+<P>
+Additionally, suppose you wanted to index three files and a directory:
+<B>eenie.html</B>, <B>meenie.html</B>, <B>miney.html</B>, and <B>htmlDir/</B>.  The
+following commands are all equivalent (assuming that the file <B>flist</B>
+contains the four files listed above, one file per line):
+<P>
+<CODE>architextIndex foo eenie.html meenie.html miney.html htmlDir</CODE>
+<P>
+<CODE>architextIndex -R foo eenie.html meenie.html miney.html htmlDir</CODE>
+<P>
+<CODE>cat flist | architextIndex foo</CODE>
+<P>
+<CODE>cat | architextIndex -R</CODE>
+<P>
+</DL>
+<A NAME="Searching from the Command Line"></A><H2>Searching from the Command Line</H2>
+As with indexing, querying can also be performed from the command line.
+<P>
+<A NAME="aquery.pl"></A><H3>aquery.pl</H3>
+This perl script takes two arguments.  The first is the collection
+name, while the second is your query.  Multiple-word queries should be
+enclosed in quotes.  <B>aquery.pl</B> takes care of parsing the information
+in the <B>.conf</B> file and invoking the actual search binary with the
+proper command-line options.  For example, a search on the database
+<B>zymurgy</B> with a query of "top-fermented ales" would be invoked
+as follows: 
+<P>
+<CODE>aquery.pl zymurgy "top-fermented ales"</CODE>
+<P>
+<A NAME="architextSearch"></A><H3>architextSearch</H3>
+This is the binary which actually runs the queries using the indexes
+generated by <B>architextIndex</B>.  Syntax for command-line use of the
+executable follows:
+<P>
+<CODE>architextSearch -R "rootnames for index files" -stem "stemmername" -stop "stoppername" -q "query string" -C "config filename"</CODE>
+<P>
+<DL>
+<DT><CODE>-R "rootname"</CODE><DD>
+specifies the rootname of the indices the searcher uses.
+<P>
+<DT><CODE>-stem "stemmer name"</CODE><DD>
+specifies where to find the stemmer table, defaulted to <B>stem.tbl</B>.
+<P>
+<DT><CODE>-stop "stop name"</CODE><DD>
+is where the searcher finds the stop table, defaulted to <B>stop.tbl</B>.
+<P>
+<DT><CODE>-C "config filename"</CODE><DD>
+is an optional argument that tells the indexing executable
+<B>architextSearch</B> to use a file that contains any of the arguments
+listed above.  If this option is not used, the executable will check
+the environment variable <CODE>ARCHITEXT_CONFIG</CODE> for the name of a
+configuration file.  If it is undefined, the program will look in the
+local directory for the file <B>.architextinit</B>.  Finally, if no config
+file is found, then the program will still function as expected,
+assuming that all the necessary arguments appear on the command line.
+<P>
+The intended use of the config file is to define arguments that will
+remain static across all your indexing and querying operations.  The
+<CODE>-stop</CODE> and <CODE>-stem</CODE> arguments definitely fall into this category,
+and the <CODE>-R</CODE> argument could arguably be placed in a config file as
+well.
+<P>
+Any operators repeated on the command line will override those that
+appear in a config file.  
+<P>
+<DT><CODE>-q "query string"</CODE><DD>
+This is string where the search is entered. 
+<P>
+</DL>
+<A NAME="Output from architextSearch"></A><H4>Output from architextSearch</H4>
+<B>architextSearch</B> outputs the results of a query to stdout in the
+following five column format:
+<P>
+<PRE>
+  DocNum  Relevance Score RelNum  Filename                     &lt;title&gt;...&lt;/title&gt;
+  ------  --------------- ------- -------------------------  ------------------
+  6       0.00541587      1       /www/burnt/html/index.html Architext Software
+  14      0.00180529      1       /www/html/demo.html        Online Demo
+  12      0.000848499     2       /www/html/company.html     About Architext
+</PRE>
+There is a second possible output format, which will only occur when
+the query uses the <A HREF="#Operators available in the architextSearch query
+language ">gather</A> operator (explained below), which is used to do
+Automatic Subject Grouping on the results of a query.  Here is sample
+output:
+<P>
+<PRE>
+  ====================
+  Summary words: Architext demo perl query magazine
+  8       /home/www/burnt/html/old-index.html     Architext SGI Page
+  25      /home/www/html/ems/index.html   IDG Demo
+  31      /home/www/html/infoworld/index.html     IDG Demo
+  32      /home/www/html/infoworld-new/index.html IDG Demo
+  71      /home/www/html/docs.html        Architext Documentation
+  All: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 23 24 25 26 
+  27 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 47 48 49 51 52 53 
+  54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
+  ====================
+  Summary words: manager ben cardiff compton's concurrency
+  28      /home/www/html/ryan.html        Architext Tasks
+  20      /home/www/html/tasks.html       Architext Tasks
+  All: 20 28
+  ====================
+  Summary words: yet everything faq seem ok
+  22      /home/www/html/faq/index.html   Architext Public Demo
+  All: 22 
+</PRE>
+In the output above, there are three subject groups, each separated by
+<CODE>===================</CODE>.  First the summary words are presented.  These
+are the words that are most central to that particular cluster of
+documents.  Next, the top articles from that group are presented in a
+three column format.  There are two leading spaces (' '), then the
+<CODE>Document Number</CODE>, another space (' '), the <CODE>Filename</CODE>, a tab
+character ('\t'), and then the <CODE>Title</CODE>.  Finally, on the line labeled
+<CODE>All:</CODE>, the numbers of all the relevant document in that group are
+output.  Oftentimes, the group contains more articles than the
+parameters of the gather are defaulted to display.
+<p>
+<A NAME="Creating a CGI Query Script"></A><H3>Creating a CGI Query Script</H3>
+It is possible to create and format query pages and scripts manually
+what are usable from a Web browser.  The script <B>architextify-html</B>
+recognizes certain tags within your html documents, and then converts
+the html pages into cgi scripts that match your orignal page yet
+support Excite, Inc. searching and subject-grouping functionality.
+<P>
+<A NAME="architextify-html"></A><H4>architextify-html</H4>
+Takes a list of html files as arguments and converts them into cgi
+scripts.  There are a number of tags that must appear within your
+html page that <B>architextify-html</B> parses and uses to create
+<B>.cgi</B> scripts with the appropriate functionality.
+<P>
+<A NAME="Excite Tags"></A><H4>Excite Tags</H4>
+An Excite tag can be placed in an html document which you parse
+using <B>architextify-html</B> which uses an extended html syntax to
+create a <B>.cgi</B> that will perform queries on an Excite database.
+<P>
+There are two types of documents that you would want to create scripts
+for.  One is for the results of a query and one is for the results of
+an ASG (Automatic Subject Grouping).  The motivation for this extended
+html syntax is to allow you to tailor the query result and subject
+grouping result pages to your needs.  The four tags available in the
+extended syntax are the following:
+<P>
+<PRE>
+  &lt;ARCHITEXT-RESULT DB="database name" UNPREFIX="path prefix to remove"
+            AHOME="location of Architext html directory (relative to html root)"&gt;
+  &lt;ARCHITEXT-MAKE-GATHER DB="database name" UNPREFIX="path prefix to remove"
+        AHOME="location of Architext html directory"&gt;
+  &lt;ARCHITEXT-GATHER DB="database name" UNPREFIX="path prefix to remove"&gt;
+        AHOME="location of Architext html directory"&gt;
+  &lt;ARCHITEXT-LEGEND DB="db name" AHOME="location of Architext html directory"&gt;
+</PRE>
+Placing these tags within your html documents and then using
+<B>architextify-html</B> to parse them will create <B>.cgi</B> scripts that
+will perform queries and subject grouping and will parse the results
+and present them in html format for use with your Web browser.  
+<P>
+The <CODE>ARCHITEXT-RESULT</CODE> and <CODE>ARCHITEXT-MAKE-GATHER</CODE> flags will appear
+in the document that you wish to have become your query script, while
+the <CODE>ARCHITEXT-GATHER</CODE> tag will reside in the file that you wish to
+become the ASG script.  The <CODE>ARCHITEXT-LEGEND</CODE> tag can appear in
+either the query script or the ASG script and will display a legend at
+the bottom of a results page explaing the terms and icons used.  The
+legend appears by default when the scripts are generated using the
+forms interface.
+<P>
+<A NAME="Sample Query Page"></A><H4>Sample Query Page</H4>
+A sample query page appears below.  Note that a simple form invokes
+the query by passing the query to the script <B>/cgi-bin/query.cgi</B> as
+the <CODE>search</CODE> field in the form.  This page is just standard html and
+there is no need to use <B>architextify-html</B> to parse this form.  The
+<B>query.cgi</B> script, however, is generated by the user with the help
+of <B>architextify-html</B>.  A <A HREF="#Sample Query Script">Sample Query Script</A> appears later in
+this document.
+<P>
+<PRE>
+  &lt;html&gt;&lt;head&gt;&lt;title&gt;Architext Querying&lt;/title&gt;&lt;/head&gt;
+  &lt;body&gt;&lt;h1&gt; &lt;img src="/Architext/Block-logo.gif"&gt; &lt;/h1&gt;
+  &lt;p&gt;&lt;b&gt;Database description:&lt;/b&gt; stuff and poop 
+  &lt;p&gt;
+  Enter a natural-language query in the form below.
+  &lt;HR&gt;
+  &lt;FORM ACTION="/cgi-bin/query.cgi" METHOD="POST"&gt;
+  &lt;INPUT TYPE="submit" VALUE="Search For Concept"&gt;
+  &lt;TEXTAREA NAME="search" COLS=80 ROWS=4&gt;&lt;/TEXTAREA&gt;&lt;P&gt;
+  &lt;/FORM&gt;
+</PRE>
+<A NAME="Sample Query Script"></A><H4>Sample Query Script</H4>
+Below is the unparsed <B>.html</B> file from which the script <B>query.cgi</B>
+(mentioned above) is created by using <B>architextify-html</B> to parse
+the <CODE>ARCHITEXT-RESULT</CODE> and <CODE>ARCHITEXT-MAKE-GATHER</CODE> tags.
+<P>
+<PRE>
+  &lt;html&gt;
+  &lt;head&gt;
+  &lt;title&gt; This is a query-result document. &lt;/title&gt;
+  &lt;/head&gt;&lt;body&gt;
+  &lt;hr&gt;
+  &lt;h1&gt; A Query &lt;/h1&gt;
+  Here are the results of your query.
+  &lt;UL&gt;&lt;ARCHITEXT-RESULT DB="mydatabase" UNPREFIX="/usr/local/www/html/"&gt;&lt;/UL&gt;
+  &lt;FORM ACTION="gather.cgi" METHOD="POST"&gt;
+  &lt;INPUT TYPE="submit" NAME="submit" VALUE="submit"&gt;
+  &lt;ARCHITEXT-MAKE-GATHER DB="mydatabase" UNPREFIX="/usr/local/www/html/"&gt;
+  &lt;/FORM&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+</PRE>
+Incidentally, the <CODE>ARCHITEXT-MAKE-GATHER</CODE> tag and the form it appears
+in are optional in this page, and are only required if the user wishes
+to perform ASG (Automatic Subject Grouping) on the results of queries.
+After this html page has been <B>architextify-html</B>-ed, it will become
+a perl script that obeys the conventions of <B>.cgi</B> scripts.  Note
+that the <B>gather.cgi</B> script that is invoked by the form above is
+another script that must be generated by the user.  The format for a
+<A HREF="#Sample Gather Script">Sample Gather Script</A> is described below.  Once installed in the
+<B>cgi-bin</B> directory, queries can be invoked using a standard html
+form.  A <A HREF="#Sample Query Page">Sample Query Page</A> is described above.
+<P>
+<A NAME="Sample Gather Script"></A><H4>Sample Gather Script</H4>
+Below appears the html source needed to create a script that will
+parse and present the results of an ASG (Automatic Subject Grouping).
+<P>
+<PRE>
+  &lt;html&gt;
+  &lt;head&gt;
+  &lt;title&gt; This is an Automatic Subject Grouping result document. &lt;/title&gt;
+  &lt;/head&gt;&lt;body&gt;
+  &lt;hr&gt;
+  &lt;h1&gt; A Gather &lt;/h1&gt;
+  Here are the results of gathering the results of your query.
+  &lt;UL&gt;&lt;ARCHITEXT-GATHER DB="mydatabase" UNPREFIX="/usr/local/www/html"&gt;&lt;/UL&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;
+</PRE>
+<A NAME="Moving Your Install Home"></A><H3>Moving Your Install Home</H3>
+If you need to move your Excite home for some reason, it is
+necessary to change the <CODE>$root</CODE> variable in all the perl scripts
+shipped with the distribution.
+<P>
+<A NAME="scripts-fix-root, scripts-fix-perl"></A><H4>scripts-fix-root, scripts-fix-perl</H4>
+scripts-fix-root is a script that will automatically replace the
+<CODE>$root</CODE> variable in any perl scripts you specify with a new one.  The
+syntax for this is as follows:
+<P>
+<PRE>
+  scripts-fix-root &lt;new root dir&gt; &lt;files to update...&gt;
+</PRE>
+There is also a script <B>scripts-fix-perl</B> available that will update
+the <CODE>#!</CODE> notation at the head of each perl script specified on the
+command line should the location of your perl interpreter change.
+Both of these scripts are used at install time, and you won't likely
+need to use them again unless your install home or your perl
+interpreter change location.
+<P>
+<A NAME="install-admin"></A><H4>install-admin</H4>
+This script takes the necessary scripts and html files from your
+install home, places the cgi scripts into your cgi-bin directory, and
+places the html into the Architext config root you specified at
+install time.  This script is also used by the install script, and
+unless you move the location of the Architext directory under your
+html root, you won't need to use this script.  Usage is as follows:
+<P>
+<PRE>
+  install-admin &lt;Architext config directory&gt; &lt;cgi-bin directory&gt;

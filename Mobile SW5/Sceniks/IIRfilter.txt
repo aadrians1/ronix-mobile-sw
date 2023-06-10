@@ -1,0 +1,14 @@
+John,
+
+The IIR filter code is still not working due to functions falling into different pages.
+
+I have calculated the number of cycles to be <2000 with the parameters given in the code.
+This will require ~40MIPS for each filter.
+
+Since the input signal is a square wave and has only two states, we can probably replace 3 multiplies
+by constants. If this is so, we will be able to do both the 1200Hz and 2200Hz filtering at 20KHz
+sampling rate with ~40MIPS. This will leave 10MIPS for other processes, which should be plenty
+enough.
+
+Good Luck,
+Roland

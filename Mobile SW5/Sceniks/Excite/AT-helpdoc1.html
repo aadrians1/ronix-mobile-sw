@@ -1,0 +1,409 @@
+<TITLE>Excite, Inc. Excite for Web Servers Help</TITLE><BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000" ALINK="#0000FF">
+<img src="pictures/AT-help_banner.gif">
+<A NAME="Excite, Inc. Excite for Web Servers Help"></A><H1>Excite, Inc. Excite for Web Servers Help</H1>
+<A NAME="Preferences and Customization"></A><H2>Preferences and Customization</H2>
+<ul>
+<li><A HREF="#Introduction">Introduction</A>
+<li><A HREF="#afeatures.pl">afeatures.pl</A>
+<li><A HREF="#Generate-Time Options">Generate-Time Options</A>
+<ul>
+<li><A HREF="#$show_legend">$show_legend</A>
+<li><A HREF="#$subject_group_mode">$subject_group_mode</A>
+</ul>
+<li><A HREF="#Query-Time Options">Query-Time Options</A>
+<ul>
+<li><A HREF="#$graphic_relevance_mode">$graphic_relevance_mode</A>
+<li><A HREF="#$query_by_example_mode">$query_by_example_mode</A>
+<li><A HREF="#$inline_summaries">$inline_summaries</A>
+<li><A HREF="#$summary_mode">$summary_mode</A>
+<li><A HREF="#$summary_link_mode">$summary_link_mode</A>
+<li><A HREF="#$number_of_summary_sentences">$number_of_summary_sentences</A>
+<li><A HREF="#$maximum_summary_length">$maximum_summary_length</A>
+<li><A HREF="#$number_of_subject_groups">$number_of_subject_groups</A>
+<li><A HREF="#$show_additional_docs_in_grouping">$show_additional_docs_in_grouping</A>
+<li><A HREF="#$max_docs_to_return">$max_docs_to_return</A>
+<li><A HREF="#$log_searches">$log_searches</A>	
+<li><A HREF="#$maximum_query_time">$maximum_query_time</A>
+<li><A HREF="#$stem_by_default">$stem_by_default</A>
+<li><A HREF="#$index_html_comments">$index_html_comments</A>
+<li><A HREF="#Result List Customization">Result List Customization</A>
+<ul>
+<li><A HREF="#$customize_result_list">$customize_result_list</A>
+<li><A HREF="#customize_result_list_line">customize_result_list_line</A>
+<li><A HREF="#customize_grouping_line">customize_grouping_line</A>
+</ul>
+</ul>
+</ul>
+<A NAME="Introduction"></A><H2>Introduction</H2>
+There are a number of different customizations one can make to the
+search/retrieval behavior of Excite for Web Servers.  These
+customizations affect such things as how the query results look,
+whether certain features are enabled, and (if enabled) how those
+features behave.  All customizations affect the query-results and
+summarization pages.
+<P>
+Perhaps the most important thing to understand about these
+customizations is that they are of two classes:
+<P>
+<ul>
+<li>those which affect the generation of new query-results pages (and
+  which will, in the future, be options provided during the
+  page-generation process), and
+<li>those which apply to all query-results pages, regardless of when
+  generated.
+</ul>
+For a better idea of the possible customizations available (and which
+above-mentioned category they fall into), here's a complete breakdown:
+<P>
+<ul>
+<li>The <I>generation</I> of all new query-results pages.  (Previously
+  generated query-results pages will be unaffected by these changes
+  unless re-generated.)
+<ul>
+<li>legend -- <B>$show_legend</B>
+<ul>
+<li>whether a legend appears at all
+<li>if one appears, whether it's at the top or bottom of the page
+</ul>
+<li>whether a special graphic which enables the regrouping of query
+    results by subject will be added to the page --
+    <B>$subject_group_mode</B>
+</ul>
+<li>The <I>display</I> of query-results pages <I>at query time</I>.  (These
+  changes will affect all query-results pages, regardless of when
+  generated.)
+<ul>
+<li>the maximum number of documents to return for each (concept-based
+    or query-by-example) query -- <B>$max_docs_to_return</B>
+<li>automatic summarization
+<ul>
+<li>whether the '(summary)' link or inline summaries will appear
+      in the results list -- <B>$summary_mode</B> and <B>$inline_summaries</B>
+<li>if enabled, then on the summary-results page...
+<ul>
+<li>the maximum number of sentences in the summary --
+	<B>$number_of_summary_sentences</B>
+<li>the maximum total length (in characters) of all the sentences
+	in the summary -- <B>$maximum_summary_length</B>
+</ul>
+</ul>
+<li>for automatic subject grouping (if enabled), 
+<ul>
+<li>the maximum number of groups generated --
+      <B>$number_of_subject_groups</B>
+<li>whether to show more than just the top results documents when
+      grouping -- <B>$show_additional_docs_in_grouping</B>
+</ul>
+<li>whether the relevance-indicating character or graphic in the
+    results list will also serve as a link enabling query-by-example
+    -- <B>$query_by_example_mode</B>
+<li>whether the relevance indicator will be a graphic (1) or simply a
+    character (0) -- '+' or '-' -- <B>$graphic_relevance_mode</B>
+<li>what else appears in each line of the results list -- the
+    subroutines <B>customize_result_list_line()</B> and
+    <B>customize_grouping_line()</B>
+</ul>
+</ul>
+The bold-face notes in the outline above indicate perl variables or
+subroutines in a particular script which must be changed in order for
+you to effect the customization -- that's right, until we have time to
+get a forms-based interface on these preferences, you'll have to do a
+little hacking to make them work to your liking.
+<P>
+A description of how to do all this customization follows directly.
+<P>
+<A NAME="afeatures.pl"></A><H3>afeatures.pl</H3>
+This file is located in the <B>perllib</B> directory (a subdirectory of
+the one in which you installed this software), and it is the file
+you'll have to modify in order to make your customizations.  By
+changing the values of certain variables and modifying the return
+values of certain subroutines in this file, you can customize
+Excite for Web Servers's behavior to suit your needs.  Keep reading...
+<P>
+<A NAME="Generation-Time Options"></A><H3>Generation-Time Options</H3>
+The options listed in this section affect the generation of
+query-results pages.
+<P>
+Remember that any query-results pages generated before modifications
+to these preferences will not be affected by the modifications.  If
+you wish for these preferences to affect old query-results pages as
+well, you must regenerate those pages.
+<P>
+<A NAME="$show_legend"></A><H4>$show_legend</H4>
+There are three options for showing the legend: 
+<P>
+<ul>
+<li>at the bottom of the page (default): 
+    <CODE>$show_legend = 'bottom';</CODE>
+<li>at the top of the page:   
+    <CODE>$show_legend = 'top';</CODE>
+<li>or not at all: 
+    <CODE>#$show_legend (commented out)</CODE>
+</ul>
+<A NAME="$subject_group_mode"></A><H4>$subject_group_mode</H4>
+The value of <CODE>$subject_group_mode</CODE> determines whether a special
+graphic will appear at the top of the query-results page allowing
+one to group the results by subject as well as by confidence.
+Options:
+<P>
+<ul>
+<li><CODE>$subject_group_mode = 1;</CODE> -- add "Grouped by Confidence/Subject"
+  graphic.
+<li><CODE>$subject_group_mode = 0;</CODE> -- do <I>not</I> add button.
+</ul>
+<A NAME="Query-Time Options"></A><H3>Query-Time Options</H3>
+The options listed in this section affect the display of all
+query-results pages (and summary results), regardless of generation
+time.
+<P>
+<A NAME="$graphic_relevance_mode"></A><H4>$graphic_relevance_mode</H4>
+In addition to numeric scores, Excite for Web Servers uses either a
+color-coded graphic or a '+'/'-' character which indicates the
+relevance of a particular document to a query (and also serves as the
+query-by-example link, if <CODE>$query_by_example_mode</CODE> == 1).  The value
+of the variable <CODE>$graphic_relevance_mode</CODE> determines whether the
+graphic or the character is used:
+<P>
+<ul>
+<li>$graphic_relevance_mode = 1; -- display red (confident) or black
+  (not confident) graphic [default]
+<li>$graphic_relevance_mode = 0; -- display '+' (confident) or '-' (not
+  confident)
+</ul>
+<A NAME="$query_by_example_mode"></A><H4>$query_by_example_mode</H4>
+When <I>Query By Example</I> is enabled, the relevance indicator -- either
+a black/red graphic or a '+'/'-' character -- is also a
+query-by-example link.  By clicking this link, one can submit an
+entire document as a query -- "give me other documents like this one."
+The value of variable <CODE>$query_by_example_mode</CODE> determines whether or
+not <I>Query By Example</I> is enabled:
+<P>
+<ul>
+<li><CODE>$query_by_example_mode = 1;</CODE> -- enabled (default)
+<li><CODE>$query_by_example_mode = 0;</CODE> -- disabled
+</ul>
+<P>
+<A NAME="$inline_summaries"></A><H4>$inline_summaries</H4>
+The default value of <CODE>$inline_summaries</CODE> is normally set to 1, 'On',
+in which case document summaries will appear directly below the document's
+title in the results list instead of a separate <B>'(summary)'</B> link,
+regardless of the <CODE>$summary_mode</CODE> variable setting, see below.
+Turning this variable on will also add a <A HREF="AT-helpdoc.html#Summary Mode"> Summary Mode</A> option to the collection
+configuration forms interface to allow the user to specify fast (first two
+lines of a document) or a more
+slower computed quality summary for the documents in a collection. Refer to
+the <A HREF="AT-helpdoc.html#Summary Mode">Summary Mode</A> section in the <A HREF="AT-helpdoc.html">Using The Forms-Based Administration Tools</A>
+documentation for further information.
+<P>
+<A NAME="$summary_mode"></A><H4>$summary_mode</H4>
+The value of the variable <CODE>$summary_mode</CODE> determines
+whether or not <I>Automatic Summarization</I> is enabled: 
+<P>
+<ul>
+<li><CODE>$summary_mode = 1;</CODE> -- summary enabled (default)
+<li><CODE>$summary_mode = 0;</CODE> -- summary disabled
+</ul>
+If <I>Automatic Summarization</I> is enabled and the variable <CODE>
+$inline_summaries</CODE> is set to 0, 'Off', then the text <B>'(summary)'</B>
+is displayed to the right of each document title in a results list.  By
+clicking this link, one can request a short summarization of the
+document. If both of the variables <CODE>$inline_summaries</CODE> and 
+<CODE>$summary_mode</CODE> are set
+to 0, 'Off', then neither the <B>'(summary)'</B> link nor inline document 
+summaries will appear on the results list.
+<P>
+<A NAME="$summary_link_mode"></A><H4>$summary_link_mode</H4>
+This variable is normally 'on'.  It determines whether or not
+a link to the original document is available on the summary page.
+<P>
+<A NAME="$number_of_summary_sentences"></A><H4>$number_of_summary_sentences</H4>
+If <I>Automatic Summarization</I> is enabled, then one can specify the
+maximum number of sentences which will be used to create summaries by
+setting the value of:<br><br> <CODE>$number_of_summary_sentences</CODE><br><br>  The default is
+5 sentences.  If <I>Automatic Summarization</I> is disabled, this variable
+has no effect.
+<P>
+<A NAME="$maximum_summary_length"></A><H4>$maximum_summary_length</H4>
+If <I>Automatic Summarization</I> is enabled, then one can specify the
+maximum number of characters to be used in the creation of summaries.
+This limit takes precendence over:<br><br> <CODE>$number_of_summary_sentences</CODE><br><br>
+reducing the number of sentences displayed if necessary.
+<P>
+To set a maximum summary length, set the value of:<br><br>
+<CODE>$maximum_summary_length</CODE><br><br>  If this variable is unset -- that is,
+commented out (by preceding it with a '#') --, then no maximum limit
+is applied.  (This is the default.)
+<P>
+<A NAME="$number_of_subject_groups"></A><H4>$number_of_subject_groups</H4>
+If <I>Automatic Subject Grouping</I> is enabled, then one can specify the
+maximum number of groups into which a set of query results will be
+divided by setting the value of:<br><br> <CODE>$number_of_subject_groups</CODE>
+<P>
+Default: <CODE>$number_of_subject_groups = 6;</CODE>
+<P>
+(Note: Logically, this number should be much less than the number of
+documents returned from a query.  Setting it higher than the number of
+returned documents will produce the same behavior as setting it equal
+to the number of returned documents.)
+<P>
+<A NAME="$show_additional_docs_in_grouping"></A><H4>$show_additional_docs_in_grouping</H4>
+Automatic subject grouping works best when it has a large number of
+documents to be putting in groups, so by default, additional documents
+from the ones originally displayed in "Grouped by Confidence" mode are
+brought in for the groupings.  However, some people find this
+confusing.  With $show_additional_docs_in_grouping, you can control
+whether this happens:
+<P>
+<ul>
+<li><CODE>$show_additional_docs_in_grouping = 1;</CODE>  show additional docs
+  (default), or
+<li><CODE>$show_additional_docs_in_grouping = 0;</CODE>  use only original docs
+</ul>
+<P>
+<A NAME="$max_docs_to_return"></A><H4>$max_docs_to_return</H4>
+The value of <CODE>$max_docs_to_return</CODE> determines the upper limit on the
+amount of documents that are returned by a query.  By default this
+variable is set to 20.
+<P>
+<A NAME="$log_searches"></A><H4>$log_searches</H4>
+Normally, this variable is 'off'.  However, if you set it to
+a non-zero value, every search done on EWS will be logged to
+a file in the install directory called <B>query.log</B>.  If you
+wish to change the name of the log file, you can do this on
+a case by case basis by editing the generated CGI script.
+Changing the last argument in the call to:
+<P>
+<PRE>
+&ArchitextQuery'directQuery()
+</PRE>
+will change the file that queries are logged to.
+<P>
+<A NAME="$maximum_query_time"></A><H4>$maximum_query_time</H4>
+You may wish to limit the amount of time, in seconds, that a search can last.  
+This is defaulted to 60 seconds normally (which should always
+be more than sufficient), but if you want to adjust it, just
+change the value of this varaible.
+<P>
+<A NAME="$stem_by_default"></A><H4>$stem_by_default</H4>
+This variable will affect how an index is generated. The default for this
+variable is set to 1, which causes only the roots of terms to be included
+in an index. Thus the keyword "smiles" would be indexed as "smile" and so
+on. Performing the query "smile" on a stemmed index would return the 
+documents containing the term "smiles" as well as those containing "smile".
+<P>
+<A NAME="$index_html_comments"></A><H4>$index_html_comments</H4>
+This variable will also affect how an index is generated. The default for
+this variable is commented out, effectively turned off. If it is 
+un-commented, this will cause the text occuring between html comment tags
+to be included in an index. Note that this variable does not in any way
+affect the summarization of a document. The summarization algorithm may
+still use html comments in a document's summary.
+<P>
+<A NAME="Result List Customization"></A><H4>Result List Customization</H4>
+By default, Excite for Web Servers displays each document's score and
+title in the results lists for regular queries, providing a link to
+the document itself.  We think it's a pretty good thing to do -- we
+made it the default behavior, right?  --, but maybe you'd like
+something else.  Perhaps you'd prefer to display its first three
+lines.  Or maybe you'd prefer to have the link be one which invokes a
+CGI script to format the document in a special way.  Both those
+things, and more, are possible.  With a little perl programming, you
+may customize results lists -- both regular and group-by-subject -- to
+your liking.
+<P>
+That perl programming involves changing subroutines which determine
+the display of the results.  Since there are two different types of
+results -- those for regular queries, and those for group-by-subject
+queries -- there is a subroutine for each.  If "activated", the
+appropriate subroutine is called for each document in the list, and it
+specifies what should appear on the line for that document.
+<P>
+<A NAME="$customize_result_list"></A><H5>$customize_result_list</H5>
+In order to activate the subroutines which produce the results-list
+lines, set the variable <CODE>$customize_result_list</CODE> to 1.  The
+subroutines are described below.
+<P>
+<A NAME="customize_result_list_line"></A><H5>customize_result_list_line</H5>
+The subroutine <CODE>customize_result_list_line</CODE> is for specifying the
+format of lines on <I>regular</I> query-results pages.  By default, this
+subroutine appears as follows:
+<P>
+<PRE>
+  sub customize_result_list_line {
+      local($collection_name, $file, $doc_root, $relevance_qbe, $score,
+            $title, $summary, $original_line) = @_;
+      return "$original_line";
+  }
+</PRE>
+The variables <CODE>$collection_name</CODE>, <CODE>$file</CODE>, <CODE>$doc_root</CODE>,
+<CODE>$relevance_qbe</CODE>, <CODE>$score</CODE>, <CODE>$title</CODE>, <CODE>$summary</CODE>, and
+<CODE>$original_line</CODE> are the actual arguments to this subroutine.  Here
+is a brief description of each:
+<P>
+<ul>
+<li><CODE>$collection_name</CODE> is the name of the collection being searched.
+  This is useful if you wish to customize the results of a query
+  differently for different collections.
+<li><CODE>$file</CODE> is the full pathname of the document.
+<li><CODE>$doc_root</CODE> is the pathname of the Web server's document root.
+  This is useful for converting the value of the <CODE>$file</CODE> variable to
+  a URL by removing the <CODE>$doc_root</CODE> prefix.
+<li><CODE>$relevance_qbe</CODE> is the filename of the appropriate
+  confidence-of-relevance indicator for that document, which also
+  serves as the query-by-example button if the
+  <CODE>$query_by_example_mode</CODE> is enabled.
+<li><CODE>$score</CODE> is the document's floating-point relevancy score (maximum,
+  10.0).  [Note that this argument is not passed in the the 
+  <B>customize_grouping_line</B> function.]
+<li><CODE>$title</CODE> is a slight misnomer.  There are two cases:
+<ul>
+<li>If the document is HTML <I>and</I> it has a title, then <CODE>$title</CODE> is
+    that title.  
+<li>If the document isn't HTML, or it's HTML without a title, then
+    <CODE>$title</CODE> is the document's filename.
+</ul>
+<li>If you are not using inline summaries (ie : $inline summaries = 0) then 
+<CODE>$summary</CODE> is the text for the summary link according to the
+following rule  (Default: if
+  summarization is enabled, <CODE>'(summary)'</CODE>; if disabled,
+  <CODE>'(empty)'</CODE>.) otherwise if you are using inline summaries
+(ie : $inline_summaries = 1) then <CODE>$summary</CODE> is the actual
+summary text for that particular returned document.
+<li><CODE>$original_line</CODE> is the text for the default result line.
+</ul>
+The subroutine -- really a function -- simply returns the string to be
+used as the result line: in this case just the <CODE>$original_line</CODE> (that
+is, the default output).
+<P>
+You can use the information provided to you to create whatever string
+you like, then return that value for the result.
+<P>
+<A NAME="customize_grouping_line"></A><H4>customize_grouping_line</H4>
+The subroutine <CODE>customize_grouping_line</CODE> is for specifying the format
+of lines on <I>group-by-subject</I> results pages.  The default format of
+the lines displayed on group-by-subject results pages is different
+from that of the lines on regular results pages.  (In particular,
+relevance scores are not displayed.)  For this reason, and because
+it's nice to have the added flexibility which doing so provides, we
+have a different subroutine for cutomizing subject-grouped lines than
+for regular query-results lines.
+<P>
+By default, this subroutine is defined as follows:
+<P>
+<PRE>
+  sub customize_grouping_line {
+      local($collection_name, $file, $doc_root, $relevance_qbe,  
+            $title, $summary, $original_line) = @_;
+      return "$original_line";
+  }
+</PRE>
+All of these arguments have the same values and meanings as those
+described above in the <B>customize_result_list_line</B> function.  The
+only difference between the two routines is the missing <CODE>$score</CODE>
+argument, not needed (since scores are not displayed in the subject
+grouping output).
+<P>
+<A NAME="Command Line Applications"></A><H2>Command Line Applications</H2>
+Documentation for accessing the functionality offered by the forms
+from the <A HREF="AT-helpdoc2.html">command line</A> is also available.
+<P>

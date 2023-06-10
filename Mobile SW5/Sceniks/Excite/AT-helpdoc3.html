@@ -1,0 +1,121 @@
+<TITLE>Excite, Inc. Excite for Web Servers Help</TITLE><BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#FF0000" ALINK="#0000FF">
+<img src="pictures/AT-help_banner.gif">
+<A NAME="Excite, Inc. Excite for Web Servers Help"></A><H1>Excite, Inc. Excite for Web Servers Help</H1>
+<A NAME="Custom Document Formats"></A><H2>Custom Document Formats</H2>
+<B>NOTE:</B> these features are currently unsupported!
+<P>
+<ul>
+<li><A HREF="#Enabling Custom Formats">Enabling Custom Formats</A>
+<ul>
+<li><A HREF="#custom_format">custom_format</A>
+<li><A HREF="#restrict_beneath_document_root">restrict_beneath_document_root</A>
+</ul>
+<li><A HREF="#Defining Custom Formats">Defining Custom Formats</A>
+<ul>
+<li><A HREF="#Document Delimiter">Document Delimiter</A>
+<li><A HREF="#Title Delimiter">Title Delimiter</A>
+</ul>
+<li><A HREF="#Indexing Custom Formats">Indexing Custom Formats</A>
+</ul>
+<A NAME="Enabling Custom Formats"></A><H2>Enabling Custom Formats</H2>
+Excite for Web Servers provides a few basic features that allow for
+searching and indexing of files with custom document formats.  By
+using these features, a user can define a string that acts as a
+document delimiter, in case there are multiple documents per file.
+Also, a string can be defined that sets off the title in each
+document, so that the title can be displayed in the results list.
+<P>
+In order to allow a custom format to be defined, two variable's values
+must be changed:
+<P>
+<PRE>
+  * C&lt;$custom_format&gt; in F&lt;afeatures.pl&gt; must be set to 1, and
+  * C&lt;$restrict_beneath_document_root&gt; must be set to 0, to allow
+    documents that appear outside the Web server's document root to be
+    indexed.
+</PRE>
+<A NAME="custom_format"></A><H3>custom_format</H3>
+Setting <CODE>$custom_format</CODE> to 1 notifies Excite for Web Servers that it
+should deal with all non-HTML files in this collection as
+custom-format files.
+<P>
+<A NAME="restrict_beneath_document_root"></A><H3>restrict_beneath_document_root</H3>
+Excite for Web Servers knows how to serve custom-format documents only
+when they appear outside the Web server's document root.  To serve
+these documents, EWS uses CGI scripts which grab and then output their
+text.
+<P>
+Setting <CODE>$restrict_beneath_document_root</CODE> to 0 is necessary as it
+relaxes the restriction of Excite for Web Servers that the documents
+it serves appear beneath the server's document root.
+<P>
+You should note that there are some drawbacks to this method of
+serving documents.  First, there's some extra computational overhead
+in invoking CGI scripts.  Second, relative-pathname hyperlinks may not
+work.  And third, the loading of images doesn't work, since the text
+of documents served in this manner by Excite for Web Servers are
+contained within &ltPRE&gt tags.
+<P>
+<A NAME="Defining Custom Formats"></A><H2>Defining Custom Formats</H2>
+Once the variables mentioned above have been appropriately set in
+<B>afeatures.pl</B>, it is possible to define document and title
+delimiters.  This is done during collection configuration using
+<B>AT-config.cgi</B>, reachable from the main administration page,
+<B>AT-admin.cgi</B>.
+<P>
+<A NAME="Document Delimiter"></A><H3>Document Delimiter</H3>
+This field defines a string that separates documents within a
+single file.  This is useful when multiple documents per file
+appear.
+<P>
+<A NAME="Title Delimiter"></A><H3>Title Delimiter</H3>
+In many custom formats, the document's title is set off by a certain
+string.  By defining this string, it is possible to cause Excite for
+Web Servers to extract the title for display in the query result list.
+<P>
+Below follows an example custom format:
+<P>
+<PRE>
+  AU Doe, John
+  TI The History of Technology
+  DA July 1st, 1995.
+  AB A short 200-word history of technology.
+  First came fire, then the wheel ...
+  .
+  .
+  *****
+  AU Doe, Jane
+  TI The History of Mathematics
+  DA July 2nd, 1995.
+  AB A short 200-word history of mathematics.
+  First came one, then two, ...
+  .
+  .
+  *****
+</PRE>
+In the example above, the <B>Document Delimiter</B> would be <CODE>'*****'</CODE>
+and the <B>Title Delimiter</B> would be <CODE>'TI'</CODE>.  Therefore, when the text
+of each document is retrieved by Excite for Web Servers, there would
+be two documents in this example, and the titles presented in a result
+list would be <I>The History of Technology</I> and <I>The History of
+Mathematics</I>.
+<P>
+<A NAME="Indexing Custom Formats"></A><H2>Indexing Custom Formats</H2>
+After the <B>Document Delimiter</B> and <B>Title Delimiter</B> have been
+defined, one can then index the documents which are in that format.
+<P>
+As explained above, if you wish to serve the text of these documents
+using Excite for Web Servers, you must store the custom format files
+in directories <I>outside</I> of the Web server's document root.  Only
+when documents are stored outside the Web server's document root does
+Excite for Web Servers know to use CGI scripts to access the text of
+those documents.  This is especially important when a
+multiple-document-per-file format is being used, since otherwise a
+link to the file would return the text of many documents at once.
+<P>
+Finally, make sure that the <A HREF="AT-helpdoc.html">IndexFilter</A>
+attribute is set to index text files as well as HTML files.  When the
+<CODE>$custom_mode</CODE> variable is enabled in <B>afeatures.pl</B>, the indexer
+assumes that all documents that are not HTML documents are in the
+custom format.
+<P>

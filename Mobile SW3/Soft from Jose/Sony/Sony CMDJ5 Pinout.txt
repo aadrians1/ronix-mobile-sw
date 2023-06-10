@@ -1,0 +1,19 @@
+
+                             "SONY" CMD-J5 pinout         
+              
+
+
+                                keyboard up
+                     
+                          X                     X
+                      1 2 X 3 4 5 6 7 8 9 10 11 X 12  
+                          X                     X
+
+            
+
+
+            5 connected to 10(shortcut,link)
+            7 TX
+            8 RX
+           12 GND 
+

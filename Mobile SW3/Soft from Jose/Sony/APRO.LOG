@@ -1,0 +1,8 @@
+APRO v2.58
+Compiler : Delphi 4
+Operating System : Win32 on Windows 4.10  A 
+Time      Type      SubType       Data      OtherData
+--------  --------  ------------  --------  ---------
+0000.001  TrDatChg  Avail         00000001  
+0000.001  TrgHdAlc  Window        000002EC  
+0000.001  Dispatch  WriteCom      00000003  [00]p[16]
