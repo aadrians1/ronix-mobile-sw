@@ -1,0 +1,81 @@
+Run install of USPU 4.38 and select directory where is your USPU 4.35 installed !!!
+
+You need USPU 4.35 or higher installed before using this file !!!!!!!!!!!!!!!!!!!!!!!!!
+
+News in 4.38r version:
+---------------------
+
+Install problem solved
+
+
+News in 4.37 version:
+---------------------
+
+- Philips Savvy unlocking 128/SB work with autodetect
+	
+- Siemens C25 
+	ver. 53 supported now 
+	autodetect version added - you don't need to check version manually
+
+- Panasonic GD30 - autodetect phone version before unlocking 
+	you can't destroy GD30 new versions anymore
+
+- Philips Diga - unlocking problem of some version finally solved
+
+- Sagem MC8xx - unlocking via cable added (work only with MC phones !!!)
+
+- Sagem MC922 - unlocking via cable added
+
+- Sagem 9xx - reading lock info via cable added (for using with SGMSLCK)
+	with this option you can unlock all 9xx phones !!!! 
+	(tested on MC912,MC922,RC922,MC939,MC930...)
+
+- some other improvement
+
+
+
+News in 4.35 version:
+---------------------
+
+Solved problem with Alcatel DB unlocking (error with OLE32.dll) and creating auto-backups 
+
+
+News in 4.34 version:
+---------------------
+
+- Panasonic GD-30 new series unlocking and flashing
+	(standard unlocking method don't work - GD-30 ver. 13 and higher,
+	you must flash it to version 09 and than unlock !!
+	Step-by-step:	1. Start GD-30 flasher, select "read phone version"
+			2. Open right flash file: gd30flash_09
+			3. disconect phone from cable
+			4. push "flash" button and connect phone to cable
+				phone LED must start light and software start flashing
+				- when phone didnt start flashing , select another type of phone and
+				  continue with step 5
+			5. After succesfull flashing unlock phone
+			
+
+- Bosch 90x unlocking method improved
+	(use unlock new button for this series)
+
+
+News in 4.33 version:
+---------------------
+
+New Ericsson T10 supported now (week 20 and later)
+
+Alcatel DB with "ST thomson" memory supported now
+Alcatel DB unlocking is now more safe !!
+Alcatel DB unlocker make autamatic backup of phone 
+	(you will find backup in uspu directory \Warranty backup\Alcatel DB)
+	You can restore destroyed phone from these backups with "Backup restorer"
+Alcatel DB - activation language menu - now automatic while unlocking
+
+Sagem 8xx and 9xx - security code reading
+
+Security of USPU improved to avoid serial code changes after computer crash while USPU is running
+
+
+Some others small bugs from 4.3 fixed
+

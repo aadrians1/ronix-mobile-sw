@@ -1,0 +1,65 @@
+
+What is new in Universal SP Unlocker 4.3
+----------------------------------------
+
+- New Philips Savvy unlocking
+	(if type of Savvy is not listed use Autodetect, 
+	Autodetect dont work with version 128/SB and 168/CT,HT)
+
+- Alcatel DB version 16C,16D supported now
+	(if your phone call number with "PREFIX" you can reset phone to factory settings
+	after unlocking - in phone menu: services/security/factory settings)
+	
+- Alcatel DB language uploader/downloader
+	(you can download languages from one phone and upload it to another,
+	you can also make language menu visible - especially usable for spanish phones)
+
+- Alcatel DB unlocker make fast backup of phone automatically - unlocking without warranty lost
+	(you can find backups in YOURUSPU\Warranty Backup\Alcatel DB directory, 
+	name of file is "C" as club and last 4 digits of IMEI,
+	you can restore phone from backup with new "Alcatel DB backup restorer" in flash menu)
+
+- Ericsson A1018,T10,T18,T28 new unlocking method without warranty lost + eeprom uploader
+	(you can now make "warranty backup" of eeprom when you unlock these phones,
+	and when you need make reclamation of phone you can upload 
+	warranty backup to phone and reflash it)
+
+- Panasonic GD-90 new series unlocking and flashing
+	(when standard unlocking method don't work - GD-90 ver. 13 and higher,
+	you must flash it to version 12 and than unlock !!
+	Step-by-step:	1. Check unlocking and when unsuccesfull continue with next steps
+			2. Start GD-90 flasher, select "read phone version"
+			3. Select right type of phone
+			4. Open right flash file:
+				- when your phone is A.. you must use A12 flash !!!
+				- when your phone is B.. you must use B12 flash !!!
+			5. disconect phone from cable
+			6. push "flash" button and connect phone to cable
+				phone LED must start light and software start flashing
+				- when phone didnt start flashing , select another type of phone and
+				  continue with step 5
+			7. After succesfull flashing unlock phone
+			8. If you want you can reflash phone again with newest flash file
+
+- Panasonic GD-30 new series unlocking and flashing
+	(standard unlocking method don't work - GD-30 ver. 13 and higher,
+	you must flash it to version 09 and than unlock !!
+	Step-by-step:	1. Start GD-30 flasher, select "read phone version"
+			2. Open right flash file: gd30flash_09
+			3. disconect phone from cable
+			4. push "flash" button and connect phone to cable
+				phone LED must start light and software start flashing
+				- when phone didnt start flashing , select another type of phone and
+				  continue with step 5
+			5. After succesfull flashing unlock phone
+			
+
+- Bosch 90x unlocking method improved
+	(use unlock new button for this series)
+
+- Siemens C25 version 51 supported too
+
+- Software for repairing and flashing of destroyed C25 included (only on CD or WWW)
+
+
+

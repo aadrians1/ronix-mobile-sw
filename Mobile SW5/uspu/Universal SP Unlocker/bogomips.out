@@ -1,0 +1,9 @@
+bogo = 3500, count = 0
+bogo = 17500, count = 0
+bogo = 87500, count = 5
+bogo = 437500, count = 25
+bogo = 2187500, count = 120
+1) count = 1195 ** mslice = 320.000000 *** bogo = 2187500
+2) count = 315 ** mslice = 320.000000 *** bogo = 585774
+3) count = 315 ** mslice = 320.000000 *** bogo = 591632
+3) count = 325 ** mslice = 320.000000 *** bogo = 597548

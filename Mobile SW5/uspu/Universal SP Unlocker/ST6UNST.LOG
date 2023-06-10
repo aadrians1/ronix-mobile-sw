@@ -1,0 +1,326 @@
+ %% PLEASE DO NOT MODIFY OR DELETE THIS FILE! %% 
+ %% This file contains information about the installation of an application. %% 
+ %% It will be used to automatically remove all application components from your computer if you choose to do so. %% 
+
+
+NOTE: Beginning of the bootstrapper section
+
+CONFIG: Title: "Universal SP Unlocker 4.35"
+
+ACTION: RegKey: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion", "SharedDLLs"
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\MSVCRT40.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\OLEPRO32.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\VB6STKIT.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\COMCAT.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\STDOLE2.TLB"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\ASYCFILT.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\OLEAUT32.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\MSVBVM60.DLL"
+(File currently on disk was already up to date)
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\OLEPRO32.DLL"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\COMCAT.DLL"
+
+ACTION: TLBRegister: "C:\WINDOWS\SYSTEM\STDOLE2.TLB"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\OLEAUT32.DLL"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\MSVBVM60.DLL"
+
+NOTE: End of the bootstrapper section
+
+NOTE: Now spawning the main Setup program 'Setup1.exe'....
+
+ACTION: CreateDir: "C:\Program Files\Universal SP Unlocker"
+
+ACTION: CreateDir: "C:\WINDOWS\Start Menu\Programs\Universal SP Unlocker 4.3"
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\GD30flash_A09.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\T10flash.S2X"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\T28flash_000113.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\T1xflash_000114.S2X"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\T18flash.S2X"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\T28flash_990831.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\A1018flash_lang1.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\GD90flash_B12.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\GD90flash_A14.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\GD90flash_A12.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\A1018flash_new.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\A1018flash_lang3.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\A1018flash_lang2.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\GD90flash_B14.s2x"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\868flash_980826.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\868flash_990212.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\868flash_981125.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\888flash_980826.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\628flash_970716.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\768flash_980910.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\768flash_980318.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\768flash_970905.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\628flash_980519.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\628flash_980114.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\768PFflash_980305.shx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\DB1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\tt2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\tt1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\tf3.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\tf2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\tf1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\Sony.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\s3.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\s2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\s1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\DBC2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\DBC1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\DBC.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\DB3.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\DB2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\tt3.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\at3.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\at2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\at1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\af3.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\af2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\af1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\908.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\8t2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\8t1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\8f3.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\8f2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\8f1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\7t2.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\7t1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\7f1.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\608.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\607.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\3110.usp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\PONYPROG.HTML"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\LANCOS.JPG"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\PROG-SAVEAS.JPG"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\PROG-NOTE.JPG"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\PROG-EDIT.JPG"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\PROG-SETUP.JPG"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\768eeprom.bin"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\868eeprom.bin"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\888eeprom.bin"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\USPU43.cnt"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\USPU43news.txt"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\USPUI.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\MFC40.DLL"
+(File currently on disk was already up to date)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\Mfc42.dll"
+(File currently on disk was already up to date)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\MSVCRT.DLL"
+(File currently on disk was already up to date)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\PonyProg.exe"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\Uspu43.hlp"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\COMDLG32.OCX"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\Crypto.ocx"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\MSCOMM32.OCX"
+(File currently on disk was already up to date)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\ARINIMan.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\DProgress.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\USPU.dll"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\Universal SP Unlocker\USPU43.exe"
+(File was not found or was an older version -- new file copied)
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\MFC40.DLL"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\Mfc42.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\COMDLG32.OCX"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\Crypto.ocx"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\MSCOMM32.OCX"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\ARINIMan.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\DProgress.dll"
+
+ACTION: ShellLink: "Universal SP Unlocker 4.3", "Universal SP Unlocker 4.3"
+
+ACTION: ShellLink: "Universal SP Unlocker 4.3", "USPU 4.3 Help"
+
+ACTION: ShellLink: "Universal SP Unlocker 4.3", "What is new in USPU 4.3"
+
+ACTION: RegKey: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion", "App Paths\USPU43.exe"
+
+ACTION: RegValue: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\USPU43.exe", ""
+

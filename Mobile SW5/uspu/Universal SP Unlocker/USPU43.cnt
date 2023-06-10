@@ -1,0 +1,42 @@
+:Base USPU42.hlp>main
+:Title USPU42
+1 Index=hpad10
+1 Welcome=hpad20
+1 List of supported phones=hpad30
+1 Contact us=hpad900
+1 Getting started
+2 Register it=hpad40
+2 Main screen=hpad50
+2 Menu=hpad60
+1 EEPROM solution unlocking
+2 EEPROM connecting=hpad120
+2 EEPROM step-by-step=hpad100
+2 Pony=hpad110
+2 Setup Pony programmer=hpad400
+1 Cable solution unlocking
+2 Ericsson 6/7xx cable unlocking=hpad200
+2 Ericsson 8xx cable unlocking=hpad210
+2 Ericsson A1018,T10,T18 cable unlocking=hpad270>main
+2 Nokia cable unlocking=hpad260>main
+2 Sagem cable unlocking=hpad220
+2 Panasonic cable unlocking=hpad230
+2 Siemens C25 cable unlocking=hpad240
+2 Siemens S10, Sony CMD-2000 cable unlocking=hpad280>main
+2 Bosch cable unlocking=hpad250
+2 Alcatel DB, View DB cable unlocking=hpad290>main
+1 Ericsson flashing
+2 Ericsson EEPROM uploader=hpad300
+2 Ericsson Flasher for 6xx, 7xx=hpad310>main
+2 Ericsson Flasher for 8x8, A1018, T10, T18=hpad320>main
+1 Alcatel flashing
+2 Alcatel DB, View DB Flasher=hpad330>main
+1 Other phones
+2 Motorola old phones unlocking=hpad600
+2 Motorola 520,920,930,StarTac130 phones unlocking=hpad610
+2 Connecting Motorola phones  to BDM programmer=hpad620
+2 Motorola phone flashing=hpad640
+2 Motorola security codes unlocking=hpad630
+1 Schematics
+2 Cable schematics=hpad500
+2 Pony schematics=hpad570
+2 Connecting Motorola phones  to BDM programmer=hpad620
