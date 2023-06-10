@@ -1,0 +1,3629 @@
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00001         LIST    P=16C57         ;closest PIC chip (has 2K)
+                    00002 
+                    00003         INCLUDE "SXDEFS.INC"    ;macro definitions for new instructions
+                    00198         LIST
+1010 0408           00199         DATA    _FUSE           ;configuration bits (TURBO, SYNC, OPTIONX, etc.)
+1011 047E           00200         DATA    _FUSEX          ; (PINS, CARRYX, BOR40, BANKS, PAGES)
+                    00204         LIST
+                    00004         INCLUDE "MAKROS.INC"
+                    00001 MOVFF   MACRO   KUDA,OTKUDA
+                    00002         MOVFW   OTKUDA
+                    00003         MOVWF   KUDA
+                    00004         ENDM
+                    00005 
+                    00006 STRANICA1       MACRO
+                    00007                 BCF     STATUS,5
+                    00008                 BCF     STATUS,6
+                    00009                 ENDM
+                    00010 STRANICA2       MACRO
+                    00011                 BSF     STATUS,5
+                    00012                 BCF     STATUS,6
+                    00013                 ENDM
+                    00014 STRANICA3       MACRO
+                    00015                 BCF     STATUS,5
+                    00016                 BSF     STATUS,6
+                    00017                 ENDM
+                    00018 STRANICA4       MACRO
+                    00019                 BSF     STATUS,5
+                    00020                 BSF     STATUS,6
+                    00021                 ENDM
+                    00022 OUT_B   MACRO   FIL
+                    00023         MOVFW   FIL
+                    00024         MOVWF   PORTB
+                    00025         ENDM
+                    00026 
+                    00027 MOVLF   MACRO   KUDA,CHTO
+                    00028         MOVLW   CHTO
+                    00029         MOVWF   KUDA
+                    00030         ENDM
+                    00031 
+                    00032 CORECT  MACRO   HIGH_BYTE,LOW_BYTE
+                    00033         SWAPF   LOW_BYTE,W
+                    00034         ANDLW   H'0F'
+                    00035         MOVWF   LOW_BYTE
+                    00036         SWAPF   HIGH_BYTE,W
+                    00037         ANDLW   H'F0'
+                    00038         ADDWF   LOW_BYTE,F
+                    00039         SWAPF   HIGH_BYTE,W
+                    00040         ANDLW   H'0F'
+                    00041         MOVWF   HIGH_BYTE
+                    00042         ENDM
+  0040EBF1          00005 DEVICE  EQU     PINS28+TURBO+OPTIONX+STACKX+BANKS8+PAGES4+OSC4MHZ
+                    00006 
+                    00007 #DEFINE GENERAL_BANK  TBANK  0
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00008 #DEFINE MATH_BANK     TBANK  1
+                    00009 #DEFINE SPI_BANK      TBANK  2
+                    00010 #DEFINE LCD_BANK      TBANK  3
+                    00011 
+                    00012 ;REGISTR DEFINITION
+                    00013 ;BANK1 - GENERAL BANK
+  00000008          00014 FLAGI           EQU     08H
+  00000009          00015 DES_DNEI        EQU     09H
+  0000000A          00016 EDIN_DNEI       EQU     0AH
+  0000000B          00017 TEMP            EQU     0BH
+  0000000C          00018 TMPLCD1         EQU     0CH
+  0000000D          00019 MINUTES         EQU     0DH
+  0000000E          00020 HOURS           EQU     0EH
+  0000000F          00021 DAY             EQU     0FH
+  00000010          00022 DATE            EQU     10H
+  00000011          00023 MOUNTH          EQU     11H
+  00000012          00024 D_MINUTES       EQU     12H
+  00000013          00025 D_HOURS         EQU     13H
+  00000014          00026 TEMP_DAY        EQU     14H
+  00000015          00027 D_DATE          EQU     15H
+  00000016          00028 D_MOUNTH        EQU     16H
+  00000017          00029 TEMP_I2C        EQU     17H
+  00000018          00030 KEYFLAG         EQU     18H
+  00000019          00031 STAT_LCD        EQU     19H
+  0000001A          00032 KEYS            EQU     1AH
+  0000001B          00033 REG_LOW_LCD     EQU     1BH
+  0000001C          00034 REG_HIGH_LCD    EQU     1CH
+  0000001D          00035 DDRAM           EQU     1DH
+  0000001E          00036 REZIM           EQU     1EH
+  0000001F          00037 TIP             EQU     1FH
+                    00038 
+                    00039 ;BANK1 MATH_BANK
+  00000010          00040 TEMP_MATH_HIGH  EQU    10H
+  00000011          00041 TEMP_MATH_LOW   EQU    11H
+  00000012          00042 TEMP_CELCII     EQU    12H
+  00000013          00043 T_NAR_LCD       EQU    13H
+  00000014          00044 T_OBR_LCD       EQU    14H
+  00000015          00045 T_OBR_RAS_LCD   EQU    15H
+  00000016          00046 ZNAK            EQU    16H
+  00000017          00047 ZNAK_NAR        EQU    17H
+  00000018          00048 ZNAK_OBR        EQU    18H
+  00000019          00049 LOW_CONST       EQU    19H
+  0000001A          00050 D_TEMP_CELCII   EQU    1AH
+  0000001B          00051 DT_OBR_RAS_LCD  EQU    1BH
+  0000001D          00052 HIGH_OBR_RAS    EQU    1DH
+  0000001E          00053 LOW_OBR_RAS     EQU    1EH
+  0000001C          00054 HIGH_CONST      EQU    1CH
+  0000001F          00055 WR_CONST        EQU    1FH
+  0000001F          00056 TEMPER_HIGH     EQU    1FH
+                    00057 
+                    00058 ;BANK2 SPI_BANK
+  00000010          00059 T_NAR_HIGH      EQU     10H
+  00000011          00060 T_OBR_HIGH      EQU     11H
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000012          00061 T_VIH_HIGH      EQU     12H
+  00000013          00062 T_NAR_LOW       EQU     13H
+  00000014          00063 T_OBR_LOW       EQU     14H
+  00000015          00064 T_VIH_LOW       EQU     15H
+  00000016          00065 CHET_SPI        EQU     16H
+  00000017          00066 TEMP_SPI        EQU     17H
+  00000018          00067 TEMP2_SPI       EQU     18H
+  00000019          00068 INP_DATA_SPI    EQU     19H
+  0000001A          00069 MATH_HIGH       EQU     1AH
+  0000001B          00070 MATH_LOW        EQU     1BH
+  0000001C          00071 MATH_HIGH8      EQU     1CH
+  0000001D          00072 MATH_LOW8       EQU     1DH
+  0000001E          00073 MATH_HIGH16     EQU     1EH
+  0000001F          00074 MATH_LOW16      EQU     1FH
+  00000016          00075 HIGH_CONTROL    EQU     16H
+  00000017          00076 LOW_CONTROL     EQU     17H
+                    00077 
+                    00078 ;LCD_BANK
+  00000010          00079 CHETCHIK1       EQU     10H
+  00000011          00080 CHETCHIK2       EQU     11H
+  00000012          00081 CHETCHIK3       EQU     12H
+  00000013          00082 HIGH_5_MIN      EQU     13H
+  00000014          00083 LOW_5_MIN       EQU     14H
+  00000015          00084 HIGH_20_SEK     EQU     15H
+  00000016          00085 LOW_20_SEK      EQU     16H
+                    00086 ;
+  00000017          00087 DROBNOE            EQU  17H
+  00000018          00088 DROB_OBR_LCD       EQU  18H
+  00000019          00089 DROB_NAR_LCD       EQU  19H
+  0000001A          00090 DROB_VIH_LCD       EQU  1AH
+  0000001B          00091 ZNAK_VIH           EQU  1BH
+  0000001C          00092 T_VIH_LCD          EQU  1CH
+  0000001D          00093 TEMP_DEN           EQU  1DH
+                    00094 
+                    00095 
+                    00096 ;CONSTANT DEFINITION
+  00000006          00097 SET_PRERIV  EQU     B'00000110'
+  0000000C          00098 T_NARUZ     EQU     B'00001100'
+  0000001C          00099 T_OBRAT     EQU     B'00011100'
+  0000002C          00100 T_VIHOD     EQU     B'00101100'
+                    00101 
+                    00102 ;PIN DEFINITION
+                    00103 ;
+  00000002          00104 KEY1    EQU     2;PORTA
+  00000001          00105 KEY2    EQU     1;PORTA
+  00000000          00106 KEY3    EQU     0;PORTA
+  00000003          00107 KEY4    EQU     3;PORTA
+                    00108 ;
+  00000000          00109 KEYPRESSED    EQU     0;FLAGi
+  00000001          00110 IZMENENIE     EQU     1;FLAGi
+  00000002          00111 LED           EQU     2;FLAGi
+  00000003          00112 MIN_5         EQU     3;FLAGi
+  00000004          00113 SMECHENIE     EQU     4;FLAGi
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000005          00114 VHOD_V_REZIM  EQU     5;FLAGI
+  00000006          00115 DNI           EQU     6;FLAGI
+                    00116 ;
+  00000000          00117 SPI_OUT EQU     0;PORTB
+  00000001          00118 SPI_IN  EQU     1;PORTB
+  00000002          00119 SPI_CS  EQU     2;PORTB
+  00000003          00120 SPI_EOC EQU     3;PORTB
+  00000004          00121 SPI_CLK EQU     4;PORTB
+                    00122 
+  00000000          00123 LED_OUT         EQU     0
+  00000001          00124 RS              EQU     1
+  00000002          00125 R_W             EQU     2
+  00000003          00126 E               EQU     3
+  00000006          00127 SDA_I2C         EQU     6
+  00000005          00128 CLK_I2C         EQU     5
+                    00129 
+0000                00130         ORG     0H
+0000 0004           00131         CLRWDT
+                    00132         GENERAL_BANK
+0001 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0002 06A8           00133         BTFSC   FLAGI,VHOD_V_REZIM
+0003 0915           00134         CALL    VID_20_SEK
+0004 0205           00135         MOVFW   PORTA
+0005 0E0F           00136         ANDLW   H'0F'
+0006 0038           00137         MOVWF   KEYFLAG
+                    00138 
+                    00139 ;       ISKLUCHENIE DREBEZGA
+0007 0443           00140         BCF     STATUS,Z
+0008 021A           00141         MOVFW   KEYS
+0009 0098           00142         SUBWF   KEYFLAG,W
+000A 0643           00143         BTFSC   STATUS,Z
+                    00144         RETI
+000B 000E               M         DATA    0Eh     ;RETI   ;return from interrupt (pull W, STATUS, FSR, PC)
+000C 0218           00145         MOVFW   KEYFLAG
+000D 003A           00146         MOVWF   KEYS
+000E 0508           00147         BSF     FLAGI,KEYPRESSED
+                    00148 ;       ESLI NE NAZATA NI ODNA KLAVISHA
+000F 0443           00149         BCF     STATUS,Z
+0010 0C0F           00150         MOVLW   H'0F'
+0011 0098           00151         SUBWF   KEYFLAG,W
+0012 0643           00152         BTFSC   STATUS,Z
+0013 0408           00153         BCF     FLAGI,KEYPRESSED
+                    00154         RETI
+0014 000E               M         DATA    0Eh     ;RETI   ;return from interrupt (pull W, STATUS, FSR, PC)
+                    00155 
+0015                00156         ORG     0015H
+0015                00157 VID_20_SEK
+0015 0061           00158          CLRF   RTCC
+                    00159          LCD_BANK
+0016 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0017 02F6           00160          DECFSZ LOW_20_SEK,F
+0018 0A20           00161          GOTO LOOPV1
+0019 02F5           00162          DECFSZ HIGH_20_SEK,F
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+001A 0A20           00163          GOTO LOOPV1
+                    00164          GENERAL_BANK
+001B 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+001C 04A8           00165          BCF    FLAGI,VHOD_V_REZIM
+001D 0508           00166          BSF    FLAGI,KEYPRESSED
+                    00167          MOVLF  REZIM,H'01'
+001E 0C01               M         MOVLW   H'01'
+001F 003E               M         MOVWF   REZIM
+                    00168 LOOPV1   GENERAL_BANK
+0020 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00169          RETP
+0021 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00170 
+                    00171 
+0022                00172 ZADERZKA
+                    00173          GENERAL_BANK
+0022 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00174          MOVLF  TEMP,D'20'
+0023 0C14               M         MOVLW   D'20'
+0024 002B               M         MOVWF   TEMP
+                    00175          MOVLF  TEMP_I2C,H'FF'
+0025 0CFF               M         MOVLW   H'FF'
+0026 0037               M         MOVWF   TEMP_I2C
+0027 0000           00176 PPP      NOP
+0028 02F7           00177          DECFSZ TEMP_I2C,F
+0029 0A27           00178          GOTO   PPP
+002A 02EB           00179          DECFSZ TEMP,F
+002B 0A27           00180          GOTO   PPP
+                    00181          RETP
+002C 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+002D                00182 SUB_KEY1
+                    00183          GENERAL_BANK
+002D 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+002E 0061           00184          CLRF   RTCC
+002F 0708           00185          BTFSS  FLAGI,KEYPRESSED
+                    00186          RETP
+0030 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0031 0658           00187          BTFSC  KEYFLAG,KEY1
+                    00188          RETP
+0032 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0033 0403           00189          BCF    STATUS,C
+0034 037E           00190          RLF    REZIM,F
+0035 0C01           00191          MOVLW  H'01'
+0036 069E           00192          BTFSC  REZIM,4
+0037 003E           00193          MOVWF  REZIM
+0038 0408           00194          BCF    FLAGI,KEYPRESSED
+                    00195          RETP
+0039 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+003A                00196 SUB_KEY4
+                    00197          GENERAL_BANK
+003A 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+003B 0061           00198          CLRF   RTCC
+003C 0708           00199          BTFSS  FLAGI,KEYPRESSED
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00200          RETP
+003D 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+003E 0678           00201          BTFSC  KEYFLAG,KEY4
+                    00202          RETP
+003F 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0040 0408           00203          BCF    FLAGI,KEYPRESSED
+0041 07FE           00204          BTFSS  REZIM,7
+0042 0A45           00205          GOTO   SBROS
+0043 04FE           00206          BCF    REZIM,7
+                    00207          RETP
+0044 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0045                00208 SBROS
+0045 05FE           00209          BSF    REZIM,7
+                    00210          RETP
+0046 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0047                00211 SUB_KEY2
+0047 0061           00212          CLRF   RTCC
+0048 0708           00213          BTFSS  FLAGI,KEYPRESSED
+                    00214          RETP
+0049 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+004A 0638           00215          BTFSC  KEYFLAG,KEY2
+                    00216          RETP
+004B 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+004C 0403           00217          BCF    STATUS,C
+004D 037B           00218          RLF    REG_LOW_LCD,F
+004E 037C           00219          RLF    REG_HIGH_LCD,F
+004F 0C01           00220          MOVLW  H'01'
+0050 0603           00221          BTFSC  STATUS,C
+0051 003B           00222          MOVWF  REG_LOW_LCD
+0052 02BD           00223          INCF   DDRAM,F
+0053 0C48           00224          MOVLW  H'48'
+0054 019D           00225          XORWF  DDRAM,W
+0055 0643           00226          BTFSC  STATUS,Z
+0056 007D           00227          CLRF   DDRAM
+0057 0C40           00228          MOVLW  H'40'
+0058 067D           00229          BTFSC  DDRAM,3
+0059 01FD           00230          ADDWF  DDRAM,F
+005A 047D           00231          BCF    DDRAM,3
+005B 0408           00232          BCF    FLAGI,KEYPRESSED
+                    00233          RETP
+005C 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+005D                00234 SUB_KEY3
+005D 0061           00235          CLRF   RTCC
+005E 0708           00236          BTFSS  FLAGI,KEYPRESSED
+                    00237          RETP
+005F 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0060 0618           00238          BTFSC  KEYFLAG,KEY3
+                    00239          RETP
+0061 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0062 0519           00240          BSF    STAT_LCD,KEY3
+0063 0408           00241          BCF    FLAGI,KEYPRESSED
+                    00242          RETP
+0064 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00243 
+0065                00244 PROVER_PRAZD
+0065 0C0A           00245          MOVLW  H'0A'
+0066 018A           00246          XORWF  EDIN_DNEI,W
+0067 0643           00247          BTFSC  STATUS,Z
+0068 006A           00248          CLRF   EDIN_DNEI
+                    00249 
+0069 0C0A           00250          MOVLW  H'0A'
+006A 0189           00251          XORWF  DES_DNEI,W
+006B 0643           00252          BTFSC  STATUS,Z
+006C 0069           00253          CLRF   DES_DNEI
+                    00254 
+006D 0C01           00255          MOVLW  H'01'
+006E 067F           00256          BTFSC  TIP,3
+006F 003F           00257          MOVWF  TIP
+0070 079B           00258          BTFSS  REG_LOW_LCD,4
+                    00259          RETP
+0071 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00260          MOVLF  REG_LOW_LCD,H'01'
+0072 0C01               M         MOVLW   H'01'
+0073 003B               M         MOVWF   REG_LOW_LCD
+0074 007C           00261          CLRF   REG_HIGH_LCD
+0075 007D           00262          CLRF   DDRAM
+                    00263          RETP
+0076 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00264 
+0077                00265 PRAZDNIK_LCD
+                    00266            STRANICA4
+0077 05A3               M                 BSF     STATUS,5
+0078 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0079 0953           00267            CALL    CURSOR_HOME
+007A 061F           00268            BTFSC   TIP,0
+007B 0C5A           00269            MOVLW   'Z'
+007C 063F           00270            BTFSC   TIP,1
+007D 0C57           00271            MOVLW   'W'
+007E 065F           00272            BTFSC   TIP,2
+007F 0C48           00273            MOVLW   'H'
+                    00274            STRANICA4
+0080 05A3               M                 BSF     STATUS,5
+0081 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0082 0939           00275            CALL      ZAPIC_CHAR
+0083 0C20           00276            MOVLW   ' '
+                    00277            STRANICA4
+0084 05A3               M                 BSF     STATUS,5
+0085 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0086 0939           00278            CALL      ZAPIC_CHAR
+                    00279 
+0087 0209           00280            MOVFW  DES_DNEI
+                    00281            STRANICA4
+0088 05A3               M                 BSF     STATUS,5
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0089 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+008A 0917           00282            CALL   SIMVOL_LCD
+                    00283 
+008B 020A           00284            MOVFW  EDIN_DNEI
+                    00285            STRANICA4
+008C 05A3               M                 BSF     STATUS,5
+008D 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+008E 0917           00286            CALL   SIMVOL_LCD
+                    00287            RETP
+008F 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00288 
+0090                00289 TERM_LCD
+                    00290            STRANICA4
+0090 05A3               M                 BSF     STATUS,5
+0091 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0092 0953           00291            CALL    CURSOR_HOME
+                    00292 ;DISPLAY HOURS
+0093 0213           00293            MOVFW  D_HOURS    ;Position 0
+                    00294            STRANICA4
+0094 05A3               M                 BSF     STATUS,5
+0095 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0096 0917           00295            CALL   SIMVOL_LCD
+0097 020E           00296            MOVFW  HOURS      ;Position 1
+                    00297            STRANICA4
+0098 05A3               M                 BSF     STATUS,5
+0099 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+009A 0917           00298            CALL   SIMVOL_LCD
+009B 0C68           00299            MOVLW  'h'        ;Position 2
+                    00300            STRANICA4
+009C 05A3               M                 BSF     STATUS,5
+009D 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+009E 0939           00301            CALL   ZAPIC_CHAR
+009F 0C20           00302            MOVLW  ' '        ;Position 3
+                    00303            STRANICA4
+00A0 05A3               M                 BSF     STATUS,5
+00A1 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00A2 0939           00304            CALL   ZAPIC_CHAR
+                    00305 ;DISPLAY DAYS
+00A3 0C00           00306            MOVLW  H'0'       ;Position 4
+                    00307            STRANICA4
+00A4 05A3               M                 BSF     STATUS,5
+00A5 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00A6 0917           00308            CALL   SIMVOL_LCD
+00A7 020F           00309            MOVFW  DAY        ;Position 5
+                    00310            STRANICA4
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00A8 05A3               M                 BSF     STATUS,5
+00A9 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00AA 0917           00311            CALL   SIMVOL_LCD
+                    00312 ;DISPLAY T_VVODIMOE
+00AB 0C20           00313            MOVLW  ' '        ;Position 6
+                    00314            STRANICA4
+00AC 05A3               M                 BSF     STATUS,5
+00AD 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00AE 0939           00315            CALL   ZAPIC_CHAR
+00AF 0C2B           00316            MOVLW  '+'        ;Position 7
+                    00317            STRANICA4
+00B0 05A3               M                 BSF     STATUS,5
+00B1 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00B2 0939           00318            CALL   ZAPIC_CHAR
+                    00319            STRANICA1
+00B3 04A3               M                 BCF     STATUS,5
+00B4 04C3               M                 BCF     STATUS,6
+00B5 09E6           00320            CALL      INDIK_2x8
+                    00321            MATH_BANK
+00B6 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00B7 021B           00322            MOVFW  DT_OBR_RAS_LCD
+                    00323            GENERAL_BANK
+00B8 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00324            STRANICA4
+00B9 05A3               M                 BSF     STATUS,5
+00BA 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00BB 0917           00325            CALL   SIMVOL_LCD
+                    00326 ;+++++++++++++++++++++++++++++++++++++++++
+                    00327            MATH_BANK
+00BC 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00BD 0215           00328            MOVFW  T_OBR_RAS_LCD
+                    00329            GENERAL_BANK
+00BE 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00330            STRANICA4
+00BF 05A3               M                 BSF     STATUS,5
+00C0 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00C1 0917           00331            CALL   SIMVOL_LCD
+                    00332 ;DISPLAY T_NARUZNOE
+00C2 0C20           00333            MOVLW  ' '
+                    00334            STRANICA4
+00C3 05A3               M                 BSF     STATUS,5
+00C4 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00C5 0939           00335            CALL   ZAPIC_CHAR
+                    00336 
+                    00337            MATH_BANK
+00C6 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00C7 0217           00338            MOVFW  ZNAK_NAR
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00339            GENERAL_BANK
+00C8 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00340            STRANICA4
+00C9 05A3               M                 BSF     STATUS,5
+00CA 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00CB 0939           00341            CALL   ZAPIC_CHAR
+                    00342 ;
+                    00343            MATH_BANK
+00CC 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00CD 0213           00344            MOVFW  T_NAR_LCD
+                    00345            GENERAL_BANK
+00CE 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00346            STRANICA4
+00CF 05A3               M                 BSF     STATUS,5
+00D0 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00D1 095C           00347            CALL   OUT_LCD
+00D2 0CA1           00348            MOVLW  H'A1'
+                    00349            STRANICA4
+00D3 05A3               M                 BSF     STATUS,5
+00D4 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00D5 0939           00350            CALL   ZAPIC_CHAR
+                    00351            RETP
+00D6 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00352 
+00D7 0528           00353            BSF     FLAGI,IZMENENIE
+00D8                00354 PRIB_DT_OBR
+                    00355            MATH_BANK
+00D8 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00D9 02BB           00356            INCF   DT_OBR_RAS_LCD,F
+                    00357            GENERAL_BANK
+00DA 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00DB 0528           00358            BSF     FLAGI,IZMENENIE
+                    00359            RETP
+00DC 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+00DD                00360 PRIB_T_OBR
+                    00361            MATH_BANK
+00DD 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00DE 02B5           00362            INCF   T_OBR_RAS_LCD,F
+                    00363            GENERAL_BANK
+00DF 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00E0 0528           00364            BSF     FLAGI,IZMENENIE
+                    00365            RETP
+00E1 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+00E2                00366 CLOCK_CORRECT
+                    00367            STRANICA4
+00E2 05A3               M                 BSF     STATUS,5
+00E3 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00E4 0B36           00368            GOTO  CLOCK_COR1
+                    00369 
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00E5                00370 VOZV_CLK_COR
+                    00371            RETP
+00E5 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00372 
+00E6                00373 INDIK_2x8
+00E6 0C40           00374            MOVLW  H'40'
+                    00375            STRANICA4
+00E7 05A3               M                 BSF     STATUS,5
+00E8 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00E9 094D           00376            CALL   SET_DDRAM
+                    00377            RETP
+00EA 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00378 
+00EB                00379 SVERKA_TAIMERA
+00EB 0BEF           00380         GOTO  NULI
+00EC                00381 VOZV_NULI
+00EC 061F           00382         BTFSC  TIP,0
+                    00383         RETP
+00ED 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00384         LCD_BANK
+00EE 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00EF 021D           00385         MOVFW   TEMP_DEN; VREMENNO VMESTO DAY
+                    00386         GENERAL_BANK
+00F0 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+00F1 0194           00387         XORWF   TEMP_DAY,W
+00F2 0743           00388         BTFSS   STATUS,Z
+00F3 0AFB           00389         GOTO    LOM
+00F4 0C03           00390         MOVLW  H'03'
+00F5 063F           00391         BTFSC  TIP,1
+00F6 002F           00392         MOVWF  DAY
+00F7 0C06           00393         MOVLW  H'06'
+00F8 065F           00394         BTFSC  TIP,2
+00F9 002F           00395         MOVWF  DAY
+                    00396         RETP
+00FA 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00397 LOM     STRANICA2
+00FB 05A3               M                 BSF     STATUS,5
+00FC 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+00FD 0900           00398         CALL    CORRECT_TEMP_DAY
+00FE 0C03           00399         MOVLW  H'03'
+00FF 063F           00400         BTFSC  TIP,1
+0100 002F           00401         MOVWF  DAY
+0101 0C06           00402         MOVLW  H'06'
+0102 065F           00403         BTFSC  TIP,2
+0103 002F           00404         MOVWF  DAY
+                    00405         RETP
+0104 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00406 
+                    00407 
+0105                00408         ORG     0105H
+0105                00409 NACHALO
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0105 0068           00410         CLRF    FLAGI
+                    00411         STRANICA2
+0106 05A3               M                 BSF     STATUS,5
+0107 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0108 0914           00412         CALL    LED_POSTANOVKA
+0109 0079           00413         CLRF    STAT_LCD
+                    00414         MOVLF   REZIM,H'01'
+010A 0C01               M         MOVLW   H'01'
+010B 003E               M         MOVWF   REZIM
+                    00415         MOVLF   KEYS,H'0F'
+010C 0C0F               M         MOVLW   H'0F'
+010D 003A               M         MOVWF   KEYS
+                    00416         MOVLF   KEYFLAG,H'0F'
+010E 0C0F               M         MOVLW   H'0F'
+010F 0038               M         MOVWF   KEYFLAG
+0110 0C06           00417         MOVLW   SET_PRERIV
+0111 0002           00418         OPTION
+                    00419 ;
+0112 0C01           00420         MOVLW   B'00000001'
+0113 0007           00421         TRIS    PORTC   ;       PORTC NA VIVOD
+0114 0067           00422         CLRF    PORTC   ;       OCHISTKA VIHODOV NA '0'
+0115 0CFF           00423         MOVLW   B'11111111'
+0116 0006           00424         TRIS    PORTB   ;       PORTB NA VIVOD
+0117 0066           00425         CLRF    PORTB   ;       OCHISTKA VIHODOV NA '0'
+0118 0C0F           00426         MOVLW   B'00001111'
+0119 0005           00427         TRIS    PORTA   ;       PORTA NA VIVOD
+011A 0065           00428         CLRF    PORTA   ;       OCHISTKA VIHODOV NA '0'
+                    00429         MODE    H'0E'
+011B 005E               M         DATA    50h|H'0E' ;MODE   ;write N into MODE register (N = 0-F)
+011C 0CF0           00430         MOVLW   B'11110000'
+011D 0005           00431         TRIS    PORTA
+                    00432         MODE    H'0F'
+011E 005F               M         DATA    50h|H'0F' ;MODE   ;write N into MODE register (N = 0-F)
+                    00433         STRANICA4
+011F 05A3               M                 BSF     STATUS,5
+0120 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0121 0B02           00434         GOTO    INIT_LCD
+0122                00435 VOZV_LCD
+                    00436         TBANK  0
+0122 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0123                00437 LALA
+                    00438         SPI_BANK
+0123 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00439         STRANICA2
+0124 05A3               M                 BSF     STATUS,5
+0125 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0126 0B14           00440         GOTO    SPI_MODULE
+                    00441         GENERAL_BANK
+0127 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0128                00442 VOZV_SPI
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00443            STRANICA3
+0128 04A3               M                 BCF     STATUS,5
+0129 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+012A 0B62           00444            GOTO   CLOCK_READ
+012B                00445 VOZV_RD_CLOCK
+                    00446            TBANK  0
+012B 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00447            STRANICA4
+012C 05A3               M                 BSF     STATUS,5
+012D 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+012E 0959           00448            CALL    CURSOR_OFF
+                    00449            STRANICA4
+012F 05A3               M                 BSF     STATUS,5
+0130 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0131 0953           00450            CALL    CURSOR_HOME
+0132 093A           00451            CALL    SUB_KEY4
+0133 06FE           00452            BTFSC   REZIM,7
+0134 0BE2           00453            GOTO    VSE_DATCHIKI
+                    00454 ;DISPLAY HOURS
+0135 0213           00455            MOVFW  D_HOURS       ;Position 0
+                    00456            STRANICA4
+0136 05A3               M                 BSF     STATUS,5
+0137 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0138 0917           00457            CALL   SIMVOL_LCD
+0139 020E           00458            MOVFW  HOURS         ;Position 1
+                    00459            STRANICA4
+013A 05A3               M                 BSF     STATUS,5
+013B 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+013C 0917           00460            CALL   SIMVOL_LCD
+013D 0C3A           00461            MOVLW  ':'           ;Position 2
+                    00462            STRANICA4
+013E 05A3               M                 BSF     STATUS,5
+013F 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0140 0939           00463            CALL   ZAPIC_CHAR
+                    00464 ;DISPLAY MINUTES
+0141 0212           00465            MOVFW  D_MINUTES     ;Position 3
+                    00466            STRANICA4
+0142 05A3               M                 BSF     STATUS,5
+0143 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0144 0917           00467            CALL   SIMVOL_LCD
+0145 020D           00468            MOVFW  MINUTES       ;Position 4
+                    00469            STRANICA4
+0146 05A3               M                 BSF     STATUS,5
+0147 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0148 0917           00470            CALL   SIMVOL_LCD
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0149 0C20           00471            MOVLW  ' '           ;Position 5
+                    00472            STRANICA4
+014A 05A3               M                 BSF     STATUS,5
+014B 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+014C 0939           00473            CALL   ZAPIC_CHAR
+                    00474 
+                    00475 ;DISPLAY T_NARUZNOE
+                    00476            MATH_BANK
+014D 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+014E 0217           00477            MOVFW  ZNAK_NAR      ;Position 6
+                    00478            GENERAL_BANK
+014F 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00479            STRANICA4
+0150 05A3               M                 BSF     STATUS,5
+0151 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0152 0939           00480            CALL   ZAPIC_CHAR
+                    00481            STRANICA2
+0153 05A3               M                 BSF     STATUS,5
+0154 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0155 0B02           00482            GOTO    NAR_TEMP_LCD  ;Position 7,8
+0156                00483 VOZV_TEMP_LCD
+0156 0CA1           00484            MOVLW  H'A1'
+                    00485            STRANICA4
+0157 05A3               M                 BSF     STATUS,5
+0158 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0159 0939           00486            CALL   ZAPIC_CHAR
+                    00487 ;DISPLAY T_OBRATNOE
+                    00488            MATH_BANK
+015A 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+015B 0218           00489            MOVFW  ZNAK_OBR
+                    00490            GENERAL_BANK
+015C 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00491            STRANICA4
+015D 05A3               M                 BSF     STATUS,5
+015E 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+015F 0939           00492            CALL   ZAPIC_CHAR
+                    00493            MATH_BANK
+0160 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0161 0214           00494            MOVFW  T_OBR_LCD
+                    00495            GENERAL_BANK
+0162 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00496            STRANICA4
+0163 05A3               M                 BSF     STATUS,5
+0164 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0165 095C           00497            CALL   OUT_LCD
+                    00498            GENERAL_BANK
+0166 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0167 0C20           00499            MOVLW  ' '
+                    00500            STRANICA4
+0168 05A3               M                 BSF     STATUS,5
+0169 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+016A 0939           00501            CALL   ZAPIC_CHAR
+016B 0C20           00502            MOVLW  ' '
+016C 071F           00503            BTFSS  TIP,0
+016D 0C54           00504            MOVLW  'T'
+                    00505            STRANICA4
+016E 05A3               M                 BSF     STATUS,5
+016F 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0170 0939           00506            CALL   ZAPIC_CHAR
+0171 0C20           00507            MOVLW  ' '
+                    00508            STRANICA4
+0172 05A3               M                 BSF     STATUS,5
+0173 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0174 0939           00509            CALL   ZAPIC_CHAR
+                    00510 
+0175 09EB           00511            CALL    SVERKA_TAIMERA
+                    00512            STRANICA2
+0176 05A3               M                 BSF     STATUS,5
+0177 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0178 0B6E           00513            GOTO   CONTROL_TEMPER
+0179                00514 VOZV_SVERKA
+0179 092D           00515            CALL   SUB_KEY1
+017A 063E           00516            BTFSC  REZIM,1
+017B 0B82           00517            GOTO   TERM_CORRECT
+017C 065E           00518            BTFSC  REZIM,2
+017D 0BEB           00519            GOTO   PRAZDNIKI
+017E 067E           00520            BTFSC  REZIM,3
+017F 09E2           00521            CALL   CLOCK_CORRECT
+0180 0B23           00522            GOTO   LALA
+                    00523 
+0181 0800           00524         RETURN
+                    00525 
+0182                00526 TERM_CORRECT
+                    00527            MOVLF  D_HOURS,H'00'
+0182 0C00               M         MOVLW   H'00'
+0183 0033               M         MOVWF   D_HOURS
+                    00528            MOVLF  HOURS,H'00'
+0184 0C00               M         MOVLW   H'00'
+0185 002E               M         MOVWF   HOURS
+                    00529            MOVLF  DAY,H'01'
+0186 0C01               M         MOVLW   H'01'
+0187 002F               M         MOVWF   DAY
+                    00530            MOVLF  REG_LOW_LCD,H'02'
+0188 0C02               M         MOVLW   H'02'
+0189 003B               M         MOVWF   REG_LOW_LCD
+018A 007C           00531            CLRF   REG_HIGH_LCD
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00532            STRANICA4
+018B 05A3               M                 BSF     STATUS,5
+018C 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+018D 0964           00533            CALL    LCD_CLEAR
+                    00534            STRANICA4
+018E 05A3               M                 BSF     STATUS,5
+018F 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0190 0956           00535            CALL    CURSOR_ON
+                    00536            MOVLF   DDRAM,H'01'
+0191 0C01               M         MOVLW   H'01'
+0192 003D               M         MOVWF   DDRAM
+                    00537            MATH_BANK
+0193 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0194 0428           00538            BCF     FLAGI,IZMENENIE
+                    00539            GENERAL_BANK
+0195 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0196                00540 LOOPT1
+                    00541            LCD_BANK
+0196 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00542            MOVLF    HIGH_20_SEK,H'0A'
+0197 0C0A               M         MOVLW   H'0A'
+0198 0035               M         MOVWF   HIGH_20_SEK
+0199 0076           00543            CLRF     LOW_20_SEK
+                    00544            GENERAL_BANK
+019A 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+019B 05A8           00545            BSF    FLAGI,VHOD_V_REZIM
+                    00546            STRANICA3
+019C 04A3               M                 BCF     STATUS,5
+019D 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+019E 09D3           00547            CALL   M24LC16_READ
+                    00548            STRANICA4
+019F 05A3               M                 BSF     STATUS,5
+01A0 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01A1 09E6           00549            CALL   VICH_OBR_FAKT
+01A2 075C           00550            BTFSS   REG_HIGH_LCD,2
+01A3 0BA9           00551            GOTO    LEVA
+01A4 007C           00552            CLRF   REG_HIGH_LCD
+                    00553            MOVLF  REG_LOW_LCD,H'02'
+01A5 0C02               M         MOVLW   H'02'
+01A6 003B               M         MOVWF   REG_LOW_LCD
+                    00554            MOVLF  DDRAM,H'01'
+01A7 0C01               M         MOVLW   H'01'
+01A8 003D               M         MOVWF   DDRAM
+01A9 0990           00555 LEVA       CALL   TERM_LCD
+01AA 021D           00556            MOVFW  DDRAM
+                    00557            STRANICA4
+01AB 05A3               M                 BSF     STATUS,5
+01AC 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+01AD 094D           00558            CALL   SET_DDRAM
+                    00559            STRANICA4
+01AE 05A3               M                 BSF     STATUS,5
+01AF 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01B0 0956           00560            CALL   CURSOR_ON
+01B1 0708           00561 CIKL1      BTFSS  FLAGI,KEYPRESSED
+01B2 0BB1           00562            GOTO   CIKL1
+                    00563            STRANICA4
+01B3 05A3               M                 BSF     STATUS,5
+01B4 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01B5 0959           00564            CALL   CURSOR_OFF
+01B6 092D           00565            CALL   SUB_KEY1
+01B7 073E           00566            BTFSS  REZIM,1
+01B8 0B23           00567            GOTO   LALA
+01B9 0947           00568            CALL   SUB_KEY2
+01BA 095D           00569            CALL   SUB_KEY3
+01BB 0719           00570            BTFSS  STAT_LCD,KEY3
+01BC 0B96           00571            GOTO   LOOPT1
+01BD 0419           00572            BCF    STAT_LCD,KEY3
+                    00573 ;           BTFSC  REG_LOW_LCD,0
+                    00574  ;          INCF   D_HOURS,F
+                    00575 
+01BE 063B           00576            BTFSC  REG_LOW_LCD,1
+01BF 02AE           00577            INCF   HOURS,F
+                    00578            ;SIMVOL 'h'        2
+                    00579            ;PROBEL            3
+                    00580            ;BTFSC  REG_LOW_LCD,4
+                    00581            ;INCF   D_DAY,F
+01C0 06BB           00582            BTFSC  REG_LOW_LCD,5
+01C1 02AF           00583            INCF   DAY,F
+                    00584            ;PROBEL            6
+                    00585            ;ZNAK '+'          7
+01C2 061C           00586            BTFSC  REG_HIGH_LCD,0
+01C3 09D8           00587            CALL   PRIB_DT_OBR
+01C4 063C           00588            BTFSC  REG_HIGH_LCD,1
+01C5 09DD           00589            CALL   PRIB_T_OBR
+                    00590            STRANICA4
+01C6 05A3               M                 BSF     STATUS,5
+01C7 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01C8 0B16           00591            GOTO   PROV_IZMEN
+01C9                00592 VOZV_IZMEN
+01C9 0728           00593            BTFSS  FLAGI,IZMENENIE
+01CA 0B96           00594            GOTO   LOOPT1
+                    00595            STRANICA2
+01CB 05A3               M                 BSF     STATUS,5
+01CC 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01CD 0990           00596            CALL         VICH_CONST
+                    00597            MATH_BANK
+01CE 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00598            MOVFF        WR_CONST,HIGH_CONST
+01CF 021C               M         MOVFW   HIGH_CONST
+01D0 003F               M         MOVWF   WR_CONST
+                    00599            GENERAL_BANK
+01D1 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+01D2 0488           00600            BCF          FLAGI,SMECHENIE
+                    00601            STRANICA3
+01D3 04A3               M                 BCF     STATUS,5
+01D4 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01D5 09B3           00602            CALL         M24LC16_WRITE
+01D6 0922           00603            CALL         ZADERZKA
+                    00604            MATH_BANK
+01D7 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00605            MOVFF        WR_CONST,LOW_CONST
+01D8 0219               M         MOVFW   LOW_CONST
+01D9 003F               M         MOVWF   WR_CONST
+                    00606            GENERAL_BANK
+01DA 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+01DB 0588           00607            BSF          FLAGI,SMECHENIE
+                    00608            STRANICA3
+01DC 04A3               M                 BCF     STATUS,5
+01DD 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01DE 09B3           00609            CALL         M24LC16_WRITE
+                    00610            GENERAL_BANK
+01DF 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+01E0 0922           00611            CALL    ZADERZKA
+01E1 0B96           00612            GOTO   LOOPT1
+                    00613 ;===========================================
+01E2                00614 VSE_DATCHIKI
+                    00615              LCD_BANK
+01E2 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00616              MOVLF    HIGH_20_SEK,H'0A'
+01E3 0C0A               M         MOVLW   H'0A'
+01E4 0035               M         MOVWF   HIGH_20_SEK
+01E5 0076           00617              CLRF     LOW_20_SEK
+                    00618              GENERAL_BANK
+01E6 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+01E7 05A8           00619              BSF    FLAGI,VHOD_V_REZIM
+                    00620              STRANICA4
+01E8 05A3               M                 BSF     STATUS,5
+01E9 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01EA 0B96           00621              GOTO      DATCHIKI_LCD
+                    00622 ;===========================================
+01EB                00623 PRAZDNIKI
+                    00624             STRANICA4
+01EB 05A3               M                 BSF     STATUS,5
+01EC 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+01ED 0BC7           00625             GOTO      PRAZDNIK_CORRECT
+01EE 0B23           00626 VOZV_PRAZD  GOTO      LALA
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 19
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00627 ;===========================================
+01EF                00628 NULI
+01EF 020A           00629      MOVFW      EDIN_DNEI
+01F0 0E0F           00630      ANDLW      H'0F'
+01F1 002B           00631      MOVWF      TEMP
+01F2 0389           00632      SWAPF      DES_DNEI,W
+01F3 0EF0           00633      ANDLW      H'F0'
+01F4 01EB           00634      ADDWF      TEMP,F
+01F5 0C00           00635      MOVLW      H'00'
+01F6 018B           00636      XORWF      TEMP,W
+01F7 0743           00637      BTFSS      STATUS,Z
+01F8 0AEC           00638      GOTO       VOZV_NULI
+                    00639      MOVLF      TIP,H'01'
+01F9 0C01               M         MOVLW   H'01'
+01FA 003F               M         MOVWF   TIP
+01FB 0AEC           00640      GOTO       VOZV_NULI
+                    00641 
+01FC                00642 TIMER_ON
+                    00643      MOVLF   REZIM,H'01'
+01FC 0C01               M         MOVLW   H'01'
+01FD 003E               M         MOVWF   REZIM
+01FE 0B23           00644      GOTO    LALA
+                    00645 ;========== PAGE 2 ==========
+                    00646 
+0200                00647         ORG     0200H
+0200                00648 CORRECT_TEMP_DAY
+0200 0403           00649           BCF      STATUS,C
+0201 00EA           00650           DECF     EDIN_DNEI,F
+0202 0603           00651           BTFSC    STATUS,C
+0203 0A0E           00652           GOTO     OPLA
+                    00653           MOVLF    EDIN_DNEI,H'09'
+0204 0C09               M         MOVLW   H'09'
+0205 002A               M         MOVWF   EDIN_DNEI
+0206 0403           00654           BCF      STATUS,C
+0207 00E9           00655           DECF     DES_DNEI,F
+0208 0603           00656           BTFSC    STATUS,C
+0209 0A0E           00657           GOTO     OPLA
+020A 006A           00658           CLRF     EDIN_DNEI
+020B 0069           00659           CLRF     DES_DNEI
+                    00660           MOVLF    TIP,H'01'
+020C 0C01               M         MOVLW   H'01'
+020D 003F               M         MOVWF   TIP
+020E 0910           00661 OPLA      CALL     WR_PRAZD
+                    00662           RETP
+020F 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00663 
+0210                00664 WR_PRAZD
+                    00665            STRANICA3
+0210 04A3               M                 BCF     STATUS,5
+0211 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0212 0BB2           00666            GOTO   PRAZDNIK_WRITE
+0213                00667 SLIV
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 20
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00668         RETP
+0213 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00669 
+0214                00670 LED_POSTANOVKA
+                    00671           GENERAL_BANK
+0214 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0215 0648           00672           BTFSC FLAGI,LED
+0216 0A1A           00673           GOTO OK
+0217 0C00           00674           MOVLW   B'00000000'
+0218 0007           00675           TRIS    PORTC   ;       PORTC NA VIVOD
+                    00676           RETP
+0219 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+021A 0C01           00677 OK        MOVLW   B'00000001'
+021B 0007           00678           TRIS    PORTC   ;       PORTC NA VVOD
+                    00679           RETP
+021C 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00680 
+021D                00681 SPI_DELAY
+021D 0000           00682         NOP
+021E 0000           00683         NOP
+021F 0000           00684         NOP
+0220 0000           00685         NOP
+0221 0000           00686         NOP
+0222 0000           00687         NOP
+0223 0000           00688         NOP
+0224 0000           00689         NOP
+0225 0000           00690         NOP
+0226 0000           00691         NOP
+0227 0000           00692         NOP
+0228 0000           00693         NOP
+0229 0000           00694         NOP
+022A 0000           00695         NOP
+022B 0000           00696         NOP
+022C 0000           00697         NOP
+022D 0800           00698         RETURN
+                    00699 
+022E                00700 SPI_REINIT
+022E 0557           00701         BSF     TEMP_SPI,SPI_CS
+                    00702         OUT_B   TEMP_SPI
+022F 0217               M         MOVFW   TEMP_SPI
+0230 0026               M         MOVWF   PORTB
+0231 091D           00703         CALL    SPI_DELAY
+0232 0457           00704         BCF     TEMP_SPI,SPI_CS
+                    00705         OUT_B   TEMP_SPI
+0233 0217               M         MOVFW   TEMP_SPI
+0234 0026               M         MOVWF   PORTB
+0235 091D           00706         CALL    SPI_DELAY
+0236 0557           00707         BSF     TEMP_SPI,SPI_CS
+                    00708         OUT_B   TEMP_SPI
+0237 0217               M         MOVFW   TEMP_SPI
+0238 0026               M         MOVWF   PORTB
+0239 091D           00709         CALL    SPI_DELAY
+023A 0457           00710         BCF     TEMP_SPI,SPI_CS
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 21
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00711         OUT_B   TEMP_SPI
+023B 0217               M         MOVFW   TEMP_SPI
+023C 0026               M         MOVWF   PORTB
+023D 091D           00712         CALL    SPI_DELAY
+023E 0800           00713         RETURN
+                    00714 
+023F                00715 SPI_START
+023F 0077           00716         CLRF    TEMP_SPI
+0240 0557           00717         BSF     TEMP_SPI,SPI_CS
+0241 0597           00718         BSF     TEMP_SPI,SPI_CLK
+                    00719         OUT_B   TEMP_SPI
+0242 0217               M         MOVFW   TEMP_SPI
+0243 0026               M         MOVWF   PORTB
+0244 091D           00720         CALL    SPI_DELAY
+0245 0457           00721         BCF     TEMP_SPI,SPI_CS
+0246 0497           00722         BCF     TEMP_SPI,SPI_CLK
+                    00723         OUT_B   TEMP_SPI
+0247 0217               M         MOVFW   TEMP_SPI
+0248 0026               M         MOVWF   PORTB
+0249 091D           00724         CALL    SPI_DELAY
+024A 0800           00725         RETURN
+                    00726 
+024B                00727 SPI_STOP
+024B 091D           00728         CALL    SPI_DELAY
+024C 0557           00729         BSF     TEMP_SPI,SPI_CS
+024D 0597           00730         BSF     TEMP_SPI,SPI_CLK
+                    00731         OUT_B   TEMP_SPI
+024E 0217               M         MOVFW   TEMP_SPI
+024F 0026               M         MOVWF   PORTB
+0250 0000           00732         NOP
+0251 091D           00733         CALL    SPI_DELAY
+0252 0800           00734         RETURN
+                    00735 
+0253                00736 EOC_TEST
+0253 0000           00737         NOP
+0254 0766           00738 SPLOOP1 BTFSS   PORTB,SPI_EOC
+0255 0A54           00739         GOTO    SPLOOP1
+0256 091D           00740         CALL    SPI_DELAY
+0257 0800           00741         RETURN
+                    00742 
+0258                00743 SPI_READ
+0258 0079           00744         CLRF    INP_DATA_SPI
+0259 0038           00745         MOVWF   TEMP2_SPI
+025A 0077           00746         CLRF    TEMP_SPI
+                    00747 
+025B 07F8           00748 LOOP11  BTFSS   TEMP2_SPI,7
+025C 0A73           00749         GOTO    NOLIK_SPI_OUT
+025D 0497           00750         BCF     TEMP_SPI,SPI_CLK    ;
+025E 0517           00751         BSF     TEMP_SPI,SPI_OUT    ;SDA - UP
+                    00752         OUT_B   TEMP_SPI
+025F 0217               M         MOVFW   TEMP_SPI
+0260 0026               M         MOVWF   PORTB
+0261 091D           00753         CALL    SPI_DELAY
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 22
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0262 0597           00754         BSF     TEMP_SPI,SPI_CLK    ;CLK UP
+                    00755         OUT_B   TEMP_SPI
+0263 0217               M         MOVFW   TEMP_SPI
+0264 0026               M         MOVWF   PORTB
+0265 0000           00756         NOP
+0266 0989           00757         CALL    SPI_VVOD
+0267 091D           00758         CALL    SPI_DELAY
+0268 091D           00759         CALL    SPI_DELAY
+0269 0497           00760         BCF     TEMP_SPI,SPI_CLK    ;CLK DOWN
+                    00761         OUT_B   TEMP_SPI
+026A 0217               M         MOVFW   TEMP_SPI
+026B 0026               M         MOVWF   PORTB
+026C 091D           00762         CALL    SPI_DELAY
+026D 091D           00763         CALL    SPI_DELAY
+026E 0378           00764         RLF     TEMP2_SPI,F
+026F 02F6           00765         DECFSZ  CHET_SPI,F
+0270 0A5B           00766         GOTO    LOOP11
+0271 0219           00767         MOVFW   INP_DATA_SPI
+                    00768         RETW
+0272 000C               M         DATA    0Ch     ;RET    ;return without destroying W register
+                    00769 
+0273                00770 NOLIK_SPI_OUT
+0273 0497           00771         BCF     TEMP_SPI,SPI_CLK    ;
+0274 0417           00772         BCF     TEMP_SPI,SPI_OUT    ;SDA - UP
+                    00773         OUT_B   TEMP_SPI
+0275 0217               M         MOVFW   TEMP_SPI
+0276 0026               M         MOVWF   PORTB
+0277 091D           00774         CALL    SPI_DELAY
+0278 0597           00775         BSF     TEMP_SPI,SPI_CLK    ;CLK UP
+                    00776         OUT_B   TEMP_SPI
+0279 0217               M         MOVFW   TEMP_SPI
+027A 0026               M         MOVWF   PORTB
+027B 0000           00777         NOP
+027C 0989           00778         CALL    SPI_VVOD
+027D 091D           00779         CALL    SPI_DELAY
+027E 091D           00780         CALL    SPI_DELAY
+027F 0497           00781         BCF     TEMP_SPI,SPI_CLK    ;CLK DOWN
+                    00782         OUT_B   TEMP_SPI
+0280 0217               M         MOVFW   TEMP_SPI
+0281 0026               M         MOVWF   PORTB
+0282 091D           00783         CALL    SPI_DELAY
+0283 091D           00784         CALL    SPI_DELAY
+0284 0378           00785         RLF     TEMP2_SPI,F
+0285 02F6           00786         DECFSZ  CHET_SPI,F
+0286 0A5B           00787         GOTO    LOOP11
+0287 0219           00788         MOVFW   INP_DATA_SPI
+                    00789         RETW
+0288 000C               M         DATA    0Ch     ;RET    ;return without destroying W register
+                    00790 ;---------------------------------------
+0289                00791 SPI_VVOD
+0289 0379           00792         RLF     INP_DATA_SPI,F
+028A 0726           00793         BTFSS   PORTB,SPI_IN
+028B 0A8E           00794         GOTO    NOLIK_SPI_IN
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 23
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+028C 0519           00795         BSF     INP_DATA_SPI,0
+028D 0800           00796         RETURN
+028E                00797 NOLIK_SPI_IN
+028E 0419           00798         BCF     INP_DATA_SPI,0
+028F 0800           00799         RETURN
+                    00800 ;-------MATH MODULE---------------------------------
+0290                00801 VICH_CONST
+                    00802         MATH_BANK
+0290 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00803         MOVFF D_TEMP_CELCII,DT_OBR_RAS_LCD
+0291 021B               M         MOVFW   DT_OBR_RAS_LCD
+0292 003A               M         MOVWF   D_TEMP_CELCII
+                    00804         MOVFF TEMP_CELCII,T_OBR_RAS_LCD
+0293 0215               M         MOVFW   T_OBR_RAS_LCD
+0294 0032               M         MOVWF   TEMP_CELCII
+0295 0071           00805         CLRF    TEMP_MATH_LOW
+0296 0070           00806         CLRF    TEMP_MATH_HIGH
+                    00807 
+0297 021A           00808         MOVFW   D_TEMP_CELCII
+0298 0031           00809         MOVWF   TEMP_MATH_LOW
+0299 0371           00810         RLF     TEMP_MATH_LOW,F
+029A 0371           00811         RLF     TEMP_MATH_LOW,F
+029B 0371           00812         RLF     TEMP_MATH_LOW,F
+029C 0CF8           00813         MOVLW   B'11111000'
+029D 0171           00814         ANDWF   TEMP_MATH_LOW,F
+029E 021A           00815         MOVFW   D_TEMP_CELCII
+029F 01F1           00816         ADDWF   TEMP_MATH_LOW,F
+02A0 021A           00817         MOVFW   D_TEMP_CELCII
+02A1 01F1           00818         ADDWF   TEMP_MATH_LOW,F
+02A2 0212           00819         MOVFW   TEMP_CELCII
+02A3 01F1           00820         ADDWF   TEMP_MATH_LOW,F
+02A4 0000           00821         NOP
+                    00822 ;PRIVODIM XX,X
+02A5 0371           00823         RLF     TEMP_MATH_LOW,F
+                    00824         MOVFF   TEMP_CELCII,TEMP_MATH_LOW
+02A6 0211               M         MOVFW   TEMP_MATH_LOW
+02A7 0032               M         MOVWF   TEMP_CELCII
+02A8 0403           00825         BCF     STATUS,C
+02A9 0371           00826         RLF     TEMP_MATH_LOW,F
+02AA 0370           00827         RLF     TEMP_MATH_HIGH,F
+02AB 0403           00828         BCF     STATUS,C
+02AC 0371           00829         RLF     TEMP_MATH_LOW,F
+02AD 0370           00830         RLF     TEMP_MATH_HIGH,F
+02AE 0212           00831         MOVFW   TEMP_CELCII
+02AF 0403           00832         BCF     STATUS,C
+02B0 01F1           00833         ADDWF   TEMP_MATH_LOW,F
+02B1 0603           00834         BTFSC   STATUS,C
+02B2 02B0           00835         INCF    TEMP_MATH_HIGH,F
+02B3 0CAB           00836         MOVLW   H'AB'
+02B4 0403           00837         BCF     STATUS,C
+02B5 01F1           00838         ADDWF   TEMP_MATH_LOW,F
+02B6 0603           00839         BTFSC   STATUS,C
+02B7 02B0           00840         INCF    TEMP_MATH_HIGH,F
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 24
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+02B8 0C0A           00841         MOVLW   H'0A'
+02B9 01F0           00842         ADDWF   TEMP_MATH_HIGH,F
+                    00843         GENERAL_BANK
+02BA 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+02BB 09CD           00844         CALL    MULTx1_2
+                    00845         SPI_BANK
+02BC 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+02BD 021B           00846         MOVFW   MATH_LOW
+                    00847         MATH_BANK
+02BE 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+02BF 0403           00848         BCF     STATUS,C
+02C0 01F1           00849         ADDWF   TEMP_MATH_LOW,F
+02C1 0603           00850         BTFSC   STATUS,C
+02C2 02B0           00851         INCF    TEMP_MATH_HIGH,F
+                    00852         SPI_BANK
+02C3 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+02C4 021A           00853         MOVFW   MATH_HIGH
+                    00854         MATH_BANK
+02C5 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+02C6 01F0           00855         ADDWF   TEMP_MATH_HIGH,F
+                    00856         MOVFF   LOW_CONST,TEMP_MATH_LOW
+02C7 0211               M         MOVFW   TEMP_MATH_LOW
+02C8 0039               M         MOVWF   LOW_CONST
+                    00857         MOVFF   HIGH_CONST,TEMP_MATH_HIGH
+02C9 0210               M         MOVFW   TEMP_MATH_HIGH
+02CA 003C               M         MOVWF   HIGH_CONST
+                    00858         GENERAL_BANK
+02CB 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00859         RETP
+02CC 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00860 
+                    00861 MULTx1_2  SPI_BANK
+02CD 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+02CE 0403           00862           BCF     STATUS,C
+                    00863           MOVFF MATH_HIGH,T_NAR_HIGH
+02CF 0210               M         MOVFW   T_NAR_HIGH
+02D0 003A               M         MOVWF   MATH_HIGH
+                    00864           MOVFF MATH_LOW,T_NAR_LOW
+02D1 0213               M         MOVFW   T_NAR_LOW
+02D2 003B               M         MOVWF   MATH_LOW
+                    00865           MOVFF MATH_HIGH8,MATH_HIGH
+02D3 021A               M         MOVFW   MATH_HIGH
+02D4 003C               M         MOVWF   MATH_HIGH8
+                    00866           MOVFF MATH_LOW8,MATH_LOW
+02D5 021B               M         MOVFW   MATH_LOW
+02D6 003D               M         MOVWF   MATH_LOW8
+                    00867           MOVFF MATH_HIGH16,MATH_HIGH8
+02D7 021C               M         MOVFW   MATH_HIGH8
+02D8 003E               M         MOVWF   MATH_HIGH16
+                    00868           MOVFF MATH_LOW16,MATH_LOW8
+02D9 021D               M         MOVFW   MATH_LOW8
+02DA 003F               M         MOVWF   MATH_LOW16
+                    00869 ;DIV/8
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 25
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+02DB 033D           00870           RRF   MATH_LOW8,F
+02DC 033D           00871           RRF   MATH_LOW8,F
+02DD 033D           00872           RRF   MATH_LOW8,F
+02DE 0C1F           00873           MOVLW B'00011111'
+02DF 017D           00874           ANDWF MATH_LOW8,F
+02E0 033C           00875           RRF   MATH_HIGH8,F
+02E1 033C           00876           RRF   MATH_HIGH8,F
+02E2 033C           00877           RRF   MATH_HIGH8,F
+02E3 031C           00878           RRF   MATH_HIGH8,W
+02E4 0EE0           00879           ANDLW B'11100000'
+02E5 01FD           00880           ADDWF MATH_LOW8,F
+02E6 0C1F           00881           MOVLW B'00011111'
+02E7 017C           00882           ANDWF MATH_HIGH8,F
+                    00883 ;DIV/16
+02E8 0403           00884         BCF     STATUS,C
+02E9 039F           00885         SWAPF   MATH_LOW16,W
+02EA 0E0F           00886         ANDLW   H'0F'
+02EB 003F           00887         MOVWF   MATH_LOW16
+02EC 039E           00888         SWAPF   MATH_HIGH16,W
+02ED 0EF0           00889         ANDLW   H'F0'
+02EE 01FF           00890         ADDWF   MATH_LOW16,F
+02EF 03BE           00891         SWAPF   MATH_HIGH16,F
+02F0 0C0F           00892         MOVLW   H'0F'
+02F1 017E           00893         ANDWF   MATH_HIGH16,F
+                    00894 ;DIV/8 ADD DIV/16
+02F2 0403           00895         BCF     STATUS,C
+02F3 021D           00896         MOVFW   MATH_LOW8
+02F4 01FF           00897         ADDWF   MATH_LOW16,F
+02F5 0603           00898         BTFSC   STATUS,C
+02F6 02BE           00899         INCF    MATH_HIGH16,F
+02F7 021C           00900         MOVFW   MATH_HIGH8
+02F8 01FE           00901         ADDWF   MATH_HIGH16,F
+                    00902 ;DANNIE + DIV/8 + DIV/16
+02F9 0403           00903         BCF     STATUS,C
+02FA 021F           00904         MOVFW   MATH_LOW16
+02FB 01FB           00905         ADDWF   MATH_LOW,F
+02FC 0603           00906         BTFSC   STATUS,C
+02FD 02BA           00907         INCF    MATH_HIGH,F
+02FE 021E           00908         MOVFW   MATH_HIGH16
+02FF 01FA           00909         ADDWF   MATH_HIGH,F
+                    00910         GENERAL_BANK
+0300 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00911         RETP
+0301 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    00912 
+                    00913 
+0302                00914         ORG     0302H
+0302                00915 NAR_TEMP_LCD
+                    00916            MATH_BANK
+0302 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0303 0393           00917            SWAPF  T_NAR_LCD,W     ;Position 7
+                    00918            GENERAL_BANK
+0304 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 26
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00919            STRANICA4
+0305 05A3               M                 BSF     STATUS,5
+0306 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0307 0917           00920            CALL   SIMVOL_LCD
+                    00921            STRANICA1
+0308 04A3               M                 BCF     STATUS,5
+0309 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+030A 09E6           00922            CALL      INDIK_2x8
+                    00923            MATH_BANK
+030B 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+030C 0213           00924            MOVFW  T_NAR_LCD
+                    00925            GENERAL_BANK
+030D 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00926            STRANICA4
+030E 05A3               M                 BSF     STATUS,5
+030F 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0310 0917           00927            CALL   SIMVOL_LCD
+                    00928            STRANICA1
+0311 04A3               M                 BCF     STATUS,5
+0312 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0313 0B56           00929            GOTO   VOZV_TEMP_LCD
+                    00930 
+                    00931 
+0314                00932 SPI_MODULE
+0314 0CEA           00933         MOVLW   B'11101010'
+0315 0006           00934         TRIS    PORTB
+                    00935         SPI_BANK
+0316 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00936 ;initial
+0317 093F           00937         CALL    SPI_START
+0318 094B           00938         CALL    SPI_STOP
+0319 093F           00939         CALL    SPI_START
+                    00940         MOVLF   CHET_SPI,D'8'
+031A 0C08               M         MOVLW   D'8'
+031B 0036               M         MOVWF   CHET_SPI
+031C 0C0C           00941         MOVLW   T_NARUZ
+031D 0958           00942         CALL    SPI_READ
+                    00943         MOVLF   CHET_SPI,D'8'
+031E 0C08               M         MOVLW   D'8'
+031F 0036               M         MOVWF   CHET_SPI
+0320 0C0C           00944         MOVLW   T_NARUZ
+0321 0958           00945         CALL    SPI_READ
+0322 0953           00946         CALL    EOC_TEST
+0323 091D           00947         CALL    SPI_DELAY
+0324 092E           00948         CALL    SPI_REINIT
+                    00949 ;rEAD T_NARUZ
+                    00950         MOVLF   CHET_SPI,D'8'
+0325 0C08               M         MOVLW   D'8'
+0326 0036               M         MOVWF   CHET_SPI
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 27
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0327 0C1C           00951         MOVLW   T_OBRAT
+0328 0958           00952         CALL    SPI_READ
+0329 0030           00953         MOVWF   T_NAR_HIGH
+                    00954         MOVLF   CHET_SPI,D'8'
+032A 0C08               M         MOVLW   D'8'
+032B 0036               M         MOVWF   CHET_SPI
+032C 0C00           00955         MOVLW   B'00000000'
+032D 0958           00956         CALL    SPI_READ
+032E 0033           00957         MOVWF   T_NAR_LOW
+032F 0953           00958         CALL    EOC_TEST
+0330 091D           00959         CALL    SPI_DELAY
+0331 092E           00960         CALL    SPI_REINIT
+                    00961 ;rEAD T_OBRAT
+                    00962         MOVLF   CHET_SPI,D'8'
+0332 0C08               M         MOVLW   D'8'
+0333 0036               M         MOVWF   CHET_SPI
+0334 0C2C           00963         MOVLW   T_VIHOD
+0335 0958           00964         CALL    SPI_READ
+0336 0031           00965         MOVWF   T_OBR_HIGH
+                    00966         MOVLF   CHET_SPI,D'8'
+0337 0C08               M         MOVLW   D'8'
+0338 0036               M         MOVWF   CHET_SPI
+0339 0C00           00967         MOVLW   B'00000000'
+033A 0958           00968         CALL    SPI_READ
+033B 0034           00969         MOVWF   T_OBR_LOW
+033C 0953           00970         CALL    EOC_TEST
+033D 091D           00971         CALL    SPI_DELAY
+033E 092E           00972         CALL    SPI_REINIT
+                    00973 ;READ T_VHOD
+                    00974         MOVLF   CHET_SPI,D'8'
+033F 0C08               M         MOVLW   D'8'
+0340 0036               M         MOVWF   CHET_SPI
+0341 0C0C           00975         MOVLW   T_NARUZ
+0342 0958           00976         CALL    SPI_READ
+0343 0032           00977         MOVWF   T_VIH_HIGH
+                    00978         MOVLF   CHET_SPI,D'8'
+0344 0C08               M         MOVLW   D'8'
+0345 0036               M         MOVWF   CHET_SPI
+0346 0C00           00979         MOVLW   B'00000000'
+0347 0958           00980         CALL    SPI_READ
+0348 0035           00981         MOVWF   T_VIH_LOW
+0349 0953           00982         CALL    EOC_TEST
+034A 091D           00983         CALL    SPI_DELAY
+034B 094B           00984         CALL    SPI_STOP
+                    00985         CORECT  T_NAR_HIGH,T_NAR_LOW
+034C 0393               M         SWAPF   T_NAR_LOW,W
+034D 0E0F               M         ANDLW   H'0F'
+034E 0033               M         MOVWF   T_NAR_LOW
+034F 0390               M         SWAPF   T_NAR_HIGH,W
+0350 0EF0               M         ANDLW   H'F0'
+0351 01F3               M         ADDWF   T_NAR_LOW,F
+0352 0390               M         SWAPF   T_NAR_HIGH,W
+0353 0E0F               M         ANDLW   H'0F'
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 28
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0354 0030               M         MOVWF   T_NAR_HIGH
+                    00986         CORECT  T_OBR_HIGH,T_OBR_LOW
+0355 0394               M         SWAPF   T_OBR_LOW,W
+0356 0E0F               M         ANDLW   H'0F'
+0357 0034               M         MOVWF   T_OBR_LOW
+0358 0391               M         SWAPF   T_OBR_HIGH,W
+0359 0EF0               M         ANDLW   H'F0'
+035A 01F4               M         ADDWF   T_OBR_LOW,F
+035B 0391               M         SWAPF   T_OBR_HIGH,W
+035C 0E0F               M         ANDLW   H'0F'
+035D 0031               M         MOVWF   T_OBR_HIGH
+                    00987         CORECT  T_VIH_HIGH,T_VIH_LOW
+035E 0395               M         SWAPF   T_VIH_LOW,W
+035F 0E0F               M         ANDLW   H'0F'
+0360 0035               M         MOVWF   T_VIH_LOW
+0361 0392               M         SWAPF   T_VIH_HIGH,W
+0362 0EF0               M         ANDLW   H'F0'
+0363 01F5               M         ADDWF   T_VIH_LOW,F
+0364 0392               M         SWAPF   T_VIH_HIGH,W
+0365 0E0F               M         ANDLW   H'0F'
+0366 0032               M         MOVWF   T_VIH_HIGH
+                    00988         STRANICA4
+0367 05A3               M                 BSF     STATUS,5
+0368 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0369 09A4           00989         CALL    VICH_TEM_LCD
+                    00990         GENERAL_BANK
+036A 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00991 
+                    00992         STRANICA1
+036B 04A3               M                 BCF     STATUS,5
+036C 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+036D 0B28           00993         GOTO      VOZV_SPI
+                    00994 
+036E                00995 CONTROL_TEMPER
+                    00996            STRANICA3
+036E 04A3               M                 BCF     STATUS,5
+036F 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0370 09D3           00997            CALL M24LC16_READ
+                    00998            GENERAL_BANK
+0371 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    00999            STRANICA4
+0372 05A3               M                 BSF     STATUS,5
+0373 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0374 09E6           01000            CALL   VICH_OBR_FAKT
+                    01001            MATH_BANK
+0375 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01002            MOVFF        TEMP_MATH_HIGH,HIGH_OBR_RAS
+0376 021D               M         MOVFW   HIGH_OBR_RAS
+0377 0030               M         MOVWF   TEMP_MATH_HIGH
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 29
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    01003            MOVFF        TEMP_MATH_LOW,LOW_OBR_RAS 
+0378 021E               M         MOVFW   LOW_OBR_RAS
+0379 0031               M         MOVWF   TEMP_MATH_LOW
+037A 0648           01004            BTFSC        FLAGI,LED
+037B 0B98           01005            GOTO         SLV
+                    01006 
+                    01007 ;########### NIZNIJ PREDEL REAGIROVANIJA ##################################
+                    01008            MATH_BANK
+037C 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01009            MOVFF        HIGH_OBR_RAS,TEMP_MATH_HIGH
+037D 0210               M         MOVFW   TEMP_MATH_HIGH
+037E 003D               M         MOVWF   HIGH_OBR_RAS
+                    01010            MOVFF        LOW_OBR_RAS ,TEMP_MATH_LOW
+037F 0211               M         MOVFW   TEMP_MATH_LOW
+0380 003E               M         MOVWF   LOW_OBR_RAS
+                    01011 
+0381 0403           01012            BCF      STATUS,C
+0382 0C0A           01013            MOVLW    H'0A'       
+0383 00BE           01014            SUBWF    LOW_OBR_RAS,F
+0384 0703           01015            BTFSS    STATUS,C            ;NIZNIJ PREDEL REAGIROVANIJA
+0385 00FD           01016            DECF     HIGH_OBR_RAS,F
+                    01017 ;//////////////////////////////////////////////////////////////////////////
+0386 021E           01018            MOVFW    LOW_OBR_RAS
+                    01019            SPI_BANK
+0387 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0388 0403           01020            BCF      STATUS,C
+0389 00B4           01021            SUBWF    T_OBR_LOW,F
+038A 0703           01022            BTFSS    STATUS,C
+038B 00F1           01023            DECF     T_OBR_HIGH,F
+                    01024            MATH_BANK
+038C 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+038D 021D           01025            MOVFW    HIGH_OBR_RAS
+                    01026            SPI_BANK
+038E 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+038F 0403           01027            BCF      STATUS,C
+0390 00B1           01028            SUBWF    T_OBR_HIGH,F
+0391 0703           01029            BTFSS    STATUS,C
+0392 0548           01030            BSF      FLAGI,LED
+0393 0914           01031            CALL     LED_POSTANOVKA
+                    01032            GENERAL_BANK
+0394 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01033            STRANICA1
+0395 04A3               M                 BCF     STATUS,5
+0396 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0397 0B79           01034            GOTO      VOZV_SVERKA
+                    01035 
+                    01036 ;########### VERHNIJ PREDEL REAGIROVANIJA ##################################
+                    01037 SLV        MATH_BANK
+0398 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01038            MOVFF        HIGH_OBR_RAS,TEMP_MATH_HIGH
+0399 0210               M         MOVFW   TEMP_MATH_HIGH
+039A 003D               M         MOVWF   HIGH_OBR_RAS
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 30
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    01039            MOVFF        LOW_OBR_RAS ,TEMP_MATH_LOW
+039B 0211               M         MOVFW   TEMP_MATH_LOW
+039C 003E               M         MOVWF   LOW_OBR_RAS
+                    01040 
+039D 0403           01041            BCF      STATUS,C
+039E 0C0A           01042            MOVLW    H'0A'       
+039F 01FE           01043            ADDWF    LOW_OBR_RAS,F
+03A0 0603           01044            BTFSC    STATUS,C            ;NIZNIJ PREDEL REAGIROVANIJA
+03A1 02BD           01045            INCF     HIGH_OBR_RAS,F
+                    01046 ;//////////////////////////////////////////////////////////////////////////
+03A2 021E           01047            MOVFW    LOW_OBR_RAS
+                    01048            SPI_BANK
+03A3 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+03A4 0403           01049            BCF      STATUS,C
+03A5 00B4           01050            SUBWF    T_OBR_LOW,F
+03A6 0703           01051            BTFSS    STATUS,C
+03A7 00F1           01052            DECF     T_OBR_HIGH,F
+                    01053            MATH_BANK
+03A8 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+03A9 021D           01054            MOVFW    HIGH_OBR_RAS
+                    01055            SPI_BANK
+03AA 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+03AB 0403           01056            BCF      STATUS,C
+03AC 00B1           01057            SUBWF    T_OBR_HIGH,F
+03AD 0603           01058            BTFSC    STATUS,C
+03AE 0448           01059            BCF      FLAGI,LED
+03AF 0914           01060            CALL     LED_POSTANOVKA
+                    01061            GENERAL_BANK
+03B0 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01062            STRANICA1
+03B1 04A3               M                 BCF     STATUS,5
+03B2 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+03B3 0B79           01063            GOTO      VOZV_SVERKA
+                    01064 
+                    01065 ;========== PAGE 3 ==========
+                    01066 
+0400                01067         ORG     0400H
+0400                01068 I_MKS5
+0400 0000           01069         NOP
+0401 0000           01070         NOP
+0402 0000           01071         NOP
+0403 0000           01072         NOP
+0404 0000           01073         NOP
+0405 0000           01074         NOP
+0406 0000           01075         NOP
+0407 0000           01076         NOP
+0408 0000           01077         NOP
+0409 0000           01078         NOP
+040A 0000           01079         NOP
+040B 0000           01080         NOP
+040C 0000           01081         NOP
+040D 0000           01082         NOP
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 31
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+040E 0000           01083         NOP
+040F 0000           01084         NOP
+0410 0000           01085         NOP
+0411 0000           01086         NOP
+0412 0000           01087         NOP
+0413 0000           01088         NOP
+0414 0000           01089         NOP
+0415 0000           01090         NOP
+0416 0000           01091         NOP
+0417 0000           01092         NOP
+0418 0000           01093         NOP
+0419 0000           01094         NOP
+041A 0000           01095         NOP
+041B 0000           01096         NOP
+041C 0800           01097         RETURN
+                    01098 
+                    01099 
+                    01100 ;====================================
+                    01101 
+041D                01102 I2C_OUT
+041D 0037           01103         MOVWF   TEMP_I2C
+041E 006B           01104         CLRF    TEMP
+041F 0C9F           01105         MOVLW   B'10011111'
+0420 0006           01106         TRIS    PORTB
+0421 0C08           01107         MOVLW   D'8'
+0422 002C           01108         MOVWF   TMPLCD1
+                    01109 
+0423 07F7           01110 LOOP6   BTFSS   TEMP_I2C,7
+0424 0A3B           01111         GOTO    NOLIK_I2C_OUT
+                    01112 
+0425 04AB           01113         BCF     TEMP,CLK_I2C    ;
+0426 05CB           01114         BSF     TEMP,SDA_I2C    ;SDA - UP
+                    01115         OUT_B   TEMP
+0427 020B               M         MOVFW   TEMP
+0428 0026               M         MOVWF   PORTB
+0429 0900           01116         CALL    I_MKS5
+042A 05AB           01117         BSF     TEMP,CLK_I2C    ;CLK UP
+                    01118         OUT_B   TEMP
+042B 020B               M         MOVFW   TEMP
+042C 0026               M         MOVWF   PORTB
+042D 0900           01119         CALL    I_MKS5
+042E 0900           01120         CALL    I_MKS5
+                    01121 
+042F 04AB           01122         BCF     TEMP,CLK_I2C    ;CLK DOWN
+                    01123         OUT_B   TEMP
+0430 020B               M         MOVFW   TEMP
+0431 0026               M         MOVWF   PORTB
+0432 0900           01124         CALL    I_MKS5
+                    01125 
+0433 04CB           01126         BCF     TEMP,SDA_I2C    ;SDA DOWN
+                    01127         OUT_B   TEMP
+0434 020B               M         MOVFW   TEMP
+0435 0026               M         MOVWF   PORTB
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 32
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0436 0900           01128         CALL    I_MKS5
+0437 0377           01129         RLF     TEMP_I2C,F
+0438 02EC           01130         DECFSZ  TMPLCD1,F
+0439 0A23           01131         GOTO    LOOP6
+043A 0800           01132         RETURN
+                    01133 
+043B                01134 NOLIK_I2C_OUT
+043B 04AB           01135         BCF     TEMP,CLK_I2C    ;SDA - DOWN
+043C 04CB           01136         BCF     TEMP,SDA_I2C    ;SDA - DOWN
+                    01137         OUT_B   TEMP
+043D 020B               M         MOVFW   TEMP
+043E 0026               M         MOVWF   PORTB
+043F 0900           01138         CALL    I_MKS5
+                    01139 
+0440 05AB           01140         BSF     TEMP,CLK_I2C    ;CLK UP
+                    01141         OUT_B   TEMP
+0441 020B               M         MOVFW   TEMP
+0442 0026               M         MOVWF   PORTB
+0443 0900           01142         CALL    I_MKS5
+0444 0900           01143         CALL    I_MKS5
+                    01144 
+0445 04AB           01145         BCF     TEMP,CLK_I2C    ;CLK DOWN
+                    01146         OUT_B   TEMP
+0446 020B               M         MOVFW   TEMP
+0447 0026               M         MOVWF   PORTB
+0448 0900           01147         CALL    I_MKS5
+                    01148 
+0449 04CB           01149         BCF     TEMP,SDA_I2C    ;SDA DOWN
+                    01150         OUT_B   TEMP
+044A 020B               M         MOVFW   TEMP
+044B 0026               M         MOVWF   PORTB
+044C 0900           01151         CALL    I_MKS5
+                    01152 
+044D 0377           01153         RLF     TEMP_I2C,F
+044E 02EC           01154         DECFSZ  TMPLCD1,F
+044F 0A23           01155         GOTO    LOOP6
+0450 0800           01156         RETURN
+                    01157 ;===========================================================================
+0451                01158 START_I2C
+0451 006B           01159         CLRF    TEMP
+0452 0C1F           01160         MOVLW   B'00011111'
+0453 0006           01161         TRIS    PORTB
+0454 05AB           01162         BSF     TEMP,CLK_I2C    ;SDA - DOWN
+0455 05CB           01163         BSF     TEMP,SDA_I2C    ;SDA - DOWN
+                    01164         OUT_B   TEMP
+0456 020B               M         MOVFW   TEMP
+0457 0026               M         MOVWF   PORTB
+0458 0900           01165         CALL    I_MKS5
+0459 04CB           01166         BCF     TEMP,SDA_I2C
+                    01167         OUT_B   TEMP
+045A 020B               M         MOVFW   TEMP
+045B 0026               M         MOVWF   PORTB
+045C 0900           01168         CALL    I_MKS5
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 33
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+045D 04AB           01169         BCF     TEMP,CLK_I2C
+                    01170         OUT_B   TEMP
+045E 020B               M         MOVFW   TEMP
+045F 0026               M         MOVWF   PORTB
+0460 0900           01171         CALL    I_MKS5
+0461 0800           01172         RETURN
+                    01173 ;===========================================================================
+0462                01174 ASK_IN
+0462 006B           01175         CLRF    TEMP
+0463 0CDF           01176         MOVLW   B'11011111'
+0464 0006           01177         TRIS    PORTB
+0465 04AB           01178         BCF     TEMP,CLK_I2C    ;CLK DOWN
+                    01179         OUT_B   TEMP
+0466 020B               M         MOVFW   TEMP
+0467 0026               M         MOVWF   PORTB
+0468 0900           01180         CALL    I_MKS5
+0469 05AB           01181         BSF     TEMP,CLK_I2C    ;CLK UP
+                    01182         OUT_B   TEMP
+046A 020B               M         MOVFW   TEMP
+046B 0026               M         MOVWF   PORTB
+                    01183 ;       CALL    I_MKS5
+046C 0900           01184         CALL    I_MKS5
+046D 04AB           01185         BCF     TEMP,CLK_I2C    ;CLK DOWN
+                    01186         OUT_B   TEMP
+046E 020B               M         MOVFW   TEMP
+046F 0026               M         MOVWF   PORTB
+0470 0900           01187         CALL    I_MKS5
+0471 0800           01188         RETURN
+                    01189 ;===========================================================================
+0472                01190 STOP_I2C
+0472 006B           01191         CLRF    TEMP
+0473 05AB           01192         BSF     TEMP,CLK_I2C
+                    01193         OUT_B   TEMP
+0474 020B               M         MOVFW   TEMP
+0475 0026               M         MOVWF   PORTB
+0476 0900           01194         CALL    I_MKS5
+0477 05CB           01195         BSF     TEMP,SDA_I2C
+                    01196         OUT_B   TEMP
+0478 020B               M         MOVFW   TEMP
+0479 0026               M         MOVWF   PORTB
+047A 0900           01197         CALL    I_MKS5
+047B 0800           01198         RETURN
+                    01199 ;===========================================================================
+047C                01200 ASK_MASTER
+047C 006B           01201         CLRF    TEMP
+047D 0C9F           01202         MOVLW   B'10011111'
+047E 0006           01203         TRIS    PORTB
+047F 04AB           01204         BCF     TEMP,CLK_I2C    ;CLK UP
+0480 04CB           01205         BCF     TEMP,SDA_I2C    ;CLK UP
+                    01206         OUT_B   TEMP
+0481 020B               M         MOVFW   TEMP
+0482 0026               M         MOVWF   PORTB
+0483 0900           01207         CALL    I_MKS5
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 34
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0484 05AB           01208         BSF     TEMP,CLK_I2C    ;CLK UP
+                    01209         OUT_B   TEMP
+0485 020B               M         MOVFW   TEMP
+0486 0026               M         MOVWF   PORTB
+0487 0900           01210         CALL    I_MKS5
+0488 0900           01211         CALL    I_MKS5
+0489 04AB           01212         BCF     TEMP,CLK_I2C    ;CLK DOWN
+                    01213         OUT_B   TEMP
+048A 020B               M         MOVFW   TEMP
+048B 0026               M         MOVWF   PORTB
+048C 0900           01214         CALL    I_MKS5
+048D 0800           01215         RETURN
+048E                01216 I2C_IN
+048E 006B           01217         CLRF    TEMP
+048F 0077           01218         CLRF    TEMP_I2C
+0490 0CDF           01219         MOVLW   B'11011111'
+0491 0006           01220         TRIS    PORTB
+0492 0C08           01221         MOVLW   D'8'
+0493 002C           01222         MOVWF   TMPLCD1
+0494                01223 LOOP7
+0494 0377           01224         RLF     TEMP_I2C,F
+0495 04AB           01225         BCF     TEMP,CLK_I2C    ;CLK UP
+                    01226         OUT_B   TEMP
+0496 020B               M         MOVFW   TEMP
+0497 0026               M         MOVWF   PORTB
+0498 0900           01227         CALL    I_MKS5
+0499 05AB           01228         BSF     TEMP,CLK_I2C    ;CLK UP
+                    01229         OUT_B   TEMP
+049A 020B               M         MOVFW   TEMP
+049B 0026               M         MOVWF   PORTB
+049C 0900           01230         CALL    I_MKS5
+                    01231 
+049D 07C6           01232         BTFSS   PORTB,SDA_I2C
+049E 0AA9           01233         GOTO    NOLIK_I2C_IN
+049F 0517           01234         BSF     TEMP_I2C,0
+04A0 0900           01235         CALL    I_MKS5
+04A1 04AB           01236         BCF     TEMP,CLK_I2C    ;CLK DOWN
+                    01237         OUT_B   TEMP
+04A2 020B               M         MOVFW   TEMP
+04A3 0026               M         MOVWF   PORTB
+04A4 0900           01238         CALL    I_MKS5
+04A5 02EC           01239         DECFSZ  TMPLCD1,F
+04A6 0A94           01240         GOTO    LOOP7
+04A7 0217           01241         MOVFW   TEMP_I2C
+                    01242         RETW
+04A8 000C               M         DATA    0Ch     ;RET    ;return without destroying W register
+                    01243 
+04A9                01244 NOLIK_I2C_IN
+04A9 0417           01245         BCF     TEMP_I2C,0
+04AA 0900           01246         CALL    I_MKS5
+04AB 04AB           01247         BCF     TEMP,CLK_I2C    ;CLK DOWN
+                    01248         OUT_B   TEMP
+04AC 020B               M         MOVFW   TEMP
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 35
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+04AD 0026               M         MOVWF   PORTB
+04AE 0900           01249         CALL    I_MKS5
+04AF 02EC           01250         DECFSZ  TMPLCD1,F
+04B0 0A94           01251         GOTO    LOOP7
+04B1 0217           01252         MOVFW   TEMP_I2C
+                    01253         RETW
+04B2 000C               M         DATA    0Ch     ;RET    ;return without destroying W register
+                    01254 ;#########################################
+                    01255 ; Microchip 24LC16B Module
+                    01256 ;#########################################
+04B3                01257 M24LC16_WRITE
+                    01258         GENERAL_BANK
+04B3 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+04B4 0428           01259         BCF     FLAGI,IZMENENIE
+04B5 0951           01260         CALL    START_I2C
+04B6 034F           01261         RLF     DAY,W
+04B7 0E0E           01262         ANDLW   B'00001110'
+04B8 002B           01263         MOVWF   TEMP
+04B9 040B           01264         BCF     TEMP,0
+04BA 0CA0           01265         MOVLW   H'A0'
+04BB 01CB           01266         ADDWF   TEMP,W
+04BC 091D           01267         CALL    I2C_OUT ;SEND ADRESS1=DAY
+04BD 0962           01268         CALL    ASK_IN
+                    01269 
+04BE 020E           01270         MOVFW   HOURS
+04BF 0E0F           01271         ANDLW   B'00001111'
+04C0 002E           01272         MOVWF   HOURS
+04C1 0393           01273         SWAPF   D_HOURS,W
+04C2 0EF0           01274         ANDLW   H'F0'
+04C3 01CE           01275         ADDWF   HOURS,W
+04C4 002B           01276         MOVWF   TEMP
+04C5 0403           01277         BCF     STATUS,C
+04C6 036B           01278         RLF     TEMP,F
+04C7 0688           01279         BTFSC   FLAGI,SMECHENIE
+04C8 050B           01280         BSF     TEMP,0
+04C9 020B           01281         MOVFW   TEMP
+04CA 091D           01282         CALL    I2C_OUT ;SEND ADRESS2=HOURS
+04CB 097C           01283         CALL    ASK_MASTER
+                    01284 
+                    01285         MATH_BANK
+04CC 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+04CD 021F           01286         MOVFW   WR_CONST
+                    01287         GENERAL_BANK
+04CE 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+04CF 091D           01288         CALL    I2C_OUT
+04D0 097C           01289         CALL    ASK_MASTER
+                    01290 ;        CALL    ASK_IN
+04D1 0972           01291         CALL    STOP_I2C
+                    01292         RETP
+04D2 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    01293 
+                    01294 ;################################
+                    01295 ;#      random adress read
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 36
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    01296 ;################################
+                    01297 
+04D3                01298 M24LC16_READ
+                    01299         GENERAL_BANK
+04D3 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+04D4 0951           01300         CALL    START_I2C
+04D5 034F           01301         RLF     DAY,W
+04D6 0E0E           01302         ANDLW   B'00001110'
+04D7 002B           01303         MOVWF   TEMP
+04D8 040B           01304         BCF     TEMP,0
+04D9 0CA0           01305         MOVLW   H'A0'
+04DA 01CB           01306         ADDWF   TEMP,W
+04DB 091D           01307         CALL    I2C_OUT ;SEND CONTOROL BYTE RW=0
+04DC 0962           01308         CALL    ASK_IN
+                    01309 
+04DD 020E           01310         MOVFW   HOURS
+04DE 0E0F           01311         ANDLW   B'00001111'
+04DF 002E           01312         MOVWF   HOURS
+04E0 0393           01313         SWAPF   D_HOURS,W
+04E1 0EF0           01314         ANDLW   H'F0'
+04E2 01CE           01315         ADDWF   HOURS,W
+04E3 002B           01316         MOVWF   TEMP
+04E4 0403           01317         BCF     STATUS,C
+04E5 034B           01318         RLF     TEMP,W
+04E6 091D           01319         CALL    I2C_OUT ;SEND ADRESS2=HOURS
+04E7 0962           01320         CALL    ASK_IN
+                    01321 ;#######  CONTROL BYTE READ
+04E8 0951           01322         CALL    START_I2C
+04E9 034F           01323         RLF     DAY,W
+04EA 0E0E           01324         ANDLW   B'00001110'
+04EB 002B           01325         MOVWF   TEMP
+04EC 050B           01326         BSF     TEMP,0
+04ED 0CA0           01327         MOVLW   H'A0'
+04EE 01CB           01328         ADDWF   TEMP,W
+04EF 091D           01329         CALL    I2C_OUT ;SEND CONTOROL BYTE RW=1
+04F0 097C           01330         CALL    ASK_MASTER
+                    01331 
+04F1 098E           01332         CALL    I2C_IN  ; RESEIVE CONSTANTA STARSHIE RAZRJADI
+                    01333         MATH_BANK
+04F2 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+04F3 003C           01334         MOVWF   HIGH_CONST
+                    01335         GENERAL_BANK
+04F4 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+04F5 097C           01336         CALL    ASK_MASTER
+                    01337 
+04F6 098E           01338         CALL    I2C_IN  ; RESEIVE T_OBR_RAS
+                    01339         MATH_BANK
+04F7 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+04F8 0039           01340         MOVWF   LOW_CONST
+                    01341         GENERAL_BANK
+04F9 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+04FA 0972           01342         CALL    STOP_I2C
+                    01343         RETP
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 37
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+04FB 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    01344 
+                    01345 ;============== CLOCK_READ  =============
+                    01346 
+0500                01347         ORG     0500H
+0500                01348 CLOCK_WRITE
+0500 0951           01349         CALL    START_I2C
+0501 0CD0           01350         MOVLW   H'D0'
+0502 002B           01351         MOVWF   TEMP
+0503 040B           01352         BCF     TEMP,0
+0504 020B           01353         MOVFW   TEMP
+0505 091D           01354         CALL    I2C_OUT ;SEND CONTOROL BYTE RW=0
+0506 0962           01355         CALL    ASK_IN
+                    01356 ;
+0507 0C01           01357         MOVLW   H'01'
+0508 091D           01358         CALL    I2C_OUT ;SEND ADRESS=01
+0509 097C           01359         CALL    ASK_MASTER
+                    01360 ;       CALL    ASK_IN
+                    01361 ;
+                    01362 ;MINUTI
+050A 03B2           01363         SWAPF   D_MINUTES,F
+050B 020D           01364         MOVFW   MINUTES
+050C 01D2           01365         ADDWF   D_MINUTES,W
+050D 091D           01366         CALL    I2C_OUT
+050E 097C           01367         CALL    ASK_MASTER
+                    01368 ;HOURS
+050F 03B3           01369         SWAPF   D_HOURS,F
+0510 020E           01370         MOVFW   HOURS
+0511 01D3           01371         ADDWF   D_HOURS,W
+0512 091D           01372         CALL    I2C_OUT
+0513 097C           01373         CALL    ASK_MASTER
+                    01374 ;DAY
+0514 020F           01375         MOVFW   DAY
+0515 0E07           01376         ANDLW   B'00000111'
+0516 091D           01377         CALL    I2C_OUT
+0517 097C           01378         CALL    ASK_MASTER
+                    01379 ;DATE
+0518 03B5           01380         SWAPF   D_DATE,F
+0519 0210           01381         MOVFW   DATE
+051A 01D5           01382         ADDWF   D_DATE,W
+051B 091D           01383         CALL    I2C_OUT
+051C 097C           01384         CALL    ASK_MASTER
+                    01385 ;MOUNTH
+051D 03B6           01386         SWAPF   D_MOUNTH,F
+051E 0211           01387         MOVFW   MOUNTH
+051F 01D6           01388         ADDWF   D_MOUNTH,W
+0520 091D           01389         CALL    I2C_OUT
+0521 097C           01390         CALL    ASK_MASTER
+0522 0972           01391         CALL    STOP_I2C
+                    01392 
+0523 0951           01393         CALL    START_I2C
+0524 0CD0           01394         MOVLW   H'D0'
+0525 002B           01395         MOVWF   TEMP
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 38
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0526 040B           01396         BCF     TEMP,0
+0527 020B           01397         MOVFW   TEMP
+0528 091D           01398         CALL    I2C_OUT ;SEND CONTOROL BYTE RW=0
+0529 0962           01399         CALL    ASK_IN
+                    01400 ;
+052A 0C01           01401         MOVLW   H'01'
+052B 091D           01402         CALL    I2C_OUT ;SEND ADRESS2=0
+052C 0962           01403         CALL    ASK_IN
+052D 0972           01404         CALL    STOP_I2C
+                    01405 ;
+052E 0951           01406         CALL    START_I2C
+052F 0CD0           01407         MOVLW   H'D0'
+0530 002B           01408         MOVWF   TEMP
+0531 050B           01409         BSF     TEMP,0  ;SEND CONTROL BYTE RW=1
+0532 020B           01410         MOVFW   TEMP
+0533 091D           01411         CALL    I2C_OUT
+0534 097C           01412         CALL    ASK_MASTER
+                    01413 ;        CALL    ASK_IN
+                    01414 ;MINUTI
+0535 098E           01415         CALL    I2C_IN  ; RESEIVE MINUTES
+0536 0E7F           01416         ANDLW   B'01111111'
+0537 002D           01417         MOVWF   MINUTES
+0538 0032           01418         MOVWF   D_MINUTES
+0539 03B2           01419         SWAPF   D_MINUTES,F
+053A 0C0F           01420         MOVLW   H'0F'
+053B 0172           01421         ANDWF   D_MINUTES,F
+053C 016D           01422         ANDWF   MINUTES,F
+053D 097C           01423         CALL    ASK_MASTER
+                    01424 ;HOURS
+053E 098E           01425         CALL    I2C_IN  ; RESEIVE HOURS
+053F 0E3F           01426         ANDLW   B'00111111'
+0540 002E           01427         MOVWF   HOURS
+0541 0033           01428         MOVWF   D_HOURS
+0542 03B3           01429         SWAPF   D_HOURS,F
+0543 0C0F           01430         MOVLW   H'0F'
+0544 0173           01431         ANDWF   D_HOURS,F
+0545 016E           01432         ANDWF   HOURS,F
+0546 097C           01433         CALL    ASK_MASTER
+                    01434 ;DAY
+0547 098E           01435         CALL    I2C_IN  ; RESEIVE DAY
+0548 0E07           01436         ANDLW   B'00000111'
+0549 002F           01437         MOVWF   DAY
+054A 097C           01438         CALL    ASK_MASTER
+                    01439 ;DATE
+054B 098E           01440         CALL    I2C_IN  ;RESEIVE DATE
+054C 0E3F           01441         ANDLW   B'00111111'
+054D 0030           01442         MOVWF   DATE
+054E 0035           01443         MOVWF   D_DATE
+054F 03B5           01444         SWAPF   D_DATE,F
+0550 0C0F           01445         MOVLW   H'0F'
+0551 0175           01446         ANDWF   D_DATE,F
+0552 0170           01447         ANDWF   DATE,F
+0553 097C           01448         CALL    ASK_MASTER
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 39
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    01449 ;MOUNTH
+0554 098E           01450         CALL    I2C_IN  ;RESEIVE MONTH
+0555 0E1F           01451         ANDLW   B'00011111'
+0556 0031           01452         MOVWF   MOUNTH
+0557 0036           01453         MOVWF   D_MOUNTH
+0558 03B6           01454         SWAPF   D_MOUNTH,F
+0559 0C0F           01455         MOVLW   H'0F'
+055A 0176           01456         ANDWF   D_MOUNTH,F
+055B 0171           01457         ANDWF   MOUNTH,F
+055C 097C           01458         CALL    ASK_MASTER
+055D 098E           01459         CALL    I2C_IN  ;RESEIVESLIP
+055E 0972           01460         CALL    STOP_I2C
+                    01461         STRANICA4
+055F 05A3               M                 BSF     STATUS,5
+0560 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0561 0B91           01462         GOTO      VOZV_WR_CLK
+0562                01463 CLOCK_READ
+0562 0951           01464         CALL    START_I2C
+0563 0CD0           01465         MOVLW   H'D0'
+0564 002B           01466         MOVWF   TEMP
+0565 040B           01467         BCF     TEMP,0
+0566 020B           01468         MOVFW   TEMP
+0567 091D           01469         CALL    I2C_OUT ;SEND CONTOROL BYTE RW=0
+0568 0962           01470         CALL    ASK_IN
+                    01471 ;
+0569 0C01           01472         MOVLW   H'01'
+056A 091D           01473         CALL    I2C_OUT ;SEND ADRESS2=0
+056B 0962           01474         CALL    ASK_IN
+056C 0972           01475         CALL    STOP_I2C
+                    01476 ;
+056D 0951           01477         CALL    START_I2C
+056E 0CD0           01478         MOVLW   H'D0'
+056F 002B           01479         MOVWF   TEMP
+0570 050B           01480         BSF     TEMP,0  ;SEND CONTROL BYTE RW=1
+0571 020B           01481         MOVFW   TEMP
+0572 091D           01482         CALL    I2C_OUT
+0573 097C           01483         CALL    ASK_MASTER
+                    01484 ;        CALL    ASK_IN
+                    01485 ;MINUTI
+0574 098E           01486         CALL    I2C_IN  ; RESEIVE MINUTES
+0575 0E7F           01487         ANDLW   B'01111111'
+0576 002D           01488         MOVWF   MINUTES
+0577 0032           01489         MOVWF   D_MINUTES
+0578 03B2           01490         SWAPF   D_MINUTES,F
+0579 0C0F           01491         MOVLW   H'0F'
+057A 0172           01492         ANDWF   D_MINUTES,F
+057B 016D           01493         ANDWF   MINUTES,F
+057C 097C           01494         CALL    ASK_MASTER
+                    01495 ;HOURS
+057D 098E           01496         CALL    I2C_IN  ; RESEIVE HOURS
+057E 0E3F           01497         ANDLW   B'00111111'
+057F 002E           01498         MOVWF   HOURS
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 40
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0580 0033           01499         MOVWF   D_HOURS
+0581 03B3           01500         SWAPF   D_HOURS,F
+0582 0C0F           01501         MOVLW   H'0F'
+0583 0173           01502         ANDWF   D_HOURS,F
+0584 016E           01503         ANDWF   HOURS,F
+0585 097C           01504         CALL    ASK_MASTER
+                    01505 ;DAY
+0586 098E           01506         CALL    I2C_IN  ; RESEIVE DAY
+0587 0E07           01507         ANDLW   B'00000111'
+0588 002F           01508         MOVWF   DAY
+                    01509         LCD_BANK
+0589 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+058A 003D           01510         MOVWF   TEMP_DEN
+                    01511         GENERAL_BANK
+058B 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+058C 097C           01512         CALL    ASK_MASTER
+                    01513 ;DATE
+058D 098E           01514         CALL    I2C_IN  ;RESEIVE DATE
+058E 0E3F           01515         ANDLW   B'00111111'
+058F 0030           01516         MOVWF   DATE
+0590 0035           01517         MOVWF   D_DATE
+0591 03B5           01518         SWAPF   D_DATE,F
+0592 0C0F           01519         MOVLW   H'0F'
+0593 0175           01520         ANDWF   D_DATE,F
+0594 0170           01521         ANDWF   DATE,F
+0595 097C           01522         CALL    ASK_MASTER
+                    01523 ;MOUNTH
+0596 098E           01524         CALL    I2C_IN  ;RESEIVE MONTH
+0597 0E1F           01525         ANDLW   B'00011111'
+0598 0031           01526         MOVWF   MOUNTH
+0599 0036           01527         MOVWF   D_MOUNTH
+059A 03B6           01528         SWAPF   D_MOUNTH,F
+059B 0C0F           01529         MOVLW   H'0F'
+059C 0176           01530         ANDWF   D_MOUNTH,F
+059D 0171           01531         ANDWF   MOUNTH,F
+                    01532 ;
+059E 097C           01533         CALL    ASK_MASTER
+059F 098E           01534         CALL    I2C_IN  ;RESEIVE YEARS
+                    01535 
+05A0 097C           01536         CALL    ASK_MASTER
+05A1 098E           01537         CALL    I2C_IN  ;RESEIVE CONTROL
+                    01538 
+05A2 097C           01539         CALL    ASK_MASTER
+05A3 098E           01540         CALL    I2C_IN  ;RESEIVE METKA
+05A4 003F           01541         MOVWF   TIP
+                    01542 
+05A5 097C           01543         CALL    ASK_MASTER
+05A6 098E           01544         CALL    I2C_IN  ;RESEIVE
+05A7 002A           01545         MOVWF   EDIN_DNEI
+                    01546 
+05A8 097C           01547         CALL    ASK_MASTER
+05A9 098E           01548         CALL    I2C_IN  ;RESEIVE
+05AA 0029           01549         MOVWF   DES_DNEI
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 41
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    01550 
+05AB 097C           01551         CALL    ASK_MASTER
+05AC 098E           01552         CALL    I2C_IN  ;RESEIVE
+05AD 0034           01553         MOVWF   TEMP_DAY
+05AE 0972           01554         CALL    STOP_I2C
+                    01555 
+                    01556         STRANICA1
+05AF 04A3               M                 BCF     STATUS,5
+05B0 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+05B1 0B2B           01557         GOTO      VOZV_RD_CLOCK
+                    01558 
+05B2                01559 PRAZDNIK_WRITE
+05B2 0951           01560         CALL    START_I2C
+05B3 0CD0           01561         MOVLW   H'D0'
+05B4 002B           01562         MOVWF   TEMP
+05B5 040B           01563         BCF     TEMP,0
+05B6 020B           01564         MOVFW   TEMP
+05B7 091D           01565         CALL    I2C_OUT ;SEND CONTOROL BYTE RW=0
+05B8 0962           01566         CALL    ASK_IN
+                    01567 ;
+05B9 0C08           01568         MOVLW   H'08'
+05BA 091D           01569         CALL    I2C_OUT ;SEND ADRESS=01
+05BB 097C           01570         CALL    ASK_MASTER
+                    01571 ;       CALL    ASK_IN
+                    01572 ;
+05BC 021F           01573         MOVFW   TIP
+05BD 091D           01574         CALL    I2C_OUT
+05BE 097C           01575         CALL    ASK_MASTER
+                    01576 ;MINUTI
+05BF 020A           01577         MOVFW   EDIN_DNEI
+05C0 091D           01578         CALL    I2C_OUT
+05C1 097C           01579         CALL    ASK_MASTER
+                    01580 
+05C2 0209           01581         MOVFW   DES_DNEI
+05C3 091D           01582         CALL    I2C_OUT
+05C4 097C           01583         CALL    ASK_MASTER
+                    01584 
+                    01585         LCD_BANK
+05C5 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+05C6 021D           01586         MOVFW   TEMP_DEN; DAY -VREMENNO
+                    01587         GENERAL_BANK
+05C7 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+05C8 091D           01588         CALL    I2C_OUT
+05C9 097C           01589         CALL    ASK_MASTER
+05CA 0972           01590         CALL    STOP_I2C
+                    01591         STRANICA4
+05CB 05A3               M                 BSF     STATUS,5
+05CC 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+05CD 0A13           01592         GOTO      SLIV
+                    01593 ;PAGE4
+                    01594 
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 42
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0600                01595         ORG     0600H
+                    01596 
+                    01597 
+0600                01598 MKS150
+                    01599         LCD_BANK
+0600 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0601 0C96           01600         MOVLW   D'150'
+0602 0030           01601         MOVWF   CHETCHIK1
+0603 0000           01602 LOOP1   NOP
+0604 02F0           01603         DECFSZ  CHETCHIK1,F
+0605 0A03           01604         GOTO    LOOP1
+                    01605         GENERAL_BANK
+0606 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0607 0800           01606         RETURN
+                    01607 ;-----------------------------------
+                    01608 ; ZADERZKA 5MKS , (5 NOPOV)
+0608                01609 MKS5
+0608 0000           01610         NOP
+0609 0000           01611         NOP
+060A 0000           01612         NOP
+060B 0000           01613         NOP
+060C 0000           01614         NOP
+060D 0800           01615         RETURN
+                    01616 ;-----------------------------------
+060E                01617 MS5     ;ZADERZKA 5 MS (D'34'=5000 NOPOV)
+                    01618         LCD_BANK
+060E 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+060F 0C22           01619         MOVLW   D'34'
+0610 0031           01620         MOVWF   CHETCHIK2
+0611 0900           01621 LOOP2   CALL    MKS150
+                    01622         LCD_BANK
+0612 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0613 02F1           01623         DECFSZ  CHETCHIK2,F
+0614 0A11           01624         GOTO    LOOP2
+                    01625         GENERAL_BANK
+0615 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0616 0800           01626         RETURN
+                    01627 
+                    01628 ;-----------------------------------
+0617                01629 SIMVOL_LCD
+0617 0934           01630        CALL     ASC_CORRECT
+0618 0939           01631        CALL     ZAPIC_CHAR
+                    01632        RETP
+0619 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    01633 
+061A                01634 ENABLE_LCD
+061A 0908           01635         CALL    MKS5 ; ZADERZKA 5 MKS
+061B 0567           01636         BSF     PORTC,E
+061C 0908           01637         CALL    MKS5 ; ZADERZKA 5 MKS
+061D 0467           01638         BCF     PORTC,E
+061E 0908           01639         CALL    MKS5 ; ZADERZKA 5 MKS
+061F 0800           01640         RETURN
+                    01641 ;
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 43
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0620                01642 ZAPIC_KOMANDI_8
+0620 002C           01643         MOVWF   TMPLCD1
+0621 0EF0           01644         ANDLW   B'11110000'
+0622 002B           01645         MOVWF   TEMP
+0623 090E           01646         CALL    MS5
+0624 040B           01647         BCF     TEMP,LED_OUT
+0625 042B           01648         BCF     TEMP,RS
+0626 044B           01649         BCF     TEMP,R_W
+0627 020B           01650         MOVFW   TEMP
+0628 0027           01651         MOVWF   PORTC
+0629 091A           01652         CALL    ENABLE_LCD
+062A 038C           01653         SWAPF   TMPLCD1,W
+062B                01654 ZAPIC_KOMANDI_4
+062B 0EF0           01655         ANDLW   B'11110000'
+062C 002B           01656         MOVWF   TEMP
+062D 040B           01657         BCF     TEMP,LED_OUT
+062E 042B           01658         BCF     TEMP,RS
+062F 044B           01659         BCF     TEMP,R_W
+0630 020B           01660         MOVFW   TEMP
+0631 0027           01661         MOVWF   PORTC
+0632 091A           01662         CALL    ENABLE_LCD
+0633 0800           01663         RETURN
+                    01664 
+0634                01665 ASC_CORRECT
+0634 0E0F           01666         ANDLW   B'00001111'
+0635 002B           01667         MOVWF   TEMP
+0636 0C30           01668         MOVLW   H'30'
+0637 01CB           01669         ADDWF   TEMP,W
+                    01670         RETW
+0638 000C               M         DATA    0Ch     ;RET    ;return without destroying W register
+                    01671 
+0639                01672 ZAPIC_CHAR
+                    01673 
+0639 002C           01674         MOVWF   TMPLCD1
+063A 0EF0           01675         ANDLW   B'11110000'
+063B 002B           01676         MOVWF   TEMP
+063C 090E           01677         CALL    MS5
+063D 040B           01678         BCF     TEMP,LED_OUT
+063E 052B           01679         BSF     TEMP,RS
+063F 044B           01680         BCF     TEMP,R_W
+0640 020B           01681         MOVFW   TEMP
+0641 0027           01682         MOVWF   PORTC
+0642 091A           01683         CALL    ENABLE_LCD
+0643 038C           01684         SWAPF   TMPLCD1,W
+0644 0EF0           01685         ANDLW   B'11110000'
+0645 002B           01686         MOVWF   TEMP
+0646 040B           01687         BCF     TEMP,LED_OUT
+0647 052B           01688         BSF     TEMP,RS
+0648 044B           01689         BCF     TEMP,R_W
+0649 020B           01690         MOVFW   TEMP
+064A 0027           01691         MOVWF   PORTC
+064B 091A           01692         CALL    ENABLE_LCD
+                    01693         RETP
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 44
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+064C 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+064D                01694 SET_DDRAM
+064D 0E7F           01695         ANDLW   H'7F'
+064E 002B           01696         MOVWF   TEMP
+064F 0C80           01697         MOVLW   H'80'
+0650 01CB           01698         ADDWF   TEMP,W
+0651 0920           01699         CALL    ZAPIC_KOMANDI_8
+                    01700         RETP
+0652 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    01701 
+0653                01702 CURSOR_HOME
+0653 0C02           01703         MOVLW   B'00000010'     ;6
+0654 0920           01704         CALL    ZAPIC_KOMANDI_8
+                    01705         RETP
+0655 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0656                01706 CURSOR_ON
+0656 0C0E           01707         MOVLW   B'00001110'     ;6
+0657 0920           01708         CALL    ZAPIC_KOMANDI_8
+                    01709         RETP
+0658 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0659                01710 CURSOR_OFF
+0659 0C0C           01711         MOVLW   B'00001100'     ;6
+065A 0920           01712         CALL    ZAPIC_KOMANDI_8
+                    01713         RETP
+065B 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+065C                01714 OUT_LCD
+065C 0037           01715         MOVWF   TEMP_I2C
+065D 0397           01716         SWAPF   TEMP_I2C,W
+065E 0934           01717         CALL    ASC_CORRECT
+065F 0939           01718         CALL    ZAPIC_CHAR
+0660 0217           01719         MOVFW   TEMP_I2C
+0661 0934           01720         CALL    ASC_CORRECT
+0662 0939           01721         CALL    ZAPIC_CHAR
+                    01722         RETP
+0663 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+0664                01723 LCD_CLEAR
+0664 0C01           01724         MOVLW   B'00000001'     ;6
+0665 0920           01725         CALL    ZAPIC_KOMANDI_8
+                    01726 ;------------ DISPLAY HOME------------
+0666 0C02           01727         MOVLW   B'00000010'     ;6
+0667 0920           01728         CALL    ZAPIC_KOMANDI_8
+                    01729         RETP
+0668 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    01730 
+0669                01731 KELV_TO_CEL
+                    01732         MOVLF   ZNAK,'+'
+0669 0C2B               M         MOVLW   '+'
+066A 0036               M         MOVWF   ZNAK
+066B 0072           01733         CLRF    TEMP_CELCII
+066C 007A           01734         CLRF    D_TEMP_CELCII
+066D 0403           01735         BCF     STATUS,C
+066E 0CAB           01736         MOVLW   H'AB'
+066F 00B1           01737         SUBWF   TEMP_MATH_LOW,F
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 45
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0670 0703           01738         BTFSS   STATUS,C
+0671 00F0           01739         DECF    TEMP_MATH_HIGH,F
+0672 0C0A           01740         MOVLW   H'0A'
+0673 00B0           01741         SUBWF   TEMP_MATH_HIGH,F
+0674 0210           01742         MOVFW   TEMP_MATH_HIGH
+0675 0EF0           01743         ANDLW   H'F0'
+0676 0443           01744         BCF     STATUS,Z
+0677 0FF0           01745         XORLW   H'F0'
+0678 0743           01746         BTFSS   STATUS,Z
+0679 0A7F           01747         GOTO    MATH_LOOP
+                    01748         MOVLF   ZNAK,'-'
+067A 0C2D               M         MOVLW   '-'
+067B 0036               M         MOVWF   ZNAK
+067C 0270           01749         COMF    TEMP_MATH_HIGH,F
+067D 0271           01750         COMF    TEMP_MATH_LOW,F
+067E 02B1           01751         INCF    TEMP_MATH_LOW,F
+067F                01752 MATH_LOOP
+067F 0403           01753         BCF     STATUS,C
+0680 0C0A           01754         MOVLW   D'10'
+0681 00B1           01755         SUBWF   TEMP_MATH_LOW,F
+0682 0703           01756         BTFSS   STATUS,C
+0683 00F0           01757         DECF    TEMP_MATH_HIGH,F
+0684 02B2           01758         INCF    TEMP_CELCII,F
+0685 0210           01759         MOVFW   TEMP_MATH_HIGH
+0686 0EF0           01760         ANDLW   H'F0'
+0687 0443           01761         BCF     STATUS,Z
+0688 0FF0           01762         XORLW   H'F0'
+0689 0743           01763         BTFSS   STATUS,Z
+068A 0A7F           01764         GOTO    MATH_LOOP
+068B 00F2           01765         DECF    TEMP_CELCII,F
+068C 0C0A           01766         MOVLW   D'10'
+068D 01D1           01767         ADDWF   TEMP_MATH_LOW,W
+                    01768         LCD_BANK
+068E 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+068F 0037           01769         MOVWF   DROBNOE
+                    01770         MATH_BANK
+0690 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01771 ;       DESATKI & EDINICI
+0691 0070           01772         CLRF    TEMP_MATH_HIGH
+                    01773         MOVFF   TEMP_MATH_LOW,TEMP_CELCII
+0692 0212               M         MOVFW   TEMP_CELCII
+0693 0031               M         MOVWF   TEMP_MATH_LOW
+0694                01774 MATH_LOOP1
+0694 0C0A           01775         MOVLW   D'10'
+0695 00B1           01776         SUBWF   TEMP_MATH_LOW,F
+0696 01F0           01777         ADDWF   TEMP_MATH_HIGH,F
+0697 02BA           01778         INCF    D_TEMP_CELCII,F
+0698 0211           01779         MOVFW   TEMP_MATH_LOW
+0699 0EF0           01780         ANDLW   H'F0'
+069A 0443           01781         BCF     STATUS,Z
+069B 0FF0           01782         XORLW   H'F0'
+069C 0743           01783         BTFSS   STATUS,Z
+069D 0A94           01784         GOTO    MATH_LOOP1
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 46
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+069E 00FA           01785         DECF    D_TEMP_CELCII,F
+069F 0C0A           01786         MOVLW   D'10'
+06A0 00B0           01787         SUBWF   TEMP_MATH_HIGH,F
+06A1 0210           01788         MOVFW   TEMP_MATH_HIGH
+06A2 00B2           01789         SUBWF   TEMP_CELCII,F
+                    01790         RETP
+06A3 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    01791 
+06A4                01792 VICH_TEM_LCD
+                    01793         SPI_BANK
+06A4 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06A5 0210           01794         MOVFW    T_NAR_HIGH
+                    01795         MATH_BANK
+06A6 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06A7 0030           01796         MOVWF    TEMP_MATH_HIGH
+                    01797         SPI_BANK
+06A8 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06A9 0213           01798         MOVFW    T_NAR_LOW
+                    01799         MATH_BANK
+06AA 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06AB 0031           01800         MOVWF    TEMP_MATH_LOW
+06AC 0969           01801         CALL     KELV_TO_CEL
+06AD 039A           01802         SWAPF    D_TEMP_CELCII,W
+06AE 0EF0           01803         ANDLW    H'F0'
+06AF 0033           01804         MOVWF    T_NAR_LCD
+06B0 0212           01805         MOVFW    TEMP_CELCII
+06B1 0E0F           01806         ANDLW    H'0F'
+06B2 01F3           01807         ADDWF    T_NAR_LCD,F
+                    01808         MOVFF    ZNAK_NAR,ZNAK
+06B3 0216               M         MOVFW   ZNAK
+06B4 0037               M         MOVWF   ZNAK_NAR
+                    01809         LCD_BANK
+06B5 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01810         MOVFF    DROB_NAR_LCD,DROBNOE
+06B6 0217               M         MOVFW   DROBNOE
+06B7 0039               M         MOVWF   DROB_NAR_LCD
+                    01811 
+                    01812         SPI_BANK
+06B8 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06B9 0211           01813         MOVFW    T_OBR_HIGH
+                    01814         MATH_BANK
+06BA 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06BB 0030           01815         MOVWF    TEMP_MATH_HIGH
+                    01816         SPI_BANK
+06BC 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06BD 0214           01817         MOVFW    T_OBR_LOW
+                    01818         MATH_BANK
+06BE 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06BF 0031           01819         MOVWF    TEMP_MATH_LOW
+06C0 0969           01820         CALL     KELV_TO_CEL
+06C1 039A           01821         SWAPF    D_TEMP_CELCII,W
+06C2 0EF0           01822         ANDLW    H'F0'
+06C3 0034           01823         MOVWF    T_OBR_LCD
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 47
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+06C4 0212           01824         MOVFW    TEMP_CELCII
+06C5 0E0F           01825         ANDLW    H'0F'
+06C6 01F4           01826         ADDWF    T_OBR_LCD,F
+                    01827         MOVFF    ZNAK_OBR,ZNAK
+06C7 0216               M         MOVFW   ZNAK
+06C8 0038               M         MOVWF   ZNAK_OBR
+                    01828         LCD_BANK
+06C9 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01829         MOVFF    DROB_OBR_LCD,DROBNOE
+06CA 0217               M         MOVFW   DROBNOE
+06CB 0038               M         MOVWF   DROB_OBR_LCD
+                    01830 
+                    01831         SPI_BANK
+06CC 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06CD 0212           01832         MOVFW    T_VIH_HIGH
+                    01833         MATH_BANK
+06CE 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06CF 0030           01834         MOVWF    TEMP_MATH_HIGH
+                    01835         SPI_BANK
+06D0 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06D1 0215           01836         MOVFW    T_VIH_LOW
+                    01837         MATH_BANK
+06D2 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06D3 0031           01838         MOVWF    TEMP_MATH_LOW
+06D4 0969           01839         CALL     KELV_TO_CEL
+06D5 039A           01840         SWAPF    D_TEMP_CELCII,W
+06D6 0EF0           01841         ANDLW    H'F0'
+                    01842         LCD_BANK
+06D7 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06D8 003C           01843         MOVWF    T_VIH_LCD
+                    01844         MATH_BANK
+06D9 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06DA 0212           01845         MOVFW    TEMP_CELCII
+06DB 0E0F           01846         ANDLW    H'0F'
+                    01847         LCD_BANK
+06DC 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06DD 01FC           01848         ADDWF    T_VIH_LCD,F
+                    01849         MOVFF    DROB_VIH_LCD,DROBNOE
+06DE 0217               M         MOVFW   DROBNOE
+06DF 003A               M         MOVWF   DROB_VIH_LCD
+                    01850         MATH_BANK
+06E0 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06E1 0216           01851         MOVFW    ZNAK
+                    01852         LCD_BANK
+06E2 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06E3 003B           01853         MOVWF    ZNAK_VIH
+                    01854         GENERAL_BANK
+06E4 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01855         RETP
+06E5 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    01856 
+06E6                01857 VICH_OBR_FAKT
+                    01858         STRANICA2
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 48
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+06E6 05A3               M                 BSF     STATUS,5
+06E7 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+06E8 09CD           01859         CALL     MULTx1_2
+                    01860         SPI_BANK
+06E9 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06EA 021B           01861         MOVFW    MATH_LOW
+                    01862         MATH_BANK
+06EB 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06EC 0403           01863         BCF     STATUS,C
+06ED 0099           01864         SUBWF   LOW_CONST,W
+06EE 0031           01865         MOVWF   TEMP_MATH_LOW
+06EF 003E           01866         MOVWF   LOW_OBR_RAS
+06F0 0703           01867         BTFSS   STATUS,C
+06F1 00FC           01868         DECF    HIGH_CONST,F
+                    01869 
+                    01870         SPI_BANK
+06F2 001A               M         DATA    18h|2   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06F3 021A           01871         MOVFW    MATH_HIGH
+                    01872         MATH_BANK
+06F4 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+06F5 0403           01873         BCF     STATUS,C
+06F6 009C           01874         SUBWF   HIGH_CONST,W
+06F7 0030           01875         MOVWF   TEMP_MATH_HIGH
+06F8 003D           01876         MOVWF   HIGH_OBR_RAS
+06F9 0969           01877         CALL    KELV_TO_CEL
+06FA 0212           01878         MOVFW   TEMP_CELCII
+06FB 0E0F           01879         ANDLW   H'0F'
+06FC 0035           01880         MOVWF   T_OBR_RAS_LCD
+06FD 021A           01881         MOVFW    D_TEMP_CELCII
+06FE 0E0F           01882         ANDLW    H'0F'
+06FF 003B           01883         MOVWF    DT_OBR_RAS_LCD
+                    01884         GENERAL_BANK
+0700 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01885         RETP
+0701 000D               M         DATA    0Dh     ;RETP   ;RET & write return addr bits 10:9 into PA1:PA0
+                    01886 
+0702                01887         ORG     0702H
+0702                01888 INIT_LCD
+                    01889 
+0702 0C30           01890         MOVLW   B'00110000'
+0703 092B           01891         CALL    ZAPIC_KOMANDI_4
+                    01892 ;-----------------------------
+0704 090E           01893         CALL    MS5 ; ZADERZKA 5 MS
+0705 0C30           01894         MOVLW   B'00110000'
+0706 092B           01895         CALL    ZAPIC_KOMANDI_4
+                    01896 ;-----------------------------
+0707 0900           01897         CALL    MKS150 ; ZADERZKA 150 MKS
+0708 0C30           01898         MOVLW   B'00110000'
+0709 092B           01899         CALL    ZAPIC_KOMANDI_4
+                    01900 ;###################################################
+                    01901 
+070A 090E           01902         CALL    MS5 ; ZADERZKA 5 MS
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 49
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+070B 0C20           01903         MOVLW   B'00100000'
+070C 092B           01904         CALL    ZAPIC_KOMANDI_4
+                    01905 
+                    01906 ;------------ FUNCTION SET ------------
+070D 0C28           01907         MOVLW   B'00101000'     ;3
+070E 0920           01908         CALL    ZAPIC_KOMANDI_8
+                    01909 
+                    01910 ;------------ DISPLAY OFF ------------
+                    01911 ;       MOVLW   B'00001000'     ;4
+                    01912 ;       CALL    ZAPIC_KOMANDI_8
+                    01913 
+                    01914 ;------------ DISPLAY ON ------------
+070F 0956           01915         CALL  CURSOR_ON
+                    01916 ;------------ MODE SET ------------
+0710 0C06           01917         MOVLW   B'00000110'     ;6
+0711 0920           01918         CALL    ZAPIC_KOMANDI_8
+                    01919 ;------------ CLR DISPLAY ------------
+0712 0964           01920         CALL    LCD_CLEAR
+                    01921         STRANICA1
+0713 04A3               M                 BCF     STATUS,5
+0714 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0715 0B22           01922         GOTO      VOZV_LCD
+0716                01923 PROV_IZMEN
+                    01924            GENERAL_BANK
+0716 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0717 0C01           01925            MOVLW   H'01'
+0718 066F           01926            BTFSC   DAY,3
+0719 002F           01927            MOVWF   DAY
+071A 0C0A           01928            MOVLW   H'0A'
+071B 0443           01929            BCF     STATUS,Z
+071C 018E           01930            XORWF   HOURS,W
+071D 0743           01931            BTFSS   STATUS,Z
+071E 0B21           01932            GOTO    LEP
+071F 006E           01933            CLRF    HOURS
+0720 02B3           01934            INCF    D_HOURS,F
+                    01935 LEP        MOVFF   TEMP,HOURS
+0721 020E               M         MOVFW   HOURS
+0722 002B               M         MOVWF   TEMP
+0723 0393           01936            SWAPF   D_HOURS,W
+0724 01EB           01937            ADDWF   TEMP,F
+0725 0C24           01938            MOVLW   H'24'
+0726 0443           01939            BCF     STATUS,Z
+0727 018B           01940            XORWF   TEMP,W
+0728 0743           01941            BTFSS   STATUS,Z
+0729 0B2C           01942            GOTO    LEP1
+072A 0073           01943            CLRF    D_HOURS
+072B 006E           01944            CLRF    HOURS
+                    01945 LEP1       MATH_BANK
+072C 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+072D 0C0A           01946            MOVLW   H'0A'
+072E 0443           01947            BCF     STATUS,Z
+072F 019B           01948            XORWF   DT_OBR_RAS_LCD,W
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 50
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0730 0643           01949            BTFSC   STATUS,Z
+0731 007B           01950            CLRF    DT_OBR_RAS_LCD
+                    01951            GENERAL_BANK
+0732 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01952            STRANICA1
+0733 04A3               M                 BCF     STATUS,5
+0734 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0735 0BC9           01953            GOTO VOZV_IZMEN
+                    01954 
+0736                01955 CLOCK_COR1
+                    01956            GENERAL_BANK
+0736 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0737 0C01           01957            MOVLW  H'01'
+0738 003B           01958            MOVWF  REG_LOW_LCD
+0739 007C           01959            CLRF   REG_HIGH_LCD
+073A 0964           01960            CALL    LCD_CLEAR
+073B 0956           01961            CALL    CURSOR_ON
+073C 007D           01962            CLRF    DDRAM
+073D 061F           01963            BTFSC  TIP,0
+073E 0B42           01964            GOTO   LOOPK1
+                    01965            STRANICA1
+073F 04A3               M                 BCF     STATUS,5
+0740 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0741 0BFC           01966            GOTO      TIMER_ON
+0742                01967 LOOPK1
+                    01968            LCD_BANK
+0742 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    01969            MOVLF    HIGH_20_SEK,H'0A'
+0743 0C0A               M         MOVLW   H'0A'
+0744 0035               M         MOVWF   HIGH_20_SEK
+0745 0076           01970            CLRF     LOW_20_SEK
+                    01971            GENERAL_BANK
+0746 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0747 05A8           01972            BSF    FLAGI,VHOD_V_REZIM
+0748 0953           01973            CALL    CURSOR_HOME
+                    01974 ;DISPLAY HOURS
+                    01975 
+0749 0213           01976            MOVFW  D_HOURS       ;0
+074A 0917           01977            CALL   SIMVOL_LCD
+074B 020E           01978            MOVFW  HOURS         ;1
+074C 0917           01979            CALL   SIMVOL_LCD
+074D 0C3A           01980            MOVLW  ':'           ;2
+074E 0939           01981            CALL   ZAPIC_CHAR
+                    01982 ;DISPLAY MINUTES
+074F 0212           01983            MOVFW  D_MINUTES     ;3
+0750 0917           01984            CALL   SIMVOL_LCD
+0751 020D           01985            MOVFW  MINUTES       ;4
+0752 0917           01986            CALL   SIMVOL_LCD
+0753 0C20           01987            MOVLW  ' '           ;5
+0754 0939           01988            CALL   ZAPIC_CHAR
+                    01989 ;DISPLAY DATE
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 51
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0755 0215           01990            MOVFW  D_DATE        ;6
+0756 0917           01991            CALL   SIMVOL_LCD
+0757 0210           01992            MOVFW  DATE          ;7
+0758 0917           01993            CALL   SIMVOL_LCD
+                    01994            STRANICA1
+0759 04A3               M                 BCF     STATUS,5
+075A 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+075B 09E6           01995            CALL      INDIK_2x8
+                    01996 
+075C 0C2E           01997            MOVLW  '.'
+075D 0939           01998            CALL   ZAPIC_CHAR
+                    01999 ;DISPLAY MOUNTH
+075E 0216           02000            MOVFW  D_MOUNTH
+075F 0917           02001            CALL   SIMVOL_LCD
+0760 0211           02002            MOVFW  MOUNTH
+0761 0917           02003            CALL   SIMVOL_LCD
+0762 0C20           02004            MOVLW  ' '
+0763 0939           02005            CALL   ZAPIC_CHAR
+                    02006 ;DISPLAY DAY
+0764 0C00           02007            MOVLW  H'0'
+0765 0917           02008            CALL   SIMVOL_LCD
+0766 020F           02009            MOVFW  DAY
+0767 0917           02010            CALL   SIMVOL_LCD
+0768 021D           02011            MOVFW  DDRAM
+0769 094D           02012            CALL   SET_DDRAM
+076A 0956           02013            CALL   CURSOR_ON
+076B 0708           02014 CIKL       BTFSS  FLAGI,KEYPRESSED
+076C 0B6B           02015            GOTO   CIKL
+076D 0959           02016            CALL   CURSOR_OFF
+                    02017            STRANICA1
+076E 04A3               M                 BCF     STATUS,5
+076F 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0770 092D           02018            CALL   SUB_KEY1
+0771 077E           02019            BTFSS  REZIM,3
+0772 0B93           02020            GOTO   OUT_CLK_CORRECT
+                    02021            STRANICA1
+0773 04A3               M                 BCF     STATUS,5
+0774 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0775 0947           02022            CALL   SUB_KEY2
+                    02023            STRANICA1
+0776 04A3               M                 BCF     STATUS,5
+0777 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0778 095D           02024            CALL   SUB_KEY3
+0779 0719           02025            BTFSS  STAT_LCD,KEY3
+077A 0B42           02026            GOTO   LOOPK1
+077B 0419           02027            BCF    STAT_LCD,KEY3
+077C 061B           02028            BTFSC  REG_LOW_LCD,0
+077D 02B3           02029            INCF   D_HOURS,F
+077E 063B           02030            BTFSC  REG_LOW_LCD,1
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 52
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+077F 02AE           02031            INCF   HOURS,F
+0780 067B           02032            BTFSC  REG_LOW_LCD,3
+0781 02B2           02033            INCF   D_MINUTES,F
+0782 069B           02034            BTFSC  REG_LOW_LCD,4
+0783 02AD           02035            INCF   MINUTES,F
+0784 06DB           02036            BTFSC  REG_LOW_LCD,6
+0785 02B5           02037            INCF   D_DATE,F
+0786 06FB           02038            BTFSC  REG_LOW_LCD,7
+0787 02B0           02039            INCF   DATE,F
+0788 063C           02040            BTFSC  REG_HIGH_LCD,1
+0789 02B6           02041            INCF   D_MOUNTH,F
+078A 065C           02042            BTFSC  REG_HIGH_LCD,2
+078B 02B1           02043            INCF   MOUNTH,F
+078C 06BC           02044            BTFSC  REG_HIGH_LCD,5
+078D 02AF           02045            INCF   DAY,F
+                    02046            STRANICA3
+078E 04A3               M                 BCF     STATUS,5
+078F 05C3               M                 BSF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0790 0B00           02047            GOTO   CLOCK_WRITE
+0791                02048 VOZV_WR_CLK
+                    02049            GENERAL_BANK
+0791 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0792 0B42           02050            GOTO   LOOPK1
+0793                02051 OUT_CLK_CORRECT
+                    02052            STRANICA1
+0793 04A3               M                 BCF     STATUS,5
+0794 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+0795 0AE5           02053            GOTO      VOZV_CLK_COR
+                    02054 ;============================================
+0796                02055 DATCHIKI_LCD
+                    02056            ;DISPLAY T_NARUZNOE
+                    02057            MATH_BANK
+0796 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0797 0217           02058            MOVFW  ZNAK_NAR      ;0
+                    02059            GENERAL_BANK
+0798 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+0799 0939           02060            CALL   ZAPIC_CHAR
+                    02061 ;;
+                    02062            MATH_BANK
+079A 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+079B 0213           02063            MOVFW  T_NAR_LCD     ;1,2
+                    02064            GENERAL_BANK
+079C 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+079D 095C           02065            CALL   OUT_LCD
+                    02066            LCD_BANK
+079E 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+079F 0219           02067            MOVFW  DROB_NAR_LCD   ;3
+                    02068            GENERAL_BANK
+07A0 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07A1 0917           02069            CALL   SIMVOL_LCD
+07A2 0CA1           02070            MOVLW  H'A1'          ;4
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 53
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+07A3 0939           02071            CALL   ZAPIC_CHAR
+                    02072 ;DISPLAY T_OBRATNOE
+                    02073            MATH_BANK
+07A4 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07A5 0218           02074            MOVFW  ZNAK_OBR       ;5
+                    02075            GENERAL_BANK
+07A6 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07A7 0939           02076            CALL   ZAPIC_CHAR
+                    02077            MATH_BANK
+07A8 0019               M         DATA    18h|1   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07A9 0214           02078            MOVFW  T_OBR_LCD      ;6,7
+                    02079            GENERAL_BANK
+07AA 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07AB 095C           02080            CALL   OUT_LCD
+                    02081            STRANICA1
+07AC 04A3               M                 BCF     STATUS,5
+07AD 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07AE 09E6           02082            CALL      INDIK_2x8
+                    02083            LCD_BANK
+07AF 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07B0 0218           02084            MOVFW  DROB_OBR_LCD
+                    02085            GENERAL_BANK
+07B1 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07B2 0917           02086            CALL   SIMVOL_LCD
+07B3 0C20           02087            MOVLW  ' '
+07B4 0939           02088            CALL   ZAPIC_CHAR
+                    02089 ;DISPLAY T_VIHODA
+                    02090            LCD_BANK
+07B5 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07B6 021B           02091            MOVFW  ZNAK_VIH
+                    02092            GENERAL_BANK
+07B7 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07B8 0939           02093            CALL   ZAPIC_CHAR
+                    02094            LCD_BANK
+07B9 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07BA 021C           02095            MOVFW  T_VIH_LCD
+                    02096            GENERAL_BANK
+07BB 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07BC 095C           02097            CALL   OUT_LCD
+                    02098            LCD_BANK
+07BD 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07BE 021A           02099            MOVFW  DROB_VIH_LCD
+                    02100            GENERAL_BANK
+07BF 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+07C0 0917           02101            CALL   SIMVOL_LCD
+07C1 0CA1           02102            MOVLW  H'A1'
+07C2 0939           02103            CALL   ZAPIC_CHAR
+                    02104            GENERAL_BANK
+07C3 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    02105            STRANICA1
+07C4 04A3               M                 BCF     STATUS,5
+07C5 04C3               M                 BCF     STATUS,6
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 54
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07C6 0B23           02106            GOTO      LALA
+                    02107 
+07C7                02108 PRAZDNIK_CORRECT
+                    02109 ;           MOVLF   TIP,H'01'
+                    02110             MOVLF   REG_LOW_LCD,H'01'
+07C7 0C01               M         MOVLW   H'01'
+07C8 003B               M         MOVWF   REG_LOW_LCD
+07C9 007C           02111             CLRF    REG_HIGH_LCD
+                    02112 
+                    02113 ;           CLRF    EDIN_DNEI
+                    02114 ;           CLRF    DES_DNEI
+07CA 0964           02115            CALL    LCD_CLEAR
+07CB 0956           02116            CALL    CURSOR_ON
+07CC 007D           02117            CLRF    DDRAM
+07CD                02118 LOOPP1
+                    02119            LCD_BANK
+07CD 001B               M         DATA    18h|3   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    02120            MOVLF    HIGH_20_SEK,H'0A'
+07CE 0C0A               M         MOVLW   H'0A'
+07CF 0035               M         MOVWF   HIGH_20_SEK
+07D0 0076           02121            CLRF     LOW_20_SEK
+                    02122            GENERAL_BANK
+07D1 0018               M         DATA    18h|0   ;BANK   ;write N into bits FSR7:FSR5 (N = 0-7)
+                    02123 
+07D2 05A8           02124            BSF    FLAGI,VHOD_V_REZIM
+                    02125            STRANICA1
+07D3 04A3               M                 BCF     STATUS,5
+07D4 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07D5 0965           02126            CALL   PROVER_PRAZD
+                    02127            STRANICA1
+07D6 04A3               M                 BCF     STATUS,5
+07D7 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07D8 0977           02128            CALL   PRAZDNIK_LCD
+07D9 021D           02129            MOVFW  DDRAM
+07DA 094D           02130            CALL   SET_DDRAM
+07DB 0956           02131            CALL   CURSOR_ON
+07DC 0708           02132 CIKP1      BTFSS  FLAGI,KEYPRESSED
+07DD 0BDC           02133            GOTO   CIKP1
+07DE 0959           02134            CALL   CURSOR_OFF
+                    02135            STRANICA1
+07DF 04A3               M                 BCF     STATUS,5
+07E0 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07E1 092D           02136            CALL   SUB_KEY1
+07E2 075E           02137            BTFSS  REZIM,2
+07E3 0BFB           02138            GOTO   LEON
+                    02139            STRANICA1
+07E4 04A3               M                 BCF     STATUS,5
+07E5 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 55
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+07E6 0947           02140            CALL   SUB_KEY2
+                    02141            STRANICA1
+07E7 04A3               M                 BCF     STATUS,5
+07E8 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07E9 095D           02142            CALL   SUB_KEY3
+07EA 0719           02143            BTFSS  STAT_LCD,KEY3
+07EB 0BCD           02144            GOTO   LOOPP1
+07EC 0419           02145            BCF    STAT_LCD,KEY3
+                    02146 
+07ED 0403           02147            BCF  STATUS,C
+07EE 061B           02148            BTFSC  REG_LOW_LCD,0
+07EF 037F           02149            RLF    TIP,F
+                    02150 
+07F0 065B           02151            BTFSC  REG_LOW_LCD,2
+07F1 02A9           02152            INCF   DES_DNEI,F
+                    02153 
+07F2 067B           02154            BTFSC  REG_LOW_LCD,3
+07F3 02AA           02155            INCF   EDIN_DNEI,F
+                    02156            STRANICA1
+07F4 04A3               M                 BCF     STATUS,5
+07F5 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07F6 0965           02157            CALL   PROVER_PRAZD
+                    02158            STRANICA2
+07F7 05A3               M                 BSF     STATUS,5
+07F8 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07F9 0910           02159            CALL   WR_PRAZD
+07FA 0BCD           02160            GOTO   LOOPP1
+                    02161 
+                    02162 LEON       STRANICA1
+07FB 04A3               M                 BCF     STATUS,5
+07FC 04C3               M                 BCF     STATUS,6
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07FD 0BEE           02163            GOTO      VOZV_PRAZD
+                    02164 
+                    02165 
+                    02166 
+                    02167 ;===============================================
+07FF                02168         ORG     07FFh           ;reset vector
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07FF 0B05           02169         GOTO    NACHALO
+                    02170         END
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 56
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ASC_CORRECT                       00000634
+ASK_IN                            00000462
+ASK_MASTER                        0000047C
+BANKS1                            00000000
+BANKS2                            00004000
+BANKS4                            00008000
+BANKS8                            0000C000
+BOR13                             00010000
+BOR25                             00030000
+BOR42                             00020000
+C                                 00000000
+CARRYX                            00040000
+CHETCHIK1                         00000010
+CHETCHIK2                         00000011
+CHETCHIK3                         00000012
+CHET_SPI                          00000016
+CIKL                              0000076B
+CIKL1                             000001B1
+CIKP1                             000007DC
+CLK_I2C                           00000005
+CLOCK_COR1                        00000736
+CLOCK_CORRECT                     000000E2
+CLOCK_READ                        00000562
+CLOCK_WRITE                       00000500
+CMP                               00000008
+CONTROL_TEMPER                    0000036E
+CORECT                            
+CORRECT_TEMP_DAY                  00000200
+CURSOR_HOME                       00000653
+CURSOR_OFF                        00000659
+CURSOR_ON                         00000656
+DATCHIKI_LCD                      00000796
+DATE                              00000010
+DAY                               0000000F
+DC                                00000001
+DDRAM                             0000001D
+DES_DNEI                          00000009
+DEVICE                            0040EBF1
+DNI                               00000006
+DROBNOE                           00000017
+DROB_NAR_LCD                      00000019
+DROB_OBR_LCD                      00000018
+DROB_VIH_LCD                      0000001A
+DT_OBR_RAS_LCD                    0000001B
+D_DATE                            00000015
+D_HOURS                           00000013
+D_MINUTES                         00000012
+D_MOUNTH                          00000016
+D_TEMP_CELCII                     0000001A
+E                                 00000003
+EDIN_DNEI                         0000000A
+ENABLE_LCD                        0000061A
+EOC_TEST                          00000253
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 57
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+FLAGI                             00000008
+FSR                               00000004
+GENERAL_BANK                      TBANK  0
+HIGH_20_SEK                       00000015
+HIGH_5_MIN                        00000013
+HIGH_CONST                        0000001C
+HIGH_CONTROL                      00000016
+HIGH_OBR_RAS                      0000001D
+HOURS                             0000000E
+I2C_IN                            0000048E
+I2C_OUT                           0000041D
+ID                                
+IND                               00000000
+INDIK_2x8                         000000E6
+INIT_LCD                          00000702
+INPUTX                            
+INP_DATA_SPI                      00000019
+IREAD                             
+IZMENENIE                         00000001
+I_MKS5                            00000400
+KELV_TO_CEL                       00000669
+KEY1                              00000002
+KEY2                              00000001
+KEY3                              00000000
+KEY4                              00000003
+KEYFLAG                           00000018
+KEYPRESSED                        00000000
+KEYS                              0000001A
+LALA                              00000123
+LCD_BANK                          TBANK  3
+LCD_CLEAR                         00000664
+LED                               00000002
+LED_OUT                           00000000
+LED_POSTANOVKA                    00000214
+LEON                              000007FB
+LEP                               00000721
+LEP1                              0000072C
+LEVA                              000001A9
+LOM                               000000FB
+LOOP1                             00000603
+LOOP11                            0000025B
+LOOP2                             00000611
+LOOP6                             00000423
+LOOP7                             00000494
+LOOPK1                            00000742
+LOOPP1                            000007CD
+LOOPT1                            00000196
+LOOPV1                            00000020
+LOW_20_SEK                        00000016
+LOW_5_MIN                         00000014
+LOW_CONST                         00000019
+LOW_CONTROL                       00000017
+LOW_OBR_RAS                       0000001E
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 58
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+LVL                               0000000D
+M24LC16_READ                      000004D3
+M24LC16_WRITE                     000004B3
+MATH_BANK                         TBANK  1
+MATH_HIGH                         0000001A
+MATH_HIGH16                       0000001E
+MATH_HIGH8                        0000001C
+MATH_LOOP                         0000067F
+MATH_LOOP1                        00000694
+MATH_LOW                          0000001B
+MATH_LOW16                        0000001F
+MATH_LOW8                         0000001D
+MINUTES                           0000000D
+MIN_5                             00000003
+MKS150                            00000600
+MKS5                              00000608
+MODE                              
+MOUNTH                            00000011
+MOVFF                             
+MOVLF                             
+MOVMW                             
+MOVWM                             
+MS5                               0000060E
+MULTx1_2                          000002CD
+NACHALO                           00000105
+NAR_TEMP_LCD                      00000302
+NOLIK_I2C_IN                      000004A9
+NOLIK_I2C_OUT                     0000043B
+NOLIK_SPI_IN                      0000028E
+NOLIK_SPI_OUT                     00000273
+NULI                              000001EF
+OK                                0000021A
+OPLA                              0000020E
+OPTIONX                           00000200
+OSC125KHZ                         000000A1
+OSC1MHZ                           000000D1
+OSC250KHZ                         000000B1
+OSC2MHZ                           000000E1
+OSC31KHZ                          00000081
+OSC4MHZ                           000000F1
+OSC500KHZ                         000000C1
+OSC62KHZ                          00000091
+OSCHS                             00000003
+OSCLP                             00000001
+OSCRC                             00000002
+OSCXT                             00000000
+OUTPUTX                           
+OUT_B                             
+OUT_CLK_CORRECT                   00000793
+OUT_LCD                           0000065C
+PA0                               00000005
+PA1                               00000006
+PA2                               00000007
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 59
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+PAGES1                            00000000
+PAGES2                            00001000
+PAGES4                            00002000
+PAGES8                            00003000
+PAGEX                             
+PC                                00000002
+PD                                00000003
+PINS18                            00000000
+PINS28                            00400000
+PLP                               0000000E
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PPP                               00000027
+PRAZDNIKI                         000001EB
+PRAZDNIK_CORRECT                  000007C7
+PRAZDNIK_LCD                      00000077
+PRAZDNIK_WRITE                    000005B2
+PRIB_DT_OBR                       000000D8
+PRIB_T_OBR                        000000DD
+PRINTX                            
+PROTECT                           00000008
+PROVER_PRAZD                      00000065
+PROV_IZMEN                        00000716
+REG_HIGH_LCD                      0000001C
+REG_LOW_LCD                       0000001B
+RESET                             
+RETI                              
+RETIW                             
+RETP                              
+RETW                              
+REZIM                             0000001E
+RS                                00000001
+RTCC                              00000001
+R_W                               00000002
+SBROS                             00000045
+SDA_I2C                           00000006
+SET_DDRAM                         0000064D
+SET_PRERIV                        00000006
+SIMVOL_LCD                        00000617
+SLIV                              00000213
+SLV                               00000398
+SMECHENIE                         00000004
+SPI_BANK                          TBANK  2
+SPI_CLK                           00000004
+SPI_CS                            00000002
+SPI_DELAY                         0000021D
+SPI_EOC                           00000003
+SPI_IN                            00000001
+SPI_MODULE                        00000314
+SPI_OUT                           00000000
+SPI_READ                          00000258
+SPI_REINIT                        0000022E
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 60
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+SPI_START                         0000023F
+SPI_STOP                          0000024B
+SPI_VVOD                          00000289
+SPLOOP1                           00000254
+ST                                0000000C
+STACKX                            00000100
+START_I2C                         00000451
+STATUS                            00000003
+STAT_LCD                          00000019
+STOP_I2C                          00000472
+STRANICA1                         
+STRANICA2                         
+STRANICA3                         
+STRANICA4                         
+SUB_KEY1                          0000002D
+SUB_KEY2                          00000047
+SUB_KEY3                          0000005D
+SUB_KEY4                          0000003A
+SVERKA_TAIMERA                    000000EB
+SYNC                              00000400
+TBANK                             
+TEMP                              0000000B
+TEMP2_SPI                         00000018
+TEMPER_HIGH                       0000001F
+TEMP_CELCII                       00000012
+TEMP_DAY                          00000014
+TEMP_DEN                          0000001D
+TEMP_I2C                          00000017
+TEMP_MATH_HIGH                    00000010
+TEMP_MATH_LOW                     00000011
+TEMP_SPI                          00000017
+TERM_CORRECT                      00000182
+TERM_LCD                          00000090
+TIMER_ON                          000001FC
+TIP                               0000001F
+TMPLCD1                           0000000C
+TO                                00000004
+TPAGE                             
+TRISX                             0000000F
+TURBO                             00000800
+T_NARUZ                           0000000C
+T_NAR_HIGH                        00000010
+T_NAR_LCD                         00000013
+T_NAR_LOW                         00000013
+T_OBRAT                           0000001C
+T_OBR_HIGH                        00000011
+T_OBR_LCD                         00000014
+T_OBR_LOW                         00000014
+T_OBR_RAS_LCD                     00000015
+T_VIHOD                           0000002C
+T_VIH_HIGH                        00000012
+T_VIH_LCD                         0000001C
+T_VIH_LOW                         00000015
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 61
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+VHOD_V_REZIM                      00000005
+VICH_CONST                        00000290
+VICH_OBR_FAKT                     000006E6
+VICH_TEM_LCD                      000006A4
+VID_20_SEK                        00000015
+VOZV_CLK_COR                      000000E5
+VOZV_IZMEN                        000001C9
+VOZV_LCD                          00000122
+VOZV_NULI                         000000EC
+VOZV_PRAZD                        000001EE
+VOZV_RD_CLOCK                     0000012B
+VOZV_SPI                          00000128
+VOZV_SVERKA                       00000179
+VOZV_TEMP_LCD                     00000156
+VOZV_WR_CLK                       00000791
+VSE_DATCHIKI                      000001E2
+WATCHDOG                          00000004
+WKED                              0000000A
+WKEN                              0000000B
+WKPND                             00000009
+WR_CONST                          0000001F
+WR_PRAZD                          00000210
+Z                                 00000002
+ZADERZKA                          00000022
+ZAPIC_CHAR                        00000639
+ZAPIC_KOMANDI_4                   0000062B
+ZAPIC_KOMANDI_8                   00000620
+ZNAK                              00000016
+ZNAK_NAR                          00000017
+ZNAK_OBR                          00000018
+ZNAK_VIH                          0000001B
+_DEVICE                           0047E408
+_FUSE                             00000408
+_FUSEX                            0000047E
+_INVERT                           00070FF9
+__16C57                           00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0080 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+00C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0100 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0140 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+MPASM 01.30 Released         T4V1_10D.ASM   12-3-1999  6:10:19         PAGE 62
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+
+0180 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+01C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXX-
+0200 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0240 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0280 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+02C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0300 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0340 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0380 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXX------------
+03C0 : ---------------- ---------------- ---------------- ----------------
+0400 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0440 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0480 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+04C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXX----
+0500 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0540 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0580 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+05C0 : XXXXXXXXXXXXXX-- ---------------- ---------------- ----------------
+0600 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0640 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0680 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+06C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0700 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0740 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0780 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+07C0 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXX-X
+1000 : ---------------- XX-------------- ---------------- ----------------
+1040 : ---------------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:  1916
+Program Memory Words Free:   132
+
+
+Errors   :     0
+Warnings :     0 reported,     2 suppressed
+Messages :    92 reported,     0 suppressed
+
+

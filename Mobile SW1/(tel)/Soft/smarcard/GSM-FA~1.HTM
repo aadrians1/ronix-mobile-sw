@@ -1,0 +1,152 @@
+<html><head><title>GSM Cloning</title></head><body>
+<h2>GSM Cloning</h2>
+
+<p>Here is some information on our GSM cloning results, starting at a
+very high level, and moving on eventually to detailed technical information,
+with data for the cryptographers and mathematicians at the end.
+Please feel free to contact us
+<a href="mailto:gsm@isaac.cs.berkeley.edu">gsm@isaac.cs.berkeley.edu</a>
+with any questions.</p>
+
+<p>This is joint work with Ian Goldberg (also of the ISAAC research group)
+and <a href="mailto:marc@scard.org">Marc Briceno</a> (Director of the
+<a href="http://www.scard.org/">Smartcard Developers Association</a>).</p>
+
+<b>Executive summary:</b>
+<p>We've shown how parties with physical access to a victim's GSM cellphone can
+``clone'' the phone and fraudulently place calls billed to the victim's account.
+
+This shows that the GSM fraud-prevention framework fails to live up to
+expectations, and casts doubt on its foundation (as well as the design process).
+However, we should be clear that this is only a partial flaw, not a total
+failure of the authentication framework: our experiments have been limited
+to showing that GSM phones can be cloned if the attacker has physical access
+to the target phone.  (In US analog cellphones, one can clone
+the cellphones with only some radio reception equipment, which is a much more
+serious flaw; as a consequence, US providers lose over $500 million yearly
+to fraud.)</p>
+
+<p>One potential threat is that the salesman who sells you a cellphone may have
+made ``a spare copy of the keys'' for his own use; he may later make fraudulent
+calls billed to you.  Because most providers today apparently rely purely on the
+authentication codes, with no fallback position if those codes are cracked,
+such fraud might go undetected until long after the money has been lost.</p>
+
+
+<h3>Background</h3>
+
+<p>The GSM fraud-prevention framework relies on special cryptographic codes to
+authenticate customers and bill them appropriately.  A personalized smartcard
+(called a SIM) in the cellphone stores a secret key which is used to
+authenticate the customer; knowledge of the key is sufficient to make calls
+billed to that customer.  The tamper-resistant smartcard is supposed to
+protect the key from disclosure (even against adversaries which may have
+physical access to the SIM); authentication is done with a cryptographic
+protocol which allows the SIM to "prove" knowledge of the key to the service
+provider, thus authorizing a call.</p>
+
+<p>As a result of our mathematical analysis, we have discovered that the
+cryptographic codes used for authentication are not strong enough to resist
+attack.  To exploit this vulnerability, an individual  would interact with the
+SIM repeatedly; with enough queries, the attacker can use some mathematical
+techniques to learn the supposedly-secret key.  Once the key is compromised,
+it is possible to make fraudulent calls which will be billed to the victim.</p>
+
+
+<h3>Clarification: not a total break of the authentication framework</h3>
+
+<p>We wish to emphasize that we have only demonstrated how to clone a phone if
+given physical access to the phone (or its SIM chip).  Many will probably be
+interested in the question of whether these attacks can be performed ``over the
+air'' (i.e. by accessing the target cellphone remotely with specialized radio
+equipment).  While we cannot rule out the possibility that someone may learn
+how to perform ``over the air'' cloning, we have not demonstrated such an
+attack in our work.</p>
+
+
+<h3>What went wrong?</h3>
+
+<p>This vulnerability can be attributed to a serious failing of the GSM security
+design process: it was conducted in secrecy.  Experts have learned over the
+years that the only way to assure security is to follow an open design process,
+encouraging public review to identify flaws while they can still be fixed.
+There's no way that we would have been able to break the cryptography so
+quickly if the design had been subjected to public scrutiny; nobody is that
+much better than the rest of the research community.</p>
+
+<p>In the telecommunications security field, openness is critical to good design.
+Codemaking is so hard to get right the first time that it is crucial to have
+others double-check one's ideas.  Instead, the GSM design committee kept all
+security specifications secret -- which made the information just secret
+enough to prevent others from identifying flaws in time to fix them, but not
+secret enough to protect the system against eventual scrutiny.  With 80
+million GSM users, fixing flaws in such a widely-fielded system is likely to
+be quite costly.</p>
+
+<p>We expect that fixing the flaw may potentially be expensive.  A new
+authentication algorithm would have to be selected.  Then new SIMs would have
+to be programmed with the new algorithm, and distributed to the 80 million
+end users.  Finally, a software upgrade may be required for all authentication
+centers.</p>
+
+
+<h3>Technical details of the attack</h3>
+
+<p>We showed how to break the COMP128 authentication algorithm, an instantiation
+of A3/A8 widely used by providers.  Our attack is a chosen-challenge attack.
+We form a number of specially-chosen challenges and query the SIM for each one;
+the SIM applies COMP128 to its secret key and our chosen challenge, returning
+a response to us.  By analyzing the responses, we are able to determine the
+value of the secret key.</p>
+
+<p>Mounting this attack requires physical access to the target SIM, an
+off-the-shelf smartcard reader, and a computer to direct the operation.  The
+attack requires one to query the smartcard about 150,000 times; our smartcard
+reader can issue 6.25 queries per second, so the whole attack takes 8 hours.
+Very little extra computation is required to analyze the responses.</p>
+
+<p>Though the COMP128 algorithm is supposed to be a secret, we pieced together
+information on its internal details from public documents, leaked information,
+and several SIMs we had access to.  After a theoretical analysis uncovered a
+potential vulnerability in the algorithm, we confirmed that our reconstruction
+of the COMP128 algorithm was correct by comparing a software implementation
+to responses computed by a SIM known to implement COMP128.</p>
+
+
+<h3>Information for cryptographers</h3>
+
+<p>The attack exploits a lack of diffusion: there's a narrow ``pipe'' inside
+COMP128.  In particular, bytes i,i+8,i+16,i+24 at the output of the second
+round depend only on bytes i,i+8,i+16,i+24 of the input to COMP128.  (By
+``round'', I refer to one layer of ``butterflies'' and S-boxes; there are a
+total of 5*8 rounds in COMP128.)  Bytes i,i+8 of the COMP128 input are bytes
+i,i+8 of the key, and bytes i+16,i+24 of the COMP128 input are bytes i,i+8
+of the challenge input.</p>
+
+<p>Now we ``probe'' the narrow pipe, by varying bytes i+16,i+24 of the COMP128
+input (i.e. bytes i,i+8 of the challenge) and holding the rest of the
+COMP128 input constant.  Since the rounds are non-bijective, you can hope
+for a collision in bytes i,i+8,i+16,i+24 of the output after two rounds.
+The birthday paradox guarantees that collisions will occur pretty rapidly
+(since the pipe is only 4 bytes wide); collisions in the narrow pipe can be
+recognized, since they will cause a collision in the output of COMP128 (i.e.
+the two authentication responses will be the same); and each collision can
+be used to learn the two key bytes i,i+8 with a bit of analysis of the first
+two rounds (i.e. perform a ``2-R attack'', in the terminology of differential
+cryptanalysis).</p>
+
+<p>As stated, this would require 2^{4*7/2 + 0.5} = 2^{14.5} chosen-input
+queries to COMP128 to learn two key bytes (since each of the four bytes of
+output after the second round are actually only 7-bit values), and thus
+would require 8 * 2^{14.5} = 2^{17.5} queries to recover the whole 128-bit
+key Ki.  However, we have some optimizations to get this number down a bit.</p>
+
+<p>Note that there is a significant amount of literature on the design of
+cryptographic hash functions out of a FFT-like structure (as COMP128 is
+designed).  For instance, Serge Vaudenay's work on a theory of black-box
+cryptanalysis (as well as his other work, e.g. ``FFT-Hash II is not yet
+secure'') is more than sufficient to uncover this weakness in COMP128.
+In other words, our attack techniques are not particularly novel.</p>
+
+</body></html>
+

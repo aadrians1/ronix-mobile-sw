@@ -1,0 +1,6 @@
+It is a method not a program.
+
+So you have to edit your eeprom and till the adress 16b-1D8 fill with 00.
+
+
+

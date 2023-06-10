@@ -1,0 +1,1 @@
+sx_tips.exe t4v1_10d.hex

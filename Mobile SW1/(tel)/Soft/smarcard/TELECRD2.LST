@@ -1,0 +1,508 @@
+MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  1
+ISO 7816 Synchronous Memory Card Emulator
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                     0001  
+                     0002         TITLE   "ISO 7816 Synchronous Memory Card Emulator" 
+                     0003         LIST    P=PIC16C84, R=HEX 
+                     0004 	INCLUDE "PICREG.EQU" 
+                     0001 ; PIC16Cxx Microcontroller Include File 
+                     0002  
+  01FF               0003 PIC54           equ     0x1ff   ; PIC16C54 Reset Vector 
+  01FF               0004 PIC55           equ     0x1ff   ; PIC16C55 Reset Vector 
+  03FF               0005 PIC56           equ     0x3ff   ; PIC16C56 Reset Vector 
+  07FF               0006 PIC57           equ     0x7ff   ; PIC16C57 Reset Vector 
+  0000               0007 PIC71           equ     0x000   ; PIC16C71 Reset Vector 
+  0000               0008 PIC84           equ     0x000   ; PIC16C84 Reset Vector 
+  0004               0009 INTVEC          equ     0x004   ; PIC16C71/84 Interupt Vector 
+                     0010  
+  0000               0011 INDIR           equ     0x000   ; Indirect File Reg Address Register 
+  0001               0012 RTCC            equ     0x001   ; Real Time Clock Counter 
+  0002               0013 PCL             equ     0x002   ; Program Counter Low Byte 
+  0003               0014 STATUS          equ     0x003   ; Status Register 
+  0004               0015 FSR             equ     0x004   ; File Select Register 
+  0005               0016 PORTA           equ     0x005   ; Port A I/O Register 
+  0006               0017 PORTB           equ     0x006   ; Port B I/O Register 
+  0007               0018 PORTC           equ     0x007   ; Port C I/O Register 
+  0008               0019 ADCON0          equ     0x008   ; PIC16C71 A/D Control Reg 0 
+  0009               0020 ADRES           equ     0x009   ; PIC16C71 A/D Converter Result Register 
+  0008               0021 EEDATA          equ     0x008   ; PIC16C84 EEPROM Data Register 
+  0009               0022 EEADR           equ     0x009   ; PIC16C84 EEPROM Address Register 
+  000A               0023 PCLATH          equ     0x00a   ; Program Counter High Bits 
+  000B               0024 INTCON          equ     0x00b   ; Interrupt Control Register 
+  0005               0025 TRISA           equ     0x005   ; Port A I/O Direction Register 
+  0006               0026 TRISB           equ     0x006   ; Port B I/O Direction Register 
+  0007               0027 TRISC           equ     0x007   ; Port C I/O Direction Register 
+  0008               0028 ADCON1          equ     0x008   ; PIC16C71 A/D Control Reg 1 
+  0008               0029 EECON1          equ     0x008   ; PIC16C84 EEPROM Control Reg. 1 
+  0009               0030 EECON2          equ     0x009   ; PIC16C84 EEPROM Control Reg. 2 
+  0001               0031 OPTION          equ     0x001   ; Option Register 
+                     0032  
+  0007               0033 MSB             equ     0x007   ; Most-Significant Bit 
+  0000               0034 LSB             equ     0x000   ; Least-Significant Bit 
+  0001               0035 TRUE            equ     1 
+  0001               0036 YES             equ     1 
+  0000               0037 FALSE           equ     0 
+  0000               0038 NO              equ     0 
+                     0039  
+                     0040 ; Status Register (f03) Bits 
+                     0041  
+  0000               0042 CARRY           equ     0x000   ; Carry Bit 
+  0000               0043 C               equ     0x000   ; Carry Bit 
+  0001               0044 DCARRY          equ     0x001   ; Digit Carry Bit 
+  0001               0045 DC              equ     0x001   ; Digit Carry Bit 
+  0002               0046 Z_BIT           equ     0x002   ; Zero Bit 
+  0002               0047 Z               equ     0x002   ; Zero Bit 
+  0003               0048 P_DOWN          equ     0x003   ; Power Down Bit 
+  0003               0049 PD              equ     0x003   ; Power Down Bit 
+MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  2
+ISO 7816 Synchronous Memory Card Emulator
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  0004               0050 T_OUT           equ     0x004   ; Watchdog Time-Out Bit 
+  0004               0051 TO              equ     0x004   ; Watchdog Time-Out Bit 
+  0005               0052 RP0             equ     0x005   ; Register Page Select 0 
+  0006               0053 RP1             equ     0x006   ; Register Page Select 1 
+  0007               0054 IRP             equ     0x007   ; Indirect Addressing Reg. Page Sel. 
+                     0055  
+                     0056 ; INTCON Register (f0b) Bits 
+                     0057  
+  0000               0058 RBIF            equ     0x000   ; RB Port change interrupt flag 
+  0001               0059 INTF            equ     0x001   ; INT Interrupt Flag 
+  0002               0060 RTIF            equ     0x002   ; RTCC Overflow Interupt Flag 
+  0003               0061 RBIE            equ     0x003   ; RB Port Ch. Interupt Enable 
+  0004               0062 INTE            equ     0x004   ; INT Interupt Enable 
+  0005               0063 RTIE            equ     0x005   ; RTCC Overflow Int. Enable 
+  0006               0064 ADIE            equ     0x006   ; PIC16C71 A/D Int. Enable 
+  0006               0065 EEIE            equ     0x006   ; PIC16C84 EEPROM Write Int. Enable 
+  0007               0066 GIE             equ     0x007   ; Global Interupt Enable 
+                     0067  
+                     0068 ; OPTION Register (f81) Bits 
+                     0069  
+  0000               0070 PS0             equ     0x000   ; Prescaler Bit 0 
+  0001               0071 PS1             equ     0x001   ; Prescaler Bit 1 
+  0002               0072 PS2             equ     0x002   ; Prescaler Bit 2 
+  0003               0073 PSA             equ     0x003   ; Prescaler Assignment Bit 
+  0004               0074 RTE             equ     0x004   ; RTCC Signal Edge Select 
+  0005               0075 RTS             equ     0x005   ; RTCC Signal Source Select 
+  0006               0076 INTEDG          equ     0x006   ; Interupt Edge Select 
+  0007               0077 RBPU            equ     0x007   ; Port B Pull-up Enable 
+                     0078  
+                     0079 ; ADCON0 Register (f08) Bits 
+                     0080  
+  0000               0081 ADON            equ     0x000   ; A/D Converter Power Switch 
+  0001               0082 ADIF            equ     0x001   ; A/D Conversion Interupt Flag 
+  0002               0083 ADGO            equ     0x002   ; A/D Conversion Start Flag 
+  0003               0084 CHS0            equ     0x003   ; A/D Converter Channel Select 0 
+  0004               0085 CHS1            equ     0x004   ; A/D Converter Channel Select 1 
+  0006               0086 ADCS0           equ     0x006   ; A/D Conversion Clock Select 0 
+  0007               0087 ADCS1           equ     0x007   ; A/D Conversion Clock Select 0 
+                     0088  
+                     0089 ; ADCON1 Register (f88) Bits 
+                     0090  
+  0000               0091 PCFG0           equ     0x000   ; RA0-RA3 Configuration Bit 0 
+  0001               0092 PCFG1           equ     0x001   ; RA0-RA3 Configuration Bit 0 
+                     0093  
+                     0094 ; EECON1 Register (f88) Bits 
+                     0095  
+  0000               0096 RD              equ     0x000   ; PIC16C84 EEPROM Read Data Flag 
+  0001               0097 WR              equ     0x001   ; PIC16C84 EEPROM Write Data Flag 
+  0002               0098 WREN            equ     0x002   ; PIC16C84 EEPROM Write Enable Flag 
+  0003               0099 WRERR           equ     0x003   ; PIC16C84 EEPROM Write Error Flag 
+  0004               0100 EEIF            equ     0x004   ; PIC16C84 EEPROM Interupt Flag 
+                     0101  
+                     0102 ; Some useful macros... 
+MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  3
+ISO 7816 Synchronous Memory Card Emulator
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                     0103  
+                     0104 PUSH    macro 
+                     0105 	movwf   TEMP_W 
+                     0106 	swapf   STATUS,W 
+                     0107 	movwf   TEMP_S 
+                     0108 	endm 
+                     0109  
+                     0110 POP     macro 
+                     0111 	swapf   TEMP_S,W 
+                     0112 	movwf   STATUS 
+                     0113 	swapf   TEMP_W 
+                     0114 	swapf   TEMP_W,W 
+                     0115 	endm 
+                     0116  
+                     0117         END 
+                     0004  
+                     0005  
+                     0006 ; PIC16C84 I/O Pin Assignment List 
+                     0007  
+  0000               0008 CRD_CLK         equ     0       ; RB0 + RA4 = Card Clock 
+  0000               0009 CRD_DTA         equ     0       ; RA0 = Card Data Output 
+  0001               0010 CRD_RST         equ     1       ; RB1 = Card Reset, Low-Active 
+  0007               0011 CRD_WE          equ     7       ; RB7 = Card Write-Enable, Hi-Active 
+                     0012  
+                     0013 ; PIC16C84 RAM Register Assignments 
+                     0014  
+  000C               0015 CRD_ID          equ     0x00c   ; Smartcard ID, 12 bytes 
+  0018               0016 FUSCNT          equ     0x018   ; Fused units counter 
+  0019               0017 BITCNT          equ     0x019   ; Bitcounter 
+  001A               0018 LOOPCNT         equ     0x01a   ; Loop Counter 
+  001B               0019 EE_FLAG         equ     0x01b   ; EEPROM Write Flag 
+  001C               0020 TEMP1           equ     0x01c   ; Temporary Storage #1 
+  001D               0021 TEMP2           equ     0x01d   ; Temporary Storage #2 
+  001E               0022 TEMP3           equ     0x01e   ; Temporary Storage #3 
+  001F               0023 TEMP4           equ     0x01f   ; Temporary Storage #4 
+  002E               0024 TEMP_W          equ     0x02e   ; Temporary W Save Address 
+  002F               0025 TEMP_S          equ     0x02f   ; Temporary STATUS Save Address 
+                     0026  
+                     0027         org     0x2000          ; Chip ID Data 
+Warning: Address exceeds maximum range for this processor
+Warning: Address exceeds maximum range for this processor
+Warning: Address exceeds maximum range for this processor
+2000 0042 0042 0042  0028         dw      042,042,042,042 
+Warning: Address exceeds maximum range for this processor
+2003 0042            0028  
+                     0029  
+                     0030         org     0x2007          ; Configuration Fuses 
+Warning: Address exceeds maximum range for this processor
+2007 0001            0031         dw      B'00000001' 
+                     0032  
+                     0033         org     0x2100          ; Internal Data EEPROM Memory (Card ID Data!) 
+Warning: Address exceeds maximum range for this processor
+Warning: Address exceeds maximum range for this processor
+MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  4
+ISO 7816 Synchronous Memory Card Emulator
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning: Address exceeds maximum range for this processor
+2100 8142 0011 2233  0034         db      0x081,0x042,0x000,0x011,0x022,0x033 
+                     0034  
+Warning: Address exceeds maximum range for this processor
+Warning: Address exceeds maximum range for this processor
+Warning: Address exceeds maximum range for this processor
+2103 4455 6677 1184  0035         db      0x044,0x055,0x066,0x077,0x011,0x084 
+                     0035  
+Warning: Address exceeds maximum range for this processor
+2106 0200            0036         db      0x002           ; Fresh Card Fused Units Count 
+                     0037  
+                     0038         org     PIC84           ; Reset-vector 
+0000 2810            0039         goto    INIT            ; Jump to initialization routine 
+                     0040  
+                     0041         org     INTVEC          ; Interupt-vector 
+                     0042 	push                    ; Save registers 
+0004 00AE               M         movwf   TEMP_W 
+0005 0E03               M         swapf   STATUS,W 
+0006 00AF               M         movwf   TEMP_S 
+0007 2048            0043         call    INTMAIN         ; Call main interupt routine 
+                     0044 	pop                     ; Restore registers 
+0008 0E2F               M         swapf   TEMP_S,W 
+0009 0083               M         movwf   STATUS 
+000A 0EAE               M         swapf   TEMP_W 
+000B 0E2E               M         swapf   TEMP_W,W 
+000C 0009            0045         retfie                  ; return from interupt & clear flag 
+                     0046  
+                     0047         org     0x010           ; Start address for init rout. 
+0010 1683            0048 INIT    bsf     STATUS,RP0      ; Access register bank 1 
+0011 0064            0049         clrwdt                  ; Clear watchdog timer 
+0012 30E8            0050         movlw   B'11101000'     ; OPTION reg. settings 
+0013 0081            0051         movwf   OPTION          ; Store in OPTION register 
+0014 30FE            0052         movlw   B'11111110'     ; Set PORT A Tristate Latches 
+0015 0085            0053         movwf   TRISA           ; Store in PORT A tristate register 
+0016 30FF            0054         movlw   B'11111111'     ; Set PORT B Tristate Latches 
+0017 0086            0055         movwf   TRISB           ; Store in PORT B tristate register 
+0018 1283            0056         bcf     STATUS,RP0      ; Access register bank 0 
+0019 0181            0057         clrf    RTCC            ; Clear RTCC 
+001A 0185            0058         clrf    PORTA           ; Clear PORTA 
+001B 0186            0059         clrf    PORTB           ; Clear PORTB 
+001C 300D            0060         movlw   0d              ; 13 bytes to copy 
+001D 009A            0061         movwf   LOOPCNT         ; Store in LOOPCNT 
+001E 300C            0062         movlw   0c              ; Start storing at $0c in RAM 
+001F 0084            0063         movwf   FSR             ; Store in FSR 
+0020 0189            0064         clrf    EEADR           ; Start at EEPROM Address 0 
+0021                 0065 EECOPY   
+0021 1683            0066         bsf     STATUS,RP0      ; Access register bank 1 
+0022 1408            0067         bsf     EECON1,RD       ; Set EECON1 Read Data Flag 
+0023 1283            0068         bcf     STATUS,RP0      ; Access register bank 0 
+0024 0808            0069         movfw   EEDATA          ; Read one byte of EEPROM Data 
+0025 0080            0070         movwf   INDIR           ; Store in RAM pointed at by FSR 
+MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  5
+ISO 7816 Synchronous Memory Card Emulator
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0026 0A84            0071         incf    FSR             ; Increase FSR pointer 
+0027 0A89            0072         incf    EEADR           ; Increase EEPROM Address Pointer 
+0028 0B9A            0073         decfsz  LOOPCNT,1       ; Decrease LOOPCNT until it's 0 
+0029 2821            0074         goto    EECOPY          ; Go and get some more bytes! 
+002A 1683            0075         bsf     STATUS,RP0      ; Access register bank 1 
+002B 1208            0076         bcf     EECON1,EEIF     ; Clear EEPROM Write Int. Flag 
+002C 1108            0077         bcf     EECON1,WREN     ; EEPROM Write Disable 
+002D 1283            0078         bcf     STATUS,RP0      ; Access register bank 0 
+002E 3090            0079         movlw   B'10010000'     ; Enable INT Interupt 
+002F 008B            0080         movwf   INTCON          ; Store in INTCON 
+                     0081  
+0030 1683            0082 MAIN    bsf     STATUS,RP0      ; Access register bank 1 
+0031 1888            0083         btfsc   EECON1,WR       ; Check if EEPROM Write Flag Set 
+0032 2830            0084         goto    MAIN            ; Skip if EEPROM Write is Completed 
+0033 1208            0085         bcf     EECON1,EEIF     ; Reset Write Completion Flag 
+0034 1108            0086         bcf     EECON1,WREN     ; EEPROM Write Disable 
+0035 1283            0087         bcf     STATUS,RP0      ; Access register bank 0 
+0036 1C1B            0088         btfss   EE_FLAG,LSB     ; Check for EEPROM Write Flag 
+0037 2830            0089         goto    MAIN            ; If not set, jump back and wait some more 
+0038 019B            0090         clrf    EE_FLAG         ; Clear EEPROM Write Flag 
+0039 300C            0091         movlw   0c              ; Units is stored in byte $0c 
+003A 0089            0092         movwf   EEADR           ; Store in EEPROM Address Counter 
+003B 0818            0093         movfw   FUSCNT          ; Get fused units counter 
+003C 0088            0094         movwf   EEDATA          ; Store in EEDATA 
+003D 1683            0095         bsf     STATUS,RP0      ; Access register bank 1 
+003E 1508            0096         bsf     EECON1,WREN     ; EEPROM Write Enable 
+003F 138B            0097         bcf     INTCON,GIE      ; Disable all interupts 
+0040 3055            0098         movlw   055             ; Magic Number #1 for EEPROM Write 
+0041 0089            0099         movwf   EECON2          ; Store in EECON2 
+0042 30AA            0100         movlw   0aa             ; Magic Number #2 for EEPROM Write 
+0043 0089            0101         movwf   EECON2          ; Store in EECON2 
+0044 1488            0102         bsf     EECON1,WR       ; Execute EEPROM Write 
+0045 178B            0103         bsf     INTCON,GIE      ; Enable all interupts again! 
+0046 1283            0104         bcf     STATUS,RP0      ; Access register bank 0 
+0047 2830            0105         goto    MAIN            ; Program main loop! 
+                     0106  
+0048 188B            0107 INTMAIN btfsc   INTCON,INTF     ; Check for INT Interupt 
+0049 284D            0108         goto    INTMAIN2        ; If set, jump to INTMAIN2 
+004A 3010            0109         movlw   B'00010000'     ; Enable INT Interupt 
+004B 008B            0110         movwf   INTCON          ; Store in INTCON 
+004C 0008            0111         return 
+                     0112  
+004D                 0113 INTMAIN2 
+004D 1283            0114         bcf     STATUS,RP0      ; Access register bank 0 
+004E 1405            0115         bsf     PORTA,CRD_DTA   ; Set Data Output High 
+004F 1886            0116         btfsc   PORTB,CRD_RST   ; Check if reset is low 
+0050 285D            0117         goto    NO_RST          ; If not, skip reset sequence 
+0051 0801            0118         movfw   RTCC            ; Get RTCC Value 
+0052 009F            0119         movwf   TEMP4           ; Store in TEMP4 
+0053 0181            0120         clrf    RTCC            ; Clear RTCC 
+0054 3055            0121         movlw   055             ; Subtract $55 from TEMP4 
+0055 021F            0122         subwf   TEMP4,0         ; to check for card reset.... 
+0056 1D03 285B       0123         bnz     NO_RST2         ; If not zero, jump to NO_RST 
+MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  6
+ISO 7816 Synchronous Memory Card Emulator
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0058 3002            0124         movlw   02              ; Unused one has $02 in FUSCNT 
+0059 0098            0125         movwf   FUSCNT          ; Store full value in FUSCNT 
+005A 141B            0126         bsf     EE_FLAG,LSB     ; Set EEPROM Write Flag 
+005B 108B            0127 NO_RST2 bcf     INTCON,INTF     ; Clear INT Interupt Flag 
+005C 0008            0128         return                  ; Mission Accomplished, return to sender 
+                     0129  
+005D 0801            0130 NO_RST  movfw   RTCC            ; Get RTCC Value 
+005E 0099            0131         movwf   BITCNT          ; Copy it to BITCNT 
+005F 009C            0132         movwf   TEMP1           ; Copy it to TEMP1 
+0060 009D            0133         movwf   TEMP2           ; Copy it to TEMP2 
+0061 3060            0134         movlw   060             ; Load W with $60 
+0062 021C            0135         subwf   TEMP1,0         ; Subtract $60 from TEMP1 
+0063 1903 287C       0136         bz      CREDIT          ; If it is equal to $60 
+0065 1803 287C       0137         bc      CREDIT          ; or greater, then skip to units area 
+0067 0C9D            0138         rrf     TEMP2           ; Rotate TEMP2 one step right 
+0068 0C9D            0139         rrf     TEMP2           ; Rotate TEMP2 one step right 
+0069 0C9D            0140         rrf     TEMP2           ; Rotate TEMP2 one step right 
+006A 300F            0141         movlw   0f              ; Load W with $f 
+006B 059D            0142         andwf   TEMP2,1         ; And TEMP2 with W register 
+006C 081D            0143         movfw   TEMP2           ; Load W with TEMP2 
+006D 3E0C            0144         addlw   0c              ; Add W with $0c 
+006E 0084            0145         movwf   FSR             ; Store data address in FSR 
+006F 0800            0146         movfw   INDIR           ; Get databyte pointed at by FSR 
+0070 009E            0147         movwf   TEMP3           ; Store it in TEMP3 
+0071 3007            0148         movlw   07              ; Load W with $07 
+0072 059C            0149         andwf   TEMP1,1         ; And TEMP1 with $07 
+0073 1903 2878       0150         bz      NO_ROT          ; If result is zero, skip shift loop 
+0075 0D9E            0151 ROTLOOP rlf     TEMP3           ; Shift TEMP3 one step left 
+0076 0B9C            0152         decfsz  TEMP1,1         ; Decrement TEMP1 until zero 
+0077 2875            0153         goto    ROTLOOP         ; If not zero, repeat until it is! 
+0078 1F9E            0154 NO_ROT  btfss   TEMP3,MSB       ; Check if MSB of TEMP3 is set 
+0079 1005            0155         bcf     PORTA,CRD_DTA   ; Clear Data Output 
+007A 108B            0156         bcf     INTCON,INTF     ; Clear INT Interupt Flag 
+007B 0008            0157         return                  ; Mission Accomplished, return to sender 
+                     0158  
+007C 1F86            0159 CREDIT  btfss   PORTB,CRD_WE    ; Check if Card Write Enable is High 
+007D 2884            0160         goto    NO_WRT          ; Abort write operation if not... 
+007E 1C86            0161         btfss   PORTB,CRD_RST   ; Check if Card Reset is High 
+007F 2884            0162         goto    NO_WRT          ; Abort write operation if not... 
+0080 0A98            0163         incf    FUSCNT          ; Increase used-up units counter 
+0081 141B            0164         bsf     EE_FLAG,LSB     ; Set EEPROM Write-Flag 
+0082 108B            0165         bcf     INTCON,INTF     ; Clear INT Interupt Flag 
+0083 0008            0166         return                  ; Mission Accomplished, return to sender 
+                     0167  
+0084 3060            0168 NO_WRT  movlw   060             ; Load W with $60 
+0085 0299            0169         subwf   BITCNT,1        ; Subtract $60 from BITCNT 
+0086 0818            0170         movfw   FUSCNT          ; Load W with FUSCNT 
+0087 0299            0171         subwf   BITCNT,1        ; Subtract FUSCNT from BITCNT 
+0088 1C03 288B       0172         bnc     FUSED           ; If result is negative, unit is fused 
+008A 1005            0173         bcf     PORTA,CRD_DTA   ; Clear Data Output 
+008B 108B            0174 FUSED   bcf     INTCON,INTF     ; Clear INT Interupt Flag 
+008C 0008            0175         return                  ; Mission Accomplished, return to sender 
+                     0176 	 
+MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  7
+ISO 7816 Synchronous Memory Card Emulator
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                     0177         END 
+                     0178  
+MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  8
+ISO 7816 Synchronous Memory Card Emulator
+
+SYMBOL TABLE
+
+LABEL                            VALUE
+
+ADCON0                            0008 
+ADCON1                            0008 
+ADCS0                             0006 
+ADCS1                             0007 
+ADGO                              0002 
+ADIE                              0006 
+ADIF                              0001 
+ADON                              0000 
+ADRES                             0009 
+BITCNT                            0019 
+C                                 0000 
+CARRY                             0000 
+CHS0                              0003 
+CHS1                              0004 
+CRD_CLK                           0000 
+CRD_DTA                           0000 
+CRD_ID                            000C 
+CRD_RST                           0001 
+CRD_WE                            0007 
+CREDIT                            007C 
+DC                                0001 
+DCARRY                            0001 
+EEADR                             0009 
+EECON1                            0008 
+EECON2                            0009 
+EECOPY                            0021 
+EEDATA                            0008 
+EEIE                              0006 
+EEIF                              0004 
+EE_FLAG                           001B 
+FALSE                             0000 
+FSR                               0004 
+FUSCNT                            0018 
+FUSED                             008B 
+GIE                               0007 
+INDIR                             0000 
+INIT                              0010 
+INTCON                            000B 
+INTE                              0004 
+INTEDG                            0006 
+INTF                              0001 
+INTMAIN                           0048 
+INTMAIN2                          004D 
+INTVEC                            0004 
+IRP                               0007 
+LOOPCNT                           001A 
+LSB                               0000 
+MAIN                              0030 
+MSB                               0007 
+NO                                0000 
+NO_ROT                            0078 
+NO_RST                            005D MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE  9
+ISO 7816 Synchronous Memory Card Emulator
+
+SYMBOL TABLE - Continued
+
+LABEL                            VALUE
+
+NO_RST2                           005B 
+NO_WRT                            0084 
+OPTION                            0001 
+PCFG0                             0000 
+PCFG1                             0001 
+PCL                               0002 
+PCLATH                            000A 
+PD                                0003 
+PIC54                             01FF 
+PIC55                             01FF 
+PIC56                             03FF 
+PIC57                             07FF 
+PIC71                             0000 
+PIC84                             0000 
+PORTA                             0005 
+PORTB                             0006 
+PORTC                             0007 
+PS0                               0000 
+PS1                               0001 
+PS2                               0002 
+PSA                               0003 
+P_DOWN                            0003 
+RBIE                              0003 
+RBIF                              0000 
+RBPU                              0007 
+RD                                0000 
+ROTLOOP                           0075 
+RP0                               0005 
+RP1                               0006 
+RTCC                              0001 
+RTE                               0004 
+RTIE                              0005 
+RTIF                              0002 
+RTS                               0005 
+STATUS                            0003 
+TEMP1                             001C 
+TEMP2                             001D 
+TEMP3                             001E 
+TEMP4                             001F 
+TEMP_S                            002F 
+TEMP_W                            002E 
+TO                                0004 
+TRISA                             0005 
+TRISB                             0006 
+TRISC                             0007 
+TRUE                              0001 
+T_OUT                             0004 
+WR                                0001 
+WREN                              0002 
+WRERR                             0003 
+YES                               0001 
+Z                                 0002 MPASM 01.02 Released  TELECRD2.ASM   9-16-1994  10:19:25                 PAGE 10
+ISO 7816 Synchronous Memory Card Emulator
+
+SYMBOL TABLE - Continued
+
+LABEL                            VALUE
+
+Z_BIT                             0002 
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : X---XXXXXXXXX--- XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+
+0080 : XXXXXXXXXXXXX--- ---------------- ---------------- ----------------
+00C0 : ---------------- ---------------- ---------------- ----------------
+
+2000 : XXXX---X-------- ---------------- ---------------- ----------------
+2040 : ---------------- ---------------- ---------------- ----------------
+
+2100 : XXXXXXX--------- ---------------- ---------------- ----------------
+2140 : ---------------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+
+Errors   :    0
+Warnings :   12
+Messages :    0
+
+

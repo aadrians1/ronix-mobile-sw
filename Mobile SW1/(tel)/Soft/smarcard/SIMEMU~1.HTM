@@ -1,0 +1,157 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<title>SIM emulator by the android</title>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#0000EE"
+vlink="#551A8B" alink="#FF0000">
+
+<p><font size="6"><b><tt>SIM emulator software &amp; hardware by
+the android</tt></b></font></p>
+
+<p><img src="images/sim.jpg"
+alt="The Androids little miracle !" align="right" hspace="20"
+width="216" height="180"></p>
+
+<p><a href="mailto:android@redestb.es?subject=ASIM:"><font
+size="5"><tt>The Android</tt></font></a><tt> has written a </tt><font
+color="#FF0000"><tt>*</tt></font><font color="#008000" size="4"><tt>w</tt></font><font
+color="#808000" size="4"><tt>o</tt></font><font color="#FF8000"
+size="4"><tt>n</tt></font><font color="#FF0080" size="4"><tt>d</tt></font><font
+color="#FF00FF" size="4"><tt>e</tt></font><font color="#FF8080"
+size="4"><tt>r</tt></font><font color="#FF0000" size="4"><tt>f</tt></font><font
+color="#8000FF" size="4"><tt>u</tt></font><font color="#800080"
+size="4"><tt>l</tt></font><font color="#FF0000"><tt>*</tt></font><tt>
+SIM emulator in turbo pascal. It emulates the file serving part
+of a SIM card AND the GSM authentication routines (COMP128). With
+the software and a very simple computer (RS-232) to phone
+interface (top left in the picture), it will allow you to make
+your own virtual SIM card where there are no restrictions to what
+SIM files can be updated. Normally only someone with the SIM
+administrative code are allowed to update certain files such as
+the administrative file - When the SIM is emulated, then *</tt><font
+size="4"><tt>YOU</tt></font><tt>* are in charge and there are no
+restrictions as to which fields can be changed - AD, ATR, etc..
+The circuit board in the middle is a smart card adaptor that was
+used to log trafic between phone and SIM during (the ongoing)
+development of the program. The program does not require much
+computing power - a 16 MHz 286 will do just fine.<br>
+Giulio Cesare (designer of the interface boards) has a </tt><a
+href="http://www.geocities.com/SiliconValley/Lab/7875/simemu.html"><tt>page
+describing them</tt></a><tt> (only in Italian for now). There are
+many places that sell complete season interfaces(eg. </tt><a
+href="http://www.multisat.de/season/season.html"><tt>Multisat</tt></a><tt>
+or </tt><a
+href="http://www.crownhill.co.uk/testequi.htm#ISO 7816 Interface"><tt>Crownhill</tt></a><tt>),
+that are easy to modify into a ASIM interface(</tt><a
+href="http://www.g7hid.demon.co.uk/motorola.htm"><tt>G7HID</tt></a><tt>
+demonstrates just how). An even simpler </tt><a
+href="newadap.bmp"><tt>interface circuit</tt></a><tt> that only
+needs a single 7400 has been deseigned by George Terziysky.</tt></p>
+
+<p><a href="download/asim31.zip"><tt>Download
+ASIM VERSION 3.1 source, .exe and documentation (75k)</tt></a><tt>
+</tt></p>
+
+<p><tt>ASIM now supports the A3 &amp; A8 authentication
+algorithms (COMP128) !</tt></p>
+
+<p><font size="5"><b><tt>Emulating the test and clone card</tt></b></font></p>
+
+<p><tt>Files for emulating a Motorola test and clone card are
+inluded with ASIM (sim.dat and clone.dat). Look at the pages
+describing the test and clone card for more information. The
+clone card frames can be saved in motorola S19 or binary format
+and can be edited within ASIM. The framebuffer has a size of 4K.
+COM port and language is defined in the *.dat file.</tt></p>
+
+<p><tt>Here are a few hints:</tt> </p>
+
+<ul>
+    <li><img src="warning.gif" width="20" height="20"><font
+        color="#FF0000"><b><tt> BE VERY CAREFUL WITH THE CLONE
+        FEATURE AND DON'T USE IT AT ALL IF YOU ARE NOT 100% SURE
+        WHAT YOU ARE DOING! It SHOULD be needless to say that by
+        transferring and especially editing transfer frames, you
+        are performing brain surgery on your phone - Many of the
+        registers WILL crash your phone if they are changed so
+        use these tools with extreme caution ! REMEMBER: Frames
+        are as the rule *not* compatible across
+        &quot;platforms&quot; </tt></b></font></li>
+    <li><tt>Use these tools at your own risk. You have been
+        warned !</tt></li>
+    <li><img src="warning.gif" width="20" height="20"><tt> If a
+        transfer for some reason does not complete, then
+        DO&nbsp;NOT&nbsp;POWER&nbsp;OFF&nbsp;THE&nbsp;PHONE. Load
+        back the original frame before you do !</tt></li>
+    <li><tt>Specify the first 5 numbers in the IMSI as 00101
+        (reserved for test use) to avoid the phone registering
+        (and getting rejected)</tt></li>
+    <li><tt>Change the phone language selection away from
+        &quot;automatic&quot;</tt></li>
+    <li><tt>If you use an external powersupply for the interface,
+        be sure to isolate it from the SIM Vpp line !</tt></li>
+    <li><tt>Check the COM post setting in the .dat file - the
+        default setting is COM 3</tt></li>
+    <li><tt>If you encounter problems, try using it under DOS
+        (not a DOS window)</tt></li>
+    <li><font color="#FF0000" size="4"><b><tt>FIX !</tt></b></font><tt>
+        - Some people are experiencing trouble using ASIM with
+        the newer phones, here is a fix: You must first power on
+        the phone without the interface card present, then load
+        clone.dat, execute the clone emulation option, and then
+        insert the interface into the phone (while phone is
+        powered). </tt></li>
+</ul>
+
+<p><font size="5"><b><tt>Editing of transfer frames</tt></b></font></p>
+
+<p><a href="mailto:tst@iname.com?subject=MEDIT"><font
+color="#0000FF" size="5"><tt><u>TST</u></tt></font></a><tt> has
+made a really, really neat program that will let you edit the
+menu configuration easily as well as editing the phonebook with
+ease and uploading your own wakeup graphic screen to the phone !
+Have fun with it, take care and remember to send me copies of
+your frames and customized graphics ! Do not use with 7200 and
+older phones. Read the excellent documentation before you try to
+use MEDIT. MEDITX is a hybrid between ASIM and MEDIT - MEDITX
+will let you do everything from one program with command line
+parameters.</tt> </p>
+
+<ul>
+    <li><img src="warning.gif" width="20" height="14"><tt> If you
+        manage to enable the Chinese, Thai or Korean language
+        option on a unit that normally does not support this, </tt><font
+        color="#FF0000"><strong><tt>do not select it !</tt></strong></font><tt>
+        It has shown to crash 8400 &amp; 8700's - Only the 8500
+        (with 8700 display) should have these (at least complex
+        chinese character) options. </tt></li>
+    <li><tt>Turbo Pascal 7.0 has a bug in regards to really fast
+        machines and the CRT unit. When the program starts up, it
+        immediately crashes with a divide by zero error. Use </tt><a
+        href="download/patchfix.zip"><tt>this fix</tt></a><tt> if
+        you experience problems with these programs.</tt></li>
+</ul>
+
+<p><a href="download/medit304.zip"><tt>Download
+MEDIT VERSION&nbsp;3.04 source, .exe and documentation (21k)</tt></a></p>
+
+<p><a href="download/meditx11.zip"><tt>Download
+MEDITX VERSION&nbsp;1.1 executable and documentation (22k)</tt></a></p>
+
+<p><font size="5"><b><tt>Collection of useful files</tt></b></font>
+</p>
+
+<ul>
+    <li><a href="wakeup.html"><tt>Wakeup graphics gallery</tt></a></li>
+</ul>
+
+<p><tt>I wish to thank&nbsp;The Android &amp; TST for putting all
+this time, effort and energy into the ASIM project !</tt></p>
+
+<p><tt>© 1998 Janus Christian Krarup</tt></p>
+</body>
+</html>

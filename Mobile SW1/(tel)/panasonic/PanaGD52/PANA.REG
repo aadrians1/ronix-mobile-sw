@@ -1,0 +1,19 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\Software\Panasonic]
+
+[HKEY_LOCAL_MACHINE\Software\Panasonic\{72FC3880-F3B4-1712-2005-3A3719E857C1}]
+"Data"="JhCm5PFi2UHu9ZY="
+"RnQE152"=hex:2e,9f,a2,8b,b1,a6,b0,5c,37,09,bb,2c,b0,f2,e0,ed,98,ee,86,db,94,\
+  7e,79,90,18,48,af,0d,72,2f,47,4e,6b,5d,73,a4,00,e6,ec,f6,c4,50,e6,ae,40,d7,\
+  17,be,b4,60,9b,1b,37,c8,97,a1,d9,fb,98,12,79,6f,00,1e
+
+[HKEY_LOCAL_MACHINE\Software\Panasonic\{72FC3880-3C29-8F42-11C5-942C591A7D3B}]
+"Data"="WvMlOPFVtepUnyA="
+
+[HKEY_LOCAL_MACHINE\Software\Panasonic\{72FC3880-3C29-3718-2282-A1375E22FA10}]
+"Data"="AGIMRliYl/K9TMA="
+"PdWg193"=hex:5c,15,51,df,3a,6d,d9,79,a5,55,31,a6,15,b9,d8,a2,db,e1,1d,54,36,\
+  4a,c8,0b,fb,3a,32,27,7e,cb,5e,c6,f7,26,4b,54,cb,5c,06,0a,ad,86,c4,60,ad,99,\
+  47,99,7c,68,cb,67,b3,72,15,0c,25,e7,1d,e9,06,82,50,ed
+

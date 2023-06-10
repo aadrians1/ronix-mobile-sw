@@ -1,0 +1,9 @@
+Uruchomienie:
+    1. Podlaczyc telefon do PC
+    2. Wlaczyc - bez SIM-a
+    3. Przekopiowac na HDD i uruchomic c25.com
+    4. Enter
+    5. Wpisac w telefonie: *#0003*00000000#
+    6. Telefon wyswietli: 'bledny kod'
+    7. Enter
+    8. Wylaczyc telefon

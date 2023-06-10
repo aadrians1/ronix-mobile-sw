@@ -1,0 +1,19 @@
+:Base S35explde.hlp
+:Title S35Expl
+1 S35Expl
+2 s35expl=hpad10
+2 Telefonbuch=hpad30
+2 Rufumleitung=hpad40
+2 SMS-Liste=hpad50
+2 SMS-Nachrichten=hpad140
+2 Vordefinierte SMS-Meldungen=hpad100
+2 Senden von SMS-Nachrichten=hpad110
+2 SMS Gruppen=hpad150
+2 Optionen=hpad60
+2 Netzinformationen=hpad120
+2 Zeitsynchronisierung=hpad70
+2 Netmonitor=hpad130
+2 Organizer=hpad80
+2 Kommandomodus=hpad160
+2 Troubleshooting=hpad90
+2 Copyright=hpad20

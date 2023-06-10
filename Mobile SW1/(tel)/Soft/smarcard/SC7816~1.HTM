@@ -1,0 +1,192 @@
+<html>
+<head><title>ISO 7816 Library</title></head>
+<body bgcolor=#ffffff>
+
+<!-- Please edit the RCS version of this file, not the one in the www directory -->
+<!-- $Id: sc7816.html,v 1.7 1998/10/22 17:50:13 rees Exp $ -->
+
+<p><img src="../../images/Topbar.gif" width="720" height="36"> </p>
+
+<h1>ISO 7816 Library</h1>
+
+<a href="sc7816.tar.gz">sc7816.tar.gz</a>
+  <p>
+
+copyright © 1997, 1998<br>
+the regents of the university of michigan<br>
+all rights reserved
+  <p>
+
+permission is granted to use, copy, create derivative works 
+and redistribute this software and such derivative works 
+for any purpose, so long as the name of the university of 
+michigan is not used in any advertising or publicity 
+pertaining to the use or distribution of this software 
+without specific, written prior authorization.  if the 
+above copyright notice or any other identification of the 
+university of michigan is included in any copy of any 
+portion of this software, then the disclaimer below must 
+also be included.
+  <p>
+
+this software is provided as is, without representation 
+from the university of michigan as to its fitness for any 
+purpose, and without warranty by the university of 
+michigan of any kind, either express or implied, including 
+without limitation the implied warranties of 
+merchantability and fitness for a particular purpose. the 
+regents of the university of michigan shall not be liable 
+for any damages, including special, indirect, incidental, or 
+consequential damages, with respect to any claim arising 
+out of or in connection with the use of the software, even 
+if it has been or is hereafter advised of the possibility of 
+such damages.
+  <p>
+<hr>
+
+This is a package of routines for talking to ISO 7816 smart cards.  The
+source is divided into an OS independent part (scrw.c) and an OS dependent
+part (scio.c).  There are three versions of the OS dependent part, scio.c for
+Unix, scioNT.c for NT, and scioPP.c for the 3Com Palm PDA.
+The NT version is not complete, but will work
+with the sample applications.
+The PP version only works in receive (snoop) mode and can not be used
+to talk to a card.
+  <p>
+
+This package currently only supports non-inverted (TS=3b), T=0 protocol,
+with default timings (WI=10, D=1, 9600 bps with 3.58 MHz clock).
+  <p>
+
+Four sample applications are included with this package.
+  <p>
+
+'lewis' is used with a dumb card reader to send commands to a smartcard.
+'clark' emulates a smartcard.  You need an inverse reader to use 'clark'.
+'dogg' makes a trace of a smartcard transaction.  You need a card extender
+to use 'dogg'.
+'compost' translates the output of 'dogg' to a more readable form.
+  <p>
+
+There is also a gif file, <a href="sleonschem.gif">sleonschem.gif</a>,
+that contains a schematic of the
+circuit we use for our inverse reader.
+  <p>
+
+For more information about smartcard research at the University of Michigan
+CITI, see our web page at
+<a href="http://www.citi.umich.edu/projects/sinciti/smartcard/">http://www.citi.umich.edu/projects/sinciti/smartcard/</a>.
+  <p>
+
+Jim Rees &lt;rees@umich.edu&gt;<br>
+November 1997
+  <p>
+
+<pre>----------------------------------------------------------------------------
+int scopen(int ttyn, int flags, int *ep);
+
+Open a connection to a smart card via serial port number 'ttyn'.  Ports are
+numbered from 0, which corresponds to /dev/tty00 on unix.  Use flag SCODSR
+if your reader, like ours, uses DSR to indicate that a card is present, else
+use SCODCD.  'ep' points to an int in which an error code is returned (see
+scrw.h).  Returns an fd or -1 on error.
+
+
+----------------------------------------------------------------------------
+int scfdopen(int fd, int flags, int *ep);
+
+Open a connection to a smart card given an fd already open on a serial port.
+This just sets the proper port parameters (9600 bps, 8/E/1).  Returns an fd
+or -1 on error.
+
+
+----------------------------------------------------------------------------
+int screset(int fd, char *atr, int *ep);
+
+Reset the card and return the ATR in the buffer pointed to by 'atr' if
+non-NULL.  'ep' points to an int in which an error code is returned (see
+scrw.h).
+
+
+----------------------------------------------------------------------------
+int scclose(int fd);
+
+Close a connection to a smart card, and reset the port parameters.
+
+
+----------------------------------------------------------------------------
+int scread(int fd, int cla, int ins, int p1, int p2, int p3, char *buf, int *sw1p, int *sw2p);
+
+Issue an "OUT" command to a smart card and read the resulting data.
+
+cla: application class
+ins: instruction code
+p1, p2: per 7816-3 or application dependent
+p3: length of data
+buf: return data read from card
+sw1p, sw2p: pointers to ints in which SW1 and SW2 are returned
+
+Returns the number of bytes actually read, or -1 on error.
+
+
+----------------------------------------------------------------------------
+int scwrite(int fd, int cla, int ins, int p1, int p2, int p3, char *buf, int *sw1p, int *sw2p);
+
+Issue an "IN" command to a smart card and write some data.
+
+cla: application class
+ins: instruction code
+p1, p2: per 7816-3 or application dependent
+p3: length of data
+buf: data to write to card
+sw1p, sw2p: pointers to ints in which SW1 and SW2 are returned
+
+Returns the number of bytes actually written, or -1 on error.
+
+
+----------------------------------------------------------------------------
+int scdsr(int fd);
+
+Return the state of DSR, which usually indicates whether a card is present.
+
+
+----------------------------------------------------------------------------
+int scdtr(int fd, int cmd);
+
+Raise or lower DTR depending on whether 'cmd' is 1 or 0.
+
+
+----------------------------------------------------------------------------
+int scgetc(int fd, char *cp, int ms);
+
+Get one byte from the card into buffer pointed to by 'cp'.  Time out after
+'ms' milliseconds.  'ms' can be 0 for poll or -1 for infinite.
+
+
+----------------------------------------------------------------------------
+int scputc(int fd, int ic);
+
+Put one byte to the card.
+
+
+----------------------------------------------------------------------------
+void scsleep(int ms);
+
+Delay for 'ms' milliseconds.
+
+
+</pre>
+  <p>
+
+<hr size="4" color="#000080">
+
+<p><font color="#000080" size="4"><strong>Center for Information
+Technology Integration</strong></font><br>
+<a href="/main.html">CITI</a><br>
+Send e-mail to <a href="mailto:info@citi.umich.edu"><i>info@citi.umich.edu</i>
+</a>, or call +1 (734) 764-5440. <br>
+All contents copyright © 1997 University of Michigan. All
+rights reserved.</p>
+
+</body>
+</html>

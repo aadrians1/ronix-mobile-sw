@@ -1,0 +1,14 @@
+*Program chodzi w 100% (testowane empirycznie)
+*Sciaga Kod Zabezpieczajacy, simlocka i na zyczenie zmienia IMEI telefonu.
+
+------------
+!WAZNE! - Katalog Siemens musi byc skopiowany do katalogu glownego na dysk C:\ z taka struktura jaka posiada.
+!WAZNE! - Program najlepiej uruchamiac po czystym DOS'em (zadnych nakladek typu NC). Jezeli pod DOs'em sie wywali to wtedy sprobowac pod Windowsem.
+
+A teraz instrukcja:
+
+1. Po skopiowaniu na dysk C:\ i uruchomieniu pliku <all25.exe> program prosi o podanie IMEI telefonu - jezeli chcesz zmienic IMEI to wpisz nowe jezeli natomiast zachowac stare to wpisz stare.
+2. Po podaniu ostatniego znaku IMEI w dolnym rogu ekranu ukarze sie numer jeden oraz napis:
+    Init Service Mode 
+Wtedy wlaczasz telefon a program zaczyna swe dzialanie. Dochodzi do cyfry o wartosci 4 i informuje nas ze zakonczyl (odpowiednia zielona tablica z napisem O.K.). Od tej chwili telefon jest odblokowany.
+------------

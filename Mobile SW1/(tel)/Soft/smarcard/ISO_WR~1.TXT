@@ -1,0 +1,45 @@
+This is an update to ISO 7816 synchronous card protocol
+It provides example of Write and WriteCarry operations which are not 
+completely described in other documentation.
+
+(c) 1998-99 Syrius Dire Service
+
+E-mail:  sds@lt.tula.net
+Fidonet: 2:5022/5.8, 2:5022/11.5
+
+===========+==============================================================
+ Operation | Explanation
+===========+==============================================================
+ Initial   |
+ state     |         b64 ........................................... b103
+ of credits|         00000111 - 00111111 - 01111111 - 00000000 - 00000011
+ counter   |
+-----------+--------------------------------------------------------------
+ Counter   | Action: Write operation on bit 102
+ decrease  |                                                           *
+  by 1     | Result: 00000111 - 00111111 - 01111111 - 00000000 - 00000001
+-----------+--------------------------------------------------------------
+ Counter   | Action: Write operation on bit 103
+ decrease  |                                                            *
+  by 1     | Result: 00000111 - 00111111 - 01111111 - 00000000 - 00000000
+-----------+--------------------------------------------------------------
+           | Action: WriteCarry operation on bit 81
+           |                                *
+           | Result: 00000111 - 00111111 - 00111111 - 11111111 - 00000000
+ Counter   |
+ decrease  | Action: WriteCarry operation on bit 88
+  by 1     |                                          *
+           | Result: 00000111 - 00111111 - 00111111 - 01111111 - 11111111
+           |
+           | Action: Write operation on bit 96
+           |                                                     *
+           | Result: 00000111 - 00111111 - 00111111 - 01111111 - 01111111
+-----------+--------------------------------------------------------------
+ Counter   | Action: Write operation on bit 97
+ decrease  |                                                      *
+  by 1     | Result: 00000111 - 00111111 - 00111111 - 01111111 - 00111111
+-----------+--------------------------------------------------------------
+ Counter   | Action: Write operation on bit 98
+ decrease  |                                                       *
+  by 1     | Result: 00000111 - 00111111 - 00111111 - 01111111 - 00011111
+-----------+--------------------------------------------------------------

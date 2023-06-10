@@ -1,0 +1,507 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<title></title>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#0000EE"
+vlink="#551A8B" alink="#FF0000">
+
+<p><font size="6"><b><tt>Motorola GSM Transfer / Clone Card</tt></b></font></p>
+
+<p><tt>The Clone Card (also reffered to as transfer card) is used
+by motorola to transfer user (personality) information
+(phonebook, options etc.) from one phone to another. The transfer
+card is not a plain SIM, because the ISO CLASS is not $A0 as in a
+standard GSM SIM, but some sort of SAM (Security Access Module).
+The card is a password protected 24 kbit serial memory (EEPROM).
+This means that a password has to be sent to the card before the
+memory can be accesed. The transfer card password is &quot;
+TESTCODE&quot; (This is sent in plaintext from the MS to the SIM
+after the MS detects that a transfer card is inserted. The
+transfer card is identified by the phone from its ATR which is
+&quot;3F 6C 00 00 25 A0 31 00 FF 00 00 01 80 04 90 00&quot;</tt></p>
+
+<p><tt>There are two primary uses of the transfer card:</tt></p>
+
+<p><tt>1) Transfer of personality. If your phone fails
+(&quot;Phone Fail See Supplier&quot;) and is to be exchanged,
+then there is a possibility to have the user data transferred
+from the defective phone to another one (This does require that
+the phone actually can be powered up). This will make the
+exchange phone appear like the old one, with the same menu setup,
+phonebook and settings. This is acomplished by transferring the
+areas of the EEPROM that contain the user data. The user data is
+far more than the 3 kb that will fit on the card and therefore
+the 8k phone EEPROM is divided into &quot;transfer frames&quot;.
+Only one transfer frame will fit on the transfer card at a time.
+A transfer of the frames 1, 2 and 3 will do a total personality
+transfer.</tt></p>
+
+<p><tt>2) Initialization of the EEPROM. If the phones EEPROM data
+become corrupted, then the configuration checksum can fail and
+generate a &quot;Phone Failed See Supplier&quot; the will result
+in the phone not booting up. With the transfer card *some* of the
+corrupted data can be replaced and the configuration block
+checksum can be recalculated. A transfer of frame 4 (the
+&quot;Master Frame&quot;) will in many cases cure a phone that
+fails with a self diagnostics code &quot;07&quot; (interrogate
+with 7100# in test mode).</tt></p>
+
+<p><tt>Mark Hawkins has this quick and dirty way of dealing with
+checksum failures (INFO 00 07): </tt><em><tt>&quot;There is
+another way to fix the 'Phone failure' problem. Get the clone
+card, with 'Clone' on the display type: 024# (this dumps master
+card info to the card) then type: 03# (this dumps it back to the
+phone) You must switch off the phone, remove the card &amp;
+remove the battery ** VERY IMPORTANT ** Switch the phone back on
+&amp; try it with a live card This works on about 90% of the
+phones that I have done...&quot;</tt></em><tt> This copies the
+corrupt EEPROM data back onto the phone, but recalculates the
+configuration block checksum - this should not be the method of
+choice if you have a backup phone to copy from. </tt></p>
+
+<p><tt>Data </tt><b><tt>CAN</tt></b><tt>&nbsp;go bad on the
+transfer card. The phone will detect the error and go &quot;</tt><b><tt>Bad
+Data On Card</tt></b><tt>&quot; when trying to transfer the frame
+to the phone. It is not an actual checksum that makes the phone
+capable of spotting bad data. The first and last thing that is
+written to the clone card, is at address $40 - This address
+contains a register that flags the status of the frame and the
+frame number. The phone will initiate the transfer to the card by
+writing &quot;bad data&quot; and when everything has been
+transferred, it will write &quot;good data&quot;. This way, a
+transfer that was stopped prematurely can be rejected. EEPROM
+read/write operations that go wrong (if not soldered correctly or
+bad) can be detected and the phone will prompt &quot;</tt><b><tt>EEPROM
+Rd Fail</tt></b><tt>&quot; or &quot;</tt><b><tt>EEPROM Wr Fail</tt></b><tt>&quot;
+. </tt></p>
+
+<table border="1">
+    <tr>
+        <td><tt>List of Clone Card (51-04025D03) Commands:</tt></td>
+        <td><tt>Frame (</tt><font color="#FF0000"><b><tt>02</tt></b></font><font
+        color="#0000FF"><b><tt>N</tt></b></font><b><tt>#</tt></b><tt>)
+        contents, description and size </tt></td>
+    </tr>
+    <tr>
+        <td valign="top"><font color="#FF0000"><b><tt>02</tt></b></font><font
+        color="#0000FF"><b><tt>N</tt></b></font><b><tt>#</tt></b><tt>
+        </tt><font size="2"><tt>Read data frame </tt></font><font
+        color="#0000FF" size="2"><b><tt>N (0...5)</tt></b></font><font
+        size="2"><tt> into clone card</tt></font><tt><br>
+        </tt><font color="#FF0000"><b><tt>03</tt></b></font><b><tt>#</tt></b><tt>
+        </tt><font size="2"><tt>Write transfer card dataframe
+        into phone</tt></font><tt><br>
+        </tt><font color="#FF0000"><b><tt>06</tt></b></font><b><tt>#</tt></b><tt>
+        </tt><font size="2"><tt>Locks the data on a transfer card</tt></font><tt><br>
+        </tt><font color="#FF0000"><b><tt>07</tt></b></font><b><tt>#</tt></b><tt>
+        </tt><font size="2"><tt>Unlocks the data on a transfer
+        card</tt></font></td>
+        <td><tt>Frame </tt><font color="#0000FF"><b><tt>1</tt></b></font><tt>
+        : </tt><font size="2"><tt>Phone setup
+        (greeting,keypad,features,settings,counter) - 2880 bytes </tt></font><tt><br>
+        Frame </tt><font color="#0000FF"><b><tt>2</tt></b></font><tt>
+        : </tt><font size="2"><tt>Phonebook entries 1-75 - 3008
+        bytes </tt></font><tt><br>
+        Frame </tt><font color="#0000FF"><b><tt>3</tt></b></font><tt>
+        : </tt><font size="2"><tt>Phonebook entries 76-100,
+        timers,rates &amp; user features - 1728 bytes </tt></font><tt><br>
+        Frame </tt><font color="#0000FF"><b><tt>4</tt></b></font><tt>
+        : </tt><font size="2"><tt>Master SIM data
+        (OEM&nbsp;settings,wakeup text,keypad,features) - 1248
+        bytes </tt></font><tt><br>
+        Frame </tt><font color="#0000FF"><b><tt>5</tt></b></font><tt>
+        : </tt><font size="2"><tt>Last 10 calls (among other
+        things) - 896 bytes (not supported by all phones)<br>
+        Contents of the different transfer frames and lengths
+        were determined on a 7500 </tt></font></td>
+    </tr>
+</table>
+
+<p><tt>There are some differences between phone types. The
+StarTAC (and Slimlite) frame 3 also contains life time meter,
+last 10 calls &amp; keypress-beep setting </tt></p>
+
+<p><tt>If you take a closer look to the frames you will notice
+that they have a distinct structure. Doing a little
+experimentation will reveal that they are composed of a header
+followed by numerous entries with the same basic format. The
+header is shown below:<br>
+</tt><code><br>
+</code><font color="#000000"><code>$0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#000000"><code>................<br>
+$0010 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+$0020 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+$0030 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+$0040 </code></font><font color="#0000FF"><code>0100 </code></font><font
+color="#000080"><code>0100 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+$0050 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+</code></font><font size="2" face="Courier New"><br>
+</font><tt>The first 64 bytes are unused. They are never read or
+written. This space can be used for making notes about the frame.
+Eg. &quot;Backup 8700 with Eng Field Opt&quot;. At $40 you can
+find the frame number: Conventional frames are numbered 01 - 05.
+The frame number is the very last thing that is written to the
+card if a dump is made to the card from the phone. This enables
+the phone to check if the transfer was complete. Incomplete
+transfers will have frame number &quot;00&quot; and trigger a
+&quot;Bad Data On Card&quot; if attempted uploaded to the phone.
+At $41 is the read-only flag: 01 means locked and 00 unlocked. </tt><code><br>
+<br>
+0000-003F Unused<br>
+0040-0040 Frame number<br>
+0041-0041 Read only flag<br>
+0042-0042 ? Doesn't seem to matter, normally 01<br>
+0043-0060 Unused<br>
+<br>
+This was the simple header. From $0060 and on is the data. The
+data field contain data as well as addressing information
+arranged in packets eg. header1&amp;data1, header2&amp;data2,
+etc. etc. The packets can be rearranged and the frame will still
+function in the correct way. However data packets are associated
+with certain frames and they (mostly) cannot be moved without
+restrictions from frame to frame. The packets are of varying
+length but all have the same 3 byte header stating length and
+target address of the packet:<br>
+<br>
+</code><font color="#008000"><code><strong>LL</strong></code></font><font
+color="#FF8000"><code><strong>ApAs</strong></code></font><font
+color="#FF0000"><code><strong>D1D2D3D4D5D6D7D8<br>
+<br>
+</strong></code></font><font color="#000000"><code>The length can
+be from $01 to $FF bytes. The address consists of a Primary(Ap)
+and a Secondary(As) address field. For example the
+(internal)phonebook generally has address field $4B, but every
+single phonebook entry has it's own subfield. The address for
+phonebook entry #01 is 4801, #02 is 4802 etc. etc. The phonebook
+entry is $24 bytes long ($14 for the text and $10 for the number
+itself), making the complete header: </code></font><font
+color="#008000"><code><strong>24</strong></code></font><font
+color="#FF8000"><code><strong>4B01</strong></code></font><font
+color="#000000"><code> for phonebook entry #01. Every entry in
+the EEPROM or SIM memory has it's own field number. This means
+that the things you are manipulating here are &quot;cooked&quot;
+and not &quot;Raw&quot; EEPROM addresses that are written to.
+Generally, if the field does not have multiple sub-entries, the
+secondary address is always 01. The lock and security codes are
+single entry fields, and things like phonebook, last 10 calls,
+PLMN list etc. are multiple secondary entries to the same primary
+entry (field). The packets of header and data repeat themselves
+over and over again and the phone will keep processing them,
+until it reaches a header that is &quot;00&quot; bytes to address
+&quot;0000&quot;. There is no dedicated &quot;Stop&quot;. This is
+why your frames should be patched with &quot;00&quot; instead of
+&quot;FF&quot; that would give a failed transfer, repeating
+itself until the end of your frame buffer is reached.</code></font></p>
+
+<p><font color="#000000"><code>Let's try to decode the first part
+of a frame 1:<br>
+00000060 </code></font><font color="#0000FF"><code>C80A </code></font><font
+color="#000080"><code>0100 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+00000070 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+00000080 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+00000090 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+000000A0 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+000000B0 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+000000C0 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0100 </code></font><font color="#000080"><code>0001
+</code></font><font color="#0000FF"><code>0200 </code></font><font
+color="#000080"><code>42FF </code></font><font color="#000000"><code>..............B.<br>
+000000D0 </code></font><font color="#0000FF"><code>FF01 </code></font><font
+color="#000080"><code>0203 </code></font><font color="#0000FF"><code>0405
+</code></font><font color="#000080"><code>0607 </code></font><font
+color="#0000FF"><code>0809 </code></font><font color="#000080"><code>0A00
+</code></font><font color="#0000FF"><code>F0FF </code></font><font
+color="#000080"><code>FF1F </code></font><font color="#000000"><code>................<br>
+000000E0 </code></font><font color="#0000FF"><code>60F6 </code></font><font
+color="#000080"><code>CEF6 </code></font><font color="#0000FF"><code>FFFF
+</code></font><font color="#000080"><code>FF7F </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>00F1
+</code></font><font color="#0000FF"><code>FFDF </code></font><font
+color="#000080"><code>F6FF </code></font><font color="#000000"><code>`...............<br>
+000000F0 </code></font><font color="#0000FF"><code>FFFF </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#0000FF"><code>FFFF
+</code></font><font color="#000080"><code>FFF7 </code></font><font
+color="#0000FF"><code>FFFF </code></font><font color="#000080"><code>7F00
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+00000100 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0001
+</code></font><font color="#000080"><code>0100 </code></font><font
+color="#0000FF"><code>06FF </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0003 </code></font><font
+color="#000080"><code>FF06 </code></font><font color="#000000"><code>................<br>
+00000110 </code></font><font color="#0000FF"><code>FF00 </code></font><font
+color="#000080"><code>0002 </code></font><font color="#0000FF"><code>0300
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0133 </code></font><font color="#000080"><code>3333
+</code></font><font color="#0000FF"><code>0003 </code></font><font
+color="#000080"><code>0101 </code></font><font color="#000000"><code>.........333....<br>
+00000120 </code></font><font color="#0000FF"><code>00F0 </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0101 </code></font><font color="#000080"><code>007A
+</code></font><font color="#0000FF"><code>0E01 </code></font><font
+color="#000080"><code>6401 </code></font><font color="#000000"><code>...........z..d.<br>
+00000130 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>9000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0E0E </code></font><font
+color="#0000FF"><code>0E0E </code></font><font color="#000080"><code>0E0E
+</code></font><font color="#0000FF"><code>0E0E </code></font><font
+color="#000080"><code>0E0E </code></font><font color="#000000"><code>................<br>
+00000140 </code></font><font color="#0000FF"><code>0E0E </code></font><font
+color="#000080"><code>0E0E </code></font><font color="#0000FF"><code>0E0E
+</code></font><font color="#000080"><code>0E0E </code></font><font
+color="#0000FF"><code>0E0E </code></font><font color="#000080"><code>0E0E
+</code></font><font color="#0000FF"><code>0E0E </code></font><font
+color="#000080"><code>0E0E </code></font><font color="#000000"><code>................<br>
+00000150 </code></font><font color="#0000FF"><code>0E0E </code></font><font
+color="#000080"><code>0E0E </code></font><font color="#0000FF"><code>0E0E
+</code></font><font color="#000080"><code>0E0E </code></font><font
+color="#0000FF"><code>0E0E </code></font><font color="#000080"><code>0E0E
+</code></font><font color="#0000FF"><code>0E0E </code></font><font
+color="#000080"><code>070B </code></font><font color="#000000"><code>................<br>
+00000160 </code></font><font color="#0000FF"><code>2418 </code></font><font
+color="#000080"><code>0106 </code></font><font color="#0000FF"><code>0032
+</code></font><font color="#000080"><code>EA0E </code></font><font
+color="#0000FF"><code>0308 </code></font><font color="#000080"><code>130F
+</code></font><font color="#0000FF"><code>1702 </code></font><font
+color="#000080"><code>050A </code></font><font color="#000000"><code>$....2..........<br>
+00000170 </code></font><font color="#0000FF"><code>0EE0 </code></font><font
+color="#000080"><code>3304 </code></font><font color="#0000FF"><code>0925
+</code></font><font color="#000080"><code>7DFE </code></font><font
+color="#0000FF"><code>FFFF </code></font><font color="#000080"><code>7FFF
+</code></font><font color="#0000FF"><code>FFFF </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#000000"><code>..3..%}.........<br>
+00000180 </code></font><font color="#0000FF"><code>F6FF </code></font><font
+color="#000080"><code>F139 </code></font><font color="#0000FF"><code>0005
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>00FF </code></font><font color="#000080"><code>7F00
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>...9............<br>
+00000190 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>0000 </code></font><font color="#000080"><code>0000
+</code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#000000"><code>................<br>
+000001A0 </code></font><font color="#0000FF"><code>0000 </code></font><font
+color="#000080"><code>0000 </code></font><font color="#0000FF"><code>0000
+</code></font><font color="#000080"><code>0000 </code></font><font
+color="#0000FF"><code>8110 </code></font><font color="#000080"><code>0142
+</code></font><font color="#0000FF"><code>3720 </code></font><font
+color="#000080"><code>2053 </code></font><font color="#000000"><code>...........B7
+S<br>
+000001B0 </code></font><font color="#0000FF"><code>5547 </code></font><font
+color="#000080"><code>3130 </code></font><font color="#0000FF"><code>3039
+</code></font><font color="#000080"><code>4245 </code></font><font
+color="#0000FF"><code>2020 </code></font><font color="#000080"><code>2045
+</code></font><font color="#0000FF"><code>2F49 </code></font><font
+color="#000080"><code>3130 </code></font><font color="#000000"><code>UG1009BE
+E/I10<br>
+000001C0 </code></font><font color="#0000FF"><code>3630 </code></font><font
+color="#000080"><code>2020 </code></font><font color="#0000FF"><code>2020
+</code></font><font color="#000080"><code>2020 </code></font><font
+color="#0000FF"><code>4443 </code></font><font color="#000080"><code>535F
+</code></font><font color="#0000FF"><code>464C </code></font><font
+color="#000080"><code>4152 </code></font><font color="#000000"><code>60
+DCS_FLAR<br>
+000001D0 </code></font><font color="#0000FF"><code>455F </code></font><font
+color="#000080"><code>3157 </code></font><font color="#0000FF"><code>2020
+</code></font><font color="#000080"><code>2020 </code></font><font
+color="#0000FF"><code>2020 </code></font><font color="#000080"><code>2020
+</code></font><font color="#0000FF"><code>2020 </code></font><font
+color="#000080"><code>3131 </code></font><font color="#000000"><code>E_1W
+11<br>
+000001E0 </code></font><font color="#0000FF"><code>3131 </code></font><font
+color="#000080"><code>2030 </code></font><font color="#0000FF"><code>3030
+</code></font><font color="#000080"><code>3936 </code></font><font
+color="#0000FF"><code>3036 </code></font><font color="#000080"><code>3235
+</code></font><font color="#0000FF"><code>3131 </code></font><font
+color="#000080"><code>3032 </code></font><font color="#000000"><code>11
+0009606251102<br>
+000001F0 </code></font><font color="#0000FF"><code>2020 </code></font><font
+color="#000080"><code>2020 </code></font><font color="#0000FF"><code>2020
+</code></font><font color="#000080"><code>2020 </code></font><font
+color="#0000FF"><code>2020 </code></font><font color="#000080"><code>2020
+</code></font><font color="#0000FF"><code>2020 </code></font><font
+color="#000080"><code>2020 </code></font><font color="#000000"><code><br>
+00000200 </code></font><font color="#0000FF"><code>2020 </code></font><font
+color="#000080"><code>2020 </code></font><font color="#0000FF"><code>2020
+</code></font><font color="#000080"><code>2020 </code></font><font
+color="#0000FF"><code>2020 </code></font><font color="#000080"><code>2020
+</code></font><font color="#0000FF"><code>2020 </code></font><font
+color="#000080"><code>2020 </code></font><font color="#000000"><code><br>
+00000210 </code></font><font color="#0000FF"><code>2020 </code></font><font
+color="#000080"><code>2020 </code></font><font color="#0000FF"><code>2020
+</code></font><font color="#000080"><code>2020 </code></font><font
+color="#0000FF"><code>2020 </code></font><font color="#000080"><code>2020
+</code></font><font color="#0000FF"><code>2020 </code></font><font
+color="#000080"><code>2020 </code></font><font color="#000000"><code><br>
+00000220 </code></font><font color="#0000FF"><code>2020 </code></font><font
+color="#000080"><code>2020 </code></font><font color="#0000FF"><code>2020
+</code></font><font color="#000080"><code>2031 </code></font><font
+color="#0000FF"><code>3442 </code></font><font color="#000080"><code>4200
+</code></font><font color="#0000FF"><code>8110 </code></font><font
+color="#000080"><code>02FF </code></font><font color="#000000"><code>14BB.....<br>
+00000230 </code></font><font color="#0000FF"><code>FFFF </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#0000FF"><code>FFFF
+</code></font><font color="#000080"><code>FFFF </code></font><font
+color="#0000FF"><code>FFFF </code></font><font color="#000080"><code>FFFF
+</code></font><font color="#0000FF"><code>FFFF </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#000000"><code>................<br>
+00000240 </code></font><font color="#0000FF"><code>FFFF </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#0000FF"><code>FFFF
+</code></font><font color="#000080"><code>FFFF </code></font><font
+color="#0000FF"><code>FFFF </code></font><font color="#000080"><code>FFFF
+</code></font><font color="#0000FF"><code>FFFF </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#000000"><code>................<br>
+00000250 </code></font><font color="#0000FF"><code>FFFF </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#0000FF"><code>FFFF
+</code></font><font color="#000080"><code>FFFF </code></font><font
+color="#0000FF"><code>FFFF </code></font><font color="#000080"><code>FFFF
+</code></font><font color="#0000FF"><code>FFFF </code></font><font
+color="#000080"><code>FFFF </code></font><font color="#000000"><code>................<br>
+</code></font><code><br>
+This frame will start by writing $C8 (length 200 bytes) bytes to
+field $0A, subfield $01, so by skipping the header and counting
+200 bytes forward, we find the next header: 7A0E01 (122 bytes to
+field 0E, subfield 01) and the next 811001 (129 bytes to field
+10, subfield 01), the next 811002 (129 bytes to field 10,
+subfield 2) and this goes on and on...</code></p>
+
+<p><code>So now we need to </code><a href="emmifield.html"><code>map
+all these fields and subfields to their respective functions</code></a><code>,
+so we truly can start to compose frames from scratch instead of
+modifying existing ones as we can do with medit and meditx. This
+will be much better than transferring frames between different
+phone models. Whereas the field you are interested in might be
+portable between the units (for example the wakeup graphic&quot;)
+other fields in the frame might not be (for example the menu
+definition).</code></p>
+
+<p><code>Before we can have total freedom to compose custom
+frames, there is just one restriction: There is *not* freedom to
+put just any field into any frame. Frame 1 expects to have only a
+certain list of packets in it and the same with the other frames.
+Moving packets between frames will reveal that if a packet is not
+supposed to be in a certain frame, it simple will not be
+processed and the EEPROM is not patched. So no matter if you knew
+the address and length og for example the IMEI, Factory test flag
+or SPlock flag, the phone would not accept the packet and just
+ignore it. </code></p>
+
+<p><code>However, if the frame number was changed to something
+that did not have a list of &quot;acceptable fields&quot; the
+phone would process the packlets and patch the EEPROM. Forexample
+the frame $FF will allow any field to be updated. This seems like
+a bug in the software. The field system is also used with the
+EMMIbox. The EMMI interface is supposed to be able to update
+these fields (the ones that do not appear in any transfer card
+frames), but the clone card interface couldn't possibly have been
+meant to do this. The most interesting thing, is that in October
+'98, every Mot phone would have this &quot;feature&quot; - From
+the ancient International 1000 to the latest StarTAC 130. So it
+seems like Motorola did not know about this bug until the fall of
+'98. Then they suddently released new software version for the
+cd920/cd930 (A0.04.29) and the cd520 (and probably others to
+come) that fixes this.</code></p>
+
+<p><font color="#000000"><code>To illustrate the usefullness og
+this &quot;feature&quot;, try to consider adding &quot;Instant
+test mode&quot; to your phone. If you wanted to edit the factory
+test flag in the EEPROM, you could manually edit the
+&quot;03&quot; at $003B in the EEPROM and clone your way out of
+the configuration checksum mismatch. All this involving opening
+the phone, desoldering the EEPROM, programming it and putting the
+unit back together. Alternatively, you could address the field
+via. the clone card. The length of the factory test flag(s) is 2
+bytes, the Primary address is $0D, so making a customized frame
+with the frame number $FF and a single packet 02 0D 01 13 33 will
+do the job. The Flag is patched in seconds and you haven't opened
+the phone. Since this frame does not contain anything else that
+is phone specific, you can use it on every single unit without
+any danger of killing the phone, just because you used a 8700
+frame on a 8400 and forgot about the display settings that also
+happen to be in frame 1 (Ooooops!). But it's even better yet ! :
+Even if you with the manual EEPROM-desoldering-programming
+approach could edit the SP field at $03AB (Off the top of my
+head), you would not be able to make it work since it is
+protected by the CRC style checksum. The real beauty is that the
+phone does not only update the configuration block checksum at
+0000:0001, but also the complicated one at $03b0:$03b1 (again,
+off the top of my head). On newer phones with the DS2401, EEPROM
+cloning is suddently possible again (but why would you when you
+can just update the SP flag directly) - when recalculating the
+checksum for the SP or IMEI, the DS2401 serial number is read and
+used to calculate the checksum. This again shows that so much of
+the functionality (field to EEPROM address translation &amp;
+checksums)actually is located in the phone itself - not in the
+EMMIbox.</code></font></p>
+
+<p><tt>© 1998 Janus Christian Krarup</tt></p>
+</body>
+</html>

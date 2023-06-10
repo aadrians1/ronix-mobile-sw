@@ -1,0 +1,99 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html">
+<meta NAME="Author" CONTENT="Syrius Dire Service">
+<meta NAME="Keywords" CONTENT="Syrius Dire Service, Tula, crack, hack, phonecard, smart card, ISO, 7816, telecard, telecards, hacking, cloning, phonecard, phonecards, cracking, emulation, programming, recharging, hackers, programs, smartcard, chipcard, piracy, illegal, reverse engineering">
+<title>ISO 7816 card emulator</title>
+</head>
+<body background="/images/bricks.jpg" TEXT="#FFFFFF" BGCOLOR="#000000" LINK="#00FF00" VLINK="#3366FF" ALINK="#FF6666">
+<p><h2>
+ISO-7816 synchronous smartcard emulator
+</h2></p>
+<hr>
+<table BORDER="0" COLS="2" WIDTH="85%" NOSAVE cellspacing="5" cellpadding="0">
+  <tr>
+    <td width="5%" align="center" valign="top">
+    <p align="center"><img src="/images/smartcard.jpg"><br>
+    Smartcard used in our city<br><br>
+    <img src="/images/chip.gif"><br>
+    Card chip
+    </p>
+    </td>
+    <td valign="top" width="80%">
+    <br><table  align="center" BORDER="1" COLS="1" WIDTH="80%" cellspacing="0" cellpadding="4">
+    <tr BGCOLOR="#C04040">
+    <td>
+    <p align="center"><font COLOR="#FFFF80"><blink><b>* * *  BREAKING NEWS  * * *</b></blink></font></td>
+    </tr>
+    <tr BGCOLOR="#104010">
+    <td><h3 align="center">Fearwork<sup>tm</sup>  project is started!</h3><p>SDS started the project of wireless emulator based on <a href="http://www.atmel.com">Atmel</a> 
+    AVR RISC microcontroller. Internal clock generator and small dimensions make available
+    to fit microcontroller in the place of card's chip. The new Fearwork<sup>tm</sup>  emulator will be able to break through almost
+    ANY wire detector device. Release date is July 1st, 1999.
+    </td>
+    </tr>
+    </table>
+
+    <h3><u><font color="#FFFFFF">Phone cards in CIS</u></font></h3>
+    <P><font color="#FFFF00">
+    The majority of payphones in CIS use smartcars based on SLE4406-compliant 
+    chip. The chip has 128 bit of internal memory. 64 bits used as card identifier, 40 bits organize
+    credits (card units) counter, 24 bits are unused. The counter range is 0..32767 units. The chip
+    only allows do decrease counter value. Card memory can be easily read using
+    LPT printer port. The card reader program is here:
+    <blockquote>
+    <a href="isoread.asm">Source assembler code</a><br>
+    <a href="isoread.com">Compiled MS-DOS executable</a><br><br><font color="#FFFFFF">
+    Card RESET pin must be connected to LPT D0 pin<br>
+    Card CLK pin must be connected to LPT D1 pin<br>
+    Card DATA pin must be connected to LPT BUSY pin<br>
+    Card GND must be connected to one of LPT GND pins.<br>
+    Card Vcc pin must be connected to LPT pin D7 or to external 5V source</font>
+    </blockquote>
+    All ISO 7816 parameters (pinout, protocol, time diagrams) are described 
+    <a href="iso7816.txt">here.</a>
+    Similar description is also available in <a href="http://www.phrack.com">Phrack magazine</a>
+     issue 48 vol.10, but that information is a bit inaccurate.<br>
+     My addition to all above documentation, which clearly describes card 
+     Write and WriteCarry operations is <a href="iso_write.txt">here</a>. 
+    Card can be emulated using PIC microcontroller by <a href="http://www.microchip.com">Microchip</a>.
+    I used PIC 16C84. Emulator charts in PDF format are here:
+    <blockquote>
+    <a href="/images/emu_dip.pdf">For DIP package of PIC16C84</a><br>
+    <a href="/images/emu_soic.pdf">For SOIC package of PIC16C84</a>
+    </blockquote>
+    As for PIC source code... Hmm... Let me not to publish it here.</p>
+    <h3><u><font color="#FFFFFF">How do wire detectors work</u></font></h3>
+    <p>I know wire detector devices of 2 types. First type is simple metal
+ detector which detects metal presence on card surface. This type of wire detectors is
+ not widely used because it is rather simply for phreakers to pass it. Second type
+  of wire detectors uses high frequency to detect wires presence. HF signal is mixed to
+  one of cards pins (usually to power supply pin). Sensor detects presence of
+  that frequency on the card's surface. This type of wire detectors is able to
+  detect very thin wires and could hardly be passed through.<br>
+  If you know any other type of wire detectors, please inform me.
+    </p>
+    </td>
+  </tr>
+</table>  
+<center>
+<P><font color="#FFFF00">Related information is available at:<br><br>
+    <a href ="http://members.tripod.com/telecardnews/index.html">
+    Phonecard security page</a><br>
+    <a href ="http://zmit.cjb.net">
+    Zmit's phreaking page</a></font></p>
+<table border="0" bgcolor="#505050" cellpadding="10"><tr><td><font color="#FFFF00">
+P.S.<br>
+A while ago I found 192-bit phonecards which contents is like:<br>
+XX XX XX XX XX XX XX XX 00 00 00 00 E0 00 FF FF FF FF FF FF XX XX XX XX<br>
+It seems to be a SLE4436 chip. The credit counter occupies last 4 bytes of card memory. 
+I have no idea how does it work. Also I have no information concerning SAM (Security Authentification Module).
+If you have any useful information on SLE4436 chip, please let me know.
+</font></td></tr></table>
+</center>
+<hr>
+<p>(c) 1998 <a href="mailto:sds@lt.tula.net">Syrius Dire Service</a></p>
+<p><a href="http://fearwall.lt.tula.net"><img src="/images/redball.gif" border="0">&nbsp;Fearwall Home Page</a></td>
+</body>
+</html>

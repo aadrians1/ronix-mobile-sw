@@ -1,0 +1,958 @@
+<html><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.06 [en] (X11; I; HP-UX B.10.20 9000/715) [Netscape]">
+   <TITLE> Investigations of Power Analysis Attacks on Smartcards
+</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+
+<CENTER>
+<H2>
+<A NAME="pgfId-109"></A>Investigations of Power Analysis Attacks on Smartcards<A NAME="23992"></A></H2></CENTER>
+
+<DIV CLASS="Author">
+<CENTER><B><I>Thomas S. Messerges</I></B></CENTER>
+</DIV>
+
+<CENTER>Motorola Labs, Motorola
+<BR>tomas@ccrl.mot.com
+<P><B><I>Ezzy A. Dabbish</I></B></CENTER>
+
+<DIV CLASS="Author">
+<CENTER>Motorola Labs, Motorola</CENTER>
+</DIV>
+
+<CENTER>dabbish@ccrl.mot.com
+<P><I><B>Robert H. Sloan</B><SUP><FONT SIZE=-2><A HREF="#pgfId-2331" CLASS="footnote">1</A></FONT></SUP></I>
+<BR>Dept. of EE and Computer Science, University of Illinois at Chicago
+<BR>&nbsp;sloan@eecs.uic.edu</CENTER>
+
+<BR>
+<P>
+<H4 CLASS="Abstract-title">
+<U>Abstract</U></H4>
+
+<DIV CLASS="Abstract">This paper presents actual results from monitoring
+smartcard power signals and introduces techniques that help maximize such
+side-channel information. Adversaries will obviously choose attacks that
+maximize side-channel information, so it is very important that the strongest
+attacks be considered when designing defensive strategies. In this paper,
+power analysis techniques used to attack DES are reviewed and analyzed.
+The noise characteristics of the power signals are examined and an approach
+to model the signal to noise ratio is proposed. Test results from monitoring
+power signals are provided. Next, approaches to maximize the information
+content of the power signals are developed and tested. These results provide
+guidance for designing smartcard solutions that are secure against power
+analysis attacks.</DIV>
+
+<H3 CLASS="FM1Heading">
+Introduction</H3>
+
+<DIV CLASS="Body">Cryptographers have traditionally analyzed cipher systems
+by modeling cryptographic algorithms as ideal mathematical objects. Conventional
+techniques such as differential <A HREF="#[1]" CLASS="XRef">[1]</A> and
+linear
+<A HREF="#[2]" CLASS="XRef">[2]
+</A>cryptanalysis are very useful
+for exploring weaknesses in algorithms represented as mathematical objects.
+These techniques, however, cannot address weaknesses in cryptographic algorithms
+that are due to a particular implementation in hardware. The realities
+of a physical implementation can be extremely difficult to control and
+often result in the leakage of side-channel information. Techniques developed
+in <A HREF="#[3]" CLASS="XRef">[3]</A> show how surprisingly little side-channel
+information is required to break some common ciphers. Attacks have been
+proposed that use such information as timing measurements [<A HREF="#[4]" CLASS="XRef">4
+</A>,<A HREF="#[5]" CLASS="XRef">5
+</A>],
+power consumption <A HREF="#[6]" CLASS="XRef">[6]</A>, electromagnetic
+emissions <A HREF="#[7]" CLASS="XRef">[7] </A>and faulty hardware [<A HREF="#[8]" CLASS="XRef">8
+</A>,<A HREF="#[9]" CLASS="XRef">9
+</A>].
+Eliminating side-channel information or preventing it from being used to
+attack a secure system is an active area of research.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>A growing number of researchers are beginning to address this issue
+of implementation. Systems that rely on smartcards to provide security
+are of particular concern. In such systems, smartcards are often viewed
+as tamper-resistant devices that are secure against all but the most determined
+and well-financed attackers. However, this reliance on the tamper resistance
+of smartcards needs to be carefully scrutinized <A HREF="#[10]" CLASS="XRef">[10]
+</A>.
+This becomes even more important in light of the recent attacks using side-channel
+information. It is often the case that important data stored on smartcards,
+such as a cryptographic key or an authentication certificate, needs to
+be kept secret to prevent counterfeiting of cards or the breaking of a
+system's security. Examples of smartcard systems that rely on the secrecy
+of the data resident on smartcards can be found in <A HREF="#[11]" CLASS="XRef">[11]
+</A>.
+Such systems are potentially vulnerable because every time the smartcard
+system performs a computation using the secret data, side-channel information
+may be leaked.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>Of all the previously mentioned sources of side-channel information,
+power measurements are perhaps the most difficult to control. Ultimately
+all calculations performed by a smartcard operate on logical ones or zeros.
+Current technological constraints result in different power consumptions
+when manipulating a logical one compared to manipulating a logical zero.
+An attacker of a smartcard can monitor such power differences and obtain
+useful side-channel information. Differential Power Analysis (DPA) <A HREF="#[6]" CLASS="XRef">[6]</A>
+is a statistical approach to monitoring such power signals from a smartcard.
+Kocher et al.
+<A HREF="#[6]" CLASS="XRef">[6]
+</A>claim one can monitor
+the actions of a single transistor within a smartcard using DPA. In <A HREF="#[6]" CLASS="XRef">[6]
+</A>,
+the authors outline a specific DPA attack against smartcards running the
+DES <A HREF="#[12]" CLASS="XRef">[12]
+</A>algorithm.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>The purpose of this paper is to present actual results from monitoring
+smartcard power signals and to introduce techniques that help maximize
+such side-channel information. Whereas <A HREF="#[3]" CLASS="XRef">[3]
+</A>showed
+how little side-channel information is required by an attacker, this paper
+takes the alternate approach and provides a first step towards showing
+how such information can be maximized. Adversaries will obviously choose
+attacks that maximize side-channel information, so it is very important
+that the strongest attacks be considered when designing defensive strategies.
+In this paper, power analysis techniques for attacking DES are reviewed
+and analyzed. The noise characteristics of the power signals are examined
+and an approach to model the signal to noise ratio is proposed. Test results
+from monitoring power signals are provided. Next, approaches to maximize
+the information content of the power signals are developed and tested.
+These results provide guidance for designing smartcard solutions that are
+secure against power analysis attacks.</DIV>
+
+<H3 CLASS="FM2Heading">
+Smartcard Power Dissipation</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>The circuit shown in <A HREF="#F1" CLASS="XRef">Figure 1</A> gives
+a simple lumped component model that is useful for understanding power
+dissipation measurements. Power dissipated by the smartcard can be monitored
+at the ground pin of the smartcard by using a small resistor (R<SUB>1</SUB>)
+in series between the V<SUB>SS</SUB> pin on the card and the true ground.
+Current moving through R<SUB>1</SUB> creates a time varying voltage that
+can be sampled by a digital oscilloscope. The current flows out of the
+smartcard through a bond wire that acts as an inductor L<SUB>bond</SUB>.
+The values of the inductor, L<SUB>bond</SUB>, and the capacitors will determine
+the shape of the power signal that is observed at V<SUB>scope</SUB>. In
+a CMOS circuit, most power is dissipated when the circuit is clocked. This
+is known as dynamic power dissipation
+<A HREF="#[13]" CLASS="XRef">[13]
+</A>.
+As V<SUB>gate</SUB> changes from 0 to 5 volts, the transistors Q<SUB>1</SUB>
+and Q<SUB>2</SUB> are both conducting for a brief period causing current
+to flow from V<SUB>dd</SUB> to ground. Also during this time, the capacitor
+C<SUB>load</SUB> will be discharged (or charged) causing more (or less)
+current to flow through the V<SUB>SS</SUB> pin.</DIV>
+<MAP NAME="paper-1"></MAP><A NAME="F1"></A><IMG SRC="paper-1.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-1.gif" USEMAP="#paper-1" >
+<DIV CLASS="Body">&nbsp;
+<BR>Information useful to a cryptanalyst is leaked because the amount of
+current being drawn when the circuit is clocked is directly related to
+the change of state of C<SUB>load </SUB>or the resulting current drawn
+by the other gates attached to C<SUB>load</SUB>. On a microprocessor, each
+clock pulse causes many bit transitions to occur simultaneously. In a typical
+smartcard microprocessor, a large portion of the power dissipation occurs
+in the gates attached to internal buses. Our experiments showed that activity
+on the data and address bus is a dominant cause of power consumption changes.
+These changes can be observed at V<SUB>scope</SUB>.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>Two types of information leakage from the data bus that have been observed
+are Hamming weight leakage and transition count leakage. Hamming weight
+information leaks when the dominant source of current is caused by the
+discharging of C<SUB>load</SUB>. A situation where Hamming weight information
+leaks is when a precharged bus design is used. In this case, the number
+of zeros driven onto the precharged bus directly determines the amount
+of current that is being discharged. Transition count information leaks
+when the dominant source of current is due to the switching of the gates
+that are driven by the data bus. When the data bus changes state, many
+of the gates driven by the bus will briefly conduct current. Thus, the
+more bits that change state, the more power that is dissipated.
+<BR><MAP NAME="paper-2"></MAP><A NAME="F2"></A><IMG SRC="paper-2.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-2.gif" USEMAP="#paper-2" ></DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>Experimental results that show transition count leakage from a typical
+8-bit, microprocessor-based smartcard are given in <A HREF="#F2" CLASS="XRef">Figure
+2 </A>. In this figure, an 8-bit data byte from memory is transferred into
+a register. Initially, the bus contains the memory address, but after a
+clock pulse, the data from memory is put onto the bus. The magnitude of
+the voltage pulse is directly proportional to the number of bits that changed.
+Waveforms for different values of memory data are plotted on top of each
+other to effectively show this relationship. The difference in voltage
+between <I>i</I> transitions and <I>i</I>+1 transitions is about 6.5 mV.
+We observed similar plots for smartcards that leak Hamming weight information.
+The type of information that a particular smartcard leaks depends on the
+circuit design of the microprocessor and the type of operation being performed
+by the card. For instance, accessing EEPROM may yield different information
+than accessing RAM. Knowing which type of information is leaked will enable
+an adversary to optimize an attack strategy.</DIV>
+
+<H3 CLASS="FM2Heading">
+Simple Power Analysis (SPA)</H3>
+
+<DIV CLASS="Body2">&nbsp;
+<BR>An SPA attack, as described in <A HREF="#[6]" CLASS="XRef">[6]</A>,
+involves directly observing a system's power consumption. Different attacks
+are possible depending on the capabilities of the attacker. In some situations
+the attacker may be allowed to run only a single encryption or decryption
+operation. Other attackers may have unlimited access to the card. The most
+powerful attackers not only have unlimited access, but also have detailed
+knowledge of the software and hardware running in the card. If an attacker
+can determine where certain instructions are being executed, it can be
+relatively simple to extract useful information. For example, during the
+PC1 permutation in DES, we could determine the Hamming weight of each key
+byte by measuring the pulse height at the cycle of the instruction that
+accesses this data. In an 8-bit microprocessor, knowing the Hamming weight
+of all eight DES key bytes reduces the brute-force search space from 256
+to</DIV>
+<IMG SRC="paper-3.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-3.gif" > or&nbsp;<IMG SRC="paper-4.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-4.gif" >
+<BR>keys depending on whether or not the parity bits are used. This was
+just an example; with algorithms using more key bits than DES or with triple-DES,
+knowing Hamming weight information alone does not help much with this type
+of brute-force attack.
+<BR>&nbsp;
+
+<P CLASS="Body">A more powerful attack can result if the attacker can see
+Hamming weight information about the key bytes and also information about
+shifted versions of the key bytes. In DES, such information can be leaked
+when shifting the C and D registers. In fact, given the weight of each
+byte for eight of the C and D shifts there is enough information to solve
+for the value of every key bit using the equation
+<BR>
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E1"></A><IMG SRC="paper-5.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-5.gif" >&nbsp;&nbsp;&nbsp;&nbsp; (1)</H6></CENTER>
+
+<DIV CLASS="Body">&nbsp; where&nbsp;<IMG SRC="paper-6.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-6.gif" > is a 56x1&nbsp;
+vector of Hamming weights, <I>w<SUB>i</SUB></I>;&nbsp;<IMG SRC="paper-8.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-8.gif" >
+is a&nbsp; 56x1 binary vector of the key bits, <I>k<SUB>j</SUB></I>; and
+<I>A</I>
+is a 56x56 binary matrix such that
+<I>A<SUB>ij</SUB></I> is 1 if and only
+if weight <I>w<SUB>i</SUB> </I>includes key bit <I>k<SUB>j</SUB></I>. Even
+algorithms with more than 56 key bits, such as triple-DES would be vulnerable
+to this attack.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>If transition count information rather than Hamming weight information
+is available, an SPA attack can still be mounted, but it may be more difficult.
+The attacker would need to know the contents of the data bus before or
+after the data being sought is accessed. Many times this data is easy to
+determine because it is a fixed address or an instruction opcode. Attackers
+with access to the code can easily get this data and set up equations similar
+to <A HREF="#E1" CLASS="XRef">Equation (1) </A>. Other less knowledgeable
+attackers may need to resort to trial and error to determine the correct
+equations. Due to the limited number of possibilities such an approach
+is reasonable.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>Our experiments confirmed that poor implementations of DES will almost
+always be vulnerable to SPA attacks. Shifting the key bytes or the use
+of conditional branches to test bit values can be especially vulnerable.
+Also, if the code or portions of the code run in variable time, power analysis
+could be used to enable a timing attack
+<A HREF="#[4]" CLASS="XRef">[4]
+</A>.
+Fortunately, implementors of cryptographic algorithms have known about
+these issues for a number of years. Kocher et al. <A HREF="#[6]" CLASS="XRef">[6]
+</A>reported
+that it is not particularly difficult to build SPA-resistant devices. However,
+the attackers keep getting smarter so further research and vigilance will
+always be necessary.</DIV>
+
+<H3 CLASS="FM2Heading">
+Differential Power Analysis (DPA)</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>A DPA attack, described in <A HREF="#[6]" CLASS="XRef">[6]
+</A>and
+reviewed here, is more powerful than an SPA attack because the attacker
+does not need to know as many details about how the algorithm was implemented.
+The technique also gains strength by using statistical analysis to help
+recover side-channel information. The objective of the DPA attacks described
+in this paper is to determine the secret key used by a smartcard running
+the DES algorithm. These techniques can also be generalized to attack other
+similar cryptographic algorithms.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>A DPA attack begins by running the encryption algorithm for <I>N</I>
+random values of plain-text input. For each of the <I>N</I> plain-text
+inputs, PTI<I><SUB>i</SUB></I>, a discrete time power signal, <I>S<SUB>ij</SUB></I>,
+is collected and the corresponding cipher-text output, CTO<I><SUB>i</SUB></I>,
+may also be collected. The power signal <I>S<SUB>ij</SUB></I> is a sampled
+version of the power consumed during the portion of the algorithm that
+is being attacked. The <I>i</I> index corresponds to the PTI<I><SUB>i </SUB></I>that
+produced the signal and the <I>j </I>index corresponds to the time of the
+sample. The <I>S<SUB>ij</SUB></I> are split into two sets using a partitioning
+function, <I>D</I>( . , . , . ):</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="pgfId-1612"></A><IMG SRC="paper-12.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-12.gif" >&nbsp;&nbsp;&nbsp;&nbsp;
+(2)</H6></CENTER>
+
+<DIV CLASS="Body">&nbsp;
+<BR>The next step is to compute the average power signal for each set:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E3"></A><IMG SRC="paper-13.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-13.gif" >&nbsp;&nbsp;&nbsp;&nbsp; (3)</H6></CENTER>
+
+<DIV CLASS="Body">&nbsp;
+<BR>where |<I>S</I><SUB>0</SUB>| + |<I>S</I><SUB>1</SUB>| = <I>N</I>. By
+subtracting the two averages a discrete time DPA bias signal, T[<I>j</I>],
+is obtained:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E4"></A><IMG SRC="paper-15.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-15.gif" >&nbsp;&nbsp;&nbsp; (4)</H6></CENTER>
+
+<DIV CLASS="Body">&nbsp;
+<BR>Selecting an appropriate <I>D</I> function will result in a DPA bias
+signal that an attacker can use to verify guesses of the secret key. An
+example of such a <I>D</I> function is as follows:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E5"></A><IMG SRC="paper-16.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-16.gif" >&nbsp;&nbsp;&nbsp; (5)</H6></CENTER>
+
+<DIV CLASS="Body0">where</DIV>
+
+<DIV CLASS="def">
+<CENTER>C<SUB>1</SUB> = the 1 bit of CTO<I><SUB>i</SUB> </I>that is XOR'ed
+with bit #1 of S-box #1</CENTER>
+</DIV>
+&nbsp
+<CENTER>C<SUB>6</SUB> = the 6 bits of CTO<I><SUB>i </SUB></I>that are XOR'ed
+with subkey K<SUB>16</SUB>
+<P>K<SUB>16</SUB> = 6 bits of the 16th round subkey feeding into S-box
+#1
+<P>SBOX1(x) = a function returning bit #1 resulting from looking up x in
+S-box #1</CENTER>
+
+<P><BR>
+
+<P CLASS="Body">The <I>D</I> function of <A HREF="#E5" CLASS="XRef">Equation
+(5)
+</A>is chosen because at some point during a DES implementation, the
+software needs to compute the value of this bit. When this occurs or anytime
+data containing this bit is manipulated, there will be a slight difference
+in the amount of power dissipated depending on whether this bit is a zero
+or a one. If this difference is&nbsp;<IMG SRC="eps.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/eps.gif" > , and the instructions
+manipulating the <I>D</I> bit occurs at times <I>j*</I>, the following
+expected difference in power equation results:
+<BR>&nbsp;
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E6"></A><IMG SRC="paper-17.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-17.gif" >&nbsp;&nbsp;&nbsp; (6)</H6></CENTER>
+
+<DIV CLASS="Body">When <I>j</I> is not equal to <I>j*</I>, the smartcard
+is manipulating bits other than the <I>D</I> bit, and the power dissipation
+is independent of the <I>D</I> bit:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E7"></A><IMG SRC="paper-18.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-18.gif" >&nbsp;&nbsp;&nbsp; (7)</H6></CENTER>
+
+<DIV CLASS="Body">As the number <I>N</I> of PTI inputs is increased, <A HREF="#E4" CLASS="XRef">Equation
+(4) </A>, converges to the expectation equation:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E8"></A><IMG SRC="paper-19.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-19.gif" >&nbsp;&nbsp;&nbsp; (8)</H6></CENTER>
+
+<DIV CLASS="Body0">Thus, a review of <A HREF="#E6" CLASS="XRef">Equation
+(6) </A>, <A HREF="#E7" CLASS="XRef">(7) </A>and <A HREF="#E8" CLASS="XRef">(8)
+</A>shows
+that if enough PTI samples are used, <I>T</I>[<I>j</I>] will show power
+biases of&nbsp;<IMG SRC="eps.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/eps.gif" > at times <I>j*</I>, and will converge
+to zero all other times. Due to small statistical biases in the S-box outputs,
+the assumption of independence in <A HREF="#E7" CLASS="XRef">Equation (7)
+</A>is
+not completely true. In reality, <I>T</I>[<I>j</I>] will not always converge
+to zero; however the largest biases will occur at times <I>j*</I>.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>One input to the <I>D</I> function was K<SUB>16</SUB>, six bits of
+the subkey. The attacker does not know these bits, but can use brute force
+and try all 2<SUP>6</SUP> possible values. For each guess, the attacker
+constructs a new partition for the power signatures and gets a new bias
+signal, <I>T</I>[<I>j</I>]. If the proper <I>D</I> function was chosen,
+the bias signal will show spikes whenever the <I>D</I> bit was manipulated.
+If the
+<I>D</I> function was not chosen correctly (i.e., the wrong subkey
+bits were guessed), then the resulting T[<I>j</I>] will not show any biases.
+Using this approach, an attacker can determine the six subkey inputs to
+S-box #1 at round 16 of DES. Repeating this approach for the seven other
+DES S-boxes allows the attacker to learn the entire round 16 subkey (48
+bits). The remaining 8 bits can be found by brute force or by successively
+applying this approach backwards to previous rounds. <A HREF="#F3" CLASS="XRef">Figure
+3</A> compares the bias signal for a correctly chosen key to that of an
+incorrectly chosen key. The signal for the incorrect key shows a few small
+biases, but the correct key has biases that are twice as large, so it is
+easily recognized. We created the signals in <A HREF="#F3" CLASS="XRef">Figure
+3</A> using
+<I>N</I> = 1300.
+<BR><MAP NAME="paper-20"><A NAME="F3"></A></MAP><IMG SRC="paper-20.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-20.gif" USEMAP="#paper-20" ></DIV>
+
+<H3 CLASS="FM1Heading">
+Noise in Power Analysis Attacks</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>There is a rich history of methods to reduce noise in electrical circuits.
+Many good textbooks have been written on this topic (e.g., <A HREF="#[14]" CLASS="XRef">[14]
+</A>).
+Techniques for noise reduction are particularly important when trying to
+measure side-channel emanations because the magnitude of these signals
+can be extremely small. The DPA attack uses averaging to reduce noise,
+but it is important to investigate other strategies that may lead to further
+reductions in the amount of noise. Experts quoted in <A HREF="#[15]" CLASS="XRef">[15]
+</A>report
+that one way to prevent a power analysis attack is to mask the side-channel
+information with random calculations that increase the measurement noise.
+A good understanding of the achievable noise levels using typical electronic
+measuring techniques is needed to evaluate the effectiveness of such a
+solution.</DIV>
+
+<H3 CLASS="FM2Heading">
+Noise Characteristics</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>There are four types of noise present when performing power analysis
+of smartcards: external, intrinsic, quantization and algorithmic. External
+noise is generated by an external source and coupled into the smartcard.
+Intrinsic noise is due to the random movement of charge carriers within
+conductors. Quantization noise is due to the quantizer in the A/D that
+is used to sample the power signals. Algorithmic noise is due to the randomness
+of the data bytes being processed by the smartcard. Intrinsic and quantization
+noise are small when compared to present day side-channel signals, but
+will likely play a larger role as future designs minimize side-channel
+signals. External noise can be reduced through careful use of measuring
+equipment, good circuit design practices and filtering. Algorithmic noise
+can be reduced if an attack strategy can use unbiased random data that
+can be averaged out.</DIV>
+<MAP NAME="F4-21"></MAP><A NAME="F4"></A><A HREF="javascript:if(confirm('http://www.eecs.uic.edu/~tmesserg/usenix99/html/F4  \n\nThis file was not retrieved by Teleport Pro, because the server reports that this file cannot be found.  \n\nDo you want to open it from the server?'))window.location='http://www.eecs.uic.edu/~tmesserg/usenix99/html/F4'" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/F4"><IMG SRC="paper-21.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-21.gif" USEMAP="#paper-21" ></A>
+<DIV CLASS="Body">&nbsp;
+<BR><A HREF="#F4" CLASS="XRef">Figure 4</A> illustrates a sample of the
+noise measured in a power analysis experiment. The top waveform, <I>N<SUB>j,</SUB></I>
+was determined using the following equation:</DIV>
+
+<CENTER>
+<H6 CLASS="equ">
+<A NAME="pgfId-1765"></A><IMG SRC="paper-22.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-22.gif" ></H6></CENTER>
+
+<DIV CLASS="Body">where the value of E[<I>S<SUB>j</SUB></I>] was estimated
+by averaging the power traces obtained when encrypting the same input data
+5,000 times and <I>S<SUB>j </SUB></I>is one of the traces. Clearly any
+deviation of <I>N<SUB>j </SUB></I>from zero should be considered noise.
+The noise shown in <A HREF="#F4" CLASS="XRef">Figure 4</A> has a slow beat
+frequency around 182 Khz that could be due to external coupling from test
+equipment or more likely due to the superposition of the digital oscilloscope's
+sampling frequency and the smartcard's clock frequency. The power spectrum
+of the noise also reveals significant spikes at the smartcard's clock frequency
+and its harmonics. A close-up of the noise reveals that a significant amount
+of the noise energy is concentrated at the edges of the smartcard's 4 Mhz
+clock edges.</DIV>
+
+<DIV CLASS="Body"><A HREF="#F4" CLASS="XRef">Figure 4</A> does not contain
+algorithmic noise since the data being encrypted was kept constant. The
+effect of algorithmic noise would be to cause spikes to appear in the portion
+of the signal where the data is being processed. These spikes could be
+used by an attacker to mark locations in the power trace that are data
+dependent. Algorithm noise can be modeled as shot noise using a generalized
+Poisson random process <A HREF="#[16]" CLASS="XRef">[16]
+</A>:</DIV>
+
+<CENTER>
+<H6 CLASS="equ">
+<A NAME="pgfId-1780"></A><IMG SRC="paper-23.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-23.gif" ></H6></CENTER>
+
+<DIV CLASS="Body">&nbsp;
+<BR>In this case, <I><B>c</B><SUB>i</SUB></I> is a random variable (r.v.)
+corresponding to the Hamming weight of the data being processed,<I> <B>j</B><SUB>i</SUB></I>
+is a Poisson r.v. that models the seemingly random locations of the data
+dependencies and <I>F</I> would be the shape of the bias signal. If random
+data is used, then <I><B>c</B><SUB>i</SUB></I> would have a binomial distribution.
+An accurate model of the various noise components would be very useful
+for simulating the effectiveness of DPA attacks and solutions.</DIV>
+
+<H3 CLASS="FM2Heading">
+Filtering the Noise</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>Filtering strategies can be used to reduce the noise shown in <A HREF="#F4" CLASS="XRef">Figure
+4</A> , but care needs to be taken so that the components necessary to
+create a power bias signal are not affected. The algorithmic noise can
+be reduced by averaging using unbiased random data. Filtering will not
+work on algorithmic noise because any filter would also reduce the desired
+bias signal. If the noise in <A HREF="#F4" CLASS="XRef">Figure 4</A> is
+assumed to be white noise, then the optimal filter that maximizes the signal-to-noise
+ratio (SNR) is the matched filter. We designed and tested such a filter
+for the bias signal shown in <A HREF="#F3" CLASS="XRef">Figure 3</A> .
+The original voltage SNR was 17.3. After using the matched filter, the
+SNR was increased to 23.2. This gives some indication of how much an attacker
+with a perfect matched filter can improve the SNR.</DIV>
+
+<H3 CLASS="FM2Heading">
+<A NAME="pgfId-1793"></A>The Effect of Averaging</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>A DPA attack is successful because averaging reduces noise energy,
+thus revealing any concentrations of signal energy that occur at constant
+positions in time. To see the effect of averaging on the noise refer back
+to <A HREF="#E3" CLASS="XRef">Equation (3) </A>. Let the average variance
+of <I>S<SUB>ij</SUB></I> be&nbsp;<IMG SRC="paper-24.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-24.gif" > and assume <I>S<SUB>ij</SUB></I>
+is independent of <I>S<SUB>kj</SUB></I> when&nbsp;<IMG SRC="paper-25.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-25.gif" >
+. If the <I>N</I> signals were equally split between sets S<SUB>0</SUB>
+and S<SUB>1</SUB>, then the variance of A<SUB>0</SUB> and A<SUB>1</SUB>
+is&nbsp;<IMG SRC="paper-26.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-26.gif" > . Therefore, when A<SUB>0</SUB> and A<SUB>1</SUB>
+are combined the resulting DPA bias signal has a variance of&nbsp;<IMG SRC="paper-27.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-27.gif" >
+.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>The averaging effect on the signal was shown in <A HREF="#E6" CLASS="XRef">Equation
+(6) </A>produce a bias spike of size&nbsp;<IMG SRC="eps.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/eps.gif" > . The <I>D</I>
+function, proposed in <A HREF="#E5" CLASS="XRef">Equation (5) </A>, has
+the effect of fixing one bit of the data being processed. If a data word
+is <I>m</I> bits wide, then the remaining unfixed bits in the word have
+an average Hamming weight of (<I>m</I>-1)/2 with a variance (i.e., algorithmic
+noise) of (<I>m</I>-1)/4. Averaging over <I>N</I> samples has a similar
+effect on this signal variance as it did on the noise variance. Assuming
+independence of the different sources of noise yields the following signal
+and noise parameters:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E9"></A><IMG SRC="paper-28.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-28.gif" >&nbsp;&nbsp;&nbsp; (9)</H6></CENTER>
+
+<DIV CLASS="Body">&nbsp;
+<BR>In the variance of the noise, the term&nbsp;<IMG SRC="paper-29.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-29.gif" >
+is the percentage of <I>T</I>[<I>j</I>] that is dependent on the data being
+encrypted, thus the percentage of algorithmic noise. The success of a DPA
+attack depends on distinguishing the signal from noise, so the final voltage
+SNR is:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E10"></A><IMG SRC="paper-30.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-30.gif" >&nbsp;&nbsp;&nbsp; (10)</H6></CENTER>
+
+<DIV CLASS="Body">&nbsp;
+<BR><A HREF="#E10" CLASS="XRef">Equation (10) </A>can be checked with previously
+measured experimental results. Setting&nbsp;<IMG SRC="paper-31.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-31.gif" > =7.5
+mV (from <A HREF="#F4" CLASS="XRef">Figure 4</A> ),&nbsp;<IMG SRC="eps.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/eps.gif" >
+= 6.5 mV (from
+<A HREF="#F2" CLASS="XRef">Figure 2</A> ), <I>m</I> = 8,
+<I>N</I>
+= 1000, and&nbsp;<IMG SRC="paper-32.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-32.gif" > yields SNR = 7.5. Experimental
+results using these parameters showed a SNR between 7 and 10, thus confirming
+that <A HREF="#E10" CLASS="XRef">Equation (10)
+</A>is a valid approximation.</DIV>
+
+<H3 CLASS="FM1Heading">
+Maximizing DPA Bias Signal</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>One way to increase the SNR in <A HREF="#E10" CLASS="XRef">Equation
+(10) </A>is to increase&nbsp;<IMG SRC="eps.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/eps.gif" > . The value of&nbsp;<IMG SRC="eps.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/eps.gif" >
+is dependent on the number of bits output by the <I>D</I> function. In
+<A HREF="#E5" CLASS="XRef">Equation
+(5)
+</A>, <I>D</I> outputs only one bit, but in general the <I>D</I> function
+could output d bits. In this general case&nbsp;<IMG SRC="eps.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/eps.gif" > = <I>dl</I>,
+where <I>l</I> is a constant equal to the voltage difference seen between
+two data words with Hamming weight <I>i</I> and <I>i</I>+1. <A HREF="#F2" CLASS="XRef">Figure
+2</A> showed that these differences can be considered approximately equal,
+for all <I>i</I>.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>When performing the differential power analysis there would be three
+sets used for partitioning:</DIV>
+
+<CENTER>
+<H6 CLASS="equ">
+<A NAME="pgfId-1864"></A><IMG SRC="paper-33.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-33.gif" ></H6></CENTER>
+
+<DIV CLASS="Body">&nbsp;
+<BR>The other DPA equations would all remain the same and the power signals
+in set S<SUB>2</SUB> would not be used. The following signal and noise
+equations would result:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E11"></A><IMG SRC="paper-34.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-34.gif" >&nbsp;&nbsp;&nbsp; (11)</H6></CENTER>
+
+<H3 CLASS="FM2Heading">
+4-bit DPA Attack on DES</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>In DES, a 4-bit <I>D</I> function based on the four bits output from
+an S-box can be used to partition the sets S<SUB>0</SUB> and S<SUB>1</SUB>.
+<A HREF="#E5" CLASS="XRef">Equation
+(5) </A>can be modified to output four bits:</DIV>
+
+<CENTER>
+<H6 CLASS="Equation">
+<A NAME="E12"></A><IMG SRC="paper-35.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-35.gif" >&nbsp;&nbsp;&nbsp; (12)</H6></CENTER>
+
+<DIV CLASS="Body">&nbsp;
+<BR>where SBOX1<SUB>4</SUB>(x) returns all four bits resulting from looking
+up x in SBOX #1. Similar <I>D</I> functions would be used for the other
+S-boxes to enable all the key bits to be eventually determined.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>The question arises as to whether
+<A HREF="#E12" CLASS="XRef">Equation
+(12) </A>will result in partitions that are unbiased enough so that the
+incorrect choices of K<SUB>16</SUB> will result in random power signals
+that average to zero. A simulation was written to see what type of biases
+could be expected. The results for 4-bit DPA and 1-bit DPA using random
+PTI inputs and a typical key are graphed in
+<A HREF="#F5" CLASS="XRef">Figure
+5</A> . The graph shows that the expected Hamming weight biases of the
+S-box #1 lookup for each of the 64 possible key guesses. The correct key
+guess clearly shows the most bias; however in the case of 4-bit DPA there
+is a case where an incorrect key guess has the same magnitude bias as the
+correct key. In this case, if the attacker did not know the sign of the
+expected bias, a very small brute-force search might be needed.
+<BR><MAP NAME="F5-36"></MAP><A NAME="F5"></A><A HREF="javascript:if(confirm('http://www.eecs.uic.edu/~tmesserg/usenix99/html/F5  \n\nThis file was not retrieved by Teleport Pro, because the server reports that this file cannot be found.  \n\nDo you want to open it from the server?'))window.location='http://www.eecs.uic.edu/~tmesserg/usenix99/html/F5'" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/F5"><IMG SRC="paper-36.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-36.gif" USEMAP="#paper-36" ></A></DIV>
+
+<H3 CLASS="FM2Heading">
+Multiple Bit DPA</H3>
+
+<DIV CLASS="Body">In general, other multiple bit <I>D</I> functions can
+be defined. In software implementations, the S-box lookups are performed
+using a load instruction from a table storing all the S-box data. To compress
+the table size, the four bit S-box data is frequently stored in pairs of
+two or more, depending on the word size of the processor. If the attacker
+knows how the S-box data is packed into this table, it would be possible
+to maximize the bit biases even further. For example, power signals with
+S-box lookups that yield many zeros can be separated from signals with
+S-box lookups containing many ones. Again, the number of bits that can
+be biased will proportionally increase the SNR.</DIV>
+
+<DIV CLASS="Body">Another way to mount an attack would be to partition
+S<SUB>0</SUB> and S<SUB>1</SUB> based on the addresses used for the S-box
+lookups rather than the data. The attacker forms two partitions, one that
+maximizes the number of address bus transitions and one that minimizes
+the number of address bus transitions. Power signatures from both partitions
+are averaged and then subtracted. If the address bus is larger than the
+data bus, even larger biases could be achieved.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>When mounting a <I>d</I>-bit DPA attack the attacker may need to use
+more power signals. After all, an average of 1-2<SUP>1-<I>d</I> </SUP>of
+the power signals are placed in partition S<SUB>2</SUB> and are unused.
+This suggests that an attacker cannot increase <I>d</I> too much without
+requiring an excessive number of power signals. An attacker running 1-bit
+DPA using <I>N</I> signals would need <I>N<SUB>d</SUB></I><SUB> </SUB>=
+2<SUP><I>d</I>-<I>1</I></SUP><I>N</I>/<I>d</I><SUP>2</SUP> power signals
+to maintain the same SNR when running <I>d</I>-bit DPA. <A HREF="#T1" CLASS="XRef">Table
+1</A> shows that for small values of <I>d</I> actually fewer power signals
+are necessary and with 8-bit DPA only twice as many signals are needed.
+The main advantage of <I>d</I>-bit DPA is that the resulting signal levels
+are magnified <I>d</I> times.</DIV>
+
+<DIV CLASS="Body">Experiments were run on a smartcard to confirm the effectiveness
+of 4-bit, 8-bit and address-bit DPA. The resulting signal levels are shown
+in <A HREF="#T2" CLASS="XRef">Table2</A>. In these experiments, the 8-bit
+DPA attack was only able to create an average bias of 6.0 bits because
+the S-box data was never all zeros or all ones. The address-bit DPA had
+similar problems so only an average bias of 6.5 bits was achieved. As can
+be seen the signal levels for these multiple bit DPA attacks are much stronger.
+It is clear that countermeasures to DPA attacks need to consider all these
+more powerful attacks.
+<P><A NAME="T1"></A><B>Table1:</B>
+<TABLE BORDER COLS=9 WIDTH="60%" NOSAVE >
+<TR NOSAVE>
+<TD NOSAVE>
+<CENTER>d</CENTER>
+</TD>
+
+<TD>
+<CENTER>1</CENTER>
+</TD>
+
+<TD>
+<CENTER>2</CENTER>
+</TD>
+
+<TD>
+<CENTER>3</CENTER>
+</TD>
+
+<TD>
+<CENTER>4</CENTER>
+</TD>
+
+<TD>
+<CENTER>5</CENTER>
+</TD>
+
+<TD>
+<CENTER>6</CENTER>
+</TD>
+
+<TD>
+<CENTER>7</CENTER>
+</TD>
+
+<TD>
+<CENTER>8</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>N</CENTER>
+</TD>
+
+<TD>
+<CENTER>N</CENTER>
+</TD>
+
+<TD>
+<CENTER>0.5N</CENTER>
+</TD>
+
+<TD>
+<CENTER>0.44N</CENTER>
+</TD>
+
+<TD>
+<CENTER>0.5N</CENTER>
+</TD>
+
+<TD>
+<CENTER>0.64N</CENTER>
+</TD>
+
+<TD>
+<CENTER>0.88N</CENTER>
+</TD>
+
+<TD>
+<CENTER>1.3N</CENTER>
+</TD>
+
+<TD>
+<CENTER>2N</CENTER>
+</TD>
+</TR>
+</TABLE>
+
+<P><A NAME="T2"></A><B>Table 2:</B>
+<TABLE BORDER COLS=5 WIDTH="60%" NOSAVE >
+<TR NOSAVE>
+<TD NOSAVE>
+<CENTER>Attack type:</CENTER>
+</TD>
+
+<TD>
+<CENTER>1-bit DPA</CENTER>
+</TD>
+
+<TD>
+<CENTER>4-bit DPA</CENTER>
+</TD>
+
+<TD>
+<CENTER>8-bit DPA</CENTER>
+</TD>
+
+<TD>
+<CENTER>Address DPA</CENTER>
+</TD>
+</TR>
+
+<TR>
+<TD>
+<CENTER>Signal Level:</CENTER>
+</TD>
+
+<TD>
+<CENTER>9.3 mV</CENTER>
+</TD>
+
+<TD>
+<CENTER>38.5mV</CENTER>
+</TD>
+
+<TD>
+<CENTER>79.5mV</CENTER>
+</TD>
+
+<TD>
+<CENTER>74.4mV</CENTER>
+</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<H3 CLASS="FM2Heading">
+Hiding the DPA Bias Spike</H3>
+
+<DIV CLASS="Body">One suggested solution to prevent DPA attacks is to add
+random calculations that increase the noise level enough to make the DPA
+bias spikes undetectable. The results presented in this paper give some
+indication of how much noise needs to be added. The main goal is to add
+enough random noise to stop an attack, but to add minimal overhead. A rough
+approximation of the noise necessary can be found by looking at the probability
+density function (p.d.f.) of the DPA bias signal plotted in <A HREF="#F6" CLASS="XRef">Figure
+6</A> . The DPA spike obviously stands out from the noise because it is
+very improbable that it was generated by noise. Ideally, the p.d.f. of
+the bias signal would stretch out to cover the DPA spike or the DPA spike
+would be reduced so that it is closer to the noise. One suggested design
+criterion is that the DPA bias spike have equal amounts of noise distributed
+above and below it. This means the median of the noise signal would be
+at the level of the DPA bias spike. If the noise were Guassian, the median
+would be when the SNR=0.67. One could then use <A HREF="#E11" CLASS="XRef">Equation
+(11)
+</A>to determine what amount of noise is necessary to prevent the
+desired level of attack. Of course a different strategy would need to be
+used if the noise p.d.f. was not normal or the noise around the DPA spike
+was non-stationary. The fact that the DPA bias spikes and most of the noise
+energy occurs near the clock edges can also be considered. Less noise may
+be necessary because the DPA spikes occur in these areas of high noise
+energy.</DIV>
+<MAP NAME="paper-37"></MAP><A NAME="F6"></A><A HREF="javascript:if(confirm('http://www.eecs.uic.edu/~tmesserg/usenix99/html/F6  \n\nThis file was not retrieved by Teleport Pro, because the server reports that this file cannot be found.  \n\nDo you want to open it from the server?'))window.location='http://www.eecs.uic.edu/~tmesserg/usenix99/html/F6'" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/F6"><IMG SRC="paper-37.gif" tppabs="http://www.eecs.uic.edu/~tmesserg/usenix99/html/paper-37.gif" USEMAP="#paper-37" ></A>
+<H3 CLASS="FM1Heading">
+Future Work</H3>
+
+<DIV CLASS="Body">Future research in this area will investigate power analysis
+attacks on hardware encryption devices and public-key cryptosystems. Preliminary
+work suggests that such systems will also be vulnerable, but specific attacks
+have not yet been evaluated. The analysis of more symmetric-key algorithms
+is also an important topic that will be investigated. Ways to design and
+implement new algorithms that are not vulnerable to these attacks will
+be researched. The solutions to prevent these types of side-channel attacks
+need to be carefully scrutinized. Comprehensive analysis techniques, testing
+procedures and more advanced modeling methods will be developed.</DIV>
+
+<H3 CLASS="FM1Heading">
+Conclusions</H3>
+
+<DIV CLASS="Body">&nbsp;
+<BR>Attacks that monitor side-channel information and in particular power
+analysis attacks have recently been getting much attention by experts in
+the smartcard industry. The results presented in this paper confirm that
+power analysis attacks can be quite powerful and need to be addressed.
+Ways an attacker might maximize the side-channel signals have been investigated
+and were found to be very effective. Solutions to prevent DPA attacks need
+to consider these advanced attacks in order to provide the maximum amount
+of security. Understanding the noise characteristics of the power signals
+is also very important. The experimental and theoretical results presented
+in this paper hopefully will be helpful for modeling the problem and designing
+the solutions.</DIV>
+
+<DIV CLASS="Body">&nbsp;
+<BR>Much of the concern in industry is how to safeguard existing products.
+These products are mostly software implementations similar to the ones
+examined in this paper. The new attacks and analysis results presented
+in this paper are applicable to these designs and to future designs and
+hardware implementations. When creating a new hardware encryption circuit
+or algorithm implementation, a designer needs to ask the question: "What
+is the strongest potential power analysis attack that can be mounted by
+an attacker?" With the answer to this in mind, a designer can successfully
+protect against power analysis attacks.</DIV>
+
+<H3 CLASS="FM1Heading">
+References</H3>
+
+<OL>
+<DIV CLASS="Reference"><A NAME="[1]"></A>[1] E. Biham and A. Shamir, "Differential
+Cryptanalysis of DES-like Crytptosystems," Journal of Cryptography, Vol.
+4, No. 1, 1991, pp. 3-72.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[2]"></A>[2] M. Matsui, "Linear Cryptanalysis
+Method for DES Cipher," in Proceedings of Advances in Cryptology-Eurocrypt
+`93, Springer-Verlag, 1994, pp. 386-397.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[3]"></A>[3] J. Kelsey, B. Schneier, D.
+Wagner, and C. Hall, "Side Channel Cryptanalysis of Product Ciphers," in
+Proceedings of ESORICS '98, Springer-Verlag, September 1998, pp. 97-110.
+<P><A NAME="[4]"></A>[4] P. Kocher, "Timing Attacks on Implementations
+of Diffie-Hellman, RSA, DSS, and Other Systems," in Proceedings of Advances
+in Cryptology-CRYPTO `96, Springer-Verlag, 1996, pp. 104-113.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[5]"></A>[5] J. F. Dhem, F. Koeune, P.
+A. Leroux, P. Mestr&eacute;, J. J. Quisquater and J. L. Willems, "A Practical
+Implementation of the Timing Attack," in Proceedings of CARDIS 1998, September
+1998.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[6]"></A>[6] P. Kocher, J. Jaffe, and B.
+Jun, "Introduction to Differential Power Analysis and Related Attacks,"
+<A HREF="javascript:if(confirm('http://www.cryptography.com/dpa/technical  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.cryptography.com/dpa/technical'" tppabs="http://www.cryptography.com/dpa/technical">http://www.cryptography.com/dpa/technical</A>,
+1998.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[7]"></A>[7] W. van Eck, "Electromagnetic
+Radiation from Video Display Units: An Eavesdropping Risk," Computers and
+Security, v. 4, 1985, pp. 269-286.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[8]"></A>[8] D. Boneh and R. A. Demillo
+and R. J. Lipton, "On the Importance of Checking Cryptographic Protocols
+for Faults," in Proceedings of Advances in Cryptology-Eurocrypt `97, Springer-Verlag,
+1997, pp. 37-51.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[9]"></A>[9] E. Biham and A. Shamir, "Differential
+Fault Analysis of Secret Key Cryptosystems," in Proceedings of Advances
+in Cryptology-CRYPTO `97, Springer-Verlag, 1997, pp. 513-525.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[10]"></A>[10] R. Anderson and M. Kuhn,
+"Tamper Resistance-A Cautionary Note," The Second USENIX Workshop on Electronic
+Commerce Proceedings, 1996, pp. 1-11.</DIV>
+
+<DIV CLASS="Reference"><A NAME="[11]"></A>[11] Cardtech/Securtech `98 -
+Conference Proceedings, Volume II: Applications, 1998.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[12]"></A>[12] ANSI X.392, "American National
+Standard for Data Encryption Algorithm (DEA)," American Standards Institute,
+1981.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[13]"></A>[13] N. Weste and K. Eshraghian,
+Principles of CMOS VLSI Design, Addison-Wesley Publishing Company, 1993.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[14]"></A>[14] E. R. Davies, Electronics
+Noise and Signal Recovery, San Diego, CA: Academic Press Inc., 1993.
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[15]"></A>[15] P. Wayner, "Code Breaker
+Cracks Smart Cards' Digital Safe," New York Times, June 22, 1998, pp. C1.
+(or
+<A HREF="javascript:if(confirm('http://www.nytimes.com/library/tech/98/06/biztech/articles/22card.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.nytimes.com/library/tech/98/06/biztech/articles/22card.html'" tppabs="http://www.nytimes.com/library/tech/98/06/biztech/articles/22card.html">http://www.nytimes.com/library/tech/98/06/biztech/articles/22card.html</A>).
+<BR>&nbsp;</DIV>
+
+<DIV CLASS="Reference"><A NAME="[16]"></A>[16] A. Papoulis, Probability,
+Random Variables, and Stochastic Processes, New York: McGraw-Hill, Inc.
+1991.</DIV>
+</OL>
+
+<HR>
+<DIV CLASS="footnotes">
+<DIV CLASS="footnote">
+<H6 CLASS="Footnote">
+<SPAN CLASS="footnoteNumber"><SUP>1.</SPAN><A NAME="pgfId-2331"></A></SUP>Partially
+supported by NSF Grant CCR-9800070.</H6>
+</DIV>
+</DIV>
+
+</BODY>
+</HTML>

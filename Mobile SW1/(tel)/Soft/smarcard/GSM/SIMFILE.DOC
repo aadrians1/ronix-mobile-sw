@@ -1,0 +1,231 @@
+#############################################################################
+##################### GSM SIM FILE SYSTEM BY THE ANDROID ####################
+#############################################################################
+
+ NAME         ADDRESS    TIPE    DATES      LEN            DESCRIPCION
+-------      ---------  ------  -------    -----        ---------------
+ ICC-ID      3F00:2FE2    EF      BIN       $0A       CARD SERIAL NUM
+ ADN         7F10:6F3A    EF      REC      100*$1C    ABREVIATED DIALING NUM
+ FDN         7F10:6F3B    EF      REC       10*$1C    FIXED DIALING NUM
+ SMS         7F10:6F3C    EF      REC       15*$B0    SHORT MESSAGE
+ MSISDN      7F10:6F40    EF      REC       05*$1C    MOB STA IS DIALING NUM
+ SMSP        7F10:6F42    EF      REC       03*$2A    SORT  MESSAGE POINTER
+ SMSS        7F10:6F43    EF      BIN       $02       SHORT MESSAGE STATUS
+ LDN         7F10:6F44    EF      CICLIC    10*$1C         DIALING NUM
+ EXT1        7F10:6F4A    EF      REC       05*$0D    EXTENSION 1
+ EXT2        7F10:6F4B    EF      REC       03*$0D    EXTENSION 2
+ LNG         7F20:6F05    EF      BIN       $04       LANGUAGE
+ IMSI        7F20:6F07    EF      BIN       $09       INTER. MOBI.SUBS.IDENT.
+ NOIMPLE     7F20:6F10    EF      BIN
+ NOIMPLE     7F20:6F16    EF      BIN
+ KC          7F20:6F20    EF      BIN       $09       CIPHERING KEY
+ PLMN SELEC  7F20:6F30    EF      BIN       $30       PLMN SELECTOR
+ HPLMN       7F20:6F31    EF      BIN       $01       SEARCH PERIOD
+ ACMMAX      7F20:6F37    EF      BIN       $03       ACOUNT MAXIMUN
+ SST         7F20:6F38    EF      BIN       $04       SIM SERVICE TABLE
+ ACM         7F20:6F39    EF      CYCL      10*$03    ACUMULATED CALL METER
+ CCP         7F20:6F3D    EF      REC       05*$0E    CAPABILITY CONFIG PARAM
+ GID1        7F20:6F3E    EF      BIN       01        GROUP IDENTIFIER LEVEL 1
+ GID2        7F20:6F3F    EF      BIN       01        GROUP IDENTIFIER LEVEL 2
+ PUCT        7F20:6F41    EF      BIN       05        PRICE PER UNIT
+ CBMI        7F20:6F45    EF      BIN       $14       CELL BROADCAST MESSAGE ID
+ BCCH        7F20:6F74    EF      BIN       $10       BROADCAST CONTROL CHANEL
+ ACC         7F20:6F78    EF      BIN       $02       ACCESS CONTROL CLASS
+ FPLMN       7F20:6F7B    EF      BIN       $0C       PLMN  PROHIBIDAS
+ LOCI        7F20:6F7E    EF      BIN       $0B       LOCATION INFORMATION
+ AD          7F20:6FAD    EF      BIN       $03       ADMINISTRATIVE DATA
+ PHASE       7F20:6FAE    EF      BIN       $01       PHASE IDENTIFICATION
+             7F10         DF      BIN
+             7F20         DF      BIN
+ NOIMPLE     7F40         DF      BIN
+
+; ###########################################################################
+; ######################## IMSI / ICCID INFO ################################
+; ###########################################################################
+
+          IMSI                            ICCID               CARD SERIAL
+ --------------------------   -----------------------------  ---------------
+ 08 29 41 70 67 21 00 05 06   98 43 70 02 00 00 98 03 51 F3  20000 0893015-3
+ 08 29 41 70 01 00 26 68 47   98 43 70 10 00 00 51 88 94 F5  01000 0158849-5
+ 08 29 41 70 01 00 26 68 78   98 43 70 10 00 00 51 88 26 F8  01000 0158862-8
+ ----------------------------------------------------------------------------
+ 08 29 41 10 02 00 27 67 78   98 43 65 02 91 46 08 61 83 F6  20196 4801638-6
+ 08 29 41 10 02 00 74 49 25   98 43 65 05 92 46 58 45 30 F6  50296 4855403-6
+
+The first 3 are for SPAIN TELEFONICA (MOVISTAR) and the last 2 are for AIRTEL.
+Whith the four first bytes of IMSI the phone konws the gsm network.
+The four byte determine ($70=TELEFONICA) ($10 AIRTEL).
+The icc id determine the card serial number (Note the nibles are inverted) and
+the country in my TELEFONICA card 89 43 70 is 98 34 70 where 34 is SPAIN and
+70 TELEFONICA.
+IN ALL THE CARDS THAT I HAVE SEEN THE FIRST BYTE IS 98.
+
+I will run succesfully an Airtel SIMLOCKED phone with a Movistar simulated SIM
+changing only the four byte in the IMSI ($70 to $10), and erasing the $10 in
+the forbiden PLMNS file. See below for PLMNS file.
+
+; ###########################################################################
+; ########################### FORBIDEN PLMNS FILE ###########################
+; ###########################################################################
+
+ 70=PLMN MOVISTAR
+ 10=PLMN AIRTEL
+The FILE PLMMNS contains the codes of the forbiden plmns.
+Im my AITEL    SIM card the file contains: 12 F4 70 FF FF FF FF FF FF FF FF FF
+In my MOVISTAR SIM card the file contains: 12 F4 10 FF FF FF FF FF FF FF FF FF
+You can observe that in an Airtel file, Movistar is forbiden and viceversa.
+
+; ###########################################################################
+; ################## SIM CARD ISO 7816-4 COMPATIBLE COMMANDS ################
+; ###########################################################################
+
+COMMAND SYNTAX: CLA INS P1 P2 P3  PROC  DATA  SW1 SW2
+
+CLA    = COMMAND CLASS IN GSM ALWAIS A0
+INS    = INSTRUCTION TYPE
+P1,P2  = PARAMETERS OF INSTRUCION
+P3     = NUMBER OF BYTES TO I/O TO OR FORM THE CARD
+PROC   = PROCEDURE BYTE RETURNED BY THE CARD (NORMALY IS THE INS BYTE)
+DATA   = DATA TO OR FROM THE CARD DEPENDING OF THE INSTRUCTION TYPE
+SW1,SW2= STATUS BYTES (90 00 IS OK)
+
+; ************** SELECT FILE  DF 7F20 ********
+
+ A0 A4 00 00 02   A4   7F 20  9F 16  (9F16... THERE'IS A MESSAGE OF 16 BYTES)
+
+; ************* GET MESSAGE OF P3 BYTES ***************
+
+A0 C0 00 00 16  C0
+
+85 14 00 18 7F 20 02 00 00 FB FF 03 09 09 00 12 04 00 83 8A 83 8A 90 00
+
+; ************* READ BINARY FROM THE CARD ************
+
+A0 B0 00 00 04 B0 03 FF FF FF 90 00 ; READS P3=4 BYTES FROM THE CURRENT FILE
+
+; ************* READ RECORDS *************
+
+A0 B2 01 04 05 B2   11 22 33 44 55  90 00
+
+  READS FROM RECORD (P1=1) OF CURRENT FILE (P3=5) BYTES
+
+; ************* WRITE BINARY TO THE CARD *******
+
+A0 D6 00 00 04 D6 12 34 56 78 90 00 ; WRITE P3=4 BYTES TO THE CURRENT FILE
+
+; **************** RESETS COST CALL COUNTER *********
+
+A0 DC 00 03 03 DC 00 00 00 90 00
+
+;**************** AUTHENTICATE SUBSCRIBER ***********
+
+ AUTHENTICATE 128 BITS:   128 BITS RAND + Ki ----> A3 ----> 32 BITS SRES
+
+A0 88 00 00 10  88   9D B9 6A B7 12 0E 6D 09 E3 A9 A4 B1 E0 AF 71 D7   9F0C
+
+ GET SRED RESPONSE:
+
+A0 C0 00 00 0C  C0   28 6F FA 6C 6A 0C 2A 87 47 2B 7C 00  9000
+
+; ********* VERIFY PIN (5328)  *********
+
+A0 20 00 01 08 20 35 33 32 38 FF FF FF FF 90 00
+
+	90 00	Normal ending
+	6B 00	P1 / P2 Wrong
+	67 08	P3 Wrong
+	98 08	Contradiction to PIN status
+	98 04	Wrong secret code
+	98 40	Wrong secret code - Instruction blocked !
+	92 0x	Update sucessful after x retries
+	92 40 	Update impossible (card EEPROM defective)
+
+P2=01 ---> PIN1
+P2=02 ---> PIN2
+
+; ********* CHANGE PIN (5328) ********
+
+A0 24 00 01 10 24 35 33 32 38 FF FF FF FF 35 33 32 38 FF FF FF FF 90 00
+
+P2=01 ---> PIN1
+P2=02 ---> PIN2
+
+; ********* OPERATE WIWHOUT PIN (5328) *********
+
+A0 26 00 01 08 26 35 33 32 38 FF FF FF FF 90 00
+
+P2=01 ---> PIN1
+P2=02 ---> PIN2
+
+; ********* OPERATE WITH PIN (5328) *********
+
+A0 28 00 01 08 28 35 33 32 38 FF FF FF FF 90 00
+
+P2=01 ---> PIN1
+P2=02 ---> PIN2
+
+; **** UNBLOCK PIN WITH PUK ****
+
+A0 2C 00 00 10 2C 35 38 37 36 39 39 30 38 35 33 32 38 FF FF FF FF 90 00
+
+P2=01 ---> PIN1
+P2=02 ---> PIN2
+
+; ****** INTERPRETACION MENSAGE 7F20  22 BYTES ********
+
+A0 A4 00 00 02 A4 7F 20 9F 16    ; SELECT DF 7F20
+
+A0 C0 00 00 16 C0                ; GET MESAGE
+85 14 00 18 7F 20 02 00 00 FB FF 03 09 09 00 12 04 00 83 8A 83 8A 90 00
+
+ 1-4       NI IDEA
+ 6-7       NOBRE FICHERO  (7F20)
+ 8-13      NI IDEA
+ 14        HIGH NIBLE (8=PIN1 OFF , 0=PIN1 ON)
+ 19        LOW NIBLE PIN1 COUNTER
+ 20        LOW NIBLE PUK1 CUNTER
+ 21        LOW NIBLE PIN2 COUNTER
+ 22        LOW NIBLE PUK2 COUNTER
+
+; ############################# GSM SECURITY ################################
+
+THE A3 & A8 ALGORITHMS ARE KEY DEPENDENT ONE WAY HASH FUNCTIONS.
+
+THE SUBSCRIBER IDENTIFICATION IS PERFORMED WHITH THE IMSI (INTERNATIONAL MOBILE
+SUBSCRIBERS IDENTIFICATION) AND THE KI (INDIVIDUAL SUBSCRIBERS KEY).
+
+	The GSM network authenticates the identity of the subscriber
+through the use of a challenge-response mechanism.  A 128-bit random
+number (RAND) is sent to the MS.  The MS computes the 32-bit signed
+response (SRES) based on the encryption of the random number (RAND)
+with the authentication algorithm (A3) using the individual subscriber
+authentication key (Ki). Upon receiving the signed response (SRES) from
+the subscriber, the GSM network repeats the calculation to verify the
+identity of the subscriber.  Note that the individual subscriber
+authentication key (Ki) is never transmitted over the radio channel.  It is
+present in the subscriber's SIM, as well as the AUC, HLR, and VLR
+databases. If the received SRES agrees with the calculated value, the MS has
+been successfully authenticated and may continue.  If the values do not match,
+the connection is terminated and an authentication failure indicated to the
+MS.
+	The SIM contains the ciphering key generating algorithm (A8)
+which is used to produce the 64-bit ciphering key (Kc).  The ciphering key 
+is computed by applying the same random number (RAND) used in the 
+authentication process to the ciphering key generating algorithm (A8) with 
+the individual subscriber authentication key (Ki).The ciphering key (Kc) is
+used to encrypt and decrypt the data between the MS and BS.
+
+	To ensure subscriber identity confidentiality, the Temporary 
+Mobile Subscriber Identity (TMSI) is used.  The TMSI is sent to the 
+mobile station after the authentication and encryption procedures have 
+taken place.  The mobile station responds by confirming reception of the 
+TMSI.  The TMSI is valid in the location area in which it was issued.  For 
+communications outside the location area, the Location Area Identification 
+(LAI) is necessary in addition to the TMSI.
+
+	Encrypted voice and data communications between the MS and the 
+network is accomplished through use of the ciphering algorithm A5.  
+Encrypted communication  is initiated by a ciphering mode request 
+command from the GSM network.  Upon receipt of this command, the 
+mobile station begins encryption and decryption of data using the 
+ciphering algorithm (A5) and the ciphering key (Kc).

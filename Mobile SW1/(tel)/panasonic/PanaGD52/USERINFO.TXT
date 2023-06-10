@@ -1,0 +1,23 @@
+Hello,
+
+Your password is:     Tom     (case sensitive !!!)
+
+Note:
+
+-  Interface must be powered with external power.
+   Please, see the shematic file.
+
+-  Don't try to change or modify any of installed
+   files. If any file has changed or virus infected,
+   SW could be destroyed !!! 
+
+-  If any error is happened SW will create HPr52Error.log
+   file in application folder, and you must send this file 
+   to me always.
+
+-  If hack attempt cause software error I will not help you
+   to restore your software !!!
+
+
+Regards,
+Ghost3D
