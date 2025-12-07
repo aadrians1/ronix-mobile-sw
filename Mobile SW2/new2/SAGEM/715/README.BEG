@@ -1,0 +1,72 @@
+Quelques indications.                                                  18/10/95
+                                                                     J. Yp-Tcha
+
+- Num‚ro de r‚f‚rence du logiciel applicatif : 23317295-5
+- Auteur : SAGEM.
+
+
+Comment utiliser le logiciel d'installation INSTALL ?
+
+
+   1) A:<Entr‚e> puis INSTALL<Entr‚e> ou B:<Entr‚e> puis INSTALL<Entr‚e> selon 
+      que la disquette soit en A ou B,
+
+   2) Lire attentivement cette notice d'utilisation,
+
+   3) Apres l'affichage de l'espace disque n‚cessaire … l'installation, saisir 
+      le chemin complet en absolu (lecteur+r‚pertoire(s) … partir de la racine)
+      o— installer le TELECHargement, tout en sachant que ce chemin complet 
+      peut se d‚composer en autant de sous-r‚pertoire que le veut l'utilisateur
+      et que le permet la saisie. Cette derniŠre ‚tant assist‚e de multiples 
+      contr“les.
+
+      - Format d'un r‚pertoire ou sous-r‚pertoire : Format DOS soit un maximum
+        de 12 caractŠres dont 3 d'extension.
+
+      - CaractŠres autoris‚s en saisie :
+        [A .. Z] : Caract‚res alphab‚tiques minuscules et majuscules,
+        [0 .. 9] : CaractŠres num‚riques,
+        [  _   ] : Soulign‚,
+        [/ et \] : D‚limiteurs de r‚pertoires et sous-r‚pertoires uniquement,
+        [  :   ] : D‚limiteur de lecteur,
+        [  .   ] : D‚limiteur d'extension de r‚pertoire ou sous-r‚pertoire,
+
+      - Si un d‚limiteur de r‚pertoire est positionn‚ en fin de saisie, l'outil
+        renvoiera l'erreur suivante : "<> : Sous-r‚pertoire vide", signifiant
+        qu'un r‚pertoire ne peut se terminer par le caract‚re \.
+
+      - Quelques exemples :
+  
+         TELECH             r‚sultat n‚gatif (pas de lecteur)
+         C:\TELECH          r‚sultat positif
+         C:TELECH           r‚sultat n‚gatif (le chemin doit ˆtre en absolu)
+         C:\REP1\REP2\REP3  r‚sultat positif
+         C:\REP1\REP2\      r‚sultat n‚gatif (pas de \ en fin de saisie)
+
+      - En cas de saisie incorrecte, une erreur est choisie parmis la liste
+        ci-aprŠs et affich‚e. A chacune de ces erreurs, sera associ‚e la cause
+        de l'erreur.
+
+        "Espace disque disponible insuffisant",
+        "Erreur en cr‚ation",
+        "Erreur en ouverture",
+        "Erreur en ‚criture",
+        "D‚limiteur de lecteur (:) inexistant ou incorrect",
+        "Saisie incorrecte",
+        "Identifiant de lecteur incorrect. Attendu : A, B, C, D, E, F",
+        "D‚limiteur de r‚pertoire (\) inexistant ou incorrect",
+        "Sous-r‚pertoire vide",
+        "R‚pertoire hors format DOS. Max 12 caractŠres",
+        "D‚limiteur d'extension de fichier (.) trop fr‚quent",
+        "Inclusion de caractŠres non autoris‚s",
+        "R‚pertoire existe d‚ja, voulez-vous l'ecraser (O,o,N,n) :",
+        "R‚pertoire hors format DOS. <8>.<3>"
+
+      - La phase de contr“le de saisie ‚tant pass‚e avec succŠs, toute erreurs
+        provoquera l'affichage de cette derniŠre, et le retour en saisie du
+        chemin complet.
+
+   4) Si la saisie est correcte, l'installation d‚marrera et ‚voluera en
+      pourcentage. A l'installation complŠte, une pause sera effectu‚e jusqu'…
+      ce qu'un appui touche d‚clenche la lecture du fichier "README.END" dans
+      lequel se trouvent des conseils d'utilisation li‚s au TELECHargement.

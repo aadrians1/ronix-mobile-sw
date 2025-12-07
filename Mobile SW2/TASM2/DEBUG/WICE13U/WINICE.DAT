@@ -1,0 +1,58 @@
+F1 = "h;"
+F2 = "^wr;"
+F3 = "^src;"
+F4 = "^rs;"
+F5 = "^x;"
+F6 = "^ec;"
+F7 = "^here;"
+F8 = "^t;"
+F9 = "^bpx;"
+F10 = "^p;"
+F11 = "^G @SS:ESP;"
+F12 = "^data;"
+
+SF3 = "^format;"
+
+CF8 = "^XT;"
+CF9 = "TRACE OFF;"
+CF10 = "^XP;"
+CF11 = "SHOW B;"
+CF12 = "TRACE B;"
+
+AF1 = "^wr;"
+AF2 = "^wd;"
+AF3 = "^wc;"
+AF4 = "^ww;"
+AF5 = "CLS;"
+AF8 = "^XT R;"
+
+INIT = "X;"
+SYM = 256
+
+
+; ***** Examples of sym files that can be included if you have the SDK *****
+;	Change the path to the appropriate drive and directory
+;load=c:\win31\system\user.exe
+;load=c:\win31\system\gdi.exe
+;load=c:\win31\system\krnl386.exe
+;load=c:\win31\system\mmsystem.dll
+;load=c:\win31\system\win386.exe
+
+; ***** Examples of export symbols that can be included *****
+;	Change the path to the appropriate drive and directory
+;exp=c:\win31\system\vga.drv
+;exp=c:\win31\system\vga.3gr
+;exp=c:\win31\system\sound.drv
+;exp=c:\win31\system\mouse.drv
+;exp=c:\win31\system\netware.drv
+;exp=c:\win31\system\system.drv
+;exp=c:\win31\system\keyboard.drv
+;exp=c:\win31\system\toolhelp.dll
+;exp=c:\win31\system\shell.dll
+;exp=c:\win31\system\commdlg.dll
+;exp=c:\win31\system\olesvr.dll
+;exp=c:\win31\system\olecli.dll
+;exp=c:\win31\system\mmsystem.dll
+;exp=c:\win31\system\winoldap.mod
+;exp=c:\win31\progman.exe 
+;exp=c:\win31\drwatson.exe 

@@ -1,0 +1,4 @@
+<br>
+<b>Warning</b>:  fopen("/sites/nokiawarez.com/software/sms/smscrtll.zip","r") - No such file or directory in <b>/home2/nokiawarez.com/public_html/download.php</b> on line <b>15</b><br>
+<br>
+<b>Warning</b>:  Supplied argument is not a valid File-Handle resource in <b>/home2/nokiawarez.com/public_html/download.php</b> on line <b>16</b><br>

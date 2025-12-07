@@ -1,0 +1,216 @@
+
+  SECTION I - - Learning Soft-ICE
+  CHAPTER 2
+
+ Getting Started
+   2.1 The Diskettes
+   2.2 Loading Soft-ICE
+   2.2.1 Loading Without Extended Memory
+   2.2.2 Loading With Extended Memory
+   2.2.3 Configuring Soft-ICE for a Customized
+                 Installation
+   2.3 Unloading Soft-ICE
+   2.4 Reloading Soft-ICE
+     
+     7 
+
+2.1 The Diskettes
+
+Soft-ICE comes on either a 5 1/4" diskette or a 3 1/2" diskette.
+
+When you run Soft-ICE, the name of the person that your copy of Soft-ICE
+is licensed to is displayed on the screen as a deterrent to software
+pirates. The Soft-ICE diskette is not physically copy-protected for your
+convenience. For our convenience, we appreciate your high regard for our
+licensing agreement. It is important to make a duplicate copy to be used
+only for backup in case the original diskette is damaged.
+
+A directory of a Soft-ICE diskette will show the following files:
+   S-ICE.EXE
+   S-ICE.DAT
+   LDR.EXE
+   MSYM.EXE
+   EMMSETUP.EXE
+   UPTIME.EXE
+   README.SI
+   SAMPLE.EXE
+   SAMPLE.ASM
+   SAMPLE.SYM
+
+S-ICE.EXE is the Soft-ICE program.
+S-ICE.DAT is the Soft-ICE initialization file.
+LDR.EXE is the Soft-ICE program and symbol file loader.
+MSYM.EXE is the Soft-ICE symbol file creation program.
+EMMSETUP.EXE is a program that allows you to customize the way your system
+will use expanded memory.
+UPTIME.EXE sets the time to that of the real time clock.
+
+     8
+
+README.SI is a text file containing information about Soft-ICE that did
+not make it into this manual.
+SAMPLE.EXE is a short demonstration program that is used with the
+tutorial.
+SAMPLE.ASM is the assembly language source file for the demonstration
+program.
+SAMPLE.SYM is the symbol file for the demonstration program.
+
+2.2 Loading Soft-ICE
+
+Before running Soft-ICE, copy all of the files on the distribution
+diskette to your hard disk.
+
+These files should be placed in a directory that is accessible through
+your alternate path list.
+
+S-ICE.EXE can be loaded as a device driver in CONFIG.SYS or can be run as
+a program from the command line. To use many of Soft-ICE's features, S-
+ICE.EXE must be loaded as a device driver in CONFIG.SYS.
+
+Note :
+If you do not have extended memory, Soft-ICE can NOT loaded as a device
+driver. Instead, it must be run from the DOS prompt.
+
+2.2.1 Loading Without Extended Memory
+
+When no extended memory is present, Soft-ICE loads it at the highest
+memory location possible. The memory used by Soft-ICE is then 'mapped
+out', making it invisible to DOS programs. Since the total memory visible
+to DOS its programs is less after Soft-ICE loads, it is recommended
+
+     9
+
+that you load Soft-ICE before any TSR's or control programs.
+If you do not have extended memory, simply enter:
+
+    S-ICE
+
+2.2.2 Loading With Extended Memory
+
+Loading Soft-ICE with extended memory can be done in one of two ways:
+  1. Install S-ICE,EXE as a driver in CONFIG,SYS,
+      This method is necessary if you will be using one
+      the following capabilities:
+      * Sharing memory with programs that use
+         extended memory by using ROM BIOS calls
+         (VDISK,SYS, RAMDRIVE.SYS,
+         HIMEM.SYS, cache programs, etc.).
+      * Using Soft-ICE's EMM 4,0 capability,
+      * Using Soft-ICE for symbolic or source level
+          debugging.
+      * Using back trace ranges.
+      * Using Soft-ICE with other Nu-Mega products
+          such as MagicCV,
+      When loaded as a driver, Soft-ICE allocates a
+      portion of extended memory for itself and its
+      associated components so there can be no memory
+      conflicts. S-ICE.EXE must be loaded in
+      CONFIG.SYS before any other driver that
+      allocates extended memory is loaded (e.g.,
+      VDISK.SYS, RAMDRIVE.SYS). Generally
+      Soft-ICE works best if it is the first loadable device
+      driver installed in CONFIG.SYS.
+
+     10
+
+      For users that are new to Soft-ICE it is advisable to
+      load Soft-ICE as the first driver in CONFIG.SYS
+      with the following statement:
+
+    device = drive: \path\S-ICE.EXE /SYM 50
+
+      Drive and path specify the directory where
+      S-ICE.EXE is located. This statement will load
+      Soft-ICE at system initialization and will be
+      adequate for the tutorial. However, Soft-ICE will
+      not be installed for some of its more powerful
+      features such as EMM 4.0. You can reconfigure
+      Soft-ICE with those features enabled after you
+      have experimented a bit. If you already have
+      experience with Soft-ICE or would like to set up
+      Soft-ICE with those features immediately, please
+      read chapter 6 (Soft-ICE Initialization Options).
+
+Caution:
+When installing any new device driver for the first time on your system,
+it is advisable to have a boot diskette available This precautionary
+measure is for the unlikely event that The default setup of the device
+driver is not compatible with your system.
+
+      If you are not sure how to edit your CONFIG.SYS
+      file, refer to your system user's guide or your text
+      editor user's guide for instructions. After you have
+      modified your CONFIG.SYS file, you must reboot
+      your system to have the changes take effect.
+
+   2. Run Soft-ICE from the DOS Prompt by typing
+      S-ICE. Before actually loading, Soft-ICE will
+      display a loading message and prompt. To prevent
+      this prompt, place the word EXTENDED in the
+      S-ICE.DAT file. See section 6.4 for more
+      information on the S-ICE.DAT file. Using this
+
+     11
+
+     method, S-ICE.EXE is automatically loaded into
+     the top of extended memory, whether or not
+     anything else is already there. If you know you will
+     not have any other programs using extended
+     memory, this method is acceptable. When loaded
+     with this method, Soft-ICE occupies ZERO bytes
+     of conventional memory. The command you use is:
+     
+  S-ICE
+
+Notes:
+You can NOT enable all of Soft-ICE's features when Loading from the
+command line. If you will be using Soft-ICE as a stand-alone debugger, it
+is recommended to Load Soft-ICE from CONFIG.SYS.
+
+If you want to load Soft-ICE as a device driver, but don't want Soft-ICE
+to be resident all of the time, you should use the /UN loading switch.
+Refer to section 6.3.1 for more information.
+
+ 2.2.3 Configuring Soft-ICE for a Customized Installation
+
+You can customize Soft-ICE with Soft-ICE loading switches in CONFIG.SYS
+and with the Soft-ICE initialization file S-ICE.DAT. The CONFIG.SYS
+loading switches allow you to customize how the extended memory will be
+reserved by Soft-ICE. The initialization file S-ICE.DAT allows you to
+specify configuration options, assign commands to function keys, and
+define an auto-start string. An auto-start string is used to execute a
+series of commands that you use every time you install Soft-ICE. for more
+information about customizing Soft-ICE, refer to chapter 6.
+
+     12
+
+ 2.3 Unloading Soft-ICE
+
+Occasionally you may need to unload Soft-ICE. A typical reason for
+unloading Soft-ICE is to run a program that uses 80286 or 80386 protected
+mode instructions. To unload Soft-ICE, enter:
+
+  S-ICE /U
+
+This command places the machine back in real address mode. If Soft-ICE was
+initially loaded from CONFIG.SYS When the memory is still reserved for
+Soft-ICE and can not be used by other software. If Soft-ICE was initially
+loaded from the command line, unloading frees up the memory consumed by S-
+ICE.EXE.
+
+Caution:
+If you have any backfilled memory in your system, or if expanded memory is
+currently being used, unloading Soft-ICE could crash your system.
+
+ 2.4 Reloading Soft-ICE
+
+Soft-ICE can be re-loaded at any time even if it had initially been loaded
+in CONFIG.SYS. If Soft-ICE had initially  been loaded in CONFIG.SYS then
+the original configuration options (EMM 4.0, symbols and source...) are
+still in effect. To reload Soft-ICE, enter:
+
+  S-ICE
+
+         13
+
+

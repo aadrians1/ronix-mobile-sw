@@ -1,0 +1,117 @@
+Soft-ICE/W 1.0 README FILE
+
+This file contains important information that is not in the user manual.
+Most of this information concerns trouble shooting problems.  Also see the
+troubleshooting section of the Soft-ICE/W manual.
+
+INSTALLING Soft-ICE/W ICONS
+___________________________
+
+A program called INSTALL.EXE on the release disk will automatically install
+the icons for the Soft-ICE/W on a Soft-ICE/W menu.  Copy all of the
+files from the root directory of the distribution diskette to a sub-directory
+on your hard drive, then run INSTALL.EXE from Windows by selecting FILE
+followed by RUN from the program manager.  When RUN prompts for the
+file name, enter hard-disk-path\INSTALL.EXE.
+
+RUNNING OUT OF MEMORY
+_____________________
+
+The default WINICE.DAT reserves 256K of symbol memory with the SYM
+directive.  If you do not need that much memory for symbols and source
+you can reduce this.
+
+LOADING MULTIPLE SYMBOL TABLES WITH THE LOAD DIRECTIVE
+______________________________________________________
+
+This item concerns loading multiple files from the LOAD directive
+in WINICE.DAT or from the WINICE /load switch.	If an error is encountered
+when loading one of the files, no further symbol table loading is done.
+If there is a loading problem with one of the files, Soft-ICE/W
+will prompt you for a key.  You can press Ctrl C at this point to exit from
+Soft-ICE/W back to DOS or press any key to continue.  If you continue
+then all further LOAD statements or /load switches will be ignored.
+
+POPPING UP FROM A SERIAL TERMINAL
+_________________________________
+
+If you are using Soft-ICE/W from a serial terminal, you should
+place the COM keyword in WINICE.DAT.  This will allow popping
+up from the serial terminal.  The syntax of the COM keyword is:
+
+	COMn = ON
+
+Where n is 1, 2, 3 or 4 depending on which COM port will be
+used.  You can alternatively place the /COMn on the Soft-ICE/W
+command line.
+
+USING Soft-ICE/W ON NOVELL NetWare Networks
+___________________________________________
+
+When Soft-ICE/W is popped up, all system activity including interrupts
+is halted.  If Soft-ICE/W is popped up for more than 15 minutes the server
+may disconnect your workstation from the network.  Under most conditions
+this timeout is long enough, but if it becomes a problem you can pop out
+of Soft-ICE/W and back in every 10 minutes or so.
+
+Under Netware 3.X, you can configure the server to increase its timeout with
+one or more SET statements on the server's consol command line (these are
+usually put in AUTOEXEC.NCF.  The syntax of the SET statement is:
+
+		SET name = value
+
+value is in seconds or in packets depending on the name.
+
+There are 3 names that are appropriate:
+
+	1. "NUMBER OF WATCHDOG PACKETS"
+		limits:   5 to 100
+		default:  10
+
+	2. "DELAY BETWEEN WATCHDOG PACKETS"
+		limits:   9.9 seconds to 10 minutes 26.2 seconds
+		default:  59.3 seconds
+
+	3. "DELAY BEFORE FIRST WATCHDOG PACKET"
+		limits:   15.7 seconds to 20 minutes 52.3 seconds
+		default:  4 minutes 56.6 seconds
+
+Example:
+
+	SET NUMBER OF WATCHDOG PACKETS = 100
+
+If you enter this command on the server's command line, the
+total timeout time to be increased from approximately
+15 minutes to approximately 2 hours.
+
+USING THE DEBUGGING VERSION OF WIN386.EXE
+___________________________________________
+
+If you are developing VxDs and using the debugging version of WIN386.EXE
+you must use the /K switch on the WINICE command line or the KBD=TRUE
+directive in WINICE.DAT.  See APPENDIX B "Using Soft-ICE/W with the Windows
+Debugging Kernel" in the reference guide for more information.
+
+UNRELEASED VERSIONS OF WINDOWS
+______________________________
+
+Soft-ICE/W is only guaranteed to work, on Windows 3.0.
+
+WLDR HANGING WHILE LOADING SOURCE
+_________________________________
+
+There may be a memory window where WLDR will hang while loading source files.
+If this occurs, increase the amount of symbol memory int the SYM directive
+in WINICE.DAT.
+
+VM MODE OR V86 MODE
+___________________
+
+When in a DOS Virtual machine, Soft-ICE/W will display 'V86' in the line
+above the code window.	The reference guide states that 'VM' is displayed.
+
+QEMM 6.0 USERS
+______________
+
+You can not use 'stealth' mode in QEMM 6.0 when using Soft-ICE/W.  They are
+being too stealthy, we can't find the video pointers.

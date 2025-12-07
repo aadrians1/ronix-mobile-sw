@@ -1,0 +1,65 @@
+Anleitung fur Nokia Unlocker V1.15 (NU 3001 SPUnlock)  fur alle Nokia Handys
+
+
+Also los Leute bitte lest die Anleitung genau durch, sonst schafft ihr das nicht mit der
+Installation ;)
+
+So als erstes hier mal Saugen <<< NU1.15.ace >>> 
+
+Nun denn, erster Schritt PC "neu Starten" und ab ins Bios dort das Datum verandern auf "1999"
+ihr lest richtig das ist der Haken bei der Sache sonst funzt das Ding nicht.
+
+Gut wenn ihr das gemacht habt dann bitte das Progy mal installieren es kommt gleich mal zu
+beginn irgend so ein Schwachsinn von wegen Demo und bla bla bla .
+Ignoriert das einfach mal geht einfach auf weiter dann kommt die abfrage zum Namen und 
+Company gebt einfach irgend was ein .
+
+Ja dann installiert sich das Progy und ihr werdet aufgefordert zum Neustart, nach dem 
+Neustart habt ihr plotzlich ein Napstersymbol auf dem Monitor :) keine Sorge ist nicht 
+Napster " runafterstart.exe" nennt sich das es ist der NU Enabler der die Hasp.exe 
+aktiviert. Diesen musst ihr nach jedem Neustart erneut aktivieren .
+
+
+Ok schlie?t das Interface dann an euer Phone an und wahlt euer Handy aus
+geht auf Unlock "Press power button on jo phone for the short time" 
+schaltet das Phone einfach kurz ein dann nimmt die Software Kontakt zum Handy auf. 
+
+Gut das machen wir dann mal und zeigt als erstes die Version des Handy an, 
+z.b beim 3210 V05.36 25-0700 NSE-8 
+Flash ID:000898890 Cheksum ...OK Erasing memory...OK Sending application.OK
+Phone Unlock OK.
+
+Akku raus Sim rein und freuen ;) 
+
+
+Ja das war es eigentlich auch schon das Progy wurde mit folgenden Phones getestet.
+
+3210 - 5.31, 5.36, 6.00
+3310 - 3.24, 4.02, 4,06, 4.18, 4.19, 4.23, 4.24, 4.35, (4.45) >>> ??
+3330 - 3.05, 3.10, 3.12, 4.12, 4.16
+5110 - 5.28, 5.29, 5.30
+6150 - 5.22, 5.23
+6210 - 3.01, 3.04, 3.74, 4.08, 4.27, 4.36, 5.01, 5.02, 5.17
+6250 - 4.01, 4.04, 4.05, 5.00
+7110 - 4.73, 4.88, 4.94, 5.00, 5.01
+8210 - 5.08, 5.11, 5.16, 5.20, 5.21, 5.25, 5.26, 5.27, 5.28
+8250 - 3.08, 3.12, 3.18
+8290 - 5.06, 5.07
+8850 - 5.11, 5.16, 5.20, 5.21, 5.25, 5.26, 5.27, 5.28
+
+
+Beim 3310 4.45 wei? ich es leider nicht ob es geht oder nicht bitte jemand der eines hat 
+um Test good luck :)
+
+
+bei Fragen im Forum posten oder im Chat nach fragen .
+
+
+Powered by _Schriftrolle & Nicole82 ;-)
+
+
+Greets to Spunlock and all Gsm-Freaks Coderz & Hackerz :) 
+
+ 
+
+ 

@@ -1,0 +1,8 @@
+PROCESOR :Hybryd
+EEPROM   :93C06 
+
+Wprowadzanie : 
+Wywol./Zatw. : 
+
+UWAGI : Wyciac dziure w Hybrydzie
+

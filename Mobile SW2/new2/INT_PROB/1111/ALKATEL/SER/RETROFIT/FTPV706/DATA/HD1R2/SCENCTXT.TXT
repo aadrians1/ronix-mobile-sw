@@ -1,0 +1,70 @@
+!===========================================================================
+!   
+!   Fichier de paramétrage des contextes pour scenarii
+!---------------------------------------------------------------------------
+!---------------------------------------------------------------------------
+! ! A T T E N T I O N, notes importantes (daniel buis, September 12, 1995)
+!
+! 1) TOUS les champs doivent être renseignés.
+!
+! 2) Le champ STEP est utilisé pour préciser la taille
+!    pour les types 'String' (tableau de caractères).
+!
+! 3) Le champ VALEUR est utilisé pour préciser la taille
+!    pour les types 'TabInt8' (tableau d'octets).
+!    Les champs MIN, MAX et STEP sont applicables à tous les éléments du tableau.
+!
+! 4) Le champ VALEUR est utilisé pour préciser le rang de l'élément dans le tableau d'octets.
+!    pour les types 'EltTab'.
+!
+!---------------------------------------------------------------------------
+!   Syntaxe applicable :
+!   -------------------
+!   avec ! en colonne 1, c'est une ligne de commentaire
+!   avec # en colonne 1, c'est une ligne de définition d'un contexte
+!
+!   Signification des champs : (NE : non exploité, pour info ou usage ultérieur)
+!   -------------------------  (** :     exploité actuellemnt                  )
+!   NE  -> Mnémonique identifiant de contexte
+!   **  -> La valeur de l'identifiant de contexte        ; tel que défini dans INC2/PLPARAMS.H
+!   **  -> La valeur de l'identifiant de contrôle associé; s'il existe (0 sinon)  (voir PANELHD0.TXT)
+!   **  -> Le type de ce contexte dans : { Int8, Int16, Int32, Double, Float, String, TabInt8, EltTab }
+!   **  -> La valeur par défaut de ce contexte
+!   **  -> La valeur courante   de ce contexte
+!   **  -> La valeur minimale   de ce contexte
+!   **  -> La valeur maximale   de ce contexte
+!   NE  -> L'unité de la valeur de ce contexte
+!   NE  -> La valeur du pas     de ce contexte
+!   NE  -> L'unité du pas       de ce contexte
+!
+!===========================================================================
+!
+! CONSTANTES POUR APPELS DRIVERS
+!
+#;NumVoie         ;1 ; 0 ; Int8; 1  ; 1; 1  ; 8 ; [none] ; 1   ; [none]
+#;NomFichier      ;2 ; 0 ; String  ; 0 ; telech.scn ;  0    ; 1     ; [none]; 13   ; [none]
+#;RepFichier      ;3 ; 0 ; String  ; 0 ; c:\resu\hd1r2\ ;  0    ; 1     ; [none]; 255   ; [none]
+#;TypeBatch       ;4 ; 0 ; Int16; 7  ; 7 ; 0  ; 8 ; [none] ; 1   ; [none]
+#;CodeResultReq   ;5 ; 0 ; Int8; 4  ; 4 ; 0  ; 255 ; [none] ; 1   ; [none]
+#;CodeResultCnf   ;6 ; 0 ; Int8; 0  ; 0 ; 0  ; 255 ; [none] ; 1   ; [none]
+#;Adress          ;7 ; 0 ; Int32; 0  ; 4294938720 ; 0  ; 4294967295 ; [none] ; 1   ; [none]
+#;Data            ;8 ; 0 ; TabInt8; 256; 0 ; 0 ; 255    ; [none] ; 1 ; [none]
+#;Length          ;9 ; 0 ; Int32; 1  ; 1 ; 1  ; 256 ; [none] ; 1   ; [none]
+#;SizeFlash       ;10 ; 0 ; Int16; 0  ; 8 ; 0  ; 32 ; [none] ; 1   ; [none]
+#;ValConfig8M     ;11 ; 0 ; Int16; 0  ; 0 ; 0  ; 1 ; [none] ; 1   ; [none]
+#;ValConfig32M    ;12 ; 0 ; Int16; 0  ; 0 ; 0  ; 1 ; [none] ; 1   ; [none]
+#;TypeDest        ;13 ; 0 ; Int8; 0  ; 0 ; 0  ; 1 ; [none] ; 1   ; [none]
+#;DestAdress      ;14 ; 0 ; Int32; 0  ; 4294938720 ; 0  ; 4294967295 ; [none] ; 1   ; [none]
+#;OrigAdress      ;15 ; 0 ; Int32; 0  ; 4294938720 ; 0  ; 4294967295 ; [none] ; 1   ; [none]
+#;NbAdress        ;16 ; 0 ; Int16; 1  ; 1 ; 0  ; 1 ; [none] ; 1   ; [none]
+#;BeginAdress     ;17 ; 0 ; Int32; 0  ; 4294938720 ; 0  ; 4294967295 ; [none] ; 1   ; [none]
+#;EndAdress       ;18 ; 0 ; Int32; 0  ; 4294938720 ; 0  ; 4294967295 ; [none] ; 1   ; [none]
+#;Checksum        ;19 ; 0 ; TabInt8; 2; 0 ; 0 ; 255    ; [none] ; 1 ; [none]
+#;MessUser        ;20 ; 0 ; String  ; 0 ; _ ;  0    ; 1     ; [none]; 20   ; [none]
+#;TypeFile        ;21 ; 0 ; Int16; 7  ; 7 ; 0  ; 8 ; [none] ; 1   ; [none]
+#;OEH_ConstTabAdress ;22 ; 0 ; TabInt32   ; 16 ; 16     ; 65536 ; 4128768 ; [none] ; 1 ; [none]
+#;DataCompare1    ;23 ; 0 ; TabInt8; 256; 0 ; 0 ; 255    ; [none] ; 1 ; [none]
+#;DataCompare2    ;24 ; 0 ; TabInt8; 256; 0 ; 0 ; 255    ; [none] ; 1 ; [none]
+#;Label           ;25 ; 0 ; Int32; 0  ; 0 ; 0  ; 1000 ; [none] ; 1   ; [none]
+!
+! VARIABLES DU SCENARIO : à partir de 100

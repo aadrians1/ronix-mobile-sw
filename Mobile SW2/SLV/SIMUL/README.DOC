@@ -1,0 +1,10 @@
+This is an easy-to-use simulator for the new Scenix microcontroller,
+which is a superset of the PIC16C5x.
+
+For a quick idea of what it does, run the DEMO batch file then hit the
+spacebar a few times or hit F6.
+
+For a better idea of what it does, hit F1 to see the help screen.
+
+As a last resort try reading SXSIM.DOC.
+

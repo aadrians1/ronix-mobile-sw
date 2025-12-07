@@ -1,0 +1,757 @@
+                             Quaid Analyzer
+                                May 1988
+
+
+ This progran allows diagnosis of programs for IBM computers, especially
+programs for which the source is unavailable, or which contain
+countermeasures to thwart tracing of their functions. You can single
+step thru a program and follow the processor instructions and registers.
+Virtually all areas of memory are available for your inspection. 
+
+
+Common Keys
+  These keys are effective everywhere.
+
+ESC   This will get you out of an area and eventually bring you back to
+      the Main Menu.
+F1    Help key
+F2    Brings up Instruction Display
+F3    Vector Display
+F4    Trace Display
+F5    ACSII Table
+F6    Users Screen. This is what was interrupted.
+F7    Exit. This is the same as selecting EXIT TO USER at the Main
+      Menu when QA has intervened, or the same as EXIT TO DOS when
+      QA is in temporary memory.
+PGUP  Up one line
+PGDN  down one line
+HOME  Cursor to top or back one screen
+END   Cursor to bottom or foward one screen.
+
+
+                    Invoking Quaid Analyzer
+
+  You have to pay attention to where Quaid Analyzer is located in memory,
+since it must not interfere with the software being diagnosed.
+
+    The command QA at the DOS prompt puts Quaid into
+    temporary memory. You will see the Main Menu. Temporary
+    memory is relinquished when you select EXIT TO DOS.
+    
+    The command QA followed by a hexadecimal interrupt number (5
+    is most common) puts Quaid into permanent memory with the 
+    specified interrupt patched. You will see the DOS prompt almost
+    immeadiatly. Therafter, Quaid Analyzer will intervene whenever
+    the patched interrupt occures. Quaid will remain memory resident
+    until you reboot or you select EXIT TO DOS on the Main Menu.
+    
+  When running QA from permanent memory, interrupt 5 is the most
+convient patch. Then you can press PRTSC to bring up Quade Analyzer.
+
+
+
+                            Main Menu
+
+The Main Menu lets you select one of the functions of the Quaid Analyzer.
+Continued pressing of ESC will bring up the Main Menu from anywhere in
+Quaid Analyzer.
+
+DESCRIPTION
+The Main Menu has a column of functions, and for most of the functions, one or
+more options to the right. Some fixed information appears to the left of a
+vertical bar. Some of the functions, such as BREAKPOINT, appear only when they
+are allowed.
+
+MENU KEYBOARD CONTROL
+
+Quaid uses a Main Menu, and several other screens where you have the option of
+moving a cursor and selecting functions. You may find the method of control to
+be unfamiliar, but when you learn it you can operate it quickly.
+
+In general, you press the four cursor arrows to get to a function or an option,
+press + and - to the right of the numeric keypad to change an option, and press
+ENTER to carry out a function after you have set its options. You can control
+lots of options without a cluttered screen.
+
+UP & DOWN KEYS      Use these keys to choose a function.
+
+LEFT & RIGHT KEYS   For the functions that have more than one option, use 
+                    these keys to highlight one of the options.      
+
++  -                Use these keys to change an option after you have reached
+                    it. Be sure to use the + and - to the right of the numeric
+                    keypad, not the typewriter keys with the same symbols.
+
+ENTER               Use ENTER to carry out a function after you have set its
+                    options.
+                    
+ESC                 Get directly to the EXIT function.
+
+0 to F              When a number appears in an option, you can change it with 
+                    these keys. The key you press is appended to the end of the
+                    number.
+                    
+BACK                When the cursor is on a number or the File Name, this key
+                    erases the last character.
+                    
+
+MENU FUNCTIONS
+  EXIT
+    Select this function to get out of Quaid Analyzer. The options are:
+    
+    - TO USER. When QA intervenes in a user program, EXIT TO USER
+      resumes execution of the interrupted program as if QA had
+      not intervened.
+    - RESIDENT. Select this option to get QA to use the terminate 
+      process and remain resident function, putting it in permanent
+      memory. Thereafter, QA will intervene any time one of
+      the patched interrupts occurs.
+    - TO DOS. This option relinquishes the permanent or temporary
+      memory occupied by QA.
+
+  BREAKPOINT
+      When you have set permanent breakpoints, you can choose any
+      breakpoint by pressing  + .  ENTER shows you the chosen 
+      breakpoint on the Instruction Display.
+  
+  AUXILIARY
+    Using the options, then ENTER, you can get reports showing the state
+    of your computer.
+    - MAP. Shows the DOS memory allocation.
+    - UART. Shows the registers in the two serial ports. Reading the
+      IIR, interrupt identification register, clears any interrupts
+      pending, so the state of the serial port may change as a result
+      of the display. This is usually not serious.
+    - DISKETTE. Interprets the contents of the diskette parameter area,
+      pointed to by vector 1E hex.
+    - DRIVERS. Displays a list of device drivers known to DOS.
+    - CMOS. Shows your computer from ROM identification byte.
+    - SCREEN. Displays screen mode from BIOS info.
+      
+PORT
+At this line you may read, change, or monitor the contents of any i/o port.
+The first option may be:
+      - OFF.    Does nothing
+      - READ.   ENTER reads the port, displaying it's contents.
+      - WRITE.  ENTER writes the data value to the port.
+      - TRACE.  ENTER runs the user program until the user refers to the port.
+                The Trace option does not appear in temporary. The trace will
+                not stop when the port reference occurs in a lower level of 
+                interrupt service, or if it occurs after an event that ends
+                single stepping. You should get near the your problem using
+                other methods before using TRACE. 
+
+The second option is the data value to be sent to the port, or the value read
+in from the port in hex.
+
+The third option is the port number in hex. To the right of this field is the
+name of the device on the port.
+
+
+FILE
+Use this function to read and write DOS files. The first option may be:
+
+    - ENABLE. Quaid can intervene while DOS is in operation, and at such times
+      it is impossible to read or write files. When you select ENABLE, Quaid
+      exits to the user until DOS reaches a point where it can be called.
+      Quaid patches interrupt 28 hex DOC scheduler, to find out when it is
+      safe to call DOS.
+      
+    - OFF. This function does nothing.
+    
+    - READ. Read an entire file into memory. You can also read part of a file.
+    
+    - CREATE. Create a new file.
+    
+The actions above take place when you press ENTER.
+
+The second option, File Origin, is the memory address corresponding to the
+beginning of the file. Use H to change between decimal and hexadecimal. The P
+key puts the data point (from the Program Display) into the File Origin.
+
+The third option is the length of the transfer. For READ, this is normally TO
+END,meaning that the whole file is to be read. To read only part of it, put the
+cursor on the length field and press W, then edit in the length.
+
+To reduce interference with the program being traced, we do not use the
+interrupts for getting control of DOS errors. Consequently, you may see the
+message  Abort,Retry,Fail?  on the screen. A  will abort the program being
+traced. To avoid problems, you should make sure the file you want to use will
+not cause errors before using the file facilities.
+
+FILE NAME
+This appears only when the first File option is READ or CREATE. Key in the file
+name here. Be sure to include the drive and directory path as part of the name,
+because you have no control of what the current DOS defaults are. Use the BACK
+key to correct mistakes in the name.
+
+HELP
+This is just a license screen. The LIGHT BULB option sets the entire screen to
+its brightest value, to help you read your notes when you work past sundown.
+
+SCREEN
+The first option is FAST or SLOW. On the IBM CGA Fast will produce snow. Use
+RIGHT ARROW to get samples of the colors used for Quaid displays. You can
+change the colors with + and - or ENTER.
+
+
+  
+                               Program Display          
+
+    The Program Display shows the processor registers, and lets you see
+memory as text or instructions. you can change the contents of memory
+or the registers. The F2key brings you to the Program Display.
+    The display is subdivided into a register area, always visable, and
+the Instruction Display, Memory Display and Reference Display, which
+overlay each other.
+
+REGISTER AREA
+  Press  ESC  from the Memory Display or the Instruction Display
+  The left side of the screen shows the names and values of the processor
+registers and a few other fields. The lines marked DATA and CODE are called the
+data point and the code point. (These fields are used to move to other 
+memory locations)
+  Below cs:ip is the sixteen bit flags register, with the bit names above
+each. You can change these bits the same way you change the other registers.
+  Below the flags is a search field. +  changes this between hex and text
+format. To key in a search field in either format, press INS, then type in your
+search string. Do not press ENTER after the search string. The hex string is in
+Arabic form, right to left. Search for occurences starting from the data point
+by pressing  L . When you search for a string that does not occur in the
+remainderof the data segment, nothing changes.
+  The register values that you work with on this screen will be restored to
+the procesor registers when you select EXIT TO USER. When running from tempory
+memory, the registers are meaningless and will never be used.
+  You can change the registers in these ways:
+    -With the cursor on a register (the code and data points are the safest
+     ones), press INS. The word EDIT flashes on the right. Key in a new
+     hexidecimal value. Move the cursor away and the flashing EDIT disappears.
+    -Move the cursor to any register(except flags or search). + moves the
+     register and the segment to the data point (for the registers above DATA)
+     or or the code point (for the ones below CODE on the display). + can also
+     copy between the code and data points.
+    -When you leave the Vector Display, the interrupt on the cursor line
+     replaces the code point.
+
+REGISTER KEYBOARD CONTROL
+
+Arrow Keys      Move cursor. When you move the cursor right from the data
+                point, you get the Memory Display on the right (ECS gets you
+                back). when you move the cursor right from the code point, you
+                get the Instruction Display on the right.
+INS             Start (or stop) Editing. Use this when you want to change a
+                register.The word 'edit' flashes on the screen.
+0 to E          Use these keys to edit the new hex value of a register. The
+                new digit goes on the low order end or the value
++               Move the register to the code point or the data point. For 
+                most of the data registers, the segment register on the same
+                line comes to the code or data point along with the data
+                register. When the cursor is already in the code point, the +
+                key copies it to the other.
++               At the search field, change between text and arabic form
+L               Find the next occurance of the search string (locate). The
+                search begins at the data point, and continuesuntil the end
+                of the segment. When there are no occurrences, the data point
+                remains unchanged.
+R               Produce the REFERENCE DISPLAY.
+
+
+
+                                INSTRUCTION DISPLAY
+
+You get here by pressing RIGHT ARROW from the code point or F2. Sometimes Quaid
+reverts directly to this display upon intervention.
+
+DESCRIPTION
+
+    The INSTRUCTION DISPLAY shows the instructions in memory in a form
+resembling the Intel assembly language.
+DETAIL: We have modified the instruction mnemonics where necessary. Where Intel
+uses  WORD PTR  or  BYTE PTR  to specify operand length, we put  .w  or  ,b
+after the opcode, for example Intel  MOVE BYTE  PTR[17],45  becomes
+move,b[17],45. We show the rep prefix as a separate instruction. The segment
+prefixes are combined with the following instruction,for example,
+move ax,[cs:bx+12]. Intel uses  JUMP ,  CALL  and  RET  for several different
+instructions. We use  JUMP ,  CALL  and RET  for the near versions, within the
+same segment, and  JUMPF ,  CALLF  and  RETF  for the far versions, to another
+segment. The forms of  RET  and  RETF  that add a constant to the stack are
+distinguished by showing the value of the constant as the operand.
+    When Quaid displays instructions starting from the wrong address, edit a
+correct starting address at the code point and press RIGHT ARROW.
+
+INSTRUCTION KEYBOARD CONTROL
+
+UP and DOWN ARROWS  Use these keys to move to neighboring instructions. When
+                    you  move the cursor off either end of the screen, the
+                    screen scrolls.
+ESC and L ARROW     Either of these keys moves the cursor back into the
+                    register area.                    
+ENTER               Set a permanent breakpoint. Later when the user program
+                    resumes, you will get a report when the user reaches the
+                    breakpoint.
+DEL                 Remove a permanent breakpoint.
+S                   Run one instruction of the user program, but stay in this
+                    screen. The code point must be the same as cs:ip to use
+                    this key. 
+I                   Give control back to the user, but intervene after the next
+                    IRET instruction. This is usefull when invoking Quaid with
+                    PRTSC. Pressing F2 and I will get you out of the BIOS, to
+                    the point where the keyboard interrupt intervened. DOS 3.3
+                    replaces the vector for interrupt 9 with its own procedure,
+                    so you have to press I twice to get to the true point.
+G                   Give control back to the user, but intervene when he
+                    reaches the instruction at the cursor.
+R                   Produce the Reference Display.
+
+                              MEMORY DISPLAY
+                              
+    To see the Memory Display, press the RIGHT ARROW at the data point.
+
+DESCRIPTION:
+Memory appears in one of three forms:
+        -Text, left to right.
+        -Arabic form, showing hexadecimal characters left to right. The letters
+         a to f are in lower case.
+        -Roman form, showing hexadecimal characters left to right. To help you
+         distinguish Arabic and Roman, the letters A to F of the Roman form
+         are in upper case.
+
+MEMORY KEYBOARD CONTROL
+
+ESC             Move the cursor to the register area.
++  -            Switch the display form. Pressing + repeatedly will cycle
+                thru the three forms.
+ARROW KEYS      Move cursor.
+INS             Start editing. After you press INS the word EDIT flashes on the
+                screen to warn you of danger. Your next keystrokes will go
+                directly into memory. If you mistakenly type into a sensitive
+                area, your computer will stop immeadiatly. In Arabic and Roman
+                form, any of the hex digits 0 to F go into memory. In text form
+                any of the typewriter keys go into memory. Press ESC to end
+                editing.
+L               Find the next occurence (locate) of the search string. The 
+                search begins at the cursor, and continues untilthe end of the 
+                segment. When there are no occurences,the cursor does not move.
+G               Run the user (the program being analysed) until a given memory
+                byte changes. Just point to a byte and press G. You will see
+                the Memory Display just mafter the byte changes. Note: This 
+                facility uses the single step. You should get close to the
+                problem area with other methods before using G.
+                
+
+                              REFERENCE DISPLAY
+
+    The Reference Display shows all mof the places in memory that refer to
+the code point. Press R in the Register Area or Instruction Display to get the
+Reference Display.
+DETAIL: References include short jumps within 128 bytes, near jumps and calls
+in the current segment, interrupt vectors, and complete segment:offset pairs
+anywhere in memory. It is possible for a jump or a double word pointer to reach
+the code point using a different segment. These references are not shown.
+
+
+                                TRACE DISPLAY
+
+    Each time Quade intervenes in an interrupt, it adds to the report on the 
+Trace Display. The screen shows a history of up to 25 lines of interrupts.
+After you have traced at least one interrupt, F4 gets to this display.
+
+DESCRIPTION:
+    Here is the meaning of the fields on the trace display, left to right:
+    - A line number
+    - The interrupt number, sometimes preceded by asterisks, showing you the 
+      nesting level. Precisely, the asterisks show the number of return proxies
+      active.
+    - An interpretation of the meaning of the interrupt. This display is 
+      extensive for interrupt 21 hex, DOS call, and brief for the interrupts
+      without assigned functions.
+    - When you used the proxy type IN/OUT or SILENT, Quaid will, when possible,
+      put the result on the same line with the  interrupt entry. When not
+      possible, the result goes on a line of it's own, right justified.
+
+A few of the interrupts create special displays, as mentioned below.
+
+Keyboard Interrupt 9
+    For this interrupt, we list the contents of the keyboard buffer, in hex, at
+the completion of the interrupt.
+
+Asynchronous Interrupts
+    For these interrupts, except the keyboard, we display the cs:ip value of 
+the interrupted program. Watching the timer interrupt with the SILENT proxy
+will show you where your computer is spending most of it's time.
+
+Diskette
+    The Trace Display line for the diskette interrupts, 13 and 40 hex, looks
+    like this:
+    
+  13 BIOS disk read      a:0.0.1.2         9.27.255          0070:0281
+
+meaning:  operation  drive C H R N      EOT.GPL.DTL        data buffer
+
+The fields from operation to DTL will be presented to the Floppy Disk
+Controller in the order we show them. They mean Cylinder (Track), Head, 
+Record (Sector number), N (length), EOT (highest sector number on track),
+GPL (gap length) and DTL (must be 255, according to Intel). On the newer
+editions of the ROM BIOS, the GPL field in the diskette parameters is ignored
+except for formatting. The information reported comes from the register
+arguments to the diskette interrupt, except for N, EOT, GPL and DTL, which come
+from the diskette parameters pointed to by interrupt vector 1E. Some copy
+protection systems use deceptive values in the arguments to the diskette
+interrupt.
+
+TRACE KEYBORD CONTROL
+
+ENTER           This is the same as selecting EXIT TO USER at the Main Menu,
+                that is, continue doing what would have happened if Quaid had
+                not intervened.
+-               After your are familiar with Quaid, you may spend a lot of
+                time at the Trace Display pressing ENTER. You can get an
+                accelerated trace by pressing -. You will be asked for a 
+                number, which you can put in with the digits 0 to 9, or
+                modify with + and - or BACK. ENTER produces that many lines
+                on the Trace Display before giving you another report. Use
+                ESC to get out after pressing - by mistake.
+                
+
+                              VECTOR DISPLAY  
+
+    This display shows you the interrupt vectors and Quaid Analyzer internal
+records called proxies. The F3 key gets to the Vector Display.
+    This section is difficult. In Quaid, when you patch an interrupt, you
+attach a proxy to it. The proxy type determines what action Quaid will take
+when the user invokes the interrupt. We suggest you preview the section on
+Patch Proxies before trying to understand the screen or keystrokes.
+
+DESCRIPTION
+For each of the interrupt vectors or proxies, we show:
+    -The interrupt number or proxy number in hex. Proxies are preceded by an x.
+    - The companion interrupt or proxy. When you patch an interrupt, you
+      associate it with a proxy. This field shows the other.
+    - The type. This is active when you have patched interrupts. We say more
+      about this later.
+    - The vector contents. For interrupts, it is the value that would be in the
+      vector without any patching. For proxies, this is the location that
+      control would pass to if the proxy had not intervened.
+    - The original vector contents, if different from the current value. When
+      Quaid starts, it records each vector for this comparison.
+    - For interrupts 8 to F only, the IMR, IRR and ISR bits.
+    - The name of the interrupt. These names come from diverse sources, and
+      include specialized interrupts used only on certain members of the IBM
+      family, such as the PCjr or the PC AT.
+When you leave the Vector Display, the contents of the interrupt at the cursor
+replaces the code point of the Program Display.
+
+VECTOR KEYBOARD CONTROL
+
+UP & DOWN ARROWS    Use these keys to move the cursor to a new interrupt or
+                    proxy.You can continue to scroll off the end of the screen.
+ENTER               When used on an interrupt without a patch, ENTER patches
+                    the interrupt,changing it's type to PATCHED, attaches a 
+                    companion proxy, and moves the cursor to the proxy.
+ENTER               When used on the interrupt or proxy for a patched interrupt,
+                    ENTER moves the cursor to the other, the companion.
++ -                 Use these keys to change a proxy type.
+DEL                 Use this key to quash a proxy, or a patched interrupt.
+
+
+INTERRUPT VECTORS
+    There are two interrupt types, in addition to blank (quashed):
+PATCHED     This means you have asked for tracing. The companion proxy 
+            determines what kind of tracing you get. Quashing a patched
+            interrupt is never dangerous.
+KEY         This is the interrupt used for breakpoints. There is only one
+            interrupt of this type. To move it, highlight it with ENTER,move
+            it elsewhere with UP or DOWN , and deposit it with ENTER.
+            When you press G at the Instruction Display, or use permanent
+            breakpoints, Quaid temporarily inserts an instruction generating
+            the KEY interrupt into the user program, removing it at the next
+            intervention. For benign programs, interrupt 3 is the best KEY
+            interrupt, because the instruction to invoke it is only one byte
+            long. As a countermeasure, some programs frequently change the 
+            contents of vectors 1 and 3. You can change the KEY interrupt to
+            something else to trace these programs.
+
+PROXIES
+Each proxie represents an address that can be placed in an interrupt vector, or
+can replace a return address on the stack. When the event occurs that would
+normally transfer control to the address in an interrupt vector or to a return
+address,the proxy will get controll instead.
+
+You will note that some of the functions below depend on fine details of the
+BIOS. If you have a compatable computer, you may find other problems with the
+most difficult interrupts.
+
+PATCH PROXIES
+These proxy types determine what action Quaid will take when a patched
+interrupt occurs. The proxy types are:
+
+IN/OUT      Quaid reports just before, and just after, running the interrupt
+            service.
+            After the report of entry, Quaid runs the interrupt service just
+            as it would run otherwise, except that the return address on the
+            stack points to a RETURN proxy.
+
+IN          Quaid reports just before entry into the interrupt service.
+            After the report of entry, it gives control to the interrupt 
+            service with the stack exactly as it would have been without
+            intervention. This is the most faithful emulation of the interrupt,
+            and in difficult cases, it is the only kind possible.
+
+OUT         Quaid reports upon completion of the interrupt service.
+            Quaid runs the interrupt service with a proxy address substituted
+            for the return address on the stack, so you can get a report on the
+            interrupt return. Some programs treat the cs:ip value on the stack
+            as a pointer to data. These programs cannot be traced with the 
+            OUT or IN/OUT proxies.
+            
+RUN         This applies only to the DOS call, interrupt 21 hex. Quaid will
+            report on .com and .exe programs just before executing the first
+            instruction.
+            
+TROJAN      This applies only to the BIOS disk interrupt, 13 hex. Quaid reports
+            any attempt to alter the hard disk. If you want to go ahead with
+            the alteration, press ENTER at the Trace Display when you get the
+            report. If not, your safest course is to press CTRL-ALT-DEL to boot
+            load your computer.
+            Quaid examines the register contents at every occurance of the 
+            interrupt. An attempt to change a hard disk has dl>=128 and ah=3
+            (write), ah=5 (format) or ah=11 (write long). Service calls that
+            don't change the hard disk run without intervention.
+            We have been criticized for not patching interrupt 26 hex, but such
+            a patch is unnecessary. The interrupt service for 26 must 
+            eventually call interrupt 13 to wite to the hard disk.
+            
+SYSREQ      This applies only to interrupt 15 hex. Quaid will give you a report
+            when the SysRq key of the Personal Computer AT or PS/2 is pressed.
+            This function does not work on the COMPAQ 286, because it issues
+            the SYSREQ interrupt before sending the EOI to the interrupt
+            controller.
+                
+SILENT      Quaid produces an entry line in the Trace Display before and after
+            execution of the interrupt service, but does not give a report. The
+            Trace Display can only be seen when another kind of report occurs.
+            The SILENT proxy is usefull for interrupts (such as the keyboard)
+            that are used by Quaid itself. The intervention is done in the same
+            way as for the IN/OUT proxy, except that the REVERT proxy is used
+            in place of RETURN.
+            
+PASS        Quaid executes the interrupt without any reports.
+            When a program such as SideKick changes a patched interrupt, it 
+            saves a proxy, and will issue calls to the proxy indefinately. 
+            Setting the proxy type to PASS is the only way to turn off the 
+            reports. When the interrupt occurs, Quaid invokes the interrupt
+            servive exactly as it would have been without intervention.
+            
+STOP        Quaid reports the interrupt, but does not invoke the interrupt
+            service. The next EXIT TO USER resumes at the instruction following
+            the interrupt call. This proxy is most commonly attached to the 
+            print screen interrupt. Thereafter, you can press PrtSc to invoke
+            Quaid, without disturbing your printer. 
+            Since the interrupt service is never called, STOP will cause 
+            system failure when used at the wrong place.
+            
+When the user program changes a patched interrupt, Quaid generates a new patch
+proxy, with the value in the new interrupt vector. If the action of the user
+was to insert a new value destroying the old one, it is safe to quash the old
+patch proxy. If the action of the user was to save the old value, and replace
+it with the new one, he will probably call the old proxy (which he thinks was
+the old interrupt vector contents) every time the interrupt occurs. In this
+case, it is not safe to quash the old proxy. Change it's type to PASS when you
+don't want to see any more tracing. You will see examples of this if you patch
+interrupts during the boot load.
+
+
+PENDING ACTION PROXIES
+
+There is another kind of proxy representing pending action. These are not
+companions of interrupts, but records of other kinds of things to be done. The
+pending action proxies are:
+
+CALL        Quaid creates this on entry into an interrupt patched with proxy
+            type IN/OUT. At EXIT TO USER, Quaid quashes the call and simulates
+            entry into the interrupt service, but with the address of a RETURN
+            proxy as the return address.
+            
+ENTER       Quaid creates this on entry into an interrupt patched with proxy
+            type IN. At EXIT TO USER, Quaid simulates entry into the interrupt
+            service and quashes the proxy. During a report you can change your
+            mind and manually change between types CALL and ENTER, or quash
+            either one, creating the effect of the STOP proxy.
+            
+RETURN      Quaid creates this when giving control to an interrupt service in
+            cases where you want a report after the interrupt; you used proxy
+            types OUT or IN/OUT. The proxy address substitutes for the return
+            address on the stack. When the interrupt service returns, Quaid 
+            restores cs:ip and quashes the RETURN proxy. The stack with a
+            RETURN proxy differs from the stack without intervention, so
+            proxies OUT, IN/OUT and SILENT cannot be used on interrupts that
+            use the cs:ip value on the stack as a data pointer. Sometimes the
+            return never occurs, and the RETURN proxy remains in existence
+            indefinitely. In that case you may quash it by hand. Be careful,
+            because if the user later returns, you will have to boot load your
+            computer.
+            
+REVERT      This is simular to RETURN, but since it is on behalf of the SILENT
+            proxy, no report occurs.
+            
+LOAD        Quaid uses this as its internal record of a program load when you
+            used the RUN proxy. You can only produce errors by quashing it.
+
+
+                                    ASCII TABLE 
+                                    
+This display shows the graphic symbols for all 256 ASCII characters. You can
+also can see the character codes and scan code returned for any keystroke. Any
+ASCII character or keystroke can be sent to the user program. The F5 key brings
+up the ASCII TABLE.
+
+DESCRIPTION
+The main body of the display shows all 256 ASCII characters, arranged in a
+rectangle. Above is the character value in decimal and hex.
+
+TABLE KEYBOARD CONTROL
+
+ARROW KEYS  Moves the cursor to any of the characters in the table.
+
+HOME        Moves the cursor to the top. The scan code and character code of
+            the keystroke will appear at the top of the screen. Use this to 
+            find out what your keyboard really generates.
+            
+K           Resume the user program, giving the character at the top of the
+            screen as input.
+            The scan code and character code go into the keyboard buffer, 
+            provided it is not full. If the last character was pointed to with
+            the cursor keys, not proceded by HOME, it is the same as holding
+            down the Alt key and keying in the character code, since the scan
+            code is zero.
+            
+
+                            DIAGNOSTIC EXAMPLE
+                            
+We will show here how to find a problem in a program, and correct it to your
+liking. For our example, we will use the COMP command of DOS. This example
+comes from DOS 3.30; for other systems, details such as instruction addresses
+may differ.
+
+When you finish a compare, DOS asks you whether you want to compare more files,
+making it easier to use a diskette system. On hard disk systems, the prompt is
+a nuisance, so we will go through the steps in finding and eliminating it. We
+show only the successful route to the solution, avoiding the unsuccessful
+efforts that are a part of any real diagnosis.With each step in our example, we
+show the keystrokes and explain what is being done.
+
+We need a simple way to get to the undesired prompt.  COMP  without parameters
+is not helpful, but   COMP A A  gets directly to the prompt  'Compare more
+files (Y/N)?'
+
+C>QA 5      Implant Quaid Analyzer in memory.
+
+PrtSc       Bring up Quaid
+
+F3          Get to the Vector Display
+
+DOWN        Hold this key until reaching interrupt 21 hex, DOS call.
+
+ENTER +     Patch interrupt 21 with a RUN proxy. This tells Quaid to stop at
+            the first instruction of the next user program.
+
+F7          Getout of Quaid, and return to the DOS prompt.
+
+C>COMP A A  
+            Start the compare program. Quaid will give you a report almost 
+            immeadiately, just before running the first instruction of COMP.
+
+F3          Get to the Vector Display.
+
+HOME        Get to the line with the RUN proxy.
+
+-           Change the proxy type of the patch on interrupt 21 to IN/OUT. From
+            now on, Quaid will report before and after the COMP program does
+            each DOS call.
+
+F4          Get back to the Trace Display.
+
+ENTER       Press this several times, watching the Trace Display. Eventually,
+            you will see some processing related to the desired prompt:
+                
+                3b chdir
+                40 write handle 2 (20) crlf Compare more files            (20)
+                40 write handle 2 (8) (Y/N)?                               (8)
+                0c clear buffer and keyin 01
+
+ENTER       The next depression of ENTER will bring you back to the user screen
+            Control is in the keyboard processor of DOS, waiting for the
+            response to the prompt.
+
+X           Give an invalid response to the prompt.
+
+ENTER       Continue pressing ENTER several more times. The Trace Display will
+            continue with:
+
+                0c clear buffer and keyin 01                              X 58
+                40 write handle 1 (2) crlf                                 (2)
+                40 write handle 2 (20) crlf compare more files            (20)
+                40 write handle 2 (8) (Y/N)?                               (8)
+                0c clear buffer and keyin 01                              X 58
+                
+                Ordinarily, you would run this again, and start to look at the 
+                code where it calls for the first write handle 2, but the 
+                write comes from a subroutine, and the following method is
+                simpler.
+                
+F2          Display instructions just after the X response. 
+            By looking up function 0C in the 'DOS Technical Reference', we
+            find that the key you press in response to the prompt is in
+            register al. You will see that the program is about to call a
+            subroutine, and following that it converts the value in al to upper
+            case with an AND instruction, and goes to one of three different
+            places depending on the value in al:
+            
+            -a jump to 07BE, probably a large, outer, loop.
+            -a jump to 0B2E, a small inner loop.
+            -DOS terminate (int 20 hex)
+            
+            The values used to compare against al are not visible, because the
+            program compares al to two memory locations. By looking in the
+            memory locations, or by common sense inference, we see that the
+            program does the big loop when you type Y, does the DOS terminate
+            when you type N, and does the small loop when you type anything
+            else.
+            
+            It looks like the way to eliminate the undesired prompt is to do
+            the DOS terminate at the beginning of the small loop. By looking
+            at the object program, we see that the hex coding for the DOS 
+            terminate is 20CD (with 20 at the higher address), and starting
+            address of the small loop is cs:0B2E.
+            
+F3          Get to the Vector Display.
+
+DOWN        Hold this until reaching interrupt 21.
+
+DEL         Quash the patch. Quaid will no longer intervene.
+
+F7          Get back to the COMP program.
+
+N           Terminate COMP.
+
+If you are cautious, you will run the COMP again, but patch the first
+instruction of the short loop to 20CD when the program is loaded. We have done
+so, and found that the COMP exits without the undesired prompt.
+
+All that remains is to patch the com file with the DOS terminate instruction.
+When a com file is loaded into memory, it starts at address cs:0100. This means
+that the patch instruction, 20CD, goes in the file at hex address 0A2E, or 2606
+decimal, that is, hex CD goes at 2606, and hex 20 goes at 2607. You can make
+the patch with the File menu function of Quaid Analyzer, or with a file utility
+such as Disk Explorer, Disk Mechanic or the Norton Utilities. The new program
+will compare files without giving a prompt.
+
+
+
+
+   This typing project has been a long time coming and I just hope it is
+   put to some good use.
+                                      
+                                           Beamer
+                                           ______
+                                           ^    ^

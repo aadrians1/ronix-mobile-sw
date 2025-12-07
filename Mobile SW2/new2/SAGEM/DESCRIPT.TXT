@@ -1,0 +1,24 @@
+SAGEM ????? (OMNITEL)
+
+SAGEM    BIN  	- SIM LOCK ON 246 01 (OMNITEL) IMEI 330029350067070
+SAG_OUT  BIN  	- FREE phone before formating SEEPROM
+SAG_FREE BIN  	- FREE phone after formating SEEPROM
+
+0002-0008  -  IMEI (1A 32 54 76 98 ....)
+000a-003f  -  Filling by 00 initial formating SEEPROM
+0620-06ef  -  Menu option 
+064a-064f  -  provader code (5 digit from IMSI) for code check activation
+0650-0652  -  Code check activation
+0653-0656  -  password (phone code) 21 43 65 87 form f - end
+0692,0693  -  Ku for mikrophone amplifaer (hh,ll)
+06d7	   -  Language  - 00 Auto
+			  10 English
+			  08 Lietuva
+
+06e6-06ee  -  SIM LOCK (provader code (5 digit from IMSI))
+07f3-07ff  - seems like control part for IMEI
+
+For clear all protection, setup and other blocking - 
+fill memory 000a-07e0 by 00h and power on phone.
+Phone will write "Formating memory" in few seconds, and start work.
+Switch off phone and on again. 

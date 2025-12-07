@@ -1,0 +1,608 @@
+Es ist endlich soweit!! Nun gibt es eine Moglichkeit ALLE Nokia Handys zu entsperren. Mit Hilfe des Nokia Flashers von Dejan dessen Funktion ich hier ausfuhrlich beschreiben werde!! 
+
+Bei Problemen bitte im Forum posten.
+
+  
+
+Pinouts 
+Die Boot- und Flashloader 
+Der Flasher 
+Backup/Repair einspielen 
+Schlusswort 
+ 
+
+Bevor ihr anfangt lest euch die FAQ durch wo die meist gestellten Fragen beantwortet werden.
+
+
+
+Anfang und Bau des Interfaces:
+
+ 
+Man kann kein Handy flashen ohne ein Flasher Interface zu haben. Mit einem normalen Datenkabel ist das nicht moglich!!! 
+
+Also musst ihr euch ein Interface besorgen. Entweder es wird bei www.Service4Handys.de bestellt, oder ihr baut es euch selbst! 
+
+Falls du es selbst bauen mochtest, ist hier eine Stuckliste mit den Conrad-Bestellnummern: 
+
+ 
+1 Platine mit SubD-Anschlu? 
+1 Sub-D25 Stecker 90° print 
+1 Sub-D9 Buchse 90° print 
+1 IC 74HC14 oder 74HCT14 
+1 Widerstand 4,7 kOhm 
+1 Widerstand 100 Ohm 
+1 Kondensator 0,1µf 
+2 Dioden BAT 43 oder 1N4148 
+
+  
+
+und hier ein Verdrahtungsplan. 
+
+
+
+                                                                   Platine oben                                                                     Platine unten
+
+    
+
+(An dieser Stelle solltest du dich bei MacG bedanken, dass er sich die Muhe gemacht hat fur uns diesen Plan zu erstellen. *g*) 
+
+  
+
+Wenn du dich genau an diesen Plan haltst und deine Verbindungen so ziehst, wie sie hier eingezeichnet sind, wird es auch funktionieren. Die Verbindungen macht man mit einem stinknormalen Draht, man muss nur aufpassen, dass man ihn auch loten kann. 
+
+ 
+Fur diejenigen unter euch, die elektronisch etwas versierter sind, ist hier ein richtiger Schaltplan. Das Layout konnt ihr euch ja selbst ausdenken...
+
+
+
+
+Ihr musst mindestens Fbus TX und RX, GND und Mbus am Phone anschlie?en! Die anderen sind nicht wichtig. ABER: furs 3210 braucht ihr unbedingt den Vpp-Pin dazu. Sonst funkt es nicht!!! (Btemp ist zum ANSCHALTEN des Handys uber Kabel (nicht unbedingt erforderlich)) 
+
+ 
+
+Pinouts:
+
+
+So, jetzt musst du dir nur noch ein kabel vom Flasherinterface zum Handy machen.
+Das machst du am einfachsten, indem du dir ein Datenkabel kaufst und den 9Pol Stecker mit der Elektronik drin wegschneidest.
+Jetzt musst du noch rausfinden, welches Drahtchen in dem Kabel an welchen Steckerkontackt fuhrt und an einen neuen 9Pol Stecker ohne Elektronik anloten. 
+
+  
+
+Die Pinbelegung des Steckers sieht so aus: 
+
+ 
+1: GND
+2: FBus TX
+3: FBus RX
+4: MBus
+5: Vpp 
+
+ 
+die Conrad Bestellnummer ist fur 
+
+9Pol Stecker: 742066-62    0,80 DM
+Gehause: 711284-62  1,90 DM 
+
+ 
+
+Hier noch die Pinouts fur die verschiedenen Handytypen:
+
+PINOUT 3210                                                PINOUt 51xx/61xx/62xx/71xx
+
+      
+
+ 
+
+PINOUT 8210/8850                                                PINOUT 3310
+
+     
+
+                                                           
+
+
+Die Boot- und Flashloader:
+
+
+Bootloader: 
+
+Der Bootloader ist immer der gleiche, namlich  „dct3bt2.tia“ er steht also boot.bin im nk_files Verzeichnis und ist im Flasherarchiv schon enthalten. Darum braucht ihr euch also nicht kummern. 
+
+  
+
+Flashloader: 
+
+Da wird das ganze schon etwas komplizierter. Ich habe dem Archiv einen Flashloader beigelegt, der fur 3310 und 5110 von mir getestet wurde. Falls er bei deinem Handy nicht geht, dann schreib dir zuerst die Flash-ID auf , die du beim Versuch das Backup auszulesen angezeigt bekommst.
+
+
+
+
+ 
+
+und schau dann in folgender Tabelle nach,  welchen Chip du im Handy hast. 
+
+ 
+00894470: Intel 28F400Cx-T, size 4Mb
+00898890: Intel 28F160B3-T, size 16Mb
+00898891: Intel 28F160B3-B, size 16Mb
+00898892: Intel 28F800B3-T, size 8Mb
+00898893: Intel 28F800B3-B, size 8Mb
+00898894: Intel 28F400B3-T, size 4Mb
+00898895: Intel 28F400B3-B, size 4Mb
+0089889C: Intel 28F800Cx-T, size 8Mb
+008988C2: Intel 28F1602C3-T, size 16Mb
+00898896: Intel 28F320B3-T, size 32Mb
+008988C4: Intel 28F3204C3-T, size 48Mb
+008988F3: Intel 28F160F3-T, ALIAS_ID=00898890
+008988F4: Intel 28F160F3-B, ALIAS_ID=00898891
+00B00048: Sharp LH28F160BVE, ALIAS_ID=00898890
+00B0004A: Sharp LH28F800BG, ALIAS_ID=00898892
+00B00060: Sharp LH28F800BG, ALIAS_ID=00898892
+00B00061: Sharp LH28F800SX, ALIAS_ID=00898893
+00B00068: Sharp LH28F160BG, ALIAS_ID=00898890
+00B000D0: Sharp LH28FS16SX, ALIAS_ID=00898891
+00B000E8: Sharp LRS1360, ALIAS_ID=00898891
+80898896: Intel 28F320B3-T, size 32Mb 
+
+  
+
+Wenn du dann weist, welcher Chip im Handy ist, findest du auch den richten Flashloader, weil er im Dateinamen meist die Bezeichnung des Chips hat.   
+
+Das .tia File dann in f_loader.bin umbennen und in c:\nk_files kopieren. 
+
+  
+
+Hier ein Beispiel: 
+
+Du hast z.B. die Flash-ID: 00898890 (ist von einem 3310) also hast du einen Intel 28F160B3-T, size 16Mb Chip.
+Dann suchst du nach einem Tiafile das ungefahr so heist: 28F160B3-T
+Mit dem iw28f016.tia hast du das den richtigen Flashloader gefunden. 
+
+
+Runterladen kannst du die Flashloader hier: 
+
+TiaPatched.zip (41 Kb) 
+
+  
+
+Wichtig: 
+
+Alle diese Flashloader sind gepatcht, damit man mit ihnen auch das Handy auslesen kann (Backup machen).
+
+Teilweise gehen die gepatchten nicht mehr zum schreiben, darum gibt es hier noch ungepatchte mit denen man dann nur schreiben kann.
+
+    
+TiaOrginal.zip (41 Kb)
+
+    
+Update vom 21.03.:
+
+Dies ist eine Zuordnung, welches Tia zu welcher Flash ID gehort. Die Zuordnungen wurden jedoch rein Auswendig gemacht. D.h. keine Garantie auf Richtigkeit!!!
+
+
+
+01B5: 29lv008.tia
+01B6: 29lv008.tia
+04B5: 29lv008.tia
+04B6: 29lv008.tia
+1F23: 49BV080.tia (kein Backup moglich)
+20F7: 29lv008.tia
+20FF: 29lv008.tia
+20DF: 29lv008.tia
+8978: i28f08.tia
+8979: i28f08.tia
+897C: i28f08.tia Vcc=5V
+897D: i28f08.tia Vcc=5V
+8989: i28f08.tia
+8994: i28f08.tia Vcc=5V
+8995: i28f08.tia Vcc=5V
+8998: i28f08.tia
+8999: i28f08.tia
+89A2: i28f08.tia
+89A6: i28f08.tia
+000122DA: w29lv800.tia (kein Backup moglich)
+0001225B: w29lv800.tia (kein Backup moglich)
+000122C4: w29lv800.tia (kein Backup moglich)
+000422DA: w29lv800.tia (kein Backup ?)
+0004225B: w29lv800.tia (kein Backup ?)
+001F00A0: w49bv819.tia (kein Backup moglich)
+001F00A3: w49bv819.tia (kein Backup moglich)
+001F00C0: aw49bv16.tia (kein Backup moglich)
+001F00C2: aw49bv16.tia (kein Backup moglich)
+001F00C8: aw49bv16.tia (kein Backup moglich)
+001F00C9: aw49bv16.tia (kein Backup moglich)
+002000D7: w29lv800.tia (kein Backup ?)
+0020005B: w29lv800.tia (kein Backup ?)
+00200090: i28f160.tia
+00200091: i28f160.tia
+002088BA: m28w320c.tia (kein Backup ?)
+002088BC: i28f160.tia (kein Backup ?)
+002C4492: i28f160.tia (kein Backup ?)
+00894470: i28f160.tia (kein Backup ?)
+00898890: i28f160.tia
+00898891: i28f160.tia
+00898892: i28f160.tia
+00898893: i28f160.tia
+00898894: i28f160.tia
+00898895: i28f160.tia
+0089889C: i28f160.tia
+008988C2: i28f160.tia
+00898896: m28w320c.tia
+008988C4: m28w320c.tia
+008988F3: i28f160.tia
+008988F4: i28f160.tia
+00B00048: i28f160.tia (kein Backup ?)
+00B0004A: i28f160.tia (kein Backup ?)
+00B00060: i28f160.tia (kein Backup ?)
+00B00061: i28f160.tia (kein Backup ?)
+00B00068: i28f160.tia (kein Backup ?)
+00B000D0: i28f160.tia (kein Backup ?)
+00B000E8: i28f160.tia (kein Backup ?)
+80898896: m28w320c.tia
+
+
+(c) by Odysseus 
+ 
+
+
+Der Flasher
+
+
+
+
+ 
+
+Zuerst entpackst Ihr das Flasher-Zipfile bitte nach c:\  Nach dem entpacken solltet Ihr folgende Verzeichnisse zusatzlich in c:\ vorfinden: flasher und nk_files. Am besten Ihr lest euch diese Anleitung erst einmal ganz genau bis zum Ende durch oder druckt sie aus, um Fehler zu vermeiden. 
+
+ 
+
+Hier kannst du ihn runter laden:
+ 
+Flasher.zip (187 Kb) 
+
+
+Der Parallelport mu? vor dem Flashen im Bios auf EPP oder EPP/ECP umgestellt werden!
+ 
+Wenn du das erledigt hast, schlie?e das Interface an Deinen PC am Parallelport (Druckerport) an und auf der anderen Seite das Handy. 
+
+Solltest Du einen Drucker oder ahnliche Gerate angeschlossen haben, so stecke Ihn bitte vorher ab und schlie?e das Interface direkt an. Bitte nicht an irgendwelche Umschaltboxen oder ahnliches.  Damit schlie?en wir die Fehlerquelle aus, das die Leitungen insgesamt zu lang werden oder ein anderes Gerat uns stort, wenn wir am flashen sind. 
+
+ 
+Bitte achtet darauf, dass das Handy AUSGESCHALTET ist! Sonst wurde das flashen nicht funktionieren.
+
+
+Offnet nun das Verzeichnis c:\flasher und startet die flasher.com.  Druckt noch schnell <ALT>+<ENTER> damit ihr das Programm im Vollbild habt. 
+
+ 
+Ihr habt nun 2 Auswahlmoglichkeiten: 
+
+1.: <F1> Auslesen des EEproms       
+
+2.: <F2> Programmieren (flashen) des EEproms 
+
+ 
+Zuerst mussen wir ein Backup unseres Handys anlegen, falls irgendwas beim flashen schief gehen sollte. Damit konnen wir das Handy meistens wieder funktionstuchtig machen. Dazu spater aber mehr, erst einmal das auslesen: Druckt <F1> und es erscheint ein Menu auf der linken Seite, wo Ihr eueren Handytyp auswahlen konnt. Bestatigt eure Wahl mit <Enter> 
+
+ 
+Jetzt offnet sich ein Menu, in dem Ihr zuerst die Startadresse und dann die Stopadresse eingeben musst und zwar genauso, wie ich sie hier angegeben ist. 
+
+
+Adressen fur das BACKUP: 
+
+3210:                        00200000-00400000  
+
+3310:                         00200000-00300000 
+
+5110:                         00200000-00300000 
+
+5130:                         00200000-00300000 
+
+6150:                         00200000-00400000 
+
+6210:                         Ver.                        3.01                        00200000-005A0000 
+
+                                                              3.04                        00200000-00600000 
+
+                                                              4.08                        00200000-00400000 
+
+  
+
+7110:                         00200000-00400000 
+
+8210:                         00200000-003D0000 
+
+8850:                         00200000-00400000 
+
+   
+
+Jetzt wechselt der Bildschirm und es wird ernst: 
+
+Press Return and turn on phone
+Hei?t nichts anderes als: 
+
+<Enter> drucken und danach kurz den ein/aus Schalter des Handys betatigen. 
+
+ 
+Das Handy darf sich nicht einschalten, dann habt Ihr was falsch gemacht! 
+
+ 
+Wenn er fertig ist, hat das Flasher Programm ein File in das Verzeichnis c:\flasher geschrieben, es hei?t: flash.out. 
+
+Dieses File musst Ihr umbenennen in z.B. Backup.fls. Dabei ist nur die Endung .fls wichtig, der Rest ist eure Sache. Aber ihr durft die Backups nicht verwechseln. Eure Dateinamen mussen so eindeutig sein, dass ihr wisst welches Backup zu welchem Handy gehort. 
+
+Ihr braucht das Backup vielleicht spater, wenn beim Flashen etwas schiefgegangen sein sollte. 
+
+Fur die Fortgeschrittenen unter euch: schaut zur Sicherheit mit einem Hexeditor (HIER zum download) euer Backup.fls an, was drinsteht. Sollte da nur ff 00 ff 00 ff 00 usw. drinstehen, ist beim auslesen etwas schiefgegangen. 
+
+Diejenigen unter euch, die keinen Hexeditor haben, konnen sich auch so helfen: Wenn ihr das Backup mit Winzip packt, darf es nicht nur ein paar kb (4 – 10kb) gro? sein. Es muss mind. noch ein halbes MB sein.  
+
+Ihr musst die Prozedur des Auslesens wiederholen falls es unbrauchbar ist. 
+
+  
+
+Das Flashen
+
+  
+
+Ihr musst euch als erstes das Patch File Archiv runterladen oder nur das eine File das Ihr braucht (weiter unten) 
+
+ 
+Patches.zip  ( 1.4 MB ) 
+
+ 
+dann kopiert ihr nur die Patch Files die ihr braucht aus dem Archiv ins NK_FILES Verzeichnis. 
+
+Der Dateiname setzt sich aus Handytyp_Version.fls zusammen. 
+
+Also musst ihr mir *#0000# die Softwareversion eures Handy abfragen, dann wisst ihr auch, welches Patch File ihr braucht. 
+
+  
+
+TIP:              Kopiert nicht alle Files in das nk_files Verzeichnis hinein, ihr konnt zwar im
+
+                    Flasher Programm auswahlen, aber nicht aus unendlich vielen. Ich schatze mal 
+
+                    nur aus ca. 20 Stuck. 
+
+  
+
+  
+
+Sollte euer Flasher nicht mehr aktiv sein, so startet wieder die Flasher.com im Vollbild. 
+
+Druckt nun <F2>. Es offnet sich wieder das altbekannte Menu mit dem Handytyp. Wahlt eures aus und druckt <ENTER>. 
+
+Dann offnet sich auf der rechten Seite ein Menu, in dem Ihr das Patch File auswahlen und mit <ENTER> bestatigen musst. 
+
+Jetzt musst ihr nur noch die Startadresse fur das Patch File eintragen. 
+
+   
+
+Adressen fur das Patchfile: 
+
+
+3210:
+
+3210_5.31.fls - 00260000 
+
+3210_5.36.fls - 00260000 
+
+3210_6.00.fls - 00260000 
+
+3310:
+
+3310_3.24.fls - 00270000 
+
+3310_4.02.fls - 00270000 
+
+3310_4.06.fls - 00280000 
+
+3310_4.18.fls - 00280000   
+
+3310_4.19.fls - 00280000
+
+3310_4.23.fls - 00270000
+
+3310_4.24.fls - 00270000
+
+3310 4.35.fls - 00270000
+
+3310 4.45.fls - 00280000
+
+3330:
+
+3330_3.05.fls - 00290000 
+
+3330_3.10.fls - 00290000 
+
+3330_3.12.fls - 00290000 
+
+3330_4.12.fls - 00290000 
+
+3330_4.16.fls - 00290000 
+
+51xx: 
+
+5110_5.28.fls - 00250000 
+
+5110_5.29.fls - 00250000 
+
+5110_5.30.fls - 00250000 
+
+5130_5.00.fls - 00250000 
+
+5130_5.71.fls - 00250000 
+
+6150: 
+
+6150_5.22.fls - 00270000 
+
+6150_5.23.fls - 00270000 
+
+6210: 
+
+6210_3.01.fls - 00380000 
+
+6210_3.04.fls - 00380000 
+
+6210_3.74.fls - 00380000 
+
+6210_4.08.fls - 00380000 
+
+6210_4.27.fls - 00380000
+
+6210_4.36.fls - 00380000
+
+6210_5.01.fls - 00380000
+
+6210_5.02.fls - 00380000
+
+6210_5.17.fls - 00380000
+
+6250: 
+
+6250 4.01.fls - 00380000
+
+6250 4.04.fls - 00380000
+
+6250 4.05.fls - 00380000
+
+6250 5.00.fls - 00380000
+
+7110: 
+
+7110_4.88.fls - 003A0000 
+
+7110_4.94.fls - 003B0000 
+
+7110_5.00.fls - 003A0000 
+
+7110_5.01.fls - 003A0000 
+
+8210: 
+
+8210 5.08.fls - 00280000
+
+8210_5.11.fls - 00280000 
+
+8210_5.16.fls - 00280000 
+
+8210_5.20.fls - 00280000 
+
+8210_5.21.fls - 00280000 
+
+8210_5.25.fls - 00280000 
+
+8210_5.26.fls - 00280000 
+
+8210_5.27.fls - 00280000 
+
+8210_5.28.fls - 00280000 
+
+8250: 
+
+8250_3.08.fls - 00280000 
+
+8250_3.12.fls - 00280000
+
+8250_3.18.fls - 00280000
+
+8290: 
+
+8290_5.06.fls - 00290000
+
+8290_5.07.fls - 00290000
+
+8850: 
+
+8850_5.11.fls - 00280000 
+
+8850_5.16.fls - 00280000 
+
+8850_5.20.fls - 00280000 
+
+8850_5.21.fls - 00280000 
+
+8850_5.25.fls - 00280000 
+
+8850_5.26.fls - 00280000
+
+8850 5.27.fls - 00280000 
+
+8850 5.28.fls - 00280000
+
+
+Habt Ihr alles richtig eingegeben, <ENTER> drucken und der Bildschirm wechselt. 
+
+ 
+Ihr seid euch wirklich sicher, alles richtig gemacht zu haben? 
+
+Dann noch einmal <ENTER> und direkt danach auf den ein/aus des Handys drucken und wieder geduldig warten. Wenn der Flasher fertig ist, das Programm mit ESC beenden und das Telefon vom Kabel trennen, sonst geht es nicht an. Legt eine beliebige SIM-Karte ins Telefon und es musste sich perfekt einbuchen. Dann habt Ihr es geschafft, GRATULATION!!!! 
+
+Alle die es nicht geschafft haben, lesen gleich weiter... 
+
+ 
+
+Backup/Repair einspielen
+
+
+Backup: 
+
+
+Du kannst ein Backup auf jedenfall wieder einspielen, auch wenn z.B. Dein Telefon nicht mehr angehen sollte. Kopiere das Backup.fls in das Verzeichnis c:\nk_files 
+
+Dann starte wieder die Flasher.com und drucke <F2>. Jetzt folgt wieder die gleiche Prozedur: Handytyp und dann "Dein" !Backupfile! auswahlen. Ein anderes Backup konnt ihr nicht nehmen. Als Startadresse gibst Du dieselbe Adresse wie beim Auslesen an! Keine  andere, sonst konnen wir Dein Handy nicht mehr retten! 
+
+Alles klar? Dann <ENTER> und danach Telefon ein/aus drucken.
+
+Wenn er fertig ist, ist Dein Handy wieder im Urzustand, also auch gelockt. Jetzt kannst du wieder mit dem Unlocken anfangen.
+
+   
+
+Repair:
+  
+
+Es gibt immer wieder Leute, die vor dem flashen kein Backup gemacht haben, oder ihres nicht funktioniert. 
+
+Fur diese Leute habe ich ein Repairflash entwickelt, das euch noch helfen konnte. 
+
+Dieses Repairflash ist eigentlich nichts anderes, als ein Backup, es ist aber gro?er ist als euer eigenes. Somit konnen teilweise auch noch Handys gerettet werden, bei denen z.B. ein defektes Backup, oder einfach an die falsche Adresse geflasht wurde. 
+
+  
+
+Bisher gibt es leider nur zwei, namlich: 
+
+ R3310_402.fls                        Startadresse: 00200000
+
+ R3310_406.fls                        Startadresse: 00200000 
+
+  
+
+Aber denkt daran, auch hier gilt, ist die Adresse falsch, ist das Handy tot!!! 
+
+Eingespielt werden diese Dateien genauso wie ein Backup und bekommen konnt ihr sie hier: 
+
+ 
+Repair.zip   (1.4 Mb) 
+
+
+
+
+Schlusswort:
+
+Wenn ihr noch Fragen dazu habt konnt ihr uns im Chat besuchen kommen!!
+
+Naturlich steht euch unser Forum fur Fragen oder Anregungen auch noch zur Verfugung. Und vergesst nicht, euch ins Gastebuch einzutragen.
+
+ 
+
+Copyright by =mOp=
+
+Anleitung wurde von Odysseus und The Firm geschrieben.
+
+Ein gemeinsames Projekt von illmatic, gms, Odysseus, max, econy and all other! ;)
+
+  
+
+  
+

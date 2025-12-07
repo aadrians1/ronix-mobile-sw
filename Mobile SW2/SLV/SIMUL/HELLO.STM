@@ -1,0 +1,5 @@
+;HELLO.STM
+
+t=0		ra0=1		;set busy bit initially
+t=100E-6	ra0=0		;clear busy bit after 100 microseconds
+

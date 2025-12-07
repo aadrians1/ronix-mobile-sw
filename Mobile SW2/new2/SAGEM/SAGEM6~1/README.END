@@ -1,0 +1,28 @@
+You have just installed the download programme on a new medium.
+This document describes the various ways of using it.
+
+1 ) Running the programme from the new medium
+
+    Under the root directory of the new medium are 2 files named TELECH1.BAT 
+    and TELECH2.BAT which allow to run the download via respectively v24 
+    port 1 or v24 port 2. The port number to select depends on where the 
+    download kit that is provided has been connected.
+
+    Files TELECH1.BAT and TELECH2.BAT also exist in the download directory;
+    It is therefore possible to modify the PATH of the PC to make these files
+    accessible directly from the download directory and thus to delete them
+    from the root directory.
+
+
+
+
+
+
+
+
+2 ) Running the programme from the installation floppy disk
+
+    It is also possible to download a mobile using the installation floppy disk:
+       First select the disk drive (A: or B:),
+       then type TELECH1.BAT or TELECH2.BAT as when running the programme from 
+       the new medium.

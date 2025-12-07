@@ -1,0 +1,68 @@
+set code_addr $107000
+set sub_0_D340A $d32c2
+set sub_0_D336C $d3224
+set sub_0_92374 $90240
+set unk_0_2 $2
+set sub_0_B64F0 $b5c80
+set sub_0_B66DA $b5e6a
+asm code_addr
+ori.w #$1000,($FFFA62).l
+lea $120000,a2
+tst $FFFFDAB8(A5)
+bne code_addr+$2A.l
+move.b #$AA,$1555(A2)
+move.b #$55,$AAA(A2)
+move.b #$A0,$1555(A2)
+move.b #$0,$3ab(A2)
+andi.w #-$1001,($FFFA62).l
+lea $3B0(a2),a2
+jsr sub_0_D340A
+move.w d0,-$2E(a6)
+jsr sub_0_D336C
+move.w d0,-$30(a6)
+pea unk_0_2.w
+move.l a2,-(a7)
+pea -$2E(a6)
+jsr sub_0_92374
+lea $24(a7),a7
+move.l #0,d0
+lea -$30(a6),a4
+clr.b d2
+move.l a2,-(a7)
+.
+mm code_addr+$72
+$528a
+.
+asm code_addr+$74
+move.b (a4)+,d0
+move.w d0,-(a7)
+jsr sub_0_B64F0
+move.w #$A,(a7)
+jsr sub_0_B66DA
+.
+mm code_addr+$88
+$5c8f
+.
+asm code_addr+$8a
+addq.b #1,d2
+cmpi.b #2,d2
+bcs code_addr+$70.l
+bgnd
+.
+asm $106000
+rte
+.
+mm $fffa00
+$42cf
+.
+mm $fffa21;b
+6
+.
+rm pc
+$107000
+.
+bf $107500 $10768c $106000;l
+br code_addr+$42
+br code_addr+$60
+bf $107500 $10768c $106000;l
+md  $3357a 4

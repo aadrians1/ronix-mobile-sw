@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   : 85C82 
+
+Wprowadzanie : 0-9
+Wywol./Zatw. : AUTOMATYCZNIE
+
+UWAGI : 

@@ -1,0 +1,66 @@
+/* Table de messages d'erreurs */
+
+/* Attention : en cas de rajout de messages, modifier l'enum de plpmsg.h */
+
+	"Succès",
+	"Erreur dans les paramètres d'entrée ",
+	"Erreur passage paramètre : ",
+	"Erreur remontée paramètre : ",
+	"Erreur de communication avec le terminal",
+	"Timeout en réception de réponse du terminal",
+	"Timeout en réception d'indication du terminal",
+	"Erreur dans les paramètres ou résultats remontés du terminal",
+	"Erreur retournée par le terminal",
+	"La voie série n'est pas ouverte",
+	"Erreur interne : driver primitives",
+	"Erreur interne : driver produit",
+	"Erreur interne : gestion messages",
+	"Erreur interne : driver communication",
+	"Erreur interne : fichier absent",
+	"Erreur interne : driver telechargement",
+	"Erreur BBIC : BC_OM_ERROR reçu",
+	"Problème Lecture EEPROM",
+	"Problème Ecriture EEPROM",
+	"Problème Mise à jour checksum EEPROM",
+	"Problème Erreur Effacement Flash",
+	"Problème Erreur Ecriture Flash",
+	"Bsic non trouvé",
+	"Erreur desinscription Bbase",
+	"Erreur inscription Bbase",
+	"Erreur activation synchro",
+	"La mise en service a déjà été effectuée",
+	"La mise hors service a déjà été effectuée",
+
+/* Erreurs driver LCE */
+
+	"Erreur parametres LCE",
+	"Erreur envoi message au routeur embarqué",
+	"Erreur envoi message BBIC",
+	"Erreur envoi message LCE",
+	"Erreur timeout réception message LCE",
+	"Erreur dans les paramètres remontés du LCE",
+
+/* Erreurs driver communication */
+
+	"Mauvais numéro de voie série",
+	"Erreur ouverture du port série",
+	"Erreur fermeture du port série",
+	"Erreur ouverture liaison",
+	"Erreur fermeture liaison",
+	"Erreur changement de configuration liaison",
+	"Le port série est déjà ouvert",
+	"Le port série est déjà fermé",
+	"Erreur port série",
+	"Erreur carte MCX",
+	"Erreur émission message",
+	"Erreur réception message",
+	"Erreur Driver communication",
+
+/* Erreurs driver téléchargement */
+
+	"Erreur émission voie ",
+	"Erreur réception voie ",
+	"Erreur : plus de mémoire RAM disponible",
+	
+/* inserer ici les nouveaux messages */
+

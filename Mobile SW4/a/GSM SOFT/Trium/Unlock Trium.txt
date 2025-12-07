@@ -1,0 +1,202 @@
+Unlock Trium
+
+
+Als kleines Schnappchen hatten wir HIER die Trium Data Suite zum Download! (Funktioniert nicht mit Mars)
+
+
+
+ 
+
+ 
+
+Mars Tools Version 3.4.0001! Download (349 kB)
+
+(Version 3.4.0001, Released 04/25/2001) 
+
+
+
+Mit diesem Tool konnt Ihr vom PC aus euer Telefonbuch, SMS und Klingeltone auf dem Handy verwalten.
+
+Hier sind einige Klingeltone
+
+Hier Konnt Ihr die MSSTDFMT.DLL downloaden falls diese bei euch fehlen sollte. Kopiert diese Datei in euer Windows/System Ordner und registriert diese im DOS-Modus mit folgendem Befehl:  "regsvr32 c:/windows/system/msstdfmt.dll"
+
+ 
+
+Ihr braucht auf jedenfall ein Datenkabel das ihr entweder selber bastelt (siehe Blid) oder hier bestellt 
+
+(http://www.Service4Handys.de/)
+ 
+
+
+
+
+
+
+
+Unlocker fur Trium Astral, Geo, Laser, Galaxy
+
+ 
+
+
+
+
+
+
+Unlock via Cable
+
+1. Handy ohne SIM einschalten
+
+2. Handy mit Kabel verbinden
+
+3. Unlocker downloaden und  starten
+
+4. Unlock drucken (Auf dem Display erscheint kurz Mitsubishi M4 Testmode,
+    danach startet es neu)
+
+5. Handy ist frei
+
+
+
+
+
+Unlocker fur Trium Mars mit Firmware vor 2001
+
+
+             
+
+ 
+
+1. Zum abfragen der Firmware * halten und 5806 eingeben und kontrollieren ob die Firmware von 2001 ist. Falls die Firmware alter als 2001 ist dann unlocken, falls neuer sein lassen
+
+2. Programm downloaden und starten
+
+3. Handy einschalten und Kabel anschlie?en
+
+4. Auf Unlock drucken
+
+5. Handy zeigt kurz "M4 Testmode" und startet dann neu
+
+6. SIM einlegen und es sollte ohne Lock sein
+
+ 
+
+
+Anleitung fur Trium Unlocker by Martech vor 2001
+
+Der Unlocker geht fur folgenden Versionen Astral,Mars,Geo,Galaxy und Aria .
+
+So als erstes sei dazu gesagt das der Unlocker die neueren Versionen von "Mars" sprich
+ab dem Datum 2001 nicht offnen kann .
+
+Also checkt vorher die Version von eurem Handy ab in dem ihr * gedruckt halt und 5806 
+eingebt anhand des Datum?s konnt ihr sehen ob das Tool euer Handy Unlocken kann.
+Ansonsten ist euer Handy ToT.
+
+So ihr braucht ein Datenkabel und das Tool das ihr euch hier saugen konnt
+<<< Trium Tool by Martech <<< .
+
+So schlie?t das Datenkabel an euer Handy an und geht mal auf "connect" das proggy wir euch 
+dann sagen "entering Test mode" dann wird das Handy erkannt.
+
+Als nachstes wenn Martech das Handy erkannt hat macht ihr am besten ein Backup
+"make Unlock Sp-Unlock Backup als Sicherheit falls was schief laufen sollte.
+
+Wenn ihr das habt konnt ihr getrost auf "Unlock SP-Lock" klicken und das Tool sollte 
+euer Handy Unlocken.
+Akku raus SIM rein und freuen ;-)
+
+Die weiteren Funktionen :
+
+Restore from Unlock Backup setzt den SIM Lock wieder rein geht aber nur mit dem Backup das 
+ihr vorher gemacht habt.
+
+Make Phone Code Backup macht ein Backup vom Phone Code.
+
+Reset Phone Code setzt den Telefon Code wieder rein.
+
+
+Eeprom hier konnt ihr das Eeprom auslesen und schreiben sollte ihr jedoch vorsichtig 
+umgehen damit wenn ihr nicht wisst wozu es gut ist und ihr macht Fehler dann konnt ihr 
+euer Handy damit Platt schie?en.
+
+
+
+Bei Problemen bitte im Forum posten oder im Chat fragen 
+
+by _Schriftrolle-
+
+greetings E*x*ecuter, wshadow ,[handy],nicole82 & all others :-)
+
+
+
+
+Unlocker fur Trium Mars (Neptun) mit Firmware 2001 (Losung 1)
+
+
+
+1. eepromrw.exe starten, COM & Mars wahlen, und auf "Read" klicken.
+
+2. Im Display sollte jetzt M4-Testmode stehen und die 16 k-bytes gelesen werden.
+(Ihr braucht ein Datenkabel mit externer Stromversorgung, das gibt?s z.B.. hier, HIER LINK EINFUGEN)
+
+3. Eeprom irgendwo abspeichern.
+
+4. troky_trium.exe starten, Mars anklicken und auf "Read from Dump" klicken.
+
+
+
+5. In den Ordner gehen wo das zuvor gemachte eeprom-file abgespeichert wurde und den 
+kompletten Dateiname mit Endung zum offnen eingeben. (z.B.. mars_locked.bin)
+
+6. Jetzt sieht man rechts oben im Fenster die IMEI und den User-Lock, links unten die 
+Unlock-Codes.
+
+7. Nun setzen wir eine fremde SIM-Karte ins Gerat, geben die PIN ein und sehen "Falsche SIM"
+
+8. Jetzt musst ihr die *-Taste gedruckt halten und die Zahlen 574243 eingeben. Ihr seht jetzt ein kleines Menu in dem ihr gefragt werdet ob "NS" entsperrt werden soll. Klar!!
+Gebt jetzt den Code ein der bei ->Unlock->NSCK steht und das Gerat sollte sich normal
+einbuchen.
+
+
+(c) 2001 by dERL [GGUG], dERL@gmx.ch, getested mit Mars [25/01/01]
+
+
+
+Unlocker fur Trium Mars (Neptun) mit Firmware 2001 (Losung 2) 
+
+
+So als erstes musst ihr das Bin auslesen (Eeprom) Files hier <<< Mars 2001.ace >>> saugen.
+
+Ok schlie?t das Datenkabel ans Handy an und startet als erstes das Tool Blue-Flower-lite
+geht auf "Mars" und lest euer Handy aus damit ,gebt dem ganzen einen Namen zb.1234 .
+So zur Sicherheit solltet ihr das File mit dem Hexeditor prufen ob es richtig ausgelesen
+wurde, wenn das der Fall ist ,gehen wir zum nachsten Schritt uber .
+
+Startet das Tool Troky lite "Achtung nicht entsperren damit" sonst ist euer Handy platt
+und hat Contact Provider (CS) . 
+
+Dann 16K Dump ins Troky Verzeichnis kopieren und Mars anklicken.
+Wahlt "read codes by Dump"
+Offnet das Verzeichnis und gebt das Bin File mit Name UND *.bin ein.
+
+Nun seht ihr die IMEI links sowie den Security Code und die Sperrcodes :-)
+Der Netzlevel links unten fur die D2 Gerate ist der Xtra Lock zu wahlen 
+bzw. der CP lock Code. 
+
+Fur die Loop Gerate der NSCK lock Code.
+
+Eingabe: Andere SIM ins Tel. Handy einschalten und auf Meldung warten. 
+" * " gedruckt halten und einen der beiden Codes unten eingeben!
+
+476989 oder 574243 NS entsperren ? Ja !!! 
+
+Dann Code eingeben, bestatigen, Telefon ist nun entsperrt :-)
+
+Falls doch noch Fragen sind bitte im Forum Posten oder im Chat nach fragen .
+
+Powered by _Schriftrolle- & Nicole82
+
+ 
+
+ 

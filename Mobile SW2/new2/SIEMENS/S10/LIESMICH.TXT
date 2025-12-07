@@ -1,0 +1,33 @@
+**************************************************
+*                                                *
+* SIEMENS  Mobile Phones                         *
+*                                                *
+**************************************************
+*                                                *
+*                                                *
+* Mobile     : C25                               *
+*                                                *
+* Lang-Group : lg1                               *
+*                                                *
+* GSM-SVN    : 49                                *
+*                                                *
+* BUILD-DATE : 15.12.99                          *
+*                                                *
+**************************************************
+
+
+Kopieren Sie die Dateien in ein Verzeichnis Ihrer Wahl.
+Rufen Sie bitte zuerst das Installations-Programm SWUPINST.EXE auf.
+Dieses erstellt das notwendige INI-File.
+Anschliessend kînnen Sie das Software-Update-Program:
+
+  C25_4901.EXE
+
+aufrufen.
+
+Beim Aufruf ohne Parameter startet der Software-Update.
+
+Hilfe erhalten Sie Åber:         C25_4901  -h
+Informationen Åber die SW mit:   C25_4901  -i
+
+

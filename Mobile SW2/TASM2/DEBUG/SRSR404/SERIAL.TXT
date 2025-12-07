@@ -1,0 +1,7 @@
+Serial numbers are:
+
+Sourcer     v. 4.04, S/N B309066-LAJE
+View it     v. 1.45, S/N V301727
+Asmtool 486 v. 2.53, S/N A302341
+Unpacker    v. 1.38, S/N U302231
+

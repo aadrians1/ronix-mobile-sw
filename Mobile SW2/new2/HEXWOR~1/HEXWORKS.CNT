@@ -1,0 +1,51 @@
+:Base HEXWORKS.HLP
+:Title Hex Workshop Help
+1 General
+2 Overview=IDHELP_OVERVIEW
+2 Hex Workshop Home Page=IDHELP_WWWPAGE
+2 Version History=IDHELP_VERSIONS
+2 Commercial Demo Policy=IDHELP_EXPIRE
+1 Ordering Hex Workshop
+2 How to Order=IDHELP_HOWTOREGISTER
+2 Credit Card Ordering=IDHELP_CREDITCARD
+2 Purchase Orders=IDHELP_PURCHASEORDER
+2 Check Orders (Order Form)=IDHELP_CHECK
+2 CompuServe Software Registration Service=IDHELP_SWREGORDER
+2 Internet Ordering=IDHELP_ORDERONLINE
+2 Ordering From Europe=IDHELP_EUROPE
+2 Hex Workshop Home Page=IDHELP_WWWPAGE
+2 Contacting BreakPoint Software Inc.=IDHELP_AUTHORS
+1 Operation
+2 General Editing=IDHELP_EDITING
+2 How To Hex Edit - An Example=IDHELP_HOWTOHEXEDIT
+2 Keycuts=IDHELP_KEYCUTS
+2 Command Line Usage=IDHELP_COMMANDLINE
+2 Status Bar=IDHELP_STATUSBAR
+2 Export and Clipboard Fromats=IDHELP_EXPORT
+2 Data Viewer=IDHELP_DATAVIEWER
+2 Page Setup=IDHELP_PAGESETUP
+2 Find/Replace Utility=IDHELP_FIND
+2 Goto Utility=IDHELP_GOTO
+2 Compare Tool=IDHELP_COMPARE
+2 Checksum Generator=IDHELP_CHECKSUM
+2 Drive (Sector) Editing=IDHELP_DRIVE
+2 Preferences
+3 Layout Preferences=IDHELP_LAYOUT
+3 Display Preferences=IDHELP_DISPLAY
+3 General Preferences=IDHELP_GENERAL
+3 Configuration Preferences=IDHELP_CONFIGURATION
+2 Mini Applications
+3 Base Converter=IDHELP_BASECONV
+3 Hex Calculator=IDHELP_CALCS
+1 Reference
+2 Windows ANSI Character Set=IDHELP_ASCII
+2 DOS Charcter Set=IDHELP_DOS
+2 EBCDIC Character Set=IDHELP_EBCDIC
+2 Macintosh Character Set=IDHELP_MAC
+2 Data Type Table=IDHELP_DATA
+1 BreakPoint Software
+2 Contacting BreakPoint Software=IDHELP_AUTHORS
+2 Hex Workshop Home Page=IDHELP_WWWPAGE
+2 License Agreement=IDHELP_COPYRIGHT
+2 Tech Support/Questions=IDHELP_TECHSUPPORT
+2 Comments/Suggestions=IDHELP_COMMENTS

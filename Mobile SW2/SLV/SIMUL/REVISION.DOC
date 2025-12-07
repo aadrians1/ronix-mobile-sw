@@ -1,0 +1,18 @@
+REVISION.DOC	MAR-14-98
+
+1.00, JAN-12-98, Released.
+
+1.01, JAN-18-98, Interrupts. Clean up status code.
+
+1.02, JAN-26-98, Fix prescaler divide ratios. Enter=Spacebar=F7.
+
+1.03, FEB-25-98, Fix RETIW instruction. Fix CARRYX FUSEX bit. Simulate
+all FUSE and FUSEX bits and load them from listing. Update examples using
+SXDEFS.INC. New HELLO example. Automatically set frequency if internal
+oscillator FUSE bits are enabled. Interrupt saves PC in shadow register,
+not on return address stack.
+
+1.04, MAR-02-98, Add Alt-F1 command to view OUTPUT screen.
+
+1.05, MAR-14-98, Fix bug when saving F1 thru F3 checkpoints using mouse.
+

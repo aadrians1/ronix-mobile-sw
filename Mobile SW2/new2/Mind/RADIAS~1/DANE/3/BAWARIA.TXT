@@ -1,0 +1,36 @@
+
+
+	     ************************************       
+	     *****  BAWARIA C REVERSE II    *****        
+	     ************************************       
+                                           
+
+
+CPU:    ?
+MEMORY: SDE 2506
+FILE:   B_SQR49.BIN
+CODE:   1234 / WPRZYK£ADZIE I W PLIKU /
+INFO:   
+TECH:   
+	1 CYFRA $68 a
+	2 CYFRA $68 b
+	3 CYFRA $67 a
+	4 CYFRA $67 b
+
+RADIO BEZ KODU	:$66 a,b = 29
+		:$66 a,b = A4 PUSTY WYŒWIETLACZ
+RADIO Z KODEM	:$66 a,b = ??
+
+PRZYK£AD:
+
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+00000  28 F1 2B 67 ¦ 29 87 28 33 ¦ 2C F7 2C 7F ¦ 2C F7 49 FF
+00010  28 F1 2B 67 ¦ 2C 7F 2C FC ¦ 2B 0D 27 1B ¦ 28 F6 19 FF
+00020  FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF ¦ 07 FC 49 FF
+00030  2C 6B 2A EF ¦ FF FF FF FF ¦ 2C F7 FF FF ¦ 2C FC 50 FF
+00040  2B 67 2B AD ¦ 26 71 2A 77 ¦ 2A 9F 2A B3 ¦ 2B 35 F9 FF
+00050  FF 6B 6F 64 ¦ 20 31 32 33 ¦ 34 20 20 32 ¦ 43 FF FF FF
+00060  33 00 11 15 ¦ 37 37 2C 34 ¦ 12 FF FF FF ¦ FF FF FF FF
+00070  FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF ¦ FF FF FF FF
+
+

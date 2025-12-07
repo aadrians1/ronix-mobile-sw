@@ -1,0 +1,208 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<meta name="description"
+content="Universal serial IC programmer for all serial programmable devices, like PIC16C48,24C32,25020,93C46,12C508,AT90S1200.AT89S53,PIC1400,27C256,EEPROM,AVR,PICMICRO">
+<meta name="keywords"
+content="pic,16c84,16cxx,17cxx,59c11,24cxx,24c16,24c32,at90s1200,at90s,89s53,98sxx,25010,25020,25040,59,13,59c22,24c01,24c02,24c08,12c508,pic1400,i2c,microwire,serial,spi,parallel,jdm,programmer,universal,atmel,philips,microchip,ludipipo,com84,ponyprog,siprog,si interface,serial,programmers,picprogrammers,pip02,picall">
+<meta name="GENERATOR" content="Microsoft FrontPage Express 2.0">
+<title>H2Deetoo's Homepage</title>
+</head>
+
+<body background="speckle.gif">
+
+<p align="center"><font color="#000000" size="6"><u>IC-Prog
+Prototype Programmer</u></font></p>
+
+<p align="center">&nbsp;</p>
+
+<p align="left"><font size="4">Programs :</font><font
+color="#000000" size="4"> 12C508, 16C84, 16F84, PIC 16F877, 24C16,
+24C32, 93C46, 90S1200, 59C11, 89C2051, 89S53, 250x0, PIC, AVR ,
+80C51 etc.</font></p>
+
+<p><font color="#000000" size="4">This software package allows
+you to program all types of serial programmable Integrated
+Circuits.</font></p>
+
+<p><font color="#FF0000" size="4">I have added a toolbar and some
+other minor functions! Also the editor part has been updated (The
+EE part does not work yet!)</font></p>
+
+<p><font color="#FF0000" size="4">I have noticed some trouble
+with different 24Cxx devices. It seems that IC-Prog does not have
+correct timing. I have tested my code with Atmel devices (24C16 +
+24C16).</font></p>
+
+<p><font color="#FF0000" size="4">Can somebody help me with the
+exact timing (and differences) for different 24Cxx devices?
+Please send accurate (tested) information!</font></p>
+
+<p><font color="#FF0000" size="4">!!!!!!! I think the problem is
+that I use PAGE WRITE. I think some IC's don't support PAGE WRITE.
+Does IC-Prog also have problems reading the 24C16 ????</font></p>
+
+<p><font color="#FF0000" size="4">If it is only writing, than I
+will change the PAGE WRITE into BYTE WRITE, which should work for
+every device.</font></p>
+
+<p><font color="#008000" size="4">In the Options menu I have
+added an option to ENABLE or DISABLE the PAGE-WRITE. Please test
+if this fixes the problem!</font></p>
+
+<p><font color="#000000" size="4">I have supported the following
+programmers:</font></p>
+
+<ul>
+    <li><a href="jdmprog.gif"><font color="#000000" size="4">JDM
+        Programmer'</font></a><font color="#000000" size="4"> for
+        all serial PIC's, 24Cxx, 93Cxx, 59Cxx and 25xxx</font></li>
+</ul>
+
+<p><font color="#000000" size="4">I did modify the programmer a
+little bit so now I have </font><a href="mwsupport.htm"><font
+color="#000000" size="4">MicroWire support</font></a><font
+color="#000000" size="4"> and 4-Wire support. The JDM programmer
+is LudiPiPo compatible, so every LudiPipo compatible programmer
+can be used like the SI Programmer or the MK13 from Maxking
+Interfaces.</font></p>
+
+<ul>
+    <li><font color="#000000" size="4">SI Programmer from </font><a
+        href="http://www.artek.it/siprog/index.htm"><font
+        color="#000000" size="4">ARTEK</font></a><font
+        color="#000000" size="4"> for all serial PIC's, 24Cxx, 93Cxx,
+        59Cxx and 25xxx and AVR devices!</font></li>
+</ul>
+
+<p><font color="#000000" size="4">For schematics of SI prog look </font><a
+href="si-prog-v2_1a.pdf"><font color="#000000" size="4">here</font></a><font
+color="#000000" size="4"> !</font></p>
+
+<ul>
+    <li><a href="http://www.maxking.com/mk13.html"><font size="4">MK13</font></a><font
+        size="4"> Programmer from Maxking Interfaces </font><font
+        color="#000000" size="4">for all serial PIC's</font></li>
+    <li><a href="http://www.conquestsys.com"><font
+        color="#000000" size="4">Conquest programmer</font></a><font
+        color="#000000" size="4"> (NOT TESTED!!) for all serial
+        PIC's</font></li>
+    <li><a href="2051pv2.gif"><font color="#000000" size="4">TAFE
+        Programmer</font></a><font color="#000000" size="4"> to
+        program parallel devices: 89C1051, 89C2051, 89C4051etc.</font></li>
+    <li><a href="cpp.gif"><font color="#000000" size="4">TAIT
+        'Classic' Programmer</font></a><font color="#000000"
+        size="4"> for all serial PIC's, 24Cxx, 93Cxx, 59Cxx and
+        25xxx</font></li>
+    <li><a href="upplow.gif"><font color="#000000" size="4">Parallel
+        TAIT programmer</font></a><font color="#000000" size="4">
+        for 16C54/55/56/57 etc. Now reading and programming of 16C54
+        included! </font></li>
+    <li><a href="funcard.jpg"><font color="#000000" size="4">Fun-card
+        Programmer</font></a><font color="#000000" size="4"> for
+        all AVR devices 90S1200, 90S8515 etc.</font></li>
+    <li><a href="hschaer.htm"><font color="#000000" size="4">SCHAER
+        Programmer</font></a><font color="#000000" size="4"> It's
+        also possible to use the </font><a
+        href="http://www.multisat.de"><font color="#000000"
+        size="4">Multiprog98</font></a><font color="#000000"
+        size="4"> as Schaer compatible! (</font><a
+        href="Multiprog98.txt"><font color="#000000" size="4">Settings
+        here</font></a><font color="#000000" size="4">)</font></li>
+    <li><a href="propic2.pdf"><font color="#000000" size="4">ProPic
+        II Programmer</font></a><font color="#000000" size="4"> (ProPic
+        I also limited supported) Not supported is the dual
+        voltage. (P16Pro Programmer is compatible!)</font></li>
+    <li><a href="stk200.jpg"><font color="#000000" size="4">STK200
+        Programmer</font></a><font color="#000000" size="4"> AVR
+        programmer from Atmel</font></li>
+</ul>
+
+<p><strong>Official supported programmers:</strong></p>
+
+<ul>
+    <li><a href="http://www.maxking.com"><strong>Maxking</strong></a></li>
+    <li><a href="http://www.multisat.de"><strong>Multisat</strong></a></li>
+    <li><a href="http://www.channeltechnology.com/"><strong>Channeltech</strong></a></li>
+    <li><a href="http://www.makinterface.com"><strong>MakInterface</strong></a></li>
+    <li><a href="http://www.jdm.homepage.dk"><strong>JDM</strong></a></li>
+</ul>
+
+<p>&nbsp;</p>
+
+<p><font color="#FF0000" size="4">NEW!!: </font><font
+color="#000000" size="4">I have added &quot;Through Pic
+Programming&quot; for all smartcards with PIC+24C16. Just enable
+the Smartcard option in the Settings menu and choose the 24C16 as
+the device. Then use Read (F8) or Programm (F5) just as normally!!!!
+This can only be used with a serial port, because the
+communication is standard asynchronous communication (Phoenix). (Verify
+and Blank is </font><font color="#FF0000" size="4">NOW supported!!!!!!</font><font
+color="#000000" size="4">)</font></p>
+
+<p><font color="#000000" size="4">You can use Direct I/O or the
+Windows API to program a device, so you can use it with Windows
+NT. Windows API is only applicable to Serial Ports!</font></p>
+
+<p><font color="#000000" size="4">I have not tested all the
+devices, so please give me feedback if I have made some errors (always
+possible!)</font></p>
+
+<p><font color="#000000" size="4">Click </font><a
+href="verified.txt"><font color="#000000" size="4">here</font></a><font
+color="#000000" size="4"> to see all succesfully verified devices</font></p>
+
+<p><font color="#FF0000" size="4">NEW comandline commands!!</font></p>
+
+<p><font color="#000000" size="4">I have also added some </font><a
+href="cmdline.txt"><font color="#000000" size="4">commandline
+parameters</font></a><font color="#000000" size="4">, so you can
+use ic-prog from within your own program or external compiler etc
+.</font></p>
+
+<p><font color="#000000" size="4">Please mail me for verification
+of a succesfully programmed device!</font></p>
+
+<p>&nbsp;</p>
+
+<p><font color="#000000" size="4">Note : Not all devices are
+currently included in the program software! I will try to add as
+many devices as possible. If you want a specific device, please
+let me know. Then I will add them first.</font></p>
+
+<p><font color="#000000" size="4">Download:</font></p>
+
+<ul type="square">
+    <li><a href="icprog.exe"><font color="#000000" size="4">IC-Prog
+        Software 0.9d03</font></a><font color="#000000" size="4">
+        The Cancel button on the program dialog does not work
+        fully!</font></li>
+    <li><a href="icprog.sys"><font color="#000000" size="4">IC-Prog
+        NT/2000 driver</font></a><font color="#000000" size="4">
+        (just put this in the same directory as IC-Prog)</font></li>
+    <li><a href="icprog.chm"><font color="#000000" size="4">Helpfile</font></a><font
+        color="#000000" size="4"> for IC-Prog (All credits go to
+        Paul Walton for this! Thanks Paul)</font></li>
+</ul>
+
+<p><font color="#000000" size="4">Just put these 2 files in the
+same directory!</font></p>
+
+<p><font color="#000000" size="4">My email address is </font><a
+href="mailto:bgijzen@wanadoo.nl"><font color="#000000" size="4">bgijzen@wanadoo.nl</font></a></p>
+
+<p><font color="#000000" size="4">Please do not mail me for
+satellite questions etc. I only know something about programming
+pic's etc!!!!!</font></p>
+
+<p><font size="4">Special thanks for helping me with testing of
+code goes to:</font></p>
+
+<p><font size="4">Carsten Post, Zibri, Outsider, Rado, Gb, Paul
+Walton, Pam and Jens Dyekjær Madsen!</font></p>
+
+<p><font size="4">Thanks guys!</font></p>
+</body>
+</html>

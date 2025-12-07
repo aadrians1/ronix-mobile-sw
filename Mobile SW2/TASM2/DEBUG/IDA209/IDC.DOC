@@ -1,0 +1,280 @@
+
+IDC language is a C-like language. It has the same lexical tokens as C does:
+character set,constants,identifiers,keywords, etc. All variables in IDC are
+automatic local variables (sic!). A variable can contain:
+  - a 32-bit signed long integer
+  - a character string (max 255 characters long)
+A program in IDC consists of function declarations. A function in IDC returns
+a value. There are 2 kinds of functions:
+  - built-in functions
+  - user-defined functions
+
+A function is declared in this way:
+
+  static func(arg1,arg2,arg3) {
+    ...
+  }
+
+where arg1,arg2,arg3 are the function parameters,'func' is the function name.
+It is not nesessary to specify the types of the parameters because any variable
+can contain a string or a number.
+
+A variable is declared in this way:
+
+  auto var;
+
+This declaration introduces a variable named 'var'. It can contain a string
+or a number. All C and C++ keywords are reserved and cannot be used as
+a variable name. The variable is defined up to end of function.
+
+In IDC there are the following statements:
+  if (expression) statement
+  if (expression) statement else statement
+  for ( expr1; expr2; expr3 ) statement
+  while (expression) statement
+  do statement while (expression);
+  break;
+  continue;
+  return <expr>;
+  return;					the same as 'return 0;'
+  { statements... }
+  expression;					 (expression-statement)
+  ;						 (empty statement)
+
+In expressions you can use almost all C operations except:
+  ++,--
+  complex assigment operations as '+='
+  , (comma operation)
+
+You can use the following construct in the expressions:
+
+  [ s, o ]
+
+This means to calculate linear (effective) address for segment 's' offset 'o'.
+The calculation is made using the following formula:
+
+  (s << 4) + o
+
+If a string constant is specified as 's', it denotes a segment by its name.
+
+There are 2 type conversion operations:
+
+  long( expr )
+  char( expr )
+
+However, all type conversions are made automatically:
+  - operand(s) are converted to 'long'
+  - the operation is performed.
+
+Exceptions:
+ 1. binary '+' operation. If the first operand is string type, the second
+    operand is converted to a string and the operands are concatenated.
+ 2. relational operations (such as ==,!=, etc.) If both operands are strings,
+    the string comparision is performed, otherwise - they are converted to
+    numbers.
+
+Built-in functions
+------------------
+
+The following conventions are used in this list:
+  'ea' is a linear address
+  'success' is 0 if a function failed, 1 otherwise
+  'void' means that function returns no meaningful value (always 0)
+
+ All function parameter conversions are made automatically.
+
+A. Utility functions
+--------------------
+long	MK_FP		(long seg,long off);	// the same as [ seg, off ]
+long	_lpoke		(long RAMea,long value); // poke a long integer into RAM
+						// returns old value
+long	_poke		(long RAMea,long value);// poke a byte into RAM
+						// returns old value
+long	_peek		(long RAMea);		// get a byte from RAM
+char	form		(char format,long value); // works as sprintf, takes only
+						// 1 parameter. Specifying %f as a parameter
+						// will lead to abnormal program termination
+						// with bad consequences.
+						// The resulting string should
+						// be less than 255 characters.
+char	substr		(char str,long x1,long x2); // substring [x1..x2-1]
+						// if x2 == -1, then till end of line
+long	strstr		(char str,char substr);	// find a substring, -1 - not found
+long	strlen		(char str);		// calculate length
+long	xtol		(char str);		// ascii hex -> number
+						// (use long() for atol)
+success	AssignKey	(char action,long key);	// assign a key to an action
+						// meaningful only before the main
+						// menu is constructed
+success	Jump		(long ea);		// move cursor to ea
+						// screen is refreshed at the end
+						// of IDC execution
+
+B. Functions that change program representation
+-----------------------------------------------
+void	DeleteAll	();			// delete ALL information
+						// about the program
+long	MakeCode	(long ea);		// convert to instruction
+						// returns number of bytes
+						// occupied by the instruuction
+success	MakeName	(long ea,char name);	// assign a name to a location
+success	MakeComm	(long ea,char comment);	// give a comment
+success	MakeRptCmt	(long ea,char comment);	// give a repeatable comment
+success	MakeArray	(long ea,long nitems);	// convert to an array
+success	MakeStr		(long ea,long size);	// convert to ASCII string
+success	MakeByte	(long ea);		// convert to byte
+success	MakeWord	(long ea);		// convert to word
+success	MakeDword	(long ea);		// convert to double-word
+success	MakeQword	(long ea);		// convert to quadro-word
+success	MakeTbyte	(long ea);		// convert to 10 bytes (tbyte)
+void	MakeUnkn	(long ea);		// convert to 'unknown'
+success	OpDec		(long ea);		// operands are decimal
+success	OpChar		(long ea);		// operands are characters
+success	OpOffset	(long ea,long segbase);	// operands are offsets
+						// if segbase==-1, then operands aren't offsets
+success	OpSegment	(long ea);		// operands are segments
+success	OpNum		(long ea);		// operands are numbers
+success	OpAlt1		(long ea,char opnd);	// manually enter 1st operand
+success	OpAlt2		(long ea,char opnd);	// manually enter 2nd operand
+void	MakeVar		(long ea);		// the location is 'variable'
+success	MakeProc	(long ea,long fl);	// fl=0: no proc, fl=1: near proc, fl=2: far proc
+success	MakeEndp	(long ea,long fl);	// fl=0: no endp,1: endp
+void	ExtLinA		(long ea,long n,char line); // insert an additional line before the generated ones
+void	ExtLinB		(long ea,long n,char line); // insert an additional line after the generated ones
+void	DelExtLnA	(long ea,long n);	// delete an additional line before the generated ones
+void	DelExtLnB	(long ea,long n);	// delete an additional line aftr  the generated ones
+success	JmpTable	(long jmpea,long tableea,long nitems);	// define a jump table
+void	PatchByte	(long ea,long value);	// change a byte
+void	SetFlags	(long ea,long flags);	// change internal flags for ea
+success	SetReg		(long ea,char reg,long value); // set value of segment register
+
+C. Functions that produce output files
+--------------------------------------
+void	WriteMap	(char file);		// produce a .map file
+void	WriteTxt	(char file,long ea1,long ea2); // produce an .asm file
+void	WriteExe	(char file);		// produce an executable file
+
+D. Informational functions
+--------------------------
+long	GetFlags	(long ea);		// get internal flags for ea
+long	Byte		(long ea);		// get a byte at ea
+long	Word		(long ea);		// get a word at ea
+long	Dword		(long ea);		// get a double-word at ea
+long	LocByName	(char name);		// -1 - no such name
+long	SegByBase	(long base);		// -1 - no such segment
+long	MinEA		();			// the minimal address defined in the program
+long	MaxEA		();			// the maximal address defined in the program
+long	ScreenEA	();			// the current screen ea
+long	BeginEA		();			// where execution starts
+long	GetReg		(long ea,char reg);	// get segment register value
+						// -1 - undefined or error
+long	FirstSeg	();			// returns start of the first
+						// segment, -1 - no segments
+long	NextSeg		(long ea);		// returns start of the next
+						// segment, -1 - no more segs
+long	SegStart	(long ea);		// returns start of the segment
+						// -1 if bad address passed
+long	SegEnd		(long ea);		// return end of the segment
+						// this address doesn't belong
+						// to the segment
+						// -1 if bad address passed
+char	SegName		(long ea);		// returns name of the segment
+						// "" if bad address passed
+long	NextAddr	(long ea);		// returns next defined address
+						// -1 if no such address exists
+long	PrevAddr	(long ea);		// returns prev defined address
+						// -1 if no such address exists
+long	NextHead	(long ea);		// returns next defined item address
+						// -1 if no such address exists
+long	PrevHead	(long ea);		// returns prev defined item address
+						// -1 if no such address exists
+long	NextNotTail	(long ea);		// returns next not tail address
+						// -1 if no such address exists
+long	PrevNotTail	(long ea);		// returns prev not tail address
+						// -1 if no such address exists
+long	ItemEnd		(long ea);		// returns address past end of
+						// the item
+long	ItemSize	(long ea);		// returns item size, min answer=1
+char	LineA		(long ea,long num);	// get additional line before generated ones
+char	LineB		(long ea,long num);	// get additional line after generated ones
+char	Comment		(long ea);		// get comment
+char	RptCmt		(long ea);		// get repeatable comment
+char	AltOp1		(long ea);		// get manually entered 1st operand
+char	AltOp2		(long ea);		// get manually entered 2nd operand
+
+E. Functions that change global settings
+----------------------------------------
+long	StringEnd	(long asciiendchar);	// set current ASCII end character
+						// returns old value
+long	StringStp	(long asciistopchar);	// set current ASCII break character
+						// returns old value
+long	LowVoids	(long lowlimit);	// set current low limit for voids
+						// returns old value
+long	HighVoids	(long highlimit);	// set current high limit for voids
+						// returns old value
+long	TailDepth	(long taildepth);	// set current tail depth
+						// returns old value
+long	Direction	(long direction);	// set current search direction
+						// returns old value
+long	Analysis	(long analysis);	// enable/disable auto analysis
+						// returns old value
+long	Tabs		(long tabulations);	// enable/disable tabulations in output file
+						// returns old value
+long	Comments	(long comments);	// enable/disable automatic comments
+						// returns old value
+long	Voids		(long voids);		// enable/disable void marks display
+						// returns old value
+long	XrefShow	(long xrefshow);	// enable/disable cross-references display
+						// returns old value
+long	Indent		(long indent);		// set indention for instruntions
+						// returns old value
+long	CmtIndent	(long cmtindent);	// set indention for comments
+						// returns old value
+long	AutoShow	(long autoshow);	// enable/disable autoanalysis display
+						// returns old value
+success	SetPrcsr	(char processor);	// set processor type
+						
+F. Functions that interact with the user
+----------------------------------------
+char	AskStr		(char defval,char prompt); // ask a string
+long	AskAddr		(long defval,char prompt); // -1 - no or bad input
+long	AskSeg		(long defval,char prompt); // -1 - no or bad input
+char	AskIdent	(char defval,char prompt);
+void	Message		(char str);		// show a message in messages window
+void	Warning		(char str);		// show a warning a dialog box
+void	Fatal		(char str);		// exit IDA immediately
+
+G. Functions that work with segments
+------------------------------------
+success	SegCreate	(long startea,long endea,long base,long use32,long alignment,long combination);
+success	SegDelete	(long segea,long disable);	// disable=1: exclude all bytes of the segment
+							// from the disassembled text.
+success	SegBounds	(long segea,long startea,long endea);
+success	SegRename	(long segea,char name);
+success	SegClass	(long segea,char class);
+success	SegAlign	(long segea,long alignment);
+	#define saAbs	   0	// Absolute segment.
+	#define saRelByte  1	// Relocatable, byte aligned.
+	#define saRelWord  2	// Relocatable, word (2-byte, 16-bit) aligned.
+	#define saRelPara  3	// Relocatable, paragraph (16-byte) aligned.
+	#define saRelPage  4	// Relocatable, aligned on 256-byte boundary (a "page"
+	                	// in the original Intel specification).
+	#define saRelDble  5	// Relocatable, aligned on a double word (4-byte)
+	                	// boundary. This value is used by the PharLap OMF for
+        	        	// the same alignment.
+	#define saRel4K    6	// This value is used by the PharLap OMF for page (4K)
+	                	// alignment. It is not supported by LINK.
+success	SegComb		(long segea,long combination);
+	#define scPriv     0    // Private. Do not combine with any other program
+                        	// segment.
+	#define scPub      2    // Public. Combine by appending at an offset that meets
+        	        	// the alignment requirement.
+	#define scPub2     4    // As defined by Microsoft, same as C=2 (public).
+	#define scStack    5    // Stack. Combine as for C=2. This combine type forces
+	                	// byte alignment.
+	#define scCommon   6    // Common. Combine by overlay using maximum size.
+	#define scPub3     7    // As defined by Microsoft, same as C=2 (public).
+success	SegAddrng	(long segea,long addrng);
+long	SegByName	(char segname);		// returns segment base
+success	SegDefRef	(long segea,char reg,long value);
+						// set default value for segment reg

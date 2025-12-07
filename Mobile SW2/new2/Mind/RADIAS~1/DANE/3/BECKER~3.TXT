@@ -1,0 +1,32 @@
+
+
+	     ************************************       
+	     *****  BECKER GRAND PRIX 2000  *****
+	     *****         BE-1319         ******
+	     ************************************       
+                                           
+
+
+CPU:    ?
+MEMORY: 85C82
+FILE:   ?
+CODE:   ?   / KOD W PRZYK£ADZIE I W PLIKU /
+INFO:   1-PIERWSZ CYFRA,2-DRUGA CYFRA,3-TRZECIA CYFRA
+	4-CZWARTA CYFRA,AUTOMATIC POTWIERDZENIE
+TECH:   
+	1 CYFRA $5A a	$5C a	$5E a
+	2 CYFRA $5A b	$5C b	$5E b
+	3 CYFRA $5B a	$5D a	$5F a
+	4 CYFRA $5B b	$5D b	$5F b
+
+LICZNIK B£ÊDÓW 	:$60 b = 3 NOMINALNIE / 0 ZABLOKOWANE /
+LICZNIK CZASU  	:$60 a = 3
+		 $60 a,b = 20 /ZABLOKOANE/
+USTAWIWNIE KODU NA WARTOŒÆ "AA" ODBIORNIK URUCHOMIA SIÊ BEZ KODU 
+TABELA PRAWDY:
+	0->A	1->B	2->8	3->9	4->E
+	5->F	6->C	7->D	8->2	9->3
+PRZYK£AD:
+
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+

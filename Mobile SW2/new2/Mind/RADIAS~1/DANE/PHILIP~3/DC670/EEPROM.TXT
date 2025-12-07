@@ -1,0 +1,7 @@
+PROCESOR : 47C421AF8536
+EEPROM   : X2402
+
+Wprowadzanie : < , >
+Wywol./Zatw. : 1 kolejno
+
+UWAGI : 

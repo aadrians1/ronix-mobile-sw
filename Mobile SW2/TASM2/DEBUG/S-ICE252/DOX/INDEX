@@ -1,0 +1,209 @@
+
+ Soft-ICE User's Guide
+
+
+ By Nu-Mega Technologies P.0. Box 7780 Nashua, NH 03060-7780 (603) 889-
+2386
+ Copyright Nu-Mega Technologies @, 1987 - 1989. All rights reserved. No
+part of this publication or the enclosed software may be reproduced or
+distributed in any form or by any means without the prior written
+permission of Nu-Mega Technologies. It is permitted to make copies of the
+Soft-ICE diskette to be used solely for backup in case of destruction of
+the original.
+We welcome your suggestions and comments regarding improvements to Soft-
+ICE or this publication. Changes will be incorporated in new editions of
+this publication and in new versions of Soft-ICE software. Nu-Mega
+Technologies reserves the right to make improvements of changes to this
+product at any time without notice.
+While every reasonable precaution has been taken in the preparation of
+this publication and software, Nu-Mega Technologies assumes no
+responsibility or liability of any kind for errors or omissions, or for
+the consequences of a such errors. The program is provided "as is" without
+warranty of any kind. The entire risk as to the quality and performance of
+this program is to you. Should the program prove defective, you assume the
+entire cost of all necessary servicing, repair or correction.
+
+
+
+     i
+
+ The following trade names are referenced throughout this Manual:
+    IBM, PCDOS, Personal Series II, AT, MDA, CGA,
+    EGA, and VGA are trademarks of International
+    Business Machines Corporation.
+    MSDOS, DEBUG, SYMDEB, CODEVIEW,
+    Microsoft Windows, Ramdrive and Microsoft are
+    trademarks of Microsoft Corporation.
+     8086, 80286, 80386 and Intel are trademarks of Intel
+     Corporation.
+     CP/M is a trademark of Digital Research.
+     Soft-ICE, MagicCV, and MagicCVW are
+     trademarks of Nu-Mega Technologies.
+     Compaq is a trademark of Compaq Computer
+     Corporation.
+
+     ii CONTENTS 
+
+  CHAPTER 1                                    Page
+
+ Introduction
+        1.1 Product Description...................2
+        1.2 Using This Manual.....................4
+        1.3 System Requirements...................5
+        
+           SECTION I -- Learning Soft-ICE
+
+CHAPTER 2
+
+ Getting Started
+        2.1 The Diskettes.........................8
+        2.2 Loading Soft-ICE......................9
+        2.3 Unloading Soft-ICE...................13
+        2.4 Reloading Soft-ICE...................13
+
+CHAPTER 3
+
+ Debugging in 30 Minutes
+        3.1 Introduction..........................16
+        3.2 Popping Up the Window.................16
+        3.3 Returning From the Window.............16
+        3.4 Changing the Window Size..............16
+        3.5 Moving the Window.....................17
+        3.6 Line Editing Keystrokes...............17
+        3.7 Interactive Status Line...............18
+        3.8 Command Syntax........................19
+        3.9 Function Keys.........................21
+        3.10 Help.................................22
+        3.11 Tutorial.............................23
+
+     iii
+
+           SECTION II -- Commands
+
+ Notational Conventions ......................... 49
+
+CHAPTER 4
+
+ Using Break Point Commands
+        4.1 Introduction ........................ 52
+        4.2 Setting Break Points ................ 53
+        4.3 Manipulating Break Points ........... 67
+
+CHAPTER 5
+
+ Using Other Commands
+       5.1 Display and Edit Commands ............ 76
+       5.2 I/O Port Commands .................... 89
+       5.3 Transfer Control Commands ............ 92
+       5.4 Debug Mode Commands .................. 103
+       5.5 Utility Commands ..................... 109
+       5.6 Specialized Debugging Commands ....... 116
+       5.7 Windowing Commands ................... 130
+       5.8 Debugger Customization Commands ...... 137
+       5.9 Screen Control Commands .............. 148
+       5.10 Symbol and Source Line Commands ..... 158
+                    
+           SECTION III -- Support Features
+
+CHAPTER 6
+ 
+ Soft-ICE Initialization Options
+       6.1 Introduction ......................... 166
+       6.2 Loading Soft-ICE from the DOS Prompt . 166
+       6.3 Loading Soft-ICE as a Loadable
+                  Device Driver ................. 167
+       6.4 The Soft-ICE Initialization File
+                  S-ICE.DAT ..................... 171
+
+     iv
+
+CHAPTER 7
+
+ Symbolic and Source Level Debugging Page
+      7.1 Introduction .......................... 178
+      7.2 Preparing for Symbolic or Source
+            Debugging ........................... 178
+      7.3 Reserving Memory for Symbols and
+            Source Files ........................ 181
+      7.4 Loading Programs and Symbol Files ..... 181
+      7.5 Debugging With Symbols ................ 184
+      7.6 Debugging With Source ................. 185
+
+CHAPTER 8
+
+ Expanded Memory Support
+      8.1 Introduction .......................... 190
+      8.2 Configuring the EMM Environment ....... 191
+      8.3 Other EMM Features .................... 194
+      8.4 EMM Debugging ......................... 195
+
+CHAPTER 9
+
+ Back Trace Ranges
+      9.1 Introduction .......................... 198
+      9.2 Using Back Trace Ranges ............... 199
+      9.3 Special Notes ......................... 201
+
+CHAPTER 10
+
+ Using Soft-ICE with MagicCV or MagicCVW
+      10.1 Introduction ......................... 204
+      10.2 Running Soft-ICE with MagicCV or
+            MagicCVW ............................ 204
+      10.3 Special Considerations ............... 205
+      10.4 The Soft-ICE ACTION command .......... 207
+
+     v
+
+       SECTION IV -- Advanced Topics
+
+CHAPTER 11
+ 
+ Advanced Features
+      11.1 Using Soft-ICE with other Debuggers .. 210
+      11.2 User-Qualified Break Points .......... 212
+      11.3 The Window in Graphics Mode .......... 216
+      11.4 Expanded Memory Debugging Features ... 216
+      11.5 Extended Memory Debugging Features ... 218
+
+CHAPTER 12
+
+ Special Debugging Problems
+      12.1 Loadable Device Drivers .............. 222
+      12.2 Boot Loaders ......................... 223
+      12.3 Interrupt Routines ................... 224
+      12.4 Non-DOS Operating Systems ............ 225
+
+CHAPTER 13
+
+ Theory of Operation
+      13.1 Activating Other Debuggers ........... 228
+      13.2 Virtual Machine Basics ............... 228
+
+APPENDIX A
+
+ Functional Command List ........................ 233
+
+APPENDIX B
+
+ Alphabetic Command List ........................ 237
+   
+     vi
+
+APPENDIX C
+ 
+    Keystroke Function List ..................... 241
+
+APPENDIX D
+
+    Error Messages and Descriptions ............. 243
+
+APPENDIX E
+
+    Troubleshooting Guide ....................... 251
+
+INDEX ........................................... 257
+
+     vii
+
+

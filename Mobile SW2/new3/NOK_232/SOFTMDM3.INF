@@ -1,0 +1,158 @@
+; Windows Modem Setup File
+; Copyright (c) 1993-1998 Microsoft Corporation
+; Manufacturer: Nokia Mobile Phones, Version 2.1
+
+[Version]
+Signature="$CHICAGO$"
+Class=Modem
+ClassGUID={4D36E96D-E325-11CE-BFC1-08002BE10318}
+Provider=%Mfg%
+
+[Manufacturer]
+%Mfg%=Models
+
+[Models]
+%Modem1%=Modem1, MDMGEN96
+%Modem2%=Modem2, MDMGEN96
+
+[Modem1] ; Nokia GSM Data 2.0
+AddReg=All, MfgAddReg, Modem1.AddReg, EXTERNAL
+
+[Modem1.AddReg] ; Nokia GSM Data 2.0
+HKR,, Properties, 1, 00,00,00,00, FF,00,00,00, 00,00,00,00, 00,00,00,00, 00,00,00,00, 33,00,00,00, 00,E1,00,00, 80,25,00,00
+
+[Modem2] ; Nokia GSM Voice 2.0
+AddReg=All, MfgAddReg, Modem2.AddReg, EXTERNAL
+
+[Modem2.AddReg] ; Nokia GSM Voice 2.0
+HKR,, Properties, 1, 00,00,00,00, FF,00,00,00, 00,00,00,00, 00,00,00,00, 00,00,00,00, 00,00,00,00, 00,E1,00,00, 80,25,00,00
+HKR,, UserInit,, "+FCLASS=8"
+HKR,, VoiceProfile, 1,00,00,00,00
+
+[Strings]
+Mfg="Nokia Mobile Phones"
+Modem1="Nokia GSM Data 2.0"
+Modem2="Nokia GSM Voice 2.0"
+
+[EXTERNAL]
+HKR,, DeviceType, 1, 01
+
+[All]
+HKR,,FriendlyDriver,,unimodem.vxd
+HKR,,DevLoader,,*vcomm
+HKR,,PortSubClass,1,02
+HKR,,ConfigDialog,,modemui.dll
+HKR,,EnumPropPages,,"modemui.dll,EnumPropPages"
+HKR, Init, 1,, "AT<cr>"
+
+[MfgAddReg]
+HKR, Init, 2,, "AT&FV1E0&D2&S0&C1S0=0<cr>"
+HKR, Monitor, 1,, "ATS0=0<cr>"
+HKR, Monitor, 2,, "None"
+HKR, Hangup, 1,, "ATH<cr>"
+HKR, Answer, 1,, "ATA<cr>"
+HKR,, Reset,, "ATZ<cr>"
+HKR, Settings, Prefix,, "AT"
+HKR, Settings, Terminator,, "<cr>"
+HKR, Settings, DialPrefix,, "D"
+HKR, Settings, DialSuffix,, ""
+HKR, Settings, FlowControl_Off,, "&K0"
+HKR, Settings, FlowControl_Hard,, "&K3"
+HKR, Settings, FlowControl_Soft,, "&K4"
+HKR, Settings, SpeedNegotiation_Off,, ""
+HKR, Settings, SpeedNegotiation_On,, "S35=7"
+HKR, Settings, CallSetupFailTimer,, "S7=<#>"
+
+HKR,         , ConfigDelay, 1, 88, 13, 00, 00
+HKR, Settings, Compression_Off,, "+DS=0,0;"
+HKR, Settings, Compression_On,, "+DS=3,0;"
+HKR, Settings, ErrorControl_Off,, "+CBST=0,0,0;+DS=3,0;"
+HKR, Settings, ErrorControl_On,, "+CBST=0,0,1;"
+
+HKR, Fax, SetupCommand,, "ATS7=255&D3&K4"
+HKR, Fax, HardwareFlowControl,, "1"
+HKR, Fax, SerialSpeedInit,, "19200"
+HKR, Fax\Class1\AdaptiveAnswer\AnswerCommand, 1,, "ATS7=90S25=2"
+HKR, Fax\Class1\AdaptiveAnswer\AnswerCommand, 2,, "ATA"
+HKR, Fax\Class1\AdaptiveAnswer, ModemResponseFaxConnect,, "CONNECT"
+HKR, Fax\Class1\AdaptiveAnswer, ModemResponseDataDetect,, "CARRIER"
+HKR, Fax\Class1\AdaptiveAnswer, ModemResponseDataConnect,, "CONNECT"
+HKR, Fax\Class2\AdaptiveAnswer\AnswerCommand, 1,, "ATS7=90S25=2"
+HKR, Fax\Class2\AdaptiveAnswer\AnswerCommand, 2,, "ATA"
+HKR, Fax\Class2\AdaptiveAnswer, ModemResponseFaxConnect,, "+FCO"
+HKR, Fax\Class2\AdaptiveAnswer, ModemResponseDataDetect,, "CARRIER"
+HKR, Fax\Class2\AdaptiveAnswer, ModemResponseDataConnect,, "CONNECT"
+
+; OK
+HKR, Responses, "<cr><lf>OK<cr><lf>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "0<cr>", 1, 00, 00, 00,00,00,00, 00,00,00,00
+; Negotiation Progress
+HKR, Responses, "<cr><lf>CARRIER<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "16<cr>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+; Connect
+HKR, Responses, "<cr><lf>CONNECT<cr><lf>", 1,  02,  00,  00,00,00,00,  00,00,00,00
+HKR, Responses, "1<cr>", 1, 02, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 300<cr><lf>", 1, 02, 00, 2c,01,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 1200<cr><lf>", 1, 02, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "5<cr>", 1, 02, 00, b0,04,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 2400<cr><lf>", 1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "10<cr>", 1, 02, 00, 60,09,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 4800<cr><lf>", 1, 02, 00, C0,12,00,00, 00,00,00,00
+HKR, Responses, "11<cr>", 1, 02, 00, c0,12,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>CONNECT 9600<cr><lf>", 1, 02, 00, 80,25,00,00, 00,00,00,00
+HKR, Responses, "12<cr>", 1, 02, 00, 80,25,00,00, 00,00,00,00
+; Error
+HKR, Responses, "<cr><lf>ERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "4<cr>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+FCERROR<cr><lf>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "+F4<cr>", 1, 03, 00, 00,00,00,00, 00,00,00,00
+; No Carrier
+HKR, Responses, "<cr><lf>NO CARRIER<cr><lf>", 1, 04, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "3<cr>", 1, 04, 00, 00,00,00,00, 00,00,00,00
+;No Dial Tone
+HKR, Responses, "<cr><lf>NO DIALTONE<cr><lf>", 1, 05, 00, 00,00,00,00, 00,00,00,00
+;Delayed
+HKR, Responses, "<cr><lf>DELAYED<cr><lf>", 1,  1D,  00,  00,00,00,00,  00,00,00,00
+HKR, Responses, "13<cr>", 1, 1D, 00, 00,00,00,00, 00,00,00,00
+;Blacklisted
+HKR, Responses, "<cr><lf>BLACKLISTED<cr><lf>", 1, 1C, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "14<cr>", 1, 1C, 00, 00,00,00,00, 00,00,00,00
+; Busy
+HKR, Responses, "<cr><lf>BUSY<cr><lf>", 1, 06, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "7<cr>", 1, 06, 00, 00,00,00,00, 00,00,00,00
+; No Answer
+HKR, Responses, "<cr><lf>NO ANSWER<cr><lf>", 1, 07, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "8<cr>", 1, 07, 00, 00,00,00,00, 00,00,00,00
+; Ring
+HKR, Responses, "<cr><lf>RING<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "2<cr>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+
+; Compression
+HKR, Responses, "<cr><lf>+DR: NONE<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+DR: V42B<cr><lf>", 1, 01, 01, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+DR: V42B RD<cr><lf>", 1, 01, 01, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+DR: V42B TD<cr><lf>", 1, 01, 01, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+DR: MNP5<cr><lf>", 1, 01, 01, 00,00,00,00, 00,00,00,00
+
+; Service Reporting Control
+HKR, Responses, "<cr><lf>+CR: ASYNC<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CR: REL ASYNC<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+
+; Error Control Reporting
+HKR, Responses, "<cr><lf>+ER: NONE<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+ER: LAMP<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+ER: ALT<cr><lf>", 1, 01, 00, 00,00,00,00, 00,00,00,00
+
+; Distinctive Ring
+HKR, Responses, "<cr><lf>+CRING: ASYNC<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: REL ASYNC<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: FAX<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: VOICE<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: VOICE/ASYNC<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: VOICE/REL ASYNC<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: ALT VOICE/ASYNC<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: ALT VOICE/REL ASYNC<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: ALT ASYNC/VOICE<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: ALT REL ASYNC/VOICE<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: ALT VOICE/FAX<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00
+HKR, Responses, "<cr><lf>+CRING: ALT FAX/VOICE<cr><lf>", 1, 08, 00, 00,00,00,00, 00,00,00,00

@@ -1,0 +1,10 @@
+PHILIPS\RENAULT 22DC579/62
+
+
+KOD   5997
+PROCESOR UPD 1723GF-698
+              579 RC4
+
+0050    PION10  25     PION11 9F   PION12 19   PION13 72 
+                
+  CODE           5            9            9          7

@@ -1,0 +1,53 @@
+SIEMENS C25 v46 Unlocking Instructions - 100% Working
+-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+= Info & Testing =
+GSMTTeamYU@windows-network.com ; Brka@windows-network.com
+================================================================
+For this procedure you need  :
+- Siemens C25_4303 Flasher
+- Siemens C25_4608 Flasher
+* (optionally) Siemens ALL25.EXE service Software
+----------------------------------------------------------------
+1. Connect the phone to cables (phone is OFF)
+2. Start the C25_4608.exe Flasher
+3. Keep Pressing POWER ON button until Flasher connects to phone
+4. Flasher will start Erasing Flash Memory
+5. When it erase Flash, and start "Transmitting data to phone ..."
+   Disconnect the cable from the phone.
+6. Phone is Dead now, and it's ok. Dont worry.
+7. Pull the battery out and put it back to phone
+8. Start the C25_4303 Flasher
+9. Keep Pressing Power ON button untill it connects to phone
+   this takes some time .. dont be afraid, everything is OK.
+10. If Flasher displays "Could not contact the mobile ... continue ?"
+    Press YES ....
+11. After this, the Flasher wil start flashing ... 
+12. When It finishes, power ON the phone
+13. The phone must start normally.
+14. Then Insert ANY SIM Card ... phone is UNLOCKED :)))
+This Method saves even the phones with "WRONG SOFTW." message.
+-------------------------------------------------------------------
+If the whole procedure doesnt work (phone still displays "wrong sw."
+here's what you need to do :
+1. Flash the Phone with C25_4608 Flasher
+2. Destroy it with old C25 Unlocker (attached)
+3. Start ALL25.EXE , enter Phone's IMEI
+4. Before Entering Last IMEI digit, prepare to turn the phone ON
+5. Enter last digit, turn ON the phone
+6. When it comes to 21st. step, HOLD ALT+X to exit the program
+   (if you dont exit it's bad :(
+7. Repeat the procedure, and phone should display "Service mode"
+8. Repat procedure Until it says "Wrong Softw."
+9. After that .... repeat procedure with Flasher's 4608 and 4303
+
+This, Second Procedure must be used in only 2% of cases ....
+
+BUT, The whole PROCEDURE (1+2) 100% Unlocks
+and Repairs EVERY PHONE !!!!!!!!!!!!!!!!!!!
+======================================================================
+
+All Info's comments etc. please e-mail me :
+GSMTeamYU@windows-network.com
+Brka@windows-network.com
+http://www.GSMTeamYU.org
+======================================================================

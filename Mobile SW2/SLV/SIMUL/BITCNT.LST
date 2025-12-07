@@ -1,0 +1,116 @@
+					===== Parallax PIC16Cxx Assembler v4.7 =====
+
+
+     1                              	;BITCNT.ASM	NOV-02-97
+     2                              	;Optimized routines to count the number of set bits in a byte.
+     3                              	; by Loren Blaney
+     4
+     5    0000-                     		DEVICE	PIC16C54,XT_OSC,WDT_OFF,PROTECT_OFF
+     6
+     7    =0008                     	BUF	EQU	08h		;buffer scratch location
+     8    =0009                     	CNT	EQU	09h		;counter
+     9
+    10    =000A                     	PAT	EQU	0Ah		;bit pattern
+    11    =000B                     	CNT1	EQU	0Bh		;bit count using method 1
+    12    =000C                     	CON	EQU	0Ch		;constant 19h
+    13
+    14    =0001                     	WREG	EQU	RTCC
+    15
+    16
+    17    0000-                     		ORG	0
+    18                              	;------------------------------------------------------------------------------
+    19                              	;Tests three methods of counting the number of set bits in a byte.
+    20                              	;
+    21    0000- 0C7F                		MOVLW	7Fh		;map W register into RTCC
+    22    0001- 0002                		OPTION
+    23
+    24    0002- 006A                		CLRF	PAT		;for all possible bytes...
+    25    0003- 020A                	LOOP	MOVF	PAT,W		;count bits using method 1
+    26    0004- 0915                		CALL	BITCNT1
+    27    0005- 002B                		MOVWF	CNT1		;save bit count
+    28
+    29    0006- 020A                		MOVF	PAT,W		;count bits using method 2
+    30    0007- 0926                		CALL	BITCNT2
+    31    0008- 0209                		MOVF	CNT,W		;get bit count (it's different)
+    32
+    33    0009- 018B                		XORWF	CNT1,W		;do the two methods give same result?
+    34    000A- 0743                		BTFSS	STATUS.2	;skip if so
+    35    000B- 0A0B                	L1	GOTO	L1		;lock up if not
+    36
+    37    000C- 020A                		MOVF	PAT,W		;count bits using method 3
+    38    000D- 092E                		CALL	BITCNT3
+    39
+    40    000E- 018B                		XORWF	CNT1,W		;is this count the same as the others?
+    41    000F- 0743                		BTFSS	STATUS.2	;skip if so
+    42    0010- 0A10                	L2	GOTO	L2		;lock up if not
+    43
+    44    0011- 02EA                		DECFSZ	PAT		;next pattern
+    45    0012- 0A03                		GOTO	LOOP
+    46    0013- 0003                		SLEEP
+    47    0014- 0A03                		GOTO	LOOP
+    48
+    49                              	;------------------------------------------------------------------------------
+    50                              	;Counts the number of set bits in the W register. The count is returned in W.
+    51                              	; Straightforward method:
+    52                              	; 17 instructions, 18 cycles, 1 RAM variable.
+    53                              	;
+    54    0015- 0028                	BITCNT1	MOVWF	BUF
+    55    0016- 0E01                		ANDLW	01h		;initialize W with count for first bit
+    56    0017- 0628                		BTFSC	BUF.1		;test remaining bits one at a time
+    57    0018- 02A1                		INCF	WREG		;increment count if bit is set
+    58    0019- 0648                		BTFSC	BUF.2
+    59    001A- 02A1                		INCF	WREG
+    60    001B- 0668                		BTFSC	BUF.3
+    61    001C- 02A1                		INCF	WREG
+    62    001D- 0688                		BTFSC	BUF.4
+    63    001E- 02A1                		INCF	WREG
+    64    001F- 06A8                		BTFSC	BUF.5
+    65    0020- 02A1                		INCF	WREG
+    66    0021- 06C8                		BTFSC	BUF.6
+    67    0022- 02A1                		INCF	WREG
+    68    0023- 06E8                		BTFSC	BUF.7
+    69    0024- 02A1                		INCF	WREG
+    70    0025- 000C                		RETURN			 (listing file edited)
+    71
+    72                              	;------------------------------------------------------------------------------
+    73                              	;Counts the number of set bits in the W register. The count is returned in CNT.
+    74                              	; Optimized for size:
+    75                              	; 8 instructions, 9-58 cycles, 2 RAM variables.
+    76                              	;
+    77    0026- 0069                	BITCNT2	CLRF	CNT		;initialize bit counter
+    78    0027- 0028                	BC10	MOVWF	BUF		;shift W right
+    79    0028- 01C8                		ADDWF	BUF,W
+    80    0029- 0603                		BTFSC	STATUS.0	;skip if carry is clear
+    81    002A- 03E9                		INCFSZ	CNT		;else count this bit
+    82    002B- 0743                		BTFSS	STATUS.2	;skip if no more bits
+    83    002C- 0A27                		GOTO	BC10		;else loop
+    84    002D- 000C                		RETURN			 (listing file edited)
+    85
+    86                              	;------------------------------------------------------------------------------
+    87                              	;Scenix version with W register mapped into RTCC.
+    88                              	;Counts the number of set bits in the W register. The count is returned in W.
+    89                              	; Optimized for speed (without using a 256-entry lookup table):
+    90                              	; 14 instructions, 15 cycles, 1 RAM location.
+    91                              	;
+    92    002E- 0028                	BITCNT3	MOVWF	BUF
+    93
+    94    002F- 0321                		RRF	WREG
+    95    0030- 0E77                		ANDLW	77h
+    96    0031- 00A8                		SUBWF	BUF
+    97
+    98    0032- 0321                		RRF	WREG
+    99    0033- 0E77                		ANDLW	77h
+   100    0034- 00A8                		SUBWF	BUF
+   101
+   102    0035- 0321                		RRF	WREG
+   103    0036- 0E77                		ANDLW	77h
+   104    0037- 00A8                		SUBWF	BUF
+   105
+   106    0038- 0388                		SWAPF	BUF,W		;add counts in high and low nibbles
+   107    0039- 01C8                		ADDWF	BUF,W
+   108    003A- 0E0F                		ANDLW	0Fh		;return with count in W
+   109    003B- 000C                		RETURN			 (listing file edited)
+
+
+						    ===== Errors: 0 =====
+

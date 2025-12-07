@@ -1,0 +1,17 @@
+BOSTON CC20         BP0750N9915387        1160 dil
+BOSTON CC20         BP0750A1107287        1160 dil
+BOSTON CC22         BP2750R7905131        1167 smd
+CASABLANCA SQR49    BP846B4652560         9470 pic
+cc22 6116
+
+CHIP ST615408Q8/BP/5
+EEPROM EXEL 9026
+       TYP XLE93C46P
+
+C2 zakodowany
+92 kod zamkniety
+
+20 01 00 00 0F 00 00 73 06 19 92 00 00 00 FF FF   KOD 1160 WYLACZONY
+20 01 00 00 0F 00 00 73 06 19 C2 00 00 00 FF FF   KOD 1160
+                        ³³ ³³ ³³
+                        06 11 kod wlaczony

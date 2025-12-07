@@ -1,0 +1,10 @@
+
+      ODBIORNIKI CLARION I WSZYSTKIE INNE KODOWANE DIODOWA MATRYCA!!!
+
+Program wpisuje kolejne kody podobnie jak GAMMA 3 PHILIPSA.
+Wyjscia portu drukarkowego steruja kluczami CD 4066 ktore wpina sie
+pod klawisze radia. Reset procesora realizuje tranzystor BD 135 ktory
+zwiera na ulamek sekundy kondensator podtrzymujacy pamiec procesora,
+zwykle 1000uf do 3300uf. Z zasilania przedwzmacniacza pobierany jest sygnal
+stop dla programu, po pojawieniu sie napiecia od 6 do 12 volt program
+staje. Informuje ze rozkodowal radio i wyswietla kod.

@@ -1,0 +1,15 @@
+***************************
+* Predefined message file *
+***************************
+
+!;MESS_USER2; Withdraw and replace the product on the interface. ;?;
+
+!;MESS_USER1; Put the product on the interface. ;?;
+
+!;ERR_IDT1; The association between 3DS, reference commerciale and technical level is not available in the Database. ;?;
+
+!;ERR_IDT2; The association between 3DS,tehnical level and IMEI is not available in the Database. ;?;
+
+!;ERR_IDT3; The association between reference commerciale, 3DS, technical level and IMEI is not available in the Database. ;?;
+
+!;ERR_IDT4; The technical level is not available in the Database. ;?;

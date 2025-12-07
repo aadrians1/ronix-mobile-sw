@@ -1,0 +1,236 @@
+
+        This is the May 1990 edition of the Quaid Analyzer.  It contains
+        a number of improvements not in the manual.
+
+        The Instruction display now shows the instructions for the 80386
+        processor.  Also, when running on an  80386, the full 32 bits of
+        the  registers  appear on  the  register  display.  If  you  are
+        running  the exercise  on  page 21  of the  manual  on an  80386
+        system, you have  to push the cursor  up key one more  time than
+        shown in the manual each time you go to the sp register.
+
+        The  CMOS  Display  has  been   replaced  by  a  screen  labeled
+        Configuration, invoked by  selecting the Config function  at the
+        menu.  At the Configuration display, you can change the contents
+        of your CMOS.  The help function, reached with the F1 key, tells
+        you the  keystrokes to change the  CMOS.  When you  have pressed
+        Ins  to start  editing, the  next  depression of  the Enter  key
+        writes the edited values back to the CMOS.
+
+        We have added a screen labeled  POS Auxiliary to display the POS
+        (configuration registers) on micro-channel  systems, and a Debug
+        Auxiliary to display the debug registers on 80386 systems.
+
+        The read file function is a common source of mistakes.  You have
+        to set the  file-origin before reading a  file.  Otherwise, your
+        file will be read into  location zero, overwriting the interrupt
+        cells and requiring you to reboot your computer.
+
+        The  colors can  now  all  be changed  to  white  with a  single
+        keystroke.  Just move the cursor to  the Screen line, then press
+        the W key.
+
+        Quaid Analyzer now  saves the contents of the  screen buffer for
+        all  ega  and   vga  modes.   It  does  not   save  the  palette
+        information, so programs using the palette may have their colors
+        altered.
+
+        The stack display now shows the  first few words accessible from
+        ss:bp as well as those following ss:sp.
+
+        We show the status of the shift  keys on the Main Menu.  This is
+        because Quaid Analyzer  occasionally thinks that the  shift keys
+        are depressed, even when they are  not, with the result that you
+        can not  use the  function keys.   When the  Main Menu  shows an
+        erroneous  shift  key, press  and  release  both shift  keys  to
+        correct  the  situation.   We  can   not  correct  this  through
+        programming, because it  happens after an unavoidable  loss of a
+        keyboard interrupt during entry into Quaid Analyzer.
+
+        Quaid Analyzer is too big for  some programs that themselves use
+        most of the  memory.  We have included a small  version of Quaid
+        Analyzer, called qsmall.com,  with most of the  luxuries removed
+        that occupies only 47k bytes.  To  install this one in permanent
+        memory, type qsmall, patch at least  one interrupt and press the
+        F7 key, or use the DOS  command qsmall with an interrupt number.
+        There is  no menu  in qsmall, and  it does  not save  the screen
+        buffer, so whenever  you return to the user  program, the screen
+        will be blank.
+        
+        A  few  computers can  not  use  Quaid  Analyzer because  of  an
+        irregular  keyboard handler  in the  BIOS.   The version  qsmall
+        should run even on those computers, since qsmall recognizes only
+        the keys that were on the old 83 key keyboard.
+
+        Quaid Analyzer can be installed by using the DOS command:
+            qa 5
+        telling  Quaid  Analyzer  to install  itself  with  interrupt  5
+        patched, and return  immediately to the DOS prompt.   In the new
+        version on this diskette, it is  possible to patch more than one
+        interrupt at the  time of installation, so you can  give the DOS
+        command:
+            qa 5 15
+        to  install  Quaid  Analyzer  with interrupts  5  and  15  (hex)
+        patched.
+
+        On computers  equipped with an  Intel 8088 processor  running at
+        4.77 Megahertz, the silent proxy can  not be used on interrupt 8
+        (timer).  The processor is too slow.
+
+
+
+                     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                         OTHER SOFTWARE FROM QUAID SOFTWARE LTD
+
+                     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                     CopyWrite including ZeroDisk is now available
+                     and will  make back-up copies of  hundreds of
+                     the  most  popular  copy-protected  business,
+                     educational  and game  software programs  and
+                     allow many of them to be run from a hard disk
+                     without a key diskette in  drive A:.  The new
+                     CopyWrite is available for  $75 US.  Call for
+                     the latest software CopyWrite will back-up.
+
+                     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+
+                            PRINT ENVELOPES THE BETTER WAY ...
+
+                                 ÉÍÍÍÍÍÍÍÍÍÍ»  
+                                 º       ºººº                                  
+                                 º       ºººº                                  
+                                 º       ºººº                                  
+                                 º          º                             
+                                 º          º
+                                 º          º
+                                 º ººº      º
+                                 º ººº      º
+                                 º ººº      º
+                                 º ººº      º
+                                 º ººº      º
+                       ÚÄÄÄÄÄÄÂÄÄĞÄÄÄÄÄÄÄÄÄÄĞÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄ¿
+                       ³      ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ      ³
+                       ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+                       ³                              şşşşşşşş  ³
+                       ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+                      using data displayed on your computer screen.
+
+
+                     The Envelope Please ... is a revolutionary new
+                     resident program  that captures  the name  and
+                     address at the  top of a letter,  and with one
+                     keystroke, prints  it on  an envelope  in your
+                     printer.
+             
+                     The  Envelope   Please...   works   with  most
+                     popular  IBM   software  including   WordStar,
+                     Symphony, dBASE and resident  software such as
+                     SideKick.
+
+                     Point  at  the  address portion  of  a  letter
+                     on-screen, put  an envelope  in your  printer,
+                     sideways for convenience, and print.
+
+                     Need a return address printed  in the top left
+                     corner   of  your   envelope?   The   Envelope
+                     Please...  will  print that too!  And  for dot
+                     matrix printers  that won't  normally feed  an
+                     envelope, The  Envelope Please...   will print
+                     sideways!
+
+                     The  Envelope  Please...  the  better  way  to
+                     print most popular size  envelopes using Epson
+                     and compatible dot matrix printers, most daisy
+                     wheel and HP and compatible laser printers and
+                     an IBM PC, XT or  AT. 
+
+                     The Envelope Please...  is only  $39 US
+
+                     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                     Disk  Explorer recovers  accidentally  deleted
+                     files and directories automatically!
+
+                     Every  computer user  will  one  day know  the
+                     sinking   feeling  that   follows   accidental
+                     deletion of a file, program or directory.
+
+                     What many people don't know however is that as
+                     long as nothing  has been written to  the disk
+                     since the deletion,  the data is still  on the
+                     diskette.  In these circumstances, recovery is
+                     possible and Disk Explorer will do it quickly.
+
+                     For  the   more  technically   inclined,  Disk
+                     Explorer will  also let you see  what's really
+                     on your disk, view  and change formats, change
+                     the  status  of  files,  change  data  in  any
+                     sector, correct bad tracks and much more.
+
+                     Disk Explorer, the program every computer user
+                     should have, just in case is available for $75
+                     US.
+
+                     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                     OmniEdit is a powerful two dimensional editor,
+                     word processor, calculator  and communications
+                     package.   It will  allow you  to capture  and
+                     move rectangular areas within other DOS files,
+                     justify  paragraphs, search  and replace,  and
+                     "undo"  the   last  function   performed.   In
+                     addition, it can send  and receive files using
+                     the Xmodem protocol.  OmniEdit uses DOS files,
+                     without any special markers, so you can use it
+                     with just about any other software.  The price
+                     is $50 US.
+
+                     ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+                     All products listed above or revisions to your
+                     existing  Quaid  software are  available  from
+                     Quaid Software Ltd.  by calling (416) 961-8243
+                     with  your  credit  card or  by  printing  and
+                     sending the order form below with  payment to:
+                                                                           
+                             Quaid Software Limited 
+                             45 Charles Street East Third Floor 
+                             Dept. 780 
+                             Toronto Ontario M4Y 1S2
+                                                           
+                     * When ordering revisions, cut  off the top of
+                     the  original  master diskette  including  the
+                     label  and return  it with  your order.   This
+                     will  prevent any  delay  of  your order  when
+                     going through customs.
+
+                     All  checks  from  outside of  the  U.S.   and
+                     Canada must be drawn on a US bank account.
+
+                 ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                 ³ Please rush  me:            Qty  Price    Total    ³
+                 ³                                                    ³
+                 ³  Quaid Analyzer             ___ @ $200 US _____    ³
+                 ³  CopyWrite                  ___ @  $75 US _____    ³
+                 ³ *CopyWrite Revision         ___ @  $25 US _____    ³ 
+                 ³  The Envelope Please...     ___ @  $39 US _____    ³
+                 ³  Disk Explorer              ___ @  $75 US _____    ³
+                 ³ *Disk Explorer Revision     ___ @  $18 US _____    ³       
+                 ³  OmniEdit                   ___ @  $50 US _____    ³
+                 ³                                                    ³
+                 ³         __ Check      __ Money Order               ³
+                 ³ __ VISA __ MasterCard __ Amex __ Diners Club       ³ 
+                 ³                                                    ³
+                 ³ Credit Card #:___________________ Exp. Date______  ³ 
+                 ³         Name:____________________________________  ³
+                 ³         Address:_________________________________  ³
+                 ³         City:____________________________________  ³ 
+                 ³         State:__________________ Zip:____________  ³ 
+                 ³         Phone number:____________________________  ³      
+                 ³         Signature:_______________________________  ³
+                 ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+

@@ -1,0 +1,52 @@
+
+
+These codes has been tested with version FLD_2C6 G60SB03X of Samsung SGH-600
+firmware. If you found any addition or error, please mail it to me.
+
+David Lopez - (david@jet.es)
+
+                        SAMSUNG SGH-600 SECRET CODES
+                        ============================
+
+
+*#06#        -> Show IMEI
+*#9999#      -> Show Software Version
+*#0001#      -> Show Serial Parameters
+
+*2767*3855#  -> Full EEPROM Reset ( THIS CODE REMOVES SP-LOCK!!!! but also
+                change IMEI to 447967-89-400044-0, you must use CHGIMEI to
+                restore it)
+*2767*2878#  -> Custom EEEPROM Reset
+
+*#9998*228#  -> Battery status (capacity, voltage, temperature)
+*#9998*246#  -> Program status
+*#9998*289#  -> Change Alarm Buzzer Frequency
+*#9998*324#  -> Debug screens
+*#9998*364#  -> Watchdog
+*#9998*377#  -> EEPROM Error Stack
+*#9998*427#  -> Trace Watchdog
+*#9998*523#  -> Change LCD contrast
+*#9998*544#  -> Jig detect
+*#9998*636#  -> Memory status
+*#9998*746#  -> SIM File Size
+*#9998*778#  -> SIM Service Table
+*#9998*785#  -> RTK (Run Time Kernel) errors
+*#9998*786#  -> Run, Last UP, Last DOWN
+*#9998*837#  -> Software Version
+*#9998*842#  -> Test Vibrator
+*#9998*862#  -> Vocoder Reg
+*#9998*872#  -> Diag
+*#9998*947#  -> Reset On Fatal Error
+*#9998*999#  -> Last/Chk
+
+*#9998*9266# -> Yann debug screen (=Debug Screens?)
+*#9998*9999# -> Software version
+
+*0001*s*f*t# -> Changes serial parameters (s=?, f=0,1, t=0,1) (incomplete)
+*0002*?#     -> unknown
+*0003*?#     -> unknown
+
+This file was downloaded from
+   The Real Free GSM Site 
+            "FreeGSM"
+ http://www.FreeGSM.tsx.org

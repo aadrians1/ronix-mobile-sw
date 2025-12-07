@@ -1,0 +1,196 @@
+		Release notes for Soft-ICE/W version 1.3
+
+
+INSTALLING Soft-ICE/W Version 1.3
+__________________________________
+
+The manual supplied with this product reflects Soft-ICE/W 1.0.  The
+additional features are documented in a Windows help-format file called
+README.HLP and in this file.  There is no install program with this product,
+so the simple installation instructions are described below.
+
+Run the program UPSIW.EXE from the update floppy. It will ask for the 
+directory where your present copy of WINICE.EXE is located, then will read
+the registartion data from it and create a new WINICE.EXE on the floppy.
+There will be no WINICE.EXE on the floppy until this is done.
+
+Copy all of the files from the root directory of the distribution diskette(s)
+to a sub-directory on your hard drive (we use \WINICE), then run ICONS.EXE 
+from Windows by selecting FILE followed by RUN from the program manager.  
+When RUN prompts for the file name, enter hard-disk-path\ICONS.EXE.  This will 
+automatically install the icons for Soft-ICE/W on a Soft-ICE/W menu.
+
+One of the icons installed will be for the README.HLP file.  This file is in
+WINHELP format and contains documentation for all changes and new features
+in Soft-ICE/W version 1.1.  Changes since version 1.1 are described below.
+
+
+----------------------------------------------------------------------------
+		TABLE OF CONTENTS FOR CHANGES SINCE VERSION 1.1
+----------------------------------------------------------------------------
+     1.  New Video Support
+     2.  BOUNDS-CHECKER/W support
+     3.  BPX command on entire Windows module
+     4.  Additions to the VXD command
+     5.  Support for breakout switches
+     6.  Horizontal scrolling of source code window
+     7.  Local heap indicator for HEAP command
+     8.  /X Command line parameter
+     9.  Additions to the CR command
+    10.  Additions to the LHEAP command
+    11.  WLDR command line supports indirection file
+    12.  FAULTS command
+
+
+    New Video Support
+    -----------------
+
+	ATI and S3 support
+	------------------
+	Soft-ICE/W now has built in video support for the ATI Ultra, ATI
+	Ultra Pro and video boards based on the S3 chipset.  These boards
+	will be automatically identified at startup time.  This should
+	allow them to be run in high resolution modes and still have 
+	Soft-ICE/W pop up on them.  You must not have a .VID file present
+	for this support to work.  This feature has been implemented to work
+	with the boards native drivers not the Windows standard drivers.
+	Therefore if using the Standard VGA, Super VGA or 8514 Windows 
+	drivers, this support may not work.  It can be turned off by using
+	the DISPLAY= keyword in WINICE.DAT.
+
+	The support for the S3 chipset is generic.  It has been tested on
+	the Orchid Fahrenheit 1280 and the STB WIND/X boards. 
+
+	NOTE: This support may not work when debugging prior to Windows
+	starting up.  At this point the Windows video driver has not 
+	been loaded and the video is in a different mode than it will be
+	when Windows has started.  If the automatic support does not work
+	at this point or other points it can be turned off by using the
+	DISPLAY= keyword in WINICE.DAT.
+
+
+	DISPLAY= keyword in WINICE.DAT
+	------------------------------
+	The DISPLAY= keyword can be specified in WINICE.DAT to alter the 
+	default video support that Soft-ICE/W provides.  The following
+	values are supported:
+	    
+	  DISPLAY=0 	   This turns off the automatic support for the
+			   ATI and S3 boards.  This can be used if the
+			   automatic support does not work correctly.
+
+	  DISPLAY=VDD	   Soft-ICE/W will use the Windows virtual display
+			   driver (VDD) to switch the display between text
+			   and graphics mode.  This will allow Soft-ICE/W
+			   to popup on a lot more video configurations.
+
+    			   CAUTION! When using this keyword Soft-ICE/W is
+			   making calls to the Windows VDD to enter/exit
+			   special message mode.  This means that there will
+			   be places in Windows where it is no longer safe to
+			   pop Soft-ICE/W up.  Also, not all VDD's correctly
+			   implement special message mode, so it may not 
+			   work at all.
+
+	  DISPLAY=S3	   Force S3 support.
+
+	  DISPLAY=MACH32   Force ATI Ultra Pro Support.
+
+	  DISPLAY=MACH8	   Force ATI Ultra Support
+
+	  DISPLAY=MACH8640 If using an ATI Ultra in 640x480 mode this keyword
+			   may be necessary.
+
+	Change in .VID file format
+	--------------------------
+	The .VID file format has been changed to support full 16 bit port
+	addresses.  There is a new A2V.EXE and V2A.EXE that supports this
+	format.  Old VID files will also still work.
+
+
+    BOUNDS-CHECKER/W support
+    ------------------------
+    Soft-ICE/W 1.3 now works with BOUNDS-CHECKER/W Version 1.03.  Any time
+    BOUNDS-CHECKER for Windows pops up, control can be transferred to
+    Soft-ICE/W through a BCHKW menu selection.    
+
+
+    BPX command on entire Windows module 
+    ------------------------------------
+    The BPX command now excepts a windows module name as a parameter.  When
+    a module name is entered, Soft-ICE/W will set a BPX style breakpoint on
+    every exported entry point in that module.  For example, BPX KERNEL will
+    set a breakpoint on every function in the Windows module KRNL386.EXE.
+    NOTE: Soft-ICE/W supports a maximum of 256 break points so it is 
+    possible to run out of break points when using this command.
+
+
+    Additions to the VXD command
+    ----------------------------
+    The VXD command now also displays the VXD id and the address of the
+    VxD's device descriptor block (DDB).  In addition, if a VxD name is
+    passed to the VXD command, Soft-ICE/W will display detailed information
+    for that VXD.  The detailed info includes the control procedure address,
+    the PM api address, the V86 api address and the addresses of all VxD
+    services.
+
+
+    Support for breakout switches
+    -----------------------------
+    To enable the support for breakout switches add the NMI keyword to the
+    WINICE.DAT file.  Pressing the breakout button once will pop up
+    Soft-ICE/W.  Pressing it again will continue Windows.
+
+    
+    Horizontal scrolling of source code window
+    ------------------------------------------
+    Source code displayed in the code window can now be scrolled horizontally
+    using the CTRL-left arrow and CTRL-right arrow keys.
+
+
+    Local heap indicator for HEAP command
+    -------------------------------------
+    The HEAP command now displays the string 'LH' next to all heap selectors
+    that contain a local heap.
+
+
+    /X Command line parameter
+    -------------------------
+    If /X is present on the WINICE command line, Soft-ICE/W will ignore the
+    X command in the INIT string in the WINICE.DAT file.  This will pop
+    up Soft-ICE/W before Windows starts, without having to edit the 
+    WINICE.DAT file.			
+
+
+    Additions to the CR command
+    ----------------------------
+    The CR command now dumps the debug registers also.
+
+
+    Additions to the LHEAP command
+    ------------------------------
+    The LHEAP command now also displays the handle of the local heap element.
+
+
+    WLDR command line supports indirection file
+    -------------------------------------------
+    WLDR now supports an indirection file on the command line for loading
+    symbols for multiple DLL's.  The syntax of the command line is
+
+        [@filename;] application-file-name application-command-line.
+
+    filename is a text file that contains the full path name of each DLL
+    to load, one name per line.
+
+
+    FAULTS command
+    --------------
+    The FAULTS command has been added which allows Soft-ICE/W processor
+    fault trapping to be turned on or off.  This is mainly intended for
+    users of both Soft-ICE/W and BOUNDS-CHECKER/W.  Users who wish
+    processor faults to go directly into BOUNDS-CHECKER/W can do a
+    FAULTS OFF command.
+
+
+
+

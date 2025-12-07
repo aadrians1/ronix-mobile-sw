@@ -1,0 +1,18 @@
+************************************************
+*      Fichier de compensation pour le HC200   *
+************************************************
+*
+***************************
+* Liste des compensations *
+***************************
+* !; a; b; c; d
+* a : numéro d'identifiant
+* b : valeur de compensation (nombre flottant )
+* c : rang du paramètre à compenser dans la requête API( voir le
+*     source du service de test pour le connaître; ne pas tenir compte
+*			de l'instance )
+* d : compensation en entrée 0(consigne) ou
+*     compensation en sortie 1(mesure).
+*
+*********************************************
+@;version01;?	/* version */

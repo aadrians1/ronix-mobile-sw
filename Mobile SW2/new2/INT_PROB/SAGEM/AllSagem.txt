@@ -1,0 +1,24 @@
+This method bypass SIMLOCK on all SAGEM phones !!!
+
+You must know PUK2 on your SIM card !
+
+When phone displays SIM LOCKED enter this :
+
+**052*
+
+phone will ask you for your PUK2 code - enter it !!!
+
+now phone will ask for new PIN2 and confirmation
+of new PIN2 - so you have to enter PIN2 !
+
+NOW You will have access to Menu !!!
+
+Now manually select your network !!!
+
+This method is developed by Dobrin Daskalov !!!
+Many thanks to Vladimir Todorov for his support !!!
+
+dobrin_d@hotmail.com 
+vladi@sps-elsys.com , ICQ: 19798496 - AGI_Soft_TM
+
+http://gsm.iq.pl

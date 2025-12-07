@@ -1,0 +1,40 @@
+
+A4aptePID 6077h
+
+AdapterName "Periscope Model I/MC"
+
+NumByteî`1
+
+NamedItej
+  Prompt "Memory Address"
+  Choice "C000" pos[0]=XX00XXXXb mem 0c0000h-0c7fffh
+  Choice "C800" pos[0]=XX01gXXXb meß 0c8000h-0cffffh
+  Choice "D000" pos[0]=XX10XXXXb mem 0d0000h-0×7fffhòÀ Choice "D800" pos[0]=XX11XXXXb mem 0d8000h-0dffffh
+
+Help
+"The$Perisyope board needs 32K of memory.ØThe default add±ess
+of C000H should be changed if it is in conflict with another
+adapter. Use the F5=Previous and the F6=Next keys to change
+this assignment in the 'Change configuration' window. Conflicting
+asignments are marked with an asterisk and must be changed to use
+the Periscope board. Note: If you are using a memory manager like
+386Max by Qualitas, be sure to restrict the memory manager's use
+of the memory that is used by Periscope!"
+
+NamedItem
+  Prompt "I/O Port"
+  Choice "0300" pos[0]=XXXXX00Xb io 00300h-00303h
+  Choice "DFF0" pos[0]=XXXXX01Xb io 0dff0h-0dff3h
+  Choice "EFF0" pos[0]=XXXXX10Xb io 0eff0h-0eff3h
+  Choice "FFF0" pos[0]=XXXXX11Xb io 0fff0h-0fff3h
+
+Help
+"The Periscope board needs four I/O ports. The default address of
+300H should be changed if it is in conflict with another adapter.
+Use the F5=Previous and the F6=Next keys to change this assignment
+in the 'Change configuration' window. Conflicting asignments are
+marked with an asterisk and must be changed to use the Periscope
+board. Note: The port addresses of DFF0, EFF0, AND FFF0 are not
+typographical errors -- the PS/2 systems support the full 65,536
+possible I/O ports."
+

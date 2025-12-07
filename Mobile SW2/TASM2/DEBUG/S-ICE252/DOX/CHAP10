@@ -1,0 +1,152 @@
+  CHAPTER 10
+
+ Using Soft-ICE with MagicCV or MagicCVW
+   10.1 Introduction
+   10.2 Running Soft-ICE with MagicCV or MagicCVW
+   10.3 Special Considerations
+   10.4 The Soft-ICE ACTION Command
+
+     203
+
+ 10.1 Introduction
+
+MagicCV allows you to run Microsoft's CodeView in less than 8K of
+conventional memory on your 80386 machine.
+
+MagicCVW allows you to run Microsoft's CodeView for Windows in less than
+8K of conventional memory on your 80386 machine.
+
+Using Soft-ICE in combination with MagicCV or MagicCVW allows you to have
+the power of Soft-ICE while still having the convenience of using the
+CodeView product that you are familiar with.
+
+In the rest of this chapter, statements about MCV will apply to both
+MagicCV and MagicCVW, and statements about CV will apply to both CodeView
+and CodeView for Windows.
+
+ 10.2 Running Soft-ICE with MagicCV or MagicCVW
+
+To use Soft-ICE 2.0 and MCV together, you must install S-ICE.EXE as a
+loadable device driver. S-ICE.EXE comes on the Soft-ICE diskette. S-
+ICE.EXE replaces NUMEGA.SYS in CONFIG.SYS. Use the /MCV, /EMM, and the
+/EXT switches as if using MagicCV or MagicCVW alone. There are additional
+switches that you may want to use for Soft-ICE. Refer to chapter 6 for
+information about these switches.
+
+To run MagicCV or MagicCVW after Soft-ICE has been loaded, refer to your
+MagicCV or MagicCVW manual.
+
+Notes:
+MagicCVW requires Soft-ICE version 2.00 or greater.
+
+MagicCV requires Soft-ICE version 1.02 or greater. The S-ICE.SYS and
+NUMEGA.SYS drivers were shipped with some versions of Soft-ICE. The S-ICE
+and NUMEGA
+
+     204 
+
+drivers must be replaced by S-ICE.EXE before you can run MagicCV and Soft-
+ICE 2.0 together.
+
+10.3 Special Considerations
+
+Two Virtual Machines
+
+When you are using both Soft-ICE and MCV together, you must keep in mind
+that CV is in a separate virtual machine from the target environment. You
+can pop Soft-ICE up from either virtual machine, i.e., when CV is running,
+or when the target program is running.
+
+If you pop Soft-ICE up while the target program is running everything
+works as defined in the Soft-ICE manual. If you pop Soft-ICE up while CV
+is running (typically done to break points), you must keep a few points in
+mind:
+    * The registers are those of CV and they CAN NOT
+       be changed.
+    * For convenience, the Soft-ICE MAP command
+       displays the memory map of the target program
+       virtual machine, not the memory map of the CV
+       virtual machine. The highlighted area in the
+       memory map may not be correct.
+    * Any display or modification of memory occurs in
+       the target program's virtual machine.
+    * You have no visibility into the CV virtual machine
+       except for the display of register values.
+       Remember that when popping up the Soft-ICE
+       window while CV is active, the register values are
+       those of CV and should not be modified.
+    * Instruction and program tracing is disabled from
+       the Soft-ICE window when CV is active. This is to
+       prevent confusion, because a trace would actually
+       step through CV, not through the target program.
+
+     205
+
+       If you attempt to do a Soft-ICE Trace (T) or
+       Program Step (P) command while CV is active,
+       you will get the warning message: "Function
+       not available in CV virtual machine."
+       To trace through your target program code instead,
+       you can do one of two options:
+       * Use the CV trace command. To do this, exit
+           the Soft-ICE window using the Soft-ICE X
+           command, then do one or more CV traces to
+           step through the target program.
+       * Use Soft-ICE to go to the target program
+           address, then use the Soft-ICE T or P
+           commands to step through your target
+           program. To do this, exit the Soft-ICE window
+           with the Soft-ICE X command, then press the
+           'F3' key until CV is in 'mixed mode'. This
+           allows you to see both the source lines and the
+           instruction addresses. Pop up Soft-ICE. If the
+           Soft-ICE window is not already in narrow
+           mode, use the Soft-ICE WIN command to
+           change the window size. Move the Soft-ICE
+           window so you can see the instruction
+           addresses on the left side of the screen. Now
+           you can use the Soft-ICE G command to go to
+           one of the addresses. Be sure to type in the full
+           address, including the segment and the offset.
+           Then enter 'G' in the CV window. At this
+           point, CV is not active, so you can use the
+           Soft-ICE T or P commands to step through t
+           target program.
+
+ CodeView's SHELL command
+
+If you run the DOS shell from within the CodeView virtual machine, the DOS
+shell is part of the virtual machine. Because of this, you should not run
+any TSRs when you are in the DOS shell. If you do, when you exit CodeView
+the TSRs will disappear along with the virtual machine. This is
+
+     206 
+
+dangerous, because any interrupt vectors that were not restored could hang
+your machine.
+
+CV's /R switch
+
+Soft-ICE takes advantage of many of the 80386 features including the 80386
+debug registers. This means that the debug registers are not available for
+CV, so you cannot use the CV /R switch when running with Soft-ICE. If you
+do use the /R switch, Soft-ICE gives you a general protection error. At
+this point, you can press "C" to continue, then rerun CV without the /R
+switch, and use the Soft-ICE break points.
+
+The CV /R switch works when you are running MCV without Soft-ICE.
+
+3.4 The Soft-ICE ACTION Command
+
+The ACTION command allows three different methods activating CV from a
+Soft-ICE break point. The best choice of action is ACTION NMI. If you
+experience any problems with ACTION set to NMI (usually because an adapter
+card in your system is using NMI), use ACTION INT1.
+
+     207
+
+     PAGE 208 is BLANK
+
+     208
+
+

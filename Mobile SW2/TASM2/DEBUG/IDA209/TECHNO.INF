@@ -1,0 +1,128 @@
+
+        If you have ideas, questions, etc., - please call me!
+
+----------------------------------------------------------------------------
+
+        Here is some technical information about IDA 2.09
+
+        I hope it is useful.
+
+Contents:
+
+        1. Macros
+        2. Default IDC files
+        3. How IDA searches for files
+        4. Memory
+        5. Some history
+        6. More history
+        7. Acknowledgements
+
+
+0. Basics
+---------
+
+   IDA is an interactive disassembler for Intel 80x86, Intel  8080/8085,
+Z80 and i860 processors.  It  can  handle  various  input  file  formats
+including com, exe, bin, MS  Windows  executable,  OS/2  executable  and
+Intel Hex format files. For 8080..Z80..HD64180 processors it can produce
+output text for various assemblers. IDA has a user-friendly  menu-driven
+interface, built-in C-like language, ability to patch  the  input  file,
+and virtually no limitations on the size and complexity of input file.
+
+1. Macros
+---------
+
+  You can use keystroke macros in IDA.
+          To start recording a macro, press Alt--
+          Press a key to define (for example, Ctrl-D)
+          Enter macro body (any keys)
+          To end recording - Alt-=.
+          To play macro - the defined key (in our example - Ctrl-D)
+
+2. Default IDC files
+--------------------
+
+     When IDA starts, it searches for ida.idc file. If  IDA  founds  it,
+IDA executes this file. If not, IDA proceeds silently.  It  is  expected
+that you will place your setup commands into this file. I hope  that  in
+the future ida.cfg file will disappear. If you try to  disassemble  some
+MS DOS driver (file extension .sys or .drv), IDA  executes  'driver.idc'
+file.
+
+3. How IDA searches for files
+-----------------------------
+
+     First, IDA looks into the  directory,  where  IDA.EXE  was  started
+from. After it looks into PATHed directories.
+
+4. Memory
+---------
+
+   IDA requires about 450k memory to start up. It can use  extended  and
+expanded memory for its code overlays. The  disassembled  data  is  kept
+partially in the conventional memory, partially on the disk. Normally if
+IDA starts up, it won't ask for more  conventional  memory  (unless  you
+open more windows).
+
+   IDA regularly checks the current disk drive for the  free  space.  If
+free disk space becomes low, it will ask  you  to  exit  and  give  more
+place. IDA  will  repeat  it  until  you  exit.  This  is  made  because
+unsiffucient disk space is very dangerous.
+
+   Of course, you need a good disk cache to improve performance of  IDA.
+In this case data will be cached too.
+
+5. Some history
+---------------
+
+     First idea about IDA was born in the fall of 1990. It took half  an
+year to screw up enough courage and to start  implementing  it.  In  the
+beginning of 1991, in January, first code line  was  written.  In  April
+1991 the first program was fully disassembled with IDA. IDA grew up  and
+new ideas appeared. I wanted to create a built-in  C-style  language  to
+control analysis of the program, to add more processors, to  disassemble
+object files, to handle UNIX COFF files, to add more intelligence to IDA
+e t c...
+
+     Alas, all of this was not  implemented.  In  July  1991  I  stopped
+working at IDA almost completely, working at IDA only for  fun.  It  was
+time to learn more  about  other  computers,  networks  and  other  nice
+things.  Today  I  would  implement  something  based  on  client-server
+architecture with network support (I have a crazy idea  about  X-windows
+implementation) working under various operating systems - but  I  won't.
+Enough for the moment. I really think that  disassemblers  and  all  the
+staff like this are becoming obsolete. People work with GUIs,  write  in
+C++ (IDA  is  written  in  C++  too,  about  40000  lines);  they  adore
+VisualBasic and they debug in  source  codes.  Today's  programmer  even
+doesn't know assembler language - and doesn't need to know it.
+
+But...
+
+     I hope that this product will be a help for you. If so,  I'm  glad.
+Hope, there are some people who need a tool like this. And if there is a
+need to add a new processor type to IDA (the same was with Intel  8085),
+I can do it fast enough.
+
+6. More history
+---------------
+
+08.11.93 I never thought that I would work at IDA again.  But  you  see,
+         here is a new version. And now I understand that  new  versions
+         of IDA will appear...
+17.02.84 I'm working on IDA to eat MS Windows executable files now. Hope
+         that it will come soon!
+25.02.94 Now IDA can disassemle New Executable format files.
+20.09.94 OS/2 files are supported.
+
+7. Acknowledgements
+-------------------
+
+     IDA would never be created without ideas and great support of these
+nice folks (sorry, it is not possible to mention all the people involved
+in IDA here):
+
+    Serge Samborskij
+    Pol Rousnak
+    Nicolaj Logvinov
+
+  Thanks to you all !

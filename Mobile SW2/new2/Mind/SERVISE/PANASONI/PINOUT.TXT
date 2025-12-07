@@ -1,0 +1,16 @@
+
+
+                 Pinout of Panasonic g450,500,520,600 for
+                coonect to cumputer with RS232>TTL interface
+
+
+                       Up side of phones
+
+                      16---------------9
+             Ant        | | | | | | | |
+                        | | | | | | | |
+                       8---------------1
+ 1 Ground
+ 6 Serial up (in)
+ 7 Serial down (out)
+13 Connect to 14

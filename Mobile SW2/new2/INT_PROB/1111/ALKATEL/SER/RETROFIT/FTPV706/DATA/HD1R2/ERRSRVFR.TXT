@@ -1,0 +1,57 @@
+/* Table de messages d'erreurs */
+
+/* Attention : en cas de rajout de messages, modifier l'enum de ehpmsg.h */
+
+	"Succès",
+	
+	/* Messages Téléchargement */
+    /* Messages InitTeleFile */
+    "Lecture données de configuration",
+    "Données de configuration chargées",
+
+    /* Messages StartTeleFile */
+	"Lecture fichier à télécharger",
+	"Lecture terminée",
+	"Données chargées",
+
+    /* Messages ControlTeleFile */
+	"Initialisation",
+	"Charge Init",
+	"Charge Rec flash",
+	"Rec flash",
+	"Get flash",
+	"Flash reconnue",
+	"Chargement LTE",
+	"Chargement Prg ",
+	"Effacement bloc",
+	"Téléchargement OK",
+
+	/* Erreurs Téléchargement */
+    /* Messages InitTeleFile */
+  	"Plus de mémoire disponible",
+	"Erreur fichier de config",
+
+    /* Messages StartTeleFile */
+	"Erreur fichier d'entrée",
+
+    /* Messages ControlTeleFile */
+	"Erreur Emission",
+	"Timeout Réception",
+	"Flash inconnue",
+	"Checksum incorrect",
+	"Réponse inconnue",
+	"Ecriture KO",
+	"Lecture KO",
+	"Effacement KO",
+	"Calcul check KO",
+	"Niveau fonctionnel KO",
+	"Zone Absente",
+	"Zone hors flash",
+    "Erreur telechargement",
+
+	/* Messages Généraux */
+    "Erreur Paramètres d'entrée",
+    "Erreur Interne",
+
+/* inserer ici les nouveaux messages */
+

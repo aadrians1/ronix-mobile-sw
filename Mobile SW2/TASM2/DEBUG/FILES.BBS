@@ -1,0 +1,106 @@
+AFDPRO       AFD debugger for DOS
+ASMGENSQ     Generates ASMGEN/ASMGEN3 disasm SEQ file
+AVSZ80       Z80 simulator/debugger
+DASM48       Intel HEX disassembler for 8048
+DASM80       8080 disassembler
+DASM85       Disassembler for 8085 binaries
+DG003        ÉÍÍÍÍÍ¾°±²Û DeGlucker Û²±°ÔÍÍÍÍÍ»
+             ÇÄÄÄÄÄÄÄÄÄÄ   v0.03   ÄÄÄÄÄÄÄÄÄÄ¶
+             ºNice and small debugger for DOSº
+             ÌÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹
+             ÇÄÄÄÄÄÄÄÄÄÄ Features: ÄÄÄÄÄÄÄÄÄÄ¶
+             ºû true 80386 Prot.mode debuggerº
+             ºû debug DOS programs ÄÄÄÄÄÄÄÄÄÄ¶
+             ºû nice interface ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¶
+             ºû made for true hard-working  Ä¶
+             ÇÄÄÄÄÄÄÄÄÄÄ   hackers specially ¶
+             ºû very powerful possibilities Ä¶
+             ºû coded in pure assembler ÄÄÄÄÄ¶
+             ÌÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹
+             ºCoded by -=CrazyMaX=-, 30.01.97º
+             ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+DG003B       ÉÍÍÍÍÍ¾°±²Û DeGlucker Û²±°ÔÍÍÍÍÍ»
+             ÇÄÄÄÄÄÄÄÄÄÄ   v0.03b  ÄÄÄÄÄÄÄÄÄÄ¶
+             ºNice and small debugger for DOSº
+             ÌÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹
+             ÇÄÄÄÄÄÄÄÄÄÄ Features: ÄÄÄÄÄÄÄÄÄÄ¶
+             ºû true 80386 Prot.mode debuggerº
+             ºû debug DOS programs ÄÄÄÄÄÄÄÄÄÄ¶
+             ºû nice interface ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¶
+             ºû made for true hard-working  Ä¶
+             ÇÄÄÄÄÄÄÄÄÄÄ   hackers specially ¶
+             ºû very powerful possibilities Ä¶
+             ºû coded in pure assembler ÄÄÄÄÄ¶
+             ÌÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹
+             ºCoded by -=CrazyMaX=-, 23.04.97º
+             ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+EDB015       Emulating debugger by S.Pachkovsky
+IDA209       Interactive disassembler (Unregistered)
+IDA305       IDA Disassembler 3.05 (c) Ilfak Guilfanov
+                *THE REGISTRATION CRACK!* [DE!/MCC]
+             ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                 .d$$$$$$$$$$$$$$$$$$$$$$$$$$$$$b.
+               1ú›$  '       `$$'     `$$'     `$›ú1
+               9ú›$   $   $   $$   $   $$   $   $›ú9
+               9ú›$   $   $   $$   $sss$$   $sss$›ú9
+               6ú›$   $   $   $$   $   $$   $   $›ú6
+               !ú›$.  $  ,$  ,$$.     ,$$.     ,$›ú!
+                 `¦@%@$@%@$%%@$$$&@%@%&$$$&@%@%&ø'
+             ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+             %%%mcc%%% [21/O4/96] [DOS] [O1/O1] %%%%%%
+INSIGHT      iúnúsúiúgúhútúúúvúeúrúsúiúoúnúú1.01
+             úúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúú
+             úÚÄÄÄÄÄÄÄ¿úúúúúúúúúúúúúÚÄ¿úúÚÄÄ¿ÚÄ¿
+             úÀÄÄ¿ ÚÄÄÙúÚÄ¿úúúúúúúúú³ ³úú³Ú¿³³ ³
+             úúúú³ ³ À¿Ú³ ³ÄÄÄ¿úúúúú³ ³Ú¿³ÀÙ³³ ³
+             úúúú³ ³Ú¿À¿³ ³ÄÄÄÙÄÄÄ¿úÀÄÙÀÙÀÄÄÙÀÄÙ
+             úúúú³ ³³À¿ÀÙ ³ÄÄÄ¿ÚÄÄÙÄÄÄ¿úúúúúúúúú
+             úÚÄÄÙ ÀÄÄ¿¿  ³Ä¿ ³³ÚÄÄÄ¿ ³úÚÄ¿úúúúú
+             úÀÄÄÄÄÄÄÄÙÀ¿ ³ú³ ³³³úúúÀÄÙÚ³ ³ÄÄÄ¿ú
+             úúúúúÀÄÙúÚÄÀÄÙÄÙ ³³³úúÚÄÄ¿À³ ³ÚÄÄÙú
+             úúúúúúúúúÀÄÄÄÄÄÄÄÙÀÄÄ¿À¿ ³ú³ ³³úúúú
+             ÚÄ¿úúÚÄÄ¿ÚÄ¿úÀÄÄÄÄÄÄÄÙÄÙ ³ÄÙ ³³úúúú
+             ³ ³úú³Ú¿³³ ³úúúúúÀÄÄÄÄÄÄÄÙÄ¿ ³³úúúú
+             ³ ³Ú¿³ÀÙ³³ ³úúúúúúúúúÀÄÙúúúÀÄÙ³úúúú
+             ÀÄÙÀÙÀÄÄÙÀÄÙúúúúúúúúúúúúúúúúÀÄÙúúúú
+             úúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúú
+             úRúEúAúLúMúOúDúEúúúDúEúBúUúGúGúEúRú
+             úúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúúú
+             şşşş features şşşşşşşşşşşşşşşşşşşşş
+              û 100% pure assembler
+              û resident and non resident debug
+              û single/proc step, breakpoints
+              û supports 8086 processor
+              û 16/32 bit registers
+              û build in 486 disassembler
+              û build in 86 assembler
+              û menu/dialogs driven interface
+              û extended code/data navigation
+              û instructions/bytes search
+              û block operations
+              û simple color highlighting
+              û palette saving (VGA+)
+              û small (less then 30KB) size
+             şşşşşşşşşşşşşşşşşşşşşşşşşşşşşşşşşşş
+             úúrúúúúúeúúúúúsúúúúúcúúúúúuúúúúúeúú
+             úúrúúúúaúúúúnúúúúgúúúúeúúúúrúúúúsúú
+MD86         Masterful Disassembler for Intel 8086 progs
+NWSI         Debugger for NOVELL Netware
+PERIS531     Periskope V5.31
+QA90         Quad analyzer V9.0
+S-ICE252     SoftIce debugger V2.52 with manuals
+SRSR404      Sourcer V4.04 disassembler
+SRSR510      Sourcer V5.10 disassembler
+SST          SST real mode debugger for DOS
+WICE13U      SoftIce debugger for WINDOWS uprgade
+WINICE       SoftIce debugger V1.0 for WINDOWS
+AXE-HACK.202 AXE-HACK - í¬ã«¨àãîé¨© à¥§¨¤¥­â­ë© ®â« ¤ç¨ª, ¢¥àá¨ï 2.02.
+              â¥«ìáâ¢  ¯®  ¤à¥á ¬:
+             FIDO 2:465/104, 2:465/104.6, 2:465/121 ¤«ï ’®¯®à®¢  €­¤à¥ï
+             Voice 380 (0622) 910316 á 9.00 ¤® 18.00 á¯à è¨¢ âì ¥£® ¦¥ ;-)
+             [passed thru Crack Soft]
+AXE-HACK.230 AXE-HACK - í¬ã«¨àãîé¨© à¥§¨¤¥­â­ë© ®â« ¤ç¨ª, ¢¥àá¨ï 2.3.
+             ‚®¯à®áë/¯à¥¤«®¦¥­¨ï/§ ¬¥ç ­¨ï/àã£ â¥«ìáâ¢  ¯®  ¤à¥áã:
+             FIDO 2:465/121.4
+             22) 910316 á  9.00 ¤® 16.00  ’®¯®à®¢ €­¤à¥©
+             oice 380 (0622) 558880 á 17.00 ¤® 22.00  ®­ ¦¥ ;-)

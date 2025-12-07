@@ -1,0 +1,64 @@
+/* English error messages table,   Attention : en cas de rajout de messages, modifier l'enum de plpmsg.h */
+
+	"Success",
+	"Parameters error ",
+	"Conversion parameters error: ",
+	"Result parameters error: ",
+	"Communication error with terminal",
+	"Timeout reception with terminal response",
+	"Timeout reception with terminal results",
+	"Parameters error in the terminal response",
+	"Returned error by the terminal",
+	"Serial link is not open",
+	"Inner error : primitives driver",
+	"Inner error : product driver",
+	"Inner error : messages administration",
+	"Inner error : communication driver",
+	"Inner error : absent file",
+	"Inner error : downloading driver",
+	"BBIC error : BC_OM_ERROR received",
+	"EEPROM reading problem",
+	"EEPROM writing problem",
+	"EEPROM checksum update problem",
+	"Problem with Flash Erasing",
+	"Problem with Flash Writing",
+	"Bsic not found",
+	"Desinscription Bbase error",
+	"Inscription Bbase error",
+	"Synchro activation error",
+	"The terminal is already connected",
+	"The terminal is already disconnected",
+
+/* Erreurs driver LCE */
+
+	"LCE parameters error",
+	"Sending message error to embedded router",
+	"BBIC sending message error",
+	"LCE sending message error",
+	"LCE timeout reception message error",
+	"LCE paramaters result error",
+
+/* Erreurs driver communication */
+
+	"Bad number of serial link",
+	"Serial link opening error",
+	"Serial link closing error",
+	"Link initialization error",
+	"Link closed error",
+	"Change of configuration link error",
+	"Serial link is already openned",
+	"Serial link is already closed",
+	"Serial port error",
+	"MCX card error",
+	"Sending message error",
+	"Reception message error",
+	"Communication Driver error",
+
+/* Erreurs driver téléchargement */
+
+	"Sending port error",
+	"Reception port error",
+	"Error : no more RAM available",
+	
+/* inserer ici les nouveaux messages */
+

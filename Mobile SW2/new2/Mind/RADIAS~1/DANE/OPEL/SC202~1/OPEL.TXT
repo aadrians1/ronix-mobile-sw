@@ -1,0 +1,5 @@
+Opel SC 202 (Blaupunkt ?)
+Kod nieznany radio odblokowane.
+SDA 2516
+
+opel202.bin  kod " 1 1 1 " pod adresem  0000  00E0 00F0

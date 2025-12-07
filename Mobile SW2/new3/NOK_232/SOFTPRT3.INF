@@ -1,0 +1,92 @@
+[version]
+LayoutFile=layout.inf
+signature="$CHICAGO$"
+Class=ports
+Provider=%NMP%
+
+[DestinationDirs]
+DefaultDestDir=11  	   ;LDID_SYS
+
+
+; Install class "Ports"
+;----------------------------------------------------------
+
+[ClassInstall]
+AddReg=Ports_Reg
+
+[Ports_Reg]
+HKR,,,,%PortsClassName%
+
+; Drivers
+;----------------------------------------------------------
+
+[Manufacturer]
+%Mfg%=MS_Ports
+
+[MS_Ports]
+%Port1.DeviceDesc%=MS_COM, *PNP0500, *PNP0501    	; Communications Port
+
+
+[Ports.AddReg]
+HKR,,NoSetupUI,,1
+
+
+; COM sections
+;----------------------------------------------------------
+
+
+[MS_COM]
+CopyFiles=ComPort.Copy
+AddReg=ComPort.AddReg
+LogConfig=c1a,c2a,c3a,c4a,caa
+
+[ComPort.Copy]
+nokport3.vxd
+sfdtp2v3.vxd
+
+[ComPort.AddReg]
+HKR,,DevLoader,,*vcomm
+HKR,,Enumerator,,serenum.vxd
+HKR,,PortDriver,,nokport3.vxd
+HKR,,ConfigDialog,,serialui.dll
+HKR,,DCB,1, 1C,00,00,00, 80,25,00,00, 11,33,00,00, 00,00, 0a,00, 0a,00, 08, 00, 00, 11, 13, 00, 00, 00
+HKR,,PortSubClass,1,01
+HKR,,EnumPropPages,,"serialui.dll,EnumPropPages"
+
+[*pnp0500.det]
+AddReg=Ports.AddReg,DevMap.AddReg
+
+[c1a]			; COM1, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=3f8-3ff(3ff::)
+
+[c2a]			; COM2, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=2f8-2ff(3ff::)
+
+[c3a]			; COM3, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=3e8-3ef(3ff::)
+
+[c4a]			; COM4, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=2e8-2ef(3ff::)
+
+[caa]			; Any base, any IRQ
+ConfigPriority=HARDRECONFIG
+IOConfig=8@100-ffff%fff8(3ff::)
+
+[DevMap.AddReg]
+HKLM,hardware\devicemap\serialcomm,COM1,,COM1
+HKLM,hardware\devicemap\serialcomm,COM2,,COM2
+HKLM,hardware\devicemap\serialcomm,COM3,,COM3
+HKLM,hardware\devicemap\serialcomm,COM4,,COM4
+
+; User readable strings
+;----------------------------------------------------------
+
+[Strings]
+NMP="Nokia Mobile Phones"
+Mfg="Nokia Mobile Phones"
+PortsClassName="Ports (COM & LPT)"
+Port1.DeviceDesc="Data Suite 2.0"

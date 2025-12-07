@@ -1,0 +1,27 @@
+01 AUTOSOUND ZURICH AS0700
+"KOD 1234"
+EEPROM: ER5911 ( MicroWire 5911  128x8 )
+
+0000  C2 CD A7 EE  4A ED EE CA  2D EE A0 45  6C 4B 45 64  ÂÍ§îJíîÊ-î ElKEd
+0010  90 70 80 80  80 80 80 78  80 80 90 80  80 80 80 98  p€€€€€x€€€€€€˜
+0020  C6 EC 1A 67  C8 6E EC C6  C6 EC 1A 67  C8 6E 6E 6E  Æì.gÈnìÆÆì.gÈnnn
+0030  45 0C C9 D5  AD 4E 4E 45  00 0D 05 D0  50 12 A0 4E  E.ÉÕ­NNE .ÐP. N
+0040  1F 87 50 2F  52 20 3F 14  60 4F 00 00  4A FA 38 29  .‡P/R ?`P  Jú8)
+0050  F0 2A 10 00  FB F0 4F 9A  67 12 56 70  92 30 27 16  ð*.ûðOšgVp’0'
+0060  38 04 30 C8  73 8F 43 9A  67 C2 23 7D  92 30 23 10  80ÈsCšgÂ#}’0#
+0070  5F 28 12 97  81 AA 3E 80  B6 95 4B 39  F2 F1 F6 F4  _(—ª>€¶•K9òñöô
+
+ADRES :
+
+0040 1F  ( 1 = pierwsza cyfra kodu )
+
+0043 2F  ( 2 = druga cyfra kodu )
+
+0046 3F  ( 3 = trzecia cyfra kodu )
+
+0049 4F  ( 4 = czwarta cyfra kodu )
+
+0054 2B  ( 2B : 2B - 0 prob )
+         (      1B - 1 proba )
+         (      0B - 2 proby )
+         (      FB - 3 proby, radio zblokowane )

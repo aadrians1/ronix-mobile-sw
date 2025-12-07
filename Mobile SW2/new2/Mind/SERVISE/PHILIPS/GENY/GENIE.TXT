@@ -1,0 +1,20 @@
+UNLOCK NEW GENIE.........
+
+1.  READ EEPROM 
+
+2.  IN BUFFER ADDRESS FC to FF YOU WILL GET NCK CODE
+
+3.  PACK THE PHONE AND ENTER NCK & YOU WILL ABLE TO USE 
+    ALL SIM CARD
+
+  FOR INFO JUST SEE ATTACHED GENIE.BIN  FILE NCK CODE IN
+  THIS BIN FILE IS 1527
+
+
+  REGARDS
+
+  BOBBY GILL
+   This file was downloaded from
+   The Real Free GSM Site 
+            "FreeGSM"
+   http://www.FreeGSM.tsx.org

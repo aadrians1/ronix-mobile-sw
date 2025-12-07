@@ -1,0 +1,26 @@
+APRO v2.58
+Compiler : Delphi 4
+Operating System : Win32 on Windows 4.10  A 
+Time      Type      SubType       Data      OtherData
+--------  --------  ------------  --------  ---------
+0000.262  TrDatChg  Avail         00000001  
+0000.263  TrgHdAlc  Window        00000924  
+0000.263  Dispatch  WriteCom      00000003  [00]p[16]
+0006.471  Dispatch  ReadCom       00000001  [00]
+0006.471  Trigger   Avail         00000001  
+0006.491  Dispatch  ReadCom       00000001  [80]
+0006.491  Trigger   Avail         00000001  
+0006.511  Dispatch  ReadCom       00000001  [80]
+0006.511  Trigger   Avail         00000001  
+0006.531  Dispatch  ReadCom       00000001  [80]
+0006.531  Trigger   Avail         00000001  
+0006.611  Dispatch  ReadCom       00000001  [00]
+0006.611  Trigger   Avail         00000001  
+0006.631  Dispatch  ReadCom       00000001  [00]
+0006.631  Trigger   Avail         00000001  
+0006.651  Dispatch  ReadCom       00000001  [80]
+0006.651  Trigger   Avail         00000001  
+0006.671  Dispatch  ReadCom       00000001  [80]
+0006.671  Trigger   Avail         00000001  
+0006.691  Dispatch  ReadCom       00000001  [FE]
+0006.691  Trigger   Avail         00000001  

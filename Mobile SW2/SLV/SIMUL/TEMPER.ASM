@@ -1,0 +1,206 @@
+;CKSUM.ASM	FEB-25-98
+;Routine to calculate the checksum of instruction memory
+; by Loren Blaney
+;
+	LIST	P=16C57		;closest PIC chip (has 2K)
+
+	INCLUDE	"SXDEFS.INC"	;macro definitions for new instructions
+DEVICE	EQU	PINS28+TURBO+SYNC+OPTIONX+STACKX+BANKS8+PAGES4+OSC4MHZ
+
+;REGISTR DEFINITIONS
+CHETCHIK_1	EQU	08H
+CHETCHIK_2	EQU	09H
+CHETCHIK_3	EQU	0AH
+TEMP_LCD	EQU	0BH
+
+;PIN DEFINITIONS
+OUT_LED	EQU	0	;PORTC
+RS	EQU	1	;PORTC
+RD_WR	EQU	2	;PORTC
+EN_LCD	EQU	3	;PORTC
+DB4	EQU	4	;PORTC
+DB5	EQU	5	;PORTC
+DB6	EQU	6	;PORTC
+DB7	EQU	7	;PORTC
+KEY1	EQU	0	;PORTA
+KEY2	EQU	1	;PORTA
+KEY3	EQU	2	;PORTA
+KEY4	EQU	3	;PORTA
+
+	ORG	0
+START	CALL	INITIAL		
+NAZAD	CALL	PROGRAMMA	
+	GOTO	NAZAD		
+
+;----------------------------------------------------------------------
+
+PROGRAMMA
+
+;	CLRF	TEMP_LCD
+;	MOVLW	H'F0'
+;	ADDWF	TEMP_LCD,W
+;	MOVWF	PORTC
+;	BCF 	PORTC,RD_WR
+;	BSF 	PORTC,RS
+;	CALL	CYCLE_LCD	
+;	CALL	CYCLE_LCD	
+	BSF 	PORTC,RD_WR
+
+	RETURN
+
+INIT_LCD
+	CALL	MS_15
+	BSF	PORTC,DB4
+	BSF	PORTC,DB5
+	CALL	CYCLE_LCD	
+;---------------------------
+	CALL	MS_5
+	CALL	CYCLE_LCD	
+;---------------------------
+	CALL	MKS_150
+	CALL	CYCLE_LCD	
+	CALL	MKS_150
+;---------------------------
+;		I
+;		I
+;		I
+;---------------------------
+	BCF	PORTC,DB4
+	CALL	CYCLE_LCD	
+	CALL	MKS_150
+	CALL	BUSY_CHECK
+;==========================
+	CALL	CYCLE_LCD	
+;---------------------------
+	CLRF	PORTC
+	BSF	PORTC,DB6
+	CALL	CYCLE_LCD	
+	CALL	MKS_150
+	CALL	BUSY_CHECK
+;==========================
+	CLRF	PORTC
+	CALL	CYCLE_LCD	
+;---------------------------
+	BSF	PORTC,DB7
+	CALL	CYCLE_LCD	
+	CALL	MKS_150
+	CALL	BUSY_CHECK
+;==========================
+	CLRF	PORTC
+	CALL	CYCLE_LCD	
+;---------------------------
+	BSF	PORTC,DB4
+	CALL	CYCLE_LCD	
+	CALL	MKS_150
+	CALL	BUSY_CHECK
+;==========================
+	CLRF	PORTC
+	CALL	CYCLE_LCD	
+;---------------------------
+	BSF	PORTC,DB6
+	BSF	PORTC,DB5
+	CALL	CYCLE_LCD	
+	CALL	MKS_150
+	CALL	BUSY_CHECK
+;==========================
+	CLRF	PORTC
+	CALL	CYCLE_LCD	
+	BSF	PORTC,DB7
+	BSF	PORTC,DB6
+	BSF	PORTC,DB5
+	CALL	CYCLE_LCD	
+	CALL	MKS_150
+	CALL	BUSY_CHECK
+
+	CLRF	PORTC
+	CALL	CYCLE_LCD	
+	BSF	PORTC,DB6
+	BSF	PORTC,DB5
+	CALL	CYCLE_LCD	
+	CALL	MKS_150
+	CALL	BUSY_CHECK
+
+	CLRF	PORTC
+	BSF	PORTC,RS
+	BSF	PORTC,DB6
+	CALL	CYCLE_LCD	
+	BSF	PORTC,RS
+	BCF	PORTC,DB6
+	CALL	CYCLE_LCD	
+	BSF	PORTC,DB7
+	CALL	MKS_150
+	CALL	BUSY_CHECK
+	BSF	PORTC,RS
+	RETURN
+
+BUSY_CHECK
+;	BSF	PORTC,RS
+;	CALL	CYCLE_LCD	
+;	CALL	CYCLE_LCD	
+;	BCF	PORTC,RS
+;	CALL	MKS_150
+	RETURN	
+
+;###########################################################################
+;
+;	TIME MODULE
+;
+;###########################################################################
+CYCLE_LCD
+	BSF	PORTC,EN_LCD
+	nop
+	CALL	MS_5
+	BCF	PORTC,EN_LCD
+	RETURN
+
+MKS_150
+	MOVLW	H'80'
+	MOVWF	CHETCHIK_1
+LOOP1	NOP
+	DECFSZ	CHETCHIK_1,F
+	GOTO	LOOP1	
+	RETURN
+
+MS_15
+	MOVLW	D'100'
+	MOVWF	CHETCHIK_2
+LOOP2	CALL	MKS_150
+	DECFSZ	CHETCHIK_2,F
+	GOTO	LOOP2	
+	RETURN
+
+MS_5
+	MOVLW	D'30'
+	MOVWF	CHETCHIK_3
+LOOP3	CALL	MKS_150
+	DECFSZ	CHETCHIK_3,F
+	GOTO	LOOP3	
+	RETURN
+
+SEKUNDA
+	MOVLW	H'FF'
+	MOVWF	CHETCHIK_2
+LOOP4	CALL	MS_5
+	DECFSZ	CHETCHIK_2,F
+	GOTO	LOOP4	
+	RETURN
+;###########################################################################
+;	END TIME MODULE
+;###########################################################################
+
+
+INITIAL		
+	MOVLW	B'00001111'
+	TRIS	PORTA
+	MOVLW	B'00000000'
+	TRIS 	PORTC
+	CLRF	PORTC
+	CLRF	TEMP_LCD
+	CALL	INIT_LCD
+	RETURN
+
+
+	ORG	07FFh		;reset vector
+
+	END
+

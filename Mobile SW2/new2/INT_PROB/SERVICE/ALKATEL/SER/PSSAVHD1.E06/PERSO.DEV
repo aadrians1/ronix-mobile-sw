@@ -1,0 +1,40 @@
+**************************************************
+*    DESCRIPTION DES INSTRUMENTS FONCTIONNELS    *
+* Alimentation : 1                               *
+* Multimètre :   2                               *
+* Banc Radio Numérique  : 3                      *
+* Banc Radio Analogique : 4                      *
+* Générateur de signaux : 5                      *
+* Simulateur de Fading  : 6                      *
+* Atténuateur de signaux : 7                     *
+* Analyseur Audio : 8                            *
+* Appareil de commutation : 9                    *
+* UUT : 10                                       *
+* Lecteur Code Barre : 12                        *
+* Power Meter : 12                               *
+* Ecran :   13                                   *
+* Fichier : 14                                   *
+* Board   : 14		                         *
+**************************************************
+
+* 		1er champ 	: nom du device
+* 		2ème champ 	: classe de l'instrument fonctionnel
+* 		3ème champ	: Instance de produit associée
+* 		4ème champ	: instance de l'instrument fonctionnel
+* 		5ème champ	: Caractéristique matérielle n°1
+* 		6ème champ	: Caractéristique matérielle n°2
+* 		7ème champ	: Caractéristique matérielle n°3
+
+
+***** Liste des devices
+
+* ------------------------------------ Lecteur Code Barre
+*&;LECOB;  LECOB;	COM;  1;   1; 0; 0; ?
+
+***** Liste des devices à initialisation unitaire *****
+* ------------------------------------ Carte Acksys
+$;ACKSYS; BOARDPC;	COM;  1;  10; 0XD000; 0x280; ?
+***** communication identification instance 1 *****
+$; COMHD;    UUT; UUT1;	1;   2;?
+***** communication personnalisation instance 2 ***** 
+$; COMHD;    UUT; UUT2;	2;   2;?

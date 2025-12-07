@@ -1,0 +1,59 @@
+Hi all!, first of all you must unzip everuthing to c:\flash90
+
+The GD90 phones that have an "AT" letters next to the SIM card have an ATMEL flash rom, for those we will use
+the LZH files with the letter "b" i.e. gad90b12.lzh
+
+The GD90 phones that have nothing next to the SIM card have an INTEL flash rom, for those we will use
+the LZH files with the letter "a" i.e. gad90a12.lzh
+
+
+First of all you must execute the file gd90.bat with the phone turned OFF and the cable unplugged.
+An a menu like this will appear:
+
+
+MENU for ATMEL Flash Memory Version 2.0 1999/OCT/9
+1. Send Mode-request(without ACK check)
+2. Gang Writer[gad90a14.DAT][C:\FLASH90\gad90a14]
+----------------------------------------------------------
+3. Send Mode-request(with ACK check)
+4. Flash Memory Writer[gad90a14.DAT]
+5. Make a write-data for 1Mbyte
+6. Verify Full-check sum modified by M.I.
+7. Read Full-check sum
+8. END
+Select Number
+ 
+
+We will press the option Nº 1 and the the next text will appear.
+ 
+Sending Write-Mode request. Please turn T/U's Power ON.
+ 
+Now we must PLUG the cable onto the phone (that is still OFF) and a green led will turn on
+Now we press the ESC key to return to the main menu, now we press the option nº4
+and something like this will appear:
+ 
+Write Flash-Memory. Input File name
+(Return to Menu with ESC key.)
+File-name described in Parameter-File:[C:\FLASH90\gad90a14]
+Write File-name (Drive#,Full-pass)   :
+ 
+When we see this in the screen we must press INTRO or to write the full path where the flash file is
+Now something like this will appear:
+ 
+Write Flash-Memory to file C:\FLASH90\gad90a14.dat
+ 
+
+It takes about 8 or 10 min. and a message will appear:
+ 
+(Return to Menu with ESC key.)
+ 
+We have just flashed the phone, we press ESC to go to the main menu and we will press nº8 to exit. now we unplug the cable and remove and put on the phone's battery. Now our phone is flashed. Now we must write the new IMEI we can do that with the utility GD90_7 but this prog has a problem that crashes the charging control, but we can fix it with another utility enclosed GD90REP that fixes the problem that the other program causes.
+Now our GD90 is UNLOCKED. 
+
+    ---> Faq by {^tek^} <---
+
+.·.·.·. AiKoN GsM GrOuP .·.·.·.
+
+E-Mail: rubia@ctv.es
+
+ICQ: 66431183

@@ -1,0 +1,27 @@
+	
+PLSCLE.C : pPL_TraceErrorS3i : Erreur ouverture liaison	
+PLSHD.C : PPL_StartCom : State : 2, Erreur ouverture liaison	
+PLSHD.C : PPL_ComStartCom : State : 3, Erreur ouverture liaison
+	 niveau PLSCOUCH.C : CompHDStartStop : Execution failed in the state :		 2
+	 niveau ERSPARA.C : PER_ConfModeCom : Execution failed in the state :		 1
+	 niveau ESSGRTST.C : PES_ExecTest : Execution failed in the state : 2
+Noeud en echec: MiseEnMarcheProduit	
+PLSCLE.C : pPL_TraceErrorS3i : Erreur ouverture liaison	
+PLSHD.C : PPL_StartCom : State : 2, Erreur ouverture liaison	
+PLSHD.C : PPL_ComStartCom : State : 3, Erreur ouverture liaison
+	 niveau PLSCOUCH.C : CompHDStartStop : Execution failed in the state :		 2
+	 niveau ERSPARA.C : PER_ConfModeCom : Execution failed in the state :		 1
+	 niveau ESSGRTST.C : PES_ExecTest : Execution failed in the state : 2
+Noeud en echec: MiseEnMarcheProduit	
+PLSCLE.C : pPL_TraceErrorS3i : Erreur ouverture liaison	
+PLSHD.C : PPL_StartCom : State : 2, Erreur ouverture liaison	
+PLSHD.C : PPL_ComStartCom : State : 3, Erreur ouverture liaison
+	 niveau PLSCOUCH.C : CompHDStartStop : Execution failed in the state :		 2
+	 niveau ERSPARA.C : PER_ConfModeCom : Execution failed in the state :		 1
+	 niveau ESSGRTST.C : PES_ExecTest : Execution failed in the state : 2
+Noeud en echec: MiseEnMarcheProd
+	 niveau PLSCOUCH.C :  CompHDMiseHSLogTest  : Execution failed in the state :		 -1
+	 niveau ETSPERSO.C :  PET_MiseHsLogTest : Execution failed in the state : 100
+	 niveau ESSGRTST.C : PES_ExecTest : Execution failed in the state : 2	
+PLSHD.C : PPL_ProdClose : State : 2, Erreur interne : driver primitives
+Noeud en echec: ArretProd

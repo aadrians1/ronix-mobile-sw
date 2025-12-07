@@ -1,0 +1,47 @@
+Opis rozkodowania radioodtw. Blaupunkt serii RCC44, 24 itp. z procesorem toshiby.
+
+W tym radiu sa uzyte dwa procesory : glowny toshiby od strony druku, i procesor
+rds teksasa od strony elementow. Kod zapisany jest w procesorze TI ale 
+przesylany jest po wlaczeniu do procesora toshiby. Nalezy wiec wylapac transmisje
+pomiedzy procesorami i odczytac kod z danych. Dane te sa przesylane po wlaczeniu 
+radia, ale tylko wtedy gdy na wyswietlaczu pojawia sie napis kode. Jesi radio 
+wyswietla kreski to kod nie jest przesylany. Nie umiem narazie modyfikowac 
+licznika bledow zawartego w TI, ale wystarczy albo odczekac jakis czas i radio 
+zacznie pytac o kod. Wtedy mozna do woli wylaczac i wlaczac radio - za kazdym 
+razem bedzie pytac o kod. Mozna "pomoc" sobie delikatnym potraktowaniem kwarca 
+od toshiby : po paru dotknieciach zapyta o kod.
+Transmisja pomiedzy procesorami po wlaczeniu wyglada nastepujaco :
+
+Do 40 98 - do texasa
+Z  C0  8 87 - do toshiby
+Do 88
+Z  62 20 F1 80
+Do E2
+Z  10
+Do 11
+Z  11
+Do 9B
+Z  C0 20 40
+Do A0
+Z  62  A 21  0
+Do E2 40 8E
+Z  C0 60 F6
+Do E0 40 15
+Z  C0 61  0 76  // kod jest 0076
+Do E1
+
+Jak widac kod jest przesylany w postaci jawnej.
+Dolaczam program do zrobienia tego radia.
+Moj program comm_rs.exe wykorzystuje wtyczke od motoroli. Operacja sprowadza sie
+do podlaczenia masy i przewodu rxd wtyczki do linii oznaczonej na schemacie 
+(schemat.gif) oraz rysunku (rcc24.jpg) jako TXD - jest to linia transmisji danych 
+z procesora TI do toshiby. Na ekranie beda oczywiscie wyswietlone tylko odpowiedzi 
+TI. Dane te przedstawione sa na rysunku dane.gif. W niektorych egzemplarzach przed
+kodem przesylana jest sekwencja C0 61 a w niektorych C0 62 - np. na rysunku. 
+Dane 3 i 4 cyfry sa zawsze powtorzone, a pozniej przesylana jest co jakis czas 
+sekwencja 8 87 8 87 itd.
+
+
+W razie watpliwosci prosze uzyc telefonu...
+Powodzenia !
+

@@ -1,0 +1,360 @@
+!=========================================================================
+!                HISTORY OF MODIFICATIONS
+!=========================================================================
+! Date           :                      12/08/95
+! Reviewed       :                      1.0
+! Author         :              O. PRINCE
+! Description    :              Création
+!---------------------------------------------------------------------------
+! Date                 : 23/05/96
+! Revision             : 3.03
+! Author               : O. PRINCE
+! Description          : Création nouveau fichier de référence générant fichiers produits
+!                        pour constantes spécifiques : précisées par entete 
+!                        !HD000 ou !HD2 ou !HD1P1 ou !ED1
+!                        précisées par entete !HD pour le reste des produits
+!
+!!!!!!!!!!!!!!!!!!!!!!! DESCRIPTION DES MENUS FTP !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! ----------------------------------------------------------------------------
+! Chaque ligne de commentaire est précédée d'un !
+! Chaque élément significatif d'une description est séparé d'un ;
+! Les mots de chaque nom de menu ou d'item sont séparés par des _ et terminés par un blanc
+!
+! Chaque description de Menu est précédée d'un $ et est définie comme suit :
+! $; Nom de la fenêtre principale; Identifiant du menu; identifiant de la fenêtre principale
+!
+! Chaque ligne de titre de menu est précédée d'un # et définie comme suit :
+! #; Nom du titre ; Identifiant du titre; Numéro de noeud à activer (0 si
+! pas d'action)
+!
+! Chaque ligne d'item de titre est précédée d'un & et définie comme suit :
+! &; Nom de l'item; Identifiant de l'item; Numéro du noeud à activer (0 si
+! pas d'action)
+!
+! Si des sous-items de cet item sont présents,
+! Chaque ligne de sous-item est précédée d'un £ et définie comme suit :
+! £; Nom du sous-item; Identifiant du sous-item; Numéro du noeud à activer
+! ( 0 si pas d'action)
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!-----------------------------------------------------------------------------
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DU MENU DU LOGICIEL DE TEST LABO HD !!!!!!!!!!!!!!!!!!!!!!!
+! !HD1R2
+$;Test_Software_HD1R2_7.06 ;1000;1001
+!
+!
+!
+!***************************************
+#;!!General ;1002;0
+!*************
+&;Connection ;1003;1000
+!
+&;Disconnection ;1100;1100
+!
+&;Switch_On ;1200;1200
+!
+!&;Enter_E/R_Number ;1300;1300
+!
+&;Link_Configuration ;1500;1500
+!
+&;Message_without_control ;1400;1400
+!
+!
+&;Exit ;1700;505
+!---------------
+!
+!***************
+#;!!Simu ;1901;0
+!***************
+!
+!
+!
+&;Localization_Status ;1810;9300
+&;Send_A_Call ;1820;9200
+&;Stop_A_Call ;1825;100110
+!
+&;Pick-up ;1830;100300
+&;+Volume ;1840;100400
+&;-Volume ;1870;100700
+&;Send_A_SOS_Call ;1850;100500
+&;Off ;1860;100600
+!
+!***************
+#;!!Radio ;2001;0
+&;Transmission_Tuning ;2000;2000
+!!!!!!!!!!!!!!
+&;Power_Measures ;2100;2100
+!!!!!!!!!!!!!!
+&;Ramps_Calculation ;2200;2200
+!!!!!!!!!!!!!!
+&;Reception_Tests ;2300;2300
+!!!!!!!!!!!!!!
+&;Offset_Table ;2400;2400
+!!!!!!!!!!!!!!
+&;I/Q_Gain ;2500;2500
+!!!!!!!!!!!!!!
+&;Quadrature_Error ;2600;2600
+!!!!!!!!!!!!!!
+&;Synthesizer ;2700;2700
+!
+£;Synthesizer_single_frequency ;2710;2700
+£;Synthesizer_GSM_Frame ;2730;2720
+!!!!!!!!!!!!!!
+&;Synthe_Configuration ;2800;2800
+!!!!!!!!!!!!!!
+&;Frequency_Reference ;2850;2850
+!!!!!!!!!!!!!!
+!&;Aerial_Switch ;2900;2900
+!!!!!!!!!!!!!!
+!*************
+!*************
+!*************
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+#;MM!!I ;3001;0
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Display ;3000; 3000
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Backlight ;3100;3100
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Contrast ;3200;3200
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Keyboard_Test ;3300;3300
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Buzzer ;3400;3400
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Vibrator ;3500;3500
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Led ;3600;3600
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!****************
+#;GSM_!!Test ;4001;0
+!
+&;Synchronization ;4000;4000
+!
+&;TCH_Mode ;4100;4100
+!
+!*****************
+#;HW_!!Cont ;5001;0
+!
+&;RAM_Reading ;5000;5000
+!
+&;RAM_Writing ;5100;5100
+!
+&;Clock ;5200;5200
+!
+!&;Free_Hands ;5300;5300
+!
+&;Low_Power_Mode ;5400;5400
+!
+&;BBIC_Register_Writing ;5410;5150
+!
+&;BBIC_Register_Reading ;5420;5050
+!
+!****************
+#;E!!Nv_Cont ;5501;0
+!
+&;Voltage_Measure ;5500;5500
+!
+&;Temperature_Measure ;5600;5600
+!
+&;Presence_Of_Charger ;5700;5700
+!
+&;Load_Parameters_Tuning ;5300;5300
+!
+&;Voltage_Automatic_Tuning ;5850;5850
+!
+&;Voltage_Limits_Tuning ;5800;5800
+!
+&;Load_Control ;5900;5900
+!
+!*****************
+#;Loo!!P ;6001;6000
+!
+&;GMSK_Loop ;6000;6000
+!
+&;Loop_to_AUDIO ;6100;6100
+!
+&;Loop_from_AUDIO ;6200;6200
+!
+&;DAI_CODEC_Loop ;6300;6300
+!
+&;Control_Data ;6400;6400
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;Fl!!Ash/Eeprom ;1600;0
+!
+! !HD1R1 !HD1R2 !HD1R3
+&;Flash_Access ;1601;0
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Reading/Display_On_Screen ;1510;1510
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Read_and_Save_in_File ;1530;1530
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Writing_by_Keyboard_Input ;1520;1520
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Writing_from_File ;1540;1540
+!
+!
+! !HD1R1 !HD1R2 !HD1R3
+&;Eeprom_Access ;1602;0
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Reading/Display_On_Screen ;6510;6510
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Read_and_Save_in_File ;6530;6530
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Writing_by_Keyboard_Input ;6520;6520
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Writing_from_File ;6540;6540
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;SIM-ME-LOCK_Writing ;1550;1550
+!
+! !HD1R1 !HD1R2 !HD1R3
+&;Eeprom_Virginization ;6550;6550
+!
+!*****************
+#;!!Options ;7001;7000
+!
+&;On/Off_Data_Display ;7000;7000
+!&;On/Off_Macro_Activation ;7100;7100
+&;Reinit_Link ;7200;0
+!
+£;Xon_session_Opening ;7210;7210
+£;Xon_session_Closing ;7220;7220
+&;Screen_Config ;7400;7400
+!
+&;Language ;7500;7500
+!!!!!!!!!!!!!!
+£;French   ;7510;7510
+!
+£;English  ;7520;7520
+!
+!
+!*****************
+#;Down!!Load ;8001;8100
+!
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Download_of_a_file ;8110;8100
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Read_a_File ;8140;8140
+!
+! !HD1R1 !HD1R2 !HD1R3 
+£;Flash_Reading ;8141;8140
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Eeprom_Reading ;8142;8150
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Zone_Erasement ;8170;8170
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Creation_of_Downloadable_File ;8120;8120
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Flash_Downloadable ;8121;8120
+!
+! !HD1R1 !HD1R2 !HD1R3
+£;Eeprom_Downloadable ;8122;8125
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Downloadable_File_Modif ;8160;8160
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Scenario_Download ;8810;8800
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Download_Config ;8130;8130
+!
+!
+!
+!
+!
+!
+!*************
+#;!!MTT ;8501;0
+!
+&;MTT_Initialization ;8505;40000
+!
+&;MTT_Connection ;8510;40050
+!
+&;MTT_Disconnection ;8520;40100
+!
+&;BBIC_Test ;8530;40200
+!
+&;Micro_memory_read ;8600;41000
+!
+&;BBIC_register_read ;8610;41100
+!
+&;MTT_RAM_read ;8580;41200
+!
+&;Micro_memory_write ;8640;41500
+!
+&;BBIC_register_write ;8650;41600
+!
+&;MTT_RAM_write ;8660;41700
+!
+&;SRAM_Test ;8540;40300
+!
+&;FLASH_Test ;8550;40400
+!
+&;Full_Test ;8560;40500
+!
+&;MTT_Stop ;8570;40800
+!
+!*************
+#;LT!!E ;8701;0
+!
+&;LTE_Initialization ;8700;87000
+!
+&;LTE_Connection ;8710;87010
+!
+&;MTT_Disconnection ;8720;87020
+!
+&;Flash_Configuration ;8730;87030
+!
+&;Flash(s)_Read_(Chechsum) ;8740;87040
+!
+&;Flash(s)_Reset ;8750;87050
+!
+&;Flash(s)_Write ;8760;87060
+!
+&;LTE_Stop ;8770;87070
+!
+!*****************
+#;In!!Fo ;9001;9100
+&;Informations ;9000;9100
+!

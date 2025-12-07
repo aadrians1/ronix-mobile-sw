@@ -1,0 +1,73 @@
+MPASM 01.30 Released          RTCCINT.ASM   2-25-1998  17:49:33         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00001 ;RTCCINT.ASM    FEB-25-98
+                    00002 ; Simple program using RTCC-rollover interrupt.
+                    00003 ; RB.0 toggles via main code and RB.1 toggles via interrupt.
+                    00004 ;
+                    00005 
+                    00006         PROCESSOR 16C58A        ;closest PIC chip
+                    00007         RADIX   DEC
+                    00008         ERRORLEVEL 1
+                    00009         LIST    ST=OFF
+                    00010 
+                    00011         INCLUDE "SXDEFS.INC"    ;macro definitions for new instructions
+                    00151         LIST
+1010 050B           00152         DATA    _FUSE           ;configuration bits (TURBO, SYNC, OPTIONX, etc.)
+1011 004E           00153         DATA    _FUSEX          ; (PINS, CARRYX, BOR40, BANKS, PAGES)
+                    00157         LIST
+                    00012 
+  0003EAF1          00013 DEVICE  EQU     PAGES4+BANKS8+TURBO+OPTIONX+OSC4MHZ+BOR40
+                    00014 
+                    00015 
+0000                00016         ORG     0               ;(3) interrupt routine (3 cycles in)
+0000 0C02           00017         MOVLW   10b             ;(1) toggle RB.1
+0001 01A6           00018         XORWF   RB              ;(1)
+                    00019 
+0002 0CEC           00020         MOVLW   -20             ;(1) interrupt every 20*2 cycles
+                    00021         RETIW                   ;(3) 9 cycles total interrupt time
+0003 000F               M         DATA    0Fh     ;RETIW  ;return from interrupt and add W to RTCC
+                    00022 
+                    00023 
+0004 0C80           00024 START   MOVLW   10000000b       ;enable RTCC interrupt, divide rate 1:2
+0005 0002           00025         OPTION
+                    00026 
+0006 0CFC           00027         MOVLW   11111100b       ;make RB.0 and RB.1 outputs
+0007 0006           00028         TRIS    RB
+                    00029 
+0008 0C01           00030         MOVLW   1               ;ready to toggle RB.0
+0009 01A6           00031 LOOP    XORWF   RB              ;(1) toggle RB.0
+000A 0A09           00032         GOTO    LOOP            ;(3) 4 cycles total loop time
+                    00033 
+                    00034 
+07FF                00035         ORG     07FFh           ;reset vector
+07FF 0A04           00036         GOTO    START
+                    00037 
+                    00038         END
+MPASM 01.30 Released          RTCCINT.ASM   2-25-1998  17:49:33         PAGE  2
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+
+0000 : XXXXXXXXXXX----- ---------------- ---------------- ----------------
+0040 : ---------------- ---------------- ---------------- ----------------
+0780 : ---------------- ---------------- ---------------- ----------------
+07C0 : ---------------- ---------------- ---------------- ---------------X
+1000 : ---------------- XX-------------- ---------------- ----------------
+1040 : ---------------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    12
+Program Memory Words Free:  2036
+
+
+Errors   :     0
+Warnings :     0 reported,     2 suppressed
+Messages :     0 reported,     3 suppressed
+
+

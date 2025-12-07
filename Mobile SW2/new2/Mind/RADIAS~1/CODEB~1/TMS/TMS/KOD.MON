@@ -1,0 +1,23 @@
+1_bajt
+Do 40 28
+Z  C0 64 17  1 39 8E 86
+Do E4
+Z   8 87  8 87  8 87  8 87  8 87  8 87
+Do 40 98
+Z  C0  8 87
+Do 88
+Z  62 20 F1 80
+Do E2
+Z  10
+Do 11
+Z  11
+Do 9B
+Z  C0 20 40
+Do A0
+Z  62  A 21  0
+Do E2 40 8E
+Z  C0 60 F6
+Do E0 40 15
+Z  C0 61  0 76  // kod jest 0076
+Do E1
+KONIEC

@@ -1,0 +1,84 @@
+uruchomic mozna tms.exe [n]
+n - numer portu, domyslnie 1
+
+Podlacza sie do TMS ( kwadratowy scalak ):
+
+<scalak> - <oznaczenie> <wyprowadzenie portu>
+3 - CLK     13
+4 - RxD do  12
+5 - TxD z   15
+Baza do     16
+
+Nogi liczy sie od srodka od kropki na scieciu.
+
+Nalezy przeciac sciezke przy 5. Do scalaka podlaczyc emiter tranzystora
+NPN, kolektor do przerwanej sciezki. Baze poprzez rezystor 10k do kabelka.
+Uruchomic program przy wylaczonym radiu, nastepnie wlaczyc radio i poczekac
+okolo 20s powinien pojawic sie napis CODE. Nacisnac PrtScr. W przedostatniej
+linijce jest kod. Mozna tez radio uruchomic od nowa - nie bedzie juz
+zablokowane.
+
+Nogi liczy sie od srodka od kropki na scieciu.
+
+
+Wynik przy starcie ( RADIO ODBLOKOWANE )
+
+Do 40 28
+Z  C0 64 17  1 39 8E 86
+Do E4
+Z   8 87  8 87  8 87  8 87  8 87  8 87
+Do 40 98
+Z  C0  8 87
+Do 88
+Z  62 20 F1 80
+Do E2
+Z  10
+Do 11
+Z  11
+Do 9B
+Z  C0 20 40
+Do A0
+Z  62  A 21  0
+Do E2 40 8E
+Z  C0 60 F6  // F6 - komurka bledu  F3; E3; D3 itd
+Do E0 40 15
+Z  C0 61  0 76  // kod jest 0076
+Do E1
+
+
+Wynik przy starcie ( RADIO ZABLOKOWANE )
+
+Do FF 40 28
+Z  C0 64 67  0 39 8C 86
+Do E4
+Z   8 87  8 87  8 87  8 87  8 87  8 87
+Do 40 98
+Z  C0  8 87
+Do 88
+Z  62 23 F1 80
+Do E2
+Z   4
+Do 44
+Z  44
+Do 9B
+Z  C0 20 40
+Do A0
+Z  62 8A 11  0
+Do E2 40 8E - sekwencja :te trzy i z kolejnej linii C0 60
+Z  C0 60 F3 TUTAJ: kom bledu  F3
+Do E0 39 86 F6 39 86 F6
+Z  B9 28 85
+Do A8
+Z  10  0
+Do 90
+Z  19  0  6
+Do 99
+Z  41
+Do 10
+Z  10
+Do 15
+Z  C0 20 40
+Do A0
+Z  61  0 76   // kod 00 76
+Do E1
+KONIEC

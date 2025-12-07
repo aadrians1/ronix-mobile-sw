@@ -1,0 +1,19 @@
+
+
+/* Table de messages d'erreurs */
+
+/* Attention : en cas de rajout de messages, modifier l'enum de plpmsg.h */
+
+
+	"Success",
+	"Error: incorrect number of datas !",
+	"Error: File not found",
+	"Error: can't open file !",
+	"Error: can't close file !",
+	"Error in reading the datas file",
+	"Error in writing the datas file",
+	"Error: can't erase file !",
+
+/* inserer ici les nouveaux messages */
+
+

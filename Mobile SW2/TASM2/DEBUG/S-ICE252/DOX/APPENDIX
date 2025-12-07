@@ -1,0 +1,695 @@
+ APPENDIX A
+
+  FUNCTIONAL COMMAND LIST
+
+  Command      Description                                Page
+
+Setting break points :
+   BPM    Set break point on memory access or
+                  execution                                 54
+   BPR    Set break point on memory range                   57
+   BPIO   Set break point on I/O port access                59
+   BPINT  Set break point on interrupt                      61
+   BPX    Set/clear break point on execution                63
+   CSIP   Set CS:IP range qualifier                         64   
+   BPAND  Wait for multiple break points to occur           65
+
+Manipulating break points :
+   BD     Disable break points                              68
+   BE     Enable break points                               69
+   BL     List break points                                 70
+   BPE    Edit break point                                  71
+   BPT    Use break point as a template                     72
+   BC     Clear break points                                73
+     
+Display and edit commands:
+   U      Unassemble instructions                           77
+   R      Display or change register                        79
+   MAP    Display system memory map                         81
+   D      Display memory                                    83
+   E      Edit memory                                       84
+   INT?   Display last interrupt number                          86
+   ? or H Display help information                          87
+   VER    Display Soft-ICE version number                   88
+
+I/O port commands:
+   I      Input from I/O port                               90
+   O      Output to I/O port                                91
+
+     233
+
+ Command       Description                                Page
+Transfer control commands:
+   X      Exit from Soft-ICE window                         93
+   G      Go to address                                     94
+   T      Trace one instruction                             95
+   P      Program step                                      96
+   HERE   Go to current cursor line                         97
+   GENINT Force an interrupt                                98
+   EXIT   Force exit of current DOS program                 99
+   BOOT   System boot (retain Soft-ICE)                     101
+   HBOOT  Hard system boot (total reset)                    102
+
+Debug mode commands:
+   ACTION Set action after break point is reached           104
+   W      Set DOS/ROM BIOS re-entrancy                      106
+                        warning mode 
+   BREAK  Break out any time                                107
+   13HERE Direct Interrupt 3's to Soft-ICE                  108
+
+Utility commands :
+   A      Assemble code                                     110
+   S      Search for data                                   112
+   F      Fill memory with data                             113
+   M      Move data                                         114
+   C      Compare two data blocks                           115
+
+Specialized Debugging Commands:
+   SHOW   Display instructions from history buffer          117
+   TRACE  Enter trace simulation mode                       119
+   XT     Single step in trace simulation mode              121
+   XP     Program step in trace simulation mode             122
+   XG     Go to address in trace simulation mode            123
+   XRSET  Resets back trace history buffer                  124
+   VECS   Save/restore/compare interrupt vectors            125
+   SNAP   Take snap shot of memory block                    127
+   EMMMAP Display EMM allocation map                        129
+
+     234
+
+  Command      Description                                 Page
+
+Windowing Commands:
+  WR      Toggle register window                            131
+  WC      Toggle/set size of code window                    132
+  WD      Toggle/set size of data window                    133
+  EC      Enter/exit code window                            134
+  .       Locate current instruction                        136
+
+Debugger Customization Commands:
+  PAUSE   Pause after each screen                           138
+  ALTKEY  Set alternate key sequence to                     139
+                 invoke Soft-ICE
+  FKEY    Show and edit function keys                       141
+  BASE    Set/display current radix                         144
+  CTPP    Toggle log session to printer                     145
+  Print-Screen Print contents of screen                     146
+  PRN     Set printer output port                           147
+
+Screen Control Commands :
+  FLASH   Restore screen during P and T                     149
+  FLICK   Screen flicker reduction                          150
+  WATCHV  Set watch video mode                              152
+  RS      Restore program screen                            153
+  CLS     Clear window                                      154
+  ALTSCR  Change to alternate screen                        155
+  WIN     Change size of Soft-ICE window                    156
+
+Symbol and Source Line Commands:
+  SYM     Display/set symbol                                159
+  SYMLOC  Relocate symbol base                              161
+  SRC     Toggle between source, mixed                      162
+                and code
+  FILE    Change/display current source file                163
+  SS      Search current source file for string             164
+
+     235
+
+Page 236 is BLANK
+
+     236 
+
+APPENDIX B
+                               
+  ALPHABETIC COMMAND LIST
+  Command      Description                                 Page
+  .       Locate current instruction                        136
+  ? or H  Display help information                          87
+  A       Assemble code                                     110
+  ACTION  Set action after break point is reached           104
+  ALTKEY  Set alternate key sequence to
+                  invoke Soft-ICE                           139
+  ALTSCR  Change to alternate screen                        155
+  BASE    Set/display current radix                         144
+  BC      Clear break points                                73
+  BD      Disable break points                              68
+  BE      Enable break points                               69
+  BL      List break points                                 70
+  BOOT    System boot (retain Soft-ICE)                     101
+  BPAND   Wait for multiple break points to occur           65
+  BPE     Edit break point                                  71
+  BPINT   Set break point on interrupt                      61
+  BPIO    Set break point on I/O port access                59
+  BPM     Set break point on memory access or
+                 execution                                  54
+  BPR     Set break point on memory range                   57
+  BPT     Use break point as a template                     72
+  BPX     Set/clear break point on execution                63
+  BREAK   Break out any time                                107
+  C       Compare two data blocks                           115
+  CLS     Clear window                                      154
+  CSIP    Set CS:IP range qualifier                         64
+  CTRL-P  Toggle log session to printer                     145
+  D       Display memory                                    83
+  E       Edit memory                                       84
+  EC      Enter/exit code window                            134
+  EMMMAP  Display EMM allocation map                        129
+  EXIT    Force exit of current DOS program                 99
+  F       Fill memory with data                             113
+  FILE    Change/display current source file                163
+
+     237  
+
+Command        Description                                 Page
+ FKEY     Show and edit function keys                       141
+ FLASH    Restore screen during P and T                     149
+ FLICK    Screen flicker reduction                          150
+ G        Go to address                                     94
+ GENINT   Force an interrupt                                98
+ HBOOT    Hard system boot (total reset)                    102
+ HERE     Go to current cursor line                         97
+ I        Input from I/O port                               90
+ 13HERE   Direct Interrupt 3's to Soft-ICE                  108
+ INT?     Display last interrupt number                     86
+ M        Move data                                         114
+ MAP      Display system memory map                         81
+ O        Output to I/O port                                91
+ P        Program step                                      96
+ PAUSE    Pause after each screen                           138
+ Print-Screen Print contents of screen                      146
+ PRN      Set printer output port                           147
+ R        Display or change register                        79
+ RS       Restore program screen                            153
+ S        Search for data                                   112
+ SHOW     Display instructions from history buffer          117
+ SNAP     Take snap shot of memory block                    127
+ SRC      Toggle between source, mixed
+                  and code                                  162
+ SS       Search current source file for string             164
+ SYM      Display/set symbol                                159
+ SYMLOC   Relocate symbol base                              161
+ T        Trace one instruction                             95
+ TRACE    Enter trace simulation mode                       119
+ U        Unassemble instructions                           77
+ VECS     Save/restore/compare interrupt vectors            125
+ VER      Display Soft-ICE version number                   88
+ WARN     Set DOS/ROM BIOS re-entrancy
+                 warning mode                               106
+ WATCHV   Set watch video mode                              152
+ WC       Toggle/set size of code window                    132
+ WD       Toggle/set size of data window                    133
+ WIN      Change size of Soft-ICE window                    156
+
+     238
+
+ WR Toggle register window
+
+Command        Description                                 Page
+ X        Exit from Soft-ICE window                         93
+ XG       Go to address in trace simulation mode            123
+ XP       Program step in trace simulation mode             122
+ XRSET    Reset back trace history buffer                   124
+ XT       Single step in trace simulation mode              121
+
+     239
+
+Page 240 is BLANK
+
+     240 
+
+APPENDIX C
+
+KEYSTROKE FUNCTION LIST
+    Keystroke       Description
+
+Moving the Soft-ICE window:
+    CTRL      Move window one row up
+    CTRL      Move window one row down
+    CTRL       Move window one row right
+    CTRL      Move window one row left
+
+Resizing the Soft-ICE window:
+    ALT       Expand the window
+    CTRL      Shrink the window
+
+Editing the Command Line:
+               Move the cursor to the right
+              Move the cursor to the left
+    INS        Toggle insert mode
+    DEL        Delete current character
+    HOME       Move cursor to the start of the line
+    END        Move cursor to the end of the line
+              Display the previous command
+              Display the next command
+    SHIFT     Scroll one line up in display
+    SHIFT     Scroll one line down in display
+    PAGE UP    Scroll one page up in display
+    PAGE DN    Scroll one page down in display
+    BKSP       Delete previous character
+    ESC        Cancel current command
+
+     241
+
+Page 242 is BLANK
+
+     242
+
+ APPENDIX D
+
+ Error Messages and Descriptions
+  This appendix lists and explains the error messages that can
+  be generated by Soft-ICE.
+
+  A General Protection Violation Has
+  Occurred. This is typically caused
+  by a protected mode instruction.
+  CS:IP = XXXX:XXXX
+  Type 'C' to Continue
+  Type 'R' to Return to Soft-ICE.
+
+     This message can occur either when an 80386
+     protected mode instruction is encountered or if there is
+     a segment wrap-around condition. You can often
+     determine the reason for this message by
+     un-assembling the instruction at the specified address.
+     If the first byte of the instruction is an 0FH, then it is
+     probably a protected mode instruction. If the 
+     instruction is accessing a word at offset 0FFFFH in a 
+     segment then it is a segment wrap problem. If you type
+     C to continue, then control is given to the interrupt 0
+     handler in the DOS virtual machine.
+
+     This message often occurs when a program jumps to an
+     address that does not contain valid code or when valid
+     code has been overwritten.
+
+ Attempt To Divide By 0
+
+    This message is displayed when Soft-ICE evaluates an
+    expression and the divisor in a divide operation is zero.
+
+     243 
+
+BPM Break Point Limit Exceeded
+
+   Soft-ICE allows a maximum of 4 memory break points.
+   This message is displayed ifyou attempt to exceed the
+   maximum limit.
+
+ Break Point Table Full
+
+   Soft-ICE allows a maximum of 16 break points. This
+   message is displayed if you attempt to exceed the
+   maximum limit.
+
+ Count Too Large
+
+   The Soft-ICE break point commands allow an optional
+   count field. This field can contain a maximum value of
+   FFH. This error message is displayed if the count
+   value specified is greater than FFH.
+
+ DOS Memory Structures Corrupted
+
+   This message is displayed if Soft-ICE detects a problem
+   with the DOS memory block chain when using the
+   MAP command. This message can also occur if you use
+   the MAP command with a non-DOS operating system.
+
+ Duplicate Break Point
+
+    When a break point is entered, Soft-ICE compares the
+    break point conditions with those of break points that
+    had been set previously. If the conditions match, this
+    message is displayed.
+
+     244
+
+  Interrupt Break Point Limit Exceeded
+
+     Soft-ICE allows a maximum of 10 interrupt break
+     points. This message is displayed if you attempt to
+     exceed the maximum limit.
+
+  Invalid Opcode Has Occurred
+  CS:IP =XXXX:XXXX
+  Type 'C' to Continue
+  Type 'R' to Return to Soft-ICE.
+
+      When the 80386 encounters an instruction that is
+      illegal, it generates an interrupt 6. Soft-ICE displays
+      this message and gives you the opportunity to continue
+      or to return to Soft-ICE. If you type C to continue,
+      then control is given to the interrupt 6 handler in the
+      DOS virtual machine.
+      This message often occurs when a program jumps to an
+      address that does not contain valid code or when valid
+      code has been overwritten.
+
+ I/O Break Point Limit Exceeded
+
+    Soft-ICE allows a maximum of 10 I/O break points.
+    This message is displayed if you attempt to exceed the
+    maximum limit.
+
+ No Alternate Screen
+
+   This message is displayed if the ALTSCR command is
+   used and Soft-ICE detects only one video adapter.
+
+ Parameter is Wrong Size
+
+    Certain fields require a specific data type size (byte,
+    word or double word). This message is displayed if the
+    
+     245
+
+    data type size is exceeded. For example, if you use the
+    command 'BPMB 2000:2000 EQ 1234' you are asking
+    Soft-ICE to look for a byte access at location 2000:2000
+    with a value of 1234H. Since 1234H is larger than a
+    byte, the command causes this error message to occur.
+
+ Parameters Required
+
+    Most Soft-ICE commands require one or more
+    parameters. If a command is entered without the
+    required number of parameters, this message is
+    displayed.
+
+ Range Break Point Limit Exceeded
+
+    Soft-ICE allows a maximum of 10 memory range break
+    points. This message is displayed if you attempt to
+    exceed the maximum limit.
+
+ Second Parameter Must Be Greater than First
+
+    When specifying a memory range, the first number
+    entered must be the lower limit of the range, otherwise
+    this message is displayed.
+
+ Segment:Offset Can Not Wrap
+
+    Most Soft-ICE commands do not allow a memory
+    pointer (segment:offset) to wrap from high memory to
+    low. For example, the memory pointer FFFF:FFFF
+    wraps and is illegal. This message is displayed if you
+    attempt to wrap from high memory to low.
+
+     246
+
+   Soft-ICE cannot be loaded.
+   Needs to load at top of memory.
+   Load before any TSR's or control programs.
+
+      Soft-ICE needs to load itself at the highest memory
+      location possible. This memory is then 'mapped out',
+      making it invisible to DOS programs, so they can't
+      crash Soft-ICE. This message is displayed if Soft-ICE
+      detects that another program has already been loaded
+      at the top of memory.
+
+  Soft-ICE cannot run with other 80386 control programs
+
+     The 80386 only allows ore protected mode program
+     a time, so Soft-ICE can not coexist with other control
+     programs. When debugging a program that use EMS
+     and EEMS, you could get this error message when you
+     try to load Soft-ICE, because some 80386 systems come
+     with a control program that uses the 80386 paging
+     system to give you EMS and EEMS with a board that
+     only has extended memory. You can, however, use a
+     true expanded memory board to debug programs that
+     use EMS and EEMS.
+
+ Soft-ICE has already been loaded
+
+    This message occurs if you attempt to load Soft-ICE
+    twice.
+
+Soft-ICE has not been loaded
+
+   This message occurs if you attempt to unload Soft-ICE
+   when it has not yet been loaded.
+
+     247 
+
+Soft-ICE loads at the top of extended memory. This may conflict with other
+programs that use extended memory. If you are sure it will not conflict,
+then answer 'Y', otherwise answer 'N' and refer to the chapter on loading
+Soft-ICE with extended memory.
+
+   This message occurs if you attempt to load Soft-ICE
+   into extended memory, and S-ICE.SYS was not loaded
+   in your CONFIG.SYS file. This warning is given to
+   insure that you do not unintentionally wipe out a
+   virtual disk or another program that may be loaded in
+   extended memory. For more information, refer to
+   section 2.2, "Loading Soft-ICE" and chapter 6,
+   "Initialization Options".
+
+ Soft-ICE will only run on 80386 based machines
+
+    Soft-ICE requires Intel's 80386 microprocessor.
+
+ Syntax Error
+
+    This message is displayed if the information that was
+    entered did not fit within the structure of any Soft-ICE
+    command.
+
+ The P & G Commands Function In RAM Only
+
+   Soft-ICE uses two methods to implement the P and G
+   commands. The first method uses the 80386 break
+   point registers. However, if you have already set 4
+   BPM-style break points, Soft-ICE uses the INT 3
+   method, which will only work in RAM. If you attempt
+   to use the P or G commands in ROM at this point,
+   Soft-ICE detects this condition and displays this error
+   message.
+
+     248 
+
+Valid Verbs are R, W, RW, X
+
+   This message is displayed if an invalid verb is specified
+   in a BPM command. When using the BPM command,
+   the valid choices for verbs are R(read), W(write),
+   RW(read/write), and X(execute).
+
+     249
+
+Page 250 is BLANK
+
+     250 
+
+APPENDIX E
+
+TROUBLESHOOTING GUIDE
+
+This appendix gives solutions to some possible problems that you could
+encounter when using Soft-ICE. If you do not find the problem here, check
+the README.SI file on your distribution diskette for any troubleshooting
+hints that may not have made it into this manual.
+
+ Time does not show the correct time at the end of the day.
+
+   Soft-ICE does not let any interrupts go through to the
+   system when the Soft-ICE window is up. This does not
+   affect the real time clock at all, so the next time you
+   reboot, the time will be displayed correctly again. You
+   can also correct the time by running the program
+   UPTIME. This gets the time from the real time clock
+   and calls DOS to set the time.
+
+When debugging a program that uses EMS and EEMS, you get this error
+message when you try to load Soft-ICE "Soft-ICE cannot run with other
+80386 control programs".
+
+   Some 386 systems come with a control program that
+   uses the 80386 paging system to give you EMS and
+   EEMS with a board that only has extended memory.
+   The 386 only allows one control program at a time, so
+   Soft-ICE can not coexist with these control programs.
+   You can, however, use a true expanded memory board
+   to debug programs that use EMS and EEMS.
+
+Soft-ICE does not cause your software debugger to break.
+
+   Some software debuggers will break only when used
+   with one type of debugging interrupt. Refer to the
+   ACTION command in section 5.4. This lists three
+   different types of standard action that can be taken
+                                             
+
+     251
+
+   when a break point happens. Try all three. Different
+   ones work better for different debuggers.
+
+ Soft-ICE does not come up when your monitor is in graphics mode, or it
+does not restore your graphics screen correctly.
+
+   Soft-ICE does not use the ROM BIOS for its output,
+   it must go directly to the hardware. Soft-ICE was
+   designed to work with the following types of
+   controllers, or ones that are 100% compatible:
+      CGA
+      MDA
+      Hercules
+      EGA
+      VGA
+   If your controller is not one of these, or not 100%
+   compatible, you can use a second controller and
+   monitor, and use the ALTSCR command described in
+   section 5.9.
+
+The key sequence used to bring up Soft-ICE conflicts with an existing
+program that you are running.
+
+   You can set a different key sequence to bring up
+   Soft-ICE by using the ALTKEY command. If this
+   doesn't work, add the SHIFT key to the current key
+   sequence and use this new key sequence to bring up
+   the existing program. Soft-ICE will not respond to the
+   new key sequence, and will allow it to go through to the
+   existing program. Refer to the ALTKEY command in
+   section 5.8.
+
+When your program crashes, Soft-ICE will not come up.
+
+    Refer to the BREAK command in section 5.4. This
+    command allows you to pop up the SoFt-ICE window
+    when the system is hung with interrupts disabled.
+
+     252 
+
+After your break point triggers your debugger, your debugger does not
+respond.
+
+   There are two possible reasons why this problem could
+   occur:
+   1) Your debugger has caused DOS or ROM BIOS to
+       be re-entered. DOS and ROM BIOS are not fully
+       re-entrant, so your debugger may not work
+       correctly. Use the WARN command to turn
+       re-entrancy warning mode on. The next time DOS
+       or ROM BIOS is about to be re-entered, a warning
+       message will be displayed, and you will be able
+       choose to return to Soft-ICE to avoid the problem
+       Refer to the WARN command in section 5.4.
+   2) A break occurred in the middle of an interrupt
+       routine. Some debuggers can not handle this
+       occurrence. Use ACTION set to HERE, because
+       Soft-ICE will allow you to break in the middle of
+       an interrupt routine. Refer to the ACTION
+       command in section 5.4.
+
+You are using a CGA monitor and you get lots of flickering when Soft-ICE
+comes up.
+
+    Certain types of video cards will flicker if characters
+    are output without waiting for horizontal or vertical
+    retrace. To reduce the flickering, turn FLICK mode
+    ON. Refer to the FLICK command in section 5.9.
+
+When you use the BOOT command, the system starts to reboot but then hangs.
+
+    Soft-ICE uses the interrupt 19 method of soft-booting.
+    There are two possible times when this method could
+    fail:
+
+     253
+
+    1) On a freshly booted system this method will work
+       fine. But if the system has been corrupted by an
+       errant program, there is a chance that this method
+       will not work.
+   2) Some programs that use extended or expanded
+       memory, such as EMS drivers or disk caches, are
+       not able to handle an interrupt 19 style boot.
+       When debugging device drivers and boot loaders
+       that have this problem, you should use the
+       following method. Boot the system without the
+       drivers that cause the problem; load Soft-ICE; set
+       up the drivers to load on the next boot; and then
+       use the BOOT command. Refer to the BOOT
+       command in section 5.3.
+
+You just used the SYSREQ key sequence to bring up Soft-ICE, and your
+system appears to be hung, or it begins to dump the screen to your
+printer.
+
+    On some keyboards, you must press the ALT key and
+    the PrtSc key simultaneously to generate a system
+    request. If you accidentally press only the PrtSc key,
+    the system will attempt to print your screen. If no
+    printer is attached, your system will appear to be hung.
+    To avoid this problem, be careful to press both keys
+    simultaneously, or use the ALTKEY command to
+    change to a different key sequence. Refer to the
+    ALTKEY command in section 5.8.
+
+You were unassembling instructions, or editing or displaying memory when
+your debugger crashed.
+
+    You accessed an address that triggered a Soft-ICE
+    break point, and ACTION was not set to HERE.
+    When Soft-ICE brings you to the point where you want
+    to look around in memory with your debugger, you
+    should disable the Soft-ICE break points. If you don't
+    you could set off a break point unintentionally. This
+
+     254 
+
+    would cause your debugger to trigger itself, which can
+    be a fatal problem with debuggers that cannot be
+    re-entrant.
+
+
+ After you exited from your debugger, the system crashed.
+
+    This problem of course could have many causes, but
+    one possible cause is that you may have forgotten to
+    disable the Soft-ICE break points, and ACTION is still
+    set to trigger your debugger. When the break point
+    occurs, ACTION will attempt to trigger your debugger,
+    but your debugger is no longer loaded.
+
+You set a break point to trap on Interrupt 15H, function 87H, 88H, or 89H,
+and the break point did not occur.
+
+    Soft-ICE processes these functions internally in
+    protected mode, so you cannot set break points on
+    these functions.
+
+Your program does not accept keystrokes, but the keyboard is still active.
+
+    A shift state key may be logically stuck down. Try
+    pressing and releasing each shift, control and alt key.
+
+Soft-ICE does not restore your graphics display properly.
+
+    Soft-ICE has an enhanced video virtualization mode
+    that can virtualize many special graphics modes. Turn
+    this mode on by entering WATCHV ON. See the
+    description of the WATCHV command for more
+    details. For non-compatible video controllers and
+    certain obscure modes you may have to use an
+    alternate monitor. See the ALTSCR command.
+
+     255 
+
+The machine locks up while you are in Soft-ICE or moving the Soft-ICE
+window.
+
+   Soft-ICE has timing problems with some keyboards.
+   Use the NOLEDS statement in S-ICE.DAT. This
+   prevents Soft-ICE from sending LED commands to the
+   keyboard.
+
+     256
+
+

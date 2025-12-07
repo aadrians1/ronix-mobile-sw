@@ -1,0 +1,308 @@
+MPASM 02.01 Released           TEMPER.ASM   6-12-1999  23:40:35         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00001 ;CKSUM.ASM      FEB-25-98
+                    00002 ;Routine to calculate the checksum of instruction memory
+                    00003 ; by Loren Blaney
+                    00004 ;
+                    00005         LIST    P=16C57         ;closest PIC chip (has 2K)
+                    00006 
+                    00007         INCLUDE "SXDEFS.INC"    ;macro definitions for new instructions
+                    00184         LIST
+1010 0008           00185         DATA    _FUSE           ;configuration bits (TURBO, SYNC, OPTIONX, etc.)
+1011 047E           00186         DATA    _FUSEX          ; (PINS, CARRYX, BOR40, BANKS, PAGES)
+                    00190         LIST
+  0040EFF1          00008 DEVICE  EQU     PINS28+TURBO+SYNC+OPTIONX+STACKX+BANKS8+PAGES4+OSC4MHZ
+                    00009 
+                    00010 ;REGISTR DEFINITIONS
+  00000008          00011 CHETCHIK_1      EQU     08H
+  00000009          00012 CHETCHIK_2      EQU     09H
+  0000000A          00013 CHETCHIK_3      EQU     0AH
+  0000000B          00014 TEMP_LCD        EQU     0BH
+                    00015 
+                    00016 ;PIN DEFINITIONS
+  00000000          00017 OUT_LED EQU     0       ;PORTC
+  00000001          00018 RS      EQU     1       ;PORTC
+  00000002          00019 RD_WR   EQU     2       ;PORTC
+  00000003          00020 EN_LCD  EQU     3       ;PORTC
+  00000004          00021 DB4     EQU     4       ;PORTC
+  00000005          00022 DB5     EQU     5       ;PORTC
+  00000006          00023 DB6     EQU     6       ;PORTC
+  00000007          00024 DB7     EQU     7       ;PORTC
+                    00025 
+0000                00026         ORG     0
+0000 094F           00027 START   CALL    INITIAL         
+0001 0903           00028 NAZAD   CALL    PROGRAMMA       
+0002 0A01           00029         GOTO    NAZAD           
+                    00030 
+                    00031 ;----------------------------------------------------------------------
+0003                00032 PROGRAMMA
+0003 0507           00033         BSF     PORTC,OUT_LED
+0004 0949           00034         CALL    SEKUNDA
+0005 0407           00035         BCF     PORTC,OUT_LED
+0006 0949           00036         CALL    SEKUNDA
+0007 006B           00037         CLRF    TEMP_LCD
+0008 052B           00038         BSF     TEMP_LCD,RS
+0009 044B           00039         BCF     TEMP_LCD,RD_WR
+000A 0CF0           00040         MOVLW   H'F0'
+000B 01CB           00041         ADDWF   TEMP_LCD,W
+000C 0027           00042         MOVWF   PORTC
+000D 0930           00043         CALL    CYCLE_LCD       
+000E 0930           00044         CALL    CYCLE_LCD       
+000F 0547           00045         BSF     PORTC,RD_WR
+0010 0800           00046         RETURN
+                    00047 
+0011                00048 INIT_LCD
+0011 093D           00049         CALL    MS_15
+MPASM 02.01 Released           TEMPER.ASM   6-12-1999  23:40:35         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0012 0587           00050         BSF     PORTC,DB4
+0013 05A7           00051         BSF     PORTC,DB5
+0014 0930           00052         CALL    CYCLE_LCD       
+0015 0943           00053         CALL    MS_5
+0016 0930           00054         CALL    CYCLE_LCD       
+0017 0937           00055         CALL    MKS_150
+0018 0930           00056         CALL    CYCLE_LCD       
+                    00057 
+0019 0487           00058         BCF     PORTC,DB4
+001A 0930           00059         CALL    CYCLE_LCD       
+001B 0067           00060         CLRF    PORTC
+001C 0930           00061         CALL    CYCLE_LCD       
+001D 0930           00062         CALL    CYCLE_LCD       
+001E 05E7           00063         BSF     PORTC,DB7
+001F 0930           00064         CALL    CYCLE_LCD       
+0020 0067           00065         CLRF    PORTC
+0021 0930           00066         CALL    CYCLE_LCD       
+0022 0587           00067         BSF     PORTC,DB4
+0023 0930           00068         CALL    CYCLE_LCD       
+0024 0067           00069         CLRF    PORTC
+0025 0930           00070         CALL    CYCLE_LCD       
+0026 05C7           00071         BSF     PORTC,DB6
+0027 05A7           00072         BSF     PORTC,DB5
+0028 0930           00073         CALL    CYCLE_LCD       
+0029 0067           00074         CLRF    PORTC
+002A 05E7           00075         BSF     PORTC,DB7
+002B 0930           00076         CALL    CYCLE_LCD       
+002C 0067           00077         CLRF    PORTC
+002D 0930           00078         CALL    CYCLE_LCD       
+002E 0527           00079         BSF     PORTC,RS
+002F 0800           00080         RETURN
+                    00081 ;###########################################################################
+                    00082 ;
+                    00083 ;       TIME MODULE
+                    00084 ;
+                    00085 ;###########################################################################
+0030                00086 CYCLE_LCD
+0030 0000           00087         NOP
+0031 0567           00088         BSF     PORTC,EN_LCD
+0032 0000           00089         NOP
+0033 0000           00090         NOP
+0034 0467           00091         BCF     PORTC,EN_LCD
+0035 0000           00092         NOP
+0036 0800           00093         RETURN
+                    00094 
+0037                00095 MKS_150
+0037 0C80           00096         MOVLW   H'80'
+0038 0028           00097         MOVWF   CHETCHIK_1
+0039 0000           00098 LOOP1   NOP
+003A 02E8           00099         DECFSZ  CHETCHIK_1,F
+003B 0A39           00100         GOTO    LOOP1   
+003C 0800           00101         RETURN
+                    00102 
+MPASM 02.01 Released           TEMPER.ASM   6-12-1999  23:40:35         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+003D                00103 MS_15
+003D 0C64           00104         MOVLW   D'100'
+003E 0029           00105         MOVWF   CHETCHIK_2
+003F 0937           00106 LOOP2   CALL    MKS_150
+0040 02E9           00107         DECFSZ  CHETCHIK_2,F
+0041 0A3F           00108         GOTO    LOOP2   
+0042 0800           00109         RETURN
+                    00110 
+0043                00111 MS_5
+0043 0C1E           00112         MOVLW   D'30'
+0044 002A           00113         MOVWF   CHETCHIK_3
+0045 0937           00114 LOOP3   CALL    MKS_150
+0046 02EA           00115         DECFSZ  CHETCHIK_3,F
+0047 0A45           00116         GOTO    LOOP3   
+0048 0800           00117         RETURN
+                    00118 
+0049                00119 SEKUNDA
+0049 0CC8           00120         MOVLW   D'200'
+004A 0029           00121         MOVWF   CHETCHIK_2
+004B 0943           00122 LOOP4   CALL    MS_5
+004C 02E9           00123         DECFSZ  CHETCHIK_2,F
+004D 0A4B           00124         GOTO    LOOP4   
+004E 0800           00125         RETURN
+                    00126 ;###########################################################################
+                    00127 ;       END TIME MODULE
+                    00128 ;###########################################################################
+                    00129 
+                    00130 
+004F                00131 INITIAL         
+004F 0C0F           00132         MOVLW   B'00001111'
+0050 0005           00133         TRIS    PORTA
+0051 0C00           00134         MOVLW   B'00000000'
+0052 0007           00135         TRIS    PORTC
+0053 0067           00136         CLRF    PORTC
+0054 006B           00137         CLRF    TEMP_LCD
+0055 0C0E           00138         MOVLW   H'0E'
+                    00139         MOVWM
+0056 0043               M         DATA    43h     ;MOVWM  ;move W register to MODE register
+0057 0CFF           00140         MOVLW   H'FF'
+0058 0020           00141         MOVWF   !PORTC  
+0059 0911           00142         CALL    INIT_LCD
+005A 0800           00143         RETURN
+                    00144 
+                    00145 
+07FF                00146         ORG     07FFh           ;reset vector
+                    00147 
+                    00148         END
+MPASM 02.01 Released           TEMPER.ASM   6-12-1999  23:40:35         PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+BANKS1                            00000000
+BANKS2                            00004000
+BANKS4                            00008000
+BANKS8                            0000C000
+BANKX                             
+BOR13                             00010000
+BOR25                             00020000
+BOR40                             00030000
+C                                 00000000
+CARRYX                            00040000
+CHETCHIK_1                        00000008
+CHETCHIK_2                        00000009
+CHETCHIK_3                        0000000A
+CMP                               00000008
+CYCLE_LCD                         00000030
+DB4                               00000004
+DB5                               00000005
+DB6                               00000006
+DB7                               00000007
+DC                                00000001
+DEVICE                            0040EFF1
+EN_LCD                            00000003
+FSR                               00000004
+ID                                
+INDF                              00000000
+INITIAL                           0000004F
+INIT_LCD                          00000011
+INPUTX                            
+IREAD                             
+LOOP1                             00000039
+LOOP2                             0000003F
+LOOP3                             00000045
+LOOP4                             0000004B
+LVL                               0000000D
+MKS_150                           00000037
+MODE                              
+MOVMW                             
+MOVWM                             
+MS_15                             0000003D
+MS_5                              00000043
+NAZAD                             00000001
+OPTIONX                           00000200
+OSC125KHZ                         000000A1
+OSC1MHZ                           000000D1
+OSC250KHZ                         000000B1
+OSC2MHZ                           000000E1
+OSC31KHZ                          00000081
+OSC4MHZ                           000000F1
+OSC500KHZ                         000000C1
+OSC62KHZ                          00000091
+OSCHS                             00000003
+OSCLP                             00000001
+OSCRC                             00000002
+MPASM 02.01 Released           TEMPER.ASM   6-12-1999  23:40:35         PAGE  5
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+OSCXT                             00000000
+OUTPUTX                           
+OUT_LED                           00000000
+PA0                               00000005
+PA1                               00000006
+PA2                               00000007
+PAGES1                            00000000
+PAGES2                            00001000
+PAGES4                            00002000
+PAGES8                            00003000
+PAGEX                             
+PC                                00000002
+PD                                00000003
+PINS18                            00000000
+PINS28                            00400000
+PINS40                            00800000
+PINS64                            00C00000
+PLP                               0000000E
+PORTA                             00000005
+PORTB                             00000006
+PORTC                             00000007
+PRINTX                            
+PROGRAMMA                         00000003
+PROTECT                           00000008
+RD_WR                             00000002
+RET                               
+RETI                              
+RETIW                             
+RETP                              
+RS                                00000001
+RTCC                              00000001
+SEKUNDA                           00000049
+ST                                0000000C
+STACKX                            00000100
+START                             00000000
+STATUS                            00000003
+SYNC                              00000400
+TEMP_LCD                          0000000B
+TO                                00000004
+TRISX                             0000000F
+TURBO                             00000800
+WATCHDOG                          00000004
+WKED                              0000000A
+WKEN                              0000000B
+WKPND                             00000009
+Z                                 00000002
+_DEVICE                           0047E008
+_FUSE                             00000008
+_FUSEX                            0000047E
+_INVERT                           00070FF9
+__16C57                           00000001
+MPASM 02.01 Released           TEMPER.ASM   6-12-1999  23:40:35         PAGE  6
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+
+0000 : XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXX
+0040 : XXXXXXXXXXXXXXXX XXXXXXXXXXX----- ---------------- ----------------
+1000 : ---------------- XX-------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    91
+Program Memory Words Free:  1957
+
+
+Errors   :     0
+Warnings :     0 reported,     2 suppressed
+Messages :     0 reported,     0 suppressed
+
+

@@ -1,0 +1,13 @@
+* fichier de compensation
+*
+***************************
+* Liste des compensations *
+***************************
+* ! a, b, c, d
+* a : numéro d'identifiant
+* b : valeur de compensation (nombre flottant )
+* c : rang du paramètre à compenser dans la requête API( voir le
+*     source du service de test pour le connaître )
+* d : compensation en entrée (consigne) ou
+*     compensation en sortie (mesure).
+*

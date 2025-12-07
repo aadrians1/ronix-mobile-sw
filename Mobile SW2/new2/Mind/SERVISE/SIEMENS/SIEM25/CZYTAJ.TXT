@@ -1,0 +1,13 @@
+Wszystkie pliki nalezy przegrac do katalogu
+C:\siemens\test\tmp\ w innym wypadku komputer ujawni blad.
+
+program nalezy uruchomic pod golym dos`em bez nakladki norton.
+Telefon musi byc pod com`em 1 wylaczony!
+
+Wpisujemy IMEI (tel wylaczony) i w momencie jak w prawym dolnym rogu
+wyskoczy: Init Service Mode WLACZAMY TELEFON
+
+W momencie zatrzymywania sie programu po ok. 3-4 operacjach nalezy wcisnac
+przycisk "A"
+Nastepnie program kontynuluje prace do nastepnego przystanku, ponawiamy
+operacje z "A".

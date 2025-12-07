@@ -1,0 +1,195 @@
+<html>
+
+<head>
+<title>PonyProg Kit</title>
+<meta name="description" content="LancOS: Lanconelli Open Systems and designs">
+<meta name="keywords" content="Claudio Lanconelli, claudio, lanconelli,
+  ponyprog, ponyprogrammer, Ponyprog, PonyProg, serial, device, programmer,
+  AMPEOS, LancOS, eeprom, e2prom, microcontroller, memory, I2C Bus, microwire,
+  SPI, PIC16F84, AVR, AT90S1200, AT90S2313, AT90S4414, AT90S8515, AVRmega,
+  24C02, 24C04, 24C08, 24C16, 24C32, 24C64, 93C06, 93C46, 93C86, SDE2506,
+  RS232">
+</head>
+<! Author :    Claudio Lanconelli ->
+
+<body bgcolor="#FFFFFF" topmargin="0" leftmargin="0" vlink="#FF0000" link="#FF00FF" alink="#00FF00">
+<div align="left">
+
+<table border="0" width="802" cellspacing="0" cellpadding="0">
+  <tr>
+      <td bgcolor="#FFFFFF" height="200" width="251" background="img/corner2.gif" valign="top" align="right"><img src="img/mymail.gif" border="0" alt="mail to me" WIDTH="121" HEIGHT="51"> 
+        <br>
+      </td>
+    <td bgcolor="#FFFFFF" height="200" width="551"><p align="center"><font size="6" color="#000080"><strong>SI Prog</strong></font></p>
+    <p align="center"><strong><em><font color="#000080">The hardware interface for PonyProg</font></em></strong></td>
+  </tr>
+  <tr>
+    <td width="251" height="251" valign="top" bgcolor="#FFFFFF" background="img/Sfondo1.gif"><div align="left"><table border="0" cellpadding="0" cellspacing="0" width="214">
+      <tr>
+        <td width="52"></td>
+        <td width="52"><img src="img/button-up.gif" alt="button-up.gif (2091 byte)" WIDTH="50" HEIGHT="50"></td>
+        <td width="10"></td>
+        <td width="152"><a href="projects.html">Projects</a></td>
+      </tr>
+      <tr>
+        <td width="52"></td>
+        <td width="52"><img src="img/button-up.gif" alt="button-up.gif (2091 byte)" WIDTH="50" HEIGHT="50"></td>
+        <td width="10"></td>
+        <td width="152"><a href="links.html">Links</a></td>
+      </tr>
+      <tr>
+        <td width="52"></td>
+        <td width="52"><img src="img/button-up.gif" alt="button-up.gif (2091 byte)" WIDTH="50" HEIGHT="50"></td>
+        <td width="10"></td>
+        <td width="152"><a href="info.html">Who am I?</a></td>
+      </tr>
+      <tr>
+        <td width="52"></td>
+        <td width="52"><img src="img/button-up.gif" alt="button-up.gif (2091 byte)" WIDTH="50" HEIGHT="50"></td>
+        <td width="10"></td>
+        <td width="152"><a href="prog.html">PonyProgrammer</a></td>
+      </tr>
+      <tr>
+        <td width="52"></td>
+        <td width="52"></td>
+        <td width="10"></td>
+        <td width="152"></td>
+      </tr>
+      <tr>
+        <td width="52"></td>
+        <td width="52">&nbsp;<p>&nbsp;</td>
+        <td width="10"></td>
+        <td width="152"></td>
+      </tr>
+      <tr>
+        <td width="52"></td>
+        <td width="52"><img src="img/square-button-up.gif" alt="square-button-up.gif (2033 byte)" WIDTH="50" HEIGHT="50"></td>
+        <td width="10"></td>
+        <td width="152"><a href="index.html">Home</a></td>
+      </tr>
+    </table>
+    </div><p align="center"><small><font color="#FFFFFF">Last update<br>
+    22 Jul 1999</font></small></td>
+    <td width="551" height="251" valign="top" bgcolor="#FFFFFF" align="center"><blockquote>
+      <p align="left">If you are interested to purchase the professional SI Prog programmer
+      assembled and tested or only the PCB alone look at <a href="http://www.artek.it/payment.htm">www.artek.it</a> Artek Electronic solutions for the
+      price, payment and shipping details.</p>
+    </blockquote>
+        <dl> 
+          <table border="0" cellpadding="0" cellspacing="0" width="535">
+            <tr> 
+              <td width="528"></td>
+            </tr>
+            <tr> 
+              <td width="528" bgcolor="#BEE0FA"><big><strong><font color="#000080">&nbsp;Part 
+                list</font></strong></big></td>
+            </tr>
+            <tr> 
+              <td width="535">&nbsp;&nbsp;&nbsp; </td>
+            </tr>
+            <tr> 
+              <td width="535">
+                <ul>
+                  <li>PonyProg SI PCB v2.0 (double side with solder and silk screen) 
+                    <ul>
+                      <li>Main board. Connect it to the serial port of the PC</li>
+                      <li>I²CBus adapter board. Connect it to the Main board</li>
+                      <li>Other E²PROM adapter board. Connect it to the Main board</li>
+                      <li>AVR adapter board. Connect it to the Main board</li>
+                      <li>PIC adapter board. Connect it to the Main board</li>
+                    </ul>
+                  </li>
+                  <li>Resistors:
+                    <ul>
+                      <li>2 x 1K</li>
+                      <li>1 x 2K2</li>
+                      <li>6 x 4K7</li>
+                      <li>7 x 10K</li>
+                      <li>1 x 15K</li>
+                    </ul>
+                  </li>
+                  <li>Capacitors:
+                    <ul>
+                      <li>2 x 47uF</li>
+                      <li>12 x 100nF</li>
+                      <li>2 x 27pF</li>
+                    </ul>
+                  </li>
+                  <li>Diodes:
+                    <ul>
+                      <li>3 x 1N4148</li>
+                      <li>3 x Zener 5V1</li>
+                      <li>1 x Zener 13V</li>
+                    </ul>
+                  </li>
+                  <li>Other Semiconductors:
+                    <ul>
+                      <li>4 x BC547 (NPN transistor)</li>
+                      <li>2 x BC557 (PNP transistor)</li>
+                      <li>1 x LM2936Z-5 (low dropout voltage regulator)</li>
+                    </ul>
+                  </li>
+                  <li>Xtal:
+                    <ul>
+                      <li>1 x 4MHz</li>
+                    </ul>
+                  </li>
+                  <li>Connectors:
+                    <ul>
+                      <li>1 x DB9 Female</li>
+                      <li>2 x AMP module 1x2p</li>
+                      <li>1 x AMP module 1x10p</li>
+                      <li>3 x Strip male SIL 3p (jumper)</li>
+                      <li>1 x Strip male SIL 2p (jumper)</li>
+                    </ul>
+                  </li>
+                  <li>Sockets:
+                    <ul>
+                      <li>7 x DIL 8p</li>
+                      <li>1 x DIL 18p</li>
+                      <li>1 x DIL 20p</li>
+                      <li>1 x DIL 28p (300mils wide)</li>
+                      <li>1 x DIL 40p</li>
+                    </ul>
+                  </li>
+                </ul>
+                <p>&nbsp;
+              </td>
+            </tr>
+            <tr> 
+              <td width="535" bgcolor="#BEE0FA"><big><strong><font color="#000080">Schematics</font></strong></big></td>
+            </tr>
+            <tr> 
+              <td width="535">&nbsp;&nbsp;&nbsp; </td>
+            </tr>
+            <tr> 
+              <td width="535">
+                <blockquote> 
+                  <p><a href="e2p/si-prog-v2_2.pdf">SI Prog schematic (PDF)</a><br>
+                    <a href="e2p/mplan2_2.pdf">SI Prog mounting plan (PDF)</a></p>
+                  <p>&nbsp;
+                </blockquote>
+              </td>
+            </tr>
+            <tr> 
+              <td width="528" bgcolor="#BEE0FA"><big><strong><font color="#000080">Assembling 
+                instructions</font></strong></big></td>
+            </tr>
+            <tr> 
+              <td width="535">&nbsp;&nbsp;&nbsp; </td>
+            </tr>
+            <tr> 
+              <td width="535">(Under construction)
+                <ol>
+                  <li>&nbsp;</li>
+                </ol>
+              </td>
+            </tr>
+          </table>
+        </dl>
+    </td>
+  </tr>
+</table>
+</div>
+</body>
+</html>

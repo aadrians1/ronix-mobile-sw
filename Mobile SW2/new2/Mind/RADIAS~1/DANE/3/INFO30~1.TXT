@@ -1,0 +1,28 @@
+
+
+	     ***********************************       
+	     *****       INFO  3000        *****        
+	     ***********************************
+
+CPU:    NEC D1719 G 556
+MEMORY: SONY CXK 1012P-128x8
+FILE:   A_480.bin
+CODE:	?
+INFO:   1=>1	1=>2	3=>3	4=>4	5=>5
+	6=>6	AMS=>7	<=>8	>=>9	BAND=>0
+	POTWIERDZENIE=>MODE
+TECH:   
+	1 CYFRA $40 a
+	2 CYFRA $43 a
+	3 CYFRA $46 a
+	4 CYFRA $49 a
+
+LICZNIK B£ÊDÓW :$54 a,b=20 RADIO Z KODEM
+KROK SYNTEZY   :$41 a,b=87 
+USTAWIENIE CYFR KODU NA 0000 - URUCHAMIA ODB. BEZ KODU
+		
+		  
+PRZYK£AD:
+
+	0  1  2  3    4  5  6  7    8  9  A  B    C  D  E  F
+

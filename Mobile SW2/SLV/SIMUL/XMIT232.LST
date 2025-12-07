@@ -1,0 +1,86 @@
+					===== Parallax PIC16Cxx Assembler v4.7 =====
+
+
+     1                              	; PROGRAM: XMIT232.SRC
+     2                              	; Taken from Parallax PIC Applicaton Note: Sending RS-232 Serial Data
+     3                              	; Written     July 15, 1993
+     4                              	; Revised February 24, 1996
+     5
+     6                              	; This program transmits a string of serial data. The baud rate is determined
+     7                              	; by the value of the constant bit_K and the clock speed of the PIC. See the
+     8                              	; table in the application note (above) for values of bit_K. For example, with
+     9                              	; the clock running at 4 MHz and a desired transmitting rate of 4800 baud,
+    10                              	; make bit_K 50.
+    11
+    12                              	; >>> Remember to change device info if programming a different PIC! <<<
+    13                              	; Do not use RC devices. Their clock speed is not sufficiently accurate
+    14                              	; or stable enough for serial communication. 
+    15
+    16    0000-                     			device	pic16c54,xt_osc,wdt_off,protect_off
+    17    01FF- 0A00                			reset	begin
+    18
+    19    =0018                     	bit_K		=	24      	;24 for 19,200-baud operation @ 8 MHz
+    20    =0045                     	serial_out	=	ra.2
+    21
+    22    0008-                     	                org     8               ;Start of available RAM
+    23
+    24    0008-                     	delay_cntr	ds	1		;Counter for serial delay routines
+    25    0009-                     	bit_cntr	ds	1		;Number of transmitted bits
+    26    000A-                     	msg_cntr	ds	1		;Offset in string
+    27    000B-                     	xmt_byte	ds	1		;The transmitted byte
+    28
+    29    0000-                     	                org     0               ;Start of code space (ROM)
+    30
+    31    0000- 0C00 0005           	begin		mov	!ra, #00000000b	;Set port to output.
+    32
+    33    0002- 0C00 002A           			mov	msg_cntr, #0	;Message string has nine characters;
+    34                              						;0 through 8. 
+    35
+    36    0004- 0C08 0029           	:again		mov	bit_cntr,#8	;Eight bits in a byte. 
+    37    0006- 020A                			mov	w,msg_cntr	;Point to position in the string. 
+    38    0007- 0921                			call	string		;Get the next character from string. 
+    39    0008- 002B                			mov	xmt_byte,w	;Put character into the transmit byte. 
+    40
+    41    0009- 0445                			clrb	serial_out	;Change to setb serial_out for direct
+    42                              						;connection.
+    43
+    44    000A- 091B                			call	bit_delay	;Start bit. 
+    45
+    46    000B- 032B                	:xmit		rr	xmt_byte	;Rotate right moves data bits into
+    47                              						;carry, starting with bit 0. 
+    48
+    49    000C- 0703 0445 0603 0545 			movb	serial_out,c	;Change to movb serial_out,/c for
+    50                              						;direct connection. 
+    51
+    52    0010- 091B                			call	bit_delay	;Data bit. 
+    53    0011- 02E9 0A0B           			djnz	bit_cntr,:xmit	;Not eight bits yet? Send next data bit
+    54
+    55    0013- 0545                			setb	serial_out	;Change to clrb serial_out for direct
+    56                              						;connection
+    57
+    58    0014- 091B                			call	bit_delay	;Stop bit. 
+    59    0015- 02AA                			inc	msg_cntr	;Add one to the string pointer.
+    60
+    61    0016- 0CF7 01CA 0703 0A04 			cjbe	msg_cntr,#8,:again
+    62                              						;More characters to send? Go to the top
+    63
+    64    001A- 0A1A                	:endless	jmp	:endless	;Endless loop. Reset controller to run
+    65                              						;program.
+    66
+    67                              	; To change the baud rate, substitute a new value for bit_K at the beginning of
+    68                              	; this program. 
+    69
+    70    001B- 0C18 0028           	bit_delay	mov	delay_cntr,#bit_K 
+    71    001D- 0000                	:loop		nop
+    72    001E- 02E8 0A1D           			djnz	delay_cntr, :loop
+    73    0020- 0800                			ret
+    74
+    75    0021- 01E2                	string		jmp	pc+w		;String consisting of "Parallax"
+    76                              						;followed by a linefeed. 
+    77
+    78    0022- 0850 0861 0872 0861 			retw	'P','a','r','a','l','l','a','x',10
+          0026- 086C 086C 0861 0878
+          002A- 080A
+
+
+						    ===== Errors: 0 =====

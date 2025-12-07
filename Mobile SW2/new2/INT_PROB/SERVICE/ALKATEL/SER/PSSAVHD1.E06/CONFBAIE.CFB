@@ -1,0 +1,35 @@
+**************************************************
+*      CONFIGURATION DE LA BAIE                  *
+**************************************************
+* ( 1) Identification du testeur
+* ( 2) N° d'interface
+* ( 3) Nom du fichier de description materiel
+* ( 4) Nom du fichier de la configuration réseau
+* ( 5) Nom du fichier de commutation dynamique
+*
+* Information 1 : non utilisé
+* Information 2 : non utilisé
+* Information 3 : non utilisé
+* Information 4 : non utilisé
+* Information 5 : non utilisé
+*
+* (1) Nbre d'échec pour une alarme  
+* (2) Autorisation de transfert réseau (non:0 oui:1)
+*	(3) utilisation de l'identification par code à barre (present:1 absent:0) 
+*	(4) indicateur du type de PV (complet:1, partiel:0, aucun PV :2)
+*	(5) Indicateur de présence de l'imprimante (presente:0 absente:1) 
+*	(6) ratio de prélèvement Dcm sur le réseau (de 0% à 100%) 
+*	(7) flag de stockage du fichier DCM (1:Oui, 0:Non)  
+*
+* Flag 1 non utilisé
+* Flag 2 non utilisé
+* Flag 3 non utilisé
+* Flag 4 non utilisé
+* Flag 5 non utilisé
+*
+***** Environnement testeur
+%; PR01;INTERF; PERSO.DEV;c:\DCM\DCM.CFG;SQSTCMUT.OBJ; 
+	 ****; ****; ****; ****; ****;
+	 2; 0; 0; 0; 1; 0; 0;
+	 0; 0; 0; 0; 0;?
+

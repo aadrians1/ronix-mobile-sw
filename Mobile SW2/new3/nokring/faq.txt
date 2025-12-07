@@ -1,0 +1,98 @@
+Nokring - http://members.tripod.com/~ringtones/
+
+Frequently Asked Questions (3-Oct-1998)
+
+
+What programs are needed in composing?
+
+          Nokring - Ringing Tone Composer program for Windows 95 & 98
+
+Which phones do support ringing tone downloading via Short Messages?
+
+          Nokia 6110, 6150, 8110i, 8810, 9000i, 9110 and compatible phones.
+
+How do I transfer new ringing tone to my phone?
+
+          In order to transfer a new ringing tone composed with Nokring to your phone,
+          you need to upload tone to your phone and send tone as a special short message
+          via Short Message Service Centre (SMSC) back to your phone:
+                      nokring --> phone --> SMSC --> phone
+
+          You can transfer tone to phone and request your phone to send it as special
+          short message to any mobile number automatically in Nokring by selecting:
+                      Send / Send ringing tone to phone / Enter Mobile number / Upload
+
+          You can also select "Save to SIM" option which allows you to send ringing tone
+          later by manually using phone's forward short message feature. You can find
+          saved ringing tones in your SIM card's memory by reading short messages.
+          Ringing tone message is that one which cannot be displayed. This message
+          can be forwarded by selecting in your phone:
+                      Option / Forward / Enter Number / Ok .
+
+What programs and hardware are needed to transfer tones to phone?
+
+          - Uploading ringing tones to phone requires Nokring and a GSM 07.05 PDU compatible
+              software or hardware installed in your PC, for example one of the following:
+                  * Nokia Data Suite 1.0 (software) + Nokia 3110, 8110, 8110i and compatible phone
+                  * Nokid Data Suite 1.2 (software) + Nokia 5110, 6110, 6150 and compatible phone
+                  * Nokia Data Suite 2.0 (software) + Nokia 5110, 6110, 6150 and compatible phone
+                  * Nokia Data Card (hardware) + Nokia 2110, 2110i and compatible phone
+                  * Nokia Card Phone (hardware)
+          - Network Service for sending and receiving short messages
+          - Message Centre Number for SMSC, which supports 8 bit data and user data headers
+              from Mobile to Mobile short message sending.
+
+          If you do not know what is your Message Centre Number, ask it from your network
+          service provider's help desk (= your GSM operator).
+
+          Note: You do not need to have Nokia Data Suite sowtware with Nokia 8810 phone,
+                   Nokia Card Phone or Nokia Data Card.
+
+How to setup correct communication port for uploading tones in Nokring?
+
+          With Data Suite check from your Control Panel / System / Device Manager,
+          which COM port has been assigned by "Nokia GSM Data-Fax Port" or similar.
+          Close Data Suite Monitor before uploading.
+
+          With 8810 phone check from Control Panel / Infrared / Options, which COM
+          port provides application support.
+
+          You can verify that your communication port is correct for example with
+          Windows HyperTerminal program. Connect phone to your PC, start
+          HyperTerminal and select COM port. Write command AT and
+          press Enter. If you receive "OK", the selected COM port is correct.
+
+Is it possible to upload tones via infrared with Nokring?
+
+          Yes - It is possible to upload tones to phone via infrared connection:
+              * 6110, 6150 and compatible phone + Data Suite + Infrared port in PC
+              * 8810 + Infrared port in PC
+
+          If you are using Data Suite, disable Microsoft's Infrared Monitor.
+          If you are using 8810 phone, enable Microsoft's Infrared Monitor.
+
+          Start Infrared reception in phone before uploading.
+
+How do I check that does my Short Message Service Centre support 8 bit
+short messages and user data headers?
+
+          With Nokia 6110, 6150, 8810 and compatible phone you can check if your SMSC
+          allows 8 bit messages and user data headers:
+
+              - Send yourself a Caller Group logo/graphic from your phone
+              - If you can receive it and view it, the Message Centre Number is OK.
+
+I received a short message and my phone (6110, 6150, 8110i, 8810) says that
+"MESSAGE CANNOT BE DISPLAYED HERE" ?
+
+          Your Short Message Service Centre does not support so called 8 bit short messages
+          or short message user data headers. Ask your operator, do they have
+          different Message Centre Number for such Short Message Service Centre,
+          which supports 8 bit and user data headers.
+
+          If they don't have such Service Centre, it is time to change operator...
+
+What is Ringing Tones Text Transfer Language (RTTTL) ?
+
+          This "RTTTL" language is used for publishing ringing tones for example in web pages.
+

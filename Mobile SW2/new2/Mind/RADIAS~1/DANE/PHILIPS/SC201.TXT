@@ -1,0 +1,6 @@
+radio bez wyswietlacza
+
+kod 5756as przez 3s  linia 0050
+procesor typu uPD1723 688
+pamiec 24c02
+

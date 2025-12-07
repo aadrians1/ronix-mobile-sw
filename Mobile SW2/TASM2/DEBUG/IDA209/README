@@ -1,0 +1,66 @@
+Version 2.09 from 20-Sep-94
+
+   IDA  stands  for  Interactive   DisAssembler.   Unlike   many   other
+disassemblers, IDA works together with you, allowing you to  modify  the
+disassembled text 'on the fly'. It  supports  many  processors,  various
+input file formats, can produce various output files e t.c.  IDA  has  a
+built-in C-like language and sports TVision user interface. This version
+of IDA works ONLY on 386 or higher!!!
+
+Below is a small description of the features:
+---------------------------------------------
+
+Supported processors:           Intel 8080, 8085, Z80, HD 64180
+                                Intel 8086/87
+                                Intel 80286/287 real & protected
+                                Intel 80386/387 real & protected
+                                Intel 80486/487 real & protected
+                                Intel Pentium   real & protected
+                                Intel 860 XR, 860 XP (alpha!)
+
+Input file types:               MS DOS EXE
+                                MS DOS COM
+                                MS DOS Driver
+                                New Executable Format
+                                Linear Executable Format
+                                Intel Hex Object Format
+                                MOS Technologies Hex Object Format
+                                Binary
+
+Output file types:              EXE plain (patched input file)
+                                COM (patched input file)
+                                BIN (patched input file)
+                                ASM (output source code)
+                                MAP (output MAP file for debugging)
+                                IDC (IDC program to recreate IDA database)
+
+Input file patching:            YES
+Command language:               built-in C-like language
+MultiTasking:                   Background analysis
+Multisession:                   YES
+AutoComment:                    BIOS & DOS interrupts
+                                (comments for all commands are available)
+Menu driven mode:               YES
+MultiWindow:                    YES
+Keyboard redefenition:          YES
+Built-in calculator:            YES
+
+Limitations:
+------------
+
+Size of input file:             UNLIMITED
+Number of segments:             UNLIMITED
+                                 There is a limit on the number of
+                                 contigious non-adjacent memory chunks.
+                                 It is about 170.
+Address space available
+for disassembling:              32-bit, up to 0xFF000000
+Number of cross-references:     UNLIMITED
+Max length of one comment:      255 chars (but 1 instruction can have
+                                many comment lines)
+Number of lines per
+        instruction/data        100
+
+-----------------------------------------------------------------------------
+
+   Please read 'license.txt' - SHAREWARE VERSION LICENSE AGREEMENT.

@@ -1,0 +1,11 @@
+PROCESOR : NEC 75116GF
+EEPROM   : CAT35C102
+
+
+Wprowadzanie : 1,2,3,4,5,6,UP,DOWN,AMS,BAND
+
+Wywol./Zatw. : MODE 
+
+UWAGI : Mozna programowac przez zlacze.
+
+Modele : RENAULT CTR620,PEUGOT PTD590

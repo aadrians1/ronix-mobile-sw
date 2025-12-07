@@ -1,0 +1,178 @@
+MPASM 01.30 Released            CKSUM.ASM   2-25-1998  17:49:04         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                    00001 ;CKSUM.ASM      FEB-25-98
+                    00002 ;Routine to calculate the checksum of instruction memory
+                    00003 ; by Loren Blaney
+                    00004 ;
+                    00005         LIST    P=16C57         ;closest PIC chip (has 2K)
+                    00006 
+                    00007         INCLUDE "SXDEFS.INC"    ;macro definitions for new instructions
+                    00151         LIST
+1010 00FA           00152         DATA    _FUSE           ;configuration bits (TURBO, SYNC, OPTIONX, etc.)
+1011 047E           00153         DATA    _FUSEX          ; (PINS, CARRYX, BOR40, BANKS, PAGES)
+                    00157         LIST
+  0040EF00          00008 DEVICE  EQU     PINS28+TURBO+SYNC+OPTIONX+STACKX+BANKS8+PAGES4
+                    00009 
+                    00010 
+0010                00011         ORG     10h
+0010                00012 POINTER RES     2               ;pointer to words in instruction memory
+0012                00013 SUM     RES     1               ;accumulator for checksum
+                    00014 
+                    00015 
+0000                00016         ORG     0
+0000 0903           00017 START   CALL    CKSUM           ;calculate checksum of ROM
+0001 0003           00018         SLEEP                   ;stop
+0002 0A00           00019         GOTO    START           ;loop forever
+                    00020 
+                    00021 ;----------------------------------------------------------------------
+                    00022 
+0003 0070           00023 CKSUM   CLRF    POINTER         ;initialize pointer to ROM
+0004 0071           00024         CLRF    POINTER+1
+0005 0072           00025         CLRF    SUM             ;initialize checksum
+                    00026 
+0006 0211           00027 CKSUM10 MOVF    POINTER+1,W     ;move POINTER into MODE:W
+                    00028         MOVWM                   ; copy low 4 bits in W into MODE
+0007 0043               M         DATA    43h     ;MOVWM  ;move W register to MODE register
+0008 0210           00029         MOVF    POINTER,W       ; copy low 8 bits of POINTER into W
+                    00030         IREAD                   ;move instr at (MODE:W) to MODE:W
+0009 0041               M         DATA    41h     ;IREAD  ;move instruction at (MODE:W) to MODE:W
+000A 01F2           00031         ADDWF   SUM,F           ;add in low 8 bits
+                    00032         MOVMW                   ;copy MODE to W
+000B 0042               M         DATA    42h     ;MOVMW  ;move MODE register to W register
+000C 01F2           00033         ADDWF   SUM,F           ;add in high 4 bits
+                    00034 
+000D 03F0           00035         INCFSZ  POINTER,F       ;loop for all of ROM (000-7FFh)
+000E 0A06           00036          GOTO   CKSUM10
+000F 02B1           00037         INCF    POINTER+1,F
+0010 0771           00038         BTFSS   POINTER+1,3     ;does pointer = 800h ?
+0011 0A06           00039          GOTO   CKSUM10         ;loop if not
+                    00040 
+0012 0212           00041         MOVF    SUM,W           ;return with checksum in W register
+                    00042         RET
+0013 000C               M         DATA    0Ch     ;RET    ;return without destroying W register
+                    00043 
+                    00044 
+07FF                00045         ORG     07FFh           ;reset vector
+MPASM 01.30 Released            CKSUM.ASM   2-25-1998  17:49:04         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Message[306]: Crossing page boundary -- ensure page bits are set.
+07FF 0A00           00046         GOTO    START
+                    00047 
+                    00048         END
+MPASM 01.30 Released            CKSUM.ASM   2-25-1998  17:49:04         PAGE  3
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+BANKS1                            00000000
+BANKS2                            00004000
+BANKS4                            00008000
+BANKS8                            0000C000
+BANKX                             
+BEL                               00000007
+BOR13                             00010000
+BOR25                             00020000
+BOR40                             00030000
+CARRYX                            00040000
+CF                                STATUS,0
+CKSUM                             00000003
+CKSUM10                           00000006
+CR                                0000000D
+DEVICE                            0040EF00
+EOF                               0000001A
+ESC                               0000001B
+FF                                0000000C
+FSR                               00000004
+IND                               00000000
+INPUTX                            
+IREAD                             
+LF                                0000000A
+MODE                              
+MOVMW                             
+MOVWM                             
+OPTIONX                           00000200
+OSC125KHZ                         000000A1
+OSC1MHZ                           000000D1
+OSC250KHZ                         000000B1
+OSC2MHZ                           000000E1
+OSC31KHZ                          00000081
+OSC4MHZ                           000000F1
+OSC500KHZ                         000000C1
+OSC62KHZ                          00000091
+OSCHS                             00000003
+OSCLP                             00000002
+OSCRC                             00000001
+OSCXT                             00000000
+OUTPUTX                           
+PAGES1                            00000000
+PAGES2                            00001000
+PAGES4                            00002000
+PAGES8                            00003000
+PAGEX                             
+PC                                00000002
+PINS18                            00000000
+PINS28                            00400000
+PINS40                            00800000
+PINS64                            00C00000
+POINTER                           00000010
+PRINTX                            
+PROTECT                           00000008
+MPASM 01.30 Released            CKSUM.ASM   2-25-1998  17:49:04         PAGE  4
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RA                                00000005
+RB                                00000006
+RC                                00000007
+RET                               
+RETI                              
+RETIW                             
+RETP                              
+RTCC                              00000001
+STACKX                            00000100
+START                             00000000
+STATUS                            00000003
+SUM                               00000012
+SYNC                              00000400
+TAB                               00000009
+TURBO                             00000800
+WATCHDOG                          00000004
+ZF                                STATUS,2
+_DEVICE                           0047E0FA
+_FUSE                             000000FA
+_FUSEX                            0000047E
+_INVERT                           00070FFA
+__16C57                           00000001
+
+
+MEMORY USAGE MAP ('X' = Used,  '-' = Unused)
+
+0000 : XXXXXXXXXXXXXXXX XXXX------------ ---------------- ----------------
+0040 : ---------------- ---------------- ---------------- ----------------
+0780 : ---------------- ---------------- ---------------- ----------------
+07C0 : ---------------- ---------------- ---------------- ---------------X
+1000 : ---------------- XX-------------- ---------------- ----------------
+1040 : ---------------- ---------------- ---------------- ----------------
+
+All other memory blocks unused.
+
+Program Memory Words Used:    21
+Program Memory Words Free:  2027
+
+
+Errors   :     0
+Warnings :     0 reported,     2 suppressed
+Messages :     1 reported,     0 suppressed
+
+

@@ -1,0 +1,40 @@
+Soft-ICE for NetWare Version 1.0   Readme File
+
+
+------------------------------------------------------------------------------
+Installing Soft-ICE
+------------------------------------------------------------------------------
+Soft-ICE and LDR can be loaded from either the DOS partition or the NetWare 
+system volume.  However, this release of Soft-ICE will look only on the DOS
+partition's current drive and directory for the SI.DAT file.  For this reason
+it is probably best to copy everything on the diskette to the DOS directory
+that contains SERVER.EXE and load them from there.  If the SI.DAT file is
+not found, the function keys will not be initialized.
+
+
+------------------------------------------------------------------------------
+Soft-ICE and NLM-Check, Net-Check and NLM-Profile
+------------------------------------------------------------------------------
+This release of Soft-ICE will NOT run while any of the other Nu-Mega NLM's
+are loaded.  An error message will be displayed if this is attempted.
+
+
+------------------------------------------------------------------------------
+Potential problems with I/O Break Points
+------------------------------------------------------------------------------
+I/O Break Points (BPIO) are supported in this release, but could potentially
+cause problems.  Interrupts could end up being disabled for longer than they
+should be.  Refer to Section 3.2 (Setting Break Points) in the User Guide
+for more information.
+
+
+------------------------------------------------------------------------------
+Hardware interrupts that overlap processor exceptions
+------------------------------------------------------------------------------
+Many of the hardware interrupts on the primary interrupt controller overlap
+interrupt vectors for processor exceptions.  To distinguish between the two
+NetWare reads the 8259A In Service Register to see if a real interrupt was
+pending.  If the appropriate bit is not set NetWare reports a processor
+exception.  This can cause a problem when using the genint command or when
+stepping through the keyboard handler.  The problem can be circumvented by
+bypassing the test in NetWare's interrupt handler.

@@ -1,0 +1,259 @@
+Turbo Assembler	 Version 2.0	    04/01/02 00:22:44	    Page 1
+qsca378h.ASM
+
+
+
+      1					 ideal
+      2					 p486
+      3
+      4		  = 0378		 LptAdr	 =	 378h
+      5		  = 0080		 XorMsk	 =	 80h
+      6
+      7	    0000			 segment code
+      8					 assume	 cs:code,ds:code
+      9
+     10						 org	 41Ah
+     11	    041A  ????			 Head	 dw	 ?
+     12	    041C  ????			 Tail	 dw	 ?
+     13
+     14						 org	 80h
+     15	    0080  ??			 PrmLen	 db	 ?
+     16	    0081  ??			 Dlm	 db	 ?
+     17	    0082  0E*(??)		 FName	 db	 14 dup	(?)
+     18
+     19						 org	 100h
+     20	    0100			 @startup:
+     21	    0100  6A 00				 push	 0
+     22	    0102  0F A1				 pop	 fs
+     23
+     24	    0104  E4 21				 in	 al,21h
+     25	    0106  50				 push	 ax
+     26	    0107  B0 FD				 mov	 al,11111101b	 ; IRQ9	only
+     27	    0109  E6 21				 out	 21h,al
+     28
+     29	    010B  64: 8B 36 041C		 mov	 si,[fs:Tail]
+     30	    0110  BF 025A			 lea	 di,[FBuf]
+     31
+     32	    0113  BA 0379			 mov	 dx,LptAdr+1
+     33	    0116  B0 00				 mov	 al,0
+     34	    0118  E6 43				 out	 43h,al
+     35	    011A  EC				 in	 al,dx
+     36	    011B  34 80				 xor	 al,XorMsk
+     37	    011D  8A E0				 mov	 ah,al
+     38	    011F  E4 40				 in	 al,40h
+     39	    0121  8A C8				 mov	 cl,al
+     40	    0123  E4 40				 in	 al,40h
+     41	    0125  8A E8				 mov	 ch,al
+     42
+     43	    0127  33 DB				 xor	 bx,bx
+     44	    0129  8B EB			 Scan:	 mov	 bp,bx		 ; ovf flag
+     45	    012B  B0 00				 mov	 al,0
+     46	    012D  E6 43				 out	 43h,al
+     47	    012F  EC				 in	 al,dx
+     48	    0130  34 80				 xor	 al,XorMsk
+     49	    0132  8A F8				 mov	 bh,al
+     50	    0134  E4 40				 in	 al,40h
+     51	    0136  8A D8				 mov	 bl,al
+     52	    0138  E4 40				 in	 al,40h
+     53	    013A  86 F8				 xchg	 bh,al
+     54	    013C  86 C4				 xchg	 al,ah
+     55	    013E  2B D9				 sub	 bx,cx
+     56	    0140  F7 DB				 neg	 bx		 ; (CX-BX) = (old-new) timer values (Dif)
+     57	    0142  78 11	90 90			 js	 NoOvf
+Turbo Assembler	 Version 2.0	    04/01/02 00:22:44	    Page 2
+qsca378h.ASM
+
+
+
+     58	    0146  0B ED				 or	 bp,bp
+     59	    0148  79 0B	90 90			 jns	 NoOvf
+     60	    014C  88 05				 mov	 [di],al
+     61	    014E  47				 inc	 di
+     62	    014F  C7 05	0000			 mov	 [word ptr di],0
+     63	    0153  47				 inc	 di
+     64	    0154  47				 inc	 di
+     65	    0155  3A C4			 NoOvf:	 cmp	 al,ah		 ; old & new port values
+     66	    0157  74 0D	90 90			 jz	 Same
+     67	    015B  88 05				 mov	 [di],al	 ; value
+     68	    015D  47				 inc	 di
+     69	    015E  89 1D				 mov	 [di],bx	 ; length
+     70	    0160  47				 inc	 di
+     71	    0161  47				 inc	 di
+     72	    0162  2B CB				 sub	 cx,bx		 ; corrected length
+     73	    0164  33 DB				 xor	 bx,bx
+     74	    0166  64: 3B 36 041C	 Same:	 cmp	 si,[fs:Tail]
+     75	    016B  75 08	90 90			 jnz	 Done
+     76	    016F  81 FF	FF00			 cmp	 di,0FF00h
+     77	    0173  72 B4				 jb	 Scan
+     78
+     79	    0175  8B EF			 Done:	 mov	 bp,di
+     80	    0177  F6 D0				 not	 al
+     81	    0179  AA				 stosb
+     82	    017A  58				 pop	 ax
+     83	    017B  E6 21				 out	 21h,al		 ; restore IRQ masks
+     84
+     85	    017D  BB 0081			 lea	 bx,[Dlm]
+     86	    0180  02 1E	0080			 add	 bl,[PrmLen]	 ; fname must be
+     87	    0184  C6 07	00			 mov	 [byte ptr bx],0 ; finished by 0
+     88	    0187  8B FB				 mov	 di,bx
+     89
+     90	    0189  BA 0082			 lea	 dx,[FName]
+     91	    018C  33 C9				 xor	 cx,cx
+     92	    018E  B4 3C				 mov	 ah,3Ch		 ; create
+     93	    0190  CD 21				 int	 21h
+     94	    0192  0F 82	00A6			 jc	 Exit
+     95
+     96	    0196  BA 025A			 lea	 dx,[FBuf]
+     97	    0199  8D 8E	FDA6			 lea	 cx,[bp+(0 - offset FBuf)]
+     98	    019D  8B D8				 mov	 bx,ax
+     99	    019F  B4 40				 mov	 ah,40h		 ; write
+    100	    01A1  CD 21				 int	 21h
+    101
+    102	    01A3  B4 3E				 mov	 ah,3Eh		 ; close
+    103	    01A5  CD 21				 int	 21h
+    104
+    105	    01A7  8B DF				 mov	 bx,di
+    106	    01A9  B9 0005			 mov	 cx,5
+    107	    01AC  B0 2E				 mov	 al,'.'
+    108	    01AE  FD				 std
+    109	    01AF  F2> AE			 repne scasb
+    110	    01B1  74 05	90 90			 je	 IsExt
+    111	    01B5  8B FB				 mov	 di,bx
+    112	    01B7  4F				 dec	 di
+    113	    01B8  47			 IsExt:	 inc	 di
+    114	    01B9  BE 0247			 lea	 si,[LnsExt]
+Turbo Assembler	 Version 2.0	    04/01/02 00:22:44	    Page 3
+qsca378h.ASM
+
+
+
+    115	    01BC  B1 05				 mov	 cl,5
+    116	    01BE  FC				 cld
+    117	    01BF  F3> A4			 rep movsb
+    118
+    119	    01C1  BA 0082			 lea	 dx,[FName]
+    120	    01C4  33 C9				 xor	 cx,cx
+    121	    01C6  B4 3C				 mov	 ah,3Ch		 ; create
+    122	    01C8  CD 21				 int	 21h
+    123	    01CA  72 70	90 90			 jc	 Exit
+    124
+    125	    01CE  8B D8				 mov	 bx,ax
+    126	    01D0  BE 025A			 lea	 si,[FBuf]
+    127	    01D3  66| 33 D2		 Rec:	 xor	 edx,edx
+    128	    01D6  AC			 Sum:	 lodsb
+    129	    01D7  66| 0F B7 3C			 movzx	 edi,[word ptr si]
+    130	    01DB  0B FF				 or	 di,di
+    131	    01DD  75 07	90 90			 jnz	 Sum1
+    132	    01E1  47				 inc	 di
+    133	    01E2  66| C1 E7 10			 shl	 edi,16
+    134	    01E6  66| 03 D7		 Sum1:	 add	 edx,edi
+    135	    01E9  46				 inc	 si
+    136	    01EA  46				 inc	 si
+    137	    01EB  3A 04				 cmp	 al,[si]
+    138	    01ED  74 E7				 jz	 Sum
+    139	    01EF  C0 C0	02			 rol	 al,2
+    140	    01F2  24 03				 and	 al,3
+    141	    01F4  0C 30				 or	 al,'0'
+    142	    01F6  BF 024C			 lea	 di,[LBuf]
+    143	    01F9  AA				 stosb
+    144	    01FA  47				 inc	 di
+    145
+    146	    01FB  56 57				 push	 si di
+    147
+    148	    01FD  B1 0A				 mov	 cl,10
+    149	    01FF  66| 33 C0		 DivLp:	 xor	 eax,eax
+    150	    0202  66| 92			 xchg	 eax,edx
+    151	    0204  66| F7 F1			 div	 ecx
+    152	    0207  66| 92			 xchg	 eax,edx
+    153	    0209  0C 30				 or	 al,'0'
+    154	    020B  AA				 stosb
+    155	    020C  66| 0B D2			 or	 edx,edx
+    156	    020F  75 EE				 jnz	 DivLp
+    157
+    158	    0211  5E				 pop	 si
+    159	    0212  8D 4D	02			 lea	 cx,[di+2]
+    160	    0215  C7 05	0A0D			 mov	 [word ptr di],0A0Dh
+    161	    0219  4F				 dec	 di
+    162	    021A  8A 04			 Swap:	 mov	 al,[si]
+    163	    021C  86 05				 xchg	 al,[di]
+    164	    021E  88 04				 mov	 [si],al
+    165	    0220  46				 inc	 si
+    166	    0221  4F				 dec	 di
+    167	    0222  3B F7				 cmp	 si,di
+    168	    0224  72 F4				 jb	 Swap
+    169	    0226  5E				 pop	 si
+    170
+    171	    0227  BA 024C			 lea	 dx,[LBuf]
+Turbo Assembler	 Version 2.0	    04/01/02 00:22:44	    Page 4
+qsca378h.ASM
+
+
+
+    172	    022A  2B CA				 sub	 cx,dx
+    173	    022C  B4 40				 mov	 ah,40h		 ; write
+    174	    022E  CD 21				 int	 21h
+    175	    0230  72 06	90 90			 jc	 WrErr
+    176
+    177	    0234  3B F5				 cmp	 si,bp
+    178	    0236  72 9B				 jb	 Rec
+    179
+    180	    0238  B4 3E			 WrErr:	 mov	 ah,3Eh		 ; close
+    181	    023A  CD 21				 int	 21h
+    182
+    183	    023C  FA			 Exit:	 cli
+    184	    023D  64: A1 041C			 mov	 ax,[fs:Tail]
+    185	    0241  64: A3 041A			 mov	 [fs:Head],ax	 ; reset keyboard buffer
+    186	    0245  FB				 sti
+    187	    0246  C3				 ret
+    188
+    189	    0247  2E 6C	6E 73 00	 LnsExt	 db	 '.lns',0
+    190	    024C  44 20	30 39 38 37 36+	 LBuf	 db	 'D 0987654321',13,10
+    191		  35 34	33 32 31 0D 0A
+    192	    025A  ??			 FBuf	 db	 ?
+    193
+    194	    025B			 ends
+    195					 end	 @startup
+Turbo Assembler	 Version 2.0	    04/01/02 00:22:44	    Page 5
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "04/01/02"
+??FILENAME			  Text	 "qsca378h"
+??TIME				  Text	 "00:22:44"
+??VERSION			  Number 0200
+@CPU				  Text	 0D9FH
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 QSCA378H
+@STARTUP			  Near	 CODE:0100
+@WORDSIZE			  Text	 2
+DIVLP				  Near	 CODE:01FF
+DLM				  Byte	 CODE:0081
+DONE				  Near	 CODE:0175
+EXIT				  Near	 CODE:023C
+FBUF				  Byte	 CODE:025A
+FNAME				  Byte	 CODE:0082
+HEAD				  Word	 CODE:041A
+ISEXT				  Near	 CODE:01B8
+LBUF				  Byte	 CODE:024C
+LNSEXT				  Byte	 CODE:0247
+LPTADR				  Number 0378
+NOOVF				  Near	 CODE:0155
+PRMLEN				  Byte	 CODE:0080
+REC				  Near	 CODE:01D3
+SAME				  Near	 CODE:0166
+SCAN				  Near	 CODE:0129
+SUM				  Near	 CODE:01D6
+SUM1				  Near	 CODE:01E6
+SWAP				  Near	 CODE:021A
+TAIL				  Word	 CODE:041C
+WRERR				  Near	 CODE:0238
+XORMSK				  Number 0080
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  025B Para	  none
+

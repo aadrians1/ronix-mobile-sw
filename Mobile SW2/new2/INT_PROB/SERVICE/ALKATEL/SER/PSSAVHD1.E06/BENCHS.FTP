@@ -1,0 +1,12 @@
+
+**********************************************
+*      Liste des baies (id,gid,IP,Nom)       *
+**********************************************
+
+1234, 0, 130.10.11.22, Baie d'intégration 1
+5678, 0, 130.10.33.44, Baie d'intégration 2
+1111, 0, 130.10.11.11, Baie AAAAAAAAAAAAAAA
+2222, 0, 130.10.22.22, Baie BBBBBBBBBBBBBBB
+3333, 0, 130.10.33.33, Baie CCCCCCCCCCCCCCC
+4444, 0, 130.10.44.44, Baie DDDDDDDDDDDDDDD
+5555, 0, 130.10.55.55, Baie EEEEEEEEEEEEEEE

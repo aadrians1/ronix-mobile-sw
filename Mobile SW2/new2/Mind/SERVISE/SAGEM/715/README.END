@@ -1,0 +1,27 @@
+Vous venez d'installer le TELECHargement sur un nouveau support, ce document
+vous d‚crira les diff‚rentes fa‡ons de l'utiliser.
+
+1 ) Utilisation … partir du nouveau support :
+
+    Sous le r‚pertoire racine de votre nouveau support, vous trouverez deux
+    fichiers nomm‚s TELECH1.BAT et TELECH2.BAT permettant de lancer, 
+    respectivement le t‚l‚chargement via le port v24 num‚ro 1, ou le port 
+    v24 num‚ro 2, … votre charge de d‚terminer ce port o— vous devez avoir 
+    connect‚ le kit de t‚l‚chargement fournit.
+
+    Ces mˆmes fichiers TELECH1.BAT et TELECH2.BAT sont ‚galement dans le 
+    r‚pertoire du t‚l‚chargement; De ce fait il vous est possible de modifier 
+    le PATH de votre PC pour que ces deux fichiers soient accessibles 
+    directement dans le r‚pertoire du t‚l‚chargement, et ainsi de les 
+    supprimer du r‚pertoire racine. 
+
+
+
+
+2 ) Utilisation … partir de la disquette d'installation :
+
+    Il est ‚galement possible de t‚l‚charger un poste … partir de la disquette
+    d'installation :
+       En se positionnant tout d'abord sur le lecteur (A: ou B:),
+       et en tapant TELECH1.BAT ou TELECH2.BAT comme pour une utilisation … 
+       partir du nouveau support.

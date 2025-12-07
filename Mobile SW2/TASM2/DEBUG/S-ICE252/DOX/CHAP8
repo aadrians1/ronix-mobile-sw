@@ -1,0 +1,255 @@
+  CHAPTER 8
+
+ Expanded Memory Support
+   8.1 Introduction
+   8.2 Configuring the EMM Environment
+   8.2.1 Default EMM Pages
+   8.2.2 Customizing the EMM Page Map
+   8.2.2.1 Including and Excluding Areas from EMM
+   8.3 Other EMM Features
+   8.3.1 Increasing Conventional Memory
+   8.3.2 Automatic Page Frame Locating
+   8.4 EMM Debugging
+
+     189
+
+ 8.1 Introduction
+
+Soft-ICE has an expanded memory manager built into its kernel. The Soft-
+ICE expanded memory manager supports the Lotus-Intel-Microsoft 4.0
+specification. This Soft-ICE feature is useful if you are using programs
+that support the EMM specification, or if you must backfill your
+conventional memory to extend your conventional memory to 640K or more.
+
+Other 386 control programs that provide EMM capability (such as QEMM or
+386-to-the-MAX) will not co-exist with Soft-ICE. If you are using those
+programs for EMM capability or backfilling, you can use the Soft-ICE EMM
+manager in their place.
+
+Enabling EMM capability in Soft-ICE involves the following steps:
+   1. Configure the expanded memory environment
+      with the utility EMMSETUP.EXE. This utility
+      modifies S-ICE.EXE with the desired EMM page
+      map.
+   2. Add the /EMM switch to your S-ICE.EXE line
+      CONFIG.SYS. This reserves a portion of
+      extended memory for expanded memory. An
+      example line in CONFIG.SYS that reserves
+      memory for EMM is:
+          DEVICE = S-ICE.EXE /EMM 2048
+      This will reserve 2 megabytes of extended memory
+      for EMM use. See section 6.3 (Loading Soft-ICE
+      as a Loadable Device Driver) for details of
+      installing Soft-ICE in CONFIG.SYS.
+  3. Reboot your system.
+
+     190 
+
+8.2 Configuring The EMM Environment
+
+Before installing S-ICE.EXE with the /EMM switch in CONFIG.SYS file, you
+may have to run EMMSETUP.EXE to configure the EMM 4.0 environment. This
+configuration process allows you to select which portions of memory you
+would like to make available as EMM 4.0 pages. Running EMMSETUP.EXE is
+highly recommended if you are using programs that take full advantage of
+the EMM 4.0 specification.
+
+8.2.1 Default EMM Pages
+
+By default, S-ICE.EXE with the /EMM switch is pre-configured to allow EMM
+4.0 pages in the following areas:
+
+   * The lower 640K (except for the 1st 64K)
+   * 64K starting at DDH
+You may want to reconfigure for the following reasons:
+   * You may have a device such as a network that i
+       the D000H area of memory.
+   * You may want to fill more holes above 640K with
+       EMM pages. This will increase performance and
+       usability of programs like Microsoft Windows. To
+       get maximum performance from Microsoft
+       Windows you should fill every available page with
+       expanded memory.
+
+ 8.2.2 Customizing the EMM Page Map
+
+To configure the EMM map you must use the utility EMMSETUP.EXE.
+EMMSETUP.EXE allows the page map to be altered, then modifies S-ICE.EXE
+with the changes.
+
+     191
+
+EMMSETUP makes its best guess on automatically configuring the EMM map.
+EMMSETUP will try to fill much of the address space as possible with
+mappable pages while working around video cards and ROMS. If its guess is
+not good enough or not to your liking you can override it. Overriding may
+be necessary if you have a network, a special video adapter or a memory-
+mapped option adapter.
+To configure the EMM map enter:
+
+   EMMSETUP
+
+EMMSETUP displays a matrix of 16K memory pages available in the lower 1
+megabyte region. The matrix is divided into 16 columns each representing
+64K (from 0 to 10000H). There are 4 rows representing the four 16K pages
+in each 64K region.
+
+Each block of the matrix can contain an E, X, R or V. Blocks that contain
+an E are available as EMM pages; blocks that contain an X are not. Blocks
+that contain an R are memory areas that have been identified by EMMSETUP
+as ROM areas. You can override these areas with an E if desired, however,
+this should only be done if the ROM is never accessed. Blocks that contain
+V are identified as video memory. We have made worst case assumptions on
+video memory. Your particular video card may not take up as much as we
+have 'guessed'. You can override the memory blocks that contain
+unnecessary V's if desired.
+
+If you are satisfied with EMMSETUP's guesses, press the F10 key and S-
+ICE.EXE will be modified with these parameters. You must reboot before any
+changes made to S-ICE.EXE will take effect. If you wish to override
+EMMSETUP's guesses, do so at this time.
+
+     192 
+
+8.2.2.1 Including and Excluding Areas from EMM
+
+To include an area as EMM 4.0 memory simply guide the cursor to the
+desired block, then type E. Conversely, to exclude an area from EMM 4.0
+memory, guide the cursor to the block and type X. When you are satisfied
+with your changes, press F10 to exit the program. All changes are
+automatically stored in the S-ICE.EXE file. If you wish to exit without
+modifying S-ICE.EXE press ESC. You must reboot before any changes made to
+S-ICE.EXE will take effect.
+
+When including upper memory blocks keep in mind the following:
+   * CGA occupies from B800H to C000H.
+   * MDA occupies from B000H to B100H.
+   * Most Hercules cards occupy from B000 to C000H.
+   * EGA occupies from A000H to C000H and from
+       C000H to C400H.
+   * VGA (mother board) occupies from A000H to
+       C000H.
+   * VGA (option card) occupies from A000H to
+       C000H and C000H to C800H.
+   * PS/2 System ROM occupies from E000H to
+       10000H.
+   * PS/2 ESDI ROM occupies from CC00H to D000H
+   * Most AT Compatible Roms occupy from F000H to
+       10000H.
+   * Compaq systems, Micronix motherboard systems,
+       and most Chips and Technologies motherboard
+       systems move the EGA/VGA ROM to E000H
+       However they still occupy the C000H region as
+       well.
+   * Token Ring Networks usually occupy from CC00H
+       to E000H.
+   * Many Networks occupy memory regions in the
+       D000H area.
+The above guidelines are for 'generic' devices, Many implementations by
+different computer vendors and
+
+     193 
+
+adapter card vendors will vary.
+
+8.3 Other EMM Features
+
+S-ICE.EXE with the /EMM switch has two features that are automatically
+enabled depending on your system configuration. These features are
+backfilling and relocating the page frame.
+
+8.3.1 Increasing Conventional Memory
+
+
+System memory will automatically be backfilled up to the first non-
+mappable page. This means it starts looking at contiguous E's at location
+1000, and continues until it finds the first non-contiguous E. If the
+contiguous E's go beyond the amount of your system's base memory, memory
+will backfilled up to the first R, V, or X that is found.
+
+The benefit of backfilling is that you can increase the amount of usable
+system memory to greater than 640K. The backfilled memory is available
+within DOS. If you do not want memory backfilled, use EMMSETUP to make
+page non-mappable (X) at the point you wish system memory to end.
+
+Note:
+Monochrome-only systems (MDA) can backfill up to B000H to add an
+additional 64K to conventional memory CGA systems can be backfilled up to
+B800, adding an additional 96K to conventional memory. EGA and VGA systems
+can be backfilled only if no graphics programs will be run. You can
+backfill an EGA or a VGA system up to B800:0 if no graphics programs will
+be run.
+
+Warning:
+If memory is backfilled,DO NOT UNLOAD Soft-ICE. Doing so will cause your
+system to crash.
+
+     194 
+
+8.3.2 Automatic Page Frame Locating
+
+Most EMM-knowledgeable programs require a 64K page frame that is not used
+as normal DOS memory. This is normally located above the video device
+area. However in some systems there is no 64K contiguous region to place
+the page frame. In these instances S-ICE.EXE 'steals' top 4 mappable pages
+of lower memory. The net result that lower DOS memory shrinks by 64K.
+
+8.4 EMM Debugging
+
+A range break point or a break point on memory that is in an EMM mappable
+area will stay at that address no matter which EMM page is mapped in.
+
+When debugging EMM programs, the EMMMAP command may also be very useful.
+See section 5.6 for more information.
+
+The D, E, S, F, and C commands can be used to view or modify any allocated
+EMM handle page. The page does not have to be currently mapped in. The
+syntax of these commands is similar to that of the commands when being
+used for non-EMM pages, except for the following:
+    * In the D, E, S, and F commands, the address
+        portion of the command must be specified in the
+        following way:
+        Hhandle# Ppage# offset
+        where handle is a number specifying which EMM
+        handle to use, page is a number specifying which
+        EMM page to use, and offset is a number from 0 to
+        4000H, specifying the offset from the beginning
+        the page.
+
+     195
+
+      Example:
+
+      DB H1 P3 0
+      This command will dump bytes from page 3 of
+      handle 1, starting at offset 0.
+
+   *  The C command must be specified in the following
+      way:
+      C Hhandle# Ppage# offset1 Llength offset2
+      where handle and page are the same as above.
+      offset1 is a number from 0 to 4000H, specifying the
+      offset from the beginning of the page, where the
+      first data block to be compared is located. offset2 is
+      a number from 0 to 4000H, specifying the offset
+      from the beginning of the page, where the second
+      data block to be compared is located.
+      Example:
+   
+      C H2 P4 00 L10 1000
+    
+      This command will compare the first 10 bytes of
+      memory located at offset 0 of page 4 of handle 2
+      with the first 10 bytes of memory located at offset
+      1000 of page 4 of handle 2.
+
+Note:
+Subsequent uses of the D, E, S, F, and C commands will continue to use the
+handle and page last specified. To get back to conventional memory, use
+one of the above commands with a segment specified in the address field,
+for example:
+         D 0:0
+
+     196
+
+

@@ -1,0 +1,215 @@
+;/*Diese Datei beinhaltete alle Messages, Nachrichten, Quasi-Statische Texte
+; die beim Programmablauf auf dem Bildschirm erscheinen kînnen.
+; Um die Mehrsprachigkeit der Programm zu gewÑhrleisten ist es also
+; unabdingbar sich an diese Konventionen zu halten.
+; Alle Zeichen, die nach einem Semikolon stehen in dieser Datei werden
+; als Kommentar interpretiert.
+; Diese Datei ist folgenderma·en aufgebaut:
+; Dieses File ist Ñhnlich einer Directory-Struktur aufgebaut, d.h. es
+; existieren "Unterverzeichnisse" gekennzeichnet durch b z.B. "#1",
+; in diesen Unterverzeichnissen werden die einzelnen Texte abgelegt.
+; Aus dem Programm heraus werden die Texte, dann auch entsprechend
+; Nummer der Unterverzeichnisses plus Offset angesprochen.
+;
+; Im Programm existiert daher folgende Struktur:
+;
+; typedef struct MESSAGES
+; {
+;       char mess[50][80]
+;
+; } TMESSAGES;
+;
+; TMESSAGES *smes
+;
+; Der Zugriff auf diese Texte des Messagefiles kann im Programm Åber folgenden
+; Pointer erfolgen
+;
+;     -  smes[BlockNr].mess[OffsetNr]
+;     -  smesiec.mess[OffsetNr]
+;
+; !!!!! ACHTUNG: Es dÅrfen in dieser Datei keine Leerzeilen existieren !!!!!
+;
+;**************************************************************************;
+#1 ***** allgemeine Einstellungen *******************************************
+Product;                / 1
+IMEI-Nr:;               / 2
+Date;                   / 3
+Time;                   / 4
+Pos;               / 5
+Ll(Pos);            / 6
+Ul(Pos);                        / 7
+Value;                                  / 8
+[];                             / 9
+Status;                                 / 10
+Description;                    / 11
+frei;                                                                    /12
+frei;                                                                    /13
+frei;                                                                    /14
+frei;                                                                    /15
+frei;                                                                    /16
+frei;                                                                    /17
+frei;                                                                    /18
+frei;                                                                    /19
+xxx      /20
+xxx      /21
+xxx      /22
+xxx      /23
+xxx      /24
+xxx      /25
+xxx      /26
+xxx      /27
+xxx      /28
+xxx      /29
+xxx      /30
+#2 ***** Menu-Einstellungen ************************************************
+Product;                / 1
+IMEI-Nr;                / 2
+Date;                   / 3
+Time;                   / 4
+Position;               / 5
+<Alt-x> (End)   <ESC> End of measurement;            / 6
+<Alt-x> (End)   <ESC> End of measurement;            / 6 / 7
+Value;                                  / 8
+Unit;                               / 9
+Status;                                 / 10
+Description;                    / 11
+#3 ***** IEC-Bus Messages **************************************************
+x;      /1
+xx;     /2
+x;      /3
+x;      /4
+x;      /5
+x;      /6
+x;      /7
+x;      /8
+x;      /9
+x;      /10
+S6GSM     S24859-C2600-Xxxx ;         /11
+S6PCN     S24859-C3600-Xxxx ;         /12
+S6Pow GSM S30880-S1850-Xxxx ;         /13
+S6Pow PCN S30880-S1900-Xxxx ;         /14
+E10       S30880-S1800-Xxxx ;         /15
+S10       S30880-S1200-Xxxx ;         /16
+S10 Act   S30880-S1200-Xxxx ;         /17
+SL10      S30880-S1600-Xxxx ;         /18
+S11       S30880-S1300-Xxxx ;         /19
+S12       S30880-S13xx-Xxxx ;         /20
+CMDX_2000 S30880-S1210-Xxxx ;         /21
+C10       S30880-S2200-Xxxx ;	        /22
+C11       S30880-S2210-Xxxx ;	        /23
+;
+#4 ***** BFBus Messages ****************************************************
+no Frame;
+ERROR 64;
+#5 ***** I/O Device Error **************************************************
+Cannot open File: ;
+xxxx;
+Cannot open File: ;
+#6 ***** sonst. Fehlermeldungen ********************************************
+Please, switch on mobile;                                     /1
+SMS-CB set successfully;                                       /2
+Attention: SMS-CB can't be set successfully, try again;        /3
+	  Mobile fehlerhaft         ;  /4
+	    Mobile o.k.             ;  /5
+       Weiter mit bel. Taste ...;           /6
+Please switch to internal antenna; /7
+Please switch to external antenna; /8
+#7 ***** Yes No Cancel usw. ************************************************
+Yes;                   / 1
+No;                 / 2
+Ok;                     / 3
+Cancel;               / 4
+Fail;                   / 5
+Print;                 / 6
+Adjust;                         /7
+Save;           /8
+#8 ***** Service Interface Menu********************************************
+&Products;                   / 1
+&Inits;                 / 2
+&Start Measuring;                     / 3
+In&fo;               / 4
+&End;                   / 5
+No;                 / 6
+Frei;  / 7
+ ;  /8
+ ;    /9
+Mobile-Typ;      /10
+S6GSM     S24859-C2600-Axx;          /11
+S6PCN     S24859-C3600-Axx ;         /12
+S6Pow GSM S30880-S1850-Axx ;         /13
+S6Pow PCN S30880-S1900-Axx ;         /14
+E10       S30880-S1800-Axx ;         /15
+S10       S30880-S1200-Axx ;         /16
+S10 Act   S30880-S1200-Axx;          /17
+SL10      S30880-S1600-Axx;          /18
+S11       S30880-S1300-Axx ;         /19
+S3     S24859-C2500-Axx;        /20
+S3+    S24859-C2510-Axx;        /21
+S3Com  S24859-C2700-Axx;        /22
+S4     S24859-C2550-Axx;        /23
+S6GSM  S24859-C2600-Axx;        /24
+S6PCN  S24859-C3600-Axx;         /25
+CM-DX 1000  S24859-C2550-Axx;        /26
+G1050  Siemens PCS  A100-1;      /27
+G1050 S30880-S1400-Xxxx;         /28
+ ;               /29
+Greetings programming;           /30
+Display contrast;         /31
+Battery adjustment;            /32
+Reset phone settings;               /33
+Greetings programmieren;               /34
+Displaypattern ein;               /35
+ ;               /36
+ ;               /37
+Display contrast;               /38
+Reset phone settings ;          /39
+Reset phone book;               /40
+#9 ***** ********************************************
+		      Measuring S3 will be started;       / 1
+		      Measuring S3+ will be started;      / 2
+		      Measuring S3Com will be started;    / 3
+		      Measuring S4 will be started;       / 4
+		      Measuring S6 GSM will be started;   / 5
+		      Measuring S6 PCN will be started;   / 6
+		    Measuring CM-DX 1000 will be started;   / 7
+Menu not implemented; /8
+Power Supply: Voltage 4.0 V / Current 3 A ;/ 9
+Insert SIM-Card with PIN and switch on mobile;   / 10
+Power Supply: Voltage 6.5 V / Current 3 A ;/ 11
+    Check beepertone    ;          / 12
+  Check displaypattern  ;  / 13
+Check keyboard, displaypattern will change while pressing a key; /14
+Check loudspeaker (1 kHz tone will be generated); /15
+Speak into microphone and check whether loop is closed; / 16
+CMD-Error while Location Update ; / 17
+Enter your PIN (SIM-Card); / 18
+Speak into microphone and check whether echoloop is closed; / 19
+Adjust display contrast; /20
+Display contrast cannot be adjusted;                                   /21
+Display contrast cannot be adjusted;                                   /22
+No communication with phone possible;                                    /23
+Display Kontrast einstellen;                                         /24
+Battery Voltage:  Value:;                                                                  /25
+Power Supply : Voltage 6.5 V;                                                                      /26
+Power Supply : Voltage;                                                                            /27
+Battery adjustment;                                                    /28
+Phone settings cannot be reset;                                        /29
+Phone settings reset to original state;                            /30
+Save / print protocol of last measurement;                                            /31
+No communication with phone possible;                                    /32
+   Wrong phone!   ;                                                                    /33
+Check Power, Phase of external Antenna with your GSM-Tester;           /34
+Check Power, Phase of internal Antenna with your GSM-Tester;           /35
+Cannot initialize flash directory;                                     /36
+Unplug external connector to switch to internal antenna;       /37
+Plug external connector back in!;          /38
+Save protocol of last measurement;                                /39
+Check keyboard. Watch reaction on your monitor; /40
+Close PopUp Earpiece; /41
+Wait until Location Update is ready; /42
+SIM-Card simulation started ! Register on your simulator !; /43
+Phone book reset to original state!; /44
+Phone book cannot be reset!; /45
+Please wait. Erasing phone book ...; /46
+Please wait. Setting default values ...; /47
+;#10 **ENDE !! ***********************************************

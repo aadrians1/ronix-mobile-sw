@@ -1,0 +1,63 @@
+Model : ALL 25
+Serie : ALL 25
+ Z	Ll(z)	Ul(z)	AGAIN	EXIT	Prameter	Kommentar
+ 1	0	999999	0	1	.	IMEI 
+ 2	-1	1	0	1	.	Service Mode
+ 3	-17	18	-1	1	.	Wersja DSP
+ 4	1	1	-1	1	.	DUMMY
+ 5	-.050	0.08	-1	1	A	Testowanie 
+ 6	-131	135	-1	1	.	Klf-Bit
+ 7	-8	80	-1	1	.	Wersja oprogramowania
+ 8	-21	123	-1	1	.	X25
+ 9	-6	600	-1	1	.	Copro
+10	803	1	-1	1	.	Zestaw x2i
+11	0	300599	-1	1	.	Data oprogramowania
+12	-165656	165656	-1	1	.	Czas oprogramowania
+13	-0.092	0.130	-1	1	A	Jasnosc
+14	1	1	-1	0	.	Dummy
+15	-500	2500	-1	1	mV	Wzmocnienie glosnika 1kHz
+16	-6000	5009	0	1	.	EEFULL
+17	-1180	1260	-1	0	mV	Skala wzmocnienia
+18	-10500	25500	-1	0	.	Czynnik wzm. glosnika
+19	-300	4500	-1	1	mV	Wzmocnienie 300Hz
+20 	-65	160	-1	1	mV	HF-Mikrofonu
+21	-5009	5009	0	1	.	IMEI 
+22	-600	800	-1	1	mV	Wzmocnienie mikrofonu 1KHz
+23	-240  	680	-1	0	mV	Skala wzmocnienia
+24	-10500	25500	-1	0	.	Czynnik wzm. mikrofonu
+25	1	1	-1	0	.	Dummy
+26	1	1	-1	0	.	Dummy
+27	-90	810	-1	1	mV	Wzmocnienie 400Hz
+28	1	1	-1	0	.	Dummy
+29	-1 	1	-1	1	.	Wzmuszenie odczytu 
+30	-29	35	-1	1	dBm	Wyjscie K37/L5
+31	-18	18	-1	1	grd	Maksymalna faza K37/L5
+32	0	4.5	-1	1	grd	Faza RMS K37/L5
+33	-29	35	-1	0	dBm	Wyjscie K698/L5
+34	-18	18	-1	0	grd	Maksymalna faza K698/L5
+35	0	4.5	-1	0	grd	Faza RMS K698/L5
+36	0 	1	-1	0	.	Dummy
+37	-1 	1	-1	1	.	Test klawiatury
+38	-20	20	-1	1	.	Ustawianie kontrastu
+39	1	1	-1	1	.	Dummy
+40	1	1	-1	1	.	Service Mode
+41	-170	170	-1	1	.	Tyrb normalny 
+42	-4	4	-1	1	.	Grupa jezykowa
+43	0	0	-1	0	.	Dummy
+44	-10	0.05	-1	1	mA	Wylaczenie telefonu
+45	0	0	-1	1	.	Wyprowadzenie Gnd
+46	-3	3	-1	1	.	SIM
+47	-1	1	-1	1	.	Wyprowadzenie (2,7,8)
+48	0	1	-1	1	.	Kontrolowanie
+49	-700	9900	-1	1	mV	Dzwiek
+50	-1	1	-1	0	.	Reset Voice Memo
+51	0	30	-1	1	.	IMEI - tryb normalny 
+52	1	1	-1	1	.	Domyslny EEPROM
+53	255	255	-1	1	.	Inicjalizacja EEPROM
+54	1	1	-1	1	.	Dummy
+55	0	143	-1      1	.	Klf-Bit
+56	-65350	65550	-1	1	.	Typ akumulatora
+57	-3.9	4.1	-1	1	V	Napiecie akumulatora
+58	-90	30	-1	1	øC	Temperatura akumulatora
+59	-92 	33	-1	1	øC	NTC dla MMI1
+

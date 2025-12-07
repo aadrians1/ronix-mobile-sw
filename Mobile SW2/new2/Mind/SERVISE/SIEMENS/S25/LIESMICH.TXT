@@ -1,0 +1,33 @@
+**************************************************
+*                                                *
+* SIEMENS  Mobile Phones                         *
+*                                                *
+**************************************************
+*                                                *
+*                                                *
+* Mobile     : S25                               *
+*                                                *
+* Lang-Group : lg1                               *
+*                                                *
+* GSM-SVN    : 05                                *
+*                                                *
+* BUILD-DATE : 20.05.99                          *
+*                                                *
+**************************************************
+
+
+Kopieren Sie die Dateien in ein Verzeichnis Ihrer Wahl.
+Rufen Sie bitte zuerst das Installations-Programm SWUPINST.EXE auf.
+Dieses erstellt das notwendige INI-File.
+Anschliessend kînnen Sie das Software-Update-Program:
+
+  S25_0501.EXE
+
+aufrufen.
+
+Beim Aufruf ohne Parameter startet der Software-Update.
+
+Hilfe erhalten Sie Åber:         S25_0501  -h
+Informationen Åber die SW mit:   S25_0501  -i
+
+

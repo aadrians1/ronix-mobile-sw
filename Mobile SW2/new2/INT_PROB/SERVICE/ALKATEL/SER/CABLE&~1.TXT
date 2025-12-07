@@ -1,0 +1,33 @@
+How to build cable: 
+The usual MAX232 schematic with external power supply thru an 7805.
+You use Gnd, Txd and Rxd line from serial port (com). On the phone connector you have 
+this connection (holding phone with keypad up, bottom view, from left to right counting)
+pin 1-4-9-GND
+pin 11 thru MAX232 to COM's Txd
+pin 12 thru MAX232 to COM's Rxd
+Built it, it works.
+
+Now the software:
+It is the original Alcatel service software copied directly from an
+hard-disk where it was installed, so you must copy all by yourself. Not all
+the software options are working, but it unlocks all HD1 alcatel phones
+(OTE, OTClub).
+
+1. EXTRACT all files in ROOT directory of drive C:
+You will get 4 new drectories
+2. Copy the dll files you find in RETROFIT\FTPV706\EXE to WINDOWS\SYSTEM
+directory
+3. Insert this in your win.ini file
+[CVIRT4]
+CVIRT4=C:\CVI\CVIRT4.EXE
+4. Start the application LGTHD1R2.EXE in the directory from point2
+The program must start. Configure from option menu the language English,
+from the first menu from left the com port
+
+Connect the phone switched off.
+Also from first menu choose SWITCH ON and then CONECTING.
+Don't care if you get some error messages on some phones.
+Use the EEPROM READ/WITE by KEYBOARD commands you find to chage locations
+176, 177 to FF, using Ctrl+Enter for read/write command in the menu's.
+
+That's it

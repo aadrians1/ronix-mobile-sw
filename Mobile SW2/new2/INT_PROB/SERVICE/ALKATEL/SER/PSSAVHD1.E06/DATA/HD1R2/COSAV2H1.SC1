@@ -1,0 +1,586 @@
+**************************************************
+*       Scenario HD1 R2 cohérence hard carte mcx *
+**************************************************
+*
+*********  HISTORIQUE  *********
+*
+* 1.0   14/05/98  T. JOUBIN Création
+********************************
+*****  Scenario COHER   ********
+********************************
+*
+
+@; CO; V1.0; 1;?
+
+*
+************************************************************
+*      Noeuds 
+************************************************************
+
+* N°Noeud;  Nom du noeud          ; Noeud OK ; Noeud KO
+*
+* Mise en marche et en logiciel de test		
+* -------------------------------------
+
+&;  1;      OpenComUut             ;  2;   20;?
+&;  2;      MiseEnMarcheProd       ;  4;   20;?
+&;  4;	    _ObtImei						   ;  6;   6;?
+&;  6;      ObtPalTech             ;  8;   20;?
+&;  8;      ObtRefIndus            ; 10;   20;?
+&; 10;      ObtRefComm             ; 12;   20;?
+&; 12;	    ObtZoneCode            ; 14;   20;?
+&; 14;	    ObtZonePerso           ; 16;   20;?
+&; 16;      ObtZoneDriver          ; 18;   20;?
+&; 18;      ObtZoneTech 			     ; 19;   20;?
+&; 19;      _ObtZoneLangue  				 ; 20;   20;?
+&; 20;      ArretProd              ;  0;    0;?   
+
+
+************************************************************
+*      Tests 
+************************************************************
+* %; Nom;NrepMax;NrepMin;NbEchecsMax;N°test;NbIer;Timeout;NbMetho;(No;type)*;?
+*  
+* (11) MessUser
+* (1) OpenComUut
+%; OpenComUut           ; 0; 0; 0; 0; 00:30; 11;1;  1;1;  ?
+
+* (3) ModeFoncMarche
+* (10) Temp
+* (10) Temp
+* (7) ConfModeCom
+* (10) Temp 1s
+* (5) MiseEsLogTest
+%; MiseEnMarcheProd     ; 0; 0; 0; 0; 00:30;  3;1; 10;1; 10;1; 7;1; 10;1; 5;1; ?
+
+* (27) ReadEeprom       : Lecture de l'IMEI sim-lockée  en eeprom
+* (12) VerifImeiLog     : stockage IMEI (à travers une fausse verif)
+%; ObtImei              ; 0; 0; 0; 0; 00:30; 27;2; 12;2;?
+
+* (28) ReadEeprom       : Lecture du PT
+* (25) SetDataTest      : Stockage PT
+%; ObtPalTech           ; 0; 0; 0; 0; 00:30; 28;2; 25;2;?
+
+* (21) ReadEeprom       : Lecture de la Ref Indus
+* (23) SetDataTest      : Stockage Ref Indus
+%; ObtRefIndus          ; 0; 0; 0; 0; 00:30; 21;1; 23;1;? 
+
+* (22) ReadEeprom       : Lecture de la référence commerciale
+* (24) SetDataTest      : Stockage Ref Commerciale
+%; ObtRefComm       		; 0; 0; 0; 0; 00:30; 22;2; 24;2;? 
+
+* (18) ReadEeprom       : Lecture de la Zone Code
+* (29) SetDataTest      : Stockage Zone Soft
+%; ObtZoneCode    ; 0; 0; 0; 0; 00:30; 18;1; 31;1? 
+
+* (16) VerifBuffLangues : Lecture de la Zone langue optionnelles(à travers une vérif)
+* (9) SetDataTest      	: Stockage Zone Langue Fixe
+* (15) SetDataTest      : Stockage Zone Langue optionnelle
+%; ObtZoneLangue     ; 0; 0; 0; 0; 00:30; 19;1; 9;3; 15;3? 
+
+* (17) ReadEeprom       : Lecture de la Zone Technique
+* (29) SetDataTest      : Stockage Zone Technique
+%; ObtZoneTech    ; 0; 0; 0; 0; 00:30; 17;1; 29;1? 
+
+* (13) ReadEeprom       : Lecture de la Zone Technique
+* (26) SetDataTest      : Stockage Zone Technique
+%; ObtZonePerso    ; 0; 0; 0; 0; 00:30; 13;1; 26;1? 
+
+* (20) ReadEeprom       : Lecture de la Zone Driver
+* (30) SetDataTest      : Stockage Zone Driver
+%; ObtZoneDriver     ; 0; 0; 0; 0; 00:30; 20;1; 30;1? 
+
+* (6) MiseHsLogTest
+* (8) StopTest
+* (2) CloseComUut
+%; ArretProd            ; 0; 0; 0; 0; 00:30; 6;3; 8;3; 2;3;? 
+
+ 		
+*----------------------------------------
+* Identifiants mémoires                  
+* ---------------------                  
+*                                        
+* 1 ----> P.T.                           
+* 2 ----> Ref. Commerciale                    |
+* 3 ----> Ref Indus
+* 4 ----> IMEI
+
+* 10 ----> version de zone driver         
+* 11 ----> version de zone technique
+* 12 ----> version de zone langue fixes
+* 13 ----> version de zone langue optionnelles
+* 14 ----> version de zone perso      
+* 15 ----> version de zone code         
+*----------------------------------------
+
+
+***** Methodes de test *****************************************************
+* Methodes de test
+* #;Nom;N°;NbMes;(Noms)*;
+*          NbParam;(Params)*;
+*          NbCompens;(Ids;Etats+1)*;
+*          Nb Inst; (Instances)*;     Prompt;?
+******************************** 
+*
+* ____________________________________________
+* --------------------------------------------
+*	Service de configurations générale
+* ____________________________________________
+* --------------------------------------------
+*
+*------------
+* service d'ouverture de la communication logicielle
+* nom           : OpenComUut ( fonction PEP_OpenComUut / "ECSPROC.C" )
+* nb mesures    : 0
+* nb instances	: 1
+* instance 1    : instance de la communication à ouvrir     
+* nb paramètres : 1
+*     param1    : indication du type de com
+*                   1 : Acksys
+*                   2 : Com1
+*------------
+#; OpenComUut;  1;
+                0; 
+                1; 1;
+                0; 
+                1; 1; 0;?
+	              
+*------------
+* service de fermeture de la communication logicielle
+* nom           : CloseComUut ( fonction PEP_CloseComUut / "ECSPROC.C" )
+* nb mesures    : 0
+* nb instances	: 1
+* instance 1    : instance de la communication à fermer
+* nb paramètres : 0
+*------------ 
+#; CloseComUut; 2;  0; 
+                    0; 
+                    0; 
+                    1; 1; 0;?
+
+*------------  
+* nom           : ModeFoncMarche ( fonction PER_ModeFoncMarche / "ERSPARA4.C" )
+* nb mesures    : 0
+* nb Iistances	: 1
+* instance 1    : instance du produit à mettre en marche
+* nb paramètres : 1
+* paramètre 1   : mode de fonctionnement du produit (0=Tele ou MTT;1=NonTele ou LCE)
+*------------ 
+* ModeFoncMarche pour tests
+#; ModeFoncMarche; 3; 0;
+                      1; 1; 
+                      0; 
+                      1; 1;
+                      0;?
+*------------ 
+* ModeFoncMarche pour le Telechargement
+#; ModeFoncMarche; 4; 0; 
+                      1; 0;
+                      0;
+                      1; 1;
+                      0;?
+
+*------------  
+* nom           : MiseEsLogTest ( fonction PET_MiseEsLogTest / "ERSPARA1.C") 
+* nb mesures    : 0
+* nb instances	: 1
+* instance 1    : instance du produit 
+* nb paramètres : 0
+*------------ 
+#; MiseEsLogTest; 5; 0; 
+                     0; 
+                     0; 
+                     1; 1; 0;?
+
+*------------  
+* nom           : MiseHsLogTest ( fonction PER_MiseHsLogTest / "ERSPARA1.C")  
+* nb mesures    : 0
+* nb instances	: 1
+* instance 1    : instance du produit 
+* nb paramètres : 0
+*------------ 
+#; MiseHsLogTest; 6; 0; 
+                     0; 
+                     0; 
+                     1; 1; 0;?
+
+* -------------------------------------------------------------------- 
+* service de communication LCE ou MTT
+* nom           : ConfModeCom ( fonction PER_ConfModeCom / "ERSPARA4.C" )
+* nb mesures    : 0
+* nb paramètres : 2
+* Paramètre 1	: Type de communication LCE = 1 ou MTT = 2
+* Paramètre 2	: Type de StopTest = 2 ou StartTest = 1
+* nb instances	: 1
+* instance 1    : instance de la communication à fermer
+*------------
+* Initialisation
+#; ConfModeCom; 7;  0; 
+                    2; 1; 1; 
+                    0; 
+                    1; 1; 0;?
+*------------
+* Clôture
+#; ConfModeCom; 8;  0; 
+                    2; 1; 2; 
+                    0; 
+                    1; 1; 0;?
+
+* -------------------------------------------------------------------- 
+* Stockage Langues Fixes
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;9;   0;
+                     2; NOMVERSION4; 12;
+                     0; 0; 0;?
+
+* -------------------------------------------------------------------- 
+* nom        : Temp (fonction PEC_Temp /"ECSPROC.C")
+* nb mesures : 0
+* nb param.  : 1
+* 1er param. : Valeur de la temporisation                           
+* nb inst    : 0
+* nb compens.: 0
+*----------                                
+* Temporisation 1s
+#; Temp; 10; 0; 1; 1; 0; 0; 0;?  
+
+* -------------------------------------------------------------------- 
+* Affichage d'un message pour mettre en route le produit																									 		
+*                         																			          
+* nom          : MessUser ( fonction PEC_MessUser /"ECSPROC.C" ) 			      																	
+* nb mesures   : 0           																							
+* nb instances : 0           																					  
+* nb param.    : 4
+* -------------------------------------------------------------------- 
+#; MessUser2; 11; 0;
+             1; MESS_USER1;
+             0;
+             0;
+             0;?
+
+* -------------------------------------------------------------------- 
+* Vérification de l'imei programmé 
+*                         																			          
+* nom           : VerifImeiLog ( fonction PET_VerifImeiLog/ "ETSPERSO.C" ) 		
+* nb mesures    : 0
+* nb param.     : 2
+* 1er param.    :  Mode de travail
+*                  1 : Récupération imei par identifiant mémoire
+*                  2 : Utilisation des fichiers masque,map et plan eeprom lu
+* 2ème param.   : identifiant mémoire de l'IMEI Sm-lockée
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;VerifImeiLog;12;    0;
+                      2; 1; 4;
+                      0;
+                      0;
+                      0;?
+
+* -------------------------------------------------------------------- 
+* Lecture de la zone perso
+*
+* nom           : ReadEeprom ( fonction PET_ReadEeprom / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances	: 0
+* nb paramètres : 6
+* Paramètre 1   : Identifiant de la zone mémoire à sauvegarder
+* Paramètre 2   : Adresse de début de zone à mettre à jour
+* Paramètre 3   : Adresse de fin de zone à mettre à jour
+* Paramètre 4   : Nombre d'octets
+* Paramètre 5   : type de zone à lire parmi :NONE, BOOT, DRV_FLASH_1,
+*                  DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*                  CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*                  TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* Paramètre 6   : Numéro de voie
+* -------------------------------------------------------------------- 
+#; ReadEeprom; 13;  0; 
+                    6; 14; 0x7FF0; 0x7FF7; 8; PARAM_2; 1;
+                    0; 0; 0;?
+                     
+* -------------------------------------------------------------------- 
+* Stockage Langues Optionnelles
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;15;   0;
+                     2; NOMVERSION5; 13;
+                     0; 0; 0;?
+                    
+* -------------------------------------------------------------------- 
+* Lecture de la zone technique
+*
+* nom           : ReadEeprom ( fonction PET_ReadEeprom / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances	: 0
+* nb paramètres : 6
+* Paramètre 1   : Identifiant de la zone mémoire à sauvegarder
+* Paramètre 2   : Adresse de début de zone à mettre à jour
+* Paramètre 3   : Adresse de fin de zone à mettre à jour
+* Paramètre 4   : Nombre d'octets
+* Paramètre 5   : type de zone à lire parmi :NONE, BOOT, DRV_FLASH_1,
+*                  DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*                  CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*                  TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* Paramètre 6   : Numéro de voie
+* -------------------------------------------------------------------- 
+#; ReadEeprom; 17;  0; 
+                    6; 11; 0x4002; 0x4009; 8; PARAM_2; 1;
+                    0; 0; 0;?
+                      
+* -------------------------------------------------------------------- 
+* Lecture de la version soft
+*
+* nom           : ReadEeprom ( fonction PET_ReadEeprom / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances	: 0
+* nb paramètres : 6
+* Paramètre 1   : Identifiant de la zone mémoire à sauvegarder
+* Paramètre 2   : Adresse de début de zone à mettre à jour
+* Paramètre 3   : Adresse de fin de zone à mettre à jour
+* Paramètre 4   : Nombre d'octets
+* Paramètre 5   : type de zone à lire parmi :NONE, BOOT, DRV_FLASH_1,
+*                  DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*                  CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*                  TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* Paramètre 6   : Numéro de voie
+* -------------------------------------------------------------------- 
+#; ReadEeprom; 18;  0; 
+                    6; 15; 0x08000; 0x08007; 8; PARAM_2; 1;
+                    0; 0; 0;?
+*-------------------------------------------------------------------- 
+* Vérification du nom des fichiers de langues fixes et optionnelles dans le produit en flash
+*                         				
+* nom           : VerifBuffLangues ( fonction PET_VerifFichierCode/ "ETSPERSO.C")
+* nb mesures    : 0           																							
+* nb param.     : 7
+* 	 1er  param.: Adresse de début de la version du soft															
+* 	 2ème param.: Place de la 1ère chaine de référence dans la table des UUT	   														
+* 	 3ème param.: Nombre de champs pour la 1ère chaine													
+* 	 4ème param.: Place de la 2ème chaine de référence dans la table des UUT	
+* 	 5ème param.: Nombre de champs pour la 2ème chaine
+* 	 6ème param.: Identifiant mémoire (langues fixes)
+* 	 7ème param.: Identifiant mémoire (langues optionnelles) 
+* 	 8ème param.: Taille de la zone de boot = 15360 
+* nb instances	: 0           																					  
+* -------------------------------------------------------------------- 
+*
+#;VerifBuffLangues;   19;0;										 
+                      8;0x08000;1;1;1;1;12;13;15360;
+                      0;
+                      0;
+                      0;?
+
+* -------------------------------------------------------------------- 
+* Lecture de la Zone Driver. 
+*
+* nom           : ReadEeprom ( fonction PET_ReadEeprom / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances	: 0
+* nb paramètres : 6
+* Paramètre 1   : Identifiant de la zone mémoire à sauvegarder
+* Paramètre 2   : Adresse de début de zone à mettre à jour
+* Paramètre 3   : Adresse de fin de zone à mettre à jour
+* Paramètre 4   : Nombre d'octets
+* Paramètre 5   : type de zone à lire parmi :NONE, BOOT, DRV_FLASH_1,
+*                  DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*                  CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*                  TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* Paramètre 6   : Numéro de voie
+* -------------------------------------------------------------------- 
+#; ReadEeprom; 20;  0; 
+                    6; 10; 0x3DF0; 0x3DF7; 8; PARAM_2; 1;
+                    0; 0; 0;?
+
+* -------------------------------------------------------------------- 
+* Lecture de la ref indus. 
+*
+* nom           : ReadEeprom ( fonction PET_ReadEeprom / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances	: 0
+* nb paramètres : 6
+* Paramètre 1   : Identifiant de la zone mémoire à sauvegarder
+* Paramètre 2   : Adresse de début de zone à mettre à jour
+* Paramètre 3   : Adresse de fin de zone à mettre à jour
+* Paramètre 4   : Nombre d'octets
+* Paramètre 5   : type de zone à lire parmi :NONE, BOOT, DRV_FLASH_1,
+*                  DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*                  CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*                  TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* Paramètre 6   : Numéro de voie
+* -------------------------------------------------------------------- 
+#; ReadEeprom; 21;  0; 
+                    6; 3; 0x4594; 0x45A3; 16; PARAM_2; 1;
+                    0; 0; 0;?
+                    
+* -------------------------------------------------------------------- 
+* Lecture de référence commerciale
+*
+* nom           : ReadEeprom ( fonction PET_ReadEeprom / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances	: 0
+* nb paramètres : 6
+* Paramètre 1   : Identifiant de la zone mémoire à sauvegarder
+* Paramètre 2   : Adresse de début de zone à mettre à jour
+* Paramètre 3   : Adresse de fin de zone à mettre à jour
+* Paramètre 4   : Nombre d'octets
+* Paramètre 5   : type de zone à lire parmi :NONE, BOOT, DRV_FLASH_1,
+*                  DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*                  CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*                  TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* Paramètre 6   : Numéro de voie
+* -------------------------------------------------------------------- 
+#; ReadEeprom; 22;  0; 
+                    6;2; 0x45A4; 0x45B3; 16; PARAM_2; 1;
+                    0; 0; 0;?
+
+* -------------------------------------------------------------------- 
+* Stockage Reférence industrielle
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;23;   0;
+                     2; NUMETIQ1; 3;
+                     0; 0; 0;?
+
+* -------------------------------------------------------------------- 
+* Stockage Reférence Commerciale
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;24;   0;
+                     2; NUMETIQ2; 2;
+                     0; 0; 0;?
+
+* -------------------------------------------------------------------- 
+* Stockage PT
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;25;   0;
+                     2; NUMETIQ3; 1;
+                     0; 0; 0;?
+
+* -------------------------------------------------------------------- 
+* Stockage zone Perso
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;26;   0;
+                     2; NOMVERSION3; 14;
+                     0; 0; 0;?
+                     
+* -------------------------------------------------------------------- 
+* Lecture de l'IMEI simlockée en eeprom
+*
+* nom           : ReadEeprom ( fonction PET_ReadEeprom / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances	: 0
+* nb paramètres : 6
+* Paramètre 1   : Identifiant de la zone mémoire où l'IMEI simlockée est sauvegardée
+* Paramètre 2   : Adresse de début de zone à mettre à jour
+* Paramètre 3   : Adresse de fin de zone à mettre à jour
+* Paramètre 4   : Nombre d'octets
+* Paramètre 5   : type de zone à lire parmi :NONE, BOOT, DRV_FLASH_1,
+*                  DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*                  CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*                  TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* Paramètre 6   : Numéro de voie
+* -------------------------------------------------------------------- 
+#; ReadEeprom; 27;  0; 
+                    6; 4; 0x15E; 0x179; 28; ZONE_EEPROM; 1;
+                    0;  0; 0;?
+
+* -------------------------------------------------------------------- 
+* Lecture du PT flash
+* nom           : ReadEeprom ( fonction PET_ReadEeprom / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances	: 0
+* nb paramètres : 6
+* Paramètre 1   : Identifiant de la zone mémoire où sauvegarder le buffer
+* Paramètre 2   : Adresse de début de zone à lire
+* Paramètre 3   : Adresse de fin de zone à lire
+* Paramètre 4   : Nombre d'octets
+* Paramètre 5   : type de zone à lire parmi :NONE, BOOT, DRV_FLASH_1,
+*                  DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*                  CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*                  TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* Paramètre 6   : Numéro de voie
+
+* -------------------------------------------------------------------- 
+#; ReadEeprom; 28;  0; 
+                    6; 1; 0x45B4; 0x45BF; 12; PARAM_2; 1;
+                    0;  0; 0;?
+
+* -------------------------------------------------------------------- 
+* Stockage zone Technique
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;29;   0;
+                     2; NOMVERSION2; 11;
+                     0; 0; 0;?
+
+* -------------------------------------------------------------------- 
+* Stockage zone Driver
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;30;   0;
+                     2; NOMVERSION1; 10;
+                     0; 0; 0;?
+
+* -------------------------------------------------------------------- 
+* Stockage zone Code
+*                         																			          
+* nom          : SetDataTest( fonction PEC_SetDataTest/ "ECSPROC.C" ) 		
+* nb mesures   : 0
+* nb param.    : 2
+* 1er param.   :  Identifiant du paramètre dans EntFicResu à stocker
+* 2ème param.   : Identifiant mémoire du buffer à stocker
+* nb instances	: 0
+* -------------------------------------------------------------------- 
+#;SetDataTest;31;   0;
+                     2; VERSOFT; 15;
+                     0; 0; 0;?

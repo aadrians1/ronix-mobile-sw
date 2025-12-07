@@ -1,0 +1,794 @@
+=========================================================================
+//
+//      THE MOST RECENT NEWS ABOUT IDA
+//      ------------------------------
+//
+//              Created 17-Jul-91       by Guilfanov I.
+//
+//  *** - bug fixes
+//  +++ - enhancements and new features
+//
+//  Now I'm working on the next versions of IDA. My plans for the near
+//  future:
+//    - Support for other processors like 8051,48 etc.
+//    - Support for UNIX format files, namely XCOFF.
+//    - Support for PowerPC.
+//    - May be, IDA will live in protected mode (I didn't decide it yet)
+//
+//  If you want to support my efforts, please register! The more registered
+//  users - the faster release of new versions.
+//
+=========================================================================
+
+    ษออออออออออออออป
+    บ Version 2.09 บ
+    ศออออออออออออออผ
+--------------------------------------------------------------------------
+20.09.94
+--------------------------------------------------------------------------
++++ IDA has a small built-in text file editor.
++++ many tiny improvements.
+
+--------------------------------------------------------------------------
+19.09.94
+--------------------------------------------------------------------------
++++ LX files loader is rewritten. Now it should work.
+
++++ If the user selects an area (using Alt-L) and presses C (convert to
+    instructions), IDA will analyse the selected area more deeply:
+      - it will guess indirect table jumps
+      - it will convert to data zero bytes
+      - it will convert to instructons all other bytes.
+    I understand that this is not enough, wait and I'll do more in this
+    direction.
+
+--------------------------------------------------------------------------
+18.09.94
+--------------------------------------------------------------------------
++++ Now IDA knows about segment selectors, so you can create segments
+    beyond 1mb. You create a segment beyond first Mb, it can't accessed
+    using 16-bit segment & 16-bit offset. So, IDA creates a virtual
+    selector which points to such segment. Now you can use almost all
+    32-bit address space, up to 0xFF000000. Addresses higher than this
+    address are used by IDA for auxillary things.
+    IDA maintains virtual selectors automatically. When a segment is
+    created, IDA creates a virtual selector if nessesary, and deletes it
+    when the segment is being killed. Max number of selectors - 64.
+
++++ ALT-J (make jumps table) works for 32-bit segments.
+
+--- I recompled IDA to use 386 instruction, so it won't run on 286 anymore.
+    Sorry.
+
+--------------------------------------------------------------------------
+17.09.94
+--------------------------------------------------------------------------
++++ Now IDA knows about short and long displacements and marks unnessarily
+    long instructions with <BAD> marks. For example:
+	8B840000      mov     ax, [si+0]
+	8B850000      mov     ax, [di+0]
+    will be converted by TASM to
+	8B04	      mov     ax, [si]
+	8B05	      mov     ax, [di]
+    so these instructions are <BAD>. Don't forget that <BAD> marks are
+    turned off by default.
+    Thanks to Vadim Belman, 2:464/15 who pointed out this fact.
+
++++ Now you can look at the dump of the program being disassembled.
+    You simply press Shift-F3 and see a dump of the program bytes
+    (with ASCII representation). Again press Shift-F3 - and you see normal
+    view of the program. You can freely use navigation commands in the
+    dump mode.
+
+--------------------------------------------------------------------------
+16.09.94
+--------------------------------------------------------------------------
+*** Fixed many bugs in disassembling 32-bit mode instructions.
+
++++ Added 387 processor instructions.
+
++++ Now IDA knows about 'large' & 'small' keywords for Intel 80x86.
+
++++ Added 486,Pentium instructions.
+
++++ Escape character (0x1B) is allowed in ASCII strings.
+
++++ The instruction
+	imul r,r,num
+    is showed as
+    	imul r,num
+    (asked by Grisha Rusanov)
+
++++ Two important changes: when you use 'convert to instruction' and
+    'convert to unexplored' commands and have an area highlighted using
+    the anchor, all bytes in the highlighted area will be affected by
+    these commands. For example, if you drop anchor at the start of the
+    file, go to the end of file and press 'C', IDA  will try to convert all
+    bytes of the program into instructions.
+
+--- -R switch meaning is reversed: it means 'load MS Windows resources'
+
++++ IDA doesn't try to fix relocations of self-loading MS Windows
+    programs. It fixes relocations only for the first segment. If I/O error
+    occur during loading the file, IDA simply warns you about it and
+    continues to load. The I/O errors may occur because of bad input file
+    structure.
+
++++ 2 new commands added (menu Options|Toggle display):
+	- Display segment part of addresses on/off
+	- Display <BAD> instructions on/off
+    Please read about <BAD> instruction in the online help (An instruction
+    is marked as <BAD> if it is undocumented or it will change its length
+    after compilation). I didn't change IDA database format number, so
+    for the old bases they will not be displayed. But you can switch them
+    on.
+
+*** Fixed a bug: you wasn't able to create segments sized about 64kb or more.
+    IDA would not move other segments properly.
+    Thanks to Dimka Kozlov (2:5020/246) for the detailed bug report.
+
+--------------------------------------------------------------------------
+01-Sep-94
+--------------------------------------------------------------------------
+*** Fixed a bug with segment registers emulation.
+
+*** Fixed a bug: you couldn't start "IDA -c file" from the root directory!
+
+*** Fixed a bug with segments.
+
++++ The NE files loader is rewritten
+
+    ษออออออออออออออออออป
+    บ Version 2.08beta บ
+    ศออออออออออออออออออผ
+--------------------------------------------------------------------------
+04-Jul-94
+--------------------------------------------------------------------------
++++ LX support added. Not complete, namely:
+	- no support for jump tables (hotkey Alt-J)
+	- no support for imported modules (IDA doesn't even looks them up)
+	- problems with segment registers and segment bases
+	- not all offset & segment selectors supported
+	- max address avialable to disassebled program - 0x0F000000
+    Despite of these limitations, I hope that you can try to use it.
+    Sorry, I have no time for fix them all. Please note that this is
+    a BETA version. I appreciate any reports about bugs,features, etc.
+
++++ Now  you can change represenation of automatically generated names.
+    See 'Options' menu.
+
++++ Several tiny modifications.
+
+--------------------------------------------------------------------------
+02-Jul-94
+--------------------------------------------------------------------------
+*** Fixed a bug with zero length segments in NE format files. IDA would
+    report silly disk read error and exit, because it couldn't read past
+    end of file.
+    Thanks to: Trigub Serge.
+
+*** Fixed a bug with 32-bit form of movsX,cmpsX... etc instructions. If these
+    instruction have a segment override prefix, IDA would disassemble them
+    uncorrectly. The same was with 'xlat' instruction.
+    Thanks to: Trigub Serge.
+
+*** Now IDA knows all about NE format files (I hope ;-). Namely the following
+    flags/features are recognized now:
+	- Application types (compatible,incompatible,uses PM API)
+	- Processor types (by default IDA sets i80286 real)
+	- Long file names support
+	- 32-bit segments
+	- Iterated segments
+	- Conforming segments
+	- 286 DPL bits
+    Among these flags IDA uses only processor type and 32-bit segments flags.
+    All other flags are simply copied to the output text with appropriate
+    comments.
+    Thanks to: Trigub Serge.
+
+    ษออออออออออออออป
+    บ Version 2.07 บ
+    ศออออออออออออออผ
+--------------------------------------------------------------------------
+21-Jun-94
+--------------------------------------------------------------------------
+*** I fixed a bug which may cause IDA to hang at startup. Sorry :-(
+    Today I release a new version because of this bug.
+
++++ Comments are inserted using a text dialog box. You can use a built-in
+    clipboard.
+
+*** I threw out the 'Shell' command - it doesn't work and makes no sense
+    because there is little memory.
+
+--------------------------------------------------------------------------
+19-Jun-94
+--------------------------------------------------------------------------
++++ 'Make Jump Table' command (hotkey Alt-J) is more intelligent  now.  It
+    itself tries to find  out  the  table  address  and  size.  If  you've
+    specified the table address  using  'Make  Offset'  command,  it  will
+    simply present this address. If the table address it  not  valid,  IDA
+    will beep.
+
++++ Pascal strings: the string length byte is decimal by default.
+
++++ 'Enter alternative operand' commands proposes the current representation
+    as the default string. Many people asked me to do so, it works this way
+    now.
+
+--------------------------------------------------------------------------
+18-Jun-94
+--------------------------------------------------------------------------
++++  Support  for  Intel  860  XP,  Intel  860  XR  processors  is  added.
+    Unfortunately, IDA doesn't support COFF format files - now I'm  forced
+    to implement it... ;-) This is not test!!! I don't have an  assembler,
+    nor a computer, nor even an executable file for these processors!
+
++++ Now IDA loads IBM PC files into 1000:0 by default.
+
++++ NE format files: I have only Borland documentation on NE format files.
+    I didn't find all relocation types in this documentation. For example,
+    when I tried to disassemble BCC.EXE, there was relocation type 0x4.  I
+    think  that  bit  2  of  the  relocation  type  designates   'additive
+    relocation'  (anology  with  LX  file  format).  When  IDA  encounters
+    relocation  type  with  bit  2  set,  it  interprets  it  as  additive
+    relocation. PLEASE, if you have full documentation on NE  file  format
+    and I'm wrong with 'additive relocation', let me know!  FYI:  now  IDA
+    knows about relocation types 0,1,2,3 and bit 2(additive).
+
+--------------------------------------------------------------------------
+13-Jun-94
+--------------------------------------------------------------------------
++++ Repeatable comments!
+        All items that refer to the current item will have this comment by
+        default. This type of comments may be used to describe subroutines,
+        data items etc., because all calls to the subroutine will have the
+        repeatable comment.
+        2 new things:
+          - MakeRptCmt,ToggleRptCmt added to 'ida.cfg'.
+          - MakeRptCmt(),RptCmt() functions added to IDC.
+   Hot keys:
+        ; - make repeatable comment
+        : - make regular comment
+
+--------------------------------------------------------------------------
+05-Jun-94
+--------------------------------------------------------------------------
++++ Added a new assembler for the Intel 8080 processor:
+        - assembler X-M-80 by Leo Sandy (only 6 chars in names)
++++ Added a new assembler for the Z80 processor:
+        - ASxxxx by Alan R. Baldwin v1.5
+          (this assembler produces incorrect code for SUB instruction)
+        - assembler X-M-80 by Leo Sandy (only 6 chars in names)
+        - A80 by ANTA electronics
+          (as far as I know, this assembler is used to program Automatic
+           Caller Identification devices in Russia)
++++ Added a new assembler for the HD64180 processor:
+        - ASxxxx by Alan R. Baldwin v1.5
+          (this assembler produces incorrect code for SUB instruction)
+*** Work with undocumented registers of the Z80 processor like xl,etc.
+    is changed.
++++ 3 changes in IBM PC analyser:
+        - Now IDA knows about AAD,AAM <n> instructions where n != 10
+          It displays them as data bytes.
+        - Now IDA distinguishes jmp and jmp short.
+        - Now IDA knows about the tiny and long OR,XOR,AND,CMP,ADD,ADC,SUB,SBB
+          instructions and displayes the large instructions that may be
+          coded as tiny instructions as data bytes, because TASM will produce
+          tiny code. Now we can get output text that produces exactly the
+          same code as the input code.
+
+--------------------------------------------------------------------------
+04-Jun-94
+--------------------------------------------------------------------------
++++ I forgot to describe several changes, they exist in v2.06:
+        - 'MakeVariable' command works as a trigger. When you mark a byte
+          as variable, all xrefs to it will disappear and will be
+          recalculated. Don't be afraid.
+        - If IDA v2.06 detects IDA database from version v2.05 it will
+          ask your permission to convert to into newer format.
+        - You can select any processor type within the current processors
+          line.
+        - There was a small bug in PC emulator: IDA thought that 'int N'
+          command passes execution to 0:4*N. Fixed.
++++ File Name Dialog box added. Now it is possible to browse directories
+    and search for the file names.
+
+    ษออออออออออออออป
+    บ Version 2.06 บ
+    ศออออออออออออออผ
+--------------------------------------------------------------------------
+31-May-94
+--------------------------------------------------------------------------
+*** Fixed a bug in bTree: if memory is not enough, it could display a  bad
+    error message or even could crash.
+
++++ Intel 8080/8085 support is enhanced. Now IDA knows about various
+    assemblers and can generate the output text for them. For the moment IDA
+    knows the following 8085 assemblers:
+      - PseudoSam by PseudoCode
+      - Table Driven Assembler (TASM) by Speech Technology Inc.
+      - Cross-16 by Universal Cross-Assemblers
+        (doesn't know about 'cz' instruction)
+      - A80 by ANTA electronics
++++ Z80 support (including undocumented instructions):
+      - Avocet Macro Preprocessor v1.0 by Avocet Systems, Inc.
+        (doesn't like long lines >80 in the input file, IDA doesn't check this)
+      - PseudoSam by PseudoCode
+        (doesn't understand add ix,ix; uses only 8 chars in the names!!)
+      - Table Driven Assembler (TASM) by Speech Technology Inc.
+        (doesn't understand 'rst 0', needs 'rst 00h',has bugs, see help)
+      - Cross-16 by Universal Cross-Assemblers
+        (doesn't understand 'set' instruction,has bugs)
++++ Binary line prefixes are added. They are displayed by default.
+    The binary line prefix is:
+
+    seg000:1234 55        push bp
+                ^^^^^^^
+    i.e. assembled code. You can show/hide them using
+    {Options|Toggle display} menu. IDA shows 8 bytes per line, you can't
+    change this.
+
+--------------------------------------------------------------------------
+15-May-94
+--------------------------------------------------------------------------
++++ Snow check is disabled in Tvision. Faster several times!!! Tvision  is
+    shipped with snow detection by default :-(((. Today I learned about it
+    and disabled it. Blazing speed!!! Also, several bugs  in  TVision  are
+    fixed (I don't think that they affected IDA performance).
+
++++ When you try to open a new IDAView  window,  sometimes  IDA  hangs.  I
+    inserted a debugging code into IDA. If you see that IDA hangs, you may
+    try to push Alt-Space key, a coredump will be created.
+
+    ษออออออออออออออป
+    บ Version 2.05 บ
+    ศออออออออออออออผ
+--------------------------------------------------------------------------
+16-Mar-94
+--------------------------------------------------------------------------
++++ When the user types in the string in the list  viewer,  (like  in  the
+    Norton Commander using Alt-keys), IDA tries to find the matching  line
+    not only below the current position, but in the whole list.  The  same
+    is when the user searches for the substring (using '?').
+
++++ 'Open names window' command added. See 'View' submenu.
+
++++ Histories for different types of input are separated from each other.
+
++++ You can scroll horizontally list viewer windows.
+
++++ In the list viewers the  'refresh  window'  command  (Ctrl-U)  is  not
+    needed because IDA automatically refreshes a list viewer  window  when
+    you select it.
+
+--------------------------------------------------------------------------
+14-Mar-94
+--------------------------------------------------------------------------
+*** Several bugs fixeds, many small changes
+
+*** Alt-R (any offset) command works as before now  (proposes  a  list  of
+    segments you can select from).
+
+--------------------------------------------------------------------------
+11-Mar-94
+--------------------------------------------------------------------------
+*** I've got tired of the bugs in the Tvision int 21h handler. Another bug
+    is fixed there.
+
+--------------------------------------------------------------------------
+06-Mar-94
+--------------------------------------------------------------------------
++++ New: Produce ASM file, Produce LST file commands.
+
++++ Indirect jumps table size is proposed by IDA. It  proposes  a  maximal
+    possible value. Be careful!
+
++++ MS Windows entry points are searched and marked as instructions at the
+    loading time.
+
+    ษออออออออออออออป
+    บ Version 2.04 บ
+    ศออออออออออออออผ
+--------------------------------------------------------------------------
+05-Mar-94
+--------------------------------------------------------------------------
++++ Now  you  can  open  windows  with  program  segmentation  or  segment
+    registers. See 'View' submenu for details.
+
+--------------------------------------------------------------------------
+03-Mar-94
+--------------------------------------------------------------------------
+*** Fixed a bug with help system in the menus: if the user presses F1,  he
+    can't escape help system till he quits menuing system.
+
+--------------------------------------------------------------------------
+02-Mar-94
+--------------------------------------------------------------------------
+*** Fixed a bug in  error  messages  display.  IDA  didn't  report  memory
+    allocation errors properly: it reported any other error. IDA  requires
+    about 500K memory!
+
+*** Fixed a bug: very small files (less  than  MS  DOS  exe  file  header)
+    couldn't be disassembled.
+
+    ษออออออออออออออป
+    บ Version 2.03 บ
+    ศออออออออออออออผ
+--------------------------------------------------------------------------
+26-Feb-94
+--------------------------------------------------------------------------
+*** Fixed a bug in plain exe-file loading. The previous version of IDA was
+    not able to load plain exe-files.
+
++++ map2idc.exe utility is enchanced.
+
+*** References beyond segment boundaries are displayed correctly now.
+
+    ษออออออออออออออป
+    บ Version 2.02 บ
+    ศออออออออออออออผ
+--------------------------------------------------------------------------
+25-Feb-94
+--------------------------------------------------------------------------
+*** Fixed a bug in IDC engine
+
++++ 4 new switches added:
+        -R - don't load MS Windows resources.
+                IDA doesn't analyse the resources (see file 'resource.idc'
+                for the example), so you may want to skip resources.
+        -W### specify MS Windows directory.
+                Default Windows directory is c:\windows. If you have installed
+                Windows in another directory, specify this switch. IDA will
+                lookup DLLs in this directory.
+        -x - don't create initial segmentation
+                This is useful if you want to upgrade your database using
+                an IDC file created by 'Unload' command. The 'Unload'
+                command is used when you want to switch to a new version
+                of IDA. Usually each new version of IDA has its own database
+                format. To create a new format database, you need:
+                        - to issue the  'Unload' command for the old
+                          database (using old version of IDA). You will
+                          receive an IDC file containing all information
+                          from your old database.
+                        - to reload your database using new IDA with switch
+                          -x.
+                        - to compile and execute the IDC file with command
+                          'Execute IDC file' (usually F2)
+                IDA with -x switch doesn't create segmentation, thus the
+                loading goes faster. This is the only benefit of this switch.
+                This switch doesn't affect NE format files.
+        -n - don't load New Executable Format.
+                Even if MS Windows executable found, it will be loaded as
+                an ordinary EXE file.
+
++++ 2 IDC example files are created:
+        kernel.idc
+                How to insert user-defined comments for DLL entry points
+                You can add your comments too.
+        resource.idc
+                How to analyse MW Windows resources using IDC.
+
++++ Now IDA regularly checks disk space and if it is less than 100k,
+    it warns the user. It is not recommended to work with IDA if the disk
+    space is low!
+
+*** Fixed 2 bugs in TVision (help subsystem)
+
++++ Help index created. Press Shift-F1 to get help index.
+
+--------------------------------------------------------------------------
+24-Feb-94
+--------------------------------------------------------------------------
++++ New Executable Format files can be disassembled now. IDA displays
+    resources as byte arrays for the moment. In order to give symbolic
+    names to the external references IDA looks for the MS Windows files
+    in the:
+      - current directory
+      - C:\WINDOWS
+      - C:\WINDOWS\SYSTEM
+
+    In the future there will be a way to specify Windows directory.
+
++++ Display of offsets is changed. Now IDA tries to display an offset even
+    if the target address is beyond segment bounds. The 'EOS_...'  symbols
+    are not generated anymore.
+
++++ There was a limit on the number of contigious chunks in  the  program.
+    You was able to create up to 51 distinct, non adjacent  segments.  Now
+    you can create up to ~ 170 such segments.
+
+--- Register values are not saved into the disk anymore.
+    As experience showed, this is not so useful and wastes disk space.
+
++++ Now IDA leaves a file names 'ida.idl' after its work. You  can  simply
+    delete this file, it is left for debugging purposes. It  contains  the
+    compiled form of IDC programs.
+
+    ษออออออออออออออป
+    บ Version 2.01 บ
+    ศออออออออออออออผ
+--------------------------------------------------------------------------
+16-Feb-94
+--------------------------------------------------------------------------
++++ Offset bases are kept as 32-bit effective addresses.  This  allows  to
+    have offsets from any point of  the  program.  For  example,  you  can
+    create an expression:
+
+      offset A - (offset B)
+
+    specifying 'B' as a base the offset. The 'offset by any base' command
+    is changed. Now it asks to enter an address.
+
++++ Many small changes and enchancements.
+
++++ 'Unload' command added. This command creates an IDC file. The IDC file
+    can be executed at any time later to recreate IDA  database  from  the
+    scratch. This command provides a way to upgrade to newer IDA  versions
+    when IDA database format is changed. Another point is that  this  file
+    can be used as a safety measure (from IDA database crashes).
+
++++ The 'Execute IDC command' is splitted into 2 commands:
+      - execute an IDC command
+      - execute an IDC file (that means to execute 'main' function)
+
+--------------------------------------------------------------------------
+12-Feb-94
+--------------------------------------------------------------------------
++++  IDC  language  is  completely  rewritten.  Now  there  are  2  steps:
+    compilation and execution. All C execution flow control structures are
+    supported, except the following:
+      - labels
+      - switch statement
+    See file 'idc.doc' for details.
+
+    ษออออออออออออออออออออป
+    บ Version 2.01 beta0 บ
+    ศออออออออออออออออออออผ
+--------------------------------------------------------------------------
+25-Jan-94
+--------------------------------------------------------------------------
++++ New commands:
+        - delete a segment
+        - change segment bounds
+
+--------------------------------------------------------------------------
+09-Jan-94
+--------------------------------------------------------------------------
+*** Fixed a bug in TurboVision. It appeared only on machines with 1 floppy
+    drive. In this case TurboVision tries to check that the  floppy  drive
+    emulates the needed disk (A for real,B  for  fantom).  The  code  that
+    implements this check is lousy. I completely rewrote this code.
+
+*** Bug fixed: If the user leaves IDA when  the  cursor  is  at  the  line
+    number 30 (for example) and next time he runs IDA with 25 lines on the
+    screen, the cursor is not on the screen. (sometimes IDA hangs)
+
+
+    ษอออออออออออออออออออป
+    บ Version 2.0       บ
+    ศอออออออออออออออออออผ
+--------------------------------------------------------------------------
+07-Jan-94
+--------------------------------------------------------------------------
++++ 'Forms' are created. They allow the  user  to  enter  multiply  inputs
+    simultaneously. The user interface will be rewritten to use the forms.
+
+*** Small bug is fixed with  names.  It  existed  only  in  ida2.0  beta2.
+    references to the second (or third...) bytes of an item would  display
+    incorrectly.
+
+--------------------------------------------------------------------------
+03-Jan-94
+--------------------------------------------------------------------------
+*** Fixed a tiny bug in void marks. This bug exists only in IDA2.0 beta2.
+
++++ Now IDA checks all near jumps and  calls  that  they  are  within  one
+    segment. If not, it tries to move the segment.
+
++++ 'MakeArray' command proposes maximal size of  array  considering  file
+    segmentation.
+
++++ Now it is impossible to define an item  (instruction  or  data)  which
+    crosses segment boundaries.
+
++++ By default line prefixes are shown.
+
++++ Extended/expanded memory swapping options are moved into configuration
+    file. Only overlayed code will be swapped. By default IDA will use 256
+    kb ext and 256 kb exp memory. However, IDA needs  only  ~200kb  memory
+    for swapping.
+
+*** Fixed a bug in auto-analysis toggler. It was impossible  to  turn  the
+    analysis off.
+
++++ IDA doesn't disassemble instructions after overlay interrupt (3Fh).
+
++++ 'Repaint'  command  is  added.  See  menu  File...  IDA  automatically
+    repaints the desktop after database repairing.
+
++++ Now 'Shell' command works again. (it invokes  DOS  shell  temporaryly)
+    Not so much memory is left (~60Kb).
+
++++ Help subsystem improved: F5-zoom help  window,  Backspace  -  previous
+    help screen.
+
+--------------------------------------------------------------------------
+29-Dec-93
+--------------------------------------------------------------------------
+*** Fixed a tiny bug in automatic analysis queue.
+
++++ Now IDA searches for 'Borland C++ - Copyright 1991 Borland  Intl.'  in
+    the loaded file, and if finds, it assumes this segment to  be  default
+    data segment. It sets default DS value for all segments  to  point  to
+    this segment.
+
++++ Memory allocation is changed: now bTree gets less memory.
+
++++ If segment register doesn't change its value at the change  point,  it
+    is not displayed in the 'segment registers list'.
+
++++  'set  default  segment  register  value'  command  added.  See   menu
+    Edit|Registers...
+
+--------------------------------------------------------------------------
+26-Dec-93
+--------------------------------------------------------------------------
+*** Fixed a bug in keyboard macros. It was impossible to redefine a macro.
+
++++ Each segment has default segment register values.  Generally,  segment
+    definitions are cleaned, now IDA supports all  segment  features.  (at
+    least from intel specification of SEGDEF's):
+       - alignment
+       - combination
+       - use16/use32
+       - Phar Lap extensions (are not displayed, for the future)
+       - class names
+       - overlay names (are not displayed, can't be changed yet)
+    Class names are not deleted. Once defined, they exist forever, even if
+    the user chooses another class name for a segment. Segment  names  are
+    checked to be a unique name in the program. Phar  Lap  extensions  and
+    overlay names are defined; the intention is to  display  them  if  OBJ
+    file is being disassembled.
+
+    ษอออออออออออออออออออป
+    บ Version 2.0 beta2 บ
+    ศอออออออออออออออออออผ
+--------------------------------------------------------------------------
+19-Dec-93
+--------------------------------------------------------------------------
++++ Huge arrays (more than 64K) can be displayed fast.
+
++++ File core.ida is merged into file 1.ida. It works faster and  we  have
+    more memory.
+
++++ 'Toggle line prefixes display'  command  added.  It  shows/hides  line
+    prefixes. Now 'GenAsm' command creates a file  with  or  without  line
+    prefixes depending on this switch value. By default, prefixes are  not
+    shown.
+
++++ Now it is  possible  to  view  many  files  of  umlimited  size  using
+    'ViewFile' command.
+
+
+--------------------------------------------------------------------------
+18-Dec-93
+--------------------------------------------------------------------------
+*** Fixed a bug in keyboard macros.
+
++++ File  1.ida  (feature  flags)  can  keep  features  of  non-contigious
+    addresses.
+
++++ IDC command "view" can be  accessed  from  main  IDA  menu.  And  this
+    command adds a new window to the screen, allowing the user to continue
+    his work.
+
++++ Immediate arguments of instructions  can  be  displayed  as  character
+    constants. Before it was possible only for special cases of arguments.
+
+--------------------------------------------------------------------------
+12-Dec-93
+--------------------------------------------------------------------------
++++ Data values can be displayed as character constants. For example,
+        dw 41h,42h,43h
+    may be converted (using 'MakeChar' command) to
+        dw 'A','B','C'
+
++++ Segment registers use less disk space now. This  should  lead  to  the
+    smaller IDA database (file 0.ida).
+
+*** There were some problems with processor types. Now this is fixed.
+
+--------------------------------------------------------------------------
+11-Dec-93
+--------------------------------------------------------------------------
+
+*** If during IDA database compression we run out of the disk  space,  the
+    disk compression program would fall into an  infinite  loop,  printing
+    error messages on the screen. This is fixed.
+
++++ Virtual Arrays format is changed. Now they can have multiply chunks of
+    contigious subarrays. This will  be  used  for  virtual  segments  and
+    structures. They will come soon!
+
+*** DOS critical errors would lead to program hanging if the user  selects
+    to retry. Now this is fixed. The problem was with  Tscreen  module  of
+    Turbo Vision. This module can't reside in the overlay  because  it  is
+    called from the DOS error handler.
+
+--------------------------------------------------------------------------
+06-Dec-93
+--------------------------------------------------------------------------
+
+*** Fixed a bug in bTree. This bug leaded to the database corruption  with
+    fatal error message. Nobody reported me about it, I hope  that  nobody
+    has encountered it. I've found it after modifications from 04.12.93.
+
+--------------------------------------------------------------------------
+04-Dec-93
+--------------------------------------------------------------------------
+
++++ Some changes to the database format were made. Now IDA  analyses  code
+    sequ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 beta0
+    didn't create segments properly. Now it works.
+
++++  Now  IDA  recognizes  and  marks  some  typical  byte  sequences   as
+    instructions.
+
+    ษอออออออออออออออออออป
+    บ Version 2.0 beta  บ
+    ศอออออออออออออออออออผ
+--------------------------------------------------------------------------
+08-Nov-93
+--------------------------------------------------------------------------
+
++++ Binary search input line string format is changed.
+    Now you can specify any sequence of bytes including zeroes etc.
+    Examples:
+      0xD, 0xa, "Test"   - will search for the CR,LF
+                           followed by the word "Test".
+      7 8 9 10           - will search for numbers
+      027                - will search for ESC code.
+
+--------------------------------------------------------------------------
+02-Nov-93
+--------------------------------------------------------------------------
+
+*** Some bugs fixed, help system improved.  Preparing  to  distribute  the
+    beta version.
+
+--------------------------------------------------------------------------
+16-Sep-93
+--------------------------------------------------------------------------
+
++++ TVision interface
+    IDA searches its files in the ida.exe directory and PATH.
+
+    ษอออออออออออออออออออป
+    บ Version 1.8a beta บ
+    ศอออออออออออออออออออผ
+
+--------------------------------------------------------------------------
+17-Feb-93
+--------------------------------------------------------------------------
+
+*** Btree class opens files in readonly mode if  Btree  will  not  change.
+    (the previous version of Btree did it, but I was forced to modify  the
+    new one for this). I need this for IDA.INT file.
+
+--------------------------------------------------------------------------
+18-Dec-92
+--------------------------------------------------------------------------
+
+*** New Btree (in C++,written by Pol Rousnak) is used. Althrough  I  tried
+    to test it myself, bugs are  very  possible.  Again,  version  1.8  is
+    incompatible with previous  versions.  For  future  versions,  I  will
+    maintain compatibility (or will write a  special  utility  to  upgrade
+    your databases). Again, IDA is much faster now.
+
+    ษอออออออออออออป
+    บ Version 1.7 บ
+    ศอออออออออออออผ
+
+
+    The history is deleted.

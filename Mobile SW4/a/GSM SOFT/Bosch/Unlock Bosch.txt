@@ -1,0 +1,101 @@
+909 / S
+
+
+Ihr braucht auf jeden fall ein Datenkabel das ihr entweder selber bastelt (siehe Blid) oder hier bestellt 
+
+(http://www.Service4Handys.de/shop)
+
+
+
+
+
+
+Und so sieht der unlocker aus:
+
+
+
+ 
+
+1. Handy mit SIM einschalten
+
+2. Handy mit Kabel verbinden
+
+3. Unlocker downloaden und  starten
+
+4. COM Port auswahlen, Code type (Nck und Provider) auswahlen... die anderen sind in DE unwichtig, button "Read Code" drucken, ein Code sollte jetzt im wei?en Feld erscheinen
+
+5. Den Code dann einfach in euer Handy eintippen!
+
+
+
+Feedback bitte im Forum
+
+
+ 
+
+Anleitung Unlock Bosch 9xx/8xx/6xx/5xx
+
+
+
+
+
+Mit dieser Software kannst du den "Entsperrcode" deines Bosch 9xx/8xx/6xx/5xx aller Serien auslesen.
+
+Dafur brauchst du lediglich:
+- Dein gesperrtes Bosch Phone 
+- Ein Kabel "Bosch 509/607 und/oder 908/909
+- Die Software All Bosch V1.2 by Piotr
+
+1. Entpacke All Bosch V1.2 in ein beliebiges Verzeichnis. 
+Schalte das Telefon an, schlie?e es an das Kabel an und an den Computer an.
+
+
+2. Wahle den COM-Port aus, an dem das Kabel angeschlossen ist und klicke auf "NCK".
+
+
+3. Jetzt nur noch den Code direkt am Telefon mit einer SIM-Karte, die dein Telefon nicht annimmt, eintippen und dein Bosch ist frei!!!
+
+
+
+traduit by |kItt_
+
+ 
+
+Anleitung Unlock Bosch 909 / 909S / 509 (weitere Modelle sollten gehen, wurden allerdings von uns noch nicht getestet, mailt mir wenn Ihr mit anderen Modellen Erfolg habt)
+ 
+
+
+ 
+
+1. Datenkabel an Handy und Rechner anschlie?en
+
+2. NEO?s Bosch Unlocker V2.1 (Beta) downloaden
+
+2. Auf den Button "Unlock Phone" drucken
+
+3. kurz warten bis auf der Anzeige "done" steht
+
+4. Karte eines anderen Netzbetreibers einlegen und es wird ein Code verlangt der immer 12345678 ist!
+
+5. Dann wieder eine andere Karte einlegen und den Code eingeben, ca 2-3 mal dann wird die Eingabe nicht mehr verlangt.
+
+6. Viel Spa? beim testen ;)
+
+Solltet Ihr Probleme mit dem Unlocken haben einfach im Forum Posten oder Anfragen an DarkAngel6666@gmx.net
+
+ 
+
+Bosch 7xx, 8xx, 9xx ALL locks unlocker:
+
+
+
+
+1. Unlock Tool Downloaden
+
+2. C-Bus Kabel ans Bosch anschlie?en, einschalten, COM-Port wahlen und auf "Remove ALL Locks" klicken, fertig, ;-)!
+
+
+
+(c) 2001 by dERL [GGUG], dERL@gmx.ch, getestet mit Bosch 909
+
+ 

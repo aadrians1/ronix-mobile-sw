@@ -1,0 +1,134 @@
+  CHAPTER 1
+
+ Introduction
+    1.1 Product Description
+    1.2 Using This Manual
+    1.3 System Requirements
+
+           1
+
+ 1.1 Product Description
+
+Soft-ICE is a software debugging tool that provides hardware-level
+debugging capabilities to PCDOS and MSDOS debuggers.
+
+Soft-ICE uses 80386 protected mode to run DOS in a virtual machine. This
+gives Soft-ICE complete control of the DOS environment. Soft-ICE uses
+80386 protected mode features, such as paging, I/O privilege level, and
+break point registers, to add hardware-level break points your existing
+DOS debugger.
+
+Soft-ICE was designed with three goals in mind:
+    1. To utilize the 80386 virtual machine capability to
+        debugging features that are impossible or
+        prohibitively slow with software-only debuggers
+        (e.g., real time hardware-level break points,
+        memory protection, breaking out of hung
+        programs, etc.).
+    2. To work with existing debuggers. We wanted to
+        provide a tool that worked with existing tools. We
+        designed Soft-ICE in such a way that you don't
+        have to learn a new debugger to get powerful
+        hardware debugging capabilities.
+    3. To be a user-friendly program with a window that
+        pops up instantly and does not get in the way. All
+        of the Soft-ICE commands were designed to fit in a
+        small window so that information on the screen
+        behind Soft-ICE could still be viewed. Dynamic
+        on-line help assists users who only use Soft-ICE
+        occasionally.
+
+The Soft-ICE program features:
+     * real time break points on memory reads/writes,
+        port reads/writes, memory ranges, and interrupts
+
+     2
+
+     * back trace history ranges
+     * symbolic and source level debugging
+     * an environment that works with existing debuggers
+     * full EMM 4.0 support
+     * backfilling to raise base memory past 640K for
+          monochrome systems
+     * a window that can pop up at any time
+     * the ability to break out by keystroke even if
+          interrupts are disabled
+     * debugger code that is isolated by 80386 protected
+          mode. This prevents an errant program from
+          modifying or destroying Soft-ICE; even if DOS
+          clobbered, Soft-ICE will still work
+     * the ability to configure Soft-ICE to use no memory
+          in the lower 640K if the system has more than 640K
+     * user-friendly dynamic help
+     * the ability to be used as a stand-alone debugger.
+          This ability is useful if you are debugging loadable
+          device drivers, interrupt handlers, or boot
+          sequences where traditional debuggers can't go,
+          if your debugger suffers from re-entrancy problems
+     * a soft boot capability that allows debugging with
+          non-DOS operating systems or self-booting
+          programs
+     * a simple installation, with no DIP switches to set
+          no I/O ports taken up, and no memory address
+          space conflicts
+     3 
+
+NOTE:
+   Soft-ICE will work with real address mode programs
+   only. It will not work with programs that use 80286 or
+   80386 protected mode instructions.
+
+1.2 Using This Manual
+
+The Soft-ICE manual is divided into four main sections:
+    Learning Soft-ICE (Section I)
+    Commands (Section II)
+    Support Features (Section lII)
+    Advanced Topics (Section IV)
+
+Soft-ICE can be used for most debugging problems after reading Section I,
+"Learning Soft-ICE", and a little experimentation. Soft-ICE's user-
+friendly on-line help can be used to reference command descriptions and
+syntax.
+
+The "Learning Soft-ICE" section contains installation instructions, a
+description of the user interface, and a tutorial. The tutorial is
+designed to get you up and running quickly.
+
+The "Commands" section describes all of the Soft-ICE commands. The command
+descriptions are organized by functional group with an alphabetic index
+for reference.
+
+The "Support Features" section covers advanced loading options, symbolic
+and source level debugging, and EMM 4.0 capability.
+
+The "Advanced Topics" section covers topics such as using Soft-ICE with
+DOS loadable drivers and using Soft-ICE with non-DOS operating systems.
+
+Throughout the manual, especially in the tutorial and the command section,
+examples are given that require you to give data to Soft-ICE. When the
+directions specify that you
+
+     4
+
+"press" a key, such as the  key, you should press the key labelled . When
+the directions tell you to "enter" a phrase, such as WIN, you should type
+in the specified letters, then press the ENTER key.
+
+ 1.3 System Requirements
+
+Soft-ICE works with the IBM Series II Model 70 and 80, Compaq 80386 and
+80386SX computers, AT compatible and 80386 co-processor cards. Soft-ICE
+will only work with 80386 XT co-processors if they are AT compatible.
+
+Soft-ICE works best with extended memory, but works fine with conventional
+memory systems.
+
+Soft-ICE does not use DOS or ROM BIOS for its video output and keystroke
+input. Therefore the video must be compatible with one of the following:
+MDA, Hercules, CGA, EGA, or VGA. Soft-ICE also has support for a two-
+monitor configuration, which can be very helpful when debugging video-
+intensive programs.
+
+     5
+

@@ -1,0 +1,89 @@
+ %% PLEASE DO NOT MODIFY OR DELETE THIS FILE! %% 
+ %% This file contains information about the installation of an application. %% 
+ %% It will be used to automatically remove all application components from your computer if you choose to do so. %% 
+
+
+NOTE: Beginning of the bootstrapper section
+
+CONFIG: Title: "nokring"
+
+ACTION: TempFile: "C:\WINDOWS\setup1.exe"
+(File was not found or was an older version -- new file copied)
+
+ACTION: RegKey: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion", "SharedDLLs"
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\VB5StKit.dll"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\MSVBVM50.dll"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\StdOle2.tlb"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\OleAut32.dll"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\OlePro32.dll"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\AsycFilt.dll"
+(File currently on disk was already up to date)
+
+NOTE: The file 'Ctl3d32.dll' was not copied because it is intended for use under Windows NT 3.51 only.  It is not needed under Windows 95 or NT 4.0.
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\Ctl3d32.dll"
+(File currently on disk was already up to date)
+
+ACTION: SystemFile: "C:\WINDOWS\SYSTEM\ComCat.dll"
+(File currently on disk was already up to date)
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\MSVBVM50.dll"
+
+ACTION: TLBRegister: "C:\WINDOWS\SYSTEM\StdOle2.tlb"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\OleAut32.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\OlePro32.dll"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\ComCat.dll"
+
+NOTE: End of the bootstrapper section
+
+NOTE: Now spawning the main Setup program 'C:\WINDOWS\setup1.exe'....
+
+ACTION: CreateDir: "C:\Program Files\nokring"
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\MCI32.OCX"
+(File currently on disk was already up to date)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\COMDLG32.OCX"
+(File currently on disk was already up to date)
+
+ACTION: SharedFile: "C:\WINDOWS\SYSTEM\MSCOMM32.OCX"
+(File currently on disk was already up to date)
+
+ACTION: PrivateFile: "C:\Program Files\nokring\nokring.exe"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\nokring\readme.txt"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\nokring\note_syntax.txt"
+(File was not found or was an older version -- new file copied)
+
+ACTION: PrivateFile: "C:\Program Files\nokring\faq.txt"
+(File was not found or was an older version -- new file copied)
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\MCI32.OCX"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\COMDLG32.OCX"
+
+ACTION: DllSelfRegister: "C:\WINDOWS\SYSTEM\MSCOMM32.OCX"
+
+ACTION: ShellLink: "", "nokring"
+
+ACTION: RegKey: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion", "App Paths\nokring.exe"
+
+ACTION: RegValue: "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\nokring.exe", ""
+

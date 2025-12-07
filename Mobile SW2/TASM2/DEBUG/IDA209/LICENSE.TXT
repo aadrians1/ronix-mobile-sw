@@ -1,0 +1,31 @@
+        Copyright (c) 1990-1994 Ilfak Guilfanov; All rights reserved.
+
+License Ü
+ ßßßßßßßß
+
+     1. IDA is a shareware product. It  is  distributed  through  public
+access channels so that perspective buyers can have the  opportunity  to
+evaluate the product before making a decision to buy. If you  decide  to
+use this software then you are under both legal and moral obligation  to
+register it with the author. But if you  decide  not  to  use  it  after
+evaluating the software, you are under no obligation.
+
+     2. If you continue to use IDA  after  the  30-day  evaluation  time
+period you must register it. To register your copy of IDA, fill  in  the
+order form and mail along with your cheque or money order to the address
+indicated in the form. Registration entitles you to continue  using  the
+current version and all future versions of IDA.
+
+     3. This program is provided AS IS without any  warranty,  expressed
+or implied, including but not limited to fitness for a  particular  use.
+The user is responsible for the results of correct or incorrect usage of
+this software.
+
+     4. IDA may not be  used  to  provide  commercial  services  without
+written permission of the author. You may  provide  commercial  services
+when you pay full registration fee.
+
+* All product names mentioned in  IDA  are  trademarks  or  registered
+  trademarks of their respective holders.
+
+

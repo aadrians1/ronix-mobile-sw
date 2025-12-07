@@ -1,0 +1,19 @@
+<HTML>
+<HEAD><TITLE>Error</TITLE></HEAD>
+<BODY>
+<H1>Error</H1>
+<BLOCKQUOTE><B>
+<HR SIZE=4><P>
+The requested item could not be loaded by the proxy.<P>
+There was no response. The server could be down
+or is not responding.
+
+If you are unable to connect again later, contact
+the server's administrator.<P>
+
+<HR SIZE=4>
+</B></BLOCKQUOTE>
+
+<P>
+<ADDRESS>Proxy server at wwwgw10.ntc.nokia.com on port 8080</ADDRESS>
+</BODY></HTML>

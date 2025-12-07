@@ -1,0 +1,8 @@
+How to build cable: 
+The usual MAX232 schematic with external power supply thru an 7805.
+You use Gnd, Txd and Rxd line from serial port (com). On the phone connector you have 
+this connection (holding phone with keypad up, bottom view, from left to right counting)
+pin 1-4-9-GND
+pin 11 thru MAX232 to COM's Txd
+pin 12 thru MAX232 to COM's Rxd
+Built it, it works.

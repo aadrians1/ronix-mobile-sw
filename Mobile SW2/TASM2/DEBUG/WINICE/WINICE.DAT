@@ -1,0 +1,33 @@
+F1 = "bd*;"
+F2 = "be*;"
+F3 = "^SRC;"
+F4 = "^RS;"
+F5 = "^X;"
+F6 = "^EC;"
+F7 = "^HERE;"
+F8 = "^BPX;"
+F9 = "^T;"
+F10 = "^P;"
+F11 = "^G @SS:SP;"
+F12 = "EXIT;"
+
+SF3 = "^format;"
+
+CF8 = "^XT;"
+CF9 = "TRACE OFF;"
+CF10 = "^XP;"
+CF11 = "SHOW B;"
+CF12 = "TRACE B;"
+
+AF1 = "^wr;"
+AF2 = "^wd;"
+AF3 = "^wc;"
+AF4 = "^ww;"
+AF5 = "CLS;"
+AF8 = "^XT R;"
+
+INIT = "lines 25;X;"
+
+SYM = 512
+
+

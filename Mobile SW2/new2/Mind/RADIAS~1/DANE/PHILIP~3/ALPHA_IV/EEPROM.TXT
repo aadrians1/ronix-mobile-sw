@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   :24C08 SMD 
+
+Wprowadzanie : 1,2,3,4
+Wywol./Zatw. : TP+TA
+
+UWAGI : 

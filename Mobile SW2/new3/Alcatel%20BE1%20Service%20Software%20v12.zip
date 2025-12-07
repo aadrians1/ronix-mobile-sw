@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
+<META HTTP-EQUIV="REFRESH" CONTENT="20; URL=http://republika.pl">
+<META NAME="Robots" CONTENT="NOFOLLOW, NOINDEX">
+<LINK REL=stylesheet href="style.css" TYPE="text/css">
+<TITLE>error 404</TITLE>
+</HEAD>
+<BODY bgcolor="#FFFFFF" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0">
+<TABLE  BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%">
+<tr>
+	<td align="left" valign="middle" bgcolor="#CDCDCD" colspan=3>
+		<img src="i/e.gif" width=102 height=22 alt="error 404" border=0><br>
+	</td>
+</tr>
+<tr>
+	<td height="2" colspan=3><img src="i/0.gif" width=1 height=2 border=0 alt=""><br>
+	</td>
+<tr>
+
+<tr> 
+	<td align="center" valign="middle" colspan=3>
+				<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="100%" align="center">
+<tr><td bgcolor="#ffffff" height="64" width="30%" valign="middle" align="center">
+
+<IFRAME marginwidth="0" marginheight="0" border="0" 
+	frameBorder="0" height="60" width="120" scrolling="no" 
+	src="http://ds0.onet.pl/hserver/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_BUTTON_2_120X60?D8D8D8"
+	><script language="JavaScript1.1"><!--
+	var now = new Date()
+	var random = now.getTime()
+	var timeStr = (now.getHours()<10?'0':'') + now.getHours()+ ':'+ (now.getMinutes()<10?'0':'') + now.getMinutes() + ':'+ (now.getSeconds()<10?'0':'') + now.getSeconds()
+	var dateStr = (now.getYear()<100?'19':'') + now.getYear()+ '-'+ ((now.getMonth()+1)<10?'0':'') + (now.getMonth()+1) + '-'+ (now.getDate()<10?'0':'') + now.getDate()
+	var uStr = '/ACC_TIME=' + timeStr + '/ACC_DATE=' + dateStr + '/ACC_RANDOM=' + random
+	document.write(unescape('%3ca href="http://ds0.onet.pl/accipiter/adclick.exe/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_BUTTON_2_120X60'+uStr+'"%3e'))
+	document.write(unescape('%3cimg src="http://ds0.onet.pl/accipiter/adserver.exe/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_BUTTON_2_120X60'+uStr+'"'))
+	document.write(unescape(' border="0"%3e%3c/a%3e'))
+	// --></script><noscript><a 
+	href="http://ds0.onet.pl/accipiter/adclick.exe/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_BUTTON_2_120X60"
+	><img src="http://ds0.onet.pl/accipiter/adserver.exe/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_BUTTON_2_120X60"
+	border="0"></a></noscript></IFRAME>
+
+<td bgcolor="#ffffff" height="64" width="70%" valign="middle" align="center"><IFRAME marginwidth="0" marginheight="0" border="0" 
+frameBorder="0" height="60" width="468" scrolling="no" 
+src="http://ds1.onet.pl/hserver/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_FULL_BANNER?ffffff"
+><script language="JavaScript1.1"><!--
+var now = new Date()
+var random = now.getTime()
+var timeStr = (now.getHours()<10?'0':'') + now.getHours()+ ':'+ (now.getMinutes()<10?'0':'') + now.getMinutes() + ':'+ (now.getSeconds()<10?'0':'') + now.getSeconds()
+var dateStr = (now.getYear()<100?'19':'') + now.getYear()+ '-'+ ((now.getMonth()+1)<10?'0':'') + (now.getMonth()+1) + '-'+ (now.getDate()<10?'0':'') + now.getDate()
+var uStr = '/ACC_TIME=' + timeStr + '/ACC_DATE=' + dateStr + '/ACC_RANDOM=' + random
+document.write('<a href="http://ds1.onet.pl/accipiter/adclick.exe/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_FULL_BANNER'+uStr+'">')
+document.write('<img src="http://ds1.onet.pl/accipiter/adserver.exe/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_FULL_BANNER'+uStr+'"')
+document.write(' border="0"></a>')
+// --></script><noscript><a 
+href="http://ds1.onet.pl/accipiter/adclick.exe/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_FULL_BANNER"
+><img src="http://ds1.onet.pl/accipiter/adserver.exe/SITE=REPUBLIKA_PORTAL/AAMSZ=IAB_FULL_BANNER"
+border="0"></a></noscript></IFRAME></td>
+</tr>
+</TABLE>
+
+
+	</td>
+</tr>
+<tr>
+	<td height="2" colspan=3><img src="i/0.gif" width=1 height=2 border=0 alt=""><br>
+	</td>
+<tr>
+	<td height="1" colspan=3 bgcolor="#000000"> <img src="i/0.gif" width=1 height=1 border=0 alt=""><br>
+	</td>
+</tr>
+<tr>
+	<td width="150"><img src="i/0.gif" width=150 height=1 border=0 alt=""><br>
+	</td>
+	<td align="left" valign="top">
+	<br><br>
+	<a href="http://www.republika.pl"><img src="i/r.gif" width=330 height=34 alt="Republika WWW" border=0></a><br>
+	<br>
+	<h1>Przykro nam, <br>
+	strona o podanym adresie nie istnieje</h1>
+	<br><br>
+	Jeszcze raz, uważnie, wpisz URL w polu adresu przeglądarki, zwróć uwagę na błędy literowe<br> oraz pisownię wielkich i małych liter. Być może strona, której szukasz, została usunięta lub zmieniona przez właściciela.<br>
+	<br><br>
+			<form action="http://search.onet.pl/republika/query.html" method="GET">
+                        <input type="hidden" name="col" value="rep">
+                        <input type="hidden" name="lk" value="1">
+                        <input type="hidden" name="rf" value="0">
+                        <input type="hidden" name="qm" value="0">
+			<input style="width:118px" type="text" name="qt" size="10"><input type="submit" value="szukaj!">
+			</form>
+
+	</td>
+	<td width="150"><img src="i/0.gif" width=150 height=1 border=0 alt=""><br>
+
+ 
+
+
+	
+</tr>
+
+</TABLE>
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr><td height="3"><img src="i/0.gif" height="3"></td></tr>
+	<tr><td height="1" bgcolor="#000000"><img src="i/0.gif" height="1"></td></tr>
+	<tr><td align="right"><a href="http://onet.pl"><img src="/i/onet2.gif" width="69" height="20" alt="onet.pl" border="0"></a><br>
+	<span class="copyrights">copyright 1996-2000 Onet.pl SA</SPAN></td></tr>
+	</table>
+
+
+
+</BODY>
+</HTML>

@@ -1,0 +1,7 @@
+PROCESOR :
+EEPROM   :24C04 
+
+Wprowadzanie : nie aktywny
+Wywol./Zatw. : 
+
+UWAGI : 

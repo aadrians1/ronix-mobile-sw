@@ -1,0 +1,8 @@
+#; 38400; OPL_ParBaudRate
+#; 57600; OPL_ParBaudRateTele
+#; 57600; OPL_ParBaudRateTele2
+#; 1; OPL_ParMcx
+#; 1; OPL_ParNumVoieMcx
+#; 10; OPL_ParIrq
+#; 280; OPL_ParAdrBase
+#; d000; OPL_ParZoneRam

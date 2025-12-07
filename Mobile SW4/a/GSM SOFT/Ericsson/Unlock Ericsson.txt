@@ -1,0 +1,179 @@
+UNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTORUNREADABLESECTOREEprom Down/upload:
+
+1. Handy aus
+2. Kabel dran
+3. Read EE/Write EE druckenn
+4. File auswahlen
+5. Wenn "Press <NO> for short time" kommt einmal auf NO bzw. rote Horertaste drucken
+6. Fertig
+
+IMEI andern:
+
+1. Handy aus
+2. Kabel dran
+3. Neue IMEI unter IMEI neben "Change IMEI" eintragen 
+4. Change IMEI drucken
+5. Wenn "Press <NO> for short time" kommt einmal auf NO bzw. rote Horertaste drucken
+6. Danach muss das Phone geflasht werden. Also Flash-File auswahlen und flashen
+7. Fertig
+
+Netmonitor ein/aus:
+
+1. Handy aus
+2. Kabel dran
+3. CH ON/CH OFF drucken
+4. Fertig
+
+IMEI andern:
+
+1. Handy aus
+2. Kabel dran
+3. IMEI unter IMEI neben "Repair IMEI" eintragen 
+4. Repair drucken
+5. Wenn "Press <NO> for short time" kommt einmal auf NO bzw. rote Horertaste drucken
+6. Danach muss das Phone geflasht werden. Also Flash-File auswahlen und flashen
+7. Fertig
+
+
+Fur evtl. Fragen od. Problemen im Forum Posten od. im Chat fragen.
+
+
+
+By E*x*ecuter 
+
+Greets to Schrifti, Wshadow, Nicole, Phil, ViperBJK, Jan2407, Handy and all others :). 
+
+ 
+
+Ericsson A1018, T1x
+ 
+
+
+Er2000 A1018 und T1x Flasher uber Datenkabel! Dieses Programm stammt von DeeZel (Vielen Dank, gute Arbeit) nur fur den COM 1 Port!
+
+Flash File fur A1018
+
+
+Flash File fur T1X Modelle:
+
+An die Software Version von eurem Handy kommt ihr mit der Tastenkombination >*<<*<*  (< Pfeiltaste links,etc) 
+geht mit oder ohne SIM Karte
+
+
+Vor der Softwareversion 00W12
+00W15 und 00W16
+Neuer als die Softwareversion 00W21
+(wenn ihr euer T10s auf T18s upgradet dann habt ihr Sprachwahl am Telefon)
+
+
+Nachteile bei der Benutzung von Er2000:
+
+Das Programm sturzt sehr gerne ab und das Handy ist dann tot. Ebenso beim Upgrade auf T18 wird automatisch die IMEI Nr. verandert, das finde ich auch schlecht, das Gerat bekommt dann so den Geruch von gestohlener Ware, bzw. ist es fur Laien dann fast unmoglich nachher die Nr. wieder zu andern.
+
+
+
+
+Ericsson T28 und neuere/altere Versionen vom T10
+
+
+Anleitung zum Unlocken mit Datex 2.2
+
+Ihr braucht unbedingt eine halbvolle Batterie am Telefon da es sonst nicht geht!
+Und ihr musst das Programm nach dem Flashen wieder neu starten.
+
+
+1.)  Software starten
+
+2.) Druckt die Schaltflache "EXPERT MENU"
+
+3.) Druckt die Schaltflache "Edongle Management"
+
+4.) Im ersten Fenster schreibt ihr "datex have beard"
+
+5.) Dann in das 2. Fenster "32109876u" schreiben
+
+6.) Und in das 3. Fenster "Your name"
+
+7.) Wenn ihr noch die IMEI andern wollt aktiviert im Fenster das Kastchen "Ask IMEI" 
+
+8.) Das Kastchen bei "Use Ini File Settings" entfernen (oder downloadet euch diese ini Datei um es mit den Flash Files auf dieser Seite zu benutzen; T28-west, T1X-west and A1018-west. Kopiert die ini in den selben Ordner wie die Datex 2.2)
+
+9.) Druck "All In One"
+
+10.) und folgt dann nur noch den Anweisungen im "EVENTS..." Fenster
+
+ 
+
+Datex Workshop ATx V2.2 - Lauft mit T28 und neuere/altere Versionen vom T10
+
+Flash files for Datex 2.2
+
+R320 000215 (bin flash) - NEW
+R320 000628 (bin flash)
+T28-west (bin flash)
+T28-World (bin flash)
+T1X-west (bin flash)
+A1018-west (bin flash)
+Flash pack for A1018 and T1X (bin flash) 
+
+ 
+
+Falls ihr euer Handy zerstort habt konnt ihr diese Methode mal testen um es wieder funktionsfahig zu bekommen:
+
+1.)  Software starten
+
+2.) Druckt die Schaltflache "EXPERT MENU"
+
+3.) Druckt die Schaltflache "Edongle Management"
+
+4.) Im ersten Fenster schreibt ihr "datex have beard"
+
+5.) Dann in das 2. Fenster "32109876u" schreiben
+
+6.) Und in das 3. Fenster "Your name"
+
+7.) Das Kastchen bei "Use Ini File Settings" entfernen (oder downloadet euch diese ini Datei um es mit den flash Files auf dieser Seite zu benutzen; T28-west, T1X-west and A1018-west. Kopiert die ini in den selben Ordner wie die Datex 2.2)
+
+8.) Druckt die Schaltflache "Flash2"
+
+9.) Folgt den Anweisungen im "EVENTS..." Fenster
+
+
+Wenn es nicht beim ersten mal klappen sollte versucht den Akku rauszunehmen und wieder setzt ihn wieder ein. Druckt nun noch einmal die "Flash2" Schaltflache.
+Wenn es nicht hilft habt ihr euren EEPROM zerschossen :-(
+
+
+
+
+Ericsson ATXX Handys (Softwareversion vor 00W20)
+
+
+Spy unlocker von Robby/SuperDupond - Das Unlocken funktioniert zu 100% mit alteren ATXX Ericsson Handys (Softwareversion vor 00W20) 
+
+1.) Ihr musst es in das Verzeichnis C:\RSSPY installieren
+
+2.) Das Programm uber Start/Programme/Special Robby ausfuhren
+
+3.) COM Port 1 fur euer Datenkabel einstellen sowie 9600 Bauds und 8 Bits Paritie
+
+4.) Auf "Test" drucken
+
+5.) Es erscheint ein neues Dialog Fenster
+
+6.) Verbindet das Kabel mit eurem Handy und den COM 1 Port ohne eine SIM Karte
+
+7.) "Unlock" drucken
+
+8.) Am Handy "NO" betatigen
+
+9.) Wenn ihr dann noch ein paar Sekunden wartet ist euer Handy entsperrt!
+
+ 
+
+Eure Testberichte bitte im Forum Posten oder im Chat nachfragen! 
+
+
+
+
+
+

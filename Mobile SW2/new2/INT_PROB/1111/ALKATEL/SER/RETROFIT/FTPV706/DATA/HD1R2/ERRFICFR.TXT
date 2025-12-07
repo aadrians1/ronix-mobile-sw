@@ -1,0 +1,18 @@
+
+
+/* Table de messages d'erreurs */
+
+/* Attention : en cas de rajout de messages, modifier l'enum de plpmsg.h */
+
+	"Succès",
+	"Erreur: nombre de Datas incorecte !",
+	"Erreur dans la recherche du fichier",
+	"Erreur: ouverture du fichier impossible !",
+	"Erreur lors de la fermeture du fichier !",
+	"Erreur lors de la lecture des données du fichier",
+	"Erreur lors de l'écriture des données du fichier",
+	"Erreur: effacement du fichier impossible !",
+
+/* inserer ici les nouveaux messages */
+
+

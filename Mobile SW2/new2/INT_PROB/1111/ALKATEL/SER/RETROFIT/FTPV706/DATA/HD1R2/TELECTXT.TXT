@@ -1,0 +1,1360 @@
+!===========================================================================
+!   ACT3 - HD   Logiciel de test                            July 19, 1995
+!   Fichier de paramétrage des contextes : HDCNTXT.TXT
+!---------------------------------------------------------------------------
+! Modification :
+! -------------
+! !OPR 23/05/1996 : Création nouveau fichier de référence générant fichiers produits
+!                   pour constantes spécifiques : précisées par entete 
+!                   !HD000 ou !HD2 ou !HD1P1 ou !HD1P2 ou !ED1
+!                   précisées par entete !HD pour le reste des produits
+! !db 22/09/1995 : Mise en conformité au nouveau format.
+!
+!---------------------------------------------------------------------------
+! ! A T T E N T I O N, notes importantes (daniel buis, September 12, 1995)
+!
+! 1) TOUS les champs doivent être renseignés.
+!
+! 2) Le champ STEP est utilisé pour préciser la taille
+!    pour les types 'String' (tableau de caractères).
+!
+! 3) Le champ VALEUR est utilisé pour préciser la taille
+!    pour les types 'TabInt8' (tableau d'octets).
+!    Les champs MIN, MAX et STEP sont applicables à tous les éléments du tableau.
+!
+! 4) Le champ VALEUR est utilisé pour préciser le rang de l'élément dans le tableau d'octets.
+!    pour les types 'EltTab'.
+!
+!---------------------------------------------------------------------------
+!   Syntaxe applicable :
+!   -------------------
+!   avec ! en colonne 1, c'est une ligne de commentaire
+!   avec # en colonne 1, c'est une ligne de définition d'un contexte
+!
+!   Signification des champs : (NE : non exploité, pour info ou usage ultérieur)
+!   -------------------------  (** :     exploité actuellemnt                  )
+!   NE  -> Mnémonique identifiant de contexte
+!   **  -> La valeur de l'identifiant de contexte        ; tel que défini dans INC2/PLPARAMS.H
+!   **  -> La valeur de l'identifiant de contrôle associé; s'il existe (0 sinon)  (voir PANELHD0.TXT)
+!   **  -> Le type de ce contexte dans : { Int8, Int16, Int32, Double, Float, String, TabInt8, EltTab }
+!   **  -> La valeur par défaut de ce contexte
+!   **  -> La valeur courante   de ce contexte
+!   **  -> La valeur minimale   de ce contexte
+!   **  -> La valeur maximale   de ce contexte
+!   NE  -> L'unité de la valeur de ce contexte
+!   NE  -> La valeur du pas     de ce contexte
+!   NE  -> L'unité du pas       de ce contexte
+!
+!===========================================================================
+!
+!   CONSTANTES DEPENDANTES DES PRODUITS
+!
+!===========================================================================
+!
+!  Famille ACCES FLASH 
+!  -----------------------------------------
+!
+#;NameReadFileFlashS2    ;291; 35001; String  ; 0     ; flash.s2  ;  0    ; 1     ; [none]; 255   ; [none]
+!
+#;NameWriteFileFlashS2   ;292; 34001; String  ; 0     ; flash.s2  ;  0    ; 1     ; [none]; 255   ; [none]
+!
+#;OPL_ParAdressFlash    ; 286 ; 30051; Int32  ; 16384 ; 16384  ; 16384 ; 32768  ; [none] ; 1   ; [none]
+!
+#;OPL_ParAdrEndFlash    ; 289 ; 30052; Int32  ; 16384 ; 16384  ; 16384 ; 32768  ; [none] ; 1   ; [none]
+!
+#;OPL_ParLengthFlash    ; 287 ; 0    ; Int32  ; 0  ; 0   ; 0 ; 16384 ; [none] ; 1   ; [none]
+!
+#;OPL_ResDataFlash      ; 1087; 0    ; TabInt8; 16384; 16384; 0 ; 1    ; [none] ; 0 ; [none]
+!
+#;OPL_ResStrDataFlash   ; 1086; 30151; String ; 0  ; 0   ; 0 ; 1    ; [none] ; 1025; [none]
+!
+#;OPL_ParAdParamTech     ; 2022 ; 0; Int32  ; 16384 ; 16384  ; 16384 ; 32768  ; [none] ; 1   ; [none]
+!
+! !HD
+#;OPL_ParLengthParamTech ; 2023 ; 0; Int32  ; 1536  ; 1536   ; 0     ; 32768  ; [none] ; 1   ; [none]
+!
+! !HD
+#;OPL_ParAdParamPerso    ; 2024 ; 0; Int32  ; 17920 ; 17920  ; 16384 ; 32768  ; [none] ; 1   ; [none]
+!
+! !HD
+#;OPL_ParLengthParamPer  ; 2025 ; 0; Int32 ; 14848  ; 14848  ; 0     ; 32768  ; [none] ; 1   ; [none]
+!
+!
+!  Famille ACCES EEPROM 
+!  -----------------------------------------
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;NameReadFileS2         ;121; 93201; String  ; 0     ; eeprom.s2  ;  0    ; 1     ; [none]; 255   ; [none]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;NameWriteFileS2        ;122; 93101; String  ; 0     ; eeprom.s2  ;  0    ; 1     ; [none]; 255   ; [none]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;OPL_ParAdressEeprom    ; 109 ; 93121; Int32  ; 0  ; 0   ; 0 ; 512  ; [none] ; 1   ; [none]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;OPL_ParAdrEndEeprom    ; 112 ; 93122; Int32  ; 0  ; 0   ; 0 ; 512  ; [none] ; 1   ; [none]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;OPL_ParLengthEeprom    ; 110 ; 0    ; Int32  ; 0  ; 0   ; 0 ; 512  ; [none] ; 1   ; [none]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;OPL_ResDataEeprom      ; 1054; 0    ; TabInt8; 512; 512 ; 0 ; 1    ; [none] ; 0 ; [none]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 512 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 32  ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 64  ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 96  ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 128 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 160 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 192 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 224 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 256 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 288 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 320 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 352 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 384 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 416 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 448 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+#;OPL_DataVirgEeprom  ; 2064; 0    ; TabInt8; 480 ; FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF ; 0 ; 255    ; [none] ; 0 ; [none]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;OPL_ResStrDataEeprom   ; 1053; 93111; String ; 0  ; 0   ; 0 ; 1    ; [none] ; 1025; [none]
+!
+!
+!
+!  -------------------------------
+!
+!  Famille RADIO : E M I S S I O N
+!  -------------------------------
+!
+#;RadioEmi_Freq          ; 40; 21001; Double;  900  ;  902.6 ;  875.0  ; 970.0 ; [MHz] ; 0.200 ; [MHz]
+!
+! !HD1R1 !HD1R2 !HD1R3 !HD2R2 !PMC !!HD5R1 !HD5COMP !HD4 !HD2R3 : ffr
+#;RadioEmi_TLev          ; 45; 21002; Int8  ;  13   ;  13   ;   5   ; 33     ; [none]; 2     ; [none]
+!
+!
+!
+!  Famille RADIO : R E C E P T I O N
+!  ---------------------------------
+#;RadioRec_FREQ          ; 22; 71001; Double ; 920.0 ; 947.6 ; 875.0 ; 970.0 ; [MHz] ; 0.200 ; [MHz]
+!
+#;RadioRec_FREQ_MON      ; 23; 71002; Double ; 920.0 ; 947.6 ; 875.0 ; 970.0 ; [MHz] ; 0.200 ; [MHz]
+!
+!  Famille RADIO : Tables d'offset
+!  ---------------------------------
+#;TabFreqTabOffset       ;160 ; 0   ;TabDouble; 12    ; 0.0   ; 920.0 ; 970.0 ; [tBG] ; 0.2   ; [tBG]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 0  ; 936.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 1  ; 939.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 2  ; 942.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 3  ; 946.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 4  ; 949.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 5  ; 952.2 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 6  ; 955.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 7  ; 958.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 8  ; 938.2 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 9  ; 944.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 10 ; 950.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqF0                ;160 ; 0   ;EltTabDouble; 11 ; 956.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+!
+!  Famille RADIO : Gain I/Q
+!  ---------------------------------
+!
+#;TabFreqAgc             ;123 ; 0   ;TabDouble; 48    ; 0.0   ; 920.0 ; 970.0 ; [tBG] ; 0.2   ; [tBG]
+#;_FreqAGCAF0            ;123 ; 0   ;EltTabDouble; 0  ; 920.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF1            ;123 ; 0   ;EltTabDouble; 1  ; 936.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF2            ;123 ; 0   ;EltTabDouble; 2  ; 938.2 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF3            ;123 ; 0   ;EltTabDouble; 3  ; 939.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF4            ;123 ; 0   ;EltTabDouble; 4  ; 941.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF5            ;123 ; 0   ;EltTabDouble; 5  ; 942.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF6            ;123 ; 0   ;EltTabDouble; 6  ; 944.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF7            ;123 ; 0   ;EltTabDouble; 7  ; 946.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF8            ;123 ; 0   ;EltTabDouble; 8  ; 947.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAF9            ;123 ; 0   ;EltTabDouble; 9  ; 949.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAFA            ;123 ; 0   ;EltTabDouble;10  ; 950.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAFB            ;123 ; 0   ;EltTabDouble;11  ; 952.2 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAFC            ;123 ; 0   ;EltTabDouble;12  ; 953.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAFD            ;123 ; 0   ;EltTabDouble;13  ; 955.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAFE            ;123 ; 0   ;EltTabDouble;14  ; 956.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCAFF            ;123 ; 0   ;EltTabDouble;15  ; 958.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF0            ;123 ; 0   ;EltTabDouble;16  ; 920.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF1            ;123 ; 0   ;EltTabDouble;17  ; 936.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF2            ;123 ; 0   ;EltTabDouble;18  ; 938.2 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF3            ;123 ; 0   ;EltTabDouble;19  ; 939.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF4            ;123 ; 0   ;EltTabDouble;20  ; 941.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF5            ;123 ; 0   ;EltTabDouble;21  ; 942.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF6            ;123 ; 0   ;EltTabDouble;22  ; 944.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF7            ;123 ; 0   ;EltTabDouble;23  ; 946.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF8            ;123 ; 0   ;EltTabDouble;24  ; 947.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBF9            ;123 ; 0   ;EltTabDouble;25  ; 949.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBFA            ;123 ; 0   ;EltTabDouble;26  ; 950.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBFB            ;123 ; 0   ;EltTabDouble;27  ; 952.2 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBFC            ;123 ; 0   ;EltTabDouble;28  ; 953.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBFD            ;123 ; 0   ;EltTabDouble;29  ; 955.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBFE            ;123 ; 0   ;EltTabDouble;30  ; 956.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCBFF            ;123 ; 0   ;EltTabDouble;31  ; 958.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF0            ;123 ; 0   ;EltTabDouble;32  ; 920.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF1            ;123 ; 0   ;EltTabDouble;33  ; 936.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF2            ;123 ; 0   ;EltTabDouble;34  ; 938.2 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF3            ;123 ; 0   ;EltTabDouble;35  ; 939.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF4            ;123 ; 0   ;EltTabDouble;36  ; 941.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF5            ;123 ; 0   ;EltTabDouble;37  ; 942.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF6            ;123 ; 0   ;EltTabDouble;38  ; 944.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF7            ;123 ; 0   ;EltTabDouble;39  ; 946.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF8            ;123 ; 0   ;EltTabDouble;40  ; 947.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCF9            ;123 ; 0   ;EltTabDouble;41  ; 949.0 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCFA            ;123 ; 0   ;EltTabDouble;42  ; 950.6 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCFB            ;123 ; 0   ;EltTabDouble;43  ; 952.2 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCFC            ;123 ; 0   ;EltTabDouble;44  ; 953.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCFD            ;123 ; 0   ;EltTabDouble;45  ; 955.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCFE            ;123 ; 0   ;EltTabDouble;46  ; 956.8 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+#;_FreqAGCCFF            ;123 ; 0   ;EltTabDouble;47  ; 958.4 ; 920.0 ; 970.0 ; [none]; 0.2   ; [none]
+!
+#;TabAttLna              ;156 ; 0   ; TabBoolean; 3 ; 0 ; 0 ; 1 ; [none] ; 1     ; [none]
+#;_AttLnaA               ;156 ; 0   ; EltTabBoolean ; 0  ; 1  ; 0 ; 1   ; [none] ; 16    ; [none]
+#;_AttLnaB               ;156 ; 0   ; EltTabBoolean ; 1  ; 1  ; 0 ; 1   ; [none] ; 16    ; [none]
+#;_AttLnaC               ;156 ; 0   ; EltTabBoolean ; 2  ; 0  ; 0 ; 1   ; [none] ; 16    ; [none]
+!
+#;TabAttMixGain          ;157 ; 0   ; TabBoolean; 3 ; 0 ; 0 ; 1 ; [none] ; 1     ; [none]
+#;_AttMixGainA           ;157 ; 0   ; EltTabBoolean ; 0  ; 1  ; 0 ; 1   ; [none] ; 16    ; [none]
+#;_AttMixGainB           ;157 ; 0   ; EltTabBoolean ; 1  ; 0  ; 0 ; 1   ; [none] ; 16    ; [none]
+#;_AttMixGainC           ;157 ; 0   ; EltTabBoolean ; 2  ; 0  ; 0 ; 1   ; [none] ; 16    ; [none]
+!
+#;TabAttOutGain          ;158 ; 0   ; TabBoolean; 3 ; 0 ; 0 ; 1 ; [none] ; 1     ; [none]
+#;_AttOutGainA           ;158 ; 0   ; EltTabBoolean ; 0  ; 1  ; 0 ; 1   ; [none] ; 16    ; [none]
+#;_AttOutGainB           ;158 ; 0   ; EltTabBoolean ; 1  ; 0  ; 0 ; 1   ; [none] ; 16    ; [none]
+#;_AttOutGainC           ;158 ; 0   ; EltTabBoolean ; 2  ; 0  ; 0 ; 1   ; [none] ; 16    ; [none]
+!
+#;TabAttLfic             ;159 ; 0   ; TabInt8; 3 ; 3 ; 0 ; 255 ; [none] ; 1     ; [none]
+#;_AttLficA              ;159 ; 0   ; EltTab ; 0  ; 8  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_AttLficB              ;159 ; 0   ; EltTab ; 1  ; 22  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_AttLficC              ;159 ; 0   ; EltTab ; 2  ; 34  ; 0 ; 255   ; [none] ; 1    ; [none]
+!
+!  Famille MMI : Affichage caractères
+!  -----------------------------------
+! !HD1R1 !HD1R2 !HD1R3
+#;Num_ligne              ; 88; 94002; Int16  ; 1     ; 1     ; 1     ; 2     ; [None]; 1     ; [None]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;Chaine_Ligne0          ; 85; 0    ; String; Test_afficheur ; Test_afficheur  ; 0    ; 0     ; [None] ; 37    ; [None]
+!
+!
+!  Famille TESTS GSM : Synchronisation
+!  -----------------------------------
+!
+#;OUI_SYNCRO_C0          ; 53  ; 88001; Int16 ; 20   ; 20   ; 1   ; 124  ; [none] ; 1   ; [none]
+!
+!===========================================================================
+!  Famille TESTS GSM : Mode TCH
+!  -----------------------------
+#;OUI_RSYNC_CANAL        ; 1011; 88105; Int16 ; 20    ; 20    ; 1   ; 124  ; [none] ; 1   ; [none]
+!
+#;OUI_MTCH_MX       ; 58  ; 89007; Int16 ; 20   ; 20   ; 1   ; 124  ; [none] ; 1   ; [none]
+!
+#;OUI_MTCH_TCH      ; 59  ; 89008; Int16 ; 30   ; 30   ; 1   ; 124  ; [none] ; 1   ; [none]
+!
+#;OUI_MTCH_TABHOP   ; 75  ; 0    ; TabInt16; 4   ; 4 ; 1 ; 124; [none] ; 1     ; [none]
+#;OUI_MTCH_TABHOP_1 ; 75  ; 89025; EltTabInt16 ; 0  ; 1  ; 1 ; 124 ; [none] ; 1    ; [none]
+#;OUI_MTCH_TABHOP_2 ; 75  ; 89026; EltTabInt16 ; 1  ; 1  ; 1 ; 124 ; [none] ; 1    ; [none]
+#;OUI_MTCH_TABHOP_3 ; 75  ; 89027; EltTabInt16 ; 2  ; 1  ; 1 ; 124 ; [none] ; 1    ; [none]
+#;OUI_MTCH_TABHOP_4 ; 75  ; 89028; EltTabInt16 ; 3  ; 1  ; 1 ; 124 ; [none] ; 1    ; [none]
+!
+! [Contrôles de résultats]
+! !HD1R1 !HD1R2 !HD1R3 !HD2R2 !PMC !!HD5R1 !HD5COMP !HD4 !HD2R3
+#;OUI_RMTCH_TXLevel     ; 1018  ; 89130; Int16 ; 15   ; 15   ; 5   ; 19  ; [none] ; 1   ; [none]
+!
+!
+!  Famille RADIO : C A L C U L   R A M P E S
+!  -----------------------------------------
+#;CalRam_Puiss1         ;  99; 61002; Double  ; -8.63 ; -8.63 ;  -20.0; 34.0  ; [none]; 0.01   ; [none]
+!
+#;CalRam_Puiss2         ; 101; 61004; Double  ;  13.57;  13.57;  -20.0; 34.0  ; [none]; 0.01  ; [none]
+!
+#;CalRam_Puiss3         ; 103; 61006  Double  ;  20.82;  20.82;  -20.0; 34.0  ; [none]; 0.01  ; [none]
+!
+#;CalRam_Puiss4         ; 105; 61008; Double  ;  31.59;  31.59;  5   ; 34.0  ; [none]; 0.01  ; [none]
+!
+#;CalRam_Ptxlev5        ; 106; 61009; Double  ;  33.0 ;  33.0 ;  5  ; 33.0  ; [none]; 0.01  ; [none]
+!
+#;ParTabRamp            ; 107;   0  ; TabInt8 ; 240   ; 0   ;  0    ; 255   ; [none]; 1     ; [none]
+!
+#;ParTabRampPwrlp       ; 173;   0  ; TabInt8 ; 270   ; 130000000000000000000000000000000000120000000000000000000000000000000000 ; 0  ; 255   ; [none]; 1     ; [none]
+#;ParTabRampPwrlp       ; 173;   0  ; TabInt8 ;  36   ; 110000000000000000000000000000000000100000000000000000000000000000000000 ; 0  ; 255   ; [none]; 1     ; [none]
+#;ParTabRampPwrlp       ; 173;   0  ; TabInt8 ;  72   ; 0F00000000000000000000000000000000000E0000000000000000000000000000000000 ; 0  ; 255   ; [none]; 1     ; [none]
+#;ParTabRampPwrlp       ; 173;   0  ; TabInt8 ; 108   ; 0D00000000000000000000000000000000000C0000000000000000000000000000000000 ; 0  ; 255   ; [none]; 1     ; [none]
+#;ParTabRampPwrlp       ; 173;   0  ; TabInt8 ; 144   ; 0B00000000000000000000000000000000000A0000000000000000000000000000000000 ; 0  ; 255   ; [none]; 1     ; [none]
+#;ParTabRampPwrlp       ; 173;   0  ; TabInt8 ; 180   ; 090000000000000000000000000000000000080000000000000000000000000000000000 ; 0  ; 255   ; [none]; 1     ; [none]
+#;ParTabRampPwrlp       ; 173;   0  ; TabInt8 ; 216   ; 070000000000000000000000000000000000060000000000000000000000000000000000 ; 0  ; 255   ; [none]; 1     ; [none]
+#;ParTabRampPwrlp       ; 173;   0  ; TabInt8 ; 252   ; 050000000000000000000000000000000000                                     ; 0  ; 255   ; [none]; 1     ; [none]
+!
+#;ParTabPwrlp            ; 165;   0  ; TabInt8 ; 15   ; 15   ;  0    ; 255   ; [none]; 1     ; [none]
+!
+#;NbRamp                ; 120;   0  ; Int16   ; 15    ;  15   ;  11   ; 15    ; [none]; 1     ; [none]
+!
+#;OPL_C_NbCrb           ; 575;   0  ; Int16   ; 15    ;  15   ;  11   ; 15    ; [none]; 1     ; [none]
+!
+#;OPL_C_PosRamp         ; 576;   0  ; Int16   ; 2     ;  2    ;  0    ; 2     ; [none]; 1     ; [none]
+!
+#;OPL_C_PosPwrlp        ; 577;   0  ; Int16   ; 1     ;  1    ;  0    ; 17    ; [none]; 1     ; [none]
+!
+#;TabTxLevel             ; 2029 ;     0    ;TabInt8;   15   ; 0507090B0D0F11131517191B1D1F21 ; 0   ; 255    ; [none] ; 1   ; [none]
+!
+!
+#;ResRamp               ; 1066 ; 0 ; TabInt8; 15 ; 15 ; 0 ; 255 ; [none] ; 1     ; [none]
+!
+#;_ParTabR               ; 1067 ; 0    ; TabFloat; 15 ; 15 ; 0  ; 60   ; [dB]  ; 7.5   ; [dB]
+#;_ParR0_poids19         ; 1067 ; 61024; EltTabFloat ; 0  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR1_poids18         ; 1067 ; 61023; EltTabFloat ; 1  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR2_poids17         ; 1067 ; 61022; EltTabFloat ; 2  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR3_poids16         ; 1067 ; 61021; EltTabFloat ; 3  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR4_poids15         ; 1067 ; 61020; EltTabFloat ; 4  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR5_poids14         ; 1067 ; 61019; EltTabFloat ; 5  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR6_poids13         ; 1067 ; 61018; EltTabFloat ; 6  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR7_poids12         ; 1067 ; 61017; EltTabFloat ; 7  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR8_poids11         ; 1067 ; 61016; EltTabFloat ; 8  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR9_poids10         ; 1067 ; 61015; EltTabFloat ; 9  ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR10_poids9         ; 1067 ; 61014; EltTabFloat ; 10 ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR11_poids8         ; 1067 ; 61013; EltTabFloat ; 11 ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR12_poids7         ; 1067 ; 61012; EltTabFloat ; 12 ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR13_poids6         ; 1067 ; 61011; EltTabFloat ; 13 ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+#;_ParR14_poids5         ; 1067 ; 61010; EltTabFloat ; 14 ; 7.5  ; 7.5 ; 60   ; [none] ; 7.5    ; [none]
+!
+#;_ParTabC               ; 1068 ; 0    ; TabFloat; 15 ; 15 ; 2  ; 112.5   ; [pF]  ; 0.01   ; [dB]
+#;_ParC0_19              ; 1068 ; 61039; EltTabFloat ; 0  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC1_18              ; 1068 ; 61038; EltTabFloat ; 1  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC2_17              ; 1068 ; 61037; EltTabFloat ; 2  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC3_16              ; 1068 ; 61036; EltTabFloat ; 3  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC4_15              ; 1068 ; 61035; EltTabFloat ; 4  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC5_14              ; 1068 ; 61034; EltTabFloat ; 5  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC6_13              ; 1068 ; 61033; EltTabFloat ; 6  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC7_12              ; 1068 ; 61032; EltTabFloat ; 7  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC8_11              ; 1068 ; 61031; EltTabFloat ; 8  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC9_10              ; 1068 ; 61030; EltTabFloat ; 9  ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC10_9              ; 1068 ; 61029; EltTabFloat ; 10 ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC11_8              ; 1068 ; 61028; EltTabFloat ; 11 ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC12_7              ; 1068 ; 61027; EltTabFloat ; 12 ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC13_6              ; 1068 ; 61026; EltTabFloat ; 13 ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+#;_ParC14_5              ; 1068 ; 61025; EltTabFloat ; 14 ; 2  ; 2 ; 112.5  ; [none] ; 0.01    ; [none]
+!
+#;-ParTabPw1             ; 1069 ; 0   ; TabBoolean; 15 ; 0 ; 0 ; 1 ; [none] ; 1     ; [none]
+#;_ParPw10_19            ; 1069 ; 61054; EltTabBoolean ; 0  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw11_18            ; 1069 ; 61053; EltTabBoolean ; 1  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw12_17            ; 1069 ; 61052; EltTabBoolean ; 2  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw13_16            ; 1069 ; 61051; EltTabBoolean ; 3  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw14_15            ; 1069 ; 61050; EltTabBoolean ; 4  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw15_14            ; 1069 ; 61049; EltTabBoolean ; 5  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw16_13            ; 1069 ; 61048; EltTabBoolean ; 6  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw17_12            ; 1069 ; 61047; EltTabBoolean ; 7  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw18_11            ; 1069 ; 61046; EltTabBoolean ; 8  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw19_10            ; 1069 ; 61045; EltTabBoolean ; 9  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw110_9            ; 1069 ; 61044; EltTabBoolean ; 10  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw111_8            ; 1069 ; 61043; EltTabBoolean ; 11  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw112_7            ; 1069 ; 61042; EltTabBoolean ; 12  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw113_6            ; 1069 ; 61041; EltTabBoolean ; 13  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+#;_ParPw114_5            ; 1069 ; 61040; EltTabBoolean ; 14  ; 0  ; 0 ; 1   ; [none] ; 1    ; [none]
+!
+!
+! [Configuration Synthetiseur]
+#;SyntheStrStatus2         ;114; 86002; String  ; 00281A     ; 00281A     ; 0     ; 1     ; [none] ; 7; [none]
+!
+!  Famille RADIO : R E C E P T I O N
+!  ---------------------------------
+#;RadioRec_RX_LNA        ; 24; 71003; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+#;RadioRec_RX_MIX        ; 25; 71004; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+#;RadioRec_RX_OUT        ; 26; 71005; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+#;RadioRec_MX1_LNA       ; 28; 71009; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+#;RadioRec_MX1_MIX       ; 29; 71010; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+#;RadioRec_MX1_OUT       ; 30; 71011; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+#;RadioRec_MX2_LNA       ; 32; 71015; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+#;RadioRec_MX2_MIX       ; 33; 71016; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+#;RadioRec_MX2_OUT       ; 34; 71017; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1     ; [none]
+!
+#;OPL_ResTension         ; 1045; 35101; Float ; 2.50  ; 2.50 ;  2.50 ; 5.8  ; [Volt] ; 0.01294 ; [Volt]
+!
+! [MesureTempérature]
+#;OPL_ResTemp            ; 1044; 36101; Float  ; 0    ;  0   ;  -50  ; 100    ; [°C  ] ; 0.01    ; [°C  ]
+!
+!  Famille Telechargement : T E L E C H A R G E M E N T
+!  -----------------------------------------
+! !HD1R2
+#;OPL_RepNameTele          ;2057; 81422; String  ; 0     ; c:\resu\hd1r2\  ;  0    ; 1     ; [none]; 255   ; [none]
+!
+! !HD1R2
+#;OPL_RepNameEeprom        ;2070; 81434; String  ; 0     ; c:\resu\hd1r2\  ;  0    ; 1     ; [none]; 255   ; [none]
+!
+#;OPL_FileNameTele         ;2047; 81421; String  ; 0     ; zan25000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R1 !HD1R2 !HD1R3
+#;OPL_FileNameEeprom       ;2069; 81433; String  ; 0     ; qan2aa03.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameBoot         ;2048; 81411; String  ; 0     ; aap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameDrv1         ;2049; 81412; String  ; 0     ; aap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+! !HD5
+#;OPL_FileNameDrv1         ;2049; 81412; String  ; 0     ; aat11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameDrv2         ;2050; 81413; String  ; 0     ; aap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameTech         ;2051; 81414; String  ; 0     ; aap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNamePerso        ;2052; 81415; String  ; 0     ; aap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameCode2        ;2053; 81416; String  ; 0     ; aap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameLangueFix    ;2054; 81417; String  ; 0     ; aap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+! !HD5
+#;OPL_FileNameLangueFix    ;2054; 81417; String  ; 0     ; aat11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameLangueVar    ;2055; 81418; String  ; 0     ; oap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameModifPerso   ;2056; 81420; String  ; 0     ; map11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+#;OPL_FileNamePatchBbic   ;2066; 81419; String  ; 0     ; b4a20000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileNameStatic    ;2106; 81425; String  ; 0     ; dap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+!
+! !HD1R2
+#;OPL_FileEeprom          ;2067; 81431; String  ; 0     ; qap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_FileModifEeprom     ;2068; 81432; String  ; 0     ; qap11000.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+! !HD1R2
+#;OPL_RepNameScen          ;2100; 81802; String  ; 0     ; c:\resu\hd1r2\  ;  0    ; 1     ; [none]; 255   ; [none]
+!
+! !HD1R2
+#;OPL_RepNameCfg          ;2101; 81803; String  ; 0     ; c:\resu\hd1r2\  ;  0    ; 1     ; [none]; 255   ; [none]
+!
+#;OPL_FileNameScen        ;2102; 81801; String  ; 0     ; telech.scn  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+#;OPL_FileNameCfg         ;2103; 0 ; String  ; 0     ; telech.cfg  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+!===========================================================================
+!  Famille RHM : Contraste
+!  ------------------------
+#;OPL_ParContraste     ; 83; 96001; Int8; 0; 0; 0; 15; [None]; 1; [None]
+!
+!===========================================================================
+!
+!   CONSTANTES INDEPENDANTES DES PRODUITS
+!
+!===========================================================================
+!  Init MCX
+!
+#;ParIrq                 ;205; 0 ; Int16  ; 10; 10; -32768; 32767     ; [none]; 1; [none]
+#;AdrBase                ;296; 0 ; Int16  ; 640; 640; -32768; 32767     ; [none]; 1; [none]
+#;ZoneRam                ;206; 0 ; Int16  ; 53248; 53248; -32768; 32767     ; [none]; 1; [none]
+!
+!  Famille Display User Messages
+!  -----------------------------
+#;bPL_MessUserOnOff      ;126 ; 0    ; Boolean; 0    ; 0    ; 0     ; 1     ; [none] ; 1   ; [none]
+#;bPL_MessUserReady      ;1048; 0    ; Boolean; 0    ; 0    ; 0     ; 1     ; [none] ; 1   ; [none]
+#;MESS_USER_MESS         ;1049; 87101; String ; _    ; _    ; 0     ; 256   ; [none] ; 4000; [none]
+!
+!
+!===========================================================================
+!  Famille GENERAL : M I S E   E N  S E R V I C E
+!
+#;OPL_VersionAL0         ;2038; 0    ; String ; HD20AL-0 ; HD20AL-0 ; 0; 0         ; [none]; 9; [none]
+#;ResSwChecksum          ;1036; 0    ; Int32  ; 0; 0; 0; 2147483647; [none]; 0; [none]
+#;ResAdresseRam          ;1079; 0    ; Int32  ; 0; 0; 0; 2147483647; [none]; 0; [none]
+!
+!
+#;OPL_TitreMemoParam     ; 2058; 0; String; 25; Paramètres_incorrects ; 0; 0; [none]; 25; [none]
+#;OPL_MsgMemoParam       ; 2059; 0; String; 60; Voulez-vous_mémoriser_leur_valeur_par_défaut? ; 0; 0; [none]; 60; [none]
+#;OPL_TitreUser          ; 2060; 0; String; 25; _ ; 0; 0; [none]; 25; [none]
+#;OPL_MessUser           ; 2061; 0; String; 60; _ ; 0; 0; [none]; 60; [none]
+#;OPL_ActionUser          ;2046; 0; Int16  ; 0; 0; -32768; 32767     ; [none]; 0; [none]
+!===========================================================================
+!  Famille INFO : 
+!
+#;ResVersionLogiciel     ;1060; 100001 ; String ; _ ; _ ; 0; 0         ; [none]; 9; [none]
+#;ResVersionBbic         ;1077; 100002 ; String ; _ ; _ ; 0; 0         ; [none]; 9; [none]
+#;ResHwDescriptor        ;1037; 100003 ; Int16  ; 0; 0; -32768; 32767     ; [none]; 0; [none]
+#;ResTypeFlash           ;1093; 0 ; TabInt8 ; 4 ; FFFFFFFF ; 0; 255         ; [none]; 1; [none]
+#;ResStrTypeFlash        ;1094; 100004 ; String ; _ ; configuration_inconnue ; 0; 0         ; [none]; 25; [none]
+!
+#;OPL_VersionBbic2       ;2040; 0    ; String ; BBIC2 ; BBIC2 ; 0; 0         ; [none]; 9; [none]
+#;OPL_VersionBbic3       ;2041; 0    ; String ; BBIC3 ; BBIC3 ; 0; 0         ; [none]; 9; [none]
+#;OPL_VersionBbic4       ;2042; 0    ; String ; BBIC4 ; BBIC4 ; 0; 0         ; [none]; 9; [none]
+#;OPL_VersionBbic5       ;2043; 0    ; String ; BBIC5 ; BBIC5 ; 0; 0         ; [none]; 9; [none]
+#;OPL_VersionBbic4A2     ;2071; 0    ; String ; BBIC4 ; BBIC4A2 ; 0; 0         ; [none]; 9; [none]
+#;OPL_VersionBbic4A4     ;2072; 0    ; String ; BBIC4 ; BBIC4A4 ; 0; 0         ; [none]; 9; [none]
+!
+#;ResVersionIdent        ;1038; 0    ; Int32  ; 0; 0; 0; 2147483647; [none]; 0; [none]
+!===========================================================================
+!
+!===========================================================================
+!  Famille GENERAL : C O N F I G  L I A I S O N
+!  -----------------------------------------
+#;OPL_ParMcx             ;143 ; 10501 ; Boolean; 0    ; 0    ; 0     ; 1     ; [none] ; 1   ; [none]
+#;OPL_ParNumVoie         ;144 ; 10502 ; Int16; 1  ; 1; 1  ; 8 ; [none] ; 1   ; [none]
+#;OPL_ParBaudRate        ;142 ; 10503 ; Int32; 38400  ; 38400; 9600  ; 38400 ; [none] ; 1   ; [none]
+#;OPL_ParFlagOpenCom     ;145 ; 0     ; Boolean; 0    ; 0    ; 0     ; 1     ; [none] ; 1   ; [none]
+!
+!
+!===========================================================================
+!  Famille GENERAL : MISE ENSERVICE E/R
+!  -----------------------------------------
+#;OPL_ParConfiguration     ;176 ; 0     ; Boolean; 1    ; 1    ; 0     ; 1     ; [none] ; 1   ; [none]
+!
+!===========================================================================
+!  Famille GENERAL : ETAT LOCALISATION
+!  -----------------------------------------
+#;OPL_ResLocState        ;1035; 0    ; Boolean ; 0       ; 0        ; 0     ; 1     ; [none] ; 0 ; [none]
+#;ResStrLoc              ;1081; 100301; String  ; _       ; _        ; 0     ; 1     ; [none] ; 20; [none]
+#;ResStrLocOk            ;1082; 0    ; String  ; _ ; Poste_localise ;  0     ; 1     ; [none] ; 20; [none]
+#;ResStrLocNok           ;1083; 0    ; String  ; _ ; Poste_Non_Localise ; ; 0     ; 1     ; [none] ; 20; [none]
+!
+!===========================================================================
+!  Famille GENERAL : ENVOI APPEL
+!  -----------------------------------------
+#;OPL_ParNumTel ; 78; 100101; String ; 0  ; 0   ; 0 ; 1    ; [none] ; 11 ; [none]
+!
+!===========================================================================
+!
+!  Famille GENERAL : ACCES EEPROM / FLASH
+!  -----------------------------------------
+#;OPL_ParZone            ; 171  ; 34002; Int8 ; 8  ; 8   ; 8 ; 16    ; [none] ; 8   ; [none]
+#;OPL_AdrStartS2         ; 2032; 0; Int32  ; 0 ; 0  ; 0 ; 32768  ; [none] ; 1   ; [none]
+!
+!  -------------------------------
+!
+!  Famille RADIO : E M I S S I O N
+!  -------------------------------
+#;RadioEmi_ModeFonc      ; 91; 21003; Int8  ;  2    ;  2    ;  0    ; 5     ; [none]; 1     ; [none]
+#;RadioEmi_Rftx          ; 11; 21004; Int16 ;  -8   ; -8    ; -504  ; 504   ; [none]; 16    ; [none]
+#;OPL_ParRftx1           ; 196; 0   ; Int16 ;  -8   ; -8    ; -504  ; 504   ; [none]; 16    ; [none]
+#;OPL_ParRftx0           ; 197; 0   ; Int16 ;  -8   ; -8    ; -504  ; 504   ; [none]; 16    ; [none]
+#;OPL_ParRftx3           ; 198; 0   ; Int16 ;  -8   ; -8    ; -504  ; 504   ; [none]; 16    ; [none]
+#;OPL_ParRftx2           ; 199; 0   ; Int16 ;  -8   ; -8    ; -504  ; 504   ; [none]; 16    ; [none]
+#;OPL_ParRftx5           ; 200; 0   ; Int16 ;  -8   ; -8    ; -504  ; 504   ; [none]; 16    ; [none]
+#;OPL_ParRftx4           ; 201; 0   ; Int16 ;  -8   ; -8    ; -504  ; 504   ; [none]; 16    ; [none]
+#;OPL_ParTabRftx         ; 202; 0   ; TabInt16    ;  6   ; -8    ; -504  ; 504   ; [none]; 16    ; [none]
+#;Rftx_1                 ; 202  ; 0 ; EltTabInt16 ;  0   ; -8    ; -504  ; 504   ; [none] ;16    ; [none]
+#;Rftx_0                 ; 202  ; 0 ; EltTabInt16 ;  1   ; -8    ; -504  ; 504   ; [none] ;16    ; [none]
+#;Rftx_3                 ; 202  ; 0 ; EltTabInt16 ;  2   ; -8    ; -504  ; 504   ; [none] ;16    ; [none]
+#;Rftx_2                 ; 202  ; 0 ; EltTabInt16 ;  3   ; -8    ; -504  ; 504   ; [none] ;16    ; [none]
+#;Rftx_5                 ; 202  ; 0 ; EltTabInt16 ;  4   ; -8    ; -504  ; 504   ; [none] ;16    ; [none]
+#;Rftx_4                 ; 202  ; 0 ; EltTabInt16 ;  5   ; -8    ; -504  ; 504   ; [none] ;16    ; [none]
+#;RadioEmi_AGaI          ; 6 ; 21005; Float ;  -1.5 ; -1.5  ; -1.5  ; 1.5   ; [dB]  ; 0.2   ; [dB]
+#;RadioEmi_AGaQ          ; 7 ; 21006; Float ;  -1.5 ; -1.5  ; -1.5  ; 1.5   ; [dB]  ; 0.2   ; [dB]
+#;RadioEmi_AOfI          ; 8 ; 21007; Int8  ;  -1   ; -1    ; -63   ; 63    ; [mV]  ; 2     ; [mV]
+#;RadioEmi_AOfQ          ; 9 ; 21008; Int8  ;  -1   ; -1   ; -63   ; 63    ; [mV]  ; 2     ; [mV]
+#;RadioEmi_IdleDelay1Tx  ; 2 ; 21009; Int8  ;  0    ;  0    ;  0    ; 124   ; [T]   ; 4     ; [T]
+#;RadioEmi_TimeDelay1Tx  ; 1 ; 21010; Float ;  4.0  ;  4.0  ;  4.0  ; 7.5   ; [T]   ; 0.5   ; [T]
+#;RadioEmi_Delay2        ; 0 ; 21011; Float ;  0.0  ;  0.0  ;  0.0  ; 15.9375; [T]   ; 0.0625 ; [T]
+#;RadioEmi_RadioDelayTx  ; 5 ; 21012; Float ; 3.875; 3.875;  0    ; 3.875 ; [T]   ; 0.125 ; [T]
+#;RadioEmi_DeltaFreq     ; 46; 21013; Double;  0    ;  0    ; -1083333; 1083333; [Hz]   ; 33.06; [Hz]
+#;RadioEmi_DeltaAtlNb    ;169; 0    ; Float ;  0    ;  0    ; -2.0  ; 1.9375; [T]   ; 0.0625; [T]
+#;RadioEmi_DeltaAtlNb    ;170; 0    ; Float ;  0    ;  0    ; -2.0  ; 1.9375; [T]   ; 0.0625; [T]
+#;RadioEmi_TypeEmission  ; 38; 0    ; Int8  ;  1    ;  1    ;  1    ; 1     ; [none]; 1     ; [none]
+#;RadioEmi_TypeModulation; 39; 0    ; Int8  ;  1    ;  1    ;  1    ; 2     ; [none]; 1     ; [none]
+#;RadioEmi_TypeModEmi    ; 92; 0    ; Int8  ;  1    ;  1    ;  1    ; 2     ; [none]; 1     ; [none]
+#;RadioEmi_DeltaPhi      ; 12; 21015  ; Float ;  0    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;RadioEmi_DeltaPhi1     ; 190; 0  ; Float ;  0    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;RadioEmi_DeltaPhi0     ; 191; 0  ; Float ;  0    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;RadioEmi_DeltaPhi3     ; 192; 0  ; Float ;  0    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;RadioEmi_DeltaPhi2     ; 193; 0  ; Float ;  0    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;RadioEmi_DeltaPhi5     ; 194; 0  ; Float ;  0    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;RadioEmi_DeltaPhi4     ; 195; 0  ; Float ;  0    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;RadioEmi_DeltaAtl      ;2020; 21014 ; Float ;  0    ;  0    ; -2.0  ; 1.9375; [T]   ; 0.0625; [T]
+#;OPL_ParTabDeltaPhi     ; 203; 0  ; TabFloat ;  6    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;DeltaPhi_1             ; 203; 0  ; EltTabFloat ;  0    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;DeltaPhi_0             ; 203; 0  ; EltTabFloat ;  1    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;DeltaPhi_3             ; 203; 0  ; EltTabFloat ;  2    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;DeltaPhi_2             ; 203; 0  ; EltTabFloat ;  3    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;DeltaPhi_5             ; 203; 0  ; EltTabFloat ;  4    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+#;DeltaPhi_4             ; 203; 0  ; EltTabFloat ;  5    ;  0    ; -22.5 ; 22.4  ; [ø]   ; 0.17578125; [ø]
+!
+#;PuissPoids             ;138  ; 0    ; Int8  ; 5    ; 5    ; 5   ; 15  ; [none] ; 1   ; [none]
+#;Chaine_CaractErreurMode; 93; 0 ; String; ?Default; \nMode_de_fonctionnement_incorrect; 0; 0;[?]; 80; [None]
+!
+!  Famille RADIO : R E C E P T I O N
+!  ---------------------------------
+#;RadioRec_RX_LFIC       ; 27; 71006; Int8   ; 0     ; 0     ; 0     ; 62    ; [dB]  ; 2     ; [dB]
+#;RadioRec_ABS_RX        ; 15; 71007; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_REL_RX        ; 18; 71008; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_MX1_LFIC      ; 31; 71012; Int8   ; 0     ; 0     ; 0     ; 62    ; [dB]  ; 2     ; [dB]
+#;RadioRec_ABS_MX1       ; 16; 71013; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_REL_MX1       ; 19; 71014; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_MX2_LFIC      ; 35; 71018; Int8   ; 0     ; 0     ; 0     ; 62    ; [dB]  ; 2     ; [dB]
+#;RadioRec_ABS_MX2       ; 17; 71019; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_REL_MX2       ; 20; 71020; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_OF_I          ; 13; 71021; Int8   ; 0     ; 0    ; -128  ; 127   ; [mV]  ; 1     ; [mV]
+#;RadioRec_OF_Q          ; 14; 71022; Int8   ; 0     ; 0    ; -128  ; 127   ; [mV]  ; 1     ; [mV]
+#;RadioRec_RFRX          ; 10; 71023; Int16  ; -8    ; -8    ; -504  ; 504   ; [mV]  ; 16    ; [mV]
+#;RadioRec_IDLEDelay1Rx  ; 4 ; 71024; Int8   ; 4     ; 4     ; 0     ; 124   ; [T]   ; 4     ; [T]
+#;RadioRec_TIMEDelay1Rx  ; 3 ; 71025; Float  ; 7.5   ; 7.5   ; 4.0   ; 7.5   ; [T]   ; 0.5   ; [T]
+!
+#;OPL_ParGainAbs1        ; 178; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainAbs2        ; 179; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainAbs3        ; 180; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainAbs4        ; 181; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainAbs5        ; 182; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainAbs6        ; 183; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainRel1        ; 184; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainRel2        ; 185; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainRel3        ; 186; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainRel4        ; 187; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainRel5        ; 188; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;OPL_ParGainRel6        ; 189; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+!!!!!!!!!!!!!! Autres paramètres de contexte pour appels procédures (hors écran)
+#;RadioRec_BlankI        ; 36; 0    ;Boolean ; 0     ; 0     ; 0     ; 1     ; [none] ; 1    ; [none]
+#;RadioRec_BlankQ        ; 37; 0    ;Boolean ; 0     ; 0     ; 0     ; 1     ; [none] ; 1    ; [none]
+!
+!!!!!!!!!!!!!! Résultats réception
+! [PwrSer/ PwrSur]
+#;ResPwrSer              ; 1000; 72002    ; Float ; 0.0 ; 0.0 ;  -127.5; 0   ; [none] ; 0.5 ; [none]
+#;ResPwrSur              ; 1001; 72001    ; Float ; 0.0 ; 0.0 ;  -127.5; 0   ; [none] ; 0.5 ; [none]
+#;ResDcI                 ; 1002; 72004    ; Int8  ; 0   ; 0.0 ;  -128  ; 127 ; [none] ; 1   ; [none]
+#;ResDcQ                 ; 1003; 72003    ; Int8  ; 0   ; 0.0 ;  -128  ; 127 ; [none] ; 1   ; [none]
+#;ResPwrSerI             ; 1058; 81002    ; Float ; 0.0 ; 0.0 ;  -127.5; 0   ; [none] ; 0.5 ; [none]
+#;ResPwrSerQ             ; 1059; 81001    ; Float ; 0.0 ; 0.0 ;  -127.5; 0   ; [none] ; 0.5 ; [none]
+!
+!
+!  Famille RADIO : Table Offset
+!  ---------------------------------
+#;ParTabOffI             ; 124; 0    ; TabInt8; 48; 48 ; 0 ; 255 ; [none] ; 1   ; [none]
+#;ParTabOffQ             ; 125; 0    ; TabInt8; 48; 48 ; 0 ; 255 ; [none] ; 1   ; [none]
+!
+!
+!  Famille RADIO : Gain I/Q
+!  ---------------------------------
+#;TypeChamp              ; 2008; 80002    ; Int8  ; 0     ; 0    ;  0   ; 2   ; [none] ; 1      ; [none]
+#;TypeIndex              ; 2009; 0        ; Int16 ; 0     ; 0    ;  0   ; 255 ; [none] ; 1      ; [none]
+#;TypeIndex1             ; 2013; 0        ; Int16 ; 0     ; 0    ;  0   ; 255 ; [none] ; 1      ; [none]
+#;TypeIndex2             ; 2014; 0        ; Int16 ; 0     ; 0    ;  0   ; 255 ; [none] ; 1      ; [none]
+#;RadioRec_ABS_A         ; 148; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_ABS_B         ; 149; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_ABS_C         ; 150; 0; Float  ; 0.0   ; 0.0   ; -7.0  ; 7.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_REL_A         ; 151; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_REL_B         ; 152; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+#;RadioRec_REL_C         ; 153; 0; Float  ; 0.0   ; 0.0   ; -4.0  ; 4.0   ; [dB]  ; 0.2   ; [dB]
+!
+!
+!  Famille RADIO : Erreur Quadrature
+!  ---------------------------------
+!#; RadioErrQuad_Freq; idem Reception
+!#; RadioErrQuad_Rfrx; idem Reception
+!
+!
+#; ResRadioErrQuad_Err   ; 1004; 84001; Float  ; 0  ; 0  ; -32  ; 32   ; [mV]  ; 0.0000001    ; [mV]
+!
+!  Famille RADIO : Synthetiseur
+!  ----------------------------
+#;Synthe_ModeAutoManu      ; 97; 85001; Int8  ;  3    ;  0    ;  0    ; 5     ; [none]; 1     ; [none]
+#;SyntheBandeFreq          ;134; 85002; Int8  ;  3    ;  0    ;  0    ; 5     ; [none]; 1     ; [none]
+!#; Synthe_FreqEmis; idem Emission
+!#; Synthe_FreqRec; idem Réception
+!#; Synthe_FreqMon; idem Réception
+!
+! [Configuration Synthetiseur]
+#;SyntheTypePll            ; 47; 86001; Boolean ; 0     ; 0     ; 0     ; 1     ; [none] ; 1    ; [none]
+!
+#;SyntheStatus2            ; 49; 0    ; TabInt8 ; 3     ; 3     ; 0     ; 1     ; [none] ; 0 ; [none]
+!
+! [Reference de frequence]
+#;RegClock             ; 162; 24001; Int8 ; 0     ; 0     ; -15     ; 16     ; [none] ; 1    ; [none]
+#;RegClockSlope        ; 163; 24002; Float  ; 0.48474861  ; 0.48474861  ; 0.48474861; 31.0234375   ; [ppm]  ; 0.0000314²21707378    ; [ppm]
+!
+! [Switch Antenne]
+#;SwitchAnt                ; 48; 87001; Boolean ; 0     ; 0     ; 0     ; 1     ; [none] ; 1    ; [none]
+!
+!  Famille BOUCLAGES : Bouclage GmskLoop
+!  -------------------------------------
+#;ResOk                    ;1006; 0    ; Boolean ; 0       ; 0        ; 0     ; 1     ; [none] ; 0 ; [none]
+#;ResStrTest               ;1061; 93001; String  ; _       ; _        ; 0     ; 1     ; [none] ; 10; [none]
+#;ResStrTestOk             ;1062; 0    ; String  ; Test_Ok ; Test_Ok  ; 0     ; 1     ; [none] ; 10; [none]
+#;ResStrTestNok            ;1063; 0    ; String  ; Test_Nok; Test_Nok ; 0     ; 1     ; [none] ; 10; [none]
+!
+#;ParVolAudio              ; 67  ; 92031; Float  ; 0    ; 0    ; 0   ;15.9375     ;[none] ;0.0625;[none]
+!
+!  Famille BOUCLAGES : LoopToAudio
+!  -------------------------------------
+#;OPL_ParLien             ; 204; 92011; Int8 ; 0     ; 0     ; 0     ; 1     ; [none] ; 1    ; [none]
+!
+!===========================================================================
+!  Famille MMI : Affichage caractères
+!  -----------------------------------
+#;Chaine_saisie          ; 84; 94001; String ; 0     ; 0     ; 0     ; 0     ; [None]; 100   ; [None]
+#;ParTypeDamier          ; 89; 0    ; Int8  ; 0       ; 0    ; 0    ; 1     ; [None] ; 1     ; [None]
+#;ParModeAffichage       ; 90; 0    ; Int8  ; 0       ; 0    ; 0    ; 1     ; [None] ; 1     ; [None]
+!
+!
+!
+!===========================================================================
+!  Famille MMI : Test Clavier
+!  --------------------------
+#;ResLigneClav           ; 1040; 99001; Int8   ; 0; 0; 0; 2; [None]; 1; [None]
+#;ResColonneClav         ; 1041; 99002; Int8   ; 0; 0; 0; 7; [None]; 1; [None]
+#;ResAppuye              ; 1042; 99003; Boolean; 0; 0; 0; 1; [None]; 1; [None]
+#;ResRelache             ; 1043; 99004; Boolean; 0; 0; 0; 1; [None]; 1; [None]
+!
+!
+!
+!===========================================================================
+!  Famille MMI : Buzzer
+!  --------------------
+#;MMI_BuzTonalite        ; 167; 97001; Int8   ; 0     ; 0     ; 0     ; 255   ; [none]; 1     ; [none]
+#;MMI_BuzVolume          ; 168; 97002; Float  ; 0.03125; 0.03125;0.03125 ; 0.5000; [none]; 0.03125; [none]
+!
+!!!!!!!!!!!!!!Autres paramètres pour fonction (hors écran)
+#;MMI_BuzActiv           ; 66; 0    ; Boolean; 0     ; 0     ; 0     ; 1     ; [none]; 1    ; [none]
+!
+!
+!===========================================================================
+!  Famille RHM : Vibreur
+!  ----------------------
+!!!!!!!!!!!!!!Autres paramètres pour fonction (hors écran)
+#;OPL_ParActiviteVibreur     ; 81  ; 0    ; Boolean; 0     ; 1     ; 0     ; 1     ; [None]; 1    ; [None]
+!
+!
+!===========================================================================
+!  Famille RHM : Led
+!  ----------------------
+#;MMI_Couleur            ; 175; 97201; Int8   ; 0     ; 0     ; 0     ; 1   ; [none]; 1     ; [none]
+!!!!!!!!!!!!!!Autres paramètres pour fonction (hors écran)
+#;OPL_ParActiviteLed     ; 174  ; 0    ; Boolean; 0     ; 1     ; 0     ; 1     ; [None]; 1    ; [None]
+!
+!===========================================================================
+!  Famille RHM : Rétro-éclairage
+!  -----------------------------
+!!!!!!!!!!!!!!Autres paramètres pour fonction (hors écran)
+#;OPL_ParActiviteLcd   ; 82; 0; Boolean; 0; 1; 0; 1; [None]; 1; [None]
+!
+!
+!===========================================================================
+!  Famille TESTS GSM : Synchronisation
+!  -----------------------------------
+! [Contrôles de saisie]
+#;OUI_SYNCRO_NFCH        ; 56  ; 88004; Int8  ; 15   ; 15   ; 1   ; 63   ; [none] ; 1   ; [none]
+#;OUI_SYNCRO_NSCH        ; 57  ; 88005; Int8  ; 5    ; 5    ; 1   ; 5    ; [none] ; 1   ; [none]
+!
+! [Contrôles de résultats]
+#;OUI_RSYNC_DeltaFilt    ; 1007; 88101; Double; 0.0  ; 0.0  ; -30.0 ; 30.0 ; [none] ; 0.000473; [none]
+#;OUI_RSYNC_DeltaBit     ; 1008; 88102; Int16 ; 0    ; 0    ; -32767; 32767; [none] ; 1       ; [none]
+!#;OUI_RSYNC_DciRes       ; 1002; 88103; Int8  ; 0    ; 0    ; -128; 127  ; [none] ; 0   ; [none]
+!#;OUI_RSYNC_DCQ_RES      ; 1003; 88104; Int8  ; 0    ; 0    ; -128; 127  ; [none] ; 0   ; [none]
+! Bsic : unsigned
+#;OUI_RSYNC_BSIC         ; 1010; 88106; Int8  ; 0    ; 0    ; 0; 255  ; [none] ; 0   ; [none]
+!
+!
+!
+!===========================================================================
+!  Famille TESTS GSM : Mode TCH
+!  -----------------------------
+! [Contrôles de saisie]
+!#;OUI_MTCH_C0       ; 53  ; 89001; Int16 ; 20   ; 20   ; 1   ; 124  ; [none] ; 1   ; [none]
+!#;OUI_MTCH_NFCH     ; 56  ; 89004; Int8  ; 15   ; 15    ; 1   ; 63   ; [none] ; 1   ; [none]
+!#;OUI_MTCH_NSCH     ; 57  ; 89005; Int8  ; 4    ; 4    ; 1   ; 5    ; [none] ; 1   ; [none]
+!
+#;OUI_MTCH_NOTS     ; 60  ; 89009; Int8  ; 5    ; 5    ; 0   ; 7    ; [none] ; 1   ; [none]
+#;OUI_MTCH_RLTO     ; 62  ; 89010; Int8  ; 64   ; 64   ; 1   ; 64   ; [none] ; 1   ; [none]
+! TA : unsigned 
+#;OUI_MTCH_TA       ;133  ; 89013; Int8  ; 0    ; 0    ; 0   ; 63  ; [none] ; 1   ; [none]
+#;OUI_MTCH_SBER     ; 63  ; 89014; Int8  ; 40   ; 40   ; 0   ; 255  ; [none] ; 1   ; [none]
+#;OUI_MTCH_SLOGP    ; 64  ; 89015; Int16 ; 1000 ; 1000 ; 0   ; 4095 ; [none] ; 1   ; [none]
+#;OUI_MTCH_DTX    ; 71  ; 89019;Boolean; 0    ; 0    ; 0   ; 1    ; [none] ; 1   ; [none]
+#;OUI_MTCH_TRANS    ; 76  ; 89020;Boolean; 0    ; 0    ; 0   ; 1    ; [none] ; 1   ; [none]
+#;OUI_MTCH_HOP      ; 72  ; 89021;Boolean; 0    ; 0    ; 0   ; 1    ; [none] ; 1   ; [none]
+#;OUI_MTCH_HSN      ; 73  ; 89022; Int8  ; 50   ; 0    ; 0   ; 63   ; [none] ; 1   ; [none]
+#;OUI_MTCH_MIAO     ; 74  ; 89023; Int8  ; 51   ; 0    ; 0   ; 63   ; [none] ; 1   ; [none]
+#;OUI_MTCH_PERIOD   ;131  ; 89024; Int8  ; 1    ; 1    ; 1   ; 255 ; [none] ; 1   ; [none]
+!#;OUI_MTCH_VOLAUDIO ; 67  ; 89016; Float ; 0.03125; 0.03125; 0.03125; 0.50; [none] ; 0.03125; [none]
+#;OUI_MTCH_TONALITE ; 69  ; 89017; Int8  ; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+!
+#;OPL_ParActivTona  ; 68  ; 0    ;Boolean; 0    ; 0    ; 0   ; 1    ; [none] ; 1   ; [none]
+!
+! [Contrôles de résultats]
+#;OUI_RMTCH_NbBit1KO    ; 1012  ; 89101; Int32 ; 0    ; 0    ; 0   ; 2147483647  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_NbBit1      ; 1013  ; 89102; Int32 ; 0    ; 0    ; 0   ; 2147483647  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_TErrBit     ; 1014  ; 89103; Float ; 0    ; 0    ; 0   ; 100.0  ; [none] ; 0.01   ; [none]
+#;OUI_RMTCH_NbTCH       ; 1020  ; 89109; Int16 ; 0    ; 0    ; 0   ; 32767  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_NbTCH_KO    ; 1022  ; 89110; Int16 ; 0    ; 0    ; 0   ; 32767  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_NbCrcKO     ; 1021  ; 89111; Int16 ; 0    ; 0    ; 0   ; 32767  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_TErrTch     ; 1015  ; 89104; Float ; 0    ; 0    ; 0   ; 100.0  ; [none] ; 0.01   ; [none]
+#;OUI_RMTCH_NbSACCH     ; 1023  ; 89112; Int16 ; 0    ; 0    ; 0   ; 32767  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_NbSACCHKO   ; 1024  ; 89113; Int16 ; 0    ; 0    ; 0   ; 32767  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_TErrSacch   ; 1016  ; 89105; Float  ; 0    ; 0    ; 0   ;100.0  ; [none] ; 0.01   ; [none]
+#;OUI_RMTCH_RXQualFull  ; 1025  ; 89114; Int8  ; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_RXQualSub   ; 1026  ; 89115; Int8  ; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_NoiseLevel  ; 1019  ; 89108; Float ; 0    ; 0    ; -32767.0   ; 32767.0  ; [none] ; 0.5   ; [none]
+#;OUI_RMTCH_PwrFull     ; 1029  ; 89118; Float ; 0    ; 0    ; -32767.0   ; 32767.0  ; 0.5   ; [dB]
+#;OUI_RMTCH_PwrSub      ; 1030  ; 89119; Float ; 0    ; 0    ; -32767.0   ; 32767.0  ; 0.5   ; [dB]
+#;OUI_RMTCH_PwrMX       ; 1032  ; 89125; Float ; 0    ; 0    ; -32767.0   ; 32767.0  ; 0.5   ; [dB]
+!#;OUI_RMTCH_DciRes      ; 1002  ; 89120; Int8  ; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+!#;OUI_RMTCH_DCQ_RES     ; 1003  ; 89121; Int8  ; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+!#;OUI_RMTCH_DeltaFit    ; 1007  ; 89122; Double; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+!#;OUI_RMTCH_DeltaBit    ; 1008  ; 89123; Float ; 0    ; 0    ; -32767.0   ; 32767.0  ; [none] ; 0.0625   ; [none]
+!#;OUI_RMTCH_BsicSync    ; 1010  ; 89126; Int8  ; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_BCanalMX    ; 1031  ; 89124; Int8  ; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+#;OUI_RMTCH_TimAdv      ; 1034  ; 89129; Int8  ; 0    ; 0    ; 0   ; 255  ; [none] ; 1   ; [none]
+!
+!
+!
+!
+!
+!===========================================================================
+!  Famille CONTROLE
+!  -----------------
+! [HeureMontre]
+#;ParMontre              ; 79  ; 0    ;Boolean; 0     ; 0    ; 0     ; 1     ; [none] ; 1    ; [none]
+#;ResTime                ; 1039; 32101    ; String; 0     ; 0    ; 0     ; 1     ; [none] ; 24   ; [none]
+!
+! [MainLibre]
+#;ParMainLibre           ; 80  ; 0    ;Boolean; 0     ; 0    ; 0     ; 1     ; [none] ; 1    ; [none]
+!
+! [MesureTempérature]
+#;OPL_ResTempHex         ; 1080; 36102; Int8   ; 0     ; 0    ; -128  ; 127   ; [none]  ; 1     ; [none]
+!
+! [MesureTension]
+#;OPL_ResTensionHex          ; 1078; 35102; Int8   ; 0     ; 0    ; -128  ; 127   ; [none]  ; 1     ; [none]
+!
+! [ReglageTension]
+#;OPL_ParSeuilBasNiCd        ;  127; 0    ; Float ; 5.00  ; 5.00 ;  5.00 ; 9.01  ; [Volt] ; 0.01 ; [Volt]
+#;OPL_ParSeuilDechargeNiCd   ;  128; 0    ; Float ; 5.00  ; 5.00 ;  5.00 ; 9.01  ; [Volt] ; 0.01 ; [Volt]
+#;OPL_ParSeuilBasLithium     ;  129; 0    ; Float ; 5.00  ; 5.00 ;  5.00 ; 9.01  ; [Volt] ; 0.01 ; [Volt]
+#;OPL_ParSeuilDechargeLithium;  130; 0    ; Float ; 5.00  ; 5.00 ;  5.00 ; 9.01  ; [Volt] ; 0.01 ; [Volt]
+!
+! [Reglage_Auto_Tension]
+#;ParV1Mesure            ;  271; 38502  ;   Int16 ; 0 ; 0 ; 0 ; 255  ; [Hexa] ; 1 ; [Hexa]
+#;ParV2Mesure            ;  272; 38503  ;   Int16 ; 0 ; 0 ; 0 ; 255  ; [Hexa] ; 1 ; [Hexa]
+#;NameSeuilTension       ;  273; 38501  ;  String ; Tenshex.txt; Tenshex.txt ; 0 ; 1  ; [none] ; 255 ; [none]
+!
+! [Reglage_Manuel_Tension]
+#;ParTypeBatterie        ;  209; 38001    ; Int8  ; 0 ; 0 ; 0 ;  127   ; [none]; 1    ; [none]
+#;ParTensMaxAttPanel     ;  210 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt1        ;  210; 38002  ; EltTabFloat ; 0 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt2        ;  210; 38003  ; EltTabFloat ; 1 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt3        ;  210; 38004  ; EltTabFloat ; 2 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensMaxAtt       ;  211 ;    0  ; TabFloat; 6 ; 6 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt1NiCd    ;  211;     0  ; EltTabFloat ; 0 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt2NiCd    ;  211;     0  ; EltTabFloat ; 1 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt3NiCd    ;  211;     0  ; EltTabFloat ; 2 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt1Li      ;  211;     0  ; EltTabFloat ; 3 ; 4.15 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt2Li      ;  211;     0  ; EltTabFloat ; 4 ; 4.15 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxAtt3Li      ;  211;     0  ; EltTabFloat ; 5 ; 4.15 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTensMaxChgPanel     ;  212 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg1        ;  212; 38005  ; EltTabFloat ; 0 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg2        ;  212; 38006  ; EltTabFloat ; 1 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg3        ;  212; 38007  ; EltTabFloat ; 2 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensMaxChg       ;  213;     0  ; TabFloat; 6 ; 6 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg1NiCd    ;  213;     0  ; EltTabFloat ; 0 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg2NiCd    ;  213;     0  ; EltTabFloat ; 1 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg3NiCd    ;  213;     0  ; EltTabFloat ; 2 ; 5.30 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg1Li      ;  213;     0  ; EltTabFloat ; 3 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg2Li      ;  213;     0  ; EltTabFloat ; 4 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMaxChg3Li      ;  213;     0  ; EltTabFloat ; 5 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTensMinAttPanel     ;  214 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt1        ;  214; 38008  ; EltTabFloat ; 0 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt2        ;  214; 38009  ; EltTabFloat ; 1 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt3        ;  214; 38010  ; EltTabFloat ; 2 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensMinAtt       ;  215;     0  ; TabFloat; 6 ; 6 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt1NiCd    ;  215;     0  ; EltTabFloat ; 0 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt2NiCd    ;  215;     0  ; EltTabFloat ; 1 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt3NiCd    ;  215;     0  ; EltTabFloat ; 2 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt1Li      ;  215;     0  ; EltTabFloat ; 3 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt2Li      ;  215;     0  ; EltTabFloat ; 4 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinAtt3Li      ;  215;     0  ; EltTabFloat ; 5 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTensMinChgPanel     ;  216 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg1        ;  216; 38011  ; EltTabFloat ; 0 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg2        ;  216; 38012  ; EltTabFloat ; 1 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg3        ;  216; 38013  ; EltTabFloat ; 2 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensMinChg       ;  217;     0  ; TabFloat; 6 ; 6 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg1NiCd    ;  217;     0  ; EltTabFloat ; 0 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg2NiCd    ;  217;     0  ; EltTabFloat ; 1 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg3NiCd    ;  217;     0  ; EltTabFloat ; 2 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg1Li      ;  217;     0  ; EltTabFloat ; 3 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg2Li      ;  217;     0  ; EltTabFloat ; 4 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensMinChg3Li      ;  217;     0  ; EltTabFloat ; 5 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTensRedEntPanel     ;  218 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt1        ;  218; 38014  ; EltTabFloat ; 0 ; 4.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt2        ;  218; 38015  ; EltTabFloat ; 1 ; 4.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt3        ;  218; 38016  ; EltTabFloat ; 2 ; 4.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensRedEnt       ;  219 ;    0  ; TabFloat; 6 ; 6 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt1NiCd    ;  219;     0  ; EltTabFloat ; 0 ; 4.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt2NiCd    ;  219;     0  ; EltTabFloat ; 1 ; 4.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt3NiCd    ;  219;     0  ; EltTabFloat ; 2 ; 4.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt1Li      ;  219;     0  ; EltTabFloat ; 3 ; 3.80 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt2Li      ;  219;     0  ; EltTabFloat ; 4 ; 3.80 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensRedEnt3Li      ;  219;     0  ; EltTabFloat ; 5 ; 3.80 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTensInfoFinChgPanel ;  220 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg1    ;  220; 38017  ; EltTabFloat ; 0 ; 5.60 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg2    ;  220; 38018  ; EltTabFloat ; 1 ; 5.60 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg3    ;  220; 38019  ; EltTabFloat ; 2 ; 5.60 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensInfoFinChg   ;  221 ;    0  ; TabFloat; 6 ; 6 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg1NiCd;  221;     0  ; EltTabFloat ; 0 ; 5.60 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg2NiCd;  221;     0  ; EltTabFloat ; 1 ; 5.60 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg3NiCd;  221;     0  ; EltTabFloat ; 2 ; 5.60 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg1Li  ;  221;     0  ; EltTabFloat ; 3 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg2Li  ;  221;     0  ; EltTabFloat ; 4 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensInfoFinChg3Li  ;  221;     0  ; EltTabFloat ; 5 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParSeuilTensSecOuvPanel;  222;     0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv1   ;  222; 38020  ; EltTabFloat ; 0 ; 5.59 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv2   ;  222; 38021  ; EltTabFloat ; 1 ; 5.59 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv3   ;  222; 38022  ; EltTabFloat ; 2 ; 5.59 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabSeuilTensSecOuv  ;  223;     0  ; TabFloat; 8 ; 8 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv1NiCd; 223;     0  ; EltTabFloat ; 0 ; 5.60 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv2NiCd; 223;     0  ; EltTabFloat ; 1 ; 5.60 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv3NiCd; 223;     0  ; EltTabFloat ; 2 ; 5.60 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv1Li ;  223;     0  ; EltTabFloat ; 3 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv2Li ;  223;     0  ; EltTabFloat ; 4 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuv3Li ;  223;     0  ; EltTabFloat ; 5 ; 4.30 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuvPile;  223;     0  ; EltTabFloat ; 6 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensSecOuvXX  ;  223;     0  ; EltTabFloat ; 7 ; 5.80 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParSeuilTensEnvPanel   ;  224;     0  ; TabFloat; 4 ; 4 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv1      ;  224; 38023  ; EltTabFloat ; 0 ; 3.60 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv2      ;  224; 38024  ; EltTabFloat ; 1 ; 3.72 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv3      ;  224; 38025  ; EltTabFloat ; 2 ; 3.84 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv4      ;  224; 38026  ; EltTabFloat ; 3 ; 5.80 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabSeuilTensEnv     ;  225;     0  ; TabFloat; 32; 32; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv1NiCd  ;  225;     0  ; EltTabFloat ; 0 ; 3.60 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv2NiCd  ;  225;     0  ; EltTabFloat ; 1 ; 3.78 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv3NiCd  ;  225;     0  ; EltTabFloat ; 2 ; 3.84 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv4NiCd  ;  225;     0  ; EltTabFloat ; 3 ; 5.80 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv1NiCd  ;  225;     0  ; EltTabFloat ; 4 ; 3.60 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv2NiCd  ;  225;     0  ; EltTabFloat ; 5 ; 3.78 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv3NiCd  ;  225;     0  ; EltTabFloat ; 6 ; 3.84 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv4NiCd  ;  225;     0  ; EltTabFloat ; 7 ; 5.80 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv1NiCd  ;  225;     0  ; EltTabFloat ; 8 ; 3.60 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv2NiCd  ;  225;     0  ; EltTabFloat ; 9 ; 3.78 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv3NiCd  ;  225;     0  ; EltTabFloat ;10 ; 3.84 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv4NiCd  ;  225;     0  ; EltTabFloat ;11 ; 5.80 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv1Li    ;  225;     0  ; EltTabFloat ;12 ; 3.45 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv2Li    ;  225;     0  ; EltTabFloat ;13 ; 3.72 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv3Li    ;  225;     0  ; EltTabFloat ;14 ; 3.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv4Li    ;  225;     0  ; EltTabFloat ;15 ; 5.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv1Li    ;  225;     0  ; EltTabFloat ;16 ; 3.45 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv2Li    ;  225;     0  ; EltTabFloat ;17 ; 3.72 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv3Li    ;  225;     0  ; EltTabFloat ;18 ; 3.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv4Li    ;  225;     0  ; EltTabFloat ;19 ; 5.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv1Li    ;  225;     0  ; EltTabFloat ;20 ; 3.45 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv2Li    ;  225;     0  ; EltTabFloat ;21 ; 3.72 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv3Li    ;  225;     0  ; EltTabFloat ;22 ; 3.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv4Li    ;  225;     0  ; EltTabFloat ;23 ; 5.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv1Pile  ;  225;     0  ; EltTabFloat ;24 ; 3.50 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv2Pile  ;  225;     0  ; EltTabFloat ;25 ; 3.80 ;-5.00 ; 5.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv3Pile  ;  225;     0  ; EltTabFloat ;26 ; 4.00 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnv4Pile  ;  225;     0  ; EltTabFloat ;27 ; 5.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnvXX     ;  225;     0  ; EltTabFloat ;28 ; 5.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnvXX     ;  225;     0  ; EltTabFloat ;29 ; 5.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnvXX     ;  225;     0  ; EltTabFloat ;30 ; 5.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParSeuilTensEnvXX     ;  225;     0  ; EltTabFloat ;31 ; 5.80 ;-5.00 ; 8.80  ; [Volt] ; 0.01294 ; [Volt]
+#;ParX1RetroOnFortPanel  ;  226;     0  ; TabFloat;     3 ; 3 ;   -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFort1        ;  226; 38027  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFort2        ;  226; 38028  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFort3        ;  226; 38029  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempX1RetroOnFort ;  227;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFortNiCd     ;  227;     0  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFortNiCd     ;  227;     0  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFortNiCd     ;  227;     0  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFortLi       ;  227;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFortLi       ;  227;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFortLi       ;  227;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParX2RetroOnFortPanel  ;  228;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFort1        ;  228; 38030  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFort2        ;  228; 38031  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFort3        ;  228; 38032  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempX2RetroOnFort ;  229;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFortNiCd     ;  229;     0  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFortNiCd     ;  229;     0  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFortNiCd     ;  229;     0  ; EltTabFloat ; 2 ; 0.8  ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFortLi       ;  229;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFortLi       ;  229;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFortLi       ;  229;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParY1RetroOnFortPanel  ;  230;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFort1        ;  230; 38033  ; EltTabFloat ; 0 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFort2        ;  230; 38034  ; EltTabFloat ; 1 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFort3        ;  230; 38035  ; EltTabFloat ; 2 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempY1RetroOnFort ;  231;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFortNiCd     ;  231;     0  ; EltTabFloat ; 0 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFortNiCd     ;  231;     0  ; EltTabFloat ; 1 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFortNiCd     ;  231;     0  ; EltTabFloat ; 2 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFortLi       ;  231;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFortLi       ;  231;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFortLi       ;  231;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParY2RetroOnFortPanel  ;  232;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFort1        ;  232; 38036  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFort2        ;  232; 38037  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFort3        ;  232; 38038  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempY2RetroOnFort ;  233;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFortNiCd     ;  233;     0  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFortNiCd     ;  233;     0  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFortNiCd     ;  233;     0  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFortLi       ;  233;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFortLi       ;  233;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFortLi       ;  233;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParX1RetroOnFaiblePanel;  234;     0  ; TabFloat;     3 ; 3 ;   -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaible1      ;  234; 38039  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaible2      ;  234; 38040  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaible3      ;  234; 38041  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempX1RetroOnFaible; 235;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaibleNiCd   ;  235;     0  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaibleNiCd   ;  235;     0  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaibleNiCd   ;  235;     0  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaibleLi     ;  235;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaibleLi     ;  235;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOnFaibleLi     ;  235;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParX2RetroOnFaiblePanel;  236;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaible1      ;  236; 38042  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaible2      ;  236; 38043  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaible3      ;  236; 38044  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempX2RetroOnFaible; 237;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaibleNiCd   ;  237;     0  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaibleNiCd   ;  237;     0  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaibleNiCd   ;  237;     0  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaibleLi     ;  237;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaibleLi     ;  237;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOnFaibleLi     ;  237;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParY1RetroOnFaiblePanel;  238;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaible1      ;  238; 38045  ; EltTabFloat ; 0 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaible2      ;  238; 38046  ; EltTabFloat ; 1 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaible3      ;  238; 38047  ; EltTabFloat ; 2 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempY1RetroOnFaible; 239;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaibleNiCd   ;  239;     0  ; EltTabFloat ; 0 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaibleNiCd   ;  239;     0  ; EltTabFloat ; 1 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaibleNiCd   ;  239;     0  ; EltTabFloat ; 2 ; 1.2 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaibleLi     ;  239;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaibleLi     ;  239;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOnFaibleLi     ;  239;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParY2RetroOnFaiblePanel;  240;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaible1      ;  240; 38048  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaible2      ;  240; 38049  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaible3      ;  240; 38050  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempY2RetroOnFaible; 241;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaibleNiCd   ;  241;     0  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaibleNiCd   ;  241;     0  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaibleNiCd   ;  241;     0  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaibleLi     ;  241;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaibleLi     ;  241;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOnFaibleLi     ;  241;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParX1RetroOffPanel     ;  242;     0  ; TabFloat;     3 ; 3 ;   -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOff1           ;  242; 38051  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOff2           ;  242; 38052  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOff3           ;  242; 38053  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempX1RetroOff    ;  243;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOffNiCd        ;  243;     0  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOffNiCd        ;  243;     0  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOffNiCd        ;  243;     0  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOffLi          ;  243;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOffLi          ;  243;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X1RetroOffLi          ;  243;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParX2RetroOffPanel     ;  244;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOff1           ;  244; 38054  ; EltTabFloat ; 0 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOff2           ;  244; 38055  ; EltTabFloat ; 1 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOff3           ;  244; 38056  ; EltTabFloat ; 2 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempX2RetroOff    ;  245;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOffNiCd        ;  245;     0  ; EltTabFloat ; 0 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOffNiCd        ;  245;     0  ; EltTabFloat ; 1 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOffNiCd        ;  245;     0  ; EltTabFloat ; 2 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOffLi          ;  245;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOffLi          ;  245;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_X2RetroOffLi          ;  245;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParY1RetroOffPanel     ;  246;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOff1           ;  246; 38057  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOff2           ;  246; 38058  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOff3           ;  246; 38059  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempY1RetroOff    ;  247;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOffNiCd        ;  247;     0  ; EltTabFloat ; 0 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOffNiCd        ;  247;     0  ; EltTabFloat ; 1 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOffNiCd        ;  247;     0  ; EltTabFloat ; 2 ; 0.8 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOffLi          ;  247;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOffLi          ;  247;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y1RetroOffLi          ;  247;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParY2RetroOffPanel     ;  248;     0  ; TabFloat;     3 ; 3 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOff1           ;  248; 38060  ; EltTabFloat ; 0 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOff2           ;  248; 38061  ; EltTabFloat ; 1 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOff3           ;  248; 38062  ; EltTabFloat ; 2 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;DeltaTempY2RetroOff    ;  249;     0  ; TabFloat;     6 ; 6 ;   0 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOffNiCd        ;  249;     0  ; EltTabFloat ; 0 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOffNiCd        ;  249;     0  ; EltTabFloat ; 1 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOffNiCd        ;  249;     0  ; EltTabFloat ; 2 ; 0.4 ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOffLi          ;  249;     0  ; EltTabFloat ; 3 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOffLi          ;  249;     0  ; EltTabFloat ; 4 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;_Y2RetroOffLi          ;  249;     0  ; EltTabFloat ; 5 ; 0   ; -30 ; 80  ; [Celsius] ; 0.01 ; [Celsius]
+#;ParTensAlarmCl2Panel   ;  250 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl21      ;  250; 38063  ; EltTabFloat ; 0 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl22      ;  250; 38064  ; EltTabFloat ; 1 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl23      ;  250; 38065  ; EltTabFloat ; 2 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensAlarmCl2     ;  251 ;    0  ; TabFloat; 8 ; 8 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl2NiCd   ;  251;     0  ; EltTabFloat ; 0 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl2NiCd   ;  251;     0  ; EltTabFloat ; 1 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl2NiCd   ;  251;     0  ; EltTabFloat ; 2 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl2Li     ;  251;     0  ; EltTabFloat ; 3 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl2Li     ;  251;     0  ; EltTabFloat ; 4 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl2Li     ;  251;     0  ; EltTabFloat ; 5 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl2Pile   ;  251;     0  ; EltTabFloat ; 6 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl2XX     ;  251;     0  ; EltTabFloat ; 7 ; 5.80 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTensAlarmCl3Panel   ;  252 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl31      ;  252; 38066  ; EltTabFloat ; 0 ; 3.40 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl32      ;  252; 38067  ; EltTabFloat ; 1 ; 3.40 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl33      ;  252; 38068  ; EltTabFloat ; 2 ; 3.40 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensAlarmCl3     ;  253;     0  ; TabFloat; 8 ; 8 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl3NiCd   ;  253;     0  ; EltTabFloat ; 0 ; 3.40 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl3NiCd   ;  253;     0  ; EltTabFloat ; 1 ; 3.40 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl3NiCd   ;  253;     0  ; EltTabFloat ; 2 ; 3.40 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl3Li     ;  253;     0  ; EltTabFloat ; 3 ; 3.40 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl3Li     ;  253;     0  ; EltTabFloat ; 4 ; 3.40 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl3Li     ;  253;     0  ; EltTabFloat ; 5 ; 3.40 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl3Pile   ;  253;     0  ; EltTabFloat ; 6 ; 3.40 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensAlarmCl3XX     ;  253;     0  ; EltTabFloat ; 7 ; 5.80 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTensBattOkPanel     ;  254 ;    0  ; TabFloat; 3 ; 3 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOk1        ;  254; 38069  ; EltTabFloat ; 0 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOk2        ;  254; 38070  ; EltTabFloat ; 1 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOk3        ;  254; 38071  ; EltTabFloat ; 2 ; 3.00 ; -5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParTabTensBattOk       ;  255;     0  ; TabFloat; 8 ; 8 ; 0 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOkNiCd     ;  255;     0  ; EltTabFloat ; 0 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOkNiCd     ;  255;     0  ; EltTabFloat ; 1 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOkNiCd     ;  255;     0  ; EltTabFloat ; 2 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOkLi       ;  255;     0  ; EltTabFloat ; 3 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOkLi       ;  255;     0  ; EltTabFloat ; 4 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOkLi       ;  255;     0  ; EltTabFloat ; 5 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOkPile     ;  255;     0  ; EltTabFloat ; 6 ; 3.00 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;_ParTensBattOkXX       ;  255;     0  ; EltTabFloat ; 7 ; 5.80 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+#;ParSeuilTension        ;  256;     0  ; Float       ; 0 ;    0 ;-5.00 ; 9.01  ; [Volt] ; 0.01294 ; [Volt]
+!
+!
+! [ReglageParamCharges]
+#;OPL_ParTempoPreAttenteD ; 257; 34101  ; Int16 ;     0 ;   30 ;     0 ; 2000  ; [Seconde];  1 ; [Seconde]
+#;OPL_ParPerSwitchD       ; 258; 34102  ; Int16 ;     0 ;   20 ;     0 ; 2000  ; [Seconde];  1 ; [Seconde] 
+#;OPL_ParTInhEtablieD     ; 259; 34103  ; Int16 ;     0 ;   10 ;     0 ; 2000  ; [Seconde];  1 ; [Seconde] 
+#;OPL_ParTempsAttenteRetro; 260; 34104  ; Int16 ;     0 ;   12 ;     0 ; 2000  ; [Seconde];  1 ; [Seconde] 
+#;OPL_ParIMarche          ; 261; 34105  ; Int16 ;     0 ;   14 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]
+#;OPL_ParIRetroEclairage  ; 262;     0  ; TabInt16;3 ; 3;   0 ;   2000 ; [mA]  ; 1; [mA]
+#;_ParIRetroEclairage1    ; 262; 34106  ; EltTabInt16;0 ;    0 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;_ParIRetroEclairage2    ; 262; 34107  ; EltTabInt16;1 ;   76 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;_ParIRetroEclairage3    ; 262; 34108  ; EltTabInt16;2 ;  152 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;OPL_ParIPreAttente      ; 263;     0  ; TabInt16;6 ; 6;   0 ;   2000 ; [mA]  ; 1; [mA]   
+#;_ParIPreAttente1        ; 263; 34109  ; EltTabInt16;0 ;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;_ParIPreAttente2        ; 263; 34110  ; EltTabInt16;1 ;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;_ParIPreAttente3        ; 263; 34111  ; EltTabInt16;2 ;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;_ParIPreAttente4        ; 263; 34112  ; EltTabInt16;3 ;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;_ParIPreAttente5        ; 263; 34113  ; EltTabInt16;4 ;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;_ParIPreAttente6        ; 263; 34114  ; EltTabInt16;5 ;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA] 
+#;OPL_ParIAttente         ; 264;     0  ; TabInt16;6 ; 6;   0 ;   2000 ; [mA]  ; 1; [mA]   
+#;_ParIAttente1           ; 264; 34115  ; EltTabInt16;0 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIAttente2           ; 264; 34116  ; EltTabInt16;1 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIAttente3           ; 264; 34117  ; EltTabInt16;2 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIAttente4           ; 264; 34118  ; EltTabInt16;3 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIAttente5           ; 264; 34119  ; EltTabInt16;4 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIAttente6           ; 264; 34120  ; EltTabInt16;5 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;OPL_ParICharge          ; 265;     0  ; TabInt16;6 ; 6;   0 ;   2000 ; [mA]  ; 1; [mA]   
+#;_ParICharge1            ; 265; 34121  ; EltTabInt16;0 ;  600 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParICharge2            ; 265; 34122  ; EltTabInt16;1 ;  800 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParICharge3            ; 265; 34123  ; EltTabInt16;2 ; 1000 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParICharge4            ; 265; 34124  ; EltTabInt16;3 ;  380 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParICharge5            ; 265; 34125  ; EltTabInt16;4 ;  750 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParICharge6            ; 265; 34126  ; EltTabInt16;5 ; 1000 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;OPL_ParIEntretien       ; 266;     0  ; TabInt16;6 ; 6;   0 ;   2000 ; [mA]  ; 1; [mA]   
+#;_ParIEntretien1         ; 266; 34127  ; EltTabInt16;0 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEntretien2         ; 266; 34128  ; EltTabInt16;1 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEntretien3         ; 266; 34129  ; EltTabInt16;2 ;   50 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEntretien4         ; 266; 34130  ; EltTabInt16;3 ;    0 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEntretien5         ; 266; 34131  ; EltTabInt16;4 ;    0 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEntretien6         ; 266; 34132  ; EltTabInt16;5 ;    0 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;OPL_ParIInhibition      ; 267;     0  ; TabInt16;6 ; 6;   0 ;   2000 ; [mA]  ; 1; [mA]   
+#;_ParIInhibition1        ; 267; 34133  ; EltTabInt16;0 ;   20 ;     0 ; 2000  ; [mA]     ; 1 ;  [mA]
+#;_ParIInhibition2        ; 267; 34134  ; EltTabInt16;1 ;   20 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIInhibition3        ; 267; 34135  ; EltTabInt16;2 ;   20 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIInhibition4        ; 267; 34136  ; EltTabInt16;3 ;   20 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIInhibition5        ; 267; 34137  ; EltTabInt16;4 ;   20 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIInhibition6        ; 267; 34138  ; EltTabInt16;5 ;   20 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;OPL_ParIEmission        ; 268;     0  ; TabInt16;15;15;   0 ;   2000 ; [mA]  ; 1; [mA]   
+#;_ParIEmission1          ; 268; 34139  ; EltTabInt16;0 ;  420 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission2          ; 268; 34140  ; EltTabInt16;1 ;  370 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission3          ; 268; 34141  ; EltTabInt16;2 ;  326 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission4          ; 268; 34142  ; EltTabInt16;3 ;  295 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission5          ; 268; 34143  ; EltTabInt16;4 ;  270 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission6          ; 268; 34144  ; EltTabInt16;5 ;  215 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission7          ; 268; 34145  ; EltTabInt16;6 ;  210 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission8          ; 268; 34146  ; EltTabInt16;7 ;  210 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission9          ; 268; 34147  ; EltTabInt16;8 ;  205 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission10         ; 268; 34148  ; EltTabInt16;9 ;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission11         ; 268; 34149  ; EltTabInt16;10;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission12         ; 268; 34150  ; EltTabInt16;11;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission13         ; 268; 34151  ; EltTabInt16;12;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission14         ; 268; 34152  ; EltTabInt16;13;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+#;_ParIEmission15         ; 268; 34153  ; EltTabInt16;14;  200 ;     0 ; 2000  ; [mA]     ;  1 ; [mA]    
+!
+!
+!
+! [Présence Chargeur]
+#;ResChargeur            ; 1046; 37101    ; Int8  ; -128  ; -128 ;  -128 ; 1   ; [none] ; 1    ; [none]
+#;ResTypeBatterie        ; 1071; 37102    ; Int8  ; -128  ; -128 ;  -128 ; 6   ; [none] ; 1    ; [none]
+!
+! [Controle Charge]
+#;ParCourant             ; 172; 39001    ; Float  ; 0.2  ; 0.2 ;  0.2 ; 1   ; [A] ; 0.1    ; [A]
+!#;ResTypeBatterie        ; 1071; 37102    ; Int8  ; -128  ; -128 ;  -128 ; 6   ; [none] ; 1    ; [none]
+!
+! [Lecture Memoire]
+#;OPL_ParAdress          ; 50  ; 30001; Int32 ; 0  ; 0  ; -2147483648 ;2147483647; [none] ; 1   ; [none]
+#;OPL_ParLength          ; 51  ; 30002; Int32 ; 0  ; 0  ; 0 ;2147483647; [none] ; 1   ; [none]
+#;OPL_ResStrData         ; 1050; 30101; String; 0  ; 0  ; 0 ; 1 ; [none] ; 401 ; [none]
+!
+#;OPL_ResData            ; 1005; 0    ; TabInt8; 200; 200 ; 0 ; 1 ; [none] ; 0 ; [none]
+#;OPL_ResDeltaLectMem    ; 1051; 0    ; Int32  ; 0  ; 0   ; 0 ;200; [none] ; 1 ; [none]
+
+!
+! [Ecriture Memoire]
+#;OPL_WriteAdrHome       ; 94  ; 31001; Int32  ; 0  ; 0  ; -2147483648 ; 2147483647 ; [none] ; 1     ; [none]
+#;OPL_WriteAdrEnd        ; 95  ; 31002; Int32  ; 0  ; 0  ; -2147483648 ; 2147483647 ; [none] ; 1     ; [none]
+#;OPL_WriteStrData       ; 96  ; 31003; String ; 0  ; 0  ; 0 ; 1 ; [none] ; 401   ; [none]
+!
+#;OPL_ParData            ; 52  ; 0    ; TabInt8; 512 ; 512 ;0  ; 1 ; [none] ; 0 ; [none]
+#;OPL_ResDeltaEcriMem    ; 1052; 0    ; Int32  ; 0  ; 0  ; 0 ; 64; [none] ; 1 ; [none]
+!
+! [Lecture Registre Bbic]
+#;OPL_ParAdressRegBbic   ; 177  ; 30201; Int32 ; 0  ; 0  ; 0 ;500; [none] ; 1   ; [none]
+!
+#;OPL_StrRegBbic         ; 2031 ; 30301; String ; 0  ; 0  ; 0 ; 1 ; [none] ; 5   ; [none]
+#;OPL_ResRegBbic         ; 1076; 0    ; TabInt8; 2; 0 ; -128 ; 127 ; [none] ; 1 ; [none]
+
+!
+! [Ecriture Registre Bbic]
+!#;OPL_ParAdressRegBbic   ; 177  ; 30001; Int32 ; 0  ; 0  ; 0 ;120; [none] ; 1   ; [none]
+!
+! [LowPower]
+#;ParActivation           ; 207  ; 0    ;Boolean; 0     ; 0    ; 0     ; 1     ; [none] ; 1    ; [none]
+#;ParDuree                ; 208  ; 0    ;Int16; 4     ; 4    ; 0     ; 100    ; [none] ; 1    ; [none]
+!
+!
+!  Famille RADIO : C A L C U L   R A M P E S
+!  -----------------------------------------
+!
+#;CalRam_Cons1          ;  98; 61001; Int16   ;  11   ;  11   ;  0    ; 255   ; [none]; 1     ; [none]
+#;CalRam_Cons2          ; 100; 61003; Int16   ;  30   ;  30   ;  0    ; 255   ; [none]; 1     ; [none]
+#;CalRam_Cons3          ; 102; 61005; Int16   ;  60   ;  60   ;  0    ; 255   ; [none]; 1     ; [none]
+#;CalRam_Cons4          ; 104; 61007; Int16   ;  170  ;  170  ;  0    ; 255   ; [none]; 1     ; [none]
+#;ParStrRamp            ; 108; 62001; String  ; _     ;  _    ;  0    ; 1     ; [none]; 1200   ; [none]
+#;NameFile              ; 116;   0  ; String  ; _     ;  _    ;  0    ; 1     ; [none]; 255   ; [none]
+#;NameMemoFileRamp      ; 117; 61055; String  ; rampes.txt   ;  rampes.txt    ;  0    ; 1     ; [none]; 255   ; [none]
+#;NameEnvFileRamp       ; 118; 61056; String  ; rampes.txt   ;  rampes.txt    ;  0    ; 1     ; [none]; 255   ; [none]
+#;NameVisuFileRamp      ; 119; 61057; String  ; rampes.txt  ;  rampes.txt    ;  0    ; 1     ; [none]; 255   ; [none]
+#;NameMemoPwrlp         ; 164; 61058; String  ; rampes.txt  ;  rampes.txt    ;  0    ; 1     ; [none]; 255   ; [none]
+#;IdtFile               ; 115;   0  ; Int16   ; 18    ;  18   ;  0    ; 22    ; [none]; 1     ; [none]
+#;ErrOpenFile           ; 2007;  0  ; String; 80 ; \nErreur_d'ouverture_du_fichier ; 0; 0; [none]; 80; [none]
+#;NameFilecorrect       ; 2039; 61059; String  ; correct.dat   ;  correct.dat    ;  0    ; 1     ; [none]; 255   ; [none]
+!
+#;_ParRamp               ; 41 ; 0    ; TabInt8; 16 ; 16 ; 0 ; 255   ; [none] ; 1     ; [none]
+#;_ParRamp1              ; 41 ; 51007; EltTab ; 0  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp0              ; 41 ; 51006; EltTab ; 1  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp3              ; 41 ; 51009; EltTab ; 2  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp2              ; 41 ; 51008; EltTab ; 3  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp5              ; 41 ; 51011; EltTab ; 4  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp4              ; 41 ; 51010; EltTab ; 5  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp7              ; 41 ; 51013; EltTab ; 6  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp6              ; 41 ; 51012; EltTab ; 7  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp9              ; 41 ; 51015; EltTab ; 8  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp8              ; 41 ; 51014; EltTab ; 9  ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp11             ; 41 ; 51017; EltTab ; 10 ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp10             ; 41 ; 51016; EltTab ; 11 ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp13             ; 41 ; 51019; EltTab ; 12 ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp12             ; 41 ; 51018; EltTab ; 13 ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp15             ; 41 ; 51021; EltTab ; 14 ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+#;_ParRamp14             ; 41 ; 51020; EltTab ; 15 ; 0  ; 0 ; 255   ; [none] ; 1    ; [none]
+!
+#;OPL_TypeParam          ; 2000 ; 0; Int32  ; 0  ; 0   ; 0 ; 512  ; [none] ; 1   ; [none]
+#;ResPwrlp               ; 1070 ; 0; Int8  ;  0   ; 0    ; 0   ; 255    ; [none]  ; 1     ; [none]
+!
+! [Calcul des consignes]
+#;ModeFoncCons        ; 147; 51002; Int8  ;  2    ;  2    ;  2    ; 5     ; [none]; 1     ; [none]
+#;OUI_CONS_R          ; 42 ; 51003; Float ;  7.5 ; 7.5  ; 7.5  ; 60   ; [dB]  ; 7.5   ; [dB]
+#;OUI_CONS_C          ; 43 ; 51004; Float ;  2 ; 2  ; 2  ; 112.5   ; [dB]  ; 0.01   ; [dB]
+#;OUI_CONS_PW1        ; 44 ; 51005;Boolean;  0 ; 0  ; 0  ; 1     ; [none] ; 1    ; [none]
+!===========================================================================
+!  Famille GENERAL : M E S S A G E  S A N S  C O N T R O L E
+!
+#;OPL_ParLengthMsg       ;135; 10401; Int32 ; 1  ; 1  ; 1 ;1023; [none] ; 1   ; [none]
+#;OPL_ParStrMsg          ;137; 10402; String  ; 0     ; 00  ;  0    ; 1     ; [none]; 2048   ; [none]
+#;OPL_ParMsg             ;136; 0    ; TabInt8; 1024; 1024 ; 0 ; 1 ; [none] ; 0 ; [none]
+#;OPL_ResLength          ;1065; 0 ; Int16 ; 1  ; 1  ; 1 ;1023; [none] ; 1   ; [none]
+#;OPL_ParTimeout         ;141; 0 ; Int16 ; 1  ; 1  ; 1 ;1023; [none] ; 1   ; [none]
+!
+! Message d'erreur du S2Test pour signaler une saisie incorrecte de paramètres,
+! comme les adresses de début et fin de zone mémoire par exemple.
+#;OPL_ErrParamEntree     ; 2010; 0; String; 80; \nErreur_saisie_de_paramètres; 0; 0; [none]; 80; [none]
+!
+#;OPL_ParTestEnCours     ; 2011; 0; String; 20; \nTest_en_cours; 0; 0; [none]; 20; [none]
+#;OPL_ParTestTermine     ; 2012; 0; String; 20; \nTest_terminé; 0; 0; [none]; 20; [none]
+#;OPL_MsgMemoTermine     ; 2021; 0; String; 25; \nMemorisation_terminee; 0; 0; [none]; 25; [none]
+#;OPL_ParMacro           ; 140  ; 0    ;Boolean; 1    ; 1    ; 0   ; 1    ; [none] ; 1   ; [none]
+!
+#;TypeUut                ; 161 ; 0, Int8  ;  8   ; 8    ; 0   ; 8    ; [none]  ; 1     ; [none]
+#;ValParamInt81          ; 2015 ; 0, Int8  ;  0   ; 0    ; -128   ; 127    ; [none]  ; 1     ; [none]
+#;ValParamInt82          ; 2016 ; 0, Int8  ;  0   ; 0    ; -128   ; 127    ; [none]  ; 1     ; [none]
+!
+#;OPL_TypeLangue         ; 2079; 0, Int8  ;  0   ; 0    ; 0   ; 1    ; [none]  ; 1     ; [none]
+!
+!
+#;TypeEcran              ; 2017; 0, Int8  ;  0   ; 0    ; 0   ; 1    ; [none]  ; 1     ; [none]
+#;OPL_NameEcr640         ; 2018; 0; String; 80; UIR640; 0; 0; [none]; 80; [none]
+#;OPL_NameEcr800         ; 2019; 0; String; 80; UIR800; 0; 0; [none]; 80; [none]
+!
+#;OPL_NameEcr640GB       ; 2075; 0; String; 20; UIR640GB; 0; 0; [none]; 20; [none]
+#;OPL_NameEcr800GB       ; 2076; 0; String; 20; UIR800GB; 0; 0; [none]; 20; [none]
+
+
+#;OPL_NameMenu800FR      ; 2078 0; String  ; 20 ;  telehd.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_NameMenu800GB      ; 2077; 0; String  ; 20 ;  telehdgb.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_NameMenu640FR      ; 2089 0; String  ; 20 ;  telehd.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_NameMenu640GB      ; 2088; 0; String  ; 20 ;  telehdgb.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+
+#;OPL_NameMsgErrServFR   ; 2080; 0; String  ; 20 ;  errsrvfr.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_NameMsgErrServGB   ; 2081; 0; String  ; 20 ;  errsrvgb.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_NameMsgErrFichFR   ; 2082; 0; String  ; 20 ;  errficfr.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_NameMsgErrFichGB   ; 2083; 0; String  ; 20 ;  errficgb.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_NameMsgErrProdFR   ; 2084; 0; String  ; 20 ;  errprdfr.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_NameMsgErrProdGB   ; 2085; 0; String  ; 20 ;  errprdgb.txt    ;  0    ; 1     ; [none]; 20   ; [none]
+!
+!
+!===========================================================================
+!  Famille Telechargement : T E L E C H A R G E M E N T
+!  -----------------------------------------
+#;OPL_Efface               ;2045; 81102; Boolean;  1     ; 1  ; 0  ; 1     ; [none] ; 1    ; [none]
+!
+#;OPL_FileNameDefault   ;2073; 81461; String  ; 0     ; default.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+#;OPL_FileNameModif     ;2074; 81462; String  ; 0     ; modif.abs  ;  0    ; 1     ; [none]; 20   ; [none]
+!
+!===========================================================================
+!  Famille GENERAL : C O N F I G  T E L E C H A R G E M E N T
+!  -----------------------------------------
+#;OPL_SpeedLti           ;2033 ; 0 ; Int32; 57600  ; 57600; 9600  ; 115200 ; [none] ; 1   ; [none]
+#;OPL_StopsLti           ;2035 ; 0 ; Int16; 2  ; 2; 1  ; 2 ; [none] ; 1   ; [none]
+#;OPL_SpeedLte           ;2034 ; 81301 ; Int32; 57600  ; 57600; 9600  ; 115200 ; [none] ; 1   ; [none]
+#;OPL_StopsLte           ;2036 ; 0 ; Int16; 1  ; 1; 1  ; 2 ; [none] ; 1   ; [none]
+#;OPL_Emulation          ;2044 ; 81302 ; Boolean; 0  ; 0; 0  ; 1 ; [none] ; 1   ; [none]
+!
+#;OPL_SpeedLte1           ;2104 ; 81301 ; Int32; 57600  ; 57600; 9600  ; 115200 ; [none] ; 1   ; [none]
+#;OPL_SpeedLte2           ;2105 ; 81311 ; Int32; 115200  ; 115200; 9600  ; 115200 ; [none] ; 1   ; [none]
+#;OPL_InitMcx            ;2065 ; 0 ; Boolean; 0  ; 0; 0  ; 1 ; [none] ; 1   ; [none]
+!
+!===========================================================================
+!  Famille PIT
+!
+#;OPL_CtxCodeCheckROM    ;2090; 0    ; TabInt8; 1; 01 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodeCheckRAM    ;2091; 0    ; TabInt8; 1; 02 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodeCheckIR     ;2092; 0    ; TabInt8; 1; 03 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodeBattery     ;2093; 0    ; TabInt8; 1; 04 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodeTemp        ;2094; 0    ; TabInt8; 1; 05 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodePitOn       ;2095; 0    ; TabInt8; 1; 06 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodePitStandBy  ;2096; 0    ; TabInt8; 1; 07 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodeStartAging  ;2097; 0    ; TabInt8; 1; 08 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodePitOff      ;2098; 0    ; TabInt8; 1; 09 ; 0 ; 255 ; [none] ; 1 ; [none]
+#;OPL_CtxCodeTestPit     ;2099; 0    ; TabInt8; 1; 0A ; 0 ; 255 ; [none] ; 1 ; [none]
+!
+! [End of file : HDCNTXT.TXT]
+!
+!

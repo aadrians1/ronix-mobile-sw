@@ -1,0 +1,19 @@
+radio montowane w Hundai Sonata 
+
+hyundai H810SU
+
+kod ustawiono za pomoc† di¢d 1N4148
+dla kodu 3241
+wmontowano diody
+2,3,6,7,8,9 ----6sztuk z mo§liwych dziesi‘ciu
+
+X	X	X	X	X	X	X	X	X	X
+	-	-			-	-	-	-	
+X	X	X	X	X	X	X	X	X	X
+1	2	3	4	5	6	7	8	9	10
+
+
+procesor uPD 1723GF 681
+KIA 6225
+KIA 6210AH
+AN 72915C

@@ -1,0 +1,5 @@
+* Fichier de configuration produit 
+* Nom : typehd5.txt
+*
+HD5 ?
+

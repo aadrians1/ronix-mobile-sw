@@ -1,0 +1,33 @@
+radio bez wyswietlacza
+
+kod 5756 as przez 3s  linia 0050
+procesor typu uPD1723 688
+pamiec 24c02
+
+podlaczenie wyswietlacza
+
+
+WYSWIETLACZ  od strony druku
+
+                  x     x       x       x       x       x
+             SZARY/ZIEL CZARNY       BRAZOWY         CZERWONY
+                        I               I               I
+                        I               I               I
+                        I               I               I
+                     +12v po stacyjce  masa    masa  +12v stale
+
+                  x     x       x       x       x       x
+                       3X BRAZOWO/BIALY     CZER/SZARY SZARY/CZARNY               
+                        I       I       I       I       I
+                        I       I       I       I       I
+                        I       I       I       I       I
+                        A       B       C     +12V  o˜wietlenie
+                                          po wlaczeniu
+                                           radia
+RADIO
+
+PODLACZENIE WYSWIETLACZA OD STRONY DRUKU
+            ______________________________________________
+    I------X   X   X   X    X    X    X   X   X    X    X
+    A          C    I
+        B-----------I    

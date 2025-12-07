@@ -1,0 +1,345 @@
+
+   SECTION III - Support Features
+
+       CHAPTER 6
+
+ Soft-ICE Initialization Options
+
+   6.1 Introduction
+   6.2 Loading from the DOS Prompt
+   6.3 Loading Soft-ICE as a Loadable Device Driver
+   6.3.1 Soft-ICE Loading Switches
+   6.4 The Soft-ICE Initialization File S-ICE.DAT
+   6.4.1 Configuration Options
+   6.4.2 Function Key Assignments
+   6.4.3 Initialization Command Sequence
+
+     165 
+
+6.1 Introduction
+
+The Soft-ICE program file (S-ICE.EXE) can be loaded as a loadable device
+driver in CONFIG.SYS or as a program from the DOS command line. To get the
+full power of Soft-ICE, it must be initially loaded as a device driver in
+CONFIG.SYS. However, there may be circumstances when you might want to run
+Soft-ICE from the DOS prompt or a batch file, such as:
+
+    * You do not have extended memory in your system
+        Soft-ICE can only load as a loadable device driver
+        if you have extended memory.
+    * You want to take up ZERO bytes of conventional
+        memory. When loaded as a device driver,
+        Soft-ICE occupies approximately 2K of
+        conventional memory.
+    * You only need to use Soft-ICE occasionally and
+        there are no other programs using extended
+        memory.
+
+In some cases you may need some of the features that require Soft-ICE to
+be loaded in CONFIG.SYS but do not want Soft-ICE to be resident all of the
+time. In this case Soft-ICE can be loaded in CONFIG.SYS to reserve
+extended memory, and then disabled, by using the /UN switch, until Soft-
+ICE is required. See section 6.3.1 for more information about the /UN
+switch.
+
+ 6.2 Loading Soft-ICE from the DOS Prompt
+
+You can NOT enable all of Soft-ICE's features when loading from the DOS
+prompt. If you will be using Soft-ICE as a stand-alone debugger, it is
+recommended you load Soft-ICE in the CONFIG.SYS file.
+
+     166 
+
+To load Soft-ICE from the DOS prompt type:
+
+         S-ICE
+
+In systems with no extended memory present, Soft-ICE loads itself at the
+highest memory location possible. The memory used by Soft-ICE is then
+'mapped out', making it invisible to DOS programs. Since the total memory
+visible to DOS and its programs is less after Soft-ICE loads, it is
+recommended that you load Soft-ICE before any TSR's control programs.
+
+In systems with extended memory, you should only load Soft-ICE from the
+DOS prompt if you are not using extended memory for anything else (e.g.,
+VDISK, CACHE, HIMEM...). When you initially load Soft-ICE from the command
+line or from a batch file, Soft-ICE will prompt you with a warning
+message. This warning message is just to remind you that Soft-ICE will
+overwrite the highest portion of extended memory when it loads. You can
+suppress this warning prompt with the EXTENDED option in the Soft-ICE
+configuration file S-ICE.DAT. For more information about the EXTENDED
+option, see section 6.4.1.
+ 
+6.3 Loading Soft-ICE as a Loadable Device Driver
+
+In order to use all of the Soft-ICE features, you must first load Soft-ICE
+as a loadable device driver in your CONFIG.SYS file. The features this
+makes possible are:
+
+    * Coexisting with other software that uses extended
+        memory.
+        Loading as a device driver allows Soft-ICE to
+        manage extended memory so you can run Soft-ICE
+        with programs that use extended memory, such
+        VDISK, CACHE and HIMEM.
+
+     167
+
+    * Symbolic and source level debugging
+        Loading as a device driver allows Soft-ICE to
+        allocate an extended memory buffer for symbols
+        and source information.
+    * Back trace ranges and the SNAP command
+        Loading as a device driver allows Soft-ICE to
+        allocate an extended memory buffer for a back
+        trace buffer. This buffer is also used for the
+        Soft-ICE SNAP command.
+    * Enabling Soft-ICE's EMM 4.0 capability
+    * Running Soft-ICE with MagicCV or MagicCVW
+
+Note :
+When loaded as a device driver in CONFIG.SYS, Soft-ICE allocates the
+highest portion of extended memory for itself and its associated
+components, so there can be no memory conflicts. S-ICE.EXE must be loaded
+in CONFIG.SYS before any other driver that allocates extended memory
+loaded (e.g., VDISK.SYS, RAMDRIVE.SYS). Generally Soft-ICE works best if
+it is the first loadable device driver installed in CONFIG.SYS.
+
+ 6.3.1 Soft-ICE Loading Switches
+
+One or more loading switches can follow S-ICE.EXE in CONFIG.SYS. These
+switches allow you to customize the way extended memory will be reserved
+by Soft-ICE. The switches all must begin with a / character. The loading
+switches are:
+
+   * /EXT XXXX -- Informs S-ICE.EXE to reserve
+       XXXX Kilobytes of extended memory for other
+       DOS programs that use extended memory (e.g.,
+       VDISK, CACHE, HIMEM,...). If the /EXT
+
+     168 
+
+switch is not present, then any extended memory not used by Soft-ICE and
+its associated components will be left as standard extended memory, but
+the amount can not be guaranteed. The /EXT switch is useful because it is
+sometimes difficult to determine exactly how much memory being used by
+Soft-ICE and its associated components. Using the /EXT switch will
+guarantee a specified amount is available for other programs that use
+extended memory.
+
+   * /SYM XXXX -- Informs S-ICE.EXE to reserve
+     XXXX Kilobytes of extended memory for symbols
+     and source usage. If XXXX is not specified, then
+     all remaining extended memory is used for
+     symbols. Enough memory must be allocated for
+     your .SYM file and all source files. For more
+     information about using symbols and source, see
+     chapter 7.
+   * /TRA XXXX -- Informs S-ICE.EXE to reserve
+     XXXX Kilobytes of extended memory for a back
+     trace history buffer. This buffer is used for back
+     trace ranges and for the SNAP command. If
+     XXXX is not specified, then 10K of extended
+     memory is automatically reserved for the buffer. If
+     you do not want any memory reserved for a back
+     trace buffer, use /TRA 0. For more information
+     about using back trace ranges, see chapter 9.
+   * /MCV XXX -- Informs S-ICE.EXE to reserve
+     XXX Kilobytes of extended memory for MagicCV
+     or MagicCVW. The minimum amount of extended
+     memory you can specify is 280K and the maximum
+     is 620K. If XXX is not specified, S-ICE.EXE will
+     reserve the remaining memory, between 280K and
+     620K. See chapter 10 for more information about
+     running Soft-ICE with MagicCV or MagicCVW.
+     */EMM XXXX -- Informs S-ICE.EXE to turn
+     XXXX Kilobytes of extended memory into EMM
+
+     169 
+
+       4.0 conforming expanded memory. If XXXX is
+       specified, then all remaining memory is used as
+       expanded. See chapter 8 for more information
+       about expanded memory support.
+    * /UN -- Informs S-ICE.EXE to enter protected
+       mode, reserve any needed extended memory, then
+       exit protected mode and unload itself. This switch
+       should be used when you are loading S-ICE.EXE
+       as a loadable device driver, but you don't want
+       your system to remain in protected mode. This
+       switch will reserve memory for Soft-ICE, and you
+       must execute S-ICE.EXE from the DOS prompt
+       when you are ready to use Soft-ICE.
+
+Soft-ICE reserves extended memory in the following order, regardless of
+the order the switches are specified:
+
+       Reserve approximately 120K for S-ICE.EXE.
+       Reserve memory for the /EXT switch if present.
+       Reserve memory for the /SYM switch if present.
+       Reserve memory for the /TRA switch if present.
+             if it is not present, default to reserve 10K for
+             the back trace buffer.
+       Reserve memory for the /MCV switch if present.
+       Reserve memory for the /EMM switch if present.
+
+If available memory runs out while trying to reserve memory for a switch
+in the above sequence, then S-ICE.EXE does the following:
+
+    1. The remaining extended memory is allocated to
+         switch being processed when memory runs out.
+    2. No memory will be reserved for the remaining
+         switches.
+
+     170
+
+ Note: 
+If the /MCV or /EMM switch is present, a additional 64K of extended memory
+is reserved for a DMA holding buffer.
+
+The switches can be placed in any order following DEVICE = S-ICE.EXE.
+example is:
+
+ DEVICE = S-ICE.EXE /TRA50 /EMM 500 /SYM 2048
+
+If four megabytes of extended memory are available, this example will
+reserve approximately 120K for Soft-ICE, 2 megabytes for symbols, 50K for
+a back trace history buffer, 500K for expanded memory and leave
+approximately 1.3 megabytes for other extended memory programs. Note that
+Soft-ICE will load into the highest portion of extended memory, leaving
+the remaining memory starting at 100000H (one megabyte mark).
+
+ 6.4 The Soft-ICE Initialization File S-ICE.DAT
+
+Soft-ICE has several load options. These options are specified by placing
+special commands in an initialization file named S-ICE.DAT.
+S-ICE.DAT is an ASCII text file that Soft-ICE parses at load time. This
+file can contain function key assignment an auto-start string and various
+configuration options. The file can be created and edited with any DOS
+text editor. When loading Soft-ICE from the command line, S-ICE.DAT must
+be placed in the current directory or in a directory that is accessible
+through your current PATH. When Soft-ICE is loaded as a device driver in
+CONFIG.SYS, S-ICE.DAT must be in the same directory where S-ICE.EXE is
+located.
+     
+     171 
+
+There are three categories of commands that can be included in the S-
+ICE.DAT initialization file:
+
+     * Special configuration options
+     * Function key assignments
+     * Initialization command sequence
+
+6.4.1 Special Configuration Options
+
+Any of the following configuration options that are needed should each be
+placed on a separate line in the S-ICE.DAT file.
+   * COMPAQ -- Compaq 386 and 386SX computer
+       and some Compaq compatible computers
+       (including computers containing Micronix
+       motherboards) have 384K of non-contiguous
+       extended memory. The COMPAQ option is
+       necessary if you want Soft-ICE to use this memory.
+       Note that the COMPAQ option is the same as the
+       /C command line parameter in Soft-ICE 1.X.
+   * NOLEDS -- The NOLEDS option tells Soft-ICE
+       not to set and clear the keyboard LEDs while the
+       Soft-ICE window is up. On some keyboards the
+       are timing problems that will cause Soft-ICE to
+       lose synchronization with the keyboard. If
+       Soft-ICE hangs when you are in the Soft-ICE
+       window use this option. Note that the NOLEDS
+       option is the same as the /L command line
+       parameter in Soft-ICE 1.X.
+  * NOTVGA -- The NOTVGA option allows
+       Soft-ICE to run on BIOS compatible VGA cards.
+       Many VGA cards are not compatible with IBM
+       VGA at the hardware level. These cards support
+       VGA at the BIOS level only. Use this switch if you
+       have one of those video adapters. Note that the
+
+     172 
+
+       NOTVGA option is the same as the /V command
+       line parameter in Soft-ICE 1.X.
+   * EXTENDED -- The EXTENDED option causes
+       Soft-ICE to load directly into extended memory
+       without prompting the user with a warning
+       message. It should be used if you are loading
+       Soft-ICE initially from the DOS prompt and do
+       want to be prompted, and you know nothing else
+       using extended memory. Note that the
+       EXTENDED option is the same as the /E
+       command line parameter in Soft-ICE 1.X.
+
+6.4.2 Function Key Assignments
+
+One or more Soft-ICE commands can be assigned to any function key at load
+time. See the description of the FKEY command in section 5.8 (Debugger
+Customization Commands) for a description of assigning function keys from
+the Soft-ICE command line.
+
+The syntax for assigning a function key name in S-ICE.DAT is :
+
+   function-key-name = "string"
+   function-key-name -- F1, F2... F12.
+   string -- The string may consist of any valid
+                   Soft-ICE commands and the special
+                   characters ^ and ;. A ^ is placed in
+                   the string to make a command
+                   invisible. A ; is placed in the string
+                   denote a carriage return. The string
+                   must be enclosed in double quotes.
+
+An example function key assignment in S-ICE.DAT is:
+     F12 = "D 100;"
+
+     173 
+
+This will assign the Soft-ICE dump command to function key 12. When F12 is
+pressed Soft-ICE will dump at offset 100H in the current data segment. The
+semi-colon following the 100 represents the ENTER key.
+
+6.4.3 Initialization Command Sequence
+
+A sequence of commands can be automatically executed when Soft-ICE loads.
+This is useful for customizing Soft-ICE to meet your needs. For example,
+you might set up windows and change the default hot key sequence.
+The syntax for setting up an initialization command sequence in S-ICE.DAT
+is:
+
+   INIT = "assignment-string"
+   assignment string -- The string consists of any valid
+                     Soft-ICE commands and the special
+                     characters ^ and ;. A ^ is placed in
+                     the string to make a command
+                     invisible. A; is placed in the string
+                     denote a carriage return. The string
+                     must be enclosed in double quotes.
+
+An example initialization command sequence in S-ICE.DAT is:
+
+   INIT = "WIN; WR; WD 1; WC 12; ALTKEY CTRL X;"
+
+This example will put the Soft-ICE window in full screen mode, create a
+register window, create a data window one line long, create a code window
+12 lines long, and change the hot key sequence to CTRL X.
+
+Sample S-ICE.DAT
+
+A sample S-ICE.DAT initialization file is included on the distribution
+diskette. This sample assigns the function keys
+
+     174  
+
+so they are used in a similar manner as the function keys in Microsoft's
+CodeView debugger. This sample S-ICE.DAT should also be used as is for the
+tutorial in chapter 3.
+
+     175
+
+ Page 176 is blank
+
+     176
+

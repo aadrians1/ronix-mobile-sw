@@ -1,0 +1,1328 @@
+!=========================================================================
+!                HISTORY OF MODIFICATIONS
+!=========================================================================
+! Date           :                      12/08/95
+! Reviewed       :                      1.0
+! Author         :              O. PRINCE
+! Description    :              Création
+! --------------------------------------------------------------------------
+!
+! Date                 : 20/11/95
+! Revision             : 1.01
+! Author               : O. PRINCE
+! Description          : CRQ55 : Rajout Bouton TCH Burst by Burst dans fenêtre TCH
+!                                                + modification ordre de tabulation
+! --------------------------------------------------------------------------
+! Date                 : 23/05/96
+! Revision             : 3.03
+! Author               : O. PRINCE
+! Description          : Création nouveau fichier de référence générant fichiers produits
+!                        pour constantes spécifiques : précisées par entete 
+!                        !HD000 ou !HD2 ou !HD1P1 ou !HD1P2 ou !ED1
+!                        précisées par entete !HD pour le reste des produits
+!
+!!!!!!!!!!!!!!!!!!!!!!! DESCRIPTION DES FENETRES FTP !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! ----------------------------------------------------------------------------
+! Chaque ligne de commentaire est précédée d'un !
+! Chaque élément significatif d'une description est séparé d'un ;
+! Les mots de chaque nom de menu ou d'item sont séparés par des _ et terminés par un blanc
+!
+! Chaque description de Fenêtre est précédée d'un $ et est définie comme suit :
+!
+! $; Fichier .UIR de la fenêtre ;
+! Numéro de fenêtre dans le fichier ;
+! Identifiant de la fenêtre ;
+! Mode de la fenêtre ( 0 si test simple, 1 si multitest,
+!                      2 si résultat   , 3 si debug    , 4 si espion ) ;
+! Numéro de noeud à activer en cas de séquence de touche Ctl Enter
+!   (si test simple, 0 sinon) ;
+! numéro de noeud à activer sur touche Esc
+!
+! Chaque ligne de contrôle de la fenêtre est précédée d'un # et définie comme suit :
+!
+! #; Nom du contrôle (inutilisé) ;
+! Numéro du contrôle dans la fenêtre ;
+! Identifiant du contrôle ;
+! Type du contrôle ( 1 pointeur , 2 booléen  , 3 Integer8, 4 String,
+!                    5 Integer16, 6 Integer32, 7 Float   , 8 Double, 9 Commande ) ;
+! Mode du contrôle ( 0 si saisie, 1 si test, 2 si résultat ) ;
+! Masque de touches du contrôle (si test, 0 sinon) ;
+! Avec 		Enter 			= 1
+! 			CtrlEnter      	= 2
+!			Esc            	= 4
+!			F1             	= 8
+!			UpArrow        	= 16
+!			DownArrow      	= 32
+!			Tab            	= 64
+!			ShiftTab       	= 128
+! Numéro de noeud à activer en cas de Ctl Enter (si fenêtre multi-test, 0 sinon)
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!===========================================================================
+!
+!   PANELS DEPENDANTS DES PRODUITS
+!
+!===========================================================================
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE REGLAGE EMISSION !!!!!!!!!!!!!!!!!!!!!!!
+! Modifs LGT 6.07 : CRQ214
+! !HD
+$;uipradio.uir ;7;21000;1;0;2002
+#;OUI_REGEMI_FREQ ;2;21001;8;0;0;0
+#;OUI_REGEMI_PUIS ;3;21002;3;1;55;21005
+#;OUI_REGEMI_MODE ;4;21003;3;0;0;0
+#;OUI_REGEMI_RFTX ;5;21004;5;1;63;21010
+#;OUI_REGEMI_DELTAPHI ;6;21015;7;1;63;21120
+#;OUI_REGEMI_ADJ_GA_I ;7;21005;7;1;63;21020
+#;OUI_REGEMI_ADJ_GA_Q ;8;21006;7;1;63;21030
+#;OUI_REGEMI_ADJ_OF_I ;9;21007;3;1;63;21040
+#;OUI_REGEMI_ADJ_OF_Q ;10;21008;3;1;63;21050
+#;OUI_REGEMI_IDLE ;11;21009;3;1;63;21060
+#;OUI_REGEMI_TIME ;12;21010;7;1;63;21070
+#;OUI_REGEMI_DELAY2 ;13;21011;7;1;63;21080
+#;OUI_REGEMI_DELAY_TX ;14;21012;7;1;63;21090
+#;OUI_REGEMI_DELTAF ;15;21013;8;1;55;21100
+#;OUI_REGEMI_DELA_ATL ;16;21014;7;1;63;21110
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE CALCUL RAMPES !!!!!!!!!!!!!!!!!!!!!!!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE CALCUL RAMPES !!!!!!!!!!!!!!!!!!!!!!!
+!
+! !HD avec CRQ 164
+$;uipradio.uir ;4;61000;1;0;2203
+#;OUI_CALRAM_CONS1 ;2;61001;5;0;0;0
+#;OUI_CALRAM_PUISS_1 ;3;61002;8;0;0;0
+#;OUI_CALRAM_CONS1_4 ;4;61003;5;0;0;0
+#;OUI_CALRAM_PUISS_2 ;5;61004;8;0;0;0
+#;OUI_CALRAM_CONS1_3 ;6;61005;5;0;0;0
+#;OUI_CALRAM_PUISS_3 ;7;61006;8;0;0;0
+#;OUI_CALRAM_CONS1_2 ;8;61007;5;0;0;0
+#;OUI_CALRAM_PUISS_4 ;9;61008;8;0;0;0
+#;OUI_CALRAM_PTXLEV5 ;10;61009;8;0;0;0
+#;OUI_CALRAM_CORRECT ;11;61059;4;0;0;0
+#;OUI_CALRAM_R   ;12;61010;7;0;8;0
+#;OUI_CALRAM_R_2 ;15;61011;7;0;8;0
+#;OUI_CALRAM_R_3 ;18;61012;7;0;8;0
+#;OUI_CALRAM_R_4 ;21;61013;7;0;8;0
+#;OUI_CALRAM_R_5 ;24;61014;7;0;8;0
+#;OUI_CALRAM_R_6 ;27;61015;7;0;8;0
+#;OUI_CALRAM_R_7 ;30;61016;7;0;8;0
+#;OUI_CALRAM_R_8 ;33;61017;7;0;8;0
+#;OUI_CALRAM_R_9 ;36;61018;7;0;8;0
+#;OUI_CALRAM_R_10 ;39;61019;7;0;8;0
+#;OUI_CALRAM_R_11 ;42;61020;7;0;8;0
+#;OUI_CALRAM_R_12 ;45;61021;7;0;8;0
+#;OUI_CALRAM_R_13 ;48;61022;7;0;8;0
+#;OUI_CALRAM_R_14 ;51;61023;7;0;8;0
+#;OUI_CALRAM_R_15 ;54;61024;7;0;8;0
+#;OUI_CALRAM_C    ;13;61025;7;0;8;0
+#;OUI_CALRAM_C_2  ;16;61026;7;0;8;0
+#;OUI_CALRAM_C_3  ;19;61027;7;0;8;0
+#;OUI_CALRAM_C_4  ;22;61028;7;0;8;0
+#;OUI_CALRAM_C_5  ;25;61029;7;0;8;0
+#;OUI_CALRAM_C_6  ;28;61030;7;0;8;0
+#;OUI_CALRAM_C_7  ;31;61031;7;0;8;0
+#;OUI_CALRAM_C_8  ;34;61032;7;0;8;0
+#;OUI_CALRAM_C_9  ;37;61033;7;0;8;0
+#;OUI_CALRAM_C_10 ;40;61034;7;0;8;0
+#;OUI_CALRAM_C_11 ;43;61035;7;0;8;0
+#;OUI_CALRAM_C_12 ;46;61036;7;0;8;0
+#;OUI_CALRAM_C_13 ;49;61037;7;0;8;0
+#;OUI_CALRAM_C_14 ;52;61038;7;0;8;0
+#;OUI_CALRAM_C_15 ;55;61039;7;0;8;0
+#;OUI_CALRAM_PW1   ;14;61040;2;0;8;0
+#;OUI_CALRAM_PW1_2 ;17;61041;2;0;8;0
+#;OUI_CALRAM_PW1_3 ;20;61042;2;0;8;0
+#;OUI_CALRAM_PW1_4 ;23;61043;2;0;8;0
+#;OUI_CALRAM_PW1_5 ;26;61044;2;0;8;0
+#;OUI_CALRAM_PW1_6 ;29;61045;2;0;8;0
+#;OUI_CALRAM_PW1_7 ;32;61046;2;0;8;0
+#;OUI_CALRAM_PW1_8 ;35;61047;2;0;8;0
+#;OUI_CALRAM_PW1_9 ;38;61048;2;0;8;0
+#;OUI_CALRAM_PW1_10 ;41;61049;2;0;8;0
+#;OUI_CALRAM_PW1_11 ;44;61050;2;0;8;0
+#;OUI_CALRAM_PW1_12 ;47;61051;2;0;8;0
+#;OUI_CALRAM_PW1_13 ;50;61052;2;0;8;0
+#;OUI_CALRAM_PW1_14 ;53;61053;2;0;8;0
+#;OUI_CALRAM_PW1_15 ;56;61054;2;0;8;0
+#;OUI_CALRAM_CALMEM   ;57;61055;4;1;6;61011
+#;OUI_CALRAM_ENVCAL   ;58;61056;4;1;6;61030
+#;OUI_CALRAM_VISCAL   ;59;61057;4;1;6;61020
+#;OUI_CALRAM_VISCAL_2 ;60;61058;4;1;6;61040
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT CALCUL RAMPES !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;12;62000;2;0;2203
+#;OUI_RAMPES_Value ;2;62001;4;0;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE EEPROM !!!!!!!!!!!!!!!!!!!!!!!
+! !HD1R1 !HD1R2!HD1R3 fenêtre eeprom
+$;uipcontr.uir ;6;93010;0;93010;6513
+#;OUI_ECRI_ADR_DEB ;2;93121;6;0;0;0
+#;OUI_ECRI_ADR_FIN ;3;93122;6;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT LECTURE EEPROM !!!!!!!!!!!!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 fenêtre eeprom
+$;uipcontr.uir ;11;93110;2;0;6513
+#;OUI_RLECT_OCTETS ;2;93111;4;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE EEPROM !!!!!!!!!!!!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 fenêtre eeprom
+$;uipcontr.uir ;2;93020;0;93020;6522
+#;OUI_ECRI_ADR_DEB ;2;93121;6;0;0;0
+#;OUI_ECRI_ADR_FIN ;3;93122;6;0;0;0
+#;OUI_ECRI_OCTETS ;4;93111;4;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE EEPROM FICHIER !!!!!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 fenêtre eeprom
+$;uipcontr.uir ;7;93030;0;93030;6532
+#;OUI_LECT_F_FICHIER ;2;93101;4;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE EEPROM FICHIER !!!!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 fenêtre eeprom
+$;uipcontr.uir ;3;93040;0;93040;6542
+#;OUI_ECRI_F_FICHIER ;2;93201;4;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE VIRGINISATION EEPROM !!!!!!!!!!!!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 fenêtre eeprom
+$;starstop.uir ;7;93050;0;93050;6552
+#;Bouclage_StartMsg;2;92001;9;0;0;0
+#;Bouclage_StopMsg;3;92002;9;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE FLASH !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;6;30050;0;30110;1513
+#;OUI_LECT_ADR_DEB ;2;30051;6;0;0;0
+#;OUI_LECT_ADR_FIN ;3;30052;6;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT LECTURE FLASH !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;11;30150;2;0;1513
+#;OUI_RLECT_OCTETS ;2;30151;4;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE FLASH !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;2;31050;0;31110;1522
+#;OUI_ECRI_ADR_DEB ;2;30051;6;0;0;0
+#;OUI_ECRI_ADR_FIN ;3;30052;6;0;0;0
+#;OUI_ECRI_OCTETS ;4;30151;4;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE FLASH FICHIER !!!!!!!!!!!!!!!!
+$;uipcontr.uir ;9;30060;0;30210;1532
+#;OUI_LECT_F_FICHIER ;2;34001;4;0;0;0
+#;OUI_LECT_F_ZONE    ;3;34002;3;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE FLASH FICHIER !!!!!!!!!!!!!!!
+$;uipcontr.uir ;5;31060;0;31210;1542
+#;OUI_ECRI_F_FICHIER ;2;35001;4;0;0;0
+#;OUI_ECRI_F_ZONE    ;3;34002;3;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT OFFSET !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;18;74000;2;0;2403
+#;OUI_ROFF_OFFI_0 ;2;74001;5;2;0;0
+#;OUI_ROFF_OFFI_2 ;3;74002;5;2;0;0
+#;OUI_ROFF_OFFI_4 ;4;74003;5;2;0;0
+#;OUI_ROFF_OFFI_6 ;5;74004;5;2;0;0
+#;OUI_ROFF_OFFI_8 ;6;74005;5;2;0;0
+#;OUI_ROFF_OFFI_10 ;7;74006;5;2;0;0
+#;OUI_ROFF_OFFI_12 ;8;74007;5;2;0;0
+#;OUI_ROFF_OFFI_14 ;9;74008;5;2;0;0
+#;OUI_ROFF_OFFQ_0 ;10;74009;5;2;0;0
+#;OUI_ROFF_OFFQ_2 ;11;74010;5;2;0;0
+#;OUI_ROFF_OFFQ_4 ;12;74011;5;2;0;0
+#;OUI_ROFF_OFFQ_6 ;13;74012;5;2;0;0
+#;OUI_ROFF_OFFQ_8 ;14;74013;5;2;0;0
+#;OUI_ROFF_OFFQ_10 ;15;74014;5;2;0;0
+#;OUI_ROFF_OFFQ_12 ;16;74015;5;2;0;0
+#;OUI_ROFF_OFFQ_14 ;17;74016;5;2;0;0
+#;OUI_ROFF_OFFI_F0 ;18;74017;5;2;0;0
+#;OUI_ROFF_OFFI_F4 ;19;74018;5;2;0;0
+#;OUI_ROFF_OFFI_F8 ;20;74019;5;2;0;0
+#;OUI_ROFF_OFFI_F12 ;21;74020;5;2;0;0
+#;OUI_ROFF_OFFQ_F0 ;22;74021;5;2;0;0
+#;OUI_ROFF_OFFQ_F4 ;23;74022;5;2;0;0
+#;OUI_ROFF_OFFQ_F8 ;24;74023;5;2;0;0
+#;OUI_ROFF_OFFQ_F12 ;25;74024;5;2;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE MODE TCH !!!!!!!!!!!!!!!!!!!!!!!
+$;uiptsgsm.uir ;1;89000;1;89000;4104
+#;OUI_MTCH_C0 ;2;88001;5;0;0;0
+#;OUI_MTCH_NFCH ;5;88004;3;0;0;0
+#;OUI_MTCH_NSCH ;6;88005;3;0;0;0
+#;OUI_MTCH_MX ;3;89007;5;0;0;0
+#;OUI_MTCH_TCH ;4;89008;5;0;53;0
+#;OUI_MTCH_NOTS ;7;89009;3;0;0;0
+#;OUI_MTCH_RLTO ;8;89010;3;0;0;0
+#;OUI_MTCH_TA ;9;89013;3;0;0;0
+#;OUI_MTCH_SBER ;10;89014;3;0;0;0
+#;OUI_MTCH_SLOGP ;11;89015;5;0;0;0
+#;OUI_MTCH_DTX ;12;89019;2;0;0;0
+#;OUI_MTCH_TRANS ;13;89020;2;0;0;0
+#;OUI_MTCH_HOP ;14;89021;2;2;0;0
+#;OUI_MTCH_HSN ;15;89022;3;0;0;0
+#;OUI_MTCH_MIAO ;16;89023;3;0;0;0
+#;OUI_MTCH_PERIOD ;17;89024;5;0;0;0
+#;OUI_MTCH_TABHOP_1 ;18;89025;5;0;0;0
+#;OUI_MTCH_TABHOP_2 ;19;89026;5;0;0;0
+#;OUI_MTCH_TABHOP_3 ;20;89027;5;0;0;0
+#;OUI_MTCH_TABHOP_4 ;21;89028;5;0;0;0
+#;OUI_MTCH_VOLAUDIO ;22;92031;7;0;0;0
+#;OUI_MTCH_TONALITE ;23;89017;3;0;0;0
+#;OUI_MTCH_COMM ;24;89029;9;1;6;89010
+#;OUI_MTCH_PAROLE ;25;89030;9;1;6;89020
+#;OUI_MTCH_TCHLOOP ;26;89031;9;1;6;89030
+#;OUI_MTCH_TCHBURST ;27;89032;9;1;6;89040
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE CONTRASTE !!!!!!!!!!!!!!!!!!!!!!!
+$;uiprhm.uir ;3;96000;0;96010;3202
+#;OUI_CONTR_CONTRASTE ;2;96001;3;1;63;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE OFFSET !!!!!!!!!!!!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 !HD2R2 !PMC !!HD5R1 !HD5COMP !HD4 !HD2R3 calcul avec CRQ 154
+$;uipradio.uir ;10;73000;0;73011;2403
+#;OUI_OFFSET_go ;2;73001;9;1;1;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TELECHARGEMENT!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 
+$;uiptele.uir ;10;81100;1;0;8109
+#;OUI_ST_EE_ZFLASH ;2;81429;2;0;0;0
+#;OUI_ST_EE_NOM_TELE ;3;81421;4;0;0;0
+#;OUI_ST_EE_ARBO ;4;81422;4;0;0;0
+#;OUI_ST_EE_BINARYSWITCH ;5;81102;2;0;0;0
+#;OUI_ST_EE_ZEEPR ;6;81430;2;0;0;0
+#;OUI_ST_EE_NOM_EEPR ;7;81433;4;0;0;0
+#;OUI_ST_EE_ARBO_EEPR ;8;81434;4;0;0;0
+#;OUI_ST_EE_COMMAND_TELE ;9;81103;9;1;2;81100
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TELECHARGEMENT PC !!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 
+$;uiptele.uir ;10;81150;1;0;8117
+#;OUI_ST_EE_ZFLASH ;2;81429;2;0;0;0
+#;OUI_ST_EE_NOM_TELE ;3;81421;4;0;0;0
+#;OUI_ST_EE_ARBO ;4;81422;4;0;0;0
+#;OUI_ST_EE_BINARYSWITCH ;5;81102;2;0;0;0
+#;OUI_ST_EE_ZEEPR ;6;81430;2;0;0;0
+#;OUI_ST_EE_NOM_EEPR ;7;81433;4;0;0;0
+#;OUI_ST_EE_ARBO_EEPR ;8;81434;4;0;0;0
+#;OUI_ST_EE_COMMAND_TELE ;9;81103;9;1;2;81120
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!! DESCRIPTION DE LA FENETRE CREATION TELECHARGEABLE EEPROM!!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 
+$;uiptele.uir ;2;81410;0;81210;8127
+#;OUI_CREEE_NOMDEF ;2;81431;4;0;0;0
+#;OUI_CREEE_NOMMODIF ;3;81432;4;0;0;0
+#;OUI_CREEE_NOM_TELE ;4;81433;4;0;0;0
+#;OUI_CREEE_ARBO ;5;81434;4;0;0;0
+#;OUI_CREEE_COMMAND ;6;81435;9;0;2;0
+!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENE²TRE LECTURE FICHIER TELECH  EEPROM!!!!!!!!!!!!
+! !HD1R1 !HD1R2 !HD1R3 
+$;uiptele.uir ;5;81450;0;81450;8158
+#;OUI_LECT_NOM_EEPR ;2;81433;4;0;0;0
+#;OUI_LECT_ARBO_EEPR ;3;81434;4;0;0;0
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE CREATION FICHIER TELECHARGEMENT !!!!!!!!!!!!
+! !HD1R2 !HD1R3 
+$;uiptele.uir ;15;81400;0;81200;8122
+#;OUI_CRETEL_ZBOOT ;2;81401;2;0;0;0
+#;OUI_CRETEL_ZDRV1 ;4;81402;2;0;0;0
+#;OUI_CRETEL_ZDRV2 ;6;81403;2;0;0;0
+#;OUI_CRETEL_ZTECH ;8;81404;2;0;0;0
+#;OUI_CRETEL_STATIC ;10;81424;2;0;0;0
+#;OUI_CRETEL_ZPERSO ;12;81405;2;0;0;0
+#;OUI_CRETEL_ZCODE2 ;16;81406;2;0;0;0
+#;OUI_CRETEL_ZLGFIX ;18;81407;2;0;0;0
+#;OUI_CRETEL_ZVAR ;20;81408;2;0;0;0
+#;OUI_CRETEL_ZBBIC ;22;81409;2;0;0;0
+#;OUI_CRETEL_ZPERS_MOD ;14;81410;2;0;0;0
+#;OUI_CRETEL_NOM_BOOT ;3;81411;4;0;0;0
+#;OUI_CRETEL_NOM_DRV1 ;5;81412;4;0;0;0
+#;OUI_CRETEL_NOM_DRV2 ;7;81413;4;0;0;0
+#;OUI_CRETEL_NOM_TECH ;9;81414;4;0;0;0
+#;OUI_CRETEL_NOM_STATIC ;11;81425;4;0;0;0
+#;OUI_CRETEL_NOM_PERSO ;13;81415;4;0;0;0
+#;OUI_CRETEL_NOM_CODE2 ;17;81416;4;0;0;0
+#;OUI_CRETEL_NOM_FIX ;19;81417;4;0;0;0
+#;OUI_CRETEL_NOM_VAR ;21;81418;4;0;0;0
+#;OUI_CRETEL_NOM_BBIC ;23;81419;4;0;0;0
+#;OUI_CRETEL_NOM_PERSM ;15;81420;4;0;0;0
+#;OUI_CRETEL_NOM_TELE ;24;81421;4;0;0;0
+#;OUI_CRETEL_ARBO ;25;81422;4;0;0;0
+#;OUI_CRETEL_COMMAND_TELE ;26;81423;9;0;2;0
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE LECTURE FICHIER TELECHARGEMENT !!!!!!!!!!!!
+! !HD1R2 !HD1R3
+$;uiptele.uir ;21;81500;0;81400;8148
+#;OUI_CRETEL_ZBOOT ;2;81401;2;0;0;0
+#;OUI_CRETEL_ZDRV1 ;3;81402;2;0;0;0
+#;OUI_CRETEL_ZDRV2 ;4;81403;2;0;0;0
+#;OUI_CRETEL_ZTECH ;5;81404;2;0;0;0
+#;OUI_CRETEL_STATIC ;6;81424;2;0;0;0
+#;OUI_CRETEL_ZPERSO ;7;81405;2;0;0;0
+#;OUI_CRETEL_ZCODE2 ;8;81406;2;0;0;0
+#;OUI_CRETEL_ZLGFIX ;9;81407;2;0;0;0
+#;OUI_CRETEL_ZVAR ;10;81408;2;0;0;0
+#;OUI_CRETEL_ZBBIC ;11;81409;2;0;0;0
+#;OUI_CRETEL_NOM_TELE ;12;81421;4;0;0;0
+#;OUI_CRETEL_ARBO ;13;81422;4;0;0;0
+#;OUI_CRETEL_COMMAND_TELE ;14;81421;9;0;2;0
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE EFFACEMENT ZONE !!!!!!!!!!!!
+! !HD1R2 !HD1R3
+$;uiptele.uir ;18;81700;0;81700;8178
+#;OUI_CRETEL_ZBOOT ;2;81401;2;0;0;0
+#;OUI_CRETEL_ZDRV1 ;3;81402;2;0;0;0
+#;OUI_CRETEL_ZDRV2 ;4;81403;2;0;0;0
+#;OUI_CRETEL_ZTECH ;5;81404;2;0;0;0
+#;OUI_CRETEL_STATIC ;6;81424;2;0;0;0
+#;OUI_CRETEL_ZPERSO ;7;81405;2;0;0;0
+#;OUI_CRETEL_ZCODE2 ;8;81406;2;0;0;0
+#;OUI_CRETEL_ZLGFIX ;9;81407;2;0;0;0
+#;OUI_CRETEL_ZVAR ;10;81408;2;0;0;0
+#;OUI_CRETEL_ZBBIC ;11;81409;2;0;0;0
+#;OUI_CRETEL_COMMAND_TELE ;12;81421;9;0;2;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TELECHARGEMENT CM/PIT!!!!!!!!!!!!
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TELECHARGEMENT PC !!!!!!!!!!!!
+!
+!
+!===========================================================================
+!
+!   PANELS INDEPENDANTS DES PRODUITS
+!
+!===========================================================================
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE MSG SANS CONTROLE !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;10;10400;0;10400;1402
+#;OUI_MSG_LENGTH ;2;10401;6;0;0;0
+#;OUI_MSG_OCTETS ;3;10402;4;0;0;0
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE CONFIGURATION LIAISON !!!!!!!!!!!!!!!!!!!!!!!
+$;uipgene.uir ;3;10500;0;10500;1502
+#;OUI_OUI_LIA_MCX ;2;10501;2;0;0;0
+#;OUI_OUI_LIA_VOIE ;3;10502;3;0;0;0
+#;OUI_OUI_LIA_VIT ;4;10503;6;0;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE MESURES CONSIGNES !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;6;51000;1;0;2102
+#;OUI_CONS_FREQ ;2;21001;8;0;0;0
+#;OUI_CONS_MODE ;3;51002;3;0;0;0
+#;OUI_CONS_R ;4;51003;7;1;55;51010
+#;OUI_CONS_C ;5;51004;7;1;55;51010
+#;OUI_CONS_PW1 ;6;51005;2;1;55;51010
+#;OUI_CONS_RAMP_0 ;7;51006;3;1;55;51020
+#;OUI_CONS_RAMP_1 ;8;51007;3;1;55;51020
+#;OUI_CONS_RAMP_2 ;9;51008;3;1;55;51020
+#;OUI_CONS_RAMP_3 ;10;51009;3;1;55;51020
+#;OUI_CONS_RAMP_4 ;11;51010;3;1;55;51020
+#;OUI_CONS_RAMP_5 ;12;51011;3;1;55;51020
+#;OUI_CONS_RAMP_6 ;13;51012;3;1;55;51020
+#;OUI_CONS_RAMP_7 ;14;51013;3;1;55;51020
+#;OUI_CONS_RAMP_8 ;15;51014;3;1;55;51020
+#;OUI_CONS_RAMP_9 ;16;51015;3;1;55;51020
+#;OUI_CONS_RAMP_10 ;17;51016;3;1;55;51020
+#;OUI_CONS_RAMP_11 ;18;51017;3;1;55;51020
+#;OUI_CONS_RAMP_12 ;19;51018;3;1;55;51020
+#;OUI_CONS_RAMP_13 ;20;51019;3;1;55;51020
+#;OUI_CONS_RAMP_14 ;21;51020;3;1;55;51020
+#;OUI_CONS_RAMP_15 ;22;51021;3;1;55;51020
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE TESTS RECEPTION !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;25;71000;1;0;2303
+#;OUI_TSTREC_FREQ ;2;71001;8;0;0;0
+#;OUI_TSTREC_FREQ_MON ;3;71002;8;0;0;0
+#;OUI_TSTREC_RX_LNA ;4;71003;2;1;55;71060
+#;OUI_TSTREC_RX_MIX ;5;71004;2;1;55;71060
+#;OUI_TSTREC_RX_OUT ;6;71005;2;1;55;71060
+#;OUI_TSTREC_RX_LFIC ;7;71006;3;1;55;71060
+#;OUI_TSTREC_ABS_RX ;8;71007;7;1;55;71050
+#;OUI_TSTREC_REL_RX ;9;71008;7;1;55;71040
+#;OUI_TSTREC_MX1_LNA ;10;71009;2;1;55;71090
+#;OUI_TSTREC_MX1_MIX ;11;71010;2;1;55;71090
+#;OUI_TSTREC_MX1_OUT ;12;71011;2;1;55;71090
+#;OUI_TSTREC_MX1_LFIC ;13;71012;3;1;55;71090
+#;OUI_TSTREC_ABS_MX1 ;14;71013;7;1;55;71080
+#;OUI_TSTREC_REL_MX1 ;15;71014;7;1;55;71070
+#;OUI_TSTREC_MX2_LNA ;16;71015;2;1;55;71120
+#;OUI_TSTREC_MX2_MIX ;17;71016;2;1;55;71120
+#;OUI_TSTREC_MX2_OUT ;18;71017;2;1;55;71120
+#;OUI_TSTREC_MX2_LFIC ;19;71018;3;1;55;71120
+#;OUI_TSTREC_ABS_MX2 ;20;71019;7;1;55;71110
+#;OUI_TSTREC_REL_MX2 ;21;71020;7;1;55;71100
+#;OUI_TSTREC_ADJ_OF_I ;22;71021;3;1;55;71020
+#;OUI_TSTREC_ADJ_OF_Q ;23;71022;3;1;55;71020
+#;OUI_TSTREC_RFRX ;24;71023;5;1;63;71010
+#;OUI_TSTREC_IDLE ;25;71024;3;1;63;71030
+#;OUI_TSTREC_TIME ;26;71025;7;1;63;71030
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT TESTS RECEPTION !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;20;72000;2;0;2303
+#;OUI_RTSTRX_PWR_SUR ;2;72001;7;2;0;0
+#;OUI_RTSTRX_PWR_SER ;3;72002;7;2;0;0
+#;OUI_RTSTRX_DC_Q ;4;72003;3;2;0;0
+#;OUI_RTSTRX_DC_I ;5;72004;3;2;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE GAIN I/Q !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;9;80000;1;0;2504
+#;OUI_GAIN_FREQ ;2;71001;8;0;0;0
+#;OUI_GAIN_TYPE ;3;80002;3;0;0;0
+#;OUI_GAIN_ADJ_REL ;4;71008;7;1;63;80010
+#;OUI_GAIN_ADJ_ABS ;5;71007;7;1;63;80020
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT GAIN RELATIF !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;17;81000;2;0;2504
+#;OUI_RGAINR_PWR_SER_Q ;2;81001;7;2;0;0
+#;OUI_RGAINR_PWR_SER_I ;3;81002;7;2;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT GAIN ABSOLU !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;16;82000;2;0;2504
+#;OUI_RGAINA_PWR_SER ;2;72002;7;2;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ERREUR QUADRATURE !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;8;83000;1;0;2603
+#;OUI_ERRQUA_FREQ ;2;71001;8;0;0;0
+#;OUI_ERRQUA_RFRX ;3;71023;5;1;63;83010
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT ERREUR QUADRATURE !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;15;84000;2;0;2603
+#;OUI_RERQUA_DQUAD ;2;84001;7;2;0;2603
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE SYNTHETISEUR EMISSION!!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;23;85000;0;85000;2702
+#;OUI_SYNTH_MODFCT ;2;85001;3;0;0;0
+#;OUI_SYNTH_FRQTX ;3;21001;8;0;55;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE SYNTHETISEUR RECEPTION !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;24;85010;0;85010;2712
+#;OUI_SYNTH_MODFCT ;2;85001;3;0;0;0
+#;OUI_SYNTH_FRQRX ;3;71001;8;0;55;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE SYNTHETISEUR TRAME GSM!!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;22;85020;0;85020;2722
+#;OUI_SYNTH_FRQTX ;2;21001;8;0;55;0
+#;OUI_SYNTH_FRQRX ;3;71001;8;0;55;0
+#;OUI_SYNTH_FRQMX ;4;71002;8;0;55;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE CONFIG SYNTHETISEUR !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;5;86000;0;86010;2802
+#;OUI_CNFSYN_TYPE ;2;86001;2;0;0;0
+#;OUI_CNFSYN_STAT2 ;3;86002;4;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE REFERENCE FREQUENCE!!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;13;24000;1;0;2852
+#;OUI_REGCLOCK ;2;24001;3;1;255;24010
+#;OUI_REGCLOCK_SLOPE ;3;24002;7;1;255;24020
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE SWITCH ANTENNE !!!!!!!!!!!!!!!!!!!!!!!
+$;uipradio.uir ;21;86020;0;86020;2902
+#;OUI_SWIANT_ANT ;2;86021;2;1;2;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE AFFICHAGE MESSAGE UTILISATEUR !!!!!!!!!!!!!!!
+$;uipradio.uir ;1;87100;3;0;0
+#;MESS_USER_MESS ;2;87101;4;2;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE SYNCHRONISATION !!!!!!!!!!!!!!!!!!!!!!!
+$;uiptsgsm.uir ;5;88000;0;88010;4003
+#;OUI_SYNCRO_C0 ;2;88001;5;0;0;0
+#;OUI_SYNCRO_NFCH ;3;88004;3;0;0;0
+#;OUI_SYNCRO_NSCH ;4;88005;3;0;0;0
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT SYNCHRONISATION !!!!!!!!!!!!!!!!!!!!!!!
+$;uiptsgsm.uir ;4;88100;2;0;4003
+#;OUI_RSYNC_DeltaFilt ;2;88101;8;2;0;0
+#;OUI_RSYNC_DeltaBit ;3;88102;5;2;0;0
+#;OUI_RSYNC_DciRes ;4;72004;3;2;0;0
+#;OUI_RSYNC_DCQ_RES ;5;72003;3;2;0;0
+#;OUI_RSYNC_CANAL ;6;88105;5;2;0;0
+#;OUI_RSYNC_BSIC ;7;88106;3;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT MODE TCH !!!!!!!!!!!!!!!!!!!!!!!
+$;uiptsgsm.uir ;2;89100;2;0;0
+#;OUI_RMTCH_RXQualFull ;2;89114;3;2;0;0
+#;OUI_RMTCH_RXQualSub ;3;89115;3;2;0;0
+#;OUI_RMTCH_NoiseLevel ;4;89108;7;2;0;0
+#;OUI_RMTCH_TXLevel ;5;89130;5;2;0;0
+#;OUI_RMTCH_PwrFull ;6;89118;7;2;0;0
+#;OUI_RMTCH_PwrSub ;7;89119;7;2;0;0
+#;OUI_RMTCH_PwrMX ;8;89125;7;2;0;0
+#;OUI_RMTCH_BsicSync ;9;88106;3;2;0;0
+#;OUI_RMTCH_BCanalMX ;10;89124;3;2;0;0
+#;OUI_RMTCH_TimAdv ;11;89129;3;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT MODE TCH LOOP !!!!!!!!!!!!!!!!!!!!!!!
+$;uiptsgsm.uir ;3;89200;2;0;0
+#;OUI_RMTCH_NbBit1KO ;2;89101;6;2;0;0
+#;OUI_RMTCH_NbBit1 ;3;89102;6;2;0;0
+#;OUI_RMTCH_TErrBit ;4;89103;7;2;0;0
+#;OUI_RMTCH_NbTCH ;5;89109;5;2;0;0
+#;OUI_RMTCH_NbTCH_KO ;6;89110;5;2;0;0
+#;OUI_RMTCH_TErrTch ;7;89104;7;2;0;0
+#;OUI_RMTCH_NbCrcKO ;8;89111;5;2;0;0
+#;OUI_RMTCH_NbSACCH ;9;89112;5;2;0;0
+#;OUI_RMTCH_NbSACCHKO ;10;89113;5;2;0;0
+#;OUI_RMTCH_TErrSacch ;11;89105;7;2;0;0
+#;OUI_RMTCH_RXQualFull ;12;89114;3;2;0;0
+#;OUI_RMTCH_RXQualSub ;13;89115;3;2;0;0
+#;OUI_RMTCH_NoiseLevel ;14;89108;7;2;0;0
+#;OUI_RMTCH_TXLevel ;15;89130;5;2;0;0
+#;OUI_RMTCH_PwrFull ;16;89118;7;2;0;0
+#;OUI_RMTCH_PwrSub ;17;89119;7;2;0;0
+#;OUI_RMTCH_PwrMX ;18;89125;7;2;0;0
+#;OUI_RMTCH_DciRes ;19;72004;3;2;0;0
+#;OUI_RMTCH_DCQ_RES ;20;72003;3;2;0;0
+#;OUI_RMTCH_DeltaFit ;21;88101;8;2;0;0
+#;OUI_RMTCH_DeltaBit ;22;88102;5;2;0;0
+#;OUI_RMTCH_BsicSync ;23;88106;3;2;0;0
+#;OUI_RMTCH_BCanalMX ;24;89124;3;2;0;0
+#;OUI_RMTCH_TimAdv ;25;89129;3;2;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE BOUCLAGES !!!!!!!!!!!!!!!!!!!!!!!
+!$;uipboucl.uir ;1;92000;1;0;6003
+!#;OUI_BOUCL_GMSK ;2;92001;9;1;2;92010
+!#;OUI_BOUCL_TAUDIO ;3;92002;9;1;2;92020
+!#;OUI_BOUCL_FAUDIO ;4;92003;9;1;2;92030
+!#;OUI_BOUCL_DAI ;5;92004;9;1;2;92040
+!#;OUI_BOUCL_CDATA ;6;92005;9;1;2;92050
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE BOUCLAGE GMSK !!!!!!!!!!!!!!!!!!!!!!!
+$;starstop.uir ;7;92000;0;92010;6003
+#;Bouclage_StartMsg;2;92001;9;0;0;0
+#;Bouclage_StopMsg;3;92002;9;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE BOUCLAGE LOOP TO AUDIO !!!!!!!!!!!!!!!!!!!!!!!
+$;uipboucl.uir ;3;92010;1;0;6103
+#;Lien ;2;92011;3;0;0;0
+#;Start ;3;92012;9;1;2;92020
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE BOUCLAGE LOOP FROM AUDIO !!!!!!!!!!!!!!!!!!!!!!!
+$;starstop.uir ;7;92020;0;92030;6203
+#;Bouclage_StartMsg;2;92001;9;0;0;0
+#;Bouclage_StopMsg;3;92002;9;0;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE DAI CODEC !!!!!!!!!!!!!!!!!!!!!!!
+$;uipboucl.uir ;2;92030;0;92040;6303
+#;OUI_MTCH_VOAUDIO ;2;92031;7;0;0;0
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE CONTROL DATA!!!!!!!!!!!!!!!!!!!!!!!
+$;starstop.uir ;7;92040;0;92050;6403
+#;Bouclage_StartMsg;2;92001;9;0;0;0
+#;Bouclage_StopMsg;3;92002;9;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT BOUCLAGES !!!!!!!!!!!!!!!!!!!!!!!
+$;uipboucl.uir ;4;93000;2;0;6003
+#;OUI_RBOUC_Status_Test ;2;93001;4;2;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE AFFICHEUR !!!!!!!!!!!!!!!!!!!!!!!
+$;uiprhm.uir ;1;94000;1;0;3002
+#;OUI_AFFICH_OUI_CHAINE ;2;94001;4;0;0;0
+#;OUI_AFFICH_OUI_NUM_LIGNE ;3;94002;3;0;0;0
+#;OUI_AFFICH_CAR_MAN ;4;94003;9;1;2;94010
+#;OUI_AFFICH_CAR_AUTO ;5;94004;9;1;2;94020
+#;OUI_AFFICH_SYM_AUTO ;6;94005;9;1;2;94030
+#;OUI_AFFICH_SYM_CLI ;7;94006;9;1;2;94040
+#;OUI_AFFICH_DAMIER ;8;94007;9;1;2;94050
+#;OUI_AFFICH_DAMIER_INV ;9;94008;9;1;2;94060
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECLAIRAGE !!!!!!!!!!!!!!!!!!!!!!!
+$;starstop.uir ;2;95000;0;95010;3102
+#;ECLAIRAGE_StopMsg;2;95001;9;1;0;0
+#;ECLAIRAGE_StartMsg;3;95002;9;1;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE BUZZER !!!!!!!!!!!!!!!!!!!!!!!
+$;uiprhm.uir ;2;97000;0;97010;3402
+#;OUI_BUZZER_TONALITE ;2;97001;3;1;55;0
+#;OUI_BUZZER_VOLUME ;3;97002;7;1;55;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE VIBREUR !!!!!!!!!!!!!!!!!!!!!!
+$;starstop.uir ;9;97100;0;97110;3502
+#;VIBREUR_StopMsg;2;97101;9;1;0;0
+#;VIBREUR_StartMsg;3;97102;9;1;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LED !!!!!!!!!!!!!!!!!!!!!!!
+$;uiprhm.uir ;4;97200;0;97210;3602
+#;OUI_LED_COULEUR ;2;97201;3;1;55;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE TEST SAISIE CLAVIER  !!!!!!!!!!!!!!!!!!!!!!!
+$;starstop.uir ;8;98000;0;98010;3303
+#;TSTCLAVIER_StopMsg;2;98001;9;1;0;0
+#;TSTCLAVIER_StartMsg;3;98002;9;1;0;0
+!
+! db 18/09/1995 : mise au point du panel <Start&Stop>
+!$;starstop.uir ;1;100000;0;98010;3303
+!#;STARTSTOP_StartMsg;2;100001;9;1;0;0
+!#;STARTSTOP_StopMsg;3;100002;9;1;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT SAISIE CLAVIER  !!!!!!!!!!!!!!!!!!!!!!!
+$;uiprhm.uir ;6;99000;2;0;3303
+#;OUI_RESCLA_LIGTOUCHE ;2;99001;3;2;0;0
+#;OUI_RESCLA_COLTOUCHE ;3;99002;3;2;0;0
+#;OUI_RESCLA_ETATOUCHE1 ;4;99003;2;2;0;0
+#;OUI_RESCLA_ETATOUCHE2 ;5;99004;2;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE SIM_ME_LOCK !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;22;31150;0;0;0
+#;SIMLOCK_TAC ;2;31151;4;0;0;0
+#;SIMLOCK_FAC ;3;31152;4;0;0;0
+#;SIMLOCK_SNR ;4;31153;4;0;0;0
+#;SIMLOCK_SP ;5;31154;4;0;0;0
+#;SIMLOCK_PLMN ;6;31155;4;0;0;0
+#;SIMLOCK_HLR ;7;31156;4;0;0;0
+#;SIMLOCK_SCS ;8;31157;4;0;0;0
+#;SIMLOCK_CMD_EQUIP ;9;31158;2;0;0;0
+#;SIMLOCK_CMD_ALCATEL ;10;31159;2;0;0;0
+#;SIMLOCK_COMMANDBUTTON ;11;31160;9;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE SIM_ME_LOCK ETSI !!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;23;31300;1;0;1563
+#;SIMLOCK_ET_TAC ;2;31301;4;0;0;0
+#;SIMLOCK_ET_FAC ;3;31302;4;0;0;0
+#;SIMLOCK_ET_SNR ;4;31303;4;0;0;0
+#;SIMLOCK_ET_SP ;5;31304;4;0;0;0
+#;SIMLOCK_ET_INFO_SNR ;6;31305;3;0;0;0
+#;SIMLOCK_ET_INFO_SIM ;7;31306;3;0;0;0
+#;SIMLOCK_ET_INFO_SIM_TEST ;8;31307;3;0;0;0
+#;SIMLOCK_ET_INFO_SUP_CATC ;9;31308;3;0;0;0
+#;SIMLOCK_ET_INFO_SUP_CATSIM ;10;31309;3;0;0;0
+#;SIMLOCK_ET_INFO_SUP_ADD ;11;31310;3;0;0;0
+#;SIMLOCK_ET_INFO_SUP_REMOVE ;12;31311;3;0;0;0
+#;SIMLOCK_ET_INFO_SUP_PERM_UNLOCK ;13;31312;3;0;0;0
+#;SIMLOCK_ET_INFO_SUP_GET_CATEGORY ;14;31313;3;0;0;0
+#;SIMLOCK_ET_INFO_SUP_RESET_COUNT ;15;31314;3;0;0;0
+#;SIMLOCK_ET_INFO_GEST_CPT ;16;31315;3;0;0;0
+#;SIMLOCK_ET_INFO_FORMAT_RESEAU ;17;31316;3;0;0;0
+#;SIMLOCK_ET_INFO_CLES_VERROUIL ;18;31317;3;0;0;0
+#;SIMLOCK_ET_INFO_SUPPORT_OLA2 ;19;31318;3;0;0;0
+#;SIMLOCK_ET_INFO_DEVER_NS ;20;31319;3;0;0;0
+#;SIMLOCK_ET_INFO_DEVER_SP ;21;31320;3;0;0;0
+#;SIMLOCK_ET_INFO_DEVER_SIM ;22;31321;3;0;0;0
+#;SIMLOCK_ET_INFO_DEVER_C ;23;31322;3;0;0;0
+#;SIMLOCK_ET_INDIC_N ;24;31323;3;0;0;0
+#;SIMLOCK_ET_INDIC_NS ;25;31324;3;0;0;0
+#;SIMLOCK_ET_INDIC_SP ;26;31325;3;0;0;0
+#;SIMLOCK_ET_INDIC_SIM ;27;31326;3;0;0;0
+#;SIMLOCK_ET_INDIC_C ;28;31327;3;0;0;0
+#;SIMLOCK_ET_INDIC_TEST ;29;31328;3;0;0;0
+#;SIMLOCK_ET_CPT_ECHECS ;30;31329;3;0;0;0
+#;SIMLOCK_ET_CPT_ECHECS_RESET ;31;31330;3;0;0;0
+#;SIMLOCK_ET_CPT_RESETS ;32;31331;3;0;0;0
+#;SIMLOCK_ET_PRES_N ;33;31332;3;0;0;0
+#;SIMLOCK_ET_CLE_N ;34;31333;4;0;0;0
+#;SIMLOCK_ET_PRES_NS ;35;31334;3;0;0;0
+#;SIMLOCK_ET_CLE_NS ;36;31335;4;0;0;0
+#;SIMLOCK_ET_PRES_CP ;37;31336;3;0;0;0
+#;SIMLOCK_ET_CLE_SP ;38;31337;4;0;0;0
+#;SIMLOCK_ET_PRES_SIM ;39;31338;3;0;0;0
+#;SIMLOCK_ET_CLE_SIM ;40;31339;4;0;0;0
+#;SIMLOCK_ET_PRES_C ;41;31340;3;0;0;0
+#;SIMLOCK_ET_CLE_C ;42;31341;4;0;0;0
+#;SIMLOCK_ET_ZONE_D ;43;31342;4;0;0;0
+#;SIMLOCK_ET_COMMANDBUTTON ;44;31343;9;1;2;31300
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE PASSWORD!!!!!!!!!!!!!!!!!!!!!!!
+$;uippwd.uir ;1;31200;0;0;0
+#;UIPPWD_PASSWORD ;2;31201;4;3;55;0
+#;UIPPWD_PASS_VALUE ;3;31202;4;4;0;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE MEMOIRE !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;6;30000;1;30010;5003
+#;OUI_LECT_ADR_DEB ;2;30001;6;1;2;30010
+#;OUI_LECT_ADR_FIN ;3;30002;6;1;2;30010
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT LECTURE MEMOIRE !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;11;30100;2;0;5003
+#;OUI_RLECT_OCTETS ;2;30101;4;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE MEMOIRE !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;2;31000;1;31010;5102
+#;OUI_ECRI_ADR_DEB ;2;31001;6;1;2;31010
+#;OUI_ECRI_ADR_FIN ;3;31002;6;1;2;31010
+#;OUI_ECRI_OCTETS ;4;31003;4;1;2;31010
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE REGISTRE BBIC !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;8;30200;1;30220;5053
+#;OUI_LECT_ADR_DEB ;2;30201;6;1;2;30220
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT LECTURE REGISTRE BBIC !!!!!!!!!!!!!!!!!!!!!!!
+$;uipcontr.uir ;11;30300;2;0;5053
+#;OUI_RLECT_OCTETS ;2;30301;4;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE REGISTRE BBIC !!!!!!!
+$;uipcontr.uir ;4;31100;1;31220;5152
+#;OUI_ECRI_ADR_DEB ;2;30201;6;1;2;31220
+#;OUI_ECRI_OCTETS ;3;30301;4;1;2;31220
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE HEURE-MONTRE !!!!!!!!!!!!!!!!!!
+$;starstop.uir ;3;32000;0;32010;5203
+#;HEURE_StopMsg;2;32001;9;1;6;0
+#;HEURE_StartMsg;3;32002;9;1;6;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTATS HEURE-MONTRE !!!!! !!!!!!!!!
+$;uipcontr.uir ;17;32100;2;0;5203
+#;RESTIME ;2;32101;4;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LOW POWER !!!!!!!!!!!!!!!!!!
+$;starstop.uir ;4;33000;0;33010;5402
+#;HEURE_StopMsg;2;33001;9;1;6;0
+#;HEURE_StartMsg;3;33002;9;1;6;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE MESURES DE TENSION !!!!!!!!!!!!!
+$;starstop.uir ;6;35000;0;35010;5503
+#;MESTENSION_StopMsg;2;35001;9;1;6;0
+#;MESTENSION_StartMsg;3;35002;9;1;6;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTATS MESURES DE TENSION !!!!!!!!!
+$;uipcontr.uir ;20;35100;2;0;5503
+#;RESTENSION_MESTENSION ;2;35101;7;2;0;0
+#;RESTENSION_TENSHEX ;3;35102;3;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE MESURES DE TEMPERATURES !!!!!!!
+$;starstop.uir ;5;36000;0;36010;5603
+#;MESTEMP_StopMsg;2;36001;9;1;6;0
+#;MESTEMP_StartMsg;3;36002;9;1;6;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTATS MESURES DE TEMPERATURES !!!!
+$;uipcontr.uir ;19;36100;2;0;5603
+#;RESTENSION_MESTENSION ;2;36101;7;2;0;0
+#;RESTENSION_TENSHEX ;3;36102;3;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE PRESENCE CHARGEURS !!!!!!!!!!!!
+$;starstop.uir ;1;37000;0;37010;5703
+#;CHARGEUR_StopMsg;2;37001;9;1;6;0
+#;CHARGEUR_StartMsg;3;37002;9;1;6;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTATS PRESENCE CHARGEURS !!!!!!!!!
+$;uipcontr.uir ;16;37100;2;0;5703
+#;RESCHARGEUR_CHARGEUR ;2;37101;3;2;0;0
+#;RESCHARGEUR_BATTERIE ;3;37102;3;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE REGLAGE AUTOMATIQUE SEUIL TENSION !!!!!!!
+$;uipcontr.uir ;13;38500;0;38550;5852
+#;REG_AUT_FICHIER    ; 2;38501;4;0;0;0
+#;REG_AUT_TENS_V1    ; 3;38502;5;0;0;0
+#;REG_AUT_TENS_V2    ; 4;38503;5;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE REGLAGE MANUEL SEUIL TENSION !!!!!!!
+$;uipcontr.uir ;15;38000;1;38100;5802
+#;REG_TENS_LISTBOX     ; 2;38001;3;1;6;38110
+#;REG_TENS_NUMERIC     ; 3;38002;7;1;8;38120
+#;REG_TENS_NUMERIC_2   ; 4;38003;7;1;8;38120
+#;REG_TENS_NUMERIC_3   ; 5;38004;7;1;8;38120
+#;REG_TENS_NUMERIC_4   ; 6;38005;7;1;8;38120
+#;REG_TENS_NUMERIC_5   ; 7;38006;7;1;8;38120
+#;REG_TENS_NUMERIC_6   ; 8;38007;7;1;8;38120
+#;REG_TENS_NUMERIC_7   ; 9;38008;7;1;8;38120
+#;REG_TENS_NUMERIC_8   ;10;38009;7;1;8;38120
+#;REG_TENS_NUMERIC_9   ;11;38010;7;1;8;38120
+#;REG_TENS_NUMERIC_10  ;12;38011;7;1;8;38120
+#;REG_TENS_NUMERIC_11  ;13;38012;7;1;8;38120
+#;REG_TENS_NUMERIC_12  ;14;38013;7;1;8;38120
+#;REG_TENS_NUMERIC_13  ;15;38014;7;1;8;38120
+#;REG_TENS_NUMERIC_14  ;16;38015;7;1;8;38120
+#;REG_TENS_NUMERIC_15  ;17;38016;7;1;8;38120
+#;REG_TENS_NUMERIC_16  ;18;38017;7;1;8;38120
+#;REG_TENS_NUMERIC_17  ;19;38018;7;1;8;38120
+#;REG_TENS_NUMERIC_18  ;20;38019;7;1;8;38120
+#;REG_TENS_NUMERIC_19  ;21;38020;7;1;8;38120
+#;REG_TENS_NUMERIC_20  ;22;38021;7;1;8;38120
+#;REG_TENS_NUMERIC_21  ;23;38022;7;1;8;38120
+#;REG_TENS_NUMERIC_22  ;24;38023;7;1;8;38120
+#;REG_TENS_NUMERIC_23  ;25;38024;7;1;8;38120
+#;REG_TENS_NUMERIC_24  ;26;38025;7;1;8;38120
+#;REG_TENS_NUMERIC_25  ;27;38026;7;1;8;38120
+#;REG_TENS_NUMERIC_26  ;28;38027;7;1;8;38120
+#;REG_TENS_NUMERIC_27  ;29;38028;7;1;8;38120
+#;REG_TENS_NUMERIC_28  ;30;38029;7;1;8;38120
+#;REG_TENS_NUMERIC_29  ;31;38030;7;1;8;38120
+#;REG_TENS_NUMERIC_30  ;32;38031;7;1;8;38120
+#;REG_TENS_NUMERIC_31  ;33;38032;7;1;8;38120
+#;REG_TENS_NUMERIC_32  ;34;38033;7;1;8;38120
+#;REG_TENS_NUMERIC_33  ;35;38034;7;1;8;38120
+#;REG_TENS_NUMERIC_34  ;36;38035;7;1;8;38120
+#;REG_TENS_NUMERIC_35  ;37;38036;7;1;8;38120
+#;REG_TENS_NUMERIC_36  ;38;38037;7;1;8;38120
+#;REG_TENS_NUMERIC_37  ;39;38038;7;1;8;38120
+#;REG_TENS_NUMERIC_38  ;40;38039;7;1;8;38120
+#;REG_TENS_NUMERIC_39  ;41;38040;7;1;8;38120
+#;REG_TENS_NUMERIC_40  ;42;38041;7;1;8;38120
+#;REG_TENS_NUMERIC_41  ;43;38042;7;1;8;38120
+#;REG_TENS_NUMERIC_42  ;44;38043;7;1;8;38120
+#;REG_TENS_NUMERIC_43  ;45;38044;7;1;8;38120
+#;REG_TENS_NUMERIC_44  ;46;38045;7;1;8;38120
+#;REG_TENS_NUMERIC_45  ;47;38046;7;1;8;38120
+#;REG_TENS_NUMERIC_46  ;48;38047;7;1;8;38120
+#;REG_TENS_NUMERIC_47  ;49;38048;7;1;8;38120
+#;REG_TENS_NUMERIC_48  ;50;38049;7;1;8;38120
+#;REG_TENS_NUMERIC_49  ;51;38050;7;1;8;38120
+#;REG_TENS_NUMERIC_50  ;52;38051;7;1;8;38120
+#;REG_TENS_NUMERIC_51  ;53;38052;7;1;8;38120
+#;REG_TENS_NUMERIC_52  ;54;38053;7;1;8;38120
+#;REG_TENS_NUMERIC_53  ;55;38054;7;1;8;38120
+#;REG_TENS_NUMERIC_54  ;56;38055;7;1;8;38120
+#;REG_TENS_NUMERIC_55  ;57;38056;7;1;8;38120
+#;REG_TENS_NUMERIC_56  ;58;38057;7;1;8;38120
+#;REG_TENS_NUMERIC_57  ;59;38058;7;1;8;38120
+#;REG_TENS_NUMERIC_58  ;60;38059;7;1;8;38120
+#;REG_TENS_NUMERIC_59  ;61;38060;7;1;8;38120
+#;REG_TENS_NUMERIC_60  ;62;38061;7;1;8;38120
+#;REG_TENS_NUMERIC_61  ;63;38062;7;1;8;38120
+#;REG_TENS_NUMERIC_62  ;64;38063;7;1;8;38120
+#;REG_TENS_NUMERIC_63  ;65;38064;7;1;8;38120
+#;REG_TENS_NUMERIC_64  ;66;38065;7;1;8;38120
+#;REG_TENS_NUMERIC_65  ;67;38066;7;1;8;38120
+#;REG_TENS_NUMERIC_66  ;68;38067;7;1;8;38120
+#;REG_TENS_NUMERIC_67  ;69;38068;7;1;8;38120
+#;REG_TENS_NUMERIC_68  ;70;38069;7;1;8;38120
+#;REG_TENS_NUMERIC_69  ;71;38070;7;1;8;38120
+#;REG_TENS_NUMERIC_70  ;72;38071;7;1;8;38120
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE REGLAGE MANUEL CHARGE !!!!!!!
+$;uipcontr.uir ;14;34000;0;34010;5303
+#;REG_CHARG_NUMERIC    ; 2;34101;5;0;0;0
+#;REG_CHARG_NUMERIC_2  ; 3;34102;5;0;0;0
+#;REG_CHARG_NUMERIC_3  ; 4;34103;5;0;0;0
+#;REG_CHARG_NUMERIC_4  ; 5;34104;5;0;0;0
+#;REG_CHARG_NUMERIC_5  ; 6;34105;5;0;0;0
+#;REG_CHARG_NUMERIC_6  ; 7;34106;5;0;0;0
+#;REG_CHARG_NUMERIC_7  ; 8;34107;5;0;0;0
+#;REG_CHARG_NUMERIC_8  ; 9;34108;5;0;0;0
+#;REG_CHARG_NUMERIC_9  ;10;34109;5;0;0;0
+#;REG_CHARG_NUMERIC_10 ;11;34110;5;0;0;0
+#;REG_CHARG_NUMERIC_11 ;12;34111;5;0;0;0
+#;REG_CHARG_NUMERIC_12 ;13;34112;5;0;0;0
+#;REG_CHARG_NUMERIC_13 ;14;34113;5;0;0;0
+#;REG_CHARG_NUMERIC_14 ;15;34114;5;0;0;0
+#;REG_CHARG_NUMERIC_15 ;16;34115;5;0;0;0
+#;REG_CHARG_NUMERIC_16 ;17;34116;5;0;0;0
+#;REG_CHARG_NUMERIC_17 ;18;34117;5;0;0;0
+#;REG_CHARG_NUMERIC_18 ;19;34118;5;0;0;0
+#;REG_CHARG_NUMERIC_19 ;20;34119;5;0;0;0
+#;REG_CHARG_NUMERIC_20 ;21;34120;5;0;0;0
+#;REG_CHARG_NUMERIC_21 ;22;34121;5;0;0;0
+#;REG_CHARG_NUMERIC_22 ;23;34122;5;0;0;0
+#;REG_CHARG_NUMERIC_23 ;24;34123;5;0;0;0
+#;REG_CHARG_NUMERIC_24 ;25;34124;5;0;0;0
+#;REG_CHARG_NUMERIC_25 ;26;34125;5;0;0;0
+#;REG_CHARG_NUMERIC_26 ;27;34126;5;0;0;0
+#;REG_CHARG_NUMERIC_27 ;28;34127;5;0;0;0
+#;REG_CHARG_NUMERIC_28 ;29;34128;5;0;0;0
+#;REG_CHARG_NUMERIC_29 ;30;34129;5;0;0;0
+#;REG_CHARG_NUMERIC_30 ;31;34130;5;0;0;0
+#;REG_CHARG_NUMERIC_31 ;32;34131;5;0;0;0
+#;REG_CHARG_NUMERIC_32 ;33;34132;5;0;0;0
+#;REG_CHARG_NUMERIC_33 ;34;34133;5;0;0;0
+#;REG_CHARG_NUMERIC_34 ;35;34134;5;0;0;0
+#;REG_CHARG_NUMERIC_35 ;36;34135;5;0;0;0
+#;REG_CHARG_NUMERIC_36 ;37;34136;5;0;0;0
+#;REG_CHARG_NUMERIC_37 ;38;34137;5;0;0;0
+#;REG_CHARG_NUMERIC_38 ;39;34138;5;0;0;0
+#;REG_CHARG_NUMERIC_39 ;40;34139;5;0;0;0
+#;REG_CHARG_NUMERIC_40 ;41;34140;5;0;0;0
+#;REG_CHARG_NUMERIC_41 ;42;34141;5;0;0;0
+#;REG_CHARG_NUMERIC_42 ;43;34142;5;0;0;0
+#;REG_CHARG_NUMERIC_43 ;44;34143;5;0;0;0
+#;REG_CHARG_NUMERIC_44 ;45;34144;5;0;0;0
+#;REG_CHARG_NUMERIC_45 ;46;34145;5;0;0;0
+#;REG_CHARG_NUMERIC_46 ;47;34146;5;0;0;0
+#;REG_CHARG_NUMERIC_47 ;48;34147;5;0;0;0
+#;REG_CHARG_NUMERIC_48 ;49;34148;5;0;0;0
+#;REG_CHARG_NUMERIC_49 ;50;34149;5;0;0;0
+#;REG_CHARG_NUMERIC_50 ;51;34150;5;0;0;0
+#;REG_CHARG_NUMERIC_51 ;52;34151;5;0;0;0
+#;REG_CHARG_NUMERIC_52 ;53;34152;5;0;0;0
+#;REG_CHARG_NUMERIC_53 ;54;34153;5;0;0;0
+!
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE CONTROLE DE CHARGE!!!!!!!!!!!
+$;uipcontr.uir ;1;39000;0;39010;5902
+#;CONTCHARGE_COURANT;2;39001;7;0;2;0
+#;CONTCHARGE_BATTERIE ;3;37102;3;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE INFORMATION !!!!!!!!!!!!!!!!!!!!!!!
+$;uipgene.uir ;2;100000;0;9102;9102
+#;OUI_INFO_VERS_APPLI ;2;100001;4;2;0;0
+#;OUI_INFO_VERS_BBIC ;3;100002;4;2;0;0
+#;OUI_INFO_VERS_HWDESC ;4;100003;5;2;0;0
+#;OUI_INFO_CONF_FLASH ;5;100004;4;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ETAT LOCALISATION !!!!!!!
+$;starstop.uir ;7;100200;0;100200;9303
+#;LOC_StopMsg;2;100201;9;1;6;0
+#;LOC_StartMsg;3;100202;9;1;6;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTATS ETAT LOCALISATION !!!!
+$;uipgene.uir ;4;100300;2;0;9303
+#;LOC_STATUS;2;100301;4;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE ENVOI APPEL !!!!!!!!!!!!!!!!!!!!!!!
+$;uipgene.uir ;1;100100;0;100100;9202
+#;APPEL_NUMTEL ;2;100101;4;0;0;0
+#;STARTSTOP_StartMsg;4;100102;9;1;0;0
+#;STARTSTOP_StopMsg;3;100103;9;1;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE TESTS EMISSION / RECEPTION !!!!!!!!!!!!!!!!!!!!!!!
+$;uipdrv.uir ;1;22000;0;22004;22003
+#;OUI_TSTREC_FREQ ;2;71001;8;0;0;0
+#;OUI_TSTREC_FREQ_MON ;3;71002;8;0;0;0
+#;OUI_TSTREC_RX_LNA ;4;71003;2;0;0;0
+#;OUI_TSTREC_RX_MIX ;5;71004;2;0;0;0
+#;OUI_TSTREC_RX_OUT ;6;71005;2;0;0;0
+#;OUI_TSTREC_RX_LFIC ;7;71006;3;0;0;0
+#;OUI_TSTREC_ABS_RX ;8;71007;7;0;0;0
+#;OUI_TSTREC_REL_RX ;9;71008;7;0;0;0
+#;OUI_TSTREC_MX1_LNA ;10;71009;2;0;0;0
+#;OUI_TSTREC_MX1_MIX ;11;71010;2;0;0;0
+#;OUI_TSTREC_MX1_OUT ;12;71011;2;0;0;0
+#;OUI_TSTREC_MX1_LFIC ;13;71012;3;0;0;0
+#;OUI_TSTREC_ABS_MX1 ;14;71013;7;0;0;0
+#;OUI_TSTREC_REL_MX1 ;15;71014;7;0;0;0
+#;OUI_TSTREC_MX2_LNA ;16;71015;2;0;0;0
+#;OUI_TSTREC_MX2_MIX ;17;71016;2;0;0;0
+#;OUI_TSTREC_MX2_OUT ;18;71017;2;0;0;0
+#;OUI_TSTREC_MX2_LFIC ;19;71018;3;0;0;0
+#;OUI_TSTREC_ABS_MX2 ;20;71019;7;0;0;0
+#;OUI_TSTREC_REL_MX2 ;21;71020;7;0;0;0
+#;OUI_TSTREC_ADJ_OF_I ;22;71021;3;0;0;0
+#;OUI_TSTREC_ADJ_OF_Q ;23;71022;3;0;0;0
+#;OUI_TSTREC_RFRX ;24;71023;5;0;0;0
+#;OUI_TSTREC_IDLE ;25;71024;3;0;0;0
+#;OUI_TSTREC_TIME ;26;71025;7;0;0;0
+#;OUI_REGEMI_FREQ ;27;21001;8;0;0;0
+#;OUI_REGEMI_PUIS ;28;21002;3;0;0;0
+#;OUI_REGEMI_MODE ;29;21003;3;0;0;0
+#;OUI_REGEMI_RFTX ;30;21004;5;0;0;0
+#;OUI_REGEMI_ADJ_GA_I ;31;21005;7;0;0;0
+#;OUI_REGEMI_ADJ_GA_Q ;32;21006;7;0;0;0
+#;OUI_REGEMI_ADJ_OF_I ;33;21007;3;0;0;0
+#;OUI_REGEMI_ADJ_OF_Q ;34;21008;3;0;0;0
+#;OUI_REGEMI_IDLE ;35;21009;3;0;0;0
+#;OUI_REGEMI_TIME ;36;21010;7;0;0;0
+#;OUI_REGEMI_DELAY2 ;37;21011;7;0;0;0
+#;OUI_REGEMI_DELAY_TX ;38;21012;7;0;0;0
+#;OUI_REGEMI_DELTAF ;39;21013;8;0;0;0
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE CONFIGURATION TELECHRGEMENT!!!!!!!
+$;uiptele.uir ;1;81300;0;81300;8132
+#;OUI_CFTELE_VIT_LTE   ;2;81301;6;0;0;0
+#;OUI_CFTELE_EMULAT    ;3;81302;2;0;0;0
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE CONFIGURATION TELECHRGEMENT!!!!!!!
+$;uiptele.uir ;13;81310;0;81320;8922
+#;OUI_CFTELE_VIT_LTE   ;2;81311;6;0;0;0
+#;OUI_CFTELE_EMULAT    ;3;81302;2;0;0;0
+!
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE CONTROLE TELECHARGEMENT!!!!!!!!!!!!
+$;uiptele.uir ;8;81200;0;0;8108
+#;OUI_RS_TEL_START_1 ;2;81201;9;1;10;0
+#;OUI_RS_TEL_START_2 ;3;81202;9;1;10;0
+#;OUI_RS_TEL_START_3 ;4;81203;9;1;10;0
+#;OUI_RS_TEL_START_4 ;5;81204;9;1;10;0
+#;OUI_RS_TEL_START_5 ;6;81205;9;1;10;0
+#;OUI_RS_TEL_START_6 ;7;81206;9;1;10;0
+#;OUI_RS_TEL_START_7 ;8;81207;9;1;10;0
+#;OUI_RS_TEL_START_8 ;9;81208;9;1;10;0			 
+#;OUI_RS_TEL_STOP   ;10;81209;9;1;10;0
+#;OUI_RS_TEL_PROG_1 ;11;81210;7;1;8;0
+#;OUI_RS_TEL_PROG_2 ;12;81211;7;1;8;0
+#;OUI_RS_TEL_PROG_3 ;13;81212;7;1;8;0
+#;OUI_RS_TEL_PROG_4 ;14;81213;7;1;8;0
+#;OUI_RS_TEL_PROG_5 ;15;81214;7;1;8;0
+#;OUI_RS_TEL_PROG_6 ;16;81215;7;1;8;0			 
+#;OUI_RS_TEL_PROG_7 ;17;81216;7;1;8;0
+#;OUI_RS_TEL_PROG_8 ;18;81217;7;1;8;0
+#;OUI_RS_TEL_STRING_1 ;19;81218;4;1;8;0
+#;OUI_RS_TEL_STRING_2 ;20;81219;4;1;8;0
+#;OUI_RS_TEL_STRING_3 ;21;81220;4;1;8;0
+#;OUI_RS_TEL_STRING_4 ;22;81221;4;1;8;0
+#;OUI_RS_TEL_STRING_5 ;23;81222;4;1;8;0
+#;OUI_RS_TEL_STRING_6 ;24;81223;4;1;8;0
+#;OUI_RS_TEL_STRING_7 ;25;81224;4;1;8;0
+#;OUI_RS_TEL_STRING_8 ;26;81225;4;1;8;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE CONTROLE TELECHARGEMENT PC!!!!!!!!!!!!
+$;uiptele.uir ;11;81600;0;0;8116
+#;OUI_RS_TEL_START_1 ;2;81201;9;1;10;0
+#;OUI_RS_TEL_STOP   ;3;81209;9;1;10;0
+#;OUI_RS_TEL_PROG_1 ;4;81210;7;1;8;0
+#;OUI_RS_TEL_STRING_1 ;5;81218;4;1;8;0
+!
+!!!!!!!! DESCRIPTION DE LA FENETRE MODIFICATION TELECHARGEABLE!!!!!!!!!!!!!
+$;uiptele.uir ;7;81460;0;81460;8162
+#;OUI_CREEE_NOMDEF ;2;81461;4;0;0;0
+#;OUI_CREEE_NOMMODIF ;3;81462;4;0;0;0
+#;OUI_CREEE_NOM_TELE ;4;81421;4;0;0;0
+#;OUI_CREEE_ARBO ;5;81422;4;0;0;0
+#;OUI_CREEE_COMMAND ;6;81423;9;0;2;0
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TELECHARGEMENT SCENARIO!!!!!!!!!!!!
+$;uiptele.uir ;12;81800;1;0;8809
+#;OUI_TEL_SC_SCEN ;2;81801;4;0;0;0
+#;OUI_TEL_SC_ARBO_SCN ;3;81802;4;0;0;0
+#;OUI_TEL_SC_ARBO_CFG ;4;81803;4;0;0;0
+#;OUI_TEL_SC_ARBO_DATA ;5;81422;4;0;0;0
+#;OUI_TEL_SC_COMMAND_TELE ;6;81804;9;1;2;81800
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TELECHARGEMENT SCENARIO PC !!!!!!!!!!!!
+$;uiptele.uir ;12;81850;1;0;8817
+#;OUI_TEL_SC_SCEN ;2;81801;4;0;0;0
+#;OUI_TEL_SC_ARBO_SCN ;3;81802;4;0;0;0
+#;OUI_TEL_SC_ARBO_CFG ;4;81803;4;0;0;0
+#;OUI_TEL_SC_ARBO_DATA ;5;81422;4;0;0;0
+#;OUI_TEL_SC_COMMAND_TELE ;6;81804;9;1;2;81820
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TELECHARGEMENT SCENARIO LTE !!!!!!!!!!!!
+$;uiptele.uir ;12;81900;1;0;8909
+#;OUI_TEL_SC_SCEN ;2;81801;4;0;0;0
+#;OUI_TEL_SC_ARBO_SCN ;3;81802;4;0;0;0
+#;OUI_TEL_SC_ARBO_CFG ;4;81803;4;0;0;0
+#;OUI_TEL_SC_ARBO_DATA ;5;81422;4;0;0;0
+#;OUI_TEL_SC_COMMAND_TELE ;6;81804;9;1;2;81900
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TELECHARGEMENT SCENARIO PC LTE !!!!!!!!!!!!
+$;uiptele.uir ;12;81950;1;0;8917
+#;OUI_TEL_SC_SCEN ;2;81801;4;0;0;0
+#;OUI_TEL_SC_ARBO_SCN ;3;81802;4;0;0;0
+#;OUI_TEL_SC_ARBO_CFG ;4;81803;4;0;0;0
+#;OUI_TEL_SC_ARBO_DATA ;5;81422;4;0;0;0
+#;OUI_TEL_SC_COMMAND_TELE ;6;81804;9;1;2;81920
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TEST PIT CHECKROM !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT TEST PIT CHECKROM !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TEST PIT CHECKRAM !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT TEST PIT CHECKRAM !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TEST PIT CHECKIR !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT TEST PIT CHECKIR !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TEST PIT BATTERY !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT TEST PIT BATTERY !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TEST PIT TEMPERATURE !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT TEST PIT TEMPERATURE !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE TEST PIT !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT TEST PIT !!!!!!!!!!!!!!!!!!!!!!!
+!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE PRESENCE PIT !!!!!!!!!!!!!!!!!!!!!!!
+!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT PRESENCE PIT !!!!!!!!!!!!!!!!!!!!!!!
+!
+!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ATTENTE APPEL !!!!!!!!!!!!!!!!!!!!!!!
+!
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT ATTENTE APPEL!!!!!!!!!!!!!!!!!
+!
+!-----------------------------------------------------------------------------          
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE Mem MicroCont  !!!!!!!!!!!!!!!!!   
+$;uipmtt.uir ;8;410010;0;410010;41003                                                   
+#;OUI_LMCONT_ADR_DEB ;2;410011;6;0;0;0                                                    
+#;OUI_LMCONT_ADR_FIN ;3;410012;6;0;0;0                                                    
+!                                                                                       
+!-----------------------------------------------------------------------------          
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT LECTURE Mem MicroCont  !!!!!!!!!!!!!!!!!   
+$;uipmtt.uir ;14;410110;2;0;41003                                                        
+#;OUI_RMCONT_OCTETS ;2;410111;4;2;0;0                                                    
+!                                                                                       
+!-----------------------------------------------------------------------------          
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE Registre BBIC  !!!!!!!!!!!!!!!!!   
+$;uipmtt.uir ;5;411010;0;411010;41103                                                   
+#;OUI_LBBIC_ADR_REGISTRE ;2;411011;6;0;0;0                                                    
+!                                                                                       
+!-----------------------------------------------------------------------------          
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT LECTURE Registre BBIC  !!!!!!!!!!!!!!!!!   
+$;uipmtt.uir ;10;411110;2;0;41103                                                        
+#;OUI_RBBIC_OCTETS ;2;411111;4;2;0;0                                                    
+!                                                                                       
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE RamMtt !!!!!!!!!!!!!!!!!!!!!!!
+$;uipmtt.uir ;9;412010;0;412010;41203
+#;OUI_LRAM_ADR_DEB ;2;412011;6;0;0;0
+#;OUI_LRAM_ADR_FIN ;3;412012;6;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT LECTURE RamMtt !!!!!!!!!!!!!!!!!!!!!!!
+$;uipmtt.uir ;15;412110;2;0;41203
+#;OUI_RRAM_OCTETS ;2;412111;4;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE Mémoire MicroCont !!!!!!!!!!!!!!!!
+$;uipmtt.uir ;3;415010;0;415010;41502
+#;OUI_EMCONT_ADR_DEB ;2;415011;6;0;0;0
+#;OUI_EMCONT_ADR_FIN ;3;415012;6;0;0;0
+#;OUI_EMCONT_OCTETS ;4;415013;4;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE Registre BBIC !!!!!!!!!!!!!!!!
+$;uipmtt.uir ;1;416010;0;416010;41602
+#;OUI_EBBIC_ADR_REGISTRE ;2;416011;6;0;0;0
+#;OUI_EBBIC_OCTETS ;3;416012;4;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE RAM MTT !!!!!!!!!!!!!!!!
+$;uipmtt.uir ;4;417010;0;417010;41702
+#;OUI_ERAM_ADR_DEB ;2;417011;6;0;0;0
+#;OUI_ERAM_ADR_FIN ;3;417012;6;0;0;0
+#;OUI_ERAM_OCTETS ;4;417013;4;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE / RESULTAT CONFIG Flash !!!!!!!!!!!!!!!!
+$;uipmtt.uir ;11;87030;0;87031;87033
+#;OUI_RCONF_TYPE_FLASH ;2;87031;4;2;0;0
+!
+!-----------------------------------------------------------------------------          
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE LECTURE Flash !!!!!!!!!!!!!!!!!!!!!!!!!!!
+$;uipmtt.uir ;7;87040;0;87400;87044
+#;OUI_LFLASH_ADR_DEB ;2;87041;6;0;0;0                                                    
+#;OUI_LFLASH_ADR_FIN ;3;87042;6;0;0;0                                                    
+#;OUI_LFLASH_CHECKSUM ;4;87043;2;0;0;0                                                    
+#;OUI_LFLASH_TYPE_FLASH ;5;87044;4;2;0;0                                                    
+!                                                                                       
+!-----------------------------------------------------------------------------          
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT LECTURE Flash  !!!!!!!!!!!!!!!!!   
+$;uipmtt.uir ;13;87140;2;0;87044
+#;OUI_RFLASH_OCTETS;2;87141;4;2;0;0                                                    
+#;OUI_RFLASH_RES_CHECKSUM;3;87142;6;2;0;0                                                    
+!                                                                                       
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE EFFACEMENT FLASH !!!!!!!!!!!!!!!!
+$;uipmtt.uir ;6;87050;0;87500;87053
+#;OUI_LEFFAC_NUMDEBUT ;2;87051;6;0;0;0
+#;OUI_LEFFAC_NUMFIN ;3;87052;6;0;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE RESULTAT EFFACEMENT FLASH !!!!!!!!!!!!!!!!
+$;uipmtt.uir ;12;87150;2;0;87053
+#;OUI_REFFAC_ADR_DEB ;2;87151;6;2;0;0
+#;OUI_REFFAC_ADR_FIN ;3;87152;6;2;0;0
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DE LA FENETRE SAISIE ECRITURE Flash !!!!!!!!!!!!!!!!
+$;uipmtt.uir ;2;87060;0;87600;87063
+#;OUI_EFLASH_ADR_DEB ;2;87061;6;0;0;0
+#;OUI_EFLASH_ADR_FIN ;3;87062;6;0;0;0
+#;OUI_EFLASH_OCTETS ;4;87063;4;0;0;0
+#;OUI_EFLASH_TYPE_FLASH ;5;87064;4;2;0;0
+!

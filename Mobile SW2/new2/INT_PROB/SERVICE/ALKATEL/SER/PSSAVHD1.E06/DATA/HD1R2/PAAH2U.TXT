@@ -1,0 +1,719 @@
+*************************************************
+*   Scenario HD1R2 pour la perso SAV		        *
+*************************************************
+*
+*v1.0 J.T creation
+*
+***** Scenario PERSO SAV ********
+@; PR; V1.0 ; 1;?
+*
+************************************************************
+*  Noeuds 
+************************************************************
+* N°Noeud;  Nom du noeud  ; Noeud OK ; Noeud KO
+*
+*-----------------------------------------------------------
+&; 1;    OpenComUut          ;  2   ; 26;?
+&; 2;    MiseEnMarcheProduit ;  3   ; 26;?
+&; 3;    MiseEnService       ;  4   ; 13;?
+&; 4;    VerifSoft           ;  5   ; 12;?
+&; 5;   AjoutPTFlash         ;  6   ; 12;?
+&; 6;   AjoutRefIndusFlash   ;  7   ; 12;?
+&; 7;   MemRefCom	     			 ;  9   ; 12;?
+&; 9;    MiseHorsService     ; 10   ; 13;?
+&;10;    ArretProduit        ; 15   ; 26;?
+*-----------------------------------------------------------
+* Erreur de verif soft  : pas de téléchargement.
+&;12;    MiseHorsService     ; 13   ; 13;?
+&;13;    ArretProduit        ; 26   ; 26;?
+
+
+*-----------------------------------------------------------
+*    --- Téléchargement ---
+&; 15;   OpenComTele         ; 16   ; 26;?
+&; 16;   AjoutImei           ; 20   ; 25;?
+&; 20;   AjoutImeiFlash      ; 21   ; 25;?
+&; 21;   Telechargement      ; 22   ; 25;?
+&; 22;   GetPersoExp	     	; 23   ; 25;?
+&; 23;   TeleExpedition      ; 25   ; 25;?
+&; 25;   CloseComTele        ; 26   ; 26;?
+&; 26;   CloseComUut         ;  0   ;  0;?
+*-----------------------------------------------------------
+*
+*
+************************************************************
+*  Tests 
+************************************************************
+* %; Nom;NrepMax;NrepMin;NbEchecsMax;NbIer;Timeout;(NoMetho;type)*;?
+*
+* (1) MessUser
+* (2) OpenComUut 
+%; OpenComUut     ; 0; 0; 0; 0; 00:30;  1;1;  2;1; ?
+
+* (4) Temporisation 1s
+* (5) ConfModeTele : TeleInit
+%; OpenComTele    ; 0; 0; 0; 0; 00:30;  4;1;  5;1; ?
+
+* (10) ProgImeiCryptDataS2
+%; AjoutImei      ; 0; 0; 0; 0;  1:30; 10;2; ?
+%; AjoutContraste ; 0; 0; 0; 0; 00:30; 18;2; ?
+
+* (15) GetDataTest
+* (16)WriteFlash
+%; AjoutPTFlash        ; 0; 0; 0; 0; 00:30; 15;2; 16;2; ?
+
+* (39) GetDataTest
+* (40) WriteFlash
+%; AjoutRefIndusFlash      ; 0; 0; 0; 0; 00:30; 39;2; 40;2; ?
+
+* (41) MajBufMemToDataS2 pour le fichier Flash
+%; AjoutImeiFlash     ; 0; 0; 0; 0; 00:30;	41;1; ?
+
+* (8)  GetDataTest
+* (9)  WriteFlash
+%; MemRefCom  ; 0; 0; 0; 0; 00:30;  8;2;  9;2; 17;2; ?
+
+* (34) LoadDataTele	 (Fichier O)
+* (33) LoadDataTeleDrv pour la flash (Fichier O)  
+%; GetLangOpt         ; 0; 0; 0; 0; 02:30; 34;1; 33;1;  ?
+
+* (11) LoadDataTeleDrv pour la flash (Fichier P)
+* (12) LoadDataTeleDrv pour l'EEPROM (Fichier Q)
+* (13) StartTele
+* (14) TestTele 
+%; Telechargement ; 0; 0; 0; 0; 10:00; 11;1; 12;1; 13;2; 14;2; ?
+
+
+* (6)  TeleStop	 
+* (36) LoadDataTele	 (Fichier U)
+%; GetPersoExp     ; 0; 0; 0; 0; 05:00; 6;1; 36;1;   ?
+
+* (38) LoadDataTeleDrv pour eeprom (Fichier U)
+* (13) StartTele
+* (14) TestTele 
+%; TeleExpedition ; 0; 0; 0; 0; 01:00; 38;1; 13;2; 14;2; ?
+ 
+ 
+%; CloseComTele   ; 0; 0; 0; 0; 00:15;  6;3;  7;3; ?
+%; CloseComUut    ; 0; 0; 0; 0; 00:15;  3;3; ?
+
+* MODE TEST
+%; MiseEnMarcheProduit; 0; 0; 0; 0; 00:30;  4;1; 20;1; 4;1; 21;1 ?
+%; MiseEnService      ; 0; 0; 0; 0; 00:30; 23;1  ?
+%; AffichMess         ; 0; 0; 0; 0; 00:10; 31;2  ?
+%; VerifSoft          ; 0; 0; 0; 0; 00:10; 25;2  ?
+*%; ReglContraste      ; 0; 0; 0; 0; 01:00; 26;2; 27;2; 28;2; 30;2; 29;2 ?
+%; MiseHorsService    ; 0; 0; 0; 0; 00:30; 24;2  ?
+%; ArretProduit       ; 0; 0; 0; 0; 00:30; 22;1  ?
+
+
+*----------------------------------------------------------------
+* Identifiants mémoires                                         |
+* ---------------------                                         |
+*                                                               |
+* 1---->données à télécharger (Flash P)                         |
+* 2---->type de zone pour les données à télécharger             |
+*                                                               |
+* 3---->langues optionnellles à télécharger (Flash O)   				|
+* 4---->type de zone pour les données à télécharger     				|
+*                                                               |
+* 5---->données  à télécharger (Eeprom Q)     									|
+* 6---->type de zone pour les données à télécharger     				|
+*                                                               |
+* 7---->données  à télécharger (Flash N)     										|
+* 8---->type de zone pour les données à télécharger     				|
+*                                                               |
+* 9---->données n°2 à télécharger (Eeprom U)              			|
+* 10--->type de zone pour les données à télécharger 						|
+*                                                               |
+* 11---->zone Palier technique                                  |
+* 12---->zone ref com                                              |
+* 13---->zone ref indust                                              |
+*                                                               |
+* les reservés :                                                |
+* 0x3002---->Identification de la   famille d'Uut               |
+* 0x3003---->Identification du type de données                  |
+*----------------------------------------------------------------
+
+************************************************************
+*  Méthodes de test
+************************************************************
+*
+* #;Nom;N°;NbMes;(Noms)*;NbParam;(Params)*;NbCompens;(Etats;Ids)*;Nb Inst;(Instances)*;
+*   
+*-------------------------------------------------------------------- 
+* Affichage d'un message pour mettre en route le produit HD
+*                                           
+* nom           : MessUser ( fonction PEC_MessUser /"ECSPROC.C" )                                           
+* nb mesures    : 0                                                 
+* nb param.     : 4
+* nb compens.   : 0
+* nb instances  : 0                                               
+*-------------------------------------------------------------------- 
+#; MessUser2; 1; 0;
+             1; MESS_USER1;
+             0;
+             0;
+             0;?
+
+*--------------------------------------------------------------------
+* service d'ouverture de la communication logicielle
+* nom           : OpenComUut ( fonction PEP_OpenComUut / "ECSPROC.C" )
+* nb mesures    : 0
+* nb paramètres : 1
+*              Si pas de parametre 1 précisé : Type de com par défaut = ACKSYS
+*              Sinon : COM1   = 2 (OES_UutTypeCom2), 
+*              ACKSYS = 1 (OES_UutTypeCom1)
+* nb compens.   : 0
+* nb instances  : 1
+* instance 1    : instance de la communication à ouvrir   
+*----------------------------------------------------------------
+#; OpenComUut; 2;
+               0;
+               0;
+               0;
+               1; 1;
+               0;?
+
+#; CloseComUut; 3;
+                0;
+                0;
+                0;
+                1; 1;
+                0;?
+
+*--------------------------------------------------------
+* nom        : Temp (fonction PEC_Temp /"ECSPROC.C")
+* nb mesures : 0
+* nb param.  : 1
+* 1er param. : Valeur de la temporisation
+* nb inst    : 0
+* nb compens.: 0
+*--------------------------------------------------------  
+* Temporisation 1s
+#; Temp; 4; 0; 1; 1; 0; 0; 0;?  
+
+*-------------------------------------------------------------------- 
+* Configuration du produit en téléchargement
+*
+* nom           : ConfModeTele ( fonction PET_ConfModeTele / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb paramètres : 1
+* Paramètre 1   : Flag du mode de téléchargement, parmi
+*                  . TeleInit  = 0
+*                  . TeleStop  = 1
+*                  . TeleClose = 2
+* Paramètre 2   : Vitesse de téléchargement, 57600, 101000...
+* nb compens.   : 0
+* nb instances  : 1
+* instance 1    : instance du produit à télécharger
+*-------------------------------------------------------------------- 
+* Télé Init
+#; ConfModeTele; 5;
+                 0; 
+                 2; 0; 57600;
+                 0; 
+                 1; 1;
+                 0;?
+* Télé Stop
+#; ConfModeTele; 6; 0; 
+                 1; 1;
+                 0; 
+                 1; 1;
+                 0;?
+* Télé Close
+#; ConfModeTele; 7; 0; 
+                 1; 2;
+                 0; 
+                 1; 1;
+                 0;?
+
+#; GetDataTest; 8;
+                0; 
+                2; NUMETIQ2;12;
+                0; 
+                0; 0;?
+*	-------------------------------------------------------------------- 
+* Ecriture de la référence commerciale en flash
+*
+* nom      			: WriteEeprom ( fonction PET_WriteEeprom / "ETSPERSO.C" )
+* nb mesures		: 0
+* nb paramètres : 5
+*	Paramètre 1		: Identifiant de la zone mémoire où la référence commerciale
+*									a été sauvegardée
+*	Paramètre 2		: Adresse de début de zone à mettre à jour
+*	Paramètre 3		: Adresse de fin de zone à mettre à jour
+*	Paramètre 4		: Nombre d'octets
+*	Paramètre 5		: type de zone à lire parmi : NONE, BOOT, DRV_FLASH_1,
+* 								DRV_FLASH_2, DRV_FLASH, PARAM_1, PARAM_2, MODIF_PARAM_2,
+*									CODE, LANG_FIXES, LANG_VAR, MENU_LANG, TAB_DESC_EXO,
+*									TAB_DESC_FIX,TAB_DESC_VAR, ZONE_AUTRES, ZONE_ALL, ZONE_EEPROM
+* nb instances	: 0
+*	-------------------------------------------------------------------- 
+ #; WriteEeprom; 		9;
+ 										0; 
+										5; 12; 0x45A4; 0x45B3; 16; PARAM_2;
+										0; 
+										0; 0;?
+
+*------------------------------------------------------------------- 
+* Crytage de l'Imei sur Hd1
+* nom           : ProgImeiCryptDataS2 ( fonction PET_ProgImeiCryptDataS2 / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb paramètres : 5
+* Paramètre 1   : Identifiant de la zone mémoire (format S2) à mettre à jour
+* Paramètre 2   : Adresse de début de la zone Imei + paramètres
+* Paramètre 3   : Adresse de fin de la zone Imei + paramètres
+* Paramètre 4   : Flag indiquant si on veut mémoriser le simlock dans une zone mémoire
+* Paramètre 5   : Zone mémoire pour conserver le simlock
+* Paramètre 6   : simlock crypté (1) ou non (0)
+* nb instances  : 1
+* instance 1    : instance de la communication
+*-------------------------------------------------------------------- 
+#; ProgImeiCryptDataS2; 10;
+                        0; 
+                        6; 9; 0x15E; 0x179; 1; 14; 1;
+                        0; 
+                        1; 1; 0;?
+*-------------------------------------------------------------------- 
+* TELECHARGEMENT EN FLASH : Transmission des données de téléchargement au driver
+*
+* nom           : LoadDataTeleDrv ( fonction PET_LoadDataTeleDrv / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb paramètres : 4
+* Paramètre 1   : Flag d'effacement de la zone de téléchargement 
+*                      NonEfface : 0
+*                      Efface  : 1
+* Paramètre 2   : Identifiant de la zone mémoire (format S2) à télécharger
+* Paramètre 3   : Identifiant mémoire du type de flash
+* Paramètre 4   : type d'écriture : flash (0) ou eeprom (1)
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; LoadDataTeleDrv; 11;
+                    0; 
+                    4; 1; 1; 2; 0;
+                    0; 
+                    0; 0;?
+
+*-------------------------------------------------------------------- 
+* TELECHARGEMENT EN E2PROM : Transmission des données de téléchargement au driver
+*
+* nom           : LoadDataTeleDrv ( fonction PET_LoadDataTeleDrv / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb paramètres : 4
+* Paramètre 1   : Flag d'effacement de la zone de téléchargement 
+*                       NonEfface : 0
+*                       Efface    : 1
+* Paramètre 2   : Identifiant de la zone mémoire (format S2) à télécharger
+* Paramètre 3   : Identifiant mémoire du type de flash
+* Paramètre 4   : type d'écriture : flash (0) ou eeprom (1)
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; LoadDataTeleDrv; 12;
+                    0; 
+                    4; 0; 9; 10; 1;
+                    0; 
+                    0; 0;?
+
+*-------------------------------------------------------------------- 
+* Lancement du téléchargement
+*
+* nom           : StartTele ( fonction PET_StartTele / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb instances  : 0
+* nb paramètres : 1
+* Paramètre 1   : Numéro de voie
+*-------------------------------------------------------------------- 
+#; StartTele; 13; 0; 
+                  1; 2;
+                  0; 
+                  0; 0;?
+                    
+*-------------------------------------------------------------------- 
+* Lecture de l'état du téléchargement 
+*
+* nom    : TestTele ( fonction PET_TestTele / "ETSPERSO.C" )
+* nb mesures  : 0
+* nb instances  : 0
+* nb paramètres : 2
+* Paramètre 1  : Numéro de la voie à scruter
+* Paramètre 2  : Timeout de scrutation
+*-------------------------------------------------------------------- 
+#; TestTele; 14;  0; 
+                  2; 2; 200;
+                  0; 
+                  0; 0;?
+
+*-------------------------------------------------------------------- 
+* Allocation d'un buffer et init à la valeur du P.T.
+* nom           : GetDataTest (fonction PEC_GetDataTest /"ECSPROC.C")
+* nb mesures    : 0
+* nb paramètres : 2
+* Paramètre 1   : Identifiant donné pour le P.T
+* Paramètre 2   : Constante identifiant l'étiquette P.T.
+* nb compens.   : 0
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; GetDataTest;15;
+                0; 
+                2; NUMETIQ3;11;
+                0; 
+                0; 0;?
+
+*-------------------------------------------------------------------- 
+* Allocation d'un buffer et init à la valeur du P.T.
+* nom           : GetDataTest (fonction PEC_GetDataTest /"ECSPROC.C")
+* nb mesures    : 0
+* nb paramètres : 2
+* Paramètre 1   : Identifiant donné pour le P.T
+* Paramètre 2   : Constante identifiant l'étiquette P.T.
+* nb compens.   : 0
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+*
+#; WriteEeprom; 16; 	
+								0; 
+							 	5; 11; 0x45B4; 0x45BF; 12; PARAM_1;
+		 						0;
+							 	0; 0; 0;?				
+*------------------------------------------------------------------- 
+* Mise à jour du checksum après modifications dans la zone S2  
+*
+* nom           : Calcchecksum (fonction PET_CalcChecksum /"ETSPERS2.C")
+* nb mesures    : 0
+* nb paramètres : 2  
+* Paramètre 1   : Identifiant de la zone mémoire (format S2) à mettre à jour
+* Paramètre 2   : Adresse de début de zone de checksum
+* Paramètre 3   : Adresse de fin de zone de checksum
+* Paramètre 4   : Adresse du checksum
+* Paramètre 5   : little Indian pour produits ACT4 =1 sinon 0
+* nb compens.   : 0
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; CalcChecksum; 17;
+                  0;
+                  5; 1; 0x6000; 0x7F9F; 0x7FFE; 0;
+                  0; 
+                  0; 0;?
+*------------------------------------------------------------------- 
+* Recopie de la valeur du Contraste dans la zone S2
+*
+* nom           : MajBufMemToDataS2 (fonction PET_MajBufMemToDataS2 /"ETSPERSO.C")
+* nb mesures    : 0
+* nb paramètres : 5
+*  Paramètre 1  : Identifiant de la zone mémoire (format S2) à mettre à jour
+*  Paramètre 2  : Identifiant de la zone mémoire Contraste
+*  Paramètre 3  : Adresse de début de la zone Contraste
+*  Paramètre 4  : Adresse de fin de la zone Contraste
+*  Paramètre 5  : Masque à appliquer sur l'octet concerné
+* nb compens.   : 0
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; MajBufMemToDataS2;18;
+                      0;
+                      5; 9; 5; 0x0005; 0x0005; 0x70;
+                      0; 
+                      0; 0;?
+
+*	--------------------------------------------------------------------
+* service de mise en marche du produit et de configuration du mode choisi
+* nom      			: ModeFoncMarche ( fonction PER_ModeFoncMarche / "ERSPARA4.C" )
+* nb mesures		: 0
+* nb paramètres : 1
+* paramètre 1		: mode de fonctionnement du produit (0=Tele ou MTT;1=NonTele ou LCE)
+* nb instances	: 1
+* instance 1    : instance du produit à mettre en marche
+*------------ 
+* Mode LCE
+#; ModeFoncMarche; 20;
+									 0;
+									 1; 1;
+									 0;
+									 1; 1;
+									 0;?
+
+*	-------------------------------------------------------------------- 
+* service de communication LCE ou MTT
+* nom      			: ConfModeCom ( fonction PER_ConfModeCom / "ERSPARA4.C" )
+* nb mesures		: 0
+* nb instances	: 1
+* instance 1    : instance de la communication à fermer
+* nb paramètres : 2
+*	Paramètre 1		: Type de communication LCE = 1 ou MTT = 2
+*	Paramètre 2		: Type de StopTest = 2 ou StartTest = 1
+*	-------------------------------------------------------------------- 
+* Initialisation
+#; ConfModeCom; 21; 0; 
+										2; 1; 1; 
+										0; 
+										1; 1; 0;?
+										
+*	-------------------------------------------------------------------- 
+* Clôture
+#; ConfModeCom; 22;0; 
+    							 2; 1; 2; 
+    							 0; 
+    							 1; 1; 0;?
+
+*	-------------------------------------------------------------------- 
+* nom      			: MiseEsLogTest ( fonction PET_MiseEsLogTest / "ERSPARA1.C") 
+* nb mesures		: 0
+* nb instances	: 1
+* instance 1    : instance du produit 
+* nb paramètres : 0
+*------------ 
+#; MiseEsLogTest;23; 0; 
+    						 	   0; 
+      							 0; 
+									   1; 1; 0;?
+
+#; MiseHsLogTest;24; 0;
+										 0;
+										 0;
+										 1; 1; 0;?
+
+*	-------------------------------------------------------------------- 
+* Vérification de la version logicielle d'un HD
+* nom      			: VerifSoftVers ( fonction PET_VerifSoftVers / "ETSPERSO.C" )
+* nb mesures		: 0
+* nb instances	: 0
+* nb paramètres : 2
+*	Paramètre 1		: nombre de données exprimant une version soft dans le fichier
+*		              des données UUT
+*	Paramètre 2		: indice ou est stockée la 1ere version de soft dans le
+*		              fichier des données UUT
+*	-------------------------------------------------------------------- 
+#; VerifSoftVers; 25;0;
+										 2; 4; 2;
+										 0; 
+										 0; 0;?
+
+
+*	-------------------------------------------------------------------- 
+* Decalage de l'octet contenant la valeur du contraste, de 1 bit vers la gauche
+* puis 5 bits sur la droite
+*
+* nom      			: DecalageBuff ( fonction PEC_DecalageBuff / "ECSPROC.C" )
+* nb mesures		: 0
+* nb instances	: 0
+* nb paramètres : 6
+*   Paramètre 1 : Identifiant de la zone mémoire où le réglage est sauvegardé
+*	  Paramètre 2 : nombre de bits de decalage, vers la gauche (nombre positif)
+*                 ou vers la droite (nombre négatif)
+*	  Paramètre 3 : Valeur introduite par le décalage : 0 ou 1
+* nb compensat. : 0
+* nb instances  : 0
+*	-------------------------------------------------------------------- 
+#; DecalageBuff; 27;
+                  0; 
+                  3; 5; 1; 0;
+                  0; 
+                  0; 0;?
+#; DecalageBuff; 28;
+                  0; 
+                  3; 5; -5; 0;
+                  0; 
+                  0; 0;?
+* Replacer les trois bits à leur emplacement initial
+#; DecalageBuff; 29;
+                  0; 
+                  3; 5; 4; 0;
+                  0; 
+                  0; 0;?
+
+*	-------------------------------------------------------------------- 
+* Réglage du contraste
+* nom      			: RegPanCont (fonction PEH_RegPanCont /"EHSRHM.C")
+* nb mesures		: 0
+* nb paramètres : 5
+*  Paramètre 1  : Identifiant de la zone mémoire à mettre à jour
+*  Paramètre 2  : Valeur par défaut du contraste Hd1
+*  Paramètre 3  : Valeur minimum à afficher pour le contraste Hd1
+*  Paramètre 4  : Valeur maximum à afficher pour le contraste Hd1
+*  Paramètre 5  : Pas d'affichage entre ces deux valeurs
+* nb compensat. : 0
+* nb instances	: 0
+*	-------------------------------------------------------------------- 
+#; RegPanCont ; 30;
+                 0;
+                 5; 5; 3; 0; 7; 1;
+                 0; 
+                 0; 0;?
+
+*	-------------------------------------------------------------------- 
+* Affichage d'un message sur l'écran LCE du produit
+* nom      			: AfficheMess (fonction PET_AffCaractere /"ETSPERSO.C")
+* nb mesures		: 0
+* nb paramètres : 2
+*  Paramètre 1  : Message à afficher
+*  Paramètre 2  : Numéro de ligne
+* nb compensat. : 0
+* nb instances	: 0
+*	-------------------------------------------------------------------- 
+#; AfficheMess ; 31;
+                  0;
+                  2; --Reglage---Contrast; 1;
+                  0; 
+                  0; 0;?
+
+*	-------------------------------------------------------------------- 
+* TELECHARGEMENT EN FLASH : Transmission des données de langues optionnelles au driver
+*
+* nom      			: LoadDataTeleDrv ( fonction PET_LoadDataTeleDrv / "ETSPERSO.C" )
+* nb mesures		: 0
+* nb paramètres : 4
+*	Paramètre 1		: Flag d'effacement de la zone de téléchargement 
+*									NonEfface : 0
+*									Efface 		: 1
+*	Paramètre 2		: Identifiant de la zone mémoire (format S2) à télécharger
+*	Paramètre 3		: Identifiant mémoire du type de flash
+* Paramètre 4   : type d'écriture : flash (0) ou eeprom (1)
+* nb instances	: 0
+*	-------------------------------------------------------------------- 
+#; LoadDataTeleDrv; 33; 0; 
+												4; 1; 3; 4; 0;
+												0; 
+												0; 0;?
+
+*	---------------------------------------------------------------------
+* Chargement des données de langues optionnelles de la Flash	
+*                         																			          
+* nom     		: LoadDataTele	( fonction PET_LoadDataTele /"ETSPERSO.C")	
+* nb mesures : 0 																										    
+* nb param.  : 2															 													  
+* 1er param. : Flag de téléchargement																		
+*              (Initialisation:1 - DesInitialisation:2)									
+* 2eme param.: Identifiant mémoire pour le type de zone lue							
+* 3eme param.: identifiant du fichier des données à télécharger (cf ftp1.cfg)					
+* 4eme param.: Identifiant de la zone mémoire des données à télécharger	
+*	----------------------------------------------------------------------
+#; LoadDataTele ; 34;
+                  0;
+                  4;1;4;15;3;
+                  0; 
+                  0; 0;?
+*	---------------------------------------------------------------------
+* Chargement des données de la Flash (Fichier N)	
+*                         																			          
+* nom     		: LoadDataTele	( fonction PET_LoadDataTele /"ETSPERSO.C")	
+* nb mesures : 0 																										    
+* nb param.  : 2															 													  
+* 1er param. : Flag de téléchargement																		
+*              (Initialisation:1 - DesInitialisation:2)									
+* 2eme param.: Identifiant mémoire pour le type de zone lue							
+* 3eme param.: identifiant du fichier des données à télécharger	(cf ftp1.cfg)					
+* 4eme param.: Identifiant de la zone mémoire des données à télécharger	
+*	----------------------------------------------------------------------
+#; LoadDataTele ; 35;
+                  0;
+                  4;1;6;17;5;
+                  0; 
+                  0; 0;?
+
+
+*	---------------------------------------------------------------------
+* Chargement des données de l'eeprom (Fichier U)		
+*                         																			          
+* nom     		: LoadDataTele	( fonction PET_LoadDataTele /"ETSPERSO.C")	
+* nb mesures : 0 																										    
+* nb param.  : 2															 													  
+* 1er param. : Flag de téléchargement																		
+*              (Initialisation:1 - DesInitialisation:2)									
+* 2eme param.: Identifiant mémoire pour le type de zone lue							
+* 3eme param.: identifiant du fichier des données à télécharger	(cf ftp1.cfg)					
+* 4eme param.: Identifiant de la zone mémoire des données à télécharger	
+*	----------------------------------------------------------------------
+#; LoadDataTele ; 36;
+                  0;
+                  4;1;8;18;7;
+                  0; 
+                  0; 0;?
+
+*-------------------------------------------------------------------- 
+* TELECHARGEMENT EN FLASH : Transmission des données de téléchargement
+*														au driver (Fichier N)
+*
+* nom           : LoadDataTeleDrv ( fonction PET_LoadDataTeleDrv / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb paramètres : 4
+* Paramètre 1   : Flag d'effacement de la zone de téléchargement 
+*                      NonEfface : 0
+*                      Efface  : 1
+* Paramètre 2   : Identifiant de la zone mémoire (format S2) à télécharger
+* Paramètre 3   : Identifiant mémoire du type de flash
+* Paramètre 4   : type d'écriture : flash (0) ou eeprom (1)
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; LoadDataTeleDrv; 37;
+                    0; 
+                    4; 1; 5; 6; 0;
+                    0; 
+                    0; 0;?
+*-------------------------------------------------------------------- 
+* TELECHARGEMENT EN E2PROM : Transmission des données de téléchargement au driver
+*
+* nom           : LoadDataTeleDrv ( fonction PET_LoadDataTeleDrv / "ETSPERSO.C" )
+* nb mesures    : 0
+* nb paramètres : 4
+* Paramètre 1   : Flag d'effacement de la zone de téléchargement 
+*                       NonEfface : 0
+*                       Efface    : 1
+* Paramètre 2   : Identifiant de la zone mémoire (format S2) à télécharger
+* Paramètre 3   : Identifiant mémoire du type de flash
+* Paramètre 4   : type d'écriture : flash (0) ou eeprom (1)
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; LoadDataTeleDrv; 38;
+                    0; 
+                    4; 0; 7; 8; 1;
+                    0; 
+                    0; 0;?
+*-------------------------------------------------------------------- 
+* Allocation d'un buffer et init à la valeur de la 3DS
+* nom           : GetDataTest (fonction PEC_GetDataTest /"ECSPROC.C")
+* nb mesures    : 0
+* nb paramètres : 2
+* Paramètre 1   : Identifiant donné pour la 3DS
+* Paramètre 2   : Constante identifiant l'étiquette 3DS
+* nb compens.   : 0
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; GetDataTest; 39;
+                0; 
+                2; NUMETIQ1;13;
+                0; 
+                0; 0;?
+
+*	--------------------------------------------------------------------
+* Ecriture de la 3DS
+* 1 Param : Identifiant buffer 
+* 2 Param : Adresse de Debut
+* 3 Param : Adresse de Fin
+* 4 Param : Nb d'octet
+* 5 Param : Zone d'ecriture  17 : Zone Eeprom
+*					16 : Zone Flash
+*	-------------------------------------------------------------------- 
+#; WriteEeprom; 40;
+								0; 
+							 	5; 13; 0x4594; 0x45A3; 16; PARAM_1;
+		 						0;
+					 			0; 0; 0;?				
+*------------------------------------------------------------------- 
+* Recopie du simlock dans la zone S2 en flash 
+*
+* nom           : MajBufMemToDataS2 (fonction PET_MajBufMemToDataS2 /"ETSPERSO.C")
+* nb mesures    : 0
+* nb paramètres : 4  
+* Paramètre 1   : Identifiant de la zone mémoire (format S2) à mettre à jour
+* Paramètre 2   : Identifiant de la zone mémoire simlock
+* Paramètre 3   : Adresse de début de la zone simlock
+* Paramètre 4   : Adresse de fin de la zone simlock
+* nb compens.   : 0
+* nb instances  : 0
+*-------------------------------------------------------------------- 
+#; MajBufMemToDataS2;41;
+                      0;
+                      4; 1; 14; 0x7FD4; 0x7FEF;
+                      0; 
+                      0; 0;?
+

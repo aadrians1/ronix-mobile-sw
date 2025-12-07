@@ -1,0 +1,3705 @@
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 1
+prob_c11.ASM
+
+
+
+      1					 masm
+      2					 p486
+      3	    0000			 code segment use16
+      4					 assume	 cs:code,ds:code,es:code,ss:code,fs:code,gs:code
+      5						 org	 82h
+      6	    0082  0D*(??)		 fname	 db	 13 dup	(?)
+      7						 org	 100h
+      8
+      9	    0100  EB 45	90		 begin:	 jmp	 main
+     10	    0103  6F 75	74 5F 68 63 31+	 fname1	 db	 'out_hc11.asm',0
+     11		  31 2E	61 73 6D 00
+     12	    0110  ????			 handle	 dw	 ?
+     13	    0112  ????			 handle1 dw	 ?
+     14	    0114  00			 addr1	 db	 0
+     15	    0115  00			 addr2	 db	 0
+     16	    0116  00			 addr3	 db	 0
+     17	    0117  ??			 dta	 db	 ?
+     18	    0118  ??			 dta1	 db	 ?
+     19	    0119  0000			 len_hi	 dw	 0
+     20	    011B  0000			 len_lo	 dw	 0
+     21	    011D  00			 hi_adr	 db	 0
+     22	    011E  ????			 chart	 dw	 ?
+     23	    0120  0000			 val16	 dw	 0
+     24	    0122  00			 val8	 db	 0
+     25	    0123  0000			 adr16	 dw	 0
+     26	    0125  00			 shift1	 db	 0
+     27	    0126  00			 shift2	 db	 0
+     28	    0127  65 72	72 6F 72 20 66+	 mess3	 db	 'error	file$'
+     29		  69 6C	65 24
+     30	    0132  41 6C	6C 20 6F 6B 24+	 mess1	 db	 'All ok$    '
+     31		  20 20	20 20
+     32	    013D  74 65	73 74 2E 66 69+	 ftest	 db	 'test.fil',0
+     33		  6C 00
+     34	    0146  ??			 orec	 db	 ?
+     35
+     36	    0147  B9 000D		 main:	 mov	 cx,13
+     37	    014A  BE 0082r			 lea	 si,fname
+     38	    014D  BB 0000			 mov	 bx,0
+     39	    0150  BE 0082r			 lea	 si,fname
+     40	    0153  8A 00			 l1:	 mov	 al,[si+bx]
+     41	    0155  3C 20				 cmp	 al,20h
+     42	    0157  74 0B	90 90			 jz	 change
+     43	    015B  3C 0D				 cmp	 al,0dh
+     44	    015D  74 05	90 90			 jz	 change
+     45	    0161  43				 inc	 bx
+     46	    0162  E2 EF				 loop	 L1
+     47	    0164  B0 00			 change: mov	 al,0
+     48	    0166  88 00				 mov	 [si+bx],al
+     49	    0168  B4 3D			 openfi: mov	 ah,3dh
+     50	    016A  B0 00				 mov	 al,0
+     51	    016C  BA 0082r			 lea	 dx,fname
+     52	    016F  CD 21				 int	 21h
+     53	    0171  72 08	90 90			 jc	 err_F		 ;file error
+     54	    0175  A3 0110r			 mov	 handle,ax
+     55	    0178  EB 13	90			 jmp	 n_op_f
+     56	    017B  E8 1B24		 err_f:	 call	 close
+     57	    017E  B4 09			 m_er_f: mov	 ah,09
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 2
+prob_c11.ASM
+
+
+
+     58	    0180  BA 0127r			 lea	 dx,mess3
+     59	    0183  B9 0020			 mov	 cx,32
+     60	    0186  CD 21				 int	 21h
+     61	    0188  C3				 ret
+     62	    0189  E8 1B16		 end_f:	 call	 close
+     63					 ;	 mov	 ah,09
+     64					 ;	 lea	 dx,mess1
+     65					 ;	 mov	 cx,32
+     66					 ;	 int	 21h
+     67	    018C  C3				 ret
+     68	    018D  E8 1B48		 n_op_f: call	 crefi
+     69	    0190  E8 1B2D		 cont_1: call	 read
+     70	    0193  A1 0123r			 mov	 ax,adr16
+     71	    0196  A3 0120r			 mov	 val16,ax
+     72	    0199  E8 1C1E			 call	 prn16
+     73	    019C  C6 06	0146r 20	 cont_2: mov	 orec,20h
+     74	    01A1  E8 1B42			 call	 rec
+     75	    01A4  C6 06	0146r 20		 mov	 orec,20h
+     76	    01A9  E8 1B3A			 call	 rec
+     77	    01AC  A0 0117r			 mov	 al,dta
+     78	    01AF  A2 0122r			 mov	 val8,al
+     79	    01B2  E8 1C27			 call	 prn8
+     80	    01B5  C6 06	0146r 09		 mov	 orec,09h
+     81	    01BA  E8 1B29			 call	 rec
+     82
+     83	    01BD  80 3E	0117r 00	 a0:	 cmp	 dta,00h
+     84	    01C2  75 05	90 90			 jnz	 nn00
+     85	    01C6  E9 09F2			 jmp	 m00
+     86	    01C9  80 3E	0117r 01	 nn00:	 cmp	 dta,01h
+     87	    01CE  75 05	90 90			 jnz	 nn01
+     88	    01D2  E9 09F2			 jmp	 m01
+     89	    01D5  80 3E	0117r 02	 nn01:	 cmp	 dta,02h
+     90	    01DA  75 05	90 90			 jnz	 nn02
+     91	    01DE  E9 09F2			 jmp	 m02
+     92	    01E1  80 3E	0117r 03	 nn02:	 cmp	 dta,03h
+     93	    01E6  75 05	90 90			 jnz	 nn03
+     94	    01EA  E9 09F2			 jmp	 m03
+     95	    01ED  80 3E	0117r 04	 nn03:	 cmp	 dta,04h
+     96	    01F2  75 02				 jnz	 $+4
+     97	    01F4  E9 09F4			 jmp	 m04
+     98	    01F7  80 3E	0117r 05		 cmp	 dta,05h
+     99	    01FC  75 02				 jnz	 $+4
+    100	    01FE  E9 09F6			 jmp	 m05
+    101	    0201  80 3E	0117r 06		 cmp	 dta,06h
+    102	    0206  75 02				 jnz	 $+4
+    103	    0208  E9 09F8			 jmp	 m06
+    104	    020B  80 3E	0117r 07		 cmp	 dta,07h
+    105	    0210  75 02				 jnz	 $+4
+    106	    0212  E9 09FA			 jmp	 m07
+    107	    0215  80 3E	0117r 08		 cmp	 dta,08h
+    108	    021A  75 02				 jnz	 $+4
+    109	    021C  E9 09FC			 jmp	 m08
+    110	    021F  80 3E	0117r 09		 cmp	 dta,09h
+    111	    0224  75 02				 jnz	 $+4
+    112	    0226  E9 0A13			 jmp	 m09
+    113	    0229  80 3E	0117r 0A		 cmp	 dta,0ah
+    114	    022E  75 02				 jnz	 $+4
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 3
+prob_c11.ASM
+
+
+
+    115	    0230  E9 0A15			 jmp	 m0a
+    116	    0233  80 3E	0117r 0B		 cmp	 dta,0bh
+    117	    0238  75 02				 jnz	 $+4
+    118	    023A  E9 0A17			 jmp	 m0b
+    119	    023D  80 3E	0117r 0C		 cmp	 dta,0ch
+    120	    0242  75 02				 jnz	 $+4
+    121	    0244  E9 0A19			 jmp	 m0c
+    122	    0247  80 3E	0117r 0D		 cmp	 dta,0dh
+    123	    024C  75 02				 jnz	 $+4
+    124	    024E  E9 0A1B			 jmp	 m0d
+    125	    0251  80 3E	0117r 0E		 cmp	 dta,0eh
+    126	    0256  75 02				 jnz	 $+4
+    127	    0258  E9 0A1D			 jmp	 m0e
+    128	    025B  80 3E	0117r 0F		 cmp	 dta,0fh
+    129	    0260  75 02				 jnz	 $+4
+    130	    0262  E9 0A1F			 jmp	 m0f
+    131
+    132	    0265  80 3E	0117r 10	 a1:	 cmp	 dta,10h
+    133	    026A  75 02				 jnz	 $+4
+    134	    026C  E9 0A21			 jmp	 m10
+    135	    026F  80 3E	0117r 11		 cmp	 dta,11h
+    136	    0274  75 02				 jnz	 $+4
+    137	    0276  E9 0A23			 jmp	 m11
+    138	    0279  80 3E	0117r 12		 cmp	 dta,12h
+    139	    027E  75 02				 jnz	 $+4
+    140	    0280  E9 0A25			 jmp	 m12
+    141	    0283  80 3E	0117r 13		 cmp	 dta,13h
+    142	    0288  75 02				 jnz	 $+4
+    143	    028A  E9 0A36			 jmp	 m13
+    144	    028D  80 3E	0117r 14		 cmp	 dta,14h
+    145	    0292  75 02				 jnz	 $+4
+    146	    0294  E9 0A47			 jmp	 m14
+    147	    0297  80 3E	0117r 15		 cmp	 dta,15h
+    148	    029C  75 02				 jnz	 $+4
+    149	    029E  E9 0A52			 jmp	 m15
+    150	    02A1  80 3E	0117r 16		 cmp	 dta,16h
+    151	    02A6  75 02				 jnz	 $+4
+    152	    02A8  E9 0A5D			 jmp	 m16
+    153	    02AB  80 3E	0117r 17		 cmp	 dta,17h
+    154	    02B0  75 02				 jnz	 $+4
+    155	    02B2  E9 0A5F			 jmp	 m17
+    156	    02B5  80 3E	0117r 18		 cmp	 dta,18h
+    157	    02BA  75 02				 jnz	 $+4
+    158	    02BC  E9 0A61			 jmp	 m18
+    159	    02BF  80 3E	0117r 19		 cmp	 dta,19h
+    160	    02C4  75 02				 jnz	 $+4
+    161	    02C6  E9 0A5A			 jmp	 m19
+    162	    02C9  80 3E	0117r 1A		 cmp	 dta,1ah
+    163	    02CE  75 02				 jnz	 $+4
+    164	    02D0  E9 0A5C			 jmp	 m1a
+    165	    02D3  80 3E	0117r 1B		 cmp	 dta,1bh
+    166	    02D8  75 02				 jnz	 $+4
+    167	    02DA  E9 0A55			 jmp	 m1b
+    168	    02DD  80 3E	0117r 1C		 cmp	 dta,1ch
+    169	    02E2  75 02				 jnz	 $+4
+    170	    02E4  E9 0A57			 jmp	 m1c
+    171	    02E7  80 3E	0117r 1D		 cmp	 dta,1dh
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 4
+prob_c11.ASM
+
+
+
+    172	    02EC  75 02				 jnz	 $+4
+    173	    02EE  E9 0A62			 jmp	 m1d
+    174	    02F1  80 3E	0117r 1E		 cmp	 dta,1eh
+    175	    02F6  75 02				 jnz	 $+4
+    176	    02F8  E9 0A6D			 jmp	 m1e
+    177	    02FB  80 3E	0117r 1F		 cmp	 dta,1fh
+    178	    0300  75 02				 jnz	 $+4
+    179	    0302  E9 0A7E			 jmp	 m1f
+    180
+    181	    0305  80 3E	0117r 20	 a2:	 cmp	 dta,020h
+    182	    030A  75 02				 jnz	 $+4
+    183	    030C  E9 0A8F			 jmp	 m20
+    184	    030F  80 3E	0117r 21		 cmp	 dta,021h
+    185	    0314  75 02				 jnz	 $+4
+    186	    0316  E9 0A94			 jmp	 m21
+    187	    0319  80 3E	0117r 22		 cmp	 dta,022h
+    188	    031E  75 02				 jnz	 $+4
+    189	    0320  E9 0A99			 jmp	 m22
+    190	    0323  80 3E	0117r 23		 cmp	 dta,023h
+    191	    0328  75 02				 jnz	 $+4
+    192	    032A  E9 0A9E			 jmp	 m23
+    193	    032D  80 3E	0117r 24		 cmp	 dta,024h
+    194	    0332  75 02				 jnz	 $+4
+    195	    0334  E9 0AA3			 jmp	 m24
+    196	    0337  80 3E	0117r 25		 cmp	 dta,025h
+    197	    033C  75 02				 jnz	 $+4
+    198	    033E  E9 0AA8			 jmp	 m25
+    199	    0341  80 3E	0117r 26		 cmp	 dta,026h
+    200	    0346  75 02				 jnz	 $+4
+    201	    0348  E9 0AAD			 jmp	 m26
+    202	    034B  80 3E	0117r 27		 cmp	 dta,027h
+    203	    0350  75 02				 jnz	 $+4
+    204	    0352  E9 0AB2			 jmp	 m27
+    205	    0355  80 3E	0117r 28		 cmp	 dta,028h
+    206	    035A  75 02				 jnz	 $+4
+    207	    035C  E9 0AB7			 jmp	 m28
+    208	    035F  80 3E	0117r 29		 cmp	 dta,029h
+    209	    0364  75 02				 jnz	 $+4
+    210	    0366  E9 0ABC			 jmp	 m29
+    211	    0369  80 3E	0117r 2A		 cmp	 dta,02ah
+    212	    036E  75 02				 jnz	 $+4
+    213	    0370  E9 0AC1			 jmp	 m2a
+    214	    0373  80 3E	0117r 2B		 cmp	 dta,02bh
+    215	    0378  75 02				 jnz	 $+4
+    216	    037A  E9 0AC6			 jmp	 m2b
+    217	    037D  80 3E	0117r 2C		 cmp	 dta,02ch
+    218	    0382  75 02				 jnz	 $+4
+    219	    0384  E9 0ACB			 jmp	 m2c
+    220	    0387  80 3E	0117r 2D		 cmp	 dta,02dh
+    221	    038C  75 02				 jnz	 $+4
+    222	    038E  E9 0AD0			 jmp	 m2d
+    223	    0391  80 3E	0117r 2E		 cmp	 dta,02eh
+    224	    0396  75 02				 jnz	 $+4
+    225	    0398  E9 0AD5			 jmp	 m2e
+    226	    039B  80 3E	0117r 2F		 cmp	 dta,02fh
+    227	    03A0  75 02				 jnz	 $+4
+    228	    03A2  E9 0ADA			 jmp	 m2f
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 5
+prob_c11.ASM
+
+
+
+    229
+    230	    03A5  80 3E	0117r 30	 a3:	 cmp	 dta,030h
+    231	    03AA  75 02				 jnz	 $+4
+    232	    03AC  E9 0ADF			 jmp	 m30
+    233	    03AF  80 3E	0117r 31		 cmp	 dta,031h
+    234	    03B4  75 02				 jnz	 $+4
+    235	    03B6  E9 0AF6			 jmp	 m31
+    236	    03B9  80 3E	0117r 32		 cmp	 dta,032h
+    237	    03BE  75 02				 jnz	 $+4
+    238	    03C0  E9 0AF8			 jmp	 m32
+    239	    03C3  80 3E	0117r 33		 cmp	 dta,033h
+    240	    03C8  75 02				 jnz	 $+4
+    241	    03CA  E9 0AFA			 jmp	 m33
+    242	    03CD  80 3E	0117r 34		 cmp	 dta,034h
+    243	    03D2  75 02				 jnz	 $+4
+    244	    03D4  E9 0AFC			 jmp	 m34
+    245	    03D7  80 3E	0117r 35		 cmp	 dta,035h
+    246	    03DC  75 02				 jnz	 $+4
+    247	    03DE  E9 0AFE			 jmp	 m35
+    248	    03E1  80 3E	0117r 36		 cmp	 dta,036h
+    249	    03E6  75 02				 jnz	 $+4
+    250	    03E8  E9 0B15			 jmp	 m36
+    251	    03EB  80 3E	0117r 37		 cmp	 dta,037h
+    252	    03F0  75 02				 jnz	 $+4
+    253	    03F2  E9 0B17			 jmp	 m37
+    254	    03F5  80 3E	0117r 38		 cmp	 dta,038h
+    255	    03FA  75 02				 jnz	 $+4
+    256	    03FC  E9 0B19			 jmp	 m38
+    257	    03FF  80 3E	0117r 39		 cmp	 dta,039h
+    258	    0404  75 02				 jnz	 $+4
+    259	    0406  E9 0B30			 jmp	 m39
+    260	    0409  80 3E	0117r 3A		 cmp	 dta,03ah
+    261	    040E  75 02				 jnz	 $+4
+    262	    0410  E9 0B32			 jmp	 m3a
+    263	    0413  80 3E	0117r 3B		 cmp	 dta,03bh
+    264	    0418  75 02				 jnz	 $+4
+    265	    041A  E9 0B49			 jmp	 m3b
+    266	    041D  80 3E	0117r 3C		 cmp	 dta,03ch
+    267	    0422  75 02				 jnz	 $+4
+    268	    0424  E9 0B4B			 jmp	 m3c
+    269	    0427  80 3E	0117r 3D		 cmp	 dta,03dh
+    270	    042C  75 02				 jnz	 $+4
+    271	    042E  E9 0B62			 jmp	 m3d
+    272	    0431  80 3E	0117r 3E		 cmp	 dta,03eh
+    273	    0436  75 02				 jnz	 $+4
+    274	    0438  E9 0B64			 jmp	 m3e
+    275	    043B  80 3E	0117r 3F		 cmp	 dta,03fh
+    276	    0440  75 02				 jnz	 $+4
+    277	    0442  E9 0B66			 jmp	 m3f
+    278
+    279	    0445  80 3E	0117r 40	 a4:	 cmp	 dta,040h
+    280	    044A  75 02				 jnz	 $+4
+    281	    044C  E9 0B68			 jmp	 m40
+    282	    044F  80 3E	0117r 41		 cmp	 dta,041h
+    283	    0454  75 02				 jnz	 $+4
+    284	    0456  E9 0B6A			 jmp	 m41
+    285	    0459  80 3E	0117r 42		 cmp	 dta,042h
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 6
+prob_c11.ASM
+
+
+
+    286	    045E  75 02				 jnz	 $+4
+    287	    0460  E9 0B6C			 jmp	 m42
+    288	    0463  80 3E	0117r 43		 cmp	 dta,043h
+    289	    0468  75 02				 jnz	 $+4
+    290	    046A  E9 0B6E			 jmp	 m43
+    291	    046D  80 3E	0117r 44		 cmp	 dta,044h
+    292	    0472  75 02				 jnz	 $+4
+    293	    0474  E9 0B70			 jmp	 m44
+    294	    0477  80 3E	0117r 45		 cmp	 dta,045h
+    295	    047C  75 02				 jnz	 $+4
+    296	    047E  E9 0B72			 jmp	 m45
+    297	    0481  80 3E	0117r 46		 cmp	 dta,046h
+    298	    0486  75 02				 jnz	 $+4
+    299	    0488  E9 0B74			 jmp	 m46
+    300	    048B  80 3E	0117r 47		 cmp	 dta,047h
+    301	    0490  75 02				 jnz	 $+4
+    302	    0492  E9 0B76			 jmp	 m47
+    303	    0495  80 3E	0117r 48		 cmp	 dta,048h
+    304	    049A  75 02				 jnz	 $+4
+    305	    049C  E9 0B78			 jmp	 m48
+    306	    049F  80 3E	0117r 49		 cmp	 dta,049h
+    307	    04A4  75 02				 jnz	 $+4
+    308	    04A6  E9 0B7A			 jmp	 m49
+    309	    04A9  80 3E	0117r 4A		 cmp	 dta,04ah
+    310	    04AE  75 02				 jnz	 $+4
+    311	    04B0  E9 0B7C			 jmp	 m4a
+    312	    04B3  80 3E	0117r 4B		 cmp	 dta,04bh
+    313	    04B8  75 02				 jnz	 $+4
+    314	    04BA  E9 0B7E			 jmp	 m4b
+    315	    04BD  80 3E	0117r 4C		 cmp	 dta,04ch
+    316	    04C2  75 02				 jnz	 $+4
+    317	    04C4  E9 0B80			 jmp	 m4c
+    318	    04C7  80 3E	0117r 4D		 cmp	 dta,04dh
+    319	    04CC  75 02				 jnz	 $+4
+    320	    04CE  E9 0B82			 jmp	 m4d
+    321	    04D1  80 3E	0117r 4E		 cmp	 dta,04eh
+    322	    04D6  75 02				 jnz	 $+4
+    323	    04D8  E9 0B84			 jmp	 m4e
+    324	    04DB  80 3E	0117r 4F		 cmp	 dta,04fh
+    325	    04E0  75 02				 jnz	 $+4
+    326	    04E2  E9 0B86			 jmp	 m4f
+    327
+    328	    04E5  80 3E	0117r 50	 a5:	 cmp	 dta,050h
+    329	    04EA  75 02				 jnz	 $+4
+    330	    04EC  E9 0B88			 jmp	 m50
+    331	    04EF  80 3E	0117r 51		 cmp	 dta,051h
+    332	    04F4  75 02				 jnz	 $+4
+    333	    04F6  E9 0B8A			 jmp	 m51
+    334	    04F9  80 3E	0117r 52		 cmp	 dta,052h
+    335	    04FE  75 02				 jnz	 $+4
+    336	    0500  E9 0B8C			 jmp	 m52
+    337	    0503  80 3E	0117r 53		 cmp	 dta,053h
+    338	    0508  75 02				 jnz	 $+4
+    339	    050A  E9 0B8E			 jmp	 m53
+    340	    050D  80 3E	0117r 54		 cmp	 dta,054h
+    341	    0512  75 02				 jnz	 $+4
+    342	    0514  E9 0B90			 jmp	 m54
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 7
+prob_c11.ASM
+
+
+
+    343	    0517  80 3E	0117r 55		 cmp	 dta,055h
+    344	    051C  75 02				 jnz	 $+4
+    345	    051E  E9 0B92			 jmp	 m55
+    346	    0521  80 3E	0117r 56		 cmp	 dta,056h
+    347	    0526  75 02				 jnz	 $+4
+    348	    0528  E9 0B94			 jmp	 m56
+    349	    052B  80 3E	0117r 57		 cmp	 dta,057h
+    350	    0530  75 02				 jnz	 $+4
+    351	    0532  E9 0B96			 jmp	 m57
+    352	    0535  80 3E	0117r 58		 cmp	 dta,058h
+    353	    053A  75 02				 jnz	 $+4
+    354	    053C  E9 0B98			 jmp	 m58
+    355	    053F  80 3E	0117r 59		 cmp	 dta,059h
+    356	    0544  75 02				 jnz	 $+4
+    357	    0546  E9 0B9A			 jmp	 m59
+    358	    0549  80 3E	0117r 5A		 cmp	 dta,05ah
+    359	    054E  75 02				 jnz	 $+4
+    360	    0550  E9 0B9C			 jmp	 m5a
+    361	    0553  80 3E	0117r 5B		 cmp	 dta,05bh
+    362	    0558  75 02				 jnz	 $+4
+    363	    055A  E9 0B9E			 jmp	 m5b
+    364	    055D  80 3E	0117r 5C		 cmp	 dta,05ch
+    365	    0562  75 02				 jnz	 $+4
+    366	    0564  E9 0BA0			 jmp	 m5c
+    367	    0567  80 3E	0117r 5D		 cmp	 dta,05dh
+    368	    056C  75 02				 jnz	 $+4
+    369	    056E  E9 0BA2			 jmp	 m5d
+    370	    0571  80 3E	0117r 5E		 cmp	 dta,05eh
+    371	    0576  75 02				 jnz	 $+4
+    372	    0578  E9 0BA4			 jmp	 m5e
+    373	    057B  80 3E	0117r 5F		 cmp	 dta,05fh
+    374	    0580  75 02				 jnz	 $+4
+    375	    0582  E9 0BA6			 jmp	 m5f
+    376
+    377	    0585  80 3E	0117r 60	 a6:	 cmp	 dta,060h
+    378	    058A  75 02				 jnz	 $+4
+    379	    058C  E9 0BA8			 jmp	 m60
+    380	    058F  80 3E	0117r 61		 cmp	 dta,061h
+    381	    0594  75 02				 jnz	 $+4
+    382	    0596  E9 0BB0			 jmp	 m61
+    383	    0599  80 3E	0117r 62		 cmp	 dta,062h
+    384	    059E  75 02				 jnz	 $+4
+    385	    05A0  E9 0BB2			 jmp	 m62
+    386	    05A3  80 3E	0117r 63		 cmp	 dta,063h
+    387	    05A8  75 02				 jnz	 $+4
+    388	    05AA  E9 0BB4			 jmp	 m63
+    389	    05AD  80 3E	0117r 64		 cmp	 dta,064h
+    390	    05B2  75 02				 jnz	 $+4
+    391	    05B4  E9 0BBC			 jmp	 m64
+    392	    05B7  80 3E	0117r 65		 cmp	 dta,065h
+    393	    05BC  75 02				 jnz	 $+4
+    394	    05BE  E9 0BC4			 jmp	 m65
+    395	    05C1  80 3E	0117r 66		 cmp	 dta,066h
+    396	    05C6  75 02				 jnz	 $+4
+    397	    05C8  E9 0BC6			 jmp	 m66
+    398	    05CB  80 3E	0117r 67		 cmp	 dta,067h
+    399	    05D0  75 02				 jnz	 $+4
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 8
+prob_c11.ASM
+
+
+
+    400	    05D2  E9 0BCE			 jmp	 m67
+    401	    05D5  80 3E	0117r 68		 cmp	 dta,068h
+    402	    05DA  75 02				 jnz	 $+4
+    403	    05DC  E9 0BD6			 jmp	 m68
+    404	    05DF  80 3E	0117r 69		 cmp	 dta,069h
+    405	    05E4  75 02				 jnz	 $+4
+    406	    05E6  E9 0BDE			 jmp	 m69
+    407	    05E9  80 3E	0117r 6A		 cmp	 dta,06ah
+    408	    05EE  75 02				 jnz	 $+4
+    409	    05F0  E9 0BE6			 jmp	 m6a
+    410	    05F3  80 3E	0117r 6B		 cmp	 dta,06bh
+    411	    05F8  75 02				 jnz	 $+4
+    412	    05FA  E9 0BEE			 jmp	 m6b
+    413	    05FD  80 3E	0117r 6C		 cmp	 dta,06ch
+    414	    0602  75 02				 jnz	 $+4
+    415	    0604  E9 0BF0			 jmp	 m6c
+    416	    0607  80 3E	0117r 6D		 cmp	 dta,06dh
+    417	    060C  75 02				 jnz	 $+4
+    418	    060E  E9 0BF8			 jmp	 m6d
+    419	    0611  80 3E	0117r 6E		 cmp	 dta,06eh
+    420	    0616  75 02				 jnz	 $+4
+    421	    0618  E9 0C00			 jmp	 m6e
+    422	    061B  80 3E	0117r 6F		 cmp	 dta,06fh
+    423	    0620  75 02				 jnz	 $+4
+    424	    0622  E9 0C08			 jmp	 m6f
+    425
+    426	    0625  80 3E	0117r 70	 a7:	 cmp	 dta,070h
+    427	    062A  75 02				 jnz	 $+4
+    428	    062C  E9 0C10			 jmp	 m70
+    429	    062F  80 3E	0117r 71		 cmp	 dta,071h
+    430	    0634  75 02				 jnz	 $+4
+    431	    0636  E9 0C15			 jmp	 m71
+    432	    0639  80 3E	0117r 72		 cmp	 dta,072h
+    433	    063E  75 02				 jnz	 $+4
+    434	    0640  E9 0C17			 jmp	 m72
+    435	    0643  80 3E	0117r 73		 cmp	 dta,073h
+    436	    0648  75 02				 jnz	 $+4
+    437	    064A  E9 0C19			 jmp	 m73
+    438	    064D  80 3E	0117r 74		 cmp	 dta,074h
+    439	    0652  75 02				 jnz	 $+4
+    440	    0654  E9 0C1E			 jmp	 m74
+    441	    0657  80 3E	0117r 75		 cmp	 dta,075h
+    442	    065C  75 02				 jnz	 $+4
+    443	    065E  E9 0C23			 jmp	 m75
+    444	    0661  80 3E	0117r 76		 cmp	 dta,076h
+    445	    0666  75 02				 jnz	 $+4
+    446	    0668  E9 0C25			 jmp	 m76
+    447	    066B  80 3E	0117r 77		 cmp	 dta,077h
+    448	    0670  75 02				 jnz	 $+4
+    449	    0672  E9 0C2A			 jmp	 m77
+    450	    0675  80 3E	0117r 78		 cmp	 dta,078h
+    451	    067A  75 02				 jnz	 $+4
+    452	    067C  E9 0C2F			 jmp	 m78
+    453	    067F  80 3E	0117r 79		 cmp	 dta,079h
+    454	    0684  75 02				 jnz	 $+4
+    455	    0686  E9 0C34			 jmp	 m79
+    456	    0689  80 3E	0117r 7A		 cmp	 dta,07ah
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 9
+prob_c11.ASM
+
+
+
+    457	    068E  75 02				 jnz	 $+4
+    458	    0690  E9 0C39			 jmp	 m7a
+    459	    0693  80 3E	0117r 7B		 cmp	 dta,07bh
+    460	    0698  75 02				 jnz	 $+4
+    461	    069A  E9 0C3E			 jmp	 m7b
+    462	    069D  80 3E	0117r 7C		 cmp	 dta,07ch
+    463	    06A2  75 02				 jnz	 $+4
+    464	    06A4  E9 0C40			 jmp	 m7c
+    465	    06A7  80 3E	0117r 7D		 cmp	 dta,07dh
+    466	    06AC  75 02				 jnz	 $+4
+    467	    06AE  E9 0C45			 jmp	 m7d
+    468	    06B1  80 3E	0117r 7E		 cmp	 dta,07eh
+    469	    06B6  75 02				 jnz	 $+4
+    470	    06B8  E9 0C4A			 jmp	 m7e
+    471	    06BB  80 3E	0117r 7F		 cmp	 dta,07fh
+    472	    06C0  75 02				 jnz	 $+4
+    473	    06C2  E9 0C4F			 jmp	 m7f
+    474
+    475	    06C5  80 3E	0117r 80	 a8:	 cmp	 dta,080h
+    476	    06CA  75 02				 jnz	 $+4
+    477	    06CC  E9 0C54			 jmp	 m80
+    478	    06CF  80 3E	0117r 81		 cmp	 dta,081h
+    479	    06D4  75 02				 jnz	 $+4
+    480	    06D6  E9 0C59			 jmp	 m81
+    481	    06D9  80 3E	0117r 82		 cmp	 dta,082h
+    482	    06DE  75 02				 jnz	 $+4
+    483	    06E0  E9 0C5E			 jmp	 m82
+    484	    06E3  80 3E	0117r 83		 cmp	 dta,083h
+    485	    06E8  75 02				 jnz	 $+4
+    486	    06EA  E9 0C63			 jmp	 m83
+    487	    06ED  80 3E	0117r 84		 cmp	 dta,084h
+    488	    06F2  75 02				 jnz	 $+4
+    489	    06F4  E9 0C68			 jmp	 m84
+    490	    06F7  80 3E	0117r 85		 cmp	 dta,085h
+    491	    06FC  75 02				 jnz	 $+4
+    492	    06FE  E9 0C6D			 jmp	 m85
+    493	    0701  80 3E	0117r 86		 cmp	 dta,086h
+    494	    0706  75 02				 jnz	 $+4
+    495	    0708  E9 0C72			 jmp	 m86
+    496	    070B  80 3E	0117r 87		 cmp	 dta,087h
+    497	    0710  75 02				 jnz	 $+4
+    498	    0712  E9 0C77			 jmp	 m87
+    499	    0715  80 3E	0117r 88		 cmp	 dta,088h
+    500	    071A  75 02				 jnz	 $+4
+    501	    071C  E9 0C79			 jmp	 m88
+    502	    071F  80 3E	0117r 89		 cmp	 dta,089h
+    503	    0724  75 02				 jnz	 $+4
+    504	    0726  E9 0C7E			 jmp	 m89
+    505	    0729  80 3E	0117r 8A		 cmp	 dta,08ah
+    506	    072E  75 02				 jnz	 $+4
+    507	    0730  E9 0C83			 jmp	 m8a
+    508	    0733  80 3E	0117r 8B		 cmp	 dta,08bh
+    509	    0738  75 02				 jnz	 $+4
+    510	    073A  E9 0C88			 jmp	 m8b
+    511	    073D  80 3E	0117r 8C		 cmp	 dta,08ch
+    512	    0742  75 02				 jnz	 $+4
+    513	    0744  E9 0C8D			 jmp	 m8c
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 10
+prob_c11.ASM
+
+
+
+    514	    0747  80 3E	0117r 8D		 cmp	 dta,08dh
+    515	    074C  75 02				 jnz	 $+4
+    516	    074E  E9 0CAA			 jmp	 m8d
+    517	    0751  80 3E	0117r 8E		 cmp	 dta,08eh
+    518	    0756  75 02				 jnz	 $+4
+    519	    0758  E9 0CAF			 jmp	 m8e
+    520	    075B  80 3E	0117r 8F		 cmp	 dta,08fh
+    521	    0760  75 02				 jnz	 $+4
+    522	    0762  E9 0CB4			 jmp	 m8f
+    523
+    524	    0765  80 3E	0117r 90	 a9:	 cmp	 dta,090h
+    525	    076A  75 02				 jnz	 $+4
+    526	    076C  E9 0CCB			 jmp	 m90
+    527	    076F  80 3E	0117r 91		 cmp	 dta,091h
+    528	    0774  75 02				 jnz	 $+4
+    529	    0776  E9 0CD0			 jmp	 m91
+    530	    0779  80 3E	0117r 92		 cmp	 dta,092h
+    531	    077E  75 02				 jnz	 $+4
+    532	    0780  E9 0CD5			 jmp	 m92
+    533	    0783  80 3E	0117r 93		 cmp	 dta,093h
+    534	    0788  75 02				 jnz	 $+4
+    535	    078A  E9 0CDA			 jmp	 m93
+    536	    078D  80 3E	0117r 94		 cmp	 dta,094h
+    537	    0792  75 02				 jnz	 $+4
+    538	    0794  E9 0CDF			 jmp	 m94
+    539	    0797  80 3E	0117r 95		 cmp	 dta,095h
+    540	    079C  75 02				 jnz	 $+4
+    541	    079E  E9 0CE4			 jmp	 m95
+    542	    07A1  80 3E	0117r 96		 cmp	 dta,096h
+    543	    07A6  75 02				 jnz	 $+4
+    544	    07A8  E9 0CE9			 jmp	 m96
+    545	    07AB  80 3E	0117r 97		 cmp	 dta,097h
+    546	    07B0  75 02				 jnz	 $+4
+    547	    07B2  E9 0CEE			 jmp	 m97
+    548	    07B5  80 3E	0117r 98		 cmp	 dta,098h
+    549	    07BA  75 02				 jnz	 $+4
+    550	    07BC  E9 0CF3			 jmp	 m98
+    551	    07BF  80 3E	0117r 99		 cmp	 dta,099h
+    552	    07C4  75 02				 jnz	 $+4
+    553	    07C6  E9 0CF8			 jmp	 m99
+    554	    07C9  80 3E	0117r 9A		 cmp	 dta,09ah
+    555	    07CE  75 02				 jnz	 $+4
+    556	    07D0  E9 0CFD			 jmp	 m9a
+    557	    07D3  80 3E	0117r 9B		 cmp	 dta,09bh
+    558	    07D8  75 02				 jnz	 $+4
+    559	    07DA  E9 0D02			 jmp	 m9b
+    560	    07DD  80 3E	0117r 9C		 cmp	 dta,09ch
+    561	    07E2  75 02				 jnz	 $+4
+    562	    07E4  E9 0D07			 jmp	 m9c
+    563	    07E7  80 3E	0117r 9D		 cmp	 dta,09dh
+    564	    07EC  75 02				 jnz	 $+4
+    565	    07EE  E9 0D24			 jmp	 m9d
+    566	    07F1  80 3E	0117r 9E		 cmp	 dta,09eh
+    567	    07F6  75 02				 jnz	 $+4
+    568	    07F8  E9 0D29			 jmp	 m9e
+    569	    07FB  80 3E	0117r 9F		 cmp	 dta,09fh
+    570	    0800  75 02				 jnz	 $+4
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 11
+prob_c11.ASM
+
+
+
+    571	    0802  E9 0D2E			 jmp	 m9f
+    572
+    573	    0805  80 3E	0117r A0	 aa:	 cmp	 dta,0A0h
+    574	    080A  75 02				 jnz	 $+4
+    575	    080C  E9 0D33			 jmp	 mA0
+    576	    080F  80 3E	0117r A1		 cmp	 dta,0A1h
+    577	    0814  75 02				 jnz	 $+4
+    578	    0816  E9 0D3B			 jmp	 mA1
+    579	    0819  80 3E	0117r A2		 cmp	 dta,0A2h
+    580	    081E  75 02				 jnz	 $+4
+    581	    0820  E9 0D43			 jmp	 mA2
+    582	    0823  80 3E	0117r A3		 cmp	 dta,0A3h
+    583	    0828  75 02				 jnz	 $+4
+    584	    082A  E9 0D4B			 jmp	 mA3
+    585	    082D  80 3E	0117r A4		 cmp	 dta,0A4h
+    586	    0832  75 02				 jnz	 $+4
+    587	    0834  E9 0D53			 jmp	 mA4
+    588	    0837  80 3E	0117r A5		 cmp	 dta,0A5h
+    589	    083C  75 02				 jnz	 $+4
+    590	    083E  E9 0D5B			 jmp	 mA5
+    591	    0841  80 3E	0117r A6		 cmp	 dta,0A6h
+    592	    0846  75 02				 jnz	 $+4
+    593	    0848  E9 0D63			 jmp	 mA6
+    594	    084B  80 3E	0117r A7		 cmp	 dta,0A7h
+    595	    0850  75 02				 jnz	 $+4
+    596	    0852  E9 0D6B			 jmp	 mA7
+    597	    0855  80 3E	0117r A8		 cmp	 dta,0A8h
+    598	    085A  75 02				 jnz	 $+4
+    599	    085C  E9 0D73			 jmp	 mA8
+    600	    085F  80 3E	0117r A9		 cmp	 dta,0A9h
+    601	    0864  75 02				 jnz	 $+4
+    602	    0866  E9 0D7B			 jmp	 mA9
+    603	    0869  80 3E	0117r AA		 cmp	 dta,0Aah
+    604	    086E  75 02				 jnz	 $+4
+    605	    0870  E9 0D83			 jmp	 mAa
+    606	    0873  80 3E	0117r AB		 cmp	 dta,0Abh
+    607	    0878  75 02				 jnz	 $+4
+    608	    087A  E9 0D8B			 jmp	 mab
+    609	    087D  80 3E	0117r AC		 cmp	 dta,0Ach
+    610	    0882  75 02				 jnz	 $+4
+    611	    0884  E9 0D93			 jmp	 mac
+    612	    0887  80 3E	0117r AD		 cmp	 dta,0Adh
+    613	    088C  75 02				 jnz	 $+4
+    614	    088E  E9 0DB6			 jmp	 mad
+    615	    0891  80 3E	0117r AE		 cmp	 dta,0Aeh
+    616	    0896  75 02				 jnz	 $+4
+    617	    0898  E9 0DBE			 jmp	 mae
+    618	    089B  80 3E	0117r AF		 cmp	 dta,0Afh
+    619	    08A0  75 02				 jnz	 $+4
+    620	    08A2  E9 0DC6			 jmp	 maf
+    621
+    622	    08A5  80 3E	0117r B0	 ab:	 cmp	 dta,0b0h
+    623	    08AA  75 02				 jnz	 $+4
+    624	    08AC  E9 0DCE			 jmp	 mb0
+    625	    08AF  80 3E	0117r B1		 cmp	 dta,0b1h
+    626	    08B4  75 02				 jnz	 $+4
+    627	    08B6  E9 0DD3			 jmp	 mb1
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 12
+prob_c11.ASM
+
+
+
+    628	    08B9  80 3E	0117r B2		 cmp	 dta,0b2h
+    629	    08BE  75 02				 jnz	 $+4
+    630	    08C0  E9 0DD8			 jmp	 mb2
+    631	    08C3  80 3E	0117r B3		 cmp	 dta,0b3h
+    632	    08C8  75 02				 jnz	 $+4
+    633	    08CA  E9 0DDD			 jmp	 mb3
+    634	    08CD  80 3E	0117r B4		 cmp	 dta,0b4h
+    635	    08D2  75 02				 jnz	 $+4
+    636	    08D4  E9 0DE2			 jmp	 mb4
+    637	    08D7  80 3E	0117r B5		 cmp	 dta,0b5h
+    638	    08DC  75 02				 jnz	 $+4
+    639	    08DE  E9 0DE7			 jmp	 mb5
+    640	    08E1  80 3E	0117r B6		 cmp	 dta,0b6h
+    641	    08E6  75 02				 jnz	 $+4
+    642	    08E8  E9 0DEC			 jmp	 mb6
+    643	    08EB  80 3E	0117r B7		 cmp	 dta,0b7h
+    644	    08F0  75 02				 jnz	 $+4
+    645	    08F2  E9 0DF1			 jmp	 mb7
+    646	    08F5  80 3E	0117r B8		 cmp	 dta,0b8h
+    647	    08FA  75 02				 jnz	 $+4
+    648	    08FC  E9 0DF6			 jmp	 mb8
+    649	    08FF  80 3E	0117r B9		 cmp	 dta,0b9h
+    650	    0904  75 02				 jnz	 $+4
+    651	    0906  E9 0DFB			 jmp	 mb9
+    652	    0909  80 3E	0117r BA		 cmp	 dta,0bah
+    653	    090E  75 02				 jnz	 $+4
+    654	    0910  E9 0E00			 jmp	 mba
+    655	    0913  80 3E	0117r BB		 cmp	 dta,0bbh
+    656	    0918  75 02				 jnz	 $+4
+    657	    091A  E9 0E05			 jmp	 mbb
+    658	    091D  80 3E	0117r BC		 cmp	 dta,0bch
+    659	    0922  75 02				 jnz	 $+4
+    660	    0924  E9 0E0A			 jmp	 mbc
+    661	    0927  80 3E	0117r BD		 cmp	 dta,0bdh
+    662	    092C  75 02				 jnz	 $+4
+    663	    092E  E9 0E27			 jmp	 mbd
+    664	    0931  80 3E	0117r BE		 cmp	 dta,0beh
+    665	    0936  75 02				 jnz	 $+4
+    666	    0938  E9 0E2C			 jmp	 mbe
+    667	    093B  80 3E	0117r BF		 cmp	 dta,0bfh
+    668	    0940  75 02				 jnz	 $+4
+    669	    0942  E9 0E31			 jmp	 mbf
+    670
+    671	    0945  80 3E	0117r C0	 ac:	 cmp	 dta,0c0h
+    672	    094A  75 02				 jnz	 $+4
+    673	    094C  E9 0E36			 jmp	 mc0
+    674	    094F  80 3E	0117r C1		 cmp	 dta,0c1h
+    675	    0954  75 02				 jnz	 $+4
+    676	    0956  E9 0E3B			 jmp	 mc1
+    677	    0959  80 3E	0117r C2		 cmp	 dta,0c2h
+    678	    095E  75 02				 jnz	 $+4
+    679	    0960  E9 0E40			 jmp	 mc2
+    680	    0963  80 3E	0117r C3		 cmp	 dta,0c3h
+    681	    0968  75 02				 jnz	 $+4
+    682	    096A  E9 0E45			 jmp	 mc3
+    683	    096D  80 3E	0117r C4		 cmp	 dta,0c4h
+    684	    0972  75 02				 jnz	 $+4
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 13
+prob_c11.ASM
+
+
+
+    685	    0974  E9 0E4A			 jmp	 mc4
+    686	    0977  80 3E	0117r C5		 cmp	 dta,0c5h
+    687	    097C  75 02				 jnz	 $+4
+    688	    097E  E9 0E4F			 jmp	 mc5
+    689	    0981  80 3E	0117r C6		 cmp	 dta,0c6h
+    690	    0986  75 02				 jnz	 $+4
+    691	    0988  E9 0E54			 jmp	 mc6
+    692	    098B  80 3E	0117r C7		 cmp	 dta,0c7h
+    693	    0990  75 02				 jnz	 $+4
+    694	    0992  E9 0E59			 jmp	 mc7
+    695	    0995  80 3E	0117r C8		 cmp	 dta,0c8h
+    696	    099A  75 02				 jnz	 $+4
+    697	    099C  E9 0E5B			 jmp	 mc8
+    698	    099F  80 3E	0117r C9		 cmp	 dta,0c9h
+    699	    09A4  75 02				 jnz	 $+4
+    700	    09A6  E9 0E60			 jmp	 mc9
+    701	    09A9  80 3E	0117r CA		 cmp	 dta,0cah
+    702	    09AE  75 02				 jnz	 $+4
+    703	    09B0  E9 0E65			 jmp	 mca
+    704	    09B3  80 3E	0117r CB		 cmp	 dta,0cbh
+    705	    09B8  75 02				 jnz	 $+4
+    706	    09BA  E9 0E6A			 jmp	 mcb
+    707	    09BD  80 3E	0117r CC		 cmp	 dta,0cch
+    708	    09C2  75 02				 jnz	 $+4
+    709	    09C4  E9 0E6F			 jmp	 mcc
+    710	    09C7  80 3E	0117r CD		 cmp	 dta,0cdh
+    711	    09CC  75 02				 jnz	 $+4
+    712	    09CE  E9 0E74			 jmp	 mcd
+    713	    09D1  80 3E	0117r CE		 cmp	 dta,0ceh
+    714	    09D6  75 02				 jnz	 $+4
+    715	    09D8  E9 0E79			 jmp	 mce
+    716	    09DB  80 3E	0117r CF		 cmp	 dta,0cfh
+    717	    09E0  75 02				 jnz	 $+4
+    718	    09E2  E9 0E96			 jmp	 mcf
+    719
+    720	    09E5  80 3E	0117r D0	 ad:	 cmp	 dta,0d0h
+    721	    09EA  75 02				 jnz	 $+4
+    722	    09EC  E9 0E98			 jmp	 md0
+    723	    09EF  80 3E	0117r D1		 cmp	 dta,0d1h
+    724	    09F4  75 02				 jnz	 $+4
+    725	    09F6  E9 0E9D			 jmp	 md1
+    726	    09F9  80 3E	0117r D2		 cmp	 dta,0d2h
+    727	    09FE  75 02				 jnz	 $+4
+    728	    0A00  E9 0EA2			 jmp	 md2
+    729	    0A03  80 3E	0117r D3		 cmp	 dta,0d3h
+    730	    0A08  75 02				 jnz	 $+4
+    731	    0A0A  E9 0EA7			 jmp	 md3
+    732	    0A0D  80 3E	0117r D4		 cmp	 dta,0d4h
+    733	    0A12  75 02				 jnz	 $+4
+    734	    0A14  E9 0EAC			 jmp	 md4
+    735	    0A17  80 3E	0117r D5		 cmp	 dta,0d5h
+    736	    0A1C  75 02				 jnz	 $+4
+    737	    0A1E  E9 0EB1			 jmp	 md5
+    738	    0A21  80 3E	0117r D6		 cmp	 dta,0d6h
+    739	    0A26  75 02				 jnz	 $+4
+    740	    0A28  E9 0EB6			 jmp	 md6
+    741	    0A2B  80 3E	0117r D7		 cmp	 dta,0d7h
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 14
+prob_c11.ASM
+
+
+
+    742	    0A30  75 02				 jnz	 $+4
+    743	    0A32  E9 0EBB			 jmp	 md7
+    744	    0A35  80 3E	0117r D8		 cmp	 dta,0d8h
+    745	    0A3A  75 02				 jnz	 $+4
+    746	    0A3C  E9 0EC0			 jmp	 md8
+    747	    0A3F  80 3E	0117r D9		 cmp	 dta,0d9h
+    748	    0A44  75 02				 jnz	 $+4
+    749	    0A46  E9 0EC5			 jmp	 md9
+    750	    0A49  80 3E	0117r DA		 cmp	 dta,0dah
+    751	    0A4E  75 02				 jnz	 $+4
+    752	    0A50  E9 0ECA			 jmp	 mda
+    753	    0A53  80 3E	0117r DB		 cmp	 dta,0dbh
+    754	    0A58  75 02				 jnz	 $+4
+    755	    0A5A  E9 0ECF			 jmp	 mdb
+    756	    0A5D  80 3E	0117r DC		 cmp	 dta,0dch
+    757	    0A62  75 02				 jnz	 $+4
+    758	    0A64  E9 0ED4			 jmp	 mdc
+    759	    0A67  80 3E	0117r DD		 cmp	 dta,0ddh
+    760	    0A6C  75 02				 jnz	 $+4
+    761	    0A6E  E9 0ED9			 jmp	 mdd
+    762	    0A71  80 3E	0117r DE		 cmp	 dta,0deh
+    763	    0A76  75 02				 jnz	 $+4
+    764	    0A78  E9 0EDE			 jmp	 mde
+    765	    0A7B  80 3E	0117r DF		 cmp	 dta,0dfh
+    766	    0A80  75 02				 jnz	 $+4
+    767	    0A82  E9 0EFB			 jmp	 mdf
+    768
+    769	    0A85  80 3E	0117r E0	 ae:	 cmp	 dta,0e0h
+    770	    0A8A  75 02				 jnz	 $+4
+    771	    0A8C  E9 0F18			 jmp	 me0
+    772	    0A8F  80 3E	0117r E1		 cmp	 dta,0e1h
+    773	    0A94  75 02				 jnz	 $+4
+    774	    0A96  E9 0F20			 jmp	 me1
+    775	    0A99  80 3E	0117r E2		 cmp	 dta,0e2h
+    776	    0A9E  75 02				 jnz	 $+4
+    777	    0AA0  E9 0F28			 jmp	 me2
+    778	    0AA3  80 3E	0117r E3		 cmp	 dta,0e3h
+    779	    0AA8  75 02				 jnz	 $+4
+    780	    0AAA  E9 0F30			 jmp	 me3
+    781	    0AAD  80 3E	0117r E4		 cmp	 dta,0e4h
+    782	    0AB2  75 02				 jnz	 $+4
+    783	    0AB4  E9 0F38			 jmp	 me4
+    784	    0AB7  80 3E	0117r E5		 cmp	 dta,0e5h
+    785	    0ABC  75 02				 jnz	 $+4
+    786	    0ABE  E9 0F40			 jmp	 me5
+    787	    0AC1  80 3E	0117r E6		 cmp	 dta,0e6h
+    788	    0AC6  75 02				 jnz	 $+4
+    789	    0AC8  E9 0F48			 jmp	 me6
+    790	    0ACB  80 3E	0117r E7		 cmp	 dta,0e7h
+    791	    0AD0  75 02				 jnz	 $+4
+    792	    0AD2  E9 0F50			 jmp	 me7
+    793	    0AD5  80 3E	0117r E8		 cmp	 dta,0e8h
+    794	    0ADA  75 02				 jnz	 $+4
+    795	    0ADC  E9 0F58			 jmp	 me8
+    796	    0ADF  80 3E	0117r E9		 cmp	 dta,0e9h
+    797	    0AE4  75 02				 jnz	 $+4
+    798	    0AE6  E9 0F60			 jmp	 me9
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 15
+prob_c11.ASM
+
+
+
+    799	    0AE9  80 3E	0117r EA		 cmp	 dta,0eah
+    800	    0AEE  75 02				 jnz	 $+4
+    801	    0AF0  E9 0F68			 jmp	 mea
+    802	    0AF3  80 3E	0117r EB		 cmp	 dta,0ebh
+    803	    0AF8  75 02				 jnz	 $+4
+    804	    0AFA  E9 0F70			 jmp	 meb
+    805	    0AFD  80 3E	0117r EC		 cmp	 dta,0ech
+    806	    0B02  75 02				 jnz	 $+4
+    807	    0B04  E9 0F78			 jmp	 mec
+    808	    0B07  80 3E	0117r ED		 cmp	 dta,0edh
+    809	    0B0C  75 02				 jnz	 $+4
+    810	    0B0E  E9 0F80			 jmp	 med
+    811	    0B11  80 3E	0117r EE		 cmp	 dta,0eeh
+    812	    0B16  75 02				 jnz	 $+4
+    813	    0B18  E9 0F88			 jmp	 mee
+    814	    0B1B  80 3E	0117r EF		 cmp	 dta,0efh
+    815	    0B20  75 02				 jnz	 $+4
+    816	    0B22  E9 0FAB			 jmp	 mef
+    817
+    818	    0B25  80 3E	0117r F0	 af:	 cmp	 dta,0f0h
+    819	    0B2A  75 02				 jnz	 $+4
+    820	    0B2C  E9 0FCE			 jmp	 mf0
+    821	    0B2F  80 3E	0117r F1		 cmp	 dta,0f1h
+    822	    0B34  75 02				 jnz	 $+4
+    823	    0B36  E9 0FD6			 jmp	 mf1
+    824	    0B39  80 3E	0117r F2		 cmp	 dta,0f2h
+    825	    0B3E  75 02				 jnz	 $+4
+    826	    0B40  E9 0FDE			 jmp	 mf2
+    827	    0B43  80 3E	0117r F3		 cmp	 dta,0f3h
+    828	    0B48  75 02				 jnz	 $+4
+    829	    0B4A  E9 0FE6			 jmp	 mf3
+    830	    0B4D  80 3E	0117r F4		 cmp	 dta,0f4h
+    831	    0B52  75 02				 jnz	 $+4
+    832	    0B54  E9 0FEE			 jmp	 mf4
+    833	    0B57  80 3E	0117r F5		 cmp	 dta,0f5h
+    834	    0B5C  75 02				 jnz	 $+4
+    835	    0B5E  E9 0FF6			 jmp	 mf5
+    836	    0B61  80 3E	0117r F6		 cmp	 dta,0f6h
+    837	    0B66  75 02				 jnz	 $+4
+    838	    0B68  E9 0FFE			 jmp	 mf6
+    839	    0B6B  80 3E	0117r F7		 cmp	 dta,0f7h
+    840	    0B70  75 02				 jnz	 $+4
+    841	    0B72  E9 1006			 jmp	 mf7
+    842	    0B75  80 3E	0117r F8		 cmp	 dta,0f8h
+    843	    0B7A  75 02				 jnz	 $+4
+    844	    0B7C  E9 100E			 jmp	 mf8
+    845	    0B7F  80 3E	0117r F9		 cmp	 dta,0f9h
+    846	    0B84  75 02				 jnz	 $+4
+    847	    0B86  E9 1016			 jmp	 mf9
+    848	    0B89  80 3E	0117r FA		 cmp	 dta,0fah
+    849	    0B8E  75 02				 jnz	 $+4
+    850	    0B90  E9 101E			 jmp	 mfa
+    851	    0B93  80 3E	0117r FB		 cmp	 dta,0fbh
+    852	    0B98  75 02				 jnz	 $+4
+    853	    0B9A  E9 1026			 jmp	 mfb
+    854	    0B9D  80 3E	0117r FC		 cmp	 dta,0fch
+    855	    0BA2  75 02				 jnz	 $+4
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 16
+prob_c11.ASM
+
+
+
+    856	    0BA4  E9 102E			 jmp	 mfc
+    857	    0BA7  80 3E	0117r FD		 cmp	 dta,0fdh
+    858	    0BAC  75 02				 jnz	 $+4
+    859	    0BAE  E9 1036			 jmp	 mfd
+    860	    0BB1  80 3E	0117r FE		 cmp	 dta,0feh
+    861	    0BB6  75 02				 jnz	 $+4
+    862	    0BB8  E9 103E			 jmp	 mfe
+    863					 ;	 cmp	 dta,0ffh
+    864					 ;	 jnz	 $+4
+    865					 ;	 jmp	 mff
+    866					 ;#1
+    867	    0BBB  BA 1DFFr		 m00:	 lea	 dx,c00	 ;test
+    868	    0BBE  E8 1134			 call	 rec5
+    869	    0BC1  E8 1179			 call	 nextb
+    870	    0BC4  E9 108C			 jmp	 enco
+    871	    0BC7  BA 1E04r		 m01:	 lea	 dx,c01	 ;nop
+    872	    0BCA  E8 1128			 call	 rec5
+    873	    0BCD  E8 116D			 call	 nextb
+    874	    0BD0  E9 1080			 jmp	 enco
+    875	    0BD3  BA 1E09r		 m02:	 lea	 dx,c02	 ;idiv
+    876	    0BD6  E8 111C			 call	 rec5
+    877	    0BD9  E8 1161			 call	 nextb
+    878	    0BDC  E9 1074			 jmp	 enco
+    879	    0BDF  BA 1E0Er		 m03:	 lea	 dx,c03	 ;fdiv
+    880	    0BE2  E8 1110			 call	 rec5
+    881	    0BE5  E8 1155			 call	 nextb
+    882	    0BE8  E9 1068			 jmp	 enco
+    883	    0BEB  BA 1E13r		 m04:	 lea	 dx,c04	 ;lsrd
+    884	    0BEE  E8 1104			 call	 rec5
+    885	    0BF1  E8 1149			 call	 nextb
+    886	    0BF4  E9 105C			 jmp	 enco
+    887	    0BF7  BA 1E18r		 m05:	 lea	 dx,c05	 ;lsld
+    888	    0BFA  E8 10F8			 call	 rec5
+    889	    0BFD  E8 113D			 call	 nextb
+    890	    0C00  E9 1050			 jmp	 enco
+    891	    0C03  BA 1E1Dr		 m06:	 lea	 dx,c06	 ;tap
+    892	    0C06  E8 10EC			 call	 rec5
+    893	    0C09  E8 1131			 call	 nextb
+    894	    0C0C  E9 1044			 jmp	 enco
+    895	    0C0F  BA 1E22r		 m07:	 lea	 dx,c07	 ;tpa
+    896	    0C12  E8 10E0			 call	 rec5
+    897	    0C15  E8 1125			 call	 nextb
+    898	    0C18  E9 1038			 jmp	 enco
+    899	    0C1B  80 3E	0126r 01	 m08:	 cmp	 shift2,1
+    900	    0C20  74 0E	90 90			 jz	 m081
+    901	    0C24  BA 1E27r			 lea	 dx,c08	 ;inx(y)
+    902	    0C27  E8 10CB			 call	 rec5
+    903	    0C2A  E8 1110			 call	 nextb
+    904	    0C2D  E9 1023			 jmp	 enco
+    905	    0C30  BA 1E2Cr		 m081:	 lea	 dx,c081 ;iny
+    906	    0C33  E8 10BF			 call	 rec5
+    907	    0C36  E8 1104			 call	 nextb
+    908	    0C39  E9 1017			 jmp	 enco
+    909
+    910	    0C3C  BA 1E31r		 m09:	 lea	 dx,c09	 ;dex
+    911	    0C3F  E8 10B3			 call	 rec5
+    912	    0C42  E8 10F8			 call	 nextb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 17
+prob_c11.ASM
+
+
+
+    913	    0C45  E9 100B			 jmp	 enco
+    914	    0C48  BA 1E36r		 m0a:	 lea	 dx,c0a	 ;clv
+    915	    0C4B  E8 10A7			 call	 rec5
+    916	    0C4E  E8 10EC			 call	 nextb
+    917	    0C51  E9 0FFF			 jmp	 enco
+    918	    0C54  BA 1E3Br		 m0b:	 lea	 dx,c0b	 ;sev
+    919	    0C57  E8 109B			 call	 rec5
+    920	    0C5A  E8 10E0			 call	 nextb
+    921	    0C5D  E9 0FF3			 jmp	 enco
+    922	    0C60  BA 1E40r		 m0c:	 lea	 dx,c0c	 ;clc
+    923	    0C63  E8 108F			 call	 rec5
+    924	    0C66  E8 10D4			 call	 nextb
+    925	    0C69  E9 0FE7			 jmp	 enco
+    926	    0C6C  BA 1E45r		 m0d:	 lea	 dx,c0d	 ;sec
+    927	    0C6F  E8 1083			 call	 rec5
+    928	    0C72  E8 10C8			 call	 nextb
+    929	    0C75  E9 0FDB			 jmp	 enco
+    930	    0C78  BA 1E4Ar		 m0e:	 lea	 dx,c0e	 ;cli
+    931	    0C7B  E8 1077			 call	 rec5
+    932	    0C7E  E8 10BC			 call	 nextb
+    933	    0C81  E9 0FCF			 jmp	 enco
+    934	    0C84  BA 1E4Fr		 m0f:	 lea	 dx,c0f	 ;sei
+    935	    0C87  E8 106B			 call	 rec5
+    936	    0C8A  E8 10B0			 call	 nextb
+    937	    0C8D  E9 0FC3			 jmp	 enco
+    938	    0C90  BA 1E54r		 m10:	 lea	 dx,c10	 ;sba
+    939	    0C93  E8 105F			 call	 rec5
+    940	    0C96  E8 10A4			 call	 nextb
+    941	    0C99  E9 0FB7			 jmp	 enco
+    942	    0C9C  BA 1E59r		 m11:	 lea	 dx,c11	 ;cba
+    943	    0C9F  E8 1053			 call	 rec5
+    944	    0CA2  E8 1098			 call	 nextb
+    945	    0CA5  E9 0FAB			 jmp	 enco
+    946	    0CA8  BA 1E5Er		 m12:	 lea	 dx,c12	 ;brset
+    947	    0CAB  E8 1047			 call	 rec5
+    948	    0CAE  E8 10D7			 call	 p8a
+    949	    0CB1  E8 104D			 call	 prob
+    950	    0CB4  E8 10C9			 call	 p8d
+    951	    0CB7  E8 1047			 call	 prob
+    952	    0CBA  E8 10E4			 call	 p8s
+    953	    0CBD  E8 107D			 call	 nextb
+    954	    0CC0  E9 0F90			 jmp	 enco
+    955	    0CC3  BA 1E63r		 m13:	 lea	 dx,c13	 ;brclr
+    956	    0CC6  E8 102C			 call	 rec5
+    957	    0CC9  E8 10BC			 call	 p8a
+    958	    0CCC  E8 1032			 call	 prob
+    959	    0CCF  E8 10AE			 call	 p8d
+    960	    0CD2  E8 102C			 call	 prob
+    961	    0CD5  E8 10C9			 call	 p8s
+    962	    0CD8  E8 1062			 call	 nextb
+    963	    0CDB  E9 0F75			 jmp	 enco
+    964	    0CDE  BA 1E68r		 m14:	 lea	 dx,c14	 ;bset
+    965	    0CE1  E8 1011			 call	 rec5
+    966	    0CE4  E8 10A1			 call	 p8a
+    967	    0CE7  E8 1017			 call	 prob
+    968	    0CEA  E8 1093			 call	 p8d
+    969	    0CED  E8 104D			 call	 nextb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 18
+prob_c11.ASM
+
+
+
+    970	    0CF0  E9 0F60			 jmp	 enco
+    971	    0CF3  BA 1E6Dr		 m15:	 lea	 dx,c15	 ;bclr
+    972	    0CF6  E8 0FFC			 call	 rec5
+    973	    0CF9  E8 108C			 call	 p8a
+    974	    0CFC  E8 1002			 call	 prob
+    975	    0CFF  E8 107E			 call	 p8d
+    976	    0D02  E8 1038			 call	 nextb
+    977	    0D05  E9 0F4B			 jmp	 enco
+    978	    0D08  BA 1E72r		 m16:	 lea	 dx,c16	 ;tab
+    979	    0D0B  E8 0FE7			 call	 rec5
+    980	    0D0E  E8 102C			 call	 nextb
+    981	    0D11  E9 0F3F			 jmp	 enco
+    982	    0D14  BA 1E77r		 m17:	 lea	 dx,c17	 ;tba
+    983	    0D17  E8 0FDB			 call	 rec5
+    984	    0D1A  E8 1020			 call	 nextb
+    985	    0D1D  E9 0F33			 jmp	 enco
+    986	    0D20  E9 0F4D		 m18:	 jmp	 paje2
+    987	    0D23  BA 1E81r		 m19:	 lea	 dx,c19	 ;daa
+    988	    0D26  E8 0FCC			 call	 rec5
+    989	    0D29  E8 1011			 call	 nextb
+    990	    0D2C  E9 0F24			 jmp	 enco
+    991	    0D2F  E9 0F52		 m1a:	 jmp	 paje3
+    992	    0D32  BA 1E8Br		 m1b:	 lea	 dx,c1b	 ;aba
+    993	    0D35  E8 0FBD			 call	 rec5
+    994	    0D38  E8 1002			 call	 nextb
+    995	    0D3B  E9 0F15			 jmp	 enco
+    996	    0D3E  BA 1E90r		 m1c:	 lea	 dx,c1c	 ;bset
+    997	    0D41  E8 0FB1			 call	 rec5
+    998	    0D44  E8 1041			 call	 p8a
+    999	    0D47  E8 0FC0			 call	 xprob	 ;(--),x
+   1000	    0D4A  E8 1033			 call	 p8d
+   1001	    0D4D  E8 0FED			 call	 nextb
+   1002	    0D50  E9 0F00			 jmp	 enco
+   1003	    0D53  BA 1E95r		 m1d:	 lea	 dx,c1d	 ;bclr
+   1004	    0D56  E8 0F9C			 call	 rec5
+   1005	    0D59  E8 102C			 call	 p8a
+   1006	    0D5C  E8 0FAB			 call	 xprob	 ;(--),x
+   1007	    0D5F  E8 101E			 call	 p8d
+   1008	    0D62  E8 0FD8			 call	 nextb
+   1009	    0D65  E9 0EEB			 jmp	 enco
+   1010	    0D68  BA 1E9Ar		 m1e:	 lea	 dx,c1e	 ;brset
+   1011	    0D6B  E8 0F87			 call	 rec5
+   1012	    0D6E  E8 1017			 call	 p8a
+   1013	    0D71  E8 0F96			 call	 xprob
+   1014	    0D74  E8 1009			 call	 p8d
+   1015	    0D77  E8 0F87			 call	 prob
+   1016	    0D7A  E8 1024			 call	 p8s
+   1017	    0D7D  E8 0FBD			 call	 nextb
+   1018	    0D80  E9 0ED0			 jmp	 enco
+   1019	    0D83  BA 1E9Fr		 m1f:	 lea	 dx,c1f	 ;brclr
+   1020	    0D86  E8 0F6C			 call	 rec5
+   1021	    0D89  E8 0FFC			 call	 p8a
+   1022	    0D8C  E8 0F7B			 call	 xprob
+   1023	    0D8F  E8 0FEE			 call	 p8d
+   1024	    0D92  E8 0F6C			 call	 prob
+   1025	    0D95  E8 1009			 call	 p8s
+   1026	    0D98  E8 0FA2			 call	 nextb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 19
+prob_c11.ASM
+
+
+
+   1027	    0D9B  E9 0EB5			 jmp	 enco
+   1028	    0D9E  BA 1EA4r		 m20:	 lea	 dx,c20	 ;bra
+   1029	    0DA1  E8 0F51			 call	 rec5
+   1030	    0DA4  E8 0FFA			 call	 p8s
+   1031	    0DA7  E8 0F93			 call	 nextb
+   1032	    0DAA  E9 0EA6			 jmp	 enco
+   1033	    0DAD  BA 1EA9r		 m21:	 lea	 dx,c21	 ;brn
+   1034	    0DB0  E8 0F42			 call	 rec5
+   1035	    0DB3  E8 0FEB			 call	 p8s
+   1036	    0DB6  E8 0F84			 call	 nextb
+   1037	    0DB9  E9 0E97			 jmp	 enco
+   1038	    0DBC  BA 1EAEr		 m22:	 lea	 dx,c22	 ;bhi
+   1039	    0DBF  E8 0F33			 call	 rec5
+   1040	    0DC2  E8 0FDC			 call	 p8s
+   1041	    0DC5  E8 0F75			 call	 nextb
+   1042	    0DC8  E9 0E88			 jmp	 enco
+   1043	    0DCB  BA 1EB3r		 m23:	 lea	 dx,c23	 ;bls
+   1044	    0DCE  E8 0F24			 call	 rec5
+   1045	    0DD1  E8 0FCD			 call	 p8s
+   1046	    0DD4  E8 0F66			 call	 nextb
+   1047	    0DD7  E9 0E79			 jmp	 enco
+   1048	    0DDA  BA 1EB8r		 m24:	 lea	 dx,c24	 ;bcc
+   1049	    0DDD  E8 0F15			 call	 rec5
+   1050	    0DE0  E8 0FBE			 call	 p8s
+   1051	    0DE3  E8 0F57			 call	 nextb
+   1052	    0DE6  E9 0E6A			 jmp	 enco
+   1053	    0DE9  BA 1EBDr		 m25:	 lea	 dx,c25	 ;bcs
+   1054	    0DEC  E8 0F06			 call	 rec5
+   1055	    0DEF  E8 0FAF			 call	 p8s
+   1056	    0DF2  E8 0F48			 call	 nextb
+   1057	    0DF5  E9 0E5B			 jmp	 enco
+   1058	    0DF8  BA 1EC2r		 m26:	 lea	 dx,c26	 ;bne
+   1059	    0DFB  E8 0EF7			 call	 rec5
+   1060	    0DFE  E8 0FA0			 call	 p8s
+   1061	    0E01  E8 0F39			 call	 nextb
+   1062	    0E04  E9 0E4C			 jmp	 enco
+   1063	    0E07  BA 1EC7r		 m27:	 lea	 dx,c27	 ;beq
+   1064	    0E0A  E8 0EE8			 call	 rec5
+   1065	    0E0D  E8 0F91			 call	 p8s
+   1066	    0E10  E8 0F2A			 call	 nextb
+   1067	    0E13  E9 0E3D			 jmp	 enco
+   1068	    0E16  BA 1ECCr		 m28:	 lea	 dx,c28	 ;bvc
+   1069	    0E19  E8 0ED9			 call	 rec5
+   1070	    0E1C  E8 0F82			 call	 p8s
+   1071	    0E1F  E8 0F1B			 call	 nextb
+   1072	    0E22  E9 0E2E			 jmp	 enco
+   1073	    0E25  BA 1ED1r		 m29:	 lea	 dx,c29	 ;bvs
+   1074	    0E28  E8 0ECA			 call	 rec5
+   1075	    0E2B  E8 0F73			 call	 p8s
+   1076	    0E2E  E8 0F0C			 call	 nextb
+   1077	    0E31  E9 0E1F			 jmp	 enco
+   1078	    0E34  BA 1ED6r		 m2a:	 lea	 dx,c2a	 ;bpl
+   1079	    0E37  E8 0EBB			 call	 rec5
+   1080	    0E3A  E8 0F64			 call	 p8s
+   1081	    0E3D  E8 0EFD			 call	 nextb
+   1082	    0E40  E9 0E10			 jmp	 enco
+   1083	    0E43  BA 1EDBr		 m2b:	 lea	 dx,c2b	 ;bmi
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 20
+prob_c11.ASM
+
+
+
+   1084	    0E46  E8 0EAC			 call	 rec5
+   1085	    0E49  E8 0F55			 call	 p8s
+   1086	    0E4C  E8 0EEE			 call	 nextb
+   1087	    0E4F  E9 0E01			 jmp	 enco
+   1088	    0E52  BA 1EE0r		 m2c:	 lea	 dx,c2c	 ;bge
+   1089	    0E55  E8 0E9D			 call	 rec5
+   1090	    0E58  E8 0F46			 call	 p8s
+   1091	    0E5B  E8 0EDF			 call	 nextb
+   1092	    0E5E  E9 0DF2			 jmp	 enco
+   1093	    0E61  BA 1EE5r		 m2d:	 lea	 dx,c2d	 ;blt
+   1094	    0E64  E8 0E8E			 call	 rec5
+   1095	    0E67  E8 0F37			 call	 p8s
+   1096	    0E6A  E8 0ED0			 call	 nextb
+   1097	    0E6D  E9 0DE3			 jmp	 enco
+   1098	    0E70  BA 1EEAr		 m2e:	 lea	 dx,c2e	 ;bgt
+   1099	    0E73  E8 0E7F			 call	 rec5
+   1100	    0E76  E8 0F28			 call	 p8s
+   1101	    0E79  E8 0EC1			 call	 nextb
+   1102	    0E7C  E9 0DD4			 jmp	 enco
+   1103	    0E7F  BA 1EEFr		 m2f:	 lea	 dx,c2f	 ;ble
+   1104	    0E82  E8 0E70			 call	 rec5
+   1105	    0E85  E8 0F19			 call	 p8s
+   1106	    0E88  E8 0EB2			 call	 nextb
+   1107	    0E8B  E9 0DC5			 jmp	 enco
+   1108
+   1109	    0E8E  80 3E	0126r 01	 m30:	 cmp	 shift2,1
+   1110	    0E93  74 0E	90 90			 jz	 m301
+   1111	    0E97  BA 1EF4r			 lea	 dx,c30	 ;tsx(y)
+   1112	    0E9A  E8 0E58			 call	 rec5
+   1113	    0E9D  E8 0E9D			 call	 nextb
+   1114	    0EA0  E9 0DB0			 jmp	 enco
+   1115	    0EA3  BA 1EF9r		 m301:	 lea	 dx,c301 ;tsy
+   1116	    0EA6  E8 0E4C			 call	 rec5
+   1117	    0EA9  E8 0E91			 call	 nextb
+   1118	    0EAC  E9 0DA4			 jmp	 enco
+   1119
+   1120	    0EAF  BA 1EFEr		 m31:	 lea	 dx,c31	 ;ins
+   1121	    0EB2  E8 0E40			 call	 rec5
+   1122	    0EB5  E8 0E85			 call	 nextb
+   1123	    0EB8  E9 0D98			 jmp	 enco
+   1124	    0EBB  BA 1F03r		 m32:	 lea	 dx,c32	 ;pula
+   1125	    0EBE  E8 0E34			 call	 rec5
+   1126	    0EC1  E8 0E79			 call	 nextb
+   1127	    0EC4  E9 0D8C			 jmp	 enco
+   1128	    0EC7  BA 1F08r		 m33:	 lea	 dx,c33	 ;pulb
+   1129	    0ECA  E8 0E28			 call	 rec5
+   1130	    0ECD  E8 0E6D			 call	 nextb
+   1131	    0ED0  E9 0D80			 jmp	 enco
+   1132	    0ED3  BA 1F0Dr		 m34:	 lea	 dx,c34	 ;des
+   1133	    0ED6  E8 0E1C			 call	 rec5
+   1134	    0ED9  E8 0E61			 call	 nextb
+   1135	    0EDC  E9 0D74			 jmp	 enco
+   1136	    0EDF  80 3E	0126r 01	 m35:	 cmp	 shift2,1
+   1137	    0EE4  74 0E	90 90			 jz	 m351
+   1138	    0EE8  BA 1F12r			 lea	 dx,c35	 ;tx(y)s
+   1139	    0EEB  E8 0E07			 call	 rec5
+   1140	    0EEE  E8 0E4C			 call	 nextb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 21
+prob_c11.ASM
+
+
+
+   1141	    0EF1  E9 0D5F			 jmp	 enco
+   1142	    0EF4  BA 1F17r		 m351:	 lea	 dx,c351 ;tys
+   1143	    0EF7  E8 0DFB			 call	 rec5
+   1144	    0EFA  E8 0E40			 call	 nextb
+   1145	    0EFD  E9 0D53			 jmp	 enco
+   1146
+   1147	    0F00  BA 1F1Cr		 m36:	 lea	 dx,c36	 ;psha
+   1148	    0F03  E8 0DEF			 call	 rec5
+   1149	    0F06  E8 0E34			 call	 nextb
+   1150	    0F09  E9 0D47			 jmp	 enco
+   1151	    0F0C  BA 1F21r		 m37:	 lea	 dx,c37	 ;pshb
+   1152	    0F0F  E8 0DE3			 call	 rec5
+   1153	    0F12  E8 0E28			 call	 nextb
+   1154	    0F15  E9 0D3B			 jmp	 enco
+   1155	    0F18  80 3E	0126r 01	 m38:	 cmp	 shift2,1
+   1156	    0F1D  74 0E	90 90			 jz	 m381
+   1157	    0F21  BA 1F26r			 lea	 dx,c38	 ;pulx
+   1158	    0F24  E8 0DCE			 call	 rec5
+   1159	    0F27  E8 0E13			 call	 nextb
+   1160	    0F2A  E9 0D26			 jmp	 enco
+   1161	    0F2D  BA 1F2Br		 m381:	 lea	 dx,c381 ;puly
+   1162	    0F30  E8 0DC2			 call	 rec5
+   1163	    0F33  E8 0E07			 call	 nextb
+   1164	    0F36  E9 0D1A			 jmp	 enco
+   1165	    0F39  BA 1F30r		 m39:	 lea	 dx,c39	 ;rts
+   1166	    0F3C  E8 0DB6			 call	 rec5
+   1167	    0F3F  E8 0DFB			 call	 nextb
+   1168	    0F42  E9 0D0E			 jmp	 enco
+   1169	    0F45  80 3E	0126r 01	 m3a:	 cmp	 shift2,1
+   1170	    0F4A  74 0E	90 90			 jz	 m3a1
+   1171	    0F4E  BA 1F35r			 lea	 dx,c3a	 ;abx(y)
+   1172	    0F51  E8 0DA1			 call	 rec5
+   1173	    0F54  E8 0DE6			 call	 nextb
+   1174	    0F57  E9 0CF9			 jmp	 enco
+   1175	    0F5A  BA 1F3Ar		 m3a1:	 lea	 dx,c3a1 ;aby
+   1176	    0F5D  E8 0D95			 call	 rec5
+   1177	    0F60  E8 0DDA			 call	 nextb
+   1178	    0F63  E9 0CED			 jmp	 enco
+   1179
+   1180	    0F66  BA 1F3Fr		 m3b:	 lea	 dx,c3b	 ;rti
+   1181	    0F69  E8 0D89			 call	 rec5
+   1182	    0F6C  E8 0DCE			 call	 nextb
+   1183	    0F6F  E9 0CE1			 jmp	 enco
+   1184	    0F72  80 3E	0126r 01	 m3c:	 cmp	 shift2,1
+   1185	    0F77  74 0E	90 90			 jz	 m3c1
+   1186	    0F7B  BA 1F44r			 lea	 dx,c3c	 ;pshx(y)
+   1187	    0F7E  E8 0D74			 call	 rec5
+   1188	    0F81  E8 0DB9			 call	 nextb
+   1189	    0F84  E9 0CCC			 jmp	 enco
+   1190	    0F87  BA 1F49r		 m3c1:	 lea	 dx,c3c1 ;pshy
+   1191	    0F8A  E8 0D68			 call	 rec5
+   1192	    0F8D  E8 0DAD			 call	 nextb
+   1193	    0F90  E9 0CC0			 jmp	 enco
+   1194
+   1195	    0F93  BA 1F4Er		 m3d:	 lea	 dx,c3d	 ;mul
+   1196	    0F96  E8 0D5C			 call	 rec5
+   1197	    0F99  E8 0DA1			 call	 nextb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 22
+prob_c11.ASM
+
+
+
+   1198	    0F9C  E9 0CB4			 jmp	 enco
+   1199	    0F9F  BA 1F53r		 m3e:	 lea	 dx,c3e	 ;wai
+   1200	    0FA2  E8 0D50			 call	 rec5
+   1201	    0FA5  E8 0D95			 call	 nextb
+   1202	    0FA8  E9 0CA8			 jmp	 enco
+   1203	    0FAB  BA 1F58r		 m3f:	 lea	 dx,c3f	 ;swi
+   1204	    0FAE  E8 0D44			 call	 rec5
+   1205	    0FB1  E8 0D89			 call	 nextb
+   1206	    0FB4  E9 0C9C			 jmp	 enco
+   1207	    0FB7  BA 1F5Dr		 m40:	 lea	 dx,c40	 ;nega
+   1208	    0FBA  E8 0D38			 call	 rec5
+   1209	    0FBD  E8 0D7D			 call	 nextb
+   1210	    0FC0  E9 0C90			 jmp	 enco
+   1211	    0FC3  BA 2359r		 m41:	 lea	 dx,c00a ;(na)
+   1212	    0FC6  E8 0D2C			 call	 rec5
+   1213	    0FC9  E8 0D71			 call	 nextb
+   1214	    0FCC  E9 0C84			 jmp	 enco
+   1215	    0FCF  BA 2359r		 m42:	 lea	 dx,c00a ;(na)
+   1216	    0FD2  E8 0D20			 call	 rec5
+   1217	    0FD5  E8 0D65			 call	 nextb
+   1218	    0FD8  E9 0C78			 jmp	 enco
+   1219	    0FDB  BA 1F6Cr		 m43:	 lea	 dx,c43	 ;coma
+   1220	    0FDE  E8 0D14			 call	 rec5
+   1221	    0FE1  E8 0D59			 call	 nextb
+   1222	    0FE4  E9 0C6C			 jmp	 enco
+   1223	    0FE7  BA 1F71r		 m44:	 lea	 dx,c44	 ;lsra
+   1224	    0FEA  E8 0D08			 call	 rec5
+   1225	    0FED  E8 0D4D			 call	 nextb
+   1226	    0FF0  E9 0C60			 jmp	 enco
+   1227	    0FF3  BA 2359r		 m45:	 lea	 dx,c00a ;(na)
+   1228	    0FF6  E8 0CFC			 call	 rec5
+   1229	    0FF9  E8 0D41			 call	 nextb
+   1230	    0FFC  E9 0C54			 jmp	 enco
+   1231	    0FFF  BA 1F7Br		 m46:	 lea	 dx,c46	 ;rora
+   1232	    1002  E8 0CF0			 call	 rec5
+   1233	    1005  E8 0D35			 call	 nextb
+   1234	    1008  E9 0C48			 jmp	 enco
+   1235	    100B  BA 1F80r		 m47:	 lea	 dx,c47	 ;asra
+   1236	    100E  E8 0CE4			 call	 rec5
+   1237	    1011  E8 0D29			 call	 nextb
+   1238	    1014  E9 0C3C			 jmp	 enco
+   1239	    1017  BA 1F85r		 m48:	 lea	 dx,c48	 ;asla
+   1240	    101A  E8 0CD8			 call	 rec5
+   1241	    101D  E8 0D1D			 call	 nextb
+   1242	    1020  E9 0C30			 jmp	 enco
+   1243	    1023  BA 1F8Ar		 m49:	 lea	 dx,c49	 ;rola
+   1244	    1026  E8 0CCC			 call	 rec5
+   1245	    1029  E8 0D11			 call	 nextb
+   1246	    102C  E9 0C24			 jmp	 enco
+   1247	    102F  BA 1F8Fr		 m4a:	 lea	 dx,c4a	 ;deca
+   1248	    1032  E8 0CC0			 call	 rec5
+   1249	    1035  E8 0D05			 call	 nextb
+   1250	    1038  E9 0C18			 jmp	 enco
+   1251	    103B  BA 2359r		 m4b:	 lea	 dx,c00a ;(na)
+   1252	    103E  E8 0CB4			 call	 rec5
+   1253	    1041  E8 0CF9			 call	 nextb
+   1254	    1044  E9 0C0C			 jmp	 enco
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 23
+prob_c11.ASM
+
+
+
+   1255	    1047  BA 1F99r		 m4c:	 lea	 dx,c4c	 ;inca
+   1256	    104A  E8 0CA8			 call	 rec5
+   1257	    104D  E8 0CED			 call	 nextb
+   1258	    1050  E9 0C00			 jmp	 enco
+   1259	    1053  BA 1F9Er		 m4d:	 lea	 dx,c4d	 ;tsta
+   1260	    1056  E8 0C9C			 call	 rec5
+   1261	    1059  E8 0CE1			 call	 nextb
+   1262	    105C  E9 0BF4			 jmp	 enco
+   1263	    105F  BA 2359r		 m4e:	 lea	 dx,c00a ;(na)
+   1264	    1062  E8 0C90			 call	 rec5
+   1265	    1065  E8 0CD5			 call	 nextb
+   1266	    1068  E9 0BE8			 jmp	 enco
+   1267	    106B  BA 1FA8r		 m4f:	 lea	 dx,c4f	 ;clra
+   1268	    106E  E8 0C84			 call	 rec5
+   1269	    1071  E8 0CC9			 call	 nextb
+   1270	    1074  E9 0BDC			 jmp	 enco
+   1271
+   1272	    1077  BA 1FADr		 m50:	 lea	 dx,c50	 ;negb
+   1273	    107A  E8 0C78			 call	 rec5
+   1274	    107D  E8 0CBD			 call	 nextb
+   1275	    1080  E9 0BD0			 jmp	 enco
+   1276	    1083  BA 2359r		 m51:	 lea	 dx,c00a ;(na)
+   1277	    1086  E8 0C6C			 call	 rec5
+   1278	    1089  E8 0CB1			 call	 nextb
+   1279	    108C  E9 0BC4			 jmp	 enco
+   1280	    108F  BA 2359r		 m52:	 lea	 dx,c00a ;(na)
+   1281	    1092  E8 0C60			 call	 rec5
+   1282	    1095  E8 0CA5			 call	 nextb
+   1283	    1098  E9 0BB8			 jmp	 enco
+   1284	    109B  BA 1FBCr		 m53:	 lea	 dx,c53	 ;comb
+   1285	    109E  E8 0C54			 call	 rec5
+   1286	    10A1  E8 0C99			 call	 nextb
+   1287	    10A4  E9 0BAC			 jmp	 enco
+   1288	    10A7  BA 1FC1r		 m54:	 lea	 dx,c54	 ;lsrb
+   1289	    10AA  E8 0C48			 call	 rec5
+   1290	    10AD  E8 0C8D			 call	 nextb
+   1291	    10B0  E9 0BA0			 jmp	 enco
+   1292	    10B3  BA 2359r		 m55:	 lea	 dx,c00a ;(na)
+   1293	    10B6  E8 0C3C			 call	 rec5
+   1294	    10B9  E8 0C81			 call	 nextb
+   1295	    10BC  E9 0B94			 jmp	 enco
+   1296	    10BF  BA 1FCBr		 m56:	 lea	 dx,c56	 ;rorb
+   1297	    10C2  E8 0C30			 call	 rec5
+   1298	    10C5  E8 0C75			 call	 nextb
+   1299	    10C8  E9 0B88			 jmp	 enco
+   1300	    10CB  BA 1FD0r		 m57:	 lea	 dx,c57	 ;asrb
+   1301	    10CE  E8 0C24			 call	 rec5
+   1302	    10D1  E8 0C69			 call	 nextb
+   1303	    10D4  E9 0B7C			 jmp	 enco
+   1304	    10D7  BA 1FD5r		 m58:	 lea	 dx,c58	 ;aslb
+   1305	    10DA  E8 0C18			 call	 rec5
+   1306	    10DD  E8 0C5D			 call	 nextb
+   1307	    10E0  E9 0B70			 jmp	 enco
+   1308	    10E3  BA 1FDAr		 m59:	 lea	 dx,c59	 ;rolb
+   1309	    10E6  E8 0C0C			 call	 rec5
+   1310	    10E9  E8 0C51			 call	 nextb
+   1311	    10EC  E9 0B64			 jmp	 enco
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 24
+prob_c11.ASM
+
+
+
+   1312	    10EF  BA 1FDFr		 m5a:	 lea	 dx,c5a	 ;decb
+   1313	    10F2  E8 0C00			 call	 rec5
+   1314	    10F5  E8 0C45			 call	 nextb
+   1315	    10F8  E9 0B58			 jmp	 enco
+   1316	    10FB  BA 2359r		 m5b:	 lea	 dx,c00a ;(na)
+   1317	    10FE  E8 0BF4			 call	 rec5
+   1318	    1101  E8 0C39			 call	 nextb
+   1319	    1104  E9 0B4C			 jmp	 enco
+   1320	    1107  BA 1FE9r		 m5c:	 lea	 dx,c5c	 ;incb
+   1321	    110A  E8 0BE8			 call	 rec5
+   1322	    110D  E8 0C2D			 call	 nextb
+   1323	    1110  E9 0B40			 jmp	 enco
+   1324	    1113  BA 1FEEr		 m5d:	 lea	 dx,c5d	 ;tstb
+   1325	    1116  E8 0BDC			 call	 rec5
+   1326	    1119  E8 0C21			 call	 nextb
+   1327	    111C  E9 0B34			 jmp	 enco
+   1328	    111F  BA 2359r		 m5e:	 lea	 dx,c00a ;(na)
+   1329	    1122  E8 0BD0			 call	 rec5
+   1330	    1125  E8 0C15			 call	 nextb
+   1331	    1128  E9 0B28			 jmp	 enco
+   1332	    112B  BA 1FF8r		 m5f:	 lea	 dx,c5f	 ;clrb
+   1333	    112E  E8 0BC4			 call	 rec5
+   1334	    1131  E8 0C09			 call	 nextb
+   1335	    1134  E9 0B1C			 jmp	 enco
+   1336
+   1337	    1137  BA 1FFDr		 m60:	 lea	 dx,c60	 ;neg
+   1338	    113A  E8 0BB8			 call	 rec5
+   1339	    113D  E8 0C48			 call	 p8a
+   1340	    1140  E8 0BC7			 call	 xprob
+   1341	    1143  E8 0BF7			 call	 nextb
+   1342	    1146  E9 0B0A			 jmp	 enco
+   1343	    1149  BA 2002r		 m61:	 lea	 dx,c61	 ;---
+   1344	    114C  E8 0BA6			 call	 rec5
+   1345	    114F  E8 0BEB			 call	 nextb
+   1346	    1152  E9 0AFE			 jmp	 enco
+   1347	    1155  BA 2007r		 m62:	 lea	 dx,c62	 ;---
+   1348	    1158  E8 0B9A			 call	 rec5
+   1349	    115B  E8 0BDF			 call	 nextb
+   1350	    115E  E9 0AF2			 jmp	 enco
+   1351	    1161  BA 200Cr		 m63:	 lea	 dx,c63	 ;com
+   1352	    1164  E8 0B8E			 call	 rec5
+   1353	    1167  E8 0C1E			 call	 p8a
+   1354	    116A  E8 0B9D			 call	 xprob
+   1355	    116D  E8 0BCD			 call	 nextb
+   1356	    1170  E9 0AE0			 jmp	 enco
+   1357	    1173  BA 2011r		 m64:	 lea	 dx,c64	 ;lsr
+   1358	    1176  E8 0B7C			 call	 rec5
+   1359	    1179  E8 0C0C			 call	 p8a
+   1360	    117C  E8 0B8B			 call	 xprob
+   1361	    117F  E8 0BBB			 call	 nextb
+   1362	    1182  E9 0ACE			 jmp	 enco
+   1363	    1185  BA 2016r		 m65:	 lea	 dx,c65	 ;---
+   1364	    1188  E8 0B6A			 call	 rec5
+   1365	    118B  E8 0BAF			 call	 nextb
+   1366	    118E  E9 0AC2			 jmp	 enco
+   1367	    1191  BA 201Br		 m66:	 lea	 dx,c66	 ;ror
+   1368	    1194  E8 0B5E			 call	 rec5
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 25
+prob_c11.ASM
+
+
+
+   1369	    1197  E8 0BEE			 call	 p8a
+   1370	    119A  E8 0B6D			 call	 xprob
+   1371	    119D  E8 0B9D			 call	 nextb
+   1372	    11A0  E9 0AB0			 jmp	 enco
+   1373	    11A3  BA 2020r		 m67:	 lea	 dx,c67	 ;asr
+   1374	    11A6  E8 0B4C			 call	 rec5
+   1375	    11A9  E8 0BDC			 call	 p8a
+   1376	    11AC  E8 0B5B			 call	 xprob
+   1377	    11AF  E8 0B8B			 call	 nextb
+   1378	    11B2  E9 0A9E			 jmp	 enco
+   1379	    11B5  BA 2025r		 m68:	 lea	 dx,c68	 ;asl
+   1380	    11B8  E8 0B3A			 call	 rec5
+   1381	    11BB  E8 0BCA			 call	 p8a
+   1382	    11BE  E8 0B49			 call	 xprob
+   1383	    11C1  E8 0B79			 call	 nextb
+   1384	    11C4  E9 0A8C			 jmp	 enco
+   1385	    11C7  BA 202Ar		 m69:	 lea	 dx,c69	 ;rol
+   1386	    11CA  E8 0B28			 call	 rec5
+   1387	    11CD  E8 0BB8			 call	 p8a
+   1388	    11D0  E8 0B37			 call	 xprob
+   1389	    11D3  E8 0B67			 call	 nextb
+   1390	    11D6  E9 0A7A			 jmp	 enco
+   1391	    11D9  BA 202Fr		 m6a:	 lea	 dx,c6a	 ;dec
+   1392	    11DC  E8 0B16			 call	 rec5
+   1393	    11DF  E8 0BA6			 call	 p8a
+   1394	    11E2  E8 0B25			 call	 xprob
+   1395	    11E5  E8 0B55			 call	 nextb
+   1396	    11E8  E9 0A68			 jmp	 enco
+   1397	    11EB  BA 2034r		 m6b:	 lea	 dx,c6b	 ;---
+   1398	    11EE  E8 0B04			 call	 rec5
+   1399	    11F1  E8 0B49			 call	 nextb
+   1400	    11F4  E9 0A5C			 jmp	 enco
+   1401	    11F7  BA 2039r		 m6c:	 lea	 dx,c6c	 ;inc
+   1402	    11FA  E8 0AF8			 call	 rec5
+   1403	    11FD  E8 0B88			 call	 p8a
+   1404	    1200  E8 0B07			 call	 xprob
+   1405	    1203  E8 0B37			 call	 nextb
+   1406	    1206  E9 0A4A			 jmp	 enco
+   1407	    1209  BA 203Er		 m6d:	 lea	 dx,c6d	 ;tst
+   1408	    120C  E8 0AE6			 call	 rec5
+   1409	    120F  E8 0B76			 call	 p8a
+   1410	    1212  E8 0AF5			 call	 xprob
+   1411	    1215  E8 0B25			 call	 nextb
+   1412	    1218  E9 0A38			 jmp	 enco
+   1413	    121B  BA 2043r		 m6e:	 lea	 dx,c6e	 ;jmp
+   1414	    121E  E8 0AD4			 call	 rec5
+   1415	    1221  E8 0B64			 call	 p8a
+   1416	    1224  E8 0AE3			 call	 xprob
+   1417	    1227  E8 0B13			 call	 nextb
+   1418	    122A  E9 0A26			 jmp	 enco
+   1419	    122D  BA 2048r		 m6f:	 lea	 dx,c6f	 ;clr
+   1420	    1230  E8 0AC2			 call	 rec5
+   1421	    1233  E8 0B52			 call	 p8a
+   1422	    1236  E8 0AD1			 call	 xprob
+   1423	    1239  E8 0B01			 call	 nextb
+   1424	    123C  E9 0A14			 jmp	 enco
+   1425
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 26
+prob_c11.ASM
+
+
+
+   1426	    123F  BA 204Dr		 m70:	 lea	 dx,c70	 ;neg
+   1427	    1242  E8 0AB0			 call	 rec5
+   1428	    1245  E8 0B0E			 call	 p16a
+   1429	    1248  E8 0AF2			 call	 nextb
+   1430	    124B  E9 0A05			 jmp	 enco
+   1431	    124E  BA 2052r		 m71:	 lea	 dx,c71	 ;---
+   1432	    1251  E8 0AA1			 call	 rec5
+   1433	    1254  E8 0AE6			 call	 nextb
+   1434	    1257  E9 09F9			 jmp	 enco
+   1435	    125A  BA 2057r		 m72:	 lea	 dx,c72	 ;---
+   1436	    125D  E8 0A95			 call	 rec5
+   1437	    1260  E8 0ADA			 call	 nextb
+   1438	    1263  E9 09ED			 jmp	 enco
+   1439	    1266  BA 205Cr		 m73:	 lea	 dx,c73	 ;com
+   1440	    1269  E8 0A89			 call	 rec5
+   1441	    126C  E8 0AE7			 call	 p16a
+   1442	    126F  E8 0ACB			 call	 nextb
+   1443	    1272  E9 09DE			 jmp	 enco
+   1444	    1275  BA 2061r		 m74:	 lea	 dx,c74	 ;lsr
+   1445	    1278  E8 0A7A			 call	 rec5
+   1446	    127B  E8 0AD8			 call	 p16a
+   1447	    127E  E8 0ABC			 call	 nextb
+   1448	    1281  E9 09CF			 jmp	 enco
+   1449	    1284  BA 2066r		 m75:	 lea	 dx,c75	 ;---
+   1450	    1287  E8 0A6B			 call	 rec5
+   1451	    128A  E8 0AB0			 call	 nextb
+   1452	    128D  E9 09C3			 jmp	 enco
+   1453	    1290  BA 206Br		 m76:	 lea	 dx,c76	 ;ror
+   1454	    1293  E8 0A5F			 call	 rec5
+   1455	    1296  E8 0ABD			 call	 p16a
+   1456	    1299  E8 0AA1			 call	 nextb
+   1457	    129C  E9 09B4			 jmp	 enco
+   1458	    129F  BA 2070r		 m77:	 lea	 dx,c77	 ;asr
+   1459	    12A2  E8 0A50			 call	 rec5
+   1460	    12A5  E8 0AAE			 call	 p16a
+   1461	    12A8  E8 0A92			 call	 nextb
+   1462	    12AB  E9 09A5			 jmp	 enco
+   1463	    12AE  BA 2075r		 m78:	 lea	 dx,c78	 ;asl
+   1464	    12B1  E8 0A41			 call	 rec5
+   1465	    12B4  E8 0A9F			 call	 p16a
+   1466	    12B7  E8 0A83			 call	 nextb
+   1467	    12BA  E9 0996			 jmp	 enco
+   1468	    12BD  BA 207Ar		 m79:	 lea	 dx,c79	 ;rol
+   1469	    12C0  E8 0A32			 call	 rec5
+   1470	    12C3  E8 0A90			 call	 p16a
+   1471	    12C6  E8 0A74			 call	 nextb
+   1472	    12C9  E9 0987			 jmp	 enco
+   1473	    12CC  BA 207Fr		 m7a:	 lea	 dx,c7a	 ;dec
+   1474	    12CF  E8 0A23			 call	 rec5
+   1475	    12D2  E8 0A81			 call	 p16a
+   1476	    12D5  E8 0A65			 call	 nextb
+   1477	    12D8  E9 0978			 jmp	 enco
+   1478	    12DB  BA 2084r		 m7b:	 lea	 dx,c7b	 ;---
+   1479	    12DE  E8 0A14			 call	 rec5
+   1480	    12E1  E8 0A59			 call	 nextb
+   1481	    12E4  E9 096C			 jmp	 enco
+   1482	    12E7  BA 2089r		 m7c:	 lea	 dx,c7c	 ;inc
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 27
+prob_c11.ASM
+
+
+
+   1483	    12EA  E8 0A08			 call	 rec5
+   1484	    12ED  E8 0A66			 call	 p16a
+   1485	    12F0  E8 0A4A			 call	 nextb
+   1486	    12F3  E9 095D			 jmp	 enco
+   1487	    12F6  BA 208Er		 m7d:	 lea	 dx,c7d	 ;tst
+   1488	    12F9  E8 09F9			 call	 rec5
+   1489	    12FC  E8 0A57			 call	 p16a
+   1490	    12FF  E8 0A3B			 call	 nextb
+   1491	    1302  E9 094E			 jmp	 enco
+   1492	    1305  BA 2093r		 m7e:	 lea	 dx,c7e	 ;jmp
+   1493	    1308  E8 09EA			 call	 rec5
+   1494	    130B  E8 0A48			 call	 p16a
+   1495	    130E  E8 0A2C			 call	 nextb
+   1496	    1311  E9 093F			 jmp	 enco
+   1497	    1314  BA 2098r		 m7f:	 lea	 dx,c7f	 ;clr
+   1498	    1317  E8 09DB			 call	 rec5
+   1499	    131A  E8 0A39			 call	 p16a
+   1500	    131D  E8 0A1D			 call	 nextb
+   1501	    1320  E9 0930			 jmp	 enco
+   1502
+   1503	    1323  BA 209Dr		 m80:	 lea	 dx,c80	 ;suba
+   1504	    1326  E8 09CC			 call	 rec5
+   1505	    1329  E8 0A54			 call	 p8d
+   1506	    132C  E8 0A0E			 call	 nextb
+   1507	    132F  E9 0921			 jmp	 enco
+   1508	    1332  BA 20A2r		 m81:	 lea	 dx,c81	 ;cmpa
+   1509	    1335  E8 09BD			 call	 rec5
+   1510	    1338  E8 0A45			 call	 p8d
+   1511	    133B  E8 09FF			 call	 nextb
+   1512	    133E  E9 0912			 jmp	 enco
+   1513	    1341  BA 20A7r		 m82:	 lea	 dx,c82	 ;sbca
+   1514	    1344  E8 09AE			 call	 rec5
+   1515	    1347  E8 0A36			 call	 p8d
+   1516	    134A  E8 09F0			 call	 nextb
+   1517	    134D  E9 0903			 jmp	 enco
+   1518	    1350  BA 20ACr		 m83:	 lea	 dx,c83	 ;subd
+   1519	    1353  E8 099F			 call	 rec5
+   1520	    1356  E8 09F5			 call	 p16d
+   1521	    1359  E8 09E1			 call	 nextb
+   1522	    135C  E9 08F4			 jmp	 enco
+   1523	    135F  BA 20B1r		 m84:	 lea	 dx,c84	 ;anda
+   1524	    1362  E8 0990			 call	 rec5
+   1525	    1365  E8 0A18			 call	 p8d
+   1526	    1368  E8 09D2			 call	 nextb
+   1527	    136B  E9 08E5			 jmp	 enco
+   1528	    136E  BA 20B6r		 m85:	 lea	 dx,c85	 ;bita
+   1529	    1371  E8 0981			 call	 rec5
+   1530	    1374  E8 0A09			 call	 p8d
+   1531	    1377  E8 09C3			 call	 nextb
+   1532	    137A  E9 08D6			 jmp	 enco
+   1533	    137D  BA 20BBr		 m86:	 lea	 dx,c86	 ;ldaa
+   1534	    1380  E8 0972			 call	 rec5
+   1535	    1383  E8 09FA			 call	 p8d
+   1536	    1386  E8 09B4			 call	 nextb
+   1537	    1389  E9 08C7			 jmp	 enco
+   1538	    138C  BA 20C0r		 m87:	 lea	 dx,c87	 ;---
+   1539	    138F  E8 0963			 call	 rec5
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 28
+prob_c11.ASM
+
+
+
+   1540	    1392  E8 09A8			 call	 nextb
+   1541	    1395  E9 08BB			 jmp	 enco
+   1542	    1398  BA 20C5r		 m88:	 lea	 dx,c88	 ;eora
+   1543	    139B  E8 0957			 call	 rec5
+   1544	    139E  E8 09DF			 call	 p8d
+   1545	    13A1  E8 0999			 call	 nextb
+   1546	    13A4  E9 08AC			 jmp	 enco
+   1547	    13A7  BA 20CAr		 m89:	 lea	 dx,c89	 ;adca
+   1548	    13AA  E8 0948			 call	 rec5
+   1549	    13AD  E8 09D0			 call	 p8d
+   1550	    13B0  E8 098A			 call	 nextb
+   1551	    13B3  E9 089D			 jmp	 enco
+   1552	    13B6  BA 20CFr		 m8a:	 lea	 dx,c8a	 ;oraa
+   1553	    13B9  E8 0939			 call	 rec5
+   1554	    13BC  E8 09C1			 call	 p8d
+   1555	    13BF  E8 097B			 call	 nextb
+   1556	    13C2  E9 088E			 jmp	 enco
+   1557	    13C5  BA 20D4r		 m8b:	 lea	 dx,c8b	 ;adda
+   1558	    13C8  E8 092A			 call	 rec5
+   1559	    13CB  E8 09B2			 call	 p8d
+   1560	    13CE  E8 096C			 call	 nextb
+   1561	    13D1  E9 087F			 jmp	 enco
+   1562	    13D4  80 3E	0126r 01	 m8c:	 cmp	 shift2,1
+   1563	    13D9  74 11	90 90			 jz	 m8c1
+   1564	    13DD  BA 20D9r			 lea	 dx,c8c	 ;cpx(y)
+   1565	    13E0  E8 0912			 call	 rec5
+   1566	    13E3  E8 0968			 call	 p16d
+   1567	    13E6  E8 0954			 call	 nextb
+   1568	    13E9  E9 0867			 jmp	 enco
+   1569	    13EC  BA 20DEr		 m8c1:	 lea	 dx,c8c1 ;cpy
+   1570	    13EF  E8 0903			 call	 rec5
+   1571	    13F2  E8 0959			 call	 p16d
+   1572	    13F5  E8 0945			 call	 nextb
+   1573	    13F8  E9 0858			 jmp	 enco
+   1574
+   1575	    13FB  BA 20E3r		 m8d:	 lea	 dx,c8d	 ;bsr
+   1576	    13FE  E8 08F4			 call	 rec5
+   1577	    1401  E8 097C			 call	 p8d
+   1578	    1404  E8 0936			 call	 nextb
+   1579	    1407  E9 0849			 jmp	 enco
+   1580	    140A  BA 20E8r		 m8e:	 lea	 dx,c8e	 ;lds
+   1581	    140D  E8 08E5			 call	 rec5
+   1582	    1410  E8 093B			 call	 p16d
+   1583	    1413  E8 0927			 call	 nextb
+   1584	    1416  E9 083A			 jmp	 enco
+   1585	    1419  80 3E	0126r 01	 m8f:	 cmp	 shift2,1
+   1586	    141E  74 0E	90 90			 jz	 m8f1
+   1587	    1422  BA 20EDr			 lea	 dx,c8f	 ;xgdx(y)
+   1588	    1425  E8 08CD			 call	 rec5
+   1589	    1428  E8 0912			 call	 nextb
+   1590	    142B  E9 0825			 jmp	 enco
+   1591	    142E  BA 20F2r		 m8f1:	 lea	 dx,c8f1 ;xgdy
+   1592	    1431  E8 08C1			 call	 rec5
+   1593	    1434  E8 0906			 call	 nextb
+   1594	    1437  E9 0819			 jmp	 enco
+   1595
+   1596	    143A  BA 20F7r		 m90:	 lea	 dx,c90	 ;suba
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 29
+prob_c11.ASM
+
+
+
+   1597	    143D  E8 08B5			 call	 rec5
+   1598	    1440  E8 0945			 call	 p8a
+   1599	    1443  E8 08F7			 call	 nextb
+   1600	    1446  E9 080A			 jmp	 enco
+   1601	    1449  BA 20FCr		 m91:	 lea	 dx,c91	 ;cmpa
+   1602	    144C  E8 08A6			 call	 rec5
+   1603	    144F  E8 0936			 call	 p8a
+   1604	    1452  E8 08E8			 call	 nextb
+   1605	    1455  E9 07FB			 jmp	 enco
+   1606	    1458  BA 2101r		 m92:	 lea	 dx,c92	 ;sbca
+   1607	    145B  E8 0897			 call	 rec5
+   1608	    145E  E8 0927			 call	 p8a
+   1609	    1461  E8 08D9			 call	 nextb
+   1610	    1464  E9 07EC			 jmp	 enco
+   1611	    1467  BA 2106r		 m93:	 lea	 dx,c93	 ;subd
+   1612	    146A  E8 0888			 call	 rec5
+   1613	    146D  E8 0918			 call	 p8a
+   1614	    1470  E8 08CA			 call	 nextb
+   1615	    1473  E9 07DD			 jmp	 enco
+   1616	    1476  BA 210Br		 m94:	 lea	 dx,c94	 ;anda
+   1617	    1479  E8 0879			 call	 rec5
+   1618	    147C  E8 0909			 call	 p8a
+   1619	    147F  E8 08BB			 call	 nextb
+   1620	    1482  E9 07CE			 jmp	 enco
+   1621	    1485  BA 2110r		 m95:	 lea	 dx,c95	 ;bita
+   1622	    1488  E8 086A			 call	 rec5
+   1623	    148B  E8 08FA			 call	 p8a
+   1624	    148E  E8 08AC			 call	 nextb
+   1625	    1491  E9 07BF			 jmp	 enco
+   1626	    1494  BA 2115r		 m96:	 lea	 dx,c96	 ;ldaa
+   1627	    1497  E8 085B			 call	 rec5
+   1628	    149A  E8 08EB			 call	 p8a
+   1629	    149D  E8 089D			 call	 nextb
+   1630	    14A0  E9 07B0			 jmp	 enco
+   1631	    14A3  BA 211Ar		 m97:	 lea	 dx,c97	 ;staa
+   1632	    14A6  E8 084C			 call	 rec5
+   1633	    14A9  E8 08DC			 call	 p8a
+   1634	    14AC  E8 088E			 call	 nextb
+   1635	    14AF  E9 07A1			 jmp	 enco
+   1636	    14B2  BA 211Fr		 m98:	 lea	 dx,c98	 ;eora
+   1637	    14B5  E8 083D			 call	 rec5
+   1638	    14B8  E8 08CD			 call	 p8a
+   1639	    14BB  E8 087F			 call	 nextb
+   1640	    14BE  E9 0792			 jmp	 enco
+   1641	    14C1  BA 2124r		 m99:	 lea	 dx,c99	 ;adca
+   1642	    14C4  E8 082E			 call	 rec5
+   1643	    14C7  E8 08BE			 call	 p8a
+   1644	    14CA  E8 0870			 call	 nextb
+   1645	    14CD  E9 0783			 jmp	 enco
+   1646	    14D0  BA 2129r		 m9a:	 lea	 dx,c9a	 ;oraa
+   1647	    14D3  E8 081F			 call	 rec5
+   1648	    14D6  E8 08AF			 call	 p8a
+   1649	    14D9  E8 0861			 call	 nextb
+   1650	    14DC  E9 0774			 jmp	 enco
+   1651	    14DF  BA 212Er		 m9b:	 lea	 dx,c9b	 ;adda
+   1652	    14E2  E8 0810			 call	 rec5
+   1653	    14E5  E8 08A0			 call	 p8a
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 30
+prob_c11.ASM
+
+
+
+   1654	    14E8  E8 0852			 call	 nextb
+   1655	    14EB  E9 0765			 jmp	 enco
+   1656	    14EE  80 3E	0126r 01	 m9c:	 cmp	 shift2,1
+   1657	    14F3  74 11	90 90			 jz	 m9c1
+   1658	    14F7  BA 2133r			 lea	 dx,c9c	 ;cpx(y)
+   1659	    14FA  E8 07F8			 call	 rec5
+   1660	    14FD  E8 0888			 call	 p8a
+   1661	    1500  E8 083A			 call	 nextb
+   1662	    1503  E9 074D			 jmp	 enco
+   1663	    1506  BA 2138r		 m9c1:	 lea	 dx,c9c1 ;cpy
+   1664	    1509  E8 07E9			 call	 rec5
+   1665	    150C  E8 0879			 call	 p8a
+   1666	    150F  E8 082B			 call	 nextb
+   1667	    1512  E9 073E			 jmp	 enco
+   1668
+   1669	    1515  BA 213Dr		 m9d:	 lea	 dx,c9d	 ;jsr
+   1670	    1518  E8 07DA			 call	 rec5
+   1671	    151B  E8 086A			 call	 p8a
+   1672	    151E  E8 081C			 call	 nextb
+   1673	    1521  E9 072F			 jmp	 enco
+   1674	    1524  BA 2142r		 m9e:	 lea	 dx,c9e	 ;lds
+   1675	    1527  E8 07CB			 call	 rec5
+   1676	    152A  E8 085B			 call	 p8a
+   1677	    152D  E8 080D			 call	 nextb
+   1678	    1530  E9 0720			 jmp	 enco
+   1679	    1533  BA 2147r		 m9f:	 lea	 dx,c9f	 ;sts
+   1680	    1536  E8 07BC			 call	 rec5
+   1681	    1539  E8 084C			 call	 p8a
+   1682	    153C  E8 07FE			 call	 nextb
+   1683	    153F  E9 0711			 jmp	 enco
+   1684
+   1685	    1542  BA 214Cr		 ma0:	 lea	 dx,ca0	 ;suba
+   1686	    1545  E8 07AD			 call	 rec5
+   1687	    1548  E8 083D			 call	 p8a
+   1688	    154B  E8 07BC			 call	 xprob
+   1689	    154E  E8 07EC			 call	 nextb
+   1690	    1551  E9 06FF			 jmp	 enco
+   1691	    1554  BA 2151r		 ma1:	 lea	 dx,ca1	 ;cmpa
+   1692	    1557  E8 079B			 call	 rec5
+   1693	    155A  E8 082B			 call	 p8a
+   1694	    155D  E8 07AA			 call	 xprob
+   1695	    1560  E8 07DA			 call	 nextb
+   1696	    1563  E9 06ED			 jmp	 enco
+   1697	    1566  BA 2156r		 ma2:	 lea	 dx,ca2	 ;sbca
+   1698	    1569  E8 0789			 call	 rec5
+   1699	    156C  E8 0819			 call	 p8a
+   1700	    156F  E8 0798			 call	 xprob
+   1701	    1572  E8 07C8			 call	 nextb
+   1702	    1575  E9 06DB			 jmp	 enco
+   1703	    1578  BA 215Br		 ma3:	 lea	 dx,ca3	 ;subd
+   1704	    157B  E8 0777			 call	 rec5
+   1705	    157E  E8 0807			 call	 p8a
+   1706	    1581  E8 0786			 call	 xprob
+   1707	    1584  E8 07B6			 call	 nextb
+   1708	    1587  E9 06C9			 jmp	 enco
+   1709	    158A  BA 2160r		 ma4:	 lea	 dx,ca4	 ;anda
+   1710	    158D  E8 0765			 call	 rec5
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 31
+prob_c11.ASM
+
+
+
+   1711	    1590  E8 07F5			 call	 p8a
+   1712	    1593  E8 0774			 call	 xprob
+   1713	    1596  E8 07A4			 call	 nextb
+   1714	    1599  E9 06B7			 jmp	 enco
+   1715	    159C  BA 2165r		 ma5:	 lea	 dx,ca5	 ;bita
+   1716	    159F  E8 0753			 call	 rec5
+   1717	    15A2  E8 07E3			 call	 p8a
+   1718	    15A5  E8 0762			 call	 xprob
+   1719	    15A8  E8 0792			 call	 nextb
+   1720	    15AB  E9 06A5			 jmp	 enco
+   1721	    15AE  BA 216Ar		 ma6:	 lea	 dx,ca6	 ;ldaa
+   1722	    15B1  E8 0741			 call	 rec5
+   1723	    15B4  E8 07D1			 call	 p8a
+   1724	    15B7  E8 0750			 call	 xprob
+   1725	    15BA  E8 0780			 call	 nextb
+   1726	    15BD  E9 0693			 jmp	 enco
+   1727	    15C0  BA 216Ar		 ma7:	 lea	 dx,ca6	 ;staa
+   1728	    15C3  E8 072F			 call	 rec5
+   1729	    15C6  E8 07BF			 call	 p8a
+   1730	    15C9  E8 073E			 call	 xprob
+   1731	    15CC  E8 076E			 call	 nextb
+   1732	    15CF  E9 0681			 jmp	 enco
+   1733	    15D2  BA 2174r		 ma8:	 lea	 dx,ca8	 ;eora
+   1734	    15D5  E8 071D			 call	 rec5
+   1735	    15D8  E8 07AD			 call	 p8a
+   1736	    15DB  E8 072C			 call	 xprob
+   1737	    15DE  E8 075C			 call	 nextb
+   1738	    15E1  E9 066F			 jmp	 enco
+   1739	    15E4  BA 2179r		 ma9:	 lea	 dx,ca9	 ;adca
+   1740	    15E7  E8 070B			 call	 rec5
+   1741	    15EA  E8 079B			 call	 p8a
+   1742	    15ED  E8 071A			 call	 xprob
+   1743	    15F0  E8 074A			 call	 nextb
+   1744	    15F3  E9 065D			 jmp	 enco
+   1745	    15F6  BA 217Er		 maa:	 lea	 dx,caa	 ;oraa
+   1746	    15F9  E8 06F9			 call	 rec5
+   1747	    15FC  E8 0789			 call	 p8a
+   1748	    15FF  E8 0708			 call	 xprob
+   1749	    1602  E8 0738			 call	 nextb
+   1750	    1605  E9 064B			 jmp	 enco
+   1751	    1608  BA 2183r		 mab:	 lea	 dx,cab	 ;adda
+   1752	    160B  E8 06E7			 call	 rec5
+   1753	    160E  E8 0777			 call	 p8a
+   1754	    1611  E8 06F6			 call	 xprob
+   1755	    1614  E8 0726			 call	 nextb
+   1756	    1617  E9 0639			 jmp	 enco
+   1757	    161A  80 3E	0126r 01	 mac:	 cmp	 shift2,1
+   1758	    161F  74 14	90 90			 jz	 mac1
+   1759	    1623  BA 2188r			 lea	 dx,cac	 ;cpx(y)
+   1760	    1626  E8 06CC			 call	 rec5
+   1761	    1629  E8 075C			 call	 p8a
+   1762	    162C  E8 06DB			 call	 xprob
+   1763	    162F  E8 070B			 call	 nextb
+   1764	    1632  E9 061E			 jmp	 enco
+   1765	    1635  BA 218Dr		 mac1:	 lea	 dx,cac1 ;cpy
+   1766	    1638  E8 06BA			 call	 rec5
+   1767	    163B  E8 074A			 call	 p8a
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 32
+prob_c11.ASM
+
+
+
+   1768	    163E  E8 06C9			 call	 xprob
+   1769	    1641  E8 06F9			 call	 nextb
+   1770	    1644  E9 060C			 jmp	 enco
+   1771
+   1772	    1647  BA 2192r		 mad:	 lea	 dx,cad	 ;jsr
+   1773	    164A  E8 06A8			 call	 rec5
+   1774	    164D  E8 0738			 call	 p8a
+   1775	    1650  E8 06B7			 call	 xprob
+   1776	    1653  E8 06E7			 call	 nextb
+   1777	    1656  E9 05FA			 jmp	 enco
+   1778	    1659  BA 2197r		 mae:	 lea	 dx,cae	 ;lds
+   1779	    165C  E8 0696			 call	 rec5
+   1780	    165F  E8 0726			 call	 p8a
+   1781	    1662  E8 06A5			 call	 xprob
+   1782	    1665  E8 06D5			 call	 nextb
+   1783	    1668  E9 05E8			 jmp	 enco
+   1784	    166B  BA 219Cr		 maf:	 lea	 dx,caf	 ;sts
+   1785	    166E  E8 0684			 call	 rec5
+   1786	    1671  E8 0714			 call	 p8a
+   1787	    1674  E8 0693			 call	 xprob
+   1788	    1677  E8 06C3			 call	 nextb
+   1789	    167A  E9 05D6			 jmp	 enco
+   1790
+   1791	    167D  BA 21A1r		 mb0:	 lea	 dx,cb0	 ;suba
+   1792	    1680  E8 0672			 call	 rec5
+   1793	    1683  E8 06D0			 call	 p16a
+   1794	    1686  E8 06B4			 call	 nextb
+   1795	    1689  E9 05C7			 jmp	 enco
+   1796	    168C  BA 21A6r		 mb1:	 lea	 dx,cb1	 ;cmpa
+   1797	    168F  E8 0663			 call	 rec5
+   1798	    1692  E8 06C1			 call	 p16a
+   1799	    1695  E8 06A5			 call	 nextb
+   1800	    1698  E9 05B8			 jmp	 enco
+   1801	    169B  BA 21ABr		 mb2:	 lea	 dx,cb2	 ;sbca
+   1802	    169E  E8 0654			 call	 rec5
+   1803	    16A1  E8 06B2			 call	 p16a
+   1804	    16A4  E8 0696			 call	 nextb
+   1805	    16A7  E9 05A9			 jmp	 enco
+   1806	    16AA  BA 21B0r		 mb3:	 lea	 dx,cb3	 ;subd
+   1807	    16AD  E8 0645			 call	 rec5
+   1808	    16B0  E8 06A3			 call	 p16a
+   1809	    16B3  E8 0687			 call	 nextb
+   1810	    16B6  E9 059A			 jmp	 enco
+   1811	    16B9  BA 21B5r		 mb4:	 lea	 dx,cb4	 ;anda
+   1812	    16BC  E8 0636			 call	 rec5
+   1813	    16BF  E8 0694			 call	 p16a
+   1814	    16C2  E8 0678			 call	 nextb
+   1815	    16C5  E9 058B			 jmp	 enco
+   1816	    16C8  BA 21BAr		 mb5:	 lea	 dx,cb5	 ;bita
+   1817	    16CB  E8 0627			 call	 rec5
+   1818	    16CE  E8 0685			 call	 p16a
+   1819	    16D1  E8 0669			 call	 nextb
+   1820	    16D4  E9 057C			 jmp	 enco
+   1821	    16D7  BA 21BFr		 mb6:	 lea	 dx,cb6	 ;ldaa
+   1822	    16DA  E8 0618			 call	 rec5
+   1823	    16DD  E8 0676			 call	 p16a
+   1824	    16E0  E8 065A			 call	 nextb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 33
+prob_c11.ASM
+
+
+
+   1825	    16E3  E9 056D			 jmp	 enco
+   1826	    16E6  BA 21BFr		 mb7:	 lea	 dx,cb6	 ;staa
+   1827	    16E9  E8 0609			 call	 rec5
+   1828	    16EC  E8 0667			 call	 p16a
+   1829	    16EF  E8 064B			 call	 nextb
+   1830	    16F2  E9 055E			 jmp	 enco
+   1831	    16F5  BA 21C9r		 mb8:	 lea	 dx,cb8	 ;eora
+   1832	    16F8  E8 05FA			 call	 rec5
+   1833	    16FB  E8 0658			 call	 p16a
+   1834	    16FE  E8 063C			 call	 nextb
+   1835	    1701  E9 054F			 jmp	 enco
+   1836	    1704  BA 21CEr		 mb9:	 lea	 dx,cb9	 ;adca
+   1837	    1707  E8 05EB			 call	 rec5
+   1838	    170A  E8 0649			 call	 p16a
+   1839	    170D  E8 062D			 call	 nextb
+   1840	    1710  E9 0540			 jmp	 enco
+   1841	    1713  BA 21D3r		 mba:	 lea	 dx,cba	 ;oraa
+   1842	    1716  E8 05DC			 call	 rec5
+   1843	    1719  E8 063A			 call	 p16a
+   1844	    171C  E8 061E			 call	 nextb
+   1845	    171F  E9 0531			 jmp	 enco
+   1846	    1722  BA 21D8r		 mbb:	 lea	 dx,cbb	 ;adda
+   1847	    1725  E8 05CD			 call	 rec5
+   1848	    1728  E8 062B			 call	 p16a
+   1849	    172B  E8 060F			 call	 nextb
+   1850	    172E  E9 0522			 jmp	 enco
+   1851	    1731  80 3E	0126r 01	 mbc:	 cmp	 shift2,1
+   1852	    1736  74 11	90 90			 jz	 mbc1
+   1853	    173A  BA 21DDr			 lea	 dx,cbc	 ;cpx(y)
+   1854	    173D  E8 05B5			 call	 rec5
+   1855	    1740  E8 0613			 call	 p16a
+   1856	    1743  E8 05F7			 call	 nextb
+   1857	    1746  E9 050A			 jmp	 enco
+   1858	    1749  BA 21E2r		 mbc1:	 lea	 dx,cbc1 ;cpy
+   1859	    174C  E8 05A6			 call	 rec5
+   1860	    174F  E8 0604			 call	 p16a
+   1861	    1752  E8 05E8			 call	 nextb
+   1862	    1755  E9 04FB			 jmp	 enco
+   1863
+   1864	    1758  BA 21E7r		 mbd:	 lea	 dx,cbd	 ;jsr
+   1865	    175B  E8 0597			 call	 rec5
+   1866	    175E  E8 05F5			 call	 p16a
+   1867	    1761  E8 05D9			 call	 nextb
+   1868	    1764  E9 04EC			 jmp	 enco
+   1869	    1767  BA 21ECr		 mbe:	 lea	 dx,cbe	 ;lds
+   1870	    176A  E8 0588			 call	 rec5
+   1871	    176D  E8 05E6			 call	 p16a
+   1872	    1770  E8 05CA			 call	 nextb
+   1873	    1773  E9 04DD			 jmp	 enco
+   1874	    1776  BA 21F1r		 mbf:	 lea	 dx,cbf	 ;sts
+   1875	    1779  E8 0579			 call	 rec5
+   1876	    177C  E8 05D7			 call	 p16a
+   1877	    177F  E8 05BB			 call	 nextb
+   1878	    1782  E9 04CE			 jmp	 enco
+   1879
+   1880	    1785  BA 21F6r		 mc0:	 lea	 dx,cc0	 ;subb
+   1881	    1788  E8 056A			 call	 rec5
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 34
+prob_c11.ASM
+
+
+
+   1882	    178B  E8 05F2			 call	 p8d
+   1883	    178E  E8 05AC			 call	 nextb
+   1884	    1791  E9 04BF			 jmp	 enco
+   1885	    1794  BA 21FBr		 mc1:	 lea	 dx,cc1	 ;cmpb
+   1886	    1797  E8 055B			 call	 rec5
+   1887	    179A  E8 05E3			 call	 p8d
+   1888	    179D  E8 059D			 call	 nextb
+   1889	    17A0  E9 04B0			 jmp	 enco
+   1890	    17A3  BA 2200r		 mc2:	 lea	 dx,cc2	 ;sbcb
+   1891	    17A6  E8 054C			 call	 rec5
+   1892	    17A9  E8 05D4			 call	 p8d
+   1893	    17AC  E8 058E			 call	 nextb
+   1894	    17AF  E9 04A1			 jmp	 enco
+   1895	    17B2  BA 2205r		 mc3:	 lea	 dx,cc3	 ;addd
+   1896	    17B5  E8 053D			 call	 rec5
+   1897	    17B8  E8 0593			 call	 p16d
+   1898	    17BB  E8 057F			 call	 nextb
+   1899	    17BE  E9 0492			 jmp	 enco
+   1900	    17C1  BA 220Ar		 mc4:	 lea	 dx,cc4	 ;andb
+   1901	    17C4  E8 052E			 call	 rec5
+   1902	    17C7  E8 05B6			 call	 p8d
+   1903	    17CA  E8 0570			 call	 nextb
+   1904	    17CD  E9 0483			 jmp	 enco
+   1905	    17D0  BA 220Fr		 mc5:	 lea	 dx,cc5	 ;bitb
+   1906	    17D3  E8 051F			 call	 rec5
+   1907	    17D6  E8 05A7			 call	 p8d
+   1908	    17D9  E8 0561			 call	 nextb
+   1909	    17DC  E9 0474			 jmp	 enco
+   1910	    17DF  BA 2214r		 mc6:	 lea	 dx,cc6	 ;ldbb
+   1911	    17E2  E8 0510			 call	 rec5
+   1912	    17E5  E8 0598			 call	 p8d
+   1913	    17E8  E8 0552			 call	 nextb
+   1914	    17EB  E9 0465			 jmp	 enco
+   1915	    17EE  BA 2219r		 mc7:	 lea	 dx,cc7	 ;---
+   1916	    17F1  E8 0501			 call	 rec5
+   1917	    17F4  E8 0546			 call	 nextb
+   1918	    17F7  E9 0459			 jmp	 enco
+   1919	    17FA  BA 221Er		 mc8:	 lea	 dx,cc8	 ;eorb
+   1920	    17FD  E8 04F5			 call	 rec5
+   1921	    1800  E8 057D			 call	 p8d
+   1922	    1803  E8 0537			 call	 nextb
+   1923	    1806  E9 044A			 jmp	 enco
+   1924	    1809  BA 2223r		 mc9:	 lea	 dx,cc9	 ;adcb
+   1925	    180C  E8 04E6			 call	 rec5
+   1926	    180F  E8 056E			 call	 p8d
+   1927	    1812  E8 0528			 call	 nextb
+   1928	    1815  E9 043B			 jmp	 enco
+   1929	    1818  BA 2228r		 mca:	 lea	 dx,cca	 ;orab
+   1930	    181B  E8 04D7			 call	 rec5
+   1931	    181E  E8 055F			 call	 p8d
+   1932	    1821  E8 0519			 call	 nextb
+   1933	    1824  E9 042C			 jmp	 enco
+   1934	    1827  BA 222Dr		 mcb:	 lea	 dx,ccb	 ;addb
+   1935	    182A  E8 04C8			 call	 rec5
+   1936	    182D  E8 0550			 call	 p8d
+   1937	    1830  E8 050A			 call	 nextb
+   1938	    1833  E9 041D			 jmp	 enco
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 35
+prob_c11.ASM
+
+
+
+   1939	    1836  BA 2232r		 mcc:	 lea	 dx,ccc	 ;ldd
+   1940	    1839  E8 04B9			 call	 rec5
+   1941	    183C  E8 050F			 call	 p16d
+   1942	    183F  E8 04FB			 call	 nextb
+   1943	    1842  E9 040E			 jmp	 enco
+   1944	    1845  BA 2237r		 mcd:	 lea	 dx,ccd	 ;				 ---------paje 4
+   1945	    1848  E8 04AA			 call	 rec5
+   1946	    184B  E8 0532			 call	 p8d
+   1947	    184E  E8 04EC			 call	 nextb
+   1948	    1851  E9 043F			 jmp	 paje4
+   1949	    1854  80 3E	0126r 01	 mce:	 cmp	 shift2,1
+   1950	    1859  74 11	90 90			 jz	 mce1
+   1951	    185D  BA 223Cr			 lea	 dx,cce	 ;ldx(y)
+   1952	    1860  E8 0492			 call	 rec5
+   1953	    1863  E8 04E8			 call	 p16d
+   1954	    1866  E8 04D4			 call	 nextb
+   1955	    1869  E9 03E7			 jmp	 enco
+   1956	    186C  BA 2241r		 mce1:	 lea	 dx,cce1 ;ldy
+   1957	    186F  E8 0483			 call	 rec5
+   1958	    1872  E8 04D9			 call	 p16d
+   1959	    1875  E8 04C5			 call	 nextb
+   1960	    1878  E9 03D8			 jmp	 enco
+   1961
+   1962	    187B  BA 2246r		 mcf:	 lea	 dx,ccf	 ;stop
+   1963	    187E  E8 0474			 call	 rec5
+   1964	    1881  E8 04B9			 call	 nextb
+   1965	    1884  E9 03CC			 jmp	 enco
+   1966
+   1967	    1887  BA 224Br		 md0:	 lea	 dx,cd0	 ;subb
+   1968	    188A  E8 0468			 call	 rec5
+   1969	    188D  E8 04F8			 call	 p8a
+   1970	    1890  E8 04AA			 call	 nextb
+   1971	    1893  E9 03BD			 jmp	 enco
+   1972	    1896  BA 2250r		 md1:	 lea	 dx,cd1	 ;cmpb
+   1973	    1899  E8 0459			 call	 rec5
+   1974	    189C  E8 04E9			 call	 p8a
+   1975	    189F  E8 049B			 call	 nextb
+   1976	    18A2  E9 03AE			 jmp	 enco
+   1977	    18A5  BA 2255r		 md2:	 lea	 dx,cd2	 ;sbcb
+   1978	    18A8  E8 044A			 call	 rec5
+   1979	    18AB  E8 04DA			 call	 p8a
+   1980	    18AE  E8 048C			 call	 nextb
+   1981	    18B1  E9 039F			 jmp	 enco
+   1982	    18B4  BA 225Ar		 md3:	 lea	 dx,cd3	 ;addd
+   1983	    18B7  E8 043B			 call	 rec5
+   1984	    18BA  E8 04CB			 call	 p8a
+   1985	    18BD  E8 047D			 call	 nextb
+   1986	    18C0  E9 0390			 jmp	 enco
+   1987	    18C3  BA 225Fr		 md4:	 lea	 dx,cd4	 ;andb
+   1988	    18C6  E8 042C			 call	 rec5
+   1989	    18C9  E8 04BC			 call	 p8a
+   1990	    18CC  E8 046E			 call	 nextb
+   1991	    18CF  E9 0381			 jmp	 enco
+   1992	    18D2  BA 2264r		 md5:	 lea	 dx,cd5	 ;bitb
+   1993	    18D5  E8 041D			 call	 rec5
+   1994	    18D8  E8 04AD			 call	 p8a
+   1995	    18DB  E8 045F			 call	 nextb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 36
+prob_c11.ASM
+
+
+
+   1996	    18DE  E9 0372			 jmp	 enco
+   1997	    18E1  BA 2269r		 md6:	 lea	 dx,cd6	 ;ldbb
+   1998	    18E4  E8 040E			 call	 rec5
+   1999	    18E7  E8 049E			 call	 p8a
+   2000	    18EA  E8 0450			 call	 nextb
+   2001	    18ED  E9 0363			 jmp	 enco
+   2002	    18F0  BA 226Er		 md7:	 lea	 dx,cd7	 ;stbb
+   2003	    18F3  E8 03FF			 call	 rec5
+   2004	    18F6  E8 048F			 call	 p8a
+   2005	    18F9  E8 0441			 call	 nextb
+   2006	    18FC  E9 0354			 jmp	 enco
+   2007	    18FF  BA 2273r		 md8:	 lea	 dx,cd8	 ;eorb
+   2008	    1902  E8 03F0			 call	 rec5
+   2009	    1905  E8 0480			 call	 p8a
+   2010	    1908  E8 0432			 call	 nextb
+   2011	    190B  E9 0345			 jmp	 enco
+   2012	    190E  BA 2278r		 md9:	 lea	 dx,cd9	 ;adcb
+   2013	    1911  E8 03E1			 call	 rec5
+   2014	    1914  E8 0471			 call	 p8a
+   2015	    1917  E8 0423			 call	 nextb
+   2016	    191A  E9 0336			 jmp	 enco
+   2017	    191D  BA 227Dr		 mda:	 lea	 dx,cda	 ;orab
+   2018	    1920  E8 03D2			 call	 rec5
+   2019	    1923  E8 0462			 call	 p8a
+   2020	    1926  E8 0414			 call	 nextb
+   2021	    1929  E9 0327			 jmp	 enco
+   2022	    192C  BA 2282r		 mdb:	 lea	 dx,cdb	 ;addb
+   2023	    192F  E8 03C3			 call	 rec5
+   2024	    1932  E8 0453			 call	 p8a
+   2025	    1935  E8 0405			 call	 nextb
+   2026	    1938  E9 0318			 jmp	 enco
+   2027	    193B  BA 2287r		 mdc:	 lea	 dx,cdc	 ;ldd
+   2028	    193E  E8 03B4			 call	 rec5
+   2029	    1941  E8 0444			 call	 p8a
+   2030	    1944  E8 03F6			 call	 nextb
+   2031	    1947  E9 0309			 jmp	 enco
+   2032	    194A  BA 228Cr		 mdd:	 lea	 dx,cdd	 ;std
+   2033	    194D  E8 03A5			 call	 rec5
+   2034	    1950  E8 0435			 call	 p8a
+   2035	    1953  E8 03E7			 call	 nextb
+   2036	    1956  E9 02FA			 jmp	 enco
+   2037	    1959  80 3E	0126r 01	 mde:	 cmp	 shift2,1
+   2038	    195E  74 11	90 90			 jz	 mde1
+   2039	    1962  BA 2291r			 lea	 dx,cde	 ;ldx(y)
+   2040	    1965  E8 038D			 call	 rec5
+   2041	    1968  E8 041D			 call	 p8a
+   2042	    196B  E8 03CF			 call	 nextb
+   2043	    196E  E9 02E2			 jmp	 enco
+   2044	    1971  BA 2296r		 mde1:	 lea	 dx,cde1 ;ldy
+   2045	    1974  E8 037E			 call	 rec5
+   2046	    1977  E8 040E			 call	 p8a
+   2047	    197A  E8 03C0			 call	 nextb
+   2048	    197D  E9 02D3			 jmp	 enco
+   2049	    1980  80 3E	0126r 01	 mdf:	 cmp	 shift2,1
+   2050	    1985  74 11	90 90			 jz	 mdf1
+   2051	    1989  BA 229Br			 lea	 dx,cdf	 ;stx(y)
+   2052	    198C  E8 0366			 call	 rec5
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 37
+prob_c11.ASM
+
+
+
+   2053	    198F  E8 03F6			 call	 p8a
+   2054	    1992  E8 03A8			 call	 nextb
+   2055	    1995  E9 02BB			 jmp	 enco
+   2056	    1998  BA 22A0r		 mdf1:	 lea	 dx,cdf1 ;sty
+   2057	    199B  E8 0357			 call	 rec5
+   2058	    199E  E8 03E7			 call	 p8a
+   2059	    19A1  E8 0399			 call	 nextb
+   2060	    19A4  E9 02AC			 jmp	 enco
+   2061
+   2062	    19A7  BA 22A5r		 me0:	 lea	 dx,ce0	 ;subb
+   2063	    19AA  E8 0348			 call	 rec5
+   2064	    19AD  E8 03D8			 call	 p8a
+   2065	    19B0  E8 0357			 call	 xprob
+   2066	    19B3  E8 0387			 call	 nextb
+   2067	    19B6  E9 029A			 jmp	 enco
+   2068	    19B9  BA 22AAr		 me1:	 lea	 dx,ce1	 ;cmpb
+   2069	    19BC  E8 0336			 call	 rec5
+   2070	    19BF  E8 03C6			 call	 p8a
+   2071	    19C2  E8 0345			 call	 xprob
+   2072	    19C5  E8 0375			 call	 nextb
+   2073	    19C8  E9 0288			 jmp	 enco
+   2074	    19CB  BA 22AFr		 me2:	 lea	 dx,ce2	 ;sbcb
+   2075	    19CE  E8 0324			 call	 rec5
+   2076	    19D1  E8 03B4			 call	 p8a
+   2077	    19D4  E8 0333			 call	 xprob
+   2078	    19D7  E8 0363			 call	 nextb
+   2079	    19DA  E9 0276			 jmp	 enco
+   2080	    19DD  BA 22B4r		 me3:	 lea	 dx,ce3	 ;addd
+   2081	    19E0  E8 0312			 call	 rec5
+   2082	    19E3  E8 03A2			 call	 p8a
+   2083	    19E6  E8 0321			 call	 xprob
+   2084	    19E9  E8 0351			 call	 nextb
+   2085	    19EC  E9 0264			 jmp	 enco
+   2086	    19EF  BA 22B9r		 me4:	 lea	 dx,ce4	 ;andb
+   2087	    19F2  E8 0300			 call	 rec5
+   2088	    19F5  E8 0390			 call	 p8a
+   2089	    19F8  E8 030F			 call	 xprob
+   2090	    19FB  E8 033F			 call	 nextb
+   2091	    19FE  E9 0252			 jmp	 enco
+   2092	    1A01  BA 22BEr		 me5:	 lea	 dx,ce5	 ;bitb
+   2093	    1A04  E8 02EE			 call	 rec5
+   2094	    1A07  E8 037E			 call	 p8a
+   2095	    1A0A  E8 02FD			 call	 xprob
+   2096	    1A0D  E8 032D			 call	 nextb
+   2097	    1A10  E9 0240			 jmp	 enco
+   2098	    1A13  BA 22C3r		 me6:	 lea	 dx,ce6	 ;ldbb
+   2099	    1A16  E8 02DC			 call	 rec5
+   2100	    1A19  E8 036C			 call	 p8a
+   2101	    1A1C  E8 02EB			 call	 xprob
+   2102	    1A1F  E8 031B			 call	 nextb
+   2103	    1A22  E9 022E			 jmp	 enco
+   2104	    1A25  BA 22C8r		 me7:	 lea	 dx,ce7	 ;stbb
+   2105	    1A28  E8 02CA			 call	 rec5
+   2106	    1A2B  E8 035A			 call	 p8a
+   2107	    1A2E  E8 02D9			 call	 xprob
+   2108	    1A31  E8 0309			 call	 nextb
+   2109	    1A34  E9 021C			 jmp	 enco
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 38
+prob_c11.ASM
+
+
+
+   2110	    1A37  BA 22CDr		 me8:	 lea	 dx,ce8	 ;eorb
+   2111	    1A3A  E8 02B8			 call	 rec5
+   2112	    1A3D  E8 0348			 call	 p8a
+   2113	    1A40  E8 02C7			 call	 xprob
+   2114	    1A43  E8 02F7			 call	 nextb
+   2115	    1A46  E9 020A			 jmp	 enco
+   2116	    1A49  BA 22D2r		 me9:	 lea	 dx,ce9	 ;adcb
+   2117	    1A4C  E8 02A6			 call	 rec5
+   2118	    1A4F  E8 0336			 call	 p8a
+   2119	    1A52  E8 02B5			 call	 xprob
+   2120	    1A55  E8 02E5			 call	 nextb
+   2121	    1A58  E9 01F8			 jmp	 enco
+   2122	    1A5B  BA 22D7r		 mea:	 lea	 dx,cea	 ;orab
+   2123	    1A5E  E8 0294			 call	 rec5
+   2124	    1A61  E8 0324			 call	 p8a
+   2125	    1A64  E8 02A3			 call	 xprob
+   2126	    1A67  E8 02D3			 call	 nextb
+   2127	    1A6A  E9 01E6			 jmp	 enco
+   2128	    1A6D  BA 22DCr		 meb:	 lea	 dx,ceb	 ;addb
+   2129	    1A70  E8 0282			 call	 rec5
+   2130	    1A73  E8 0312			 call	 p8a
+   2131	    1A76  E8 0291			 call	 xprob
+   2132	    1A79  E8 02C1			 call	 nextb
+   2133	    1A7C  E9 01D4			 jmp	 enco
+   2134	    1A7F  BA 22E1r		 mec:	 lea	 dx,cec	 ;ldd
+   2135	    1A82  E8 0270			 call	 rec5
+   2136	    1A85  E8 0300			 call	 p8a
+   2137	    1A88  E8 027F			 call	 xprob
+   2138	    1A8B  E8 02AF			 call	 nextb
+   2139	    1A8E  E9 01C2			 jmp	 enco
+   2140	    1A91  BA 22E6r		 med:	 lea	 dx,ced	 ;std
+   2141	    1A94  E8 025E			 call	 rec5
+   2142	    1A97  E8 02EE			 call	 p8a
+   2143	    1A9A  E8 026D			 call	 xprob
+   2144	    1A9D  E8 029D			 call	 nextb
+   2145	    1AA0  E9 01B0			 jmp	 enco
+   2146	    1AA3  80 3E	0126r 01	 mee:	 cmp	 shift2,1
+   2147	    1AA8  74 14	90 90			 jz	 mee1
+   2148	    1AAC  BA 22EBr			 lea	 dx,cee	 ;ldx(y)
+   2149	    1AAF  E8 0243			 call	 rec5
+   2150	    1AB2  E8 02D3			 call	 p8a
+   2151	    1AB5  E8 0252			 call	 xprob
+   2152	    1AB8  E8 0282			 call	 nextb
+   2153	    1ABB  E9 0195			 jmp	 enco
+   2154	    1ABE  BA 22F0r		 mee1:	 lea	 dx,cee1 ;ldy
+   2155	    1AC1  E8 0231			 call	 rec5
+   2156	    1AC4  E8 02C1			 call	 p8a
+   2157	    1AC7  E8 0240			 call	 xprob
+   2158	    1ACA  E8 0270			 call	 nextb
+   2159	    1ACD  E9 0183			 jmp	 enco
+   2160	    1AD0  80 3E	0126r 01	 mef:	 cmp	 shift2,1
+   2161	    1AD5  74 14	90 90			 jz	 mef1
+   2162	    1AD9  BA 22F5r			 lea	 dx,cef	 ;stx(y)
+   2163	    1ADC  E8 0216			 call	 rec5
+   2164	    1ADF  E8 02A6			 call	 p8a
+   2165	    1AE2  E8 0225			 call	 xprob
+   2166	    1AE5  E8 0255			 call	 nextb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 39
+prob_c11.ASM
+
+
+
+   2167	    1AE8  E9 0168			 jmp	 enco
+   2168	    1AEB  BA 22FAr		 mef1:	 lea	 dx,cef1 ;sty
+   2169	    1AEE  E8 0204			 call	 rec5
+   2170	    1AF1  E8 0294			 call	 p8a
+   2171	    1AF4  E8 0213			 call	 xprob
+   2172	    1AF7  E8 0243			 call	 nextb
+   2173	    1AFA  E9 0156			 jmp	 enco
+   2174
+   2175	    1AFD  BA 22FFr		 mf0:	 lea	 dx,cf0	 ;subb
+   2176	    1B00  E8 01F2			 call	 rec5
+   2177	    1B03  E8 0282			 call	 p8a
+   2178	    1B06  E8 0201			 call	 xprob
+   2179	    1B09  E8 0231			 call	 nextb
+   2180	    1B0C  E9 0144			 jmp	 enco
+   2181	    1B0F  BA 2304r		 mf1:	 lea	 dx,cf1	 ;cmpb
+   2182	    1B12  E8 01E0			 call	 rec5
+   2183	    1B15  E8 0270			 call	 p8a
+   2184	    1B18  E8 01EF			 call	 xprob
+   2185	    1B1B  E8 021F			 call	 nextb
+   2186	    1B1E  E9 0132			 jmp	 enco
+   2187	    1B21  BA 2309r		 mf2:	 lea	 dx,cf2	 ;sbcb
+   2188	    1B24  E8 01CE			 call	 rec5
+   2189	    1B27  E8 025E			 call	 p8a
+   2190	    1B2A  E8 01DD			 call	 xprob
+   2191	    1B2D  E8 020D			 call	 nextb
+   2192	    1B30  E9 0120			 jmp	 enco
+   2193	    1B33  BA 230Er		 mf3:	 lea	 dx,cf3	 ;addd
+   2194	    1B36  E8 01BC			 call	 rec5
+   2195	    1B39  E8 024C			 call	 p8a
+   2196	    1B3C  E8 01CB			 call	 xprob
+   2197	    1B3F  E8 01FB			 call	 nextb
+   2198	    1B42  E9 010E			 jmp	 enco
+   2199	    1B45  BA 2313r		 mf4:	 lea	 dx,cf4	 ;andb
+   2200	    1B48  E8 01AA			 call	 rec5
+   2201	    1B4B  E8 023A			 call	 p8a
+   2202	    1B4E  E8 01B9			 call	 xprob
+   2203	    1B51  E8 01E9			 call	 nextb
+   2204	    1B54  E9 00FC			 jmp	 enco
+   2205	    1B57  BA 2318r		 mf5:	 lea	 dx,cf5	 ;bitb
+   2206	    1B5A  E8 0198			 call	 rec5
+   2207	    1B5D  E8 0228			 call	 p8a
+   2208	    1B60  E8 01A7			 call	 xprob
+   2209	    1B63  E8 01D7			 call	 nextb
+   2210	    1B66  E9 00EA			 jmp	 enco
+   2211	    1B69  BA 231Dr		 mf6:	 lea	 dx,cf6	 ;ldbb
+   2212	    1B6C  E8 0186			 call	 rec5
+   2213	    1B6F  E8 0216			 call	 p8a
+   2214	    1B72  E8 0195			 call	 xprob
+   2215	    1B75  E8 01C5			 call	 nextb
+   2216	    1B78  E9 00D8			 jmp	 enco
+   2217	    1B7B  BA 2322r		 mf7:	 lea	 dx,cf7	 ;stbb
+   2218	    1B7E  E8 0174			 call	 rec5
+   2219	    1B81  E8 0204			 call	 p8a
+   2220	    1B84  E8 0183			 call	 xprob
+   2221	    1B87  E8 01B3			 call	 nextb
+   2222	    1B8A  E9 00C6			 jmp	 enco
+   2223	    1B8D  BA 2327r		 mf8:	 lea	 dx,cf8	 ;eorb
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 40
+prob_c11.ASM
+
+
+
+   2224	    1B90  E8 0162			 call	 rec5
+   2225	    1B93  E8 01F2			 call	 p8a
+   2226	    1B96  E8 0171			 call	 xprob
+   2227	    1B99  E8 01A1			 call	 nextb
+   2228	    1B9C  E9 00B4			 jmp	 enco
+   2229	    1B9F  BA 232Cr		 mf9:	 lea	 dx,cf9	 ;adcb
+   2230	    1BA2  E8 0150			 call	 rec5
+   2231	    1BA5  E8 01E0			 call	 p8a
+   2232	    1BA8  E8 015F			 call	 xprob
+   2233	    1BAB  E8 018F			 call	 nextb
+   2234	    1BAE  E9 00A2			 jmp	 enco
+   2235	    1BB1  BA 2331r		 mfa:	 lea	 dx,cfa	 ;orab
+   2236	    1BB4  E8 013E			 call	 rec5
+   2237	    1BB7  E8 01CE			 call	 p8a
+   2238	    1BBA  E8 014D			 call	 xprob
+   2239	    1BBD  E8 017D			 call	 nextb
+   2240	    1BC0  E9 0090			 jmp	 enco
+   2241	    1BC3  BA 2336r		 mfb:	 lea	 dx,cfb	 ;addb
+   2242	    1BC6  E8 012C			 call	 rec5
+   2243	    1BC9  E8 01BC			 call	 p8a
+   2244	    1BCC  E8 013B			 call	 xprob
+   2245	    1BCF  E8 016B			 call	 nextb
+   2246	    1BD2  EB 7F	90			 jmp	 enco
+   2247	    1BD5  BA 233Br		 mfc:	 lea	 dx,cfc	 ;ldd
+   2248	    1BD8  E8 011A			 call	 rec5
+   2249	    1BDB  E8 01AA			 call	 p8a
+   2250	    1BDE  E8 0129			 call	 xprob
+   2251	    1BE1  E8 0159			 call	 nextb
+   2252	    1BE4  EB 6D	90			 jmp	 enco
+   2253	    1BE7  BA 2340r		 mfd:	 lea	 dx,cfd	 ;std
+   2254	    1BEA  E8 0108			 call	 rec5
+   2255	    1BED  E8 0198			 call	 p8a
+   2256	    1BF0  E8 0117			 call	 xprob
+   2257	    1BF3  E8 0147			 call	 nextb
+   2258	    1BF6  EB 5B	90			 jmp	 enco
+   2259	    1BF9  80 3E	0126r 01	 mfe:	 cmp	 shift2,1
+   2260	    1BFE  74 14	90 90			 jz	 mfe1
+   2261	    1C02  BA 2345r			 lea	 dx,cfe	 ;ldx(y)
+   2262	    1C05  E8 00ED			 call	 rec5
+   2263	    1C08  E8 017D			 call	 p8a
+   2264	    1C0B  E8 00FC			 call	 xprob
+   2265	    1C0E  E8 012C			 call	 nextb
+   2266	    1C11  EB 40	90			 jmp	 enco
+   2267	    1C14  BA 234Ar		 mfe1:	 lea	 dx,cfe1 ;ldy
+   2268	    1C17  E8 00DB			 call	 rec5
+   2269	    1C1A  E8 016B			 call	 p8a
+   2270	    1C1D  E8 00EA			 call	 xprob
+   2271	    1C20  E8 011A			 call	 nextb
+   2272	    1C23  EB 2E	90			 jmp	 enco
+   2273	    1C26  80 3E	0126r 01	 mff:	 cmp	 shift2,1
+   2274	    1C2B  74 14	90 90			 jz	 mff1
+   2275	    1C2F  BA 234Fr			 lea	 dx,cff	 ;stx(y)
+   2276	    1C32  E8 00C0			 call	 rec5
+   2277	    1C35  E8 0150			 call	 p8a
+   2278	    1C38  E8 00CF			 call	 xprob
+   2279	    1C3B  E8 00FF			 call	 nextb
+   2280	    1C3E  EB 13	90			 jmp	 enco
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 41
+prob_c11.ASM
+
+
+
+   2281	    1C41  BA 2354r		 mff1:	 lea	 dx,cff1 ;sty
+   2282	    1C44  E8 00AE			 call	 rec5
+   2283	    1C47  E8 013E			 call	 p8a
+   2284	    1C4A  E8 00BD			 call	 xprob
+   2285	    1C4D  E8 00ED			 call	 nextb
+   2286	    1C50  EB 01	90			 jmp	 enco
+   2287					 ;%
+   2288	    1C53  FF 06	0123r		 enco:	 inc	 adr16
+   2289	    1C57  C6 06	0125r 00		 mov	 shift1,0
+   2290	    1C5C  C6 06	0126r 00		 mov	 shift2,0
+   2291	    1C61  83 3E	0123r 10		 cmp	 adr16,10h
+   2292	    1C66  74 05	90 90			 jz	 end_f_
+   2293	    1C6A  E9 E523			 jmp	 cont_1
+   2294	    1C6D  E9 E519		 end_f_: jmp	 end_f
+   2295
+   2296	    1C70  E8 004D		 paje2:	 call	 read		 ;cod 18
+   2297	    1C73  FF 06	0123r			 inc	 adr16
+   2298	    1C77  C6 06	0125r 01		 mov	 shift1,1	 ;IND,Y
+   2299	    1C7C  C6 06	0126r 01		 mov	 shift2,1	 ;CMP(Y)
+   2300	    1C81  E9 E539			 jmp	 a0
+   2301
+   2302	    1C84  E8 0039		 paje3:	 call	 read		 ;cod 1A
+   2303	    1C87  FF 06	0123r			 inc	 adr16
+   2304	    1C8B  C6 06	0126r 01		 mov	 shift2,1	 ;CMP(Y)
+   2305	    1C90  E9 E52A			 jmp	 a0
+   2306
+   2307	    1C93  E8 002A		 paje4:	 call	 read		 ;cod CD
+   2308	    1C96  FF 06	0123r			 inc	 adr16
+   2309	    1C9A  C6 06	0125r 01		 mov	 shift1,1	 ;IND,Y
+   2310	    1C9F  E9 E51B			 jmp	 a0
+   2311
+   2312					 ;		 *** close file	***
+   2313					 ;		 ------------------
+   2314
+   2315	    1CA2  B4 3E			 close:	 mov	 ah,3eh
+   2316	    1CA4  8B 1E	0110r			 mov	 bx,handle
+   2317	    1CA8  CD 21				 int	 21h
+   2318	    1CAA  B4 3E				 mov	 ah,3eh
+   2319	    1CAC  8B 1E	0112r			 mov	 bx,handle1
+   2320	    1CB0  CD 21				 int	 21h
+   2321	    1CB2  C3				 ret
+   2322
+   2323
+   2324					 ;		 *** open file ***
+   2325					 ;		 -----------------
+   2326
+   2327	    1CB3  B4 3D			 open:	 mov	 ah,3dh
+   2328	    1CB5  B0 00				 mov	 al,0
+   2329	    1CB7  BA 0082r			 lea	 dx,fname
+   2330	    1CBA  CD 21				 int	 21h
+   2331	    1CBC  A3 0110r			 mov	 handle,ax
+   2332	    1CBF  C3				 ret
+   2333
+   2334					 ;		 *** read file ***
+   2335					 ;		 -----------------
+   2336
+   2337	    1CC0  B4 3F			 read:	 mov	 ah,3fh
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 42
+prob_c11.ASM
+
+
+
+   2338	    1CC2  8B 1E	0110r			 mov	 bx,handle
+   2339	    1CC6  B9 0001			 mov	 cx,1
+   2340	    1CC9  BA 0117r			 lea	 dx,dta
+   2341	    1CCC  CD 21				 int	 21h
+   2342	    1CCE  72 05	90 90			 jc	 read_e
+   2343	    1CD2  B4 00				 mov	 ah,0
+   2344	    1CD4  C3				 ret
+   2345	    1CD5  B4 01			 read_e: mov	 ah,1
+   2346	    1CD7  C3				 ret
+   2347
+   2348					 ;		 *** created file ***
+   2349					 ;		 --------------------
+   2350
+   2351	    1CD8  B4 3C			 crefi:	 mov	 ah,3ch
+   2352	    1CDA  B9 0000			 mov	 cx,00
+   2353	    1CDD  BA 0103r			 lea	 dx,fname1
+   2354	    1CE0  CD 21				 int	 21h
+   2355	    1CE2  A3 0112r			 mov	 handle1,ax
+   2356	    1CE5  C3				 ret
+   2357
+   2358					 ;		 *** rec file ***
+   2359					 ;		 ----------------
+   2360
+   2361	    1CE6  B4 40			 rec:	 mov	 ah,40h
+   2362	    1CE8  8B 1E	0112r			 mov	 bx,handle1
+   2363	    1CEC  B9 0001			 mov	 cx,1
+   2364	    1CEF  BA 0146r			 lea	 dx,orec
+   2365	    1CF2  CD 21				 int	 21h
+   2366	    1CF4  C3				 ret
+   2367
+   2368					 ;		 *** rec file 5	bytes ***
+   2369					 ;		 ------------------------
+   2370	    1CF5  B4 40				 rec5:	 mov	 ah,40h
+   2371	    1CF7  8B 1E	0112r			 mov	 bx,handle1
+   2372	    1CFB  B9 0005			 mov	 cx,5
+   2373					 ;	 lea	 dx,orec
+   2374	    1CFE  CD 21				 int	 21h
+   2375	    1D00  C3				 ret
+   2376
+   2377	    1D01  C6 06	0146r 20	 prob:	 mov	 orec,'	'
+   2378	    1D06  E8 FFDD			 call	 rec
+   2379	    1D09  C3				 ret
+   2380
+   2381	    1D0A  C6 06	0146r 2C	 xprob:	 mov	 orec,','
+   2382	    1D0F  E8 FFD4			 call	 rec
+   2383	    1D12  80 3E	0125r 01		 cmp	 shift1,1
+   2384	    1D17  74 13	90 90			 jz	 x_prob
+   2385	    1D1B  C6 06	0146r 58		 mov	 orec,'X'
+   2386	    1D20  E8 FFC3			 call	 rec
+   2387	    1D23  C6 06	0146r 20		 mov	 orec,'	'
+   2388	    1D28  E8 FFBB			 call	 rec
+   2389	    1D2B  C3				 ret
+   2390	    1D2C  C6 06	0146r 59	 x_prob: mov	 orec,'Y'
+   2391	    1D31  E8 FFB2			 call	 rec
+   2392	    1D34  C6 06	0146r 20		 mov	 orec,'	'
+   2393	    1D39  E8 FFAA			 call	 rec
+   2394	    1D3C  C3				 ret
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 43
+prob_c11.ASM
+
+
+
+   2395
+   2396	    1D3D  C6 06	0146r 0A	 nextb:	 mov	 orec,0ah
+   2397	    1D42  E8 FFA1			 call	 rec
+   2398	    1D45  C6 06	0146r 0D		 mov	 orec,0dh
+   2399	    1D4A  E8 FF99			 call	 rec
+   2400	    1D4D  C3				 ret
+   2401
+   2402	    1D4E  C6 06	0146r 23	 p16d:	 mov	 orec,23h	 ;#
+   2403	    1D53  E8 FF90			 call	 rec
+   2404	    1D56  C6 06	0146r 24	 p16a:	 mov	 orec,24h	 ;$
+   2405	    1D5B  E8 FF88			 call	 rec
+   2406	    1D5E  E8 FF5F			 call	 read
+   2407	    1D61  FF 06	0123r			 inc	 adr16
+   2408	    1D65  A0 0117r			 mov	 al,dta
+   2409	    1D68  A2 0122r			 mov	 val8,al
+   2410	    1D6B  E8 FF52			 call	 read
+   2411	    1D6E  FF 06	0123r			 inc	 adr16
+   2412	    1D72  8A 26	0122r			 mov	 ah,val8
+   2413	    1D76  A0 0117r			 mov	 al,dta
+   2414	    1D79  A3 0120r			 mov	 val16,ax
+   2415	    1D7C  E8 003B			 call	 prn16
+   2416	    1D7F  C3				 ret
+   2417
+   2418	    1D80  C6 06	0146r 23	 p8d:	 mov	 orec,23h	 ;#
+   2419	    1D85  E8 FF5E			 call	 rec
+   2420	    1D88  C6 06	0146r 24	 p8a:	 mov	 orec,24h	 ;$
+   2421	    1D8D  E8 FF56			 call	 rec
+   2422	    1D90  E8 FF2D			 call	 read
+   2423	    1D93  FF 06	0123r			 inc	 adr16
+   2424	    1D97  A0 0117r			 mov	 al,dta
+   2425	    1D9A  A2 0122r			 mov	 val8,al
+   2426	    1D9D  E8 003C			 call	 prn8
+   2427	    1DA0  C3				 ret
+   2428
+   2429	    1DA1  C6 06	0146r 12	 p8s:	 mov	 orec,12h	 ;
+   2430	    1DA6  E8 FF3D			 call	 rec
+   2431	    1DA9  E8 FF14			 call	 read
+   2432	    1DAC  FF 06	0123r			 inc	 adr16
+   2433	    1DB0  A0 0117r			 mov	 al,dta
+   2434	    1DB3  A2 0122r			 mov	 val8,al
+   2435	    1DB6  E8 0023			 call	 prn8
+   2436	    1DB9  C3				 ret
+   2437
+   2438
+   2439					 ;-------------------------------
+   2440	    1DBA  A1 0120r		 prn16:	 mov	 ax,val16
+   2441	    1DBD  C1 E8	0C			 shr	 ax,12
+   2442	    1DC0  E8 0029			 call	 meta_
+   2443	    1DC3  A1 0120r			 mov	 ax,val16
+   2444	    1DC6  C1 E8	08			 shr	 ax,8
+   2445	    1DC9  E8 0020			 call	 meta_
+   2446	    1DCC  A1 0120r			 mov	 ax,val16	 ;save 16 bit value
+   2447	    1DCF  C1 E8	04			 shr	 ax,4
+   2448	    1DD2  E8 0017			 call	 meta_
+   2449	    1DD5  A1 0120r			 mov	 ax,val16
+   2450	    1DD8  E8 0011			 call	 meta_
+   2451	    1DDB  C3				 ret
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 44
+prob_c11.ASM
+
+
+
+   2452
+   2453	    1DDC  A0 0122r		 prn8:	 mov	 al,val8	 ;save 8 bit value
+   2454	    1DDF  C0 E8	04			 shr	 al,4
+   2455	    1DE2  E8 0007			 call	 meta_
+   2456	    1DE5  A0 0122r			 mov	 al,val8
+   2457	    1DE8  E8 0001			 call	 meta_
+   2458	    1DEB  C3				 ret
+   2459
+   2460	    1DEC  24 0F			 meta_:	 and	 al,0fh
+   2461	    1DEE  3C 09				 cmp	 al,9
+   2462	    1DF0  7E 04	90 90			 jle	 digit_
+   2463	    1DF4  04 07				 add	 al,7
+   2464	    1DF6  04 30			 digit_: add	 al,30h
+   2465	    1DF8  A2 0146r			 mov	 orec,al
+   2466	    1DFB  E8 FEE8			 call	 rec
+   2467	    1DFE  C3				 ret
+   2468
+   2469
+   2470	    1DFF  54 45	53 54 20	 c00	 db	 'TEST '
+   2471	    1E04  4E 4F	50 20 20	 c01	 db	 'NOP  '
+   2472	    1E09  49 44	49 56 20	 c02	 db	 'IDIV '
+   2473	    1E0E  46 44	49 56 20	 c03	 db	 'FDIV '
+   2474	    1E13  4C 53	52 44 20	 c04	 db	 'LSRD '
+   2475	    1E18  41 53	4C 44 20	 c05	 db	 'ASLD '
+   2476	    1E1D  54 41	50 20 20	 c06	 db	 'TAP  '
+   2477	    1E22  54 50	41 20 20	 c07	 db	 'TPA  '
+   2478	    1E27  49 4E	58 20 20	 c08	 db	 'INX  '
+   2479	    1E2C  49 4E	59 20 20	 c081	 db	 'INY  '
+   2480	    1E31  44 45	58 20 20	 c09	 db	 'DEX  '
+   2481	    1E36  43 4C	56 20 20	 c0A	 db	 'CLV  '
+   2482	    1E3B  53 45	56 20 20	 c0B	 db	 'SEV  '
+   2483	    1E40  43 4C	43 20 20	 c0C	 db	 'CLC  '
+   2484	    1E45  53 45	43 20 20	 c0D	 db	 'SEC  '
+   2485	    1E4A  43 4C	49 20 20	 c0E	 db	 'CLI  '
+   2486	    1E4F  53 45	49 20 20	 c0F	 db	 'SEI  '
+   2487	    1E54  53 42	41 20 20	 c10	 db	 'SBA  '
+   2488	    1E59  43 42	41 20 20	 c11	 db	 'CBA  '
+   2489	    1E5E  42 52	53 45 54	 c12	 db	 'BRSET'
+   2490	    1E63  42 52	43 4C 52	 c13	 db	 'BRCLR'
+   2491	    1E68  42 53	45 54 20	 c14	 db	 'BSET '
+   2492	    1E6D  42 43	4C 52 20	 c15	 db	 'BCLR '
+   2493	    1E72  54 41	42 20 20	 c16	 db	 'TAB  '
+   2494	    1E77  54 42	41 20 20	 c17	 db	 'TBA  '
+   2495	    1E7C  50 20	32 20 20	 c18	 db	 'P 2  '
+   2496	    1E81  44 41	41 20 20	 c19	 db	 'DAA  '
+   2497	    1E86  50 20	33 20 20	 c1a	 db	 'P 3  '
+   2498	    1E8B  41 42	41 20 20	 c1b	 db	 'ABA  '
+   2499	    1E90  42 53	45 54 20	 c1c	 db	 'BSET '
+   2500	    1E95  42 43	4C 52 20	 c1d	 db	 'BCLR '
+   2501	    1E9A  42 52	53 45 54	 c1e	 db	 'BRSET'
+   2502	    1E9F  42 52	43 4C 52	 c1f	 db	 'BRCLR'
+   2503	    1EA4  42 52	41 20 20	 c20	 db	 'BRA  '
+   2504	    1EA9  42 52	4E 20 20	 c21	 db	 'BRN  '
+   2505	    1EAE  42 48	49 20 20	 c22	 db	 'BHI  '
+   2506	    1EB3  42 4C	53 20 20	 c23	 db	 'BLS  '
+   2507	    1EB8  42 43	43 20 20	 c24	 db	 'BCC  '
+   2508	    1EBD  42 43	53 20 20	 c25	 db	 'BCS  '
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 45
+prob_c11.ASM
+
+
+
+   2509	    1EC2  42 4E	45 20 20	 c26	 db	 'BNE  '
+   2510	    1EC7  42 45	51 20 20	 c27	 db	 'BEQ  '
+   2511	    1ECC  42 56	43 20 20	 c28	 db	 'BVC  '
+   2512	    1ED1  42 56	53 20 20	 c29	 db	 'BVS  '
+   2513	    1ED6  42 50	4C 20 20	 c2a	 db	 'BPL  '
+   2514	    1EDB  42 4D	49 20 20	 c2b	 db	 'BMI  '
+   2515	    1EE0  42 47	45 20 20	 c2c	 db	 'BGE  '
+   2516	    1EE5  42 4C	54 20 20	 c2d	 db	 'BLT  '
+   2517	    1EEA  42 47	54 20 20	 c2e	 db	 'BGT  '
+   2518	    1EEF  42 4C	45 20 20	 c2f	 db	 'BLE  '
+   2519	    1EF4  54 53	58 20 20	 c30	 db	 'TSX  '
+   2520	    1EF9  54 53	59 20 20	 c301	 db	 'TSY  '
+   2521	    1EFE  49 4E	53 20 20	 c31	 db	 'INS  '
+   2522	    1F03  50 55	4C 41 20	 c32	 db	 'PULA '
+   2523	    1F08  50 55	4C 42 20	 c33	 db	 'PULB '
+   2524	    1F0D  44 45	53 20 20	 c34	 db	 'DES  '
+   2525	    1F12  54 58	53 20 20	 c35	 db	 'TXS  '
+   2526	    1F17  54 59	53 20 20	 c351	 db	 'TYS  '
+   2527	    1F1C  50 53	48 41 20	 c36	 db	 'PSHA '
+   2528	    1F21  50 53	48 42 20	 c37	 db	 'PSHB '
+   2529	    1F26  50 55	4C 58 20	 c38	 db	 'PULX '
+   2530	    1F2B  50 55	4C 59 20	 c381	 db	 'PULY '
+   2531	    1F30  52 54	53 20 20	 c39	 db	 'RTS  '
+   2532	    1F35  41 42	58 20 20	 c3a	 db	 'ABX  '
+   2533	    1F3A  41 42	59 20 20	 c3a1	 db	 'ABY  '
+   2534	    1F3F  52 54	49 20 20	 c3b	 db	 'RTI  '
+   2535	    1F44  50 53	48 58 20	 c3c	 db	 'PSHX '
+   2536	    1F49  50 53	48 59 20	 c3c1	 db	 'PSHY '
+   2537	    1F4E  4D 55	4C 20 20	 c3d	 db	 'MUL  '
+   2538	    1F53  57 41	49 20 20	 c3e	 db	 'WAI  '
+   2539	    1F58  53 57	49 20 20	 c3f	 db	 'SWI  '
+   2540	    1F5D  4E 45	47 41 20	 c40	 db	 'NEGA '
+   2541	    1F62  2D 2D	2D 2D 2D	 c41	 db	 '-----'
+   2542	    1F67  2D 2D	2D 2D 2D	 c42	 db	 '-----'
+   2543	    1F6C  43 4F	4D 41 20	 c43	 db	 'COMA '
+   2544	    1F71  4C 53	52 41 20	 c44	 db	 'LSRA '
+   2545	    1F76  2D 2D	2D 2D 2D	 c45	 db	 '-----'
+   2546	    1F7B  52 4F	52 41 20	 c46	 db	 'RORA '
+   2547	    1F80  41 53	52 41 20	 c47	 db	 'ASRA '
+   2548	    1F85  41 53	4C 41 20	 c48	 db	 'ASLA '
+   2549	    1F8A  52 4F	4C 41 20	 c49	 db	 'ROLA '
+   2550	    1F8F  44 45	43 41 20	 c4a	 db	 'DECA '
+   2551	    1F94  2D 2D	2D 2D 2D	 c4b	 db	 '-----'
+   2552	    1F99  49 4E	43 41 20	 c4c	 db	 'INCA '
+   2553	    1F9E  54 53	54 41 20	 c4d	 db	 'TSTA '
+   2554	    1FA3  2D 2D	2D 2D 2D	 c4e	 db	 '-----'
+   2555	    1FA8  43 4C	52 41 20	 c4f	 db	 'CLRA '
+   2556	    1FAD  4E 45	47 42 20	 c50	 db	 'NEGB '
+   2557	    1FB2  2D 2D	2D 2D 2D	 c51	 db	 '-----'
+   2558	    1FB7  2D 2D	2D 2D 2D	 c52	 db	 '-----'
+   2559	    1FBC  43 4F	4D 42 20	 c53	 db	 'COMB '
+   2560	    1FC1  4C 53	52 42 20	 c54	 db	 'LSRB '
+   2561	    1FC6  2D 2D	2D 2D 2D	 c55	 db	 '-----'
+   2562	    1FCB  52 4F	52 42 20	 c56	 db	 'RORB '
+   2563	    1FD0  41 53	52 42 20	 c57	 db	 'ASRB '
+   2564	    1FD5  41 53	4C 42 20	 c58	 db	 'ASLB '
+   2565	    1FDA  52 4F	4C 42 20	 c59	 db	 'ROLB '
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 46
+prob_c11.ASM
+
+
+
+   2566	    1FDF  44 45	43 42 20	 c5a	 db	 'DECB '
+   2567	    1FE4  2D 2D	2D 2D 2D	 c5b	 db	 '-----'
+   2568	    1FE9  49 4E	43 42 20	 c5c	 db	 'INCB '
+   2569	    1FEE  54 53	54 42 20	 c5d	 db	 'TSTB '
+   2570	    1FF3  2D 2D	2D 2D 2D	 c5e	 db	 '-----'
+   2571	    1FF8  43 4C	52 42 20	 c5f	 db	 'CLRB '
+   2572
+   2573	    1FFD  4E 45	47 20 20	 c60	 db	 'NEG  '
+   2574	    2002  2D 2D	2D 2D 2D	 c61	 db	 '-----'
+   2575	    2007  2D 2D	2D 2D 2D	 c62	 db	 '-----'
+   2576	    200C  43 4F	4D 20 20	 c63	 db	 'COM  '
+   2577	    2011  4C 53	52 20 20	 c64	 db	 'LSR  '
+   2578	    2016  2D 2D	2D 2D 2D	 c65	 db	 '-----'
+   2579	    201B  52 4F	52 20 20	 c66	 db	 'ROR  '
+   2580	    2020  41 53	52 20 20	 c67	 db	 'ASR  '
+   2581	    2025  41 53	4C 20 20	 c68	 db	 'ASL  '
+   2582	    202A  52 4F	4C 20 20	 c69	 db	 'ROL  '
+   2583	    202F  44 45	43 20 20	 c6a	 db	 'DEC  '
+   2584	    2034  2D 2D	2D 2D 2D	 c6b	 db	 '-----'
+   2585	    2039  49 4E	43 20 20	 c6c	 db	 'INC  '
+   2586	    203E  54 53	54 20 20	 c6d	 db	 'TST  '
+   2587	    2043  4A 4D	50 20 20	 c6e	 db	 'JMP  '
+   2588	    2048  43 4C	52 20 20	 c6f	 db	 'CLR  '
+   2589
+   2590	    204D  4E 45	47 20 20	 c70	 db	 'NEG  '
+   2591	    2052  2D 2D	2D 2D 2D	 c71	 db	 '-----'
+   2592	    2057  2D 2D	2D 2D 2D	 c72	 db	 '-----'
+   2593	    205C  43 4F	4D 20 20	 c73	 db	 'COM  '
+   2594	    2061  4C 53	52 20 20	 c74	 db	 'LSR  '
+   2595	    2066  2D 2D	2D 2D 2D	 c75	 db	 '-----'
+   2596	    206B  52 4F	52 20 20	 c76	 db	 'ROR  '
+   2597	    2070  41 53	52 20 20	 c77	 db	 'ASR  '
+   2598	    2075  41 53	4C 20 20	 c78	 db	 'ASL  '
+   2599	    207A  52 4F	4C 20 20	 c79	 db	 'ROL  '
+   2600	    207F  44 45	43 20 20	 c7a	 db	 'DEC  '
+   2601	    2084  2D 2D	2D 2D 2D	 c7b	 db	 '-----'
+   2602	    2089  49 4E	43 20 20	 c7c	 db	 'INC  '
+   2603	    208E  54 53	54 20 20	 c7d	 db	 'TST  '
+   2604	    2093  4A 4D	50 20 20	 c7e	 db	 'JMP  '
+   2605	    2098  43 4C	52 20 20	 c7f	 db	 'CLR  '
+   2606
+   2607	    209D  53 55	42 41 20	 c80	 db	 'SUBA '
+   2608	    20A2  43 4D	50 41 20	 c81	 db	 'CMPA '
+   2609	    20A7  53 42	43 41 20	 c82	 db	 'SBCA '
+   2610	    20AC  53 55	42 44 20	 c83	 db	 'SUBD '
+   2611	    20B1  41 4E	44 41 20	 c84	 db	 'ANDA '
+   2612	    20B6  42 49	54 41 20	 c85	 db	 'BITA '
+   2613	    20BB  4C 44	41 41 20	 c86	 db	 'LDAA '
+   2614	    20C0  2D 2D	2D 2D 2D	 c87	 db	 '-----'
+   2615	    20C5  45 4F	52 41 20	 c88	 db	 'EORA '
+   2616	    20CA  41 44	43 41 20	 c89	 db	 'ADCA '
+   2617	    20CF  4F 52	41 41 20	 c8a	 db	 'ORAA '
+   2618	    20D4  41 44	44 41 20	 c8b	 db	 'ADDA '
+   2619	    20D9  43 50	58 20 20	 c8c	 db	 'CPX  '
+   2620	    20DE  43 50	59 20 20	 c8c1	 db	 'CPY  '
+   2621	    20E3  42 53	52 20 20	 c8d	 db	 'BSR  '
+   2622	    20E8  4C 44	53 20 20	 c8e	 db	 'LDS  '
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 47
+prob_c11.ASM
+
+
+
+   2623	    20ED  58 47	44 58 20	 c8f	 db	 'XGDX '
+   2624	    20F2  58 47	44 59 20	 c8f1	 db	 'XGDY '
+   2625
+   2626	    20F7  53 55	42 41 20	 c90	 db	 'SUBA '
+   2627	    20FC  43 4D	50 41 20	 c91	 db	 'CMPA '
+   2628	    2101  53 42	43 41 20	 c92	 db	 'SBCA '
+   2629	    2106  53 55	42 44 20	 c93	 db	 'SUBD '
+   2630	    210B  41 4E	44 41 20	 c94	 db	 'ANDA '
+   2631	    2110  42 49	54 41 20	 c95	 db	 'BITA '
+   2632	    2115  4C 44	41 41 20	 c96	 db	 'LDAA '
+   2633	    211A  53 54	41 41 20	 c97	 db	 'STAA '
+   2634	    211F  45 4F	52 41 20	 c98	 db	 'EORA '
+   2635	    2124  41 44	43 41 20	 c99	 db	 'ADCA '
+   2636	    2129  4F 52	41 41 20	 c9a	 db	 'ORAA '
+   2637	    212E  41 44	44 41 20	 c9b	 db	 'ADDA '
+   2638	    2133  43 50	58 20 20	 c9c	 db	 'CPX  '
+   2639	    2138  43 50	59 20 20	 c9c1	 db	 'CPY  '
+   2640	    213D  4A 53	52 20 20	 c9d	 db	 'JSR  '
+   2641	    2142  4C 44	53 20 20	 c9e	 db	 'LDS  '
+   2642	    2147  53 54	53 20 20	 c9f	 db	 'STS  '
+   2643
+   2644	    214C  53 55	42 41 20	 ca0	 db	 'SUBA '
+   2645	    2151  43 4D	50 41 20	 ca1	 db	 'CMPA '
+   2646	    2156  53 42	43 41 20	 ca2	 db	 'SBCA '
+   2647	    215B  53 55	42 44 20	 ca3	 db	 'SUBD '
+   2648	    2160  41 4E	44 41 20	 ca4	 db	 'ANDA '
+   2649	    2165  42 49	54 41 20	 ca5	 db	 'BITA '
+   2650	    216A  4C 44	41 41 20	 ca6	 db	 'LDAA '
+   2651	    216F  53 54	41 41 20	 ca7	 db	 'STAA '
+   2652	    2174  45 4F	52 41 20	 ca8	 db	 'EORA '
+   2653	    2179  41 44	43 41 20	 ca9	 db	 'ADCA '
+   2654	    217E  4F 52	41 41 20	 caa	 db	 'ORAA '
+   2655	    2183  41 44	44 41 20	 cab	 db	 'ADDA '
+   2656	    2188  43 50	58 20 20	 cac	 db	 'CPX  '
+   2657	    218D  43 50	59 20 20	 cac1	 db	 'CPY  '
+   2658	    2192  4A 53	52 20 20	 cad	 db	 'JSR  '
+   2659	    2197  4C 44	53 20 20	 cae	 db	 'LDS  '
+   2660	    219C  53 54	53 20 20	 caf	 db	 'STS  '
+   2661
+   2662	    21A1  53 55	42 41 20	 cb0	 db	 'SUBA '
+   2663	    21A6  43 4D	50 41 20	 cb1	 db	 'CMPA '
+   2664	    21AB  53 42	43 41 20	 cb2	 db	 'SBCA '
+   2665	    21B0  53 55	42 44 20	 cb3	 db	 'SUBD '
+   2666	    21B5  41 4E	44 41 20	 cb4	 db	 'ANDA '
+   2667	    21BA  42 49	54 41 20	 cb5	 db	 'BITA '
+   2668	    21BF  4C 44	41 41 20	 cb6	 db	 'LDAA '
+   2669	    21C4  53 54	41 41 20	 cb7	 db	 'STAA '
+   2670	    21C9  45 4F	52 41 20	 cb8	 db	 'EORA '
+   2671	    21CE  41 44	43 41 20	 cb9	 db	 'ADCA '
+   2672	    21D3  4F 52	41 41 20	 cba	 db	 'ORAA '
+   2673	    21D8  41 44	44 41 20	 cbb	 db	 'ADDA '
+   2674	    21DD  43 50	58 20 20	 cbc	 db	 'CPX  '
+   2675	    21E2  43 50	59 20 20	 cbc1	 db	 'CPY  '
+   2676	    21E7  4A 53	52 20 20	 cbd	 db	 'JSR  '
+   2677	    21EC  4C 44	53 20 20	 cbe	 db	 'LDS  '
+   2678	    21F1  53 54	53 20 20	 cbf	 db	 'STS  '
+   2679
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 48
+prob_c11.ASM
+
+
+
+   2680	    21F6  53 55	42 42 20	 cc0	 db	 'SUBB '
+   2681	    21FB  43 4D	50 42 20	 cc1	 db	 'CMPB '
+   2682	    2200  53 42	43 42 20	 cc2	 db	 'SBCB '
+   2683	    2205  41 44	44 44 20	 cc3	 db	 'ADDD '
+   2684	    220A  41 4E	44 42 20	 cc4	 db	 'ANDB '
+   2685	    220F  42 49	54 42 20	 cc5	 db	 'BITB '
+   2686	    2214  4C 44	41 42 20	 cc6	 db	 'LDAB '
+   2687	    2219  2D 2D	2D 2D 2D	 cc7	 db	 '-----'
+   2688	    221E  45 4F	52 42 20	 cc8	 db	 'EORB '
+   2689	    2223  41 44	43 42 20	 cc9	 db	 'ADCB '
+   2690	    2228  4F 52	41 42 20	 cca	 db	 'ORAB '
+   2691	    222D  41 44	44 42 20	 ccb	 db	 'ADDB '
+   2692	    2232  4C 44	44 20 20	 ccc	 db	 'LDD  '
+   2693	    2237  50 20	34 20 20	 ccd	 db	 'P 4  '
+   2694	    223C  4C 44	58 20 20	 cce	 db	 'LDX  '
+   2695	    2241  4C 44	59 20 20	 cce1	 db	 'LDY  '
+   2696	    2246  53 54	4F 50 20	 ccf	 db	 'STOP '
+   2697
+   2698	    224B  53 55	42 42 20	 cd0	 db	 'SUBB '
+   2699	    2250  43 4D	50 42 20	 cd1	 db	 'CMPB '
+   2700	    2255  53 42	43 42 20	 cd2	 db	 'SBCB '
+   2701	    225A  41 44	44 44 20	 cd3	 db	 'ADDD '
+   2702	    225F  41 4E	44 42 20	 cd4	 db	 'ANDB '
+   2703	    2264  42 49	54 42 20	 cd5	 db	 'BITB '
+   2704	    2269  4C 44	41 42 20	 cd6	 db	 'LDAB '
+   2705	    226E  53 54	41 42 20	 cd7	 db	 'STAB '
+   2706	    2273  45 4F	52 42 20	 cd8	 db	 'EORB '
+   2707	    2278  41 44	43 42 20	 cd9	 db	 'ADCB '
+   2708	    227D  4F 52	41 42 20	 cda	 db	 'ORAB '
+   2709	    2282  41 44	44 42 20	 cdb	 db	 'ADDB '
+   2710	    2287  4C 44	44 20 20	 cdc	 db	 'LDD  '
+   2711	    228C  53 54	44 20 20	 cdd	 db	 'STD  '
+   2712	    2291  4C 44	58 20 20	 cde	 db	 'LDX  '
+   2713	    2296  4C 44	59 20 20	 cde1	 db	 'LDY  '
+   2714	    229B  53 54	58 20 20	 cdf	 db	 'STX  '
+   2715	    22A0  53 54	59 20 20	 cdf1	 db	 'STY  '
+   2716
+   2717	    22A5  53 55	42 42 20	 ce0	 db	 'SUBB '
+   2718	    22AA  43 4D	50 42 20	 ce1	 db	 'CMPB '
+   2719	    22AF  53 42	43 42 20	 ce2	 db	 'SBCB '
+   2720	    22B4  41 44	44 44 20	 ce3	 db	 'ADDD '
+   2721	    22B9  41 4E	44 42 20	 ce4	 db	 'ANDB '
+   2722	    22BE  42 49	54 42 20	 ce5	 db	 'BITB '
+   2723	    22C3  4C 44	41 42 20	 ce6	 db	 'LDAB '
+   2724	    22C8  53 54	41 42 20	 ce7	 db	 'STAB '
+   2725	    22CD  45 4F	52 42 20	 ce8	 db	 'EORB '
+   2726	    22D2  41 44	43 42 20	 ce9	 db	 'ADCB '
+   2727	    22D7  4F 52	41 42 20	 cea	 db	 'ORAB '
+   2728	    22DC  41 44	44 42 20	 ceb	 db	 'ADDB '
+   2729	    22E1  4C 44	44 20 20	 cec	 db	 'LDD  '
+   2730	    22E6  53 54	44 20 20	 ced	 db	 'STD  '
+   2731	    22EB  4C 44	58 20 20	 cee	 db	 'LDX  '
+   2732	    22F0  4C 44	59 20 20	 cee1	 db	 'LDY  '
+   2733	    22F5  53 54	58 20 20	 cef	 db	 'STX  '
+   2734	    22FA  53 54	59 20 20	 cef1	 db	 'STY  '
+   2735
+   2736	    22FF  53 55	42 42 20	 cf0	 db	 'SUBB '
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 49
+prob_c11.ASM
+
+
+
+   2737	    2304  43 4D	50 42 20	 cf1	 db	 'CMPB '
+   2738	    2309  53 42	43 42 20	 cf2	 db	 'SBCB '
+   2739	    230E  41 44	44 44 20	 cf3	 db	 'ADDD '
+   2740	    2313  41 4E	44 42 20	 cf4	 db	 'ANDB '
+   2741	    2318  42 49	54 42 20	 cf5	 db	 'BITB '
+   2742	    231D  4C 44	42 42 20	 cf6	 db	 'LDBB '
+   2743	    2322  53 54	42 42 20	 cf7	 db	 'STBB '
+   2744	    2327  45 4F	52 42 20	 cf8	 db	 'EORB '
+   2745	    232C  41 44	43 42 20	 cf9	 db	 'ADCB '
+   2746	    2331  4F 52	41 42 20	 cfa	 db	 'ORAB '
+   2747	    2336  41 44	44 42 20	 cfb	 db	 'ADDB '
+   2748	    233B  4C 44	44 20 20	 cfc	 db	 'LDD  '
+   2749	    2340  53 54	44 20 20	 cfd	 db	 'STD  '
+   2750	    2345  4C 44	58 20 20	 cfe	 db	 'LDX  '
+   2751	    234A  4C 44	59 20 20	 cfe1	 db	 'LDY  '
+   2752	    234F  53 54	58 20 20	 cff	 db	 'STX  '
+   2753	    2354  53 54	59 20 20	 cff1	 db	 'STY  '
+   2754	    2359  28 4E	41 29 20	 c00a	 db	 '(NA) '
+   2755
+   2756	    235E			 code	 ends
+   2757						 end	 begin 
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 50
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "05/29/96"
+??FILENAME			  Text	 "prob_c11"
+??TIME				  Text	 "02:16:47"
+??VERSION			  Number 0200
+@CPU				  Text	 0D9FH
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 PROB_C11
+@WORDSIZE			  Text	 2
+A0				  Near	 CODE:01BD
+A1				  Near	 CODE:0265
+A2				  Near	 CODE:0305
+A3				  Near	 CODE:03A5
+A4				  Near	 CODE:0445
+A5				  Near	 CODE:04E5
+A6				  Near	 CODE:0585
+A7				  Near	 CODE:0625
+A8				  Near	 CODE:06C5
+A9				  Near	 CODE:0765
+AA				  Near	 CODE:0805
+AB				  Near	 CODE:08A5
+AC				  Near	 CODE:0945
+AD				  Near	 CODE:09E5
+ADDR1				  Byte	 CODE:0114
+ADDR2				  Byte	 CODE:0115
+ADDR3				  Byte	 CODE:0116
+ADR16				  Word	 CODE:0123
+AE				  Near	 CODE:0A85
+AF				  Near	 CODE:0B25
+BEGIN				  Near	 CODE:0100
+C00				  Byte	 CODE:1DFF
+C00A				  Byte	 CODE:2359
+C01				  Byte	 CODE:1E04
+C02				  Byte	 CODE:1E09
+C03				  Byte	 CODE:1E0E
+C04				  Byte	 CODE:1E13
+C05				  Byte	 CODE:1E18
+C06				  Byte	 CODE:1E1D
+C07				  Byte	 CODE:1E22
+C08				  Byte	 CODE:1E27
+C081				  Byte	 CODE:1E2C
+C09				  Byte	 CODE:1E31
+C0A				  Byte	 CODE:1E36
+C0B				  Byte	 CODE:1E3B
+C0C				  Byte	 CODE:1E40
+C0D				  Byte	 CODE:1E45
+C0E				  Byte	 CODE:1E4A
+C0F				  Byte	 CODE:1E4F
+C10				  Byte	 CODE:1E54
+C11				  Byte	 CODE:1E59
+C12				  Byte	 CODE:1E5E
+C13				  Byte	 CODE:1E63
+C14				  Byte	 CODE:1E68
+C15				  Byte	 CODE:1E6D
+C16				  Byte	 CODE:1E72
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 51
+Symbol Table
+
+
+
+C17				  Byte	 CODE:1E77
+C18				  Byte	 CODE:1E7C
+C19				  Byte	 CODE:1E81
+C1A				  Byte	 CODE:1E86
+C1B				  Byte	 CODE:1E8B
+C1C				  Byte	 CODE:1E90
+C1D				  Byte	 CODE:1E95
+C1E				  Byte	 CODE:1E9A
+C1F				  Byte	 CODE:1E9F
+C20				  Byte	 CODE:1EA4
+C21				  Byte	 CODE:1EA9
+C22				  Byte	 CODE:1EAE
+C23				  Byte	 CODE:1EB3
+C24				  Byte	 CODE:1EB8
+C25				  Byte	 CODE:1EBD
+C26				  Byte	 CODE:1EC2
+C27				  Byte	 CODE:1EC7
+C28				  Byte	 CODE:1ECC
+C29				  Byte	 CODE:1ED1
+C2A				  Byte	 CODE:1ED6
+C2B				  Byte	 CODE:1EDB
+C2C				  Byte	 CODE:1EE0
+C2D				  Byte	 CODE:1EE5
+C2E				  Byte	 CODE:1EEA
+C2F				  Byte	 CODE:1EEF
+C30				  Byte	 CODE:1EF4
+C301				  Byte	 CODE:1EF9
+C31				  Byte	 CODE:1EFE
+C32				  Byte	 CODE:1F03
+C33				  Byte	 CODE:1F08
+C34				  Byte	 CODE:1F0D
+C35				  Byte	 CODE:1F12
+C351				  Byte	 CODE:1F17
+C36				  Byte	 CODE:1F1C
+C37				  Byte	 CODE:1F21
+C38				  Byte	 CODE:1F26
+C381				  Byte	 CODE:1F2B
+C39				  Byte	 CODE:1F30
+C3A				  Byte	 CODE:1F35
+C3A1				  Byte	 CODE:1F3A
+C3B				  Byte	 CODE:1F3F
+C3C				  Byte	 CODE:1F44
+C3C1				  Byte	 CODE:1F49
+C3D				  Byte	 CODE:1F4E
+C3E				  Byte	 CODE:1F53
+C3F				  Byte	 CODE:1F58
+C40				  Byte	 CODE:1F5D
+C41				  Byte	 CODE:1F62
+C42				  Byte	 CODE:1F67
+C43				  Byte	 CODE:1F6C
+C44				  Byte	 CODE:1F71
+C45				  Byte	 CODE:1F76
+C46				  Byte	 CODE:1F7B
+C47				  Byte	 CODE:1F80
+C48				  Byte	 CODE:1F85
+C49				  Byte	 CODE:1F8A
+C4A				  Byte	 CODE:1F8F
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 52
+Symbol Table
+
+
+
+C4B				  Byte	 CODE:1F94
+C4C				  Byte	 CODE:1F99
+C4D				  Byte	 CODE:1F9E
+C4E				  Byte	 CODE:1FA3
+C4F				  Byte	 CODE:1FA8
+C50				  Byte	 CODE:1FAD
+C51				  Byte	 CODE:1FB2
+C52				  Byte	 CODE:1FB7
+C53				  Byte	 CODE:1FBC
+C54				  Byte	 CODE:1FC1
+C55				  Byte	 CODE:1FC6
+C56				  Byte	 CODE:1FCB
+C57				  Byte	 CODE:1FD0
+C58				  Byte	 CODE:1FD5
+C59				  Byte	 CODE:1FDA
+C5A				  Byte	 CODE:1FDF
+C5B				  Byte	 CODE:1FE4
+C5C				  Byte	 CODE:1FE9
+C5D				  Byte	 CODE:1FEE
+C5E				  Byte	 CODE:1FF3
+C5F				  Byte	 CODE:1FF8
+C60				  Byte	 CODE:1FFD
+C61				  Byte	 CODE:2002
+C62				  Byte	 CODE:2007
+C63				  Byte	 CODE:200C
+C64				  Byte	 CODE:2011
+C65				  Byte	 CODE:2016
+C66				  Byte	 CODE:201B
+C67				  Byte	 CODE:2020
+C68				  Byte	 CODE:2025
+C69				  Byte	 CODE:202A
+C6A				  Byte	 CODE:202F
+C6B				  Byte	 CODE:2034
+C6C				  Byte	 CODE:2039
+C6D				  Byte	 CODE:203E
+C6E				  Byte	 CODE:2043
+C6F				  Byte	 CODE:2048
+C70				  Byte	 CODE:204D
+C71				  Byte	 CODE:2052
+C72				  Byte	 CODE:2057
+C73				  Byte	 CODE:205C
+C74				  Byte	 CODE:2061
+C75				  Byte	 CODE:2066
+C76				  Byte	 CODE:206B
+C77				  Byte	 CODE:2070
+C78				  Byte	 CODE:2075
+C79				  Byte	 CODE:207A
+C7A				  Byte	 CODE:207F
+C7B				  Byte	 CODE:2084
+C7C				  Byte	 CODE:2089
+C7D				  Byte	 CODE:208E
+C7E				  Byte	 CODE:2093
+C7F				  Byte	 CODE:2098
+C80				  Byte	 CODE:209D
+C81				  Byte	 CODE:20A2
+C82				  Byte	 CODE:20A7
+C83				  Byte	 CODE:20AC
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 53
+Symbol Table
+
+
+
+C84				  Byte	 CODE:20B1
+C85				  Byte	 CODE:20B6
+C86				  Byte	 CODE:20BB
+C87				  Byte	 CODE:20C0
+C88				  Byte	 CODE:20C5
+C89				  Byte	 CODE:20CA
+C8A				  Byte	 CODE:20CF
+C8B				  Byte	 CODE:20D4
+C8C				  Byte	 CODE:20D9
+C8C1				  Byte	 CODE:20DE
+C8D				  Byte	 CODE:20E3
+C8E				  Byte	 CODE:20E8
+C8F				  Byte	 CODE:20ED
+C8F1				  Byte	 CODE:20F2
+C90				  Byte	 CODE:20F7
+C91				  Byte	 CODE:20FC
+C92				  Byte	 CODE:2101
+C93				  Byte	 CODE:2106
+C94				  Byte	 CODE:210B
+C95				  Byte	 CODE:2110
+C96				  Byte	 CODE:2115
+C97				  Byte	 CODE:211A
+C98				  Byte	 CODE:211F
+C99				  Byte	 CODE:2124
+C9A				  Byte	 CODE:2129
+C9B				  Byte	 CODE:212E
+C9C				  Byte	 CODE:2133
+C9C1				  Byte	 CODE:2138
+C9D				  Byte	 CODE:213D
+C9E				  Byte	 CODE:2142
+C9F				  Byte	 CODE:2147
+CA0				  Byte	 CODE:214C
+CA1				  Byte	 CODE:2151
+CA2				  Byte	 CODE:2156
+CA3				  Byte	 CODE:215B
+CA4				  Byte	 CODE:2160
+CA5				  Byte	 CODE:2165
+CA6				  Byte	 CODE:216A
+CA7				  Byte	 CODE:216F
+CA8				  Byte	 CODE:2174
+CA9				  Byte	 CODE:2179
+CAA				  Byte	 CODE:217E
+CAB				  Byte	 CODE:2183
+CAC				  Byte	 CODE:2188
+CAC1				  Byte	 CODE:218D
+CAD				  Byte	 CODE:2192
+CAE				  Byte	 CODE:2197
+CAF				  Byte	 CODE:219C
+CB0				  Byte	 CODE:21A1
+CB1				  Byte	 CODE:21A6
+CB2				  Byte	 CODE:21AB
+CB3				  Byte	 CODE:21B0
+CB4				  Byte	 CODE:21B5
+CB5				  Byte	 CODE:21BA
+CB6				  Byte	 CODE:21BF
+CB7				  Byte	 CODE:21C4
+CB8				  Byte	 CODE:21C9
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 54
+Symbol Table
+
+
+
+CB9				  Byte	 CODE:21CE
+CBA				  Byte	 CODE:21D3
+CBB				  Byte	 CODE:21D8
+CBC				  Byte	 CODE:21DD
+CBC1				  Byte	 CODE:21E2
+CBD				  Byte	 CODE:21E7
+CBE				  Byte	 CODE:21EC
+CBF				  Byte	 CODE:21F1
+CC0				  Byte	 CODE:21F6
+CC1				  Byte	 CODE:21FB
+CC2				  Byte	 CODE:2200
+CC3				  Byte	 CODE:2205
+CC4				  Byte	 CODE:220A
+CC5				  Byte	 CODE:220F
+CC6				  Byte	 CODE:2214
+CC7				  Byte	 CODE:2219
+CC8				  Byte	 CODE:221E
+CC9				  Byte	 CODE:2223
+CCA				  Byte	 CODE:2228
+CCB				  Byte	 CODE:222D
+CCC				  Byte	 CODE:2232
+CCD				  Byte	 CODE:2237
+CCE				  Byte	 CODE:223C
+CCE1				  Byte	 CODE:2241
+CCF				  Byte	 CODE:2246
+CD0				  Byte	 CODE:224B
+CD1				  Byte	 CODE:2250
+CD2				  Byte	 CODE:2255
+CD3				  Byte	 CODE:225A
+CD4				  Byte	 CODE:225F
+CD5				  Byte	 CODE:2264
+CD6				  Byte	 CODE:2269
+CD7				  Byte	 CODE:226E
+CD8				  Byte	 CODE:2273
+CD9				  Byte	 CODE:2278
+CDA				  Byte	 CODE:227D
+CDB				  Byte	 CODE:2282
+CDC				  Byte	 CODE:2287
+CDD				  Byte	 CODE:228C
+CDE				  Byte	 CODE:2291
+CDE1				  Byte	 CODE:2296
+CDF				  Byte	 CODE:229B
+CDF1				  Byte	 CODE:22A0
+CE0				  Byte	 CODE:22A5
+CE1				  Byte	 CODE:22AA
+CE2				  Byte	 CODE:22AF
+CE3				  Byte	 CODE:22B4
+CE4				  Byte	 CODE:22B9
+CE5				  Byte	 CODE:22BE
+CE6				  Byte	 CODE:22C3
+CE7				  Byte	 CODE:22C8
+CE8				  Byte	 CODE:22CD
+CE9				  Byte	 CODE:22D2
+CEA				  Byte	 CODE:22D7
+CEB				  Byte	 CODE:22DC
+CEC				  Byte	 CODE:22E1
+CED				  Byte	 CODE:22E6
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 55
+Symbol Table
+
+
+
+CEE				  Byte	 CODE:22EB
+CEE1				  Byte	 CODE:22F0
+CEF				  Byte	 CODE:22F5
+CEF1				  Byte	 CODE:22FA
+CF0				  Byte	 CODE:22FF
+CF1				  Byte	 CODE:2304
+CF2				  Byte	 CODE:2309
+CF3				  Byte	 CODE:230E
+CF4				  Byte	 CODE:2313
+CF5				  Byte	 CODE:2318
+CF6				  Byte	 CODE:231D
+CF7				  Byte	 CODE:2322
+CF8				  Byte	 CODE:2327
+CF9				  Byte	 CODE:232C
+CFA				  Byte	 CODE:2331
+CFB				  Byte	 CODE:2336
+CFC				  Byte	 CODE:233B
+CFD				  Byte	 CODE:2340
+CFE				  Byte	 CODE:2345
+CFE1				  Byte	 CODE:234A
+CFF				  Byte	 CODE:234F
+CFF1				  Byte	 CODE:2354
+CHANGE				  Near	 CODE:0164
+CHART				  Word	 CODE:011E
+CLOSE				  Near	 CODE:1CA2
+CONT_1				  Near	 CODE:0190
+CONT_2				  Near	 CODE:019C
+CREFI				  Near	 CODE:1CD8
+DIGIT_				  Near	 CODE:1DF6
+DTA				  Byte	 CODE:0117
+DTA1				  Byte	 CODE:0118
+ENCO				  Near	 CODE:1C53
+END_F				  Near	 CODE:0189
+END_F_				  Near	 CODE:1C6D
+ERR_F				  Near	 CODE:017B
+FNAME				  Byte	 CODE:0082
+FNAME1				  Byte	 CODE:0103
+FTEST				  Byte	 CODE:013D
+HANDLE				  Word	 CODE:0110
+HANDLE1				  Word	 CODE:0112
+HI_ADR				  Byte	 CODE:011D
+L1				  Near	 CODE:0153
+LEN_HI				  Word	 CODE:0119
+LEN_LO				  Word	 CODE:011B
+M00				  Near	 CODE:0BBB
+M01				  Near	 CODE:0BC7
+M02				  Near	 CODE:0BD3
+M03				  Near	 CODE:0BDF
+M04				  Near	 CODE:0BEB
+M05				  Near	 CODE:0BF7
+M06				  Near	 CODE:0C03
+M07				  Near	 CODE:0C0F
+M08				  Near	 CODE:0C1B
+M081				  Near	 CODE:0C30
+M09				  Near	 CODE:0C3C
+M0A				  Near	 CODE:0C48
+M0B				  Near	 CODE:0C54
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 56
+Symbol Table
+
+
+
+M0C				  Near	 CODE:0C60
+M0D				  Near	 CODE:0C6C
+M0E				  Near	 CODE:0C78
+M0F				  Near	 CODE:0C84
+M10				  Near	 CODE:0C90
+M11				  Near	 CODE:0C9C
+M12				  Near	 CODE:0CA8
+M13				  Near	 CODE:0CC3
+M14				  Near	 CODE:0CDE
+M15				  Near	 CODE:0CF3
+M16				  Near	 CODE:0D08
+M17				  Near	 CODE:0D14
+M18				  Near	 CODE:0D20
+M19				  Near	 CODE:0D23
+M1A				  Near	 CODE:0D2F
+M1B				  Near	 CODE:0D32
+M1C				  Near	 CODE:0D3E
+M1D				  Near	 CODE:0D53
+M1E				  Near	 CODE:0D68
+M1F				  Near	 CODE:0D83
+M20				  Near	 CODE:0D9E
+M21				  Near	 CODE:0DAD
+M22				  Near	 CODE:0DBC
+M23				  Near	 CODE:0DCB
+M24				  Near	 CODE:0DDA
+M25				  Near	 CODE:0DE9
+M26				  Near	 CODE:0DF8
+M27				  Near	 CODE:0E07
+M28				  Near	 CODE:0E16
+M29				  Near	 CODE:0E25
+M2A				  Near	 CODE:0E34
+M2B				  Near	 CODE:0E43
+M2C				  Near	 CODE:0E52
+M2D				  Near	 CODE:0E61
+M2E				  Near	 CODE:0E70
+M2F				  Near	 CODE:0E7F
+M30				  Near	 CODE:0E8E
+M301				  Near	 CODE:0EA3
+M31				  Near	 CODE:0EAF
+M32				  Near	 CODE:0EBB
+M33				  Near	 CODE:0EC7
+M34				  Near	 CODE:0ED3
+M35				  Near	 CODE:0EDF
+M351				  Near	 CODE:0EF4
+M36				  Near	 CODE:0F00
+M37				  Near	 CODE:0F0C
+M38				  Near	 CODE:0F18
+M381				  Near	 CODE:0F2D
+M39				  Near	 CODE:0F39
+M3A				  Near	 CODE:0F45
+M3A1				  Near	 CODE:0F5A
+M3B				  Near	 CODE:0F66
+M3C				  Near	 CODE:0F72
+M3C1				  Near	 CODE:0F87
+M3D				  Near	 CODE:0F93
+M3E				  Near	 CODE:0F9F
+M3F				  Near	 CODE:0FAB
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 57
+Symbol Table
+
+
+
+M40				  Near	 CODE:0FB7
+M41				  Near	 CODE:0FC3
+M42				  Near	 CODE:0FCF
+M43				  Near	 CODE:0FDB
+M44				  Near	 CODE:0FE7
+M45				  Near	 CODE:0FF3
+M46				  Near	 CODE:0FFF
+M47				  Near	 CODE:100B
+M48				  Near	 CODE:1017
+M49				  Near	 CODE:1023
+M4A				  Near	 CODE:102F
+M4B				  Near	 CODE:103B
+M4C				  Near	 CODE:1047
+M4D				  Near	 CODE:1053
+M4E				  Near	 CODE:105F
+M4F				  Near	 CODE:106B
+M50				  Near	 CODE:1077
+M51				  Near	 CODE:1083
+M52				  Near	 CODE:108F
+M53				  Near	 CODE:109B
+M54				  Near	 CODE:10A7
+M55				  Near	 CODE:10B3
+M56				  Near	 CODE:10BF
+M57				  Near	 CODE:10CB
+M58				  Near	 CODE:10D7
+M59				  Near	 CODE:10E3
+M5A				  Near	 CODE:10EF
+M5B				  Near	 CODE:10FB
+M5C				  Near	 CODE:1107
+M5D				  Near	 CODE:1113
+M5E				  Near	 CODE:111F
+M5F				  Near	 CODE:112B
+M60				  Near	 CODE:1137
+M61				  Near	 CODE:1149
+M62				  Near	 CODE:1155
+M63				  Near	 CODE:1161
+M64				  Near	 CODE:1173
+M65				  Near	 CODE:1185
+M66				  Near	 CODE:1191
+M67				  Near	 CODE:11A3
+M68				  Near	 CODE:11B5
+M69				  Near	 CODE:11C7
+M6A				  Near	 CODE:11D9
+M6B				  Near	 CODE:11EB
+M6C				  Near	 CODE:11F7
+M6D				  Near	 CODE:1209
+M6E				  Near	 CODE:121B
+M6F				  Near	 CODE:122D
+M70				  Near	 CODE:123F
+M71				  Near	 CODE:124E
+M72				  Near	 CODE:125A
+M73				  Near	 CODE:1266
+M74				  Near	 CODE:1275
+M75				  Near	 CODE:1284
+M76				  Near	 CODE:1290
+M77				  Near	 CODE:129F
+M78				  Near	 CODE:12AE
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 58
+Symbol Table
+
+
+
+M79				  Near	 CODE:12BD
+M7A				  Near	 CODE:12CC
+M7B				  Near	 CODE:12DB
+M7C				  Near	 CODE:12E7
+M7D				  Near	 CODE:12F6
+M7E				  Near	 CODE:1305
+M7F				  Near	 CODE:1314
+M80				  Near	 CODE:1323
+M81				  Near	 CODE:1332
+M82				  Near	 CODE:1341
+M83				  Near	 CODE:1350
+M84				  Near	 CODE:135F
+M85				  Near	 CODE:136E
+M86				  Near	 CODE:137D
+M87				  Near	 CODE:138C
+M88				  Near	 CODE:1398
+M89				  Near	 CODE:13A7
+M8A				  Near	 CODE:13B6
+M8B				  Near	 CODE:13C5
+M8C				  Near	 CODE:13D4
+M8C1				  Near	 CODE:13EC
+M8D				  Near	 CODE:13FB
+M8E				  Near	 CODE:140A
+M8F				  Near	 CODE:1419
+M8F1				  Near	 CODE:142E
+M90				  Near	 CODE:143A
+M91				  Near	 CODE:1449
+M92				  Near	 CODE:1458
+M93				  Near	 CODE:1467
+M94				  Near	 CODE:1476
+M95				  Near	 CODE:1485
+M96				  Near	 CODE:1494
+M97				  Near	 CODE:14A3
+M98				  Near	 CODE:14B2
+M99				  Near	 CODE:14C1
+M9A				  Near	 CODE:14D0
+M9B				  Near	 CODE:14DF
+M9C				  Near	 CODE:14EE
+M9C1				  Near	 CODE:1506
+M9D				  Near	 CODE:1515
+M9E				  Near	 CODE:1524
+M9F				  Near	 CODE:1533
+MA0				  Near	 CODE:1542
+MA1				  Near	 CODE:1554
+MA2				  Near	 CODE:1566
+MA3				  Near	 CODE:1578
+MA4				  Near	 CODE:158A
+MA5				  Near	 CODE:159C
+MA6				  Near	 CODE:15AE
+MA7				  Near	 CODE:15C0
+MA8				  Near	 CODE:15D2
+MA9				  Near	 CODE:15E4
+MAA				  Near	 CODE:15F6
+MAB				  Near	 CODE:1608
+MAC				  Near	 CODE:161A
+MAC1				  Near	 CODE:1635
+MAD				  Near	 CODE:1647
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 59
+Symbol Table
+
+
+
+MAE				  Near	 CODE:1659
+MAF				  Near	 CODE:166B
+MAIN				  Near	 CODE:0147
+MB0				  Near	 CODE:167D
+MB1				  Near	 CODE:168C
+MB2				  Near	 CODE:169B
+MB3				  Near	 CODE:16AA
+MB4				  Near	 CODE:16B9
+MB5				  Near	 CODE:16C8
+MB6				  Near	 CODE:16D7
+MB7				  Near	 CODE:16E6
+MB8				  Near	 CODE:16F5
+MB9				  Near	 CODE:1704
+MBA				  Near	 CODE:1713
+MBB				  Near	 CODE:1722
+MBC				  Near	 CODE:1731
+MBC1				  Near	 CODE:1749
+MBD				  Near	 CODE:1758
+MBE				  Near	 CODE:1767
+MBF				  Near	 CODE:1776
+MC0				  Near	 CODE:1785
+MC1				  Near	 CODE:1794
+MC2				  Near	 CODE:17A3
+MC3				  Near	 CODE:17B2
+MC4				  Near	 CODE:17C1
+MC5				  Near	 CODE:17D0
+MC6				  Near	 CODE:17DF
+MC7				  Near	 CODE:17EE
+MC8				  Near	 CODE:17FA
+MC9				  Near	 CODE:1809
+MCA				  Near	 CODE:1818
+MCB				  Near	 CODE:1827
+MCC				  Near	 CODE:1836
+MCD				  Near	 CODE:1845
+MCE				  Near	 CODE:1854
+MCE1				  Near	 CODE:186C
+MCF				  Near	 CODE:187B
+MD0				  Near	 CODE:1887
+MD1				  Near	 CODE:1896
+MD2				  Near	 CODE:18A5
+MD3				  Near	 CODE:18B4
+MD4				  Near	 CODE:18C3
+MD5				  Near	 CODE:18D2
+MD6				  Near	 CODE:18E1
+MD7				  Near	 CODE:18F0
+MD8				  Near	 CODE:18FF
+MD9				  Near	 CODE:190E
+MDA				  Near	 CODE:191D
+MDB				  Near	 CODE:192C
+MDC				  Near	 CODE:193B
+MDD				  Near	 CODE:194A
+MDE				  Near	 CODE:1959
+MDE1				  Near	 CODE:1971
+MDF				  Near	 CODE:1980
+MDF1				  Near	 CODE:1998
+ME0				  Near	 CODE:19A7
+ME1				  Near	 CODE:19B9
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 60
+Symbol Table
+
+
+
+ME2				  Near	 CODE:19CB
+ME3				  Near	 CODE:19DD
+ME4				  Near	 CODE:19EF
+ME5				  Near	 CODE:1A01
+ME6				  Near	 CODE:1A13
+ME7				  Near	 CODE:1A25
+ME8				  Near	 CODE:1A37
+ME9				  Near	 CODE:1A49
+MEA				  Near	 CODE:1A5B
+MEB				  Near	 CODE:1A6D
+MEC				  Near	 CODE:1A7F
+MED				  Near	 CODE:1A91
+MEE				  Near	 CODE:1AA3
+MEE1				  Near	 CODE:1ABE
+MEF				  Near	 CODE:1AD0
+MEF1				  Near	 CODE:1AEB
+MESS1				  Byte	 CODE:0132
+MESS3				  Byte	 CODE:0127
+META_				  Near	 CODE:1DEC
+MF0				  Near	 CODE:1AFD
+MF1				  Near	 CODE:1B0F
+MF2				  Near	 CODE:1B21
+MF3				  Near	 CODE:1B33
+MF4				  Near	 CODE:1B45
+MF5				  Near	 CODE:1B57
+MF6				  Near	 CODE:1B69
+MF7				  Near	 CODE:1B7B
+MF8				  Near	 CODE:1B8D
+MF9				  Near	 CODE:1B9F
+MFA				  Near	 CODE:1BB1
+MFB				  Near	 CODE:1BC3
+MFC				  Near	 CODE:1BD5
+MFD				  Near	 CODE:1BE7
+MFE				  Near	 CODE:1BF9
+MFE1				  Near	 CODE:1C14
+MFF				  Near	 CODE:1C26
+MFF1				  Near	 CODE:1C41
+M_ER_F				  Near	 CODE:017E
+NEXTB				  Near	 CODE:1D3D
+NN00				  Near	 CODE:01C9
+NN01				  Near	 CODE:01D5
+NN02				  Near	 CODE:01E1
+NN03				  Near	 CODE:01ED
+N_OP_F				  Near	 CODE:018D
+OPEN				  Near	 CODE:1CB3
+OPENFI				  Near	 CODE:0168
+OREC				  Byte	 CODE:0146
+P16A				  Near	 CODE:1D56
+P16D				  Near	 CODE:1D4E
+P8A				  Near	 CODE:1D88
+P8D				  Near	 CODE:1D80
+P8S				  Near	 CODE:1DA1
+PAJE2				  Near	 CODE:1C70
+PAJE3				  Near	 CODE:1C84
+PAJE4				  Near	 CODE:1C93
+PRN16				  Near	 CODE:1DBA
+PRN8				  Near	 CODE:1DDC
+Turbo Assembler	 Version 2.0	    05/29/96 02:16:47	    Page 61
+Symbol Table
+
+
+
+PROB				  Near	 CODE:1D01
+READ				  Near	 CODE:1CC0
+READ_E				  Near	 CODE:1CD5
+REC				  Near	 CODE:1CE6
+REC5				  Near	 CODE:1CF5
+SHIFT1				  Byte	 CODE:0125
+SHIFT2				  Byte	 CODE:0126
+VAL16				  Word	 CODE:0120
+VAL8				  Byte	 CODE:0122
+XPROB				  Near	 CODE:1D0A
+X_PROB				  Near	 CODE:1D2C
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  235E Para	  none
+

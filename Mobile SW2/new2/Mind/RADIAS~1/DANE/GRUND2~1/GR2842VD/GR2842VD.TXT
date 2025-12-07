@@ -1,0 +1,13 @@
+grundig WKC 2842 VD
+CHIP NEC  D1719C 641
+EEPROM   GRN-002 (93C46 64*16)
+
+4 pierwsze bajty                 21 06 33 32 
+4 ostatnie bajty   		 84 09 84 09 --- kod zamkniety
+4 ostatnie bajty   		 48 09 48 09 --- kod otwarty
+pozostale bajty ustawic na       00 00 00 00 ...
+
+ 				KOD - 1380
+
+
+Przy otwartym kodzie nacisnac na kilka sekund "U.M" wyswietli sie kod.

@@ -1,0 +1,256 @@
+   List	of sections within this	file:
+
+1. INSTALLING SOFT-ICE
+2. INSTALLING WITH DOS 5
+3. PATCH TO SOFT-ICE TO	RUN MAGIC CV WITH CODEVIEW 3.14
+4. BATCH FILES FOR COMPILING WITH MICROSOFT C COMPILERS
+5. BATCH FILES FOR COMPILING WITH BORLAND C++ COMPILERS
+6. BATCH FILE FOR COMPILING WITH BORLAND TURBO PASCAL
+7. CONFIG EDIT
+8. MSYM	WARNINGS
+9. COMPILING WITH TOPSPEED
+
+--------------------------------------------------------------------------
+1. INSTALLING SOFT-ICE
+--------------------------------------------------------------------------
+
+  When Soft-ICE	is copied to a system, EMMSETUP	should be run to insure
+that the internal EMM map within S-ICE.EXE matches the configuration of	
+that system. When running EMMSETUP, first select "Reconfigure Driver to 
+Current	Configuration". If you have any I/O adapters which use memory, 
+such as	network	cards, select "Manual Configuration and Status Screen" 
+and X-out the block of memory used. After exiting EMMSETUP, check the 
+date and time on S-ICE.EXE to insure that it has been changed.
+
+  When Soft-ICE	is installed in	the CONFIG.SYS file, the switches are
+assigned as follows:
+  /EXT reserves	XMS memory from	the 1Mb	boundary on up for drivers such	as
+HIMEM, CACHE, SMARTDRV and RAMDRIVE. HIMEM.SYS uses 64K	of XMS memory, and
+the others use the amount specified in their switches. Add these up and
+set the	EXT switch to this total.
+  /SYM reserves	space to store the symbolic debug data and the source 
+files. The amount needed depends on the	user's application, but usually 
+the largest portion is for storing the source files. This space	is in 
+extended memory, just below Soft-ICE (which is at the top of extended 
+memory). In many cases a large amount of SYM space is necessary.
+  /EMM reserves	space for use as emulated expanded memory. It is used by 
+SMARTDRV and RAMDRIVE with the /A switch, and sometimes	by application 
+programs. On some systems, CodeView 3.11 and 3.14 will run only	in 
+expanded memory. This space is reserved	just below the /SYM space.
+
+--------------------------------------------------------------------------
+2. INSTALLING WITH DOS 5
+--------------------------------------------------------------------------
+
+   S-ICE.EXE must be used as the EMS memory manager (do	not use	EMM386).
+   HIMEM.SYS must be after S-ICE.EXE, not before. When HIMEM.SYS is 
+loaded,	it displays the	message	"Installed A20 Handler"	followed by a
+number.	If the number is not "1" or "2", you must use the switch "/m:1"	
+with HIMEM.SYS.
+   DOS 5.0 may be loaded high with the "dos = high" command. Note that
+HIMEM.SYS must be installed to use this.
+   If you wish to load drivers and T&SR's high, you must configure the
+memory manager for this	using EMMSETUP (or BCSETUP for BC.SYS).
+   If you do not have our utility UMB.SYS, you must use	our Load High 
+utilities (LD.SYS and LH.EXE). Since the DOS 5.0 load high utility is 
+called by "LH",	rename ours to LHIGH.EXE. In this case you cannot use 
+"dos = umb". Your CONFIG.SYS file should look something	like this:
+	dos = high
+	device = c:\si\ce.exe		;configuration editor
+	device = c:\si\s-ice.exe /SYM 500 /EXT 2112 /EMM
+	device = c:\dos\himem.sys /m:1
+	device = c:\si\ld.sys c:\dos\smartdrv.sys 2048
+	device = c:\si\ld.sys c:\ansi.sys
+etc...
+
+   If you have UMB.SYS,	you may	install	this driver to allow using the DOS
+5 UMB functions	and load-high utilities. In this case your CONFIG.SYS file
+would look something like this:
+   
+	dos = high,umb
+	device = c:\si\ce.exe		;configuration editor
+	device = c:\si\s-ice.exe /SYM 500 /EXT 2112 /EMM
+	device = c:\dos\himem.sys /m:1
+	device = c:\si\umb.sys
+	devicehigh = c:\dos\smartdrv.sys 2048
+	devicehigh = c:\ansi.sys
+etc...
+
+--------------------------------------------------------------------------
+3. PATCH TO SOFT-ICE TO	RUN MAGIC CV WITH CODEVIEW 3.14
+--------------------------------------------------------------------------
+
+   This	is a patch to Soft-ICE to allow	MagicCV	3.0 to work with
+CodeView 3.14. Where it	says something like "xxxx:wwww+1", if the
+address	printed	was 2C58:6CBA, use "2C58:6CBB",	etc.
+   Some	users have reported slightly different addresses in earlier
+versions of Soft-ICE (e.g., 6C85 instead of 6CBA).
+
+ren s-ice.exe s-ice.bin
+debug s-ice.bin
+-s cs:0	lffff 42 22
+prints address in xxxx:wwww format (wwww should	be 6CBA)
+-e xxxx:wwww+1 1e
+-s cs:0	lffff 5a 20
+prints address in xxxx:yyyy format (yyyy should	be 6CC5)
+prints address in xxxx:zzzz format (zzzz should	be 6D0B)
+-e xxxx:yyyy+1 1c
+-e xxxx:zzzz+1 1c
+-w
+-q
+ren s-ice.bin s-ice.exe
+
+
+   Also, you must use either the /D or the /E switch with MCV. Since the 
+/E switch requires setting up expanded memory, we recommend trying the /D 
+switch first.
+
+--------------------------------------------------------------------------
+4. BATCH FILES FOR COMPILING WITH MICROSOFT C COMPILERS
+--------------------------------------------------------------------------
+
+This is	a sample batch file for	Microsoft C 6.0	using a	Large memory 
+model, without a floating point	coprocessor.
+
+ c600\bin\cl /AL /Zi /c	%1.c
+ c600\bin\link /MA /CO /LI %1,%1,%1,c600\lib\llibce,;
+
+For other models:change	/AL:	change llibce:	if hardware FP,	llibc7
+	SMALL		/AS	       slibce			slibc7
+	MEDIUM		/AM	       mlibce			mlibc7
+	COMPACT		/AC	       clibce			clibc7
+	HUGE		/AH	       hlibce			hlibc7
+
+--------------------------------------------------------------------------
+5. BATCH FILES FOR COMPILING WITH BORLAND C++ COMPILERS
+--------------------------------------------------------------------------
+
+This is	a sample batch file for	Turbo/Borland C++ using	a Large	memory 
+model, without a floating point	coprocessor. It	is run from the	tc\lib
+directory to avoid having to specify the path for all the library files
+called in the tlink command line:
+
+ cd tc\lib
+ tc\tcc	-v -ml -Itc\include -c c:\%1.c
+ tc\tlink /v/s/l/c c0l %1,c:\%1,c:\%1,emu mathl	cl
+ cd\
+
+Other models: change -ml:   change c0l:	 change	mathl:	 change	cl:
+      SMALL	     -ms	   c0s		maths		cs
+      MEDIUM	     -mm	   c0m		mathm		cm
+      COMPACT	     -mc	   c0c		mathc		cc
+      HUGE	     -mh	   c0h		mathh		ch
+For hardware FP	(80x87)	use "fp87" in place of "emu" in	the link line.
+
+--------------------------------------------------------------------------
+6. BATCH FILE FOR COMPILING WITH BORLAND TURBO PASCAL
+--------------------------------------------------------------------------
+
+ The following batch file format is recommended:
+
+	   tpc %1 /B/GD/$E+/$F+/$S+/$L+
+	   msym	%1
+
+--------------------------------------------------------------------------
+7. CONFIG EDIT
+-------------------------------------------------------------------------
+CONFIG EDIT (CE.EXE) is	an on-the-fly editor for CONFIG.SYS. Install
+CE.EXE as the 1st "DEVICE=" in your CONFIG.SYS file.
+
+When your system boots,	you will hear a	tone.  You have	a short	time to
+press any key after the	tone. If you press a key CE will take over. CE
+allows changing	CONFIG.SYS before using	it. 
+
+CE.EXE Version 2.0 also	lists all the CONFIGxx.xxx files, and allows 
+choosing which one to boot with. The chosen CONFIGxx.xxx file may be 
+edited permanently or on a one-time basis before booting. CE.EXE must 
+be the first driver in all the CONFIGxx.xxx files, because it cleans up	
+for the	previous bootup	operation before booting.
+
+MAIN FUNCTIONS WITHIN THE CE.EXE MENU:
+
+ESC   -	Boot using the current CONFIG.SYS file.
+
+ENTER -	Boot using the selected	file without editing.
+
+F10   -	Boot using the selected	file without editing, and copy it into 
+	CONFIG.SYS. The	previous CONFIG.SYS is saved as	CONFIG.BAK.
+
+F2    -	Edit the selected file before booting. To exit the edit	session
+	select ESC, F1 or F10 (see below).
+
+	ESC   -	Exit the edit session with no changes.
+
+	F1    -	Change the selected file for this boot only. The changes 
+		are not	permanant.
+
+	F10   -	Change the selected file permanently (including	for this
+		boot).
+
+OTHER IMPORTANT	NOTES:
+
+CE can also be run from	the command line.  This	is for a quick look or
+quick changes to CONFIG.SYS.
+
+The /Q switch (Quiet) will disable the initial sound made by CE.EXE when
+it is installed	in CONFIG.SYS.
+
+-------------------------------------------------------------------------
+8. MSYM	WARNINGS
+-------------------------------------------------------------------------
+   When	the compiler does not produce correct debug information	in the
+.EXE file, the .EXE file must be made without debug information, and a 
+.MAP file with line-number data	must be	created. MSYM must be used to 
+make a .SYM file from the .MAP file so that Soft-ICE can get the symbolic
+and source information correctly.
+
+   MSYM	requires a Microsoft-compatible	.MAP file with at least	one real
+Public symbol. It returns the message "Hex Value Expected" if no Public	
+symbol is found. This is common	with Assembly language programs	because
+public symbols must be declared	specifically, while higher language
+compilers typically make all procedure names public.
+
+   If all the Public symbols in	the .MAP file are Absolute, or if some
+modules	do not have a Class, an	invalid	.SYM file may be produced, which
+can cause problems when	running	Soft-ICE.
+
+   MSYM	searches for the strings "Start" and "Publics by Value"	within 
+the .MAP file, and will	return an error	message	if these exact strings
+are not	found.
+
+   The versions	of MSYM	prior to November 1991 cannot correctly	process	
+public names longer than 49 characters.	If a longer name is encountered, 
+it prints the message "String not found" with no name, and then	aborts.	
+Zortech	C++ and	Borland	C++ allow function names to include their entire 
+argument list, so such errors are likely to occur when using these 
+compilers. Versions of MSYM dated from November	1991 and later allow 
+public names up	to 250 characters long.
+
+-------------------------------------------------------------------------
+9. COMPILING WITH TOPSPEED
+-------------------------------------------------------------------------
+    The	following is a recommended project file	format for compiling with
+Topspeed (large	model):
+
+#system	auto exe
+#model large jpi
+#pragma	debug(vid=>full)
+#pragma	debug(line_num=>on)
+#compile %main
+#link %prjname
+
+    This creates a detailed map	file. Use our MSYM.EXE utility to create
+a .SYM file using the command:
+	msym program-name		
+    Bounds-Checker will	extract	the debug information from this	file.
+
+    The	following is a recommended batch file format (large model):
+
+c:\ts\sys\tsc c:\%1.c /m /ml /v2 /debug(line_num=on)
+msym %1
+
+    Topspeed does not generate line-number debug information for the line
+containing "main". In some cases this prevents being able to display
+source code.
+
+-------------------------------------------------------------------------

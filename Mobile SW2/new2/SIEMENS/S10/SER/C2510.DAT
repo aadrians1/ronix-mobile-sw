@@ -1,0 +1,32 @@
+Sammelkarte: S24859-C2510-Axx-1
+Software   : A100-2
+ Z       Ll(z)     Ul(z)     Einheit   Kommentar
+ 1       0.115     0.250     A         Power consumption
+ 2       241195    241195    .         SW-Version
+ 3       184420    184420    .         Language 1
+ 4       1         1         .         Beeper-Test
+ 5       1         1         .         Displaypattern
+ 6       1         1         .         Keyboard-Test
+ 7       1         1         .         Speaker-Test
+ 8       1         1         .         NF-Loop
+ 9       29        33        dBm       Power Ch124/P5 unsync.
+10       -20       20        grd       Phase Ch124/P5 (Peak) unsync.
+11       0         5         grd       Phase Ch124/P5 (RMS) unsync.
+12       25        35        dBm       Power (internal Antenna)
+13       -20       20        grd       Phase (Peak) internal Antenna
+14       0         5         grd       Phase (RMS)  internal Antenna
+15       0         1         .         Location Update
+16       1         1         .         Call from Mobile
+17       1         1         .         Echo-Loop
+18       31        33        dBm       Power Ch124/P5 sync.
+19       -20       20        grd       Phase CH124/P5 (Peak) sync.
+20       0         5         grd       Phase Ch124/P5 (RMS) sync.
+21       -90       90        Hz        Freq  Ch124/P5 sync.
+22       1         1         .         Power Ramp matching
+23       -106      -98       dBm       RX-Level Ch124 Peg. -102 dBm
+24       0         3         .         RX-Qual Ch124 Peg. -102 dBm
+25       0         2         %         BER-102 Ch124 e_frames
+26       0         0.2       %         BER-102 Ch124 rber Ib
+27       0         2.2       %         BER-102 Ch24 rber II
+28       2         12        .         RX-Level Async. -86dBm
+

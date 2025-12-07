@@ -1,0 +1,70 @@
+A few hints.                                                         18/07/95
+                                                                     J. Yp-Tcha
+
+- reference number of the application software : 23305020-8
+- Author : SAGEM.
+
+
+How to use the installation software INSTALL
+
+
+   1) A:<Return> then INSTALL<Return> or B:<Return> then INSTALL<Return> 
+      depending on whether the floppy disk is in A or B
+
+   2) Read the present instructions carefully,
+
+   3) After having displayed the disk space required to install the software,
+      type in the full absolute path (disk drive + directories starting from 
+      the root directory) where the download programme is to installed
+      knowing that the full path can be split in as many sub-directories as
+      wished by the user and as allowed by the keyboard input. The latter is
+      subject to multiple consistency checks.
+
+      - Format of directories and sub-directories: DOS Format, that is no more
+        than 12 characters, including 3 extension characters.
+
+      - Characters allowed for keying in
+        [A .. Z] : Upper case and lower case alphabetical characters,
+        [0 .. 9] : numerical characters,
+        [  _   ] : underline,
+        [/ and \]: directory and subdirectory separators only,
+        [  :   ] : disk-drive separators
+        [  .   ] : directory and subdirectory extension separators only,
+
+      - When a directory separator is the last character of the string to be
+        typed-in, the tool returns the following error message:"<> Empty sub-
+        directory" meaning that a directory cannot end with \.
+
+      - A few examples:
+
+         TELECH             negative outcome (no disk-drive) 
+         C:\TELECH          positive outcome
+         C:TELECH           negative outcome (path must be absolute)
+         C:\DIR1\DIR2\DIR3  positive outcome
+         C:\DIR1\DIR2\      negative outcome (\ cannot end typed-in string)
+
+      - In the event of wrong keying-in, an error message chosen from the 
+        following list will be displayed. Each error message corresponds to
+        an error cause.
+
+        "Insufficient disk space available",
+        "Creation error",
+        "Opening error",
+        "Writing error",
+        "No or wrong disk-drive separator (:)",
+        "typing-in error"
+        "Wrong disk-drive identifier: A, B, C, D, E, F expected",
+        "No or wrong directory separator (\)",
+        "Empty sub-directory",
+        "Non-DOS format directory. 12 characters maximum",
+        "Too many file extension separators (.)",
+        "Unauthorised characters typed-in",
+        "Directory already exists, do you want to overwrite it (Y,y,N,n) :",
+        "Non-DOS format directory. <8>.<3>"
+
+      - When typing-in control has succeeded, every error will lead to its
+        display and the full path will need to be typed in again.
+
+   4) When installing is completed, a pause will occur until typing-in triggers
+      reading file "README.END" which includes instructions on how to use
+      the downloading software.

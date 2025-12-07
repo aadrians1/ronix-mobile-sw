@@ -1,0 +1,78 @@
+; PROGRAM: XMIT232.SRC
+; Taken from Parallax PIC Applicaton Note: Sending RS-232 Serial Data
+; Written     July 15, 1993
+; Revised February 24, 1996
+
+; This program transmits a string of serial data. The baud rate is determined
+; by the value of the constant bit_K and the clock speed of the PIC. See the
+; table in the application note (above) for values of bit_K. For example, with
+; the clock running at 4 MHz and a desired transmitting rate of 4800 baud,
+; make bit_K 50.
+
+; >>> Remember to change device info if programming a different PIC! <<<
+; Do not use RC devices. Their clock speed is not sufficiently accurate
+; or stable enough for serial communication. 
+
+		device	pic16c54,xt_osc,wdt_off,protect_off
+		reset	begin
+
+bit_K		=	24      	;24 for 19,200-baud operation @ 8 MHz
+serial_out	=	ra.2
+
+                org     8               ;Start of available RAM
+
+delay_cntr	ds	1		;Counter for serial delay routines
+bit_cntr	ds	1		;Number of transmitted bits
+msg_cntr	ds	1		;Offset in string
+xmt_byte	ds	1		;The transmitted byte
+
+                org     0               ;Start of code space (ROM)
+
+begin		mov	!ra, #00000000b	;Set port to output.
+
+		mov	msg_cntr, #0	;Message string has nine characters;
+					;0 through 8. 
+
+:again		mov	bit_cntr,#8	;Eight bits in a byte. 
+		mov	w,msg_cntr	;Point to position in the string. 
+		call	string		;Get the next character from string. 
+		mov	xmt_byte,w	;Put character into the transmit byte. 
+
+		clrb	serial_out	;Change to setb serial_out for direct
+					;connection.
+
+		call	bit_delay	;Start bit. 
+
+:xmit		rr	xmt_byte	;Rotate right moves data bits into
+					;carry, starting with bit 0. 
+
+		movb	serial_out,c	;Change to movb serial_out,/c for
+					;direct connection. 
+
+		call	bit_delay	;Data bit. 
+		djnz	bit_cntr,:xmit	;Not eight bits yet? Send next data bit
+
+		setb	serial_out	;Change to clrb serial_out for direct
+					;connection
+
+		call	bit_delay	;Stop bit. 
+		inc	msg_cntr	;Add one to the string pointer.
+
+		cjbe	msg_cntr,#8,:again
+					;More characters to send? Go to the top
+
+:endless	jmp	:endless	;Endless loop. Reset controller to run
+					;program.
+
+; To change the baud rate, substitute a new value for bit_K at the beginning of
+; this program. 
+
+bit_delay	mov	delay_cntr,#bit_K 
+:loop		nop
+		djnz	delay_cntr, :loop
+		ret
+
+string		jmp	pc+w		;String consisting of "Parallax"
+					;followed by a linefeed. 
+
+		retw	'P','a','r','a','l','l','a','x',10

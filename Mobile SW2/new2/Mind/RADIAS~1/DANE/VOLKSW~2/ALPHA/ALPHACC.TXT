@@ -1,0 +1,8 @@
+VWZ1Z1R3102179
+kod 1 7 6 1
+
+                                          43 21
+kod pod adresem 00030  8C FF C0 37  37 77 16 71  A4 B4 E4 75  98 B8 E8 59  
+
+                       X
+licznik bledow  00040  00 00 FF FF  FF FF FF FF  FF FF FF FF  FF FF FF FF

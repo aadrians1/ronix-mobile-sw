@@ -1,0 +1,115 @@
+[ComPorts]
+Mobile= 3       ; COM port of bootadapter
+Simulator= 1    ; COM port of CMD-5x or CTS-55
+NGSM= 2         ; COM port of NGSM 32/10 power supply
+
+[SIM]           
+Sim_MNC= 66     ; MNC of network simulated by CMD/CTS
+Sim_MCC= 1      ; MCC of network simulated by CMD/CTS
+Sim_Simu= 1     ; Simcard Simulation (1=On, 0=Off)
+
+[Service]
+Reset= 0        ; Automatic service reset (1=On, 0=Off)
+Headline=                Siemens Service Software for S6 - C11;
+Simulator_On= 2 ; Simulator selection: CMD=1, CTS=2, none=0
+NGSM_On= 0      ; Switch for power supply (1=On, 0=Off) 
+
+[Channel]
+GSM_TCH= 124    ; Traffic Channel number during testing for GSM-900
+GSM_CCCH= 122   ; Common Control Channel number during testing for GSM-900
+PCN_TCH= 885    ; Settings for PCN (GSM-1800)
+PCN_CCCH= 883
+PCS_TCH= 810    ; Settings for PCS (GSM-1900)
+PCS_CCCH= 808
+
+[S6GSM]
+LimitDat=c2600.dat ; Limit File for S6GSM
+Int_Cor= 40.0 ; S6GSM CMD-5x Correction internal Antenna 
+Ext_Cor= 2.0  ; S6GSM CMD-5x Correction external Antenna 
+CTS_Int_Cor= 26.0 ; S6GSM CTS-55 Correction internal Antenna 
+CTS_Ext_Cor= 2.0  ; S6GSM CTS-55 Correction external Antenna 
+
+[S6PCN]
+LimitDat=c3600.dat ; Limit File for S6PCN
+Int_Cor= 40.0 ; S6PCN CMD-5x Correction internal Antenna 
+Ext_Cor= 2.0  ; S6PCN CMD-5x Correction external Antenna
+CTS_Int_Cor= 20.0 ; S6PCN CTS-55 Correction internal Antenna 
+CTS_Ext_Cor= 2.0  ; S6PCN CTS-55 Correction external Antenna 
+
+[E10]
+LimitDat=s1800.dat ; Limit File for E10
+Int_Cor= 40.0 ; E10 CMD-5x Correction internal Antenna 
+Ext_Cor= 2.0  ; E10 CMD-5x Correction external Antenna
+CTS_Int_Cor= 20.0 ; E10 CTS-55 Correction internal Antenna 
+CTS_Ext_Cor= 2.0  ; E10 CTS-55 Correction external Antenna 
+
+[S6PowGSM]
+LimitDat=s1850.dat ; Limit File for S6 Power GSM
+Int_Cor= 40.0 ; S6 Power GSM CMD-5x Correction internal Antenna 
+Ext_Cor= 2.0  ; S6 Power GSM CMD-5x Correction external Antenna 
+CTS_Int_Cor= 23.0 ; S6 Power GSM CTS-55 Correction internal Antenna 
+CTS_Ext_Cor= 4.0  ; S6 Power GSM CTS-55 Correction external Antenna 
+
+[S6PowPCN]
+LimitDat=s1900.dat ; Limit File for S6 Power PCN
+Int_Cor= 40.0 ; S6 Power PCN CMD-5x Correction internal Antenna
+Ext_Cor= 2.0  ; S6 Power PCN CMD-5x Correction external Antenna 
+CTS_Int_Cor= 20.0 ; S6 Power PCN CTS-55 Correction internal Antenna
+CTS_Ext_Cor= 2.0  ; S6 Power PCN CTS-55 Correction external Antenna 
+
+[S10]
+LimitDat=s1200.dat ; Limit File for S10
+Int_Cor= 40.0 ; S10 CMD-5x Correction internal Antenna 
+Ext_Cor= 2.0  ; S10 CMD-5x Correction external Antenna 
+CTS_Int_Cor= 20.0 ; S10 CTS-55 Correction internal Antenna 
+CTS_Ext_Cor= 4.0  ; S10 CTS-55 Correction external Antenna 
+
+[SL10]
+LimitDat=s1600.dat ; Limit File for SL10
+Int_Cor= 0.0 ; !! NOT USED !!
+Ext_Cor= 2.0  ; SL10 CMD-5x Correction external Antenna 
+CTS_Int_Cor= 0.0 ; !! NOT USED !!
+CTS_Ext_Cor= 6.0  ; SL10 CTS-55 Correction external Antenna 
+
+
+[S10Active]
+LimitDat=s1200act.dat ; Limit File for S10 Active
+Int_Cor= 40.0 ; S10Active CMD-5x Correction internal Antenna 
+Ext_Cor= 2.0  ; S10Active CMD-5x Correction external Antenna 
+CTS_Int_Cor= 17.0 ; S10Active CTS-55 Correction internal Antenna 
+CTS_Ext_Cor= 4.0  ; S10Active CTS-55 Correction external Antenna 
+
+[S11]
+LimitDat=s1300.dat ; Limit File for S11
+Int_Cor= 40.0 ; S11 CMD-5x Correction internal Antenna 
+Ext_Cor= 2.0  ; S11 CMD-5x Correction external Antenna 
+CTS_Int_Cor= 20.0 ; S11 CTS-55 Correction internal Antenna 
+CTS_Ext_Cor= 2.0  ; S11 CTS-55 Correction external Antenna 
+
+[S12]
+LimitDat=s1370.dat ; Limit File for S12
+Int_Cor= 40.0 ; S12 CMD-5x Correction internal Antenna 
+Ext_Cor= 2.0  ; S12 CMD-5x Correction external Antenna 
+CTS_Int_Cor= 20.0 ; S12 CTS-55 Correction internal Antenna 
+CTS_Ext_Cor= 2.0  ; S12 CTS-55 Correction external Antenna 
+
+[C10]
+LimitDat=s2200.dat ; Limit File for C10
+Int_Cor= 40.0 ; C10 CMD-5x Correction internal Antenna
+Ext_Cor= 2.0  ; C10 CMD-5x Correction external Antenna
+CTS_Int_Cor= 20.0 ; C10 CTS-55 Correction internal Antenna
+CTS_Ext_Cor= 2.0  ; C10 CTS-55 Correction external Antenna
+
+[C11]
+LimitDat=s2210.dat ; Limit File for C11
+Int_Cor= 60.0 ; C11 CMD-5x Correction internal Antenna
+Ext_Cor= 3.0  ; C11 CMD-5x Correction external Antenna
+CTS_Int_Cor= 20.0 ; C11 CTS-55 Correction internal Antenna
+CTS_Ext_Cor= 4.0  ; C11 CTS-55 Correction external Antenna
+
+[CMD-X2000]
+LimitDat=s1210.dat ; Limit File for Sony
+Int_Cor= 40.0 ; Sony CMD-5x Correction internal Antenna
+Ext_Cor= 2.0  ; Sony CMD-5x Correction external Antenna
+CTS_Int_Cor= 20.0 ; Sony CTS-55 Correction internal Antenna
+CTS_Ext_Cor= 2.0  ; Sony CTS-55 Correction external Antenna

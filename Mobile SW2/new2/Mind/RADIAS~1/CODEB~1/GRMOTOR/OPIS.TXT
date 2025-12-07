@@ -1,0 +1,8 @@
+Program ten liczy pierwsza linie w odbiorniku grundig wykonanym z procesorem
+MOTOROLI "MC68HC11 A8".
+Program nie liczy dokladnie kodu ktory zawiera w pierwszej oraz trzeciej cyfrze
+kodu zero:
+np:0101
+   0001
+   0401
+najlepiej zeby kod nie zawieral zera.

@@ -1,0 +1,169 @@
+SXSET.DOC     MAR-21-98
+
+
+Here's the Scenix instruction set grouped by function. These mnemonics
+follow the Microchip standard rather than the Parallax standard used by
+Scenix.
+
+             ADDWF  f,d  C,DC,Z
+             SUBWF  f,d  C,DC,Z
+             ANDWF  f,d  Z            ANDLW  k    Z
+             IORWF  f,d  Z            IORLW  k    Z
+             XORWF  f,d  Z            XORLW  k    Z
+
+             MOVWF  f    -            MOVLW  k    -
+             MOVF   f,d  Z
+
+             CLRF   f    Z            CLRW   -    Z
+
+             COMF   f,d  Z
+             DECF   f,d  Z            INCF   f,d  Z
+             DECFSZ f,d  -            INCFSZ f,d  -
+             RLF    f,d  C            RRF    f,d  C
+             SWAPF  f,d  -
+
+             BCF    f,b  -            BSF    f,b  -
+             BTFSC  f,b  -            BTFSS  f,b  -
+
+             GOTO   n    -  (512)   * PAGE   n    -  (8)
+             CALL   k    -  (256)
+           * RET    -    -            RETLW  k    -
+           * RETP   -    PA1,PA0
+           * RETI   -    C,DC,Z     * RETIW  -    C,DC,Z
+
+           * MOVWM  -    -          * MODE   n    -  (16)
+           * MOVMW  -    -
+           * IREAD  -    -
+
+           * BANK   n    -  (8)
+             CLRWDT -    TO,PD   
+             SLEEP  -    TO,PD
+             OPTION -    -          b = bit 0..7 in f
+             TRIS   f    -          d = destination: W or f
+             NOP    -    -          f = file register (RAM)
+                                    W = working register (accumulator)
+             C = carry status bit   k = 8-bit constant
+             DC= digit carry        n = constant
+             Z = zero status        * = new instruction not in PIC 16C5x
+
+
+
+There is some confusion as to what the new instructions added by Scenix
+actually do.
+
+
+MODE n - The four literal bits of "n" are loaded into the MODE register.
+Status affected: None
+Encoding: 0000 0101 nnnn
+Words: 1
+Cycles: 1 (for both PIC 16C5x compatible mode and turbo mode)
+Example: MODE 0Eh	;After instruction, MODE register contains 1110
+
+
+MOVMW - Copies the four bits in the MODE register into W. The high four
+bits of W are zeroed.
+
+
+MOVWM - Copies the four low bits of W into the MODE register.
+
+
+IREAD - Used to read 12-bit instruction memory. The contents of address
+(MODE:W) is copied into MODE:W. In other words: First store the high four
+bits of the address to be read into the MODE register and the low eight
+bits of the address into the W register. After the IREAD instruction is
+executed, the high four bits of the addressed location are in MODE and
+the low eight bits are in W.
+
+The IREAD instruction has the interesting property that it takes the same
+amount of time to execute regardless of the TURBO_ bit in FUSE (DEVICE
+TURBO).
+
+
+RETI - Return from interrupt. The PC, W, STATUS and FSR registers are
+restored to the values they had when the interrupt occurred. Shadow
+registers are used to hold these values; the subroutine return address
+stack is not used. Thus subroutines can be called to a depth of eight
+levels while interrupts are enabled.
+
+
+RETIW - Same as RETI but adds the contents of W to RTCC without affecting
+the prescaler. This provides a periodic interrupt that can be adjusted by
+256 steps.
+
+
+RET - Same as RETLW but the W register is not affected. (Beware that
+MPASM assembles RETURN as RETLW 0.)
+
+
+RETP - Same as RET but the return address bits 10 & 9 (on the stack) are
+written to the page-select bits PA1 & PA0 in the STATUS register. Thus
+the page-select bits are properly set to the page being returned to.
+
+
+PAGE n - The three literal bits of "n" are loaded into the page-select
+bits PA2:PA0 in the STATUS register. This normally prepares a GOTO or
+CALL across a page boundary. PA2 is currently unused since 2K of
+instruction memory is only four pages.
+
+
+BANK n - The three literal bits of "n" are loaded into the bank-select
+bits (the high three bits) in the FSR register. In PIC 16C54 compatible
+mode, only one bank is enabled and the three high bits in FSR are always
+set. (INCFSZ FSR still skips when FSR is initially 0FFh even though the
+result is 0E0h.)
+
+
+SUBWF - If the CF_ bit in FUSEX is 0 (DEVICE CARRYX), the complement of C
+is subtracted (borrowed) from the result. The intent of the CF_ bit is to
+make multiprecision adds and subtracts easier, as shown here:
+
+   ;FF:= FF + GG with correct carry out (CF_ is 0)
+	MOVF	G,W		;add low bytes
+	BCF	STATUS,CF	;clear carry
+	ADDWF	F
+	MOVF	G+1,W		;add high bytes and carry
+	ADDWF	F+1
+
+   ;FF:= FF - GG with correct carry out (CF_ is 0)
+	MOVF	G,W		;subtract low bytes
+	BSF	STATUS,CF	;set carry
+	SUBWF	F		; F - G
+	MOVF	G+1,W		;subtract high bytes
+	SUBWF	F+1
+
+The following routines accomplish the same thing (although with an extra
+instruction), and they're compatable with the PIC 16C5x:
+
+   ;FF:= FF + GG with correct carry out (CF_ is 1)
+	MOVF	G,W		;add low bytes
+	ADDWF	F
+	MOVF	G+1,W		;get ready to add high bytes
+	BTFSC	STATUS,CF	;skip if there was no carry into high byte
+	INCFSZ	G+1,W		;else add in carry; if result is 0 then high
+	ADDWF	F+1		; byte doesn't change and CF is still set
+
+   ;FF:= FF - GG with correct carry out (CF_ is 1)
+	MOVF	G,W		;subtract low bytes
+	SUBWF	F
+	MOVF	G+1,W		;get ready to subtract high bytes
+	BTFSS	STATUS,CF	;skip if there was no borrow from high byte
+	INCFSZ	G+1,W		;else increase amount to subtract by 1; if it's
+	SUBWF	F+1		; 0 then high byte doesn't change, nor does CF
+
+Since the carry-out is correct in all four of these routines, they can
+easily be extended for more bytes of precision.
+
+
+
+MIWU
+
+WKPND should be cleared before enabling WKEN interrupts, otherwise a
+spurious interrupt will occur.
+
+The interrupt service routine must clear WKPND to enable additional
+interrupts on the MIWU pin.
+
+
+
+-Loren Blaney
+

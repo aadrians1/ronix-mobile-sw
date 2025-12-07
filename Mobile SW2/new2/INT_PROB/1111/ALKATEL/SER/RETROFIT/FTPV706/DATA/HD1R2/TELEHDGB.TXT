@@ -1,0 +1,109 @@
+!=========================================================================
+!                HISTORY OF MODIFICATIONS
+!=========================================================================
+! Date           :                      12/08/95
+! Reviewed       :                      1.0
+! Author         :              O. PRINCE
+! Description    :              Création
+!---------------------------------------------------------------------------
+! Date                 : 23/05/96
+! Revision             : 3.03
+! Author               : O. PRINCE
+! Description          : Création nouveau fichier de référence générant fichiers produits
+!                        pour constantes spécifiques : précisées par entete 
+!                        !HD000 ou !HD2 ou !HD1P1 ou !ED1
+!                        précisées par entete !HD pour le reste des produits
+!
+!!!!!!!!!!!!!!!!!!!!!!! DESCRIPTION DES MENUS FTP !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! ----------------------------------------------------------------------------
+! Chaque ligne de commentaire est précédée d'un !
+! Chaque élément significatif d'une description est séparé d'un ;
+! Les mots de chaque nom de menu ou d'item sont séparés par des _ et terminés par un blanc
+!
+! Chaque description de Menu est précédée d'un $ et est définie comme suit :
+! $; Nom de la fenêtre principale; Identifiant du menu; identifiant de la fenêtre principale
+!
+! Chaque ligne de titre de menu est précédée d'un # et définie comme suit :
+! #; Nom du titre ; Identifiant du titre; Numéro de noeud à activer (0 si
+! pas d'action)
+!
+! Chaque ligne d'item de titre est précédée d'un & et définie comme suit :
+! &; Nom de l'item; Identifiant de l'item; Numéro du noeud à activer (0 si
+! pas d'action)
+!
+! Si des sous-items de cet item sont présents,
+! Chaque ligne de sous-item est précédée d'un £ et définie comme suit :
+! £; Nom du sous-item; Identifiant du sous-item; Numéro du noeud à activer
+! ( 0 si pas d'action)
+!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!
+!-----------------------------------------------------------------------------
+!!!!!!!!!!!!! DESCRIPTION DU MENU DU LOGICIEL DE TEST LABO HD !!!!!!!!!!!!!!!!!!!!!!!
+!
+! !HD1R2
+$;Download_HD1R2_7.06 ;1000;1001
+!
+!
+!
+!***************************************
+#;!!General ;1000;1000
+!
+!&;Configuration ;1500;1500
+!
+!
+&;Quit ;1700;505
+!
+!*****************
+#;Down!!Load ;8001;8100
+!
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+&;Download_of_a_file ;8110;8100
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+!&;Read_a_File ;8140;8140
+!
+! !HD1R1 !HD1R2 !HD1R3 
+!£;Flash_Reading ;8141;8140
+!
+! !HD1R1 !HD1R2 !HD1R3
+!£;Eeprom_Reading ;8142;8150
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+!&;Zone_Erasement ;8170;8170
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+!&;Creation_of_Downloadable_File ;8120;8120
+!
+! !HD1R1 !HD1R2 !HD1R3
+!£;Flash_Downloadable ;8121;8120
+!
+! !HD1R1 !HD1R2 !HD1R3
+!£;Eeprom_Downloadable ;8122;8125
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+!&;Downloadable_File_Modif ;8160;8160
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+!&;Scenario_Download ;8810;8800
+!
+! !HD1R1 !HD2R1 !HD1R2 !HD1R3 !HD2R2 !HD5R1 !HD5COMP !HD4 !HD2R3
+!&;Download_Config ;8130;8130
+!
+!
+!
+!
+!
+!
+#;!!Option ;3001;3000
+!
+&;Language ;7500;7500
+!!!!!!!!!!!!!!
+£;French   ;7510;7510
+!
+£;English  ;7520;7520
+!
+!
+!&;Screen_Config ;7400;7400
+!

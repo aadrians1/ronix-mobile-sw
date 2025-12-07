@@ -1,0 +1,602 @@
+//cell list exchange format v2.0//
+012C02D026202 71292 Friolzheim, Mönsheimer Straße 28, Gebäude Erich Sommerer GmbH
+013602D026202 75449 Wurmberg, am nördlichen Ortsausgang, neben dem Wasserspeicher
+014102D026202 75179 Pforzheim, Wilhelm-Becker-Straße, Gebäude Versandhaus Klingel
+014202D026202 75179 Pforzheim, Wilhelm-Becker-Straße, Gebäude Versandhaus Klingel
+014302D026202 75179 Pforzheim, Wilhelm-Becker-Straße, Gebäude Versandhaus Klingel
+021D02D026202 76437 Rastatt, Gewerbepark Stockfeldstraße, Hotel Maximilian
+021E02D026202 76437 Rastatt, Gewerbepark Stockfeldstraße, Hotel Maximilian
+021F02D026202 76437 Rastatt, Gewerbepark Stockfeldstraße, Hotel Maximilian
+028002D026202 75210 Keltern, , auf dem NFN-Steinbruchgelände
+028A02D026202 75196 Nöttingen, Tullastraße, Gebäude Fa. Kunzmann
+029F02D026202 76133 KA-Weststadt, Kaiserallee 15, Hochhaus
+02A002D026202 76133 KA-Weststadt, Kaiserallee 15, Hochhaus
+02A102D026202 76133 KA-Weststadt, Kaiserallee 15, Hochhaus
+02A902D026202 76228 Bergwald, Elsa-Brandströmstr.9, Wohnhaus
+02AA02D026202 76228 Bergwald, Elsa-Brandströmstr.9, Wohnhaus
+02B302D026202 76275 Ettlingen IG, Einstein/Hertzstraße, Gebäude Fa. GEA Wiegand
+02B402D026202 76275 Ettlingen IG, Einstein/Hertzstraße, Gebäude Fa. GEA Wiegand
+02B502D026202 76275 Ettlingen IG, Einstein/Hertzstraße, Gebäude Fa. GEA Wiegand
+02EF030C26202 76726 Germersheim, Theobaldstraße 3, Wohnhaus
+02F0030C26202 76726 Germersheim, Theobaldstraße 3, Wohnhaus
+02F1030C26202 76726 Germersheim, Theobaldstraße 3, Wohnhaus
+0320030C26202 76764 Rheinzabern, Bahnhofstraße, Raiffeisen-Lagerhaus
+039902D026202 76870 Kandel, Luitpoldstr. 14, Kreiskrankenhaus
+039A02D026202 76870 Kandel, Luitpoldstr. 14, Kreiskrankenhaus
+039B02D026202 76870 Kandel, Luitpoldstr. 14, Kreiskrankenhaus
+07B202D026202 77815 Bühl, Industriestrasse 32, Gelände Mannesmann Handel AG
+07BD02D026202 77855 Achern, nähe Feuerwehrdenkmal, Betonmast der Telekom
+07BE02D026202 77855 Achern, nähe Feuerwehrdenkmal, Betonmast der Telekom
+07BF02D026202 77855 Achern, nähe Feuerwehrdenkmal, Betonmast der Telekom
+08B6030C26202 76694 Forst, Freiherr v. Drais Straße, Gelände Fa. WSA Wärmetechnik
+08C0030C26202 68753 Waghäusel, Waghäuseler Str., Gebäude der Südzucker AG
+0938030C26202 75053 Gondelsheim, am westl. Ortsausgang, Gebäude der Getreidemühle Heck
+09D802D026202 76530 Baden-Baden, Moltkestrasse 15, auf Gebäude des SWR
+09E302D026202 76532 BAD-Sandweier, Richard-Haniel-Str. 3, Kies- und Betonwerke Peterbeton
+09E402D026202 76532 BAD-Sandweier, Richard-Haniel-Str. 3, Kies- und Betonwerke Peterbeton
+09E502D026202 76532 BAD-Sandweier, Richard-Haniel-Str. 3, Kies- und Betonwerke Peterbeton
+0A1E02D026202 71665 Vaihingen/Enz, beim Segelfluggelände, neben dem Wasserspeicher
+0A3C030C26202 75248 Bretten-Kleinvillars, nördlich, beim Wasserbehälter Schillingswald
+0A5002D026202 76327 Söllingen, verlängerte Riethstraße, Gelände des Söllinger Wasserspeichers
+0B0E02D026202 75417 Mühlacker-Dürrmenz, nähe Segelflugplatz, beim Hangensteiner Hof
+0C62030C26202 75031 Eppingen-Adelshofen, auf dem Hohenstein, neben dem Wasserbehälter
+0C6D030C26202 75447 Sternenfels, auf dem Stromberg, neben Wasserspeicher des ZBWV
+0C6E030C26202 75447 Sternenfels, auf dem Stromberg, neben Wasserspeicher des ZBWV
+0C6F030C26202 75447 Sternenfels, auf dem Stromberg, neben Wasserspeicher des ZBWV
+0C8A030C26202 75045 Walzbachtal, an der B293, Betonturm der Telekom
+0F6402D026202 76571 Gaggenau-Michelbach, am Waldsportplatz 1, neben dem Sportplatz
+0F6502D026202 76571 Gaggenau-Michelbach, am Waldsportplatz 1, neben dem Sportplatz
+0F6602D026202 76571 Gaggenau-Michelbach, am Waldsportplatz 1, neben dem Sportplatz
+0F7802D026202 75305 Waldrennach, beim Sportplatz, auf dem Wasserturm
+0FF102D026202 76316 Malsch, Tullastraße, Betonwerk Malsch
+0FF202D026202 76316 Malsch, Tullastraße, Betonwerk Malsch
+120D02D026202 76887 Bad Bergzabern, Danziger Strasse, auf dem Kreiskrankenhaus
+120E02D026202 76887 Bad Bergzabern, Danziger Strasse, auf dem Kreiskrankenhaus
+127002D026202 76530 Baden-Baden, Albrecht-Dürer-Straße 1, Gebäude RENTALAB GmbH
+128402D026202 75378 Bad Liebenzell, beim Monakamer Kopf, auf Fernsehumsetzer
+132F02D026202 75180 Pforzheim, Konrad-Adenauer-Str. 3, Wohnhaus
+133002D026202 75180 Pforzheim, Konrad-Adenauer-Str. 3, Wohnhaus
+144702D026202 77836 Rheinmünster, Hauptstrasse 5, Gebäude Fa. Wöhrle
+144802D026202 77836 Rheinmünster, Hauptstrasse 5, Gebäude Fa. Wöhrle
+148D02D026202 76437 Rastatt, Engelstraße 39, Schornstein des Kreiskrankenhauses
+148E02D026202 76437 Rastatt, Engelstraße 39, Schornstein des Kreiskrankenhauses
+14B5030C26202 76646 Bruchsal, Prinz-Wilhelm-Straße, Bahnhofsgelände
+14B6030C26202 76647 Bruchsal, Prinz-Wilhelm-Straße, Bahnhofsgelände
+14F002D026202 75323 Bad Wildbad-Calmbach, oberhalb des Orts, auf dem unteren Eiberg
+1536030C26202 76709 Kronau, A5 nähe Abfahrt Kronau, Betonturm
+15D702D026202 76448 Durmersheim, Industriestraße 6, Gebäude Fa. BSW
+15D802D026202 76448 Durmersheim, Industriestraße 6, Gebäude Fa. BSW
+15E102D026202 76187 KA-Knielingen, G.-Braun-Straße, Antennenturm MMO-Gelände
+15E202D026202 76187 KA-Knielingen, G.-Braun-Straße, Antennenturm MMO-Gelände
+15E302D026202 76187 KA-Knielingen, G.-Braun-Straße, Antennenturm MMO-Gelände
+15EB02D026202 76139 KA-Hagsfeld, Am Storrenacker, Gelände Fa. Hornbach
+15EC02D026202 76139 KA-Hagsfeld, Am Storrenacker, Gelände Fa. Hornbach
+15ED02D026202 76139 KA-Hagsfeld, Am Storrenacker, Gelände Fa. Hornbach
+15F502D026202 76185 KA-Mühlburg, Carl-Metz-Straße, Kamin Fa. Metz
+15F602D026202 76185 KA-Mühlburg, Carl-Metz-Straße, Kamin Fa. Metz
+15F702D026202 76185 KA-Mühlburg, Carl-Metz-Straße, Kamin Fa. Metz
+160802D026202 76768 Berg, nähe Sportplatz, auf dem Wasserturm
+168002D026202 76744 Wörth a. Rhein, Dorschbergstraße, auf Wasserspeicher
+16D002D026202 76275 Ettlingen, auf dem Wattkopf, Wattkopfturm
+16DA02D026202 76332 Bad Herrenalb, auf dem Maienberg, (grüner!) Telekom-Stahlgittermast
+172002D026202 75203 Königsbach, Schwarzwaldstraße, beim Hundesportplatz
+177B02D026202 71287 Weissach/Württ., Porschestraße, auf dem Porschegelände
+177C02D026202 71287 Weissach/Württ., Porschestraße, auf dem Porschegelände
+178402D026202 71296 Heimsheim, bei der JVA, Betonmast
+17B6030C26202 76356 Weingarten, Höhefeldstraße, Silo Fa. Trautwein
+17C0030C26202 76344 Leopoldshafen, 600m nach OE rechts, Betonturm der Telekom
+1806030C26202 76703 Kraichtal-Tiefenbach, an der L552, auf Fernsehumsetzer
+184302D026202 76534 BAD-Lichtental, auf dem Schafberg, auf Telekom-Mast oberhalb Altenheim
+184C030C26202 76703 Kraichtal-Oberacker, Burgweg, bei der Sporthalle
+18D902D026202 76131 KA-Oststadt, Fraunhoferstraße, Gebäude Fraunhofergesellschaft
+18DA02D026202 76131 KA-Oststadt, Fraunhoferstraße, Gebäude Fraunhofergesellschaft
+18DB02D026202 76131 KA-Oststadt, Fraunhoferstraße, Gebäude Fraunhofergesellschaft
+18E302D026202 76287 Rheinstetten Forcheim, Oberfeldstraße 8, Wohnhaus
+18E402D026202 76287 Rheinstetten Forcheim, Oberfeldstraße 8, Wohnhaus
+18ED02D026202 76149 KA-Neureut, Am Sandfeld 1, SÜBA-Baumarkt
+18EE02D026202 76149 KA-Neureut, Am Sandfeld 1, SÜBA-Baumarkt
+18EF02D026202 76149 KA-Neureut, Am Sandfeld 1, SÜBA-Baumarkt
+18F702D026202 76227 Grötzingen, Alte Weingartener Straße, Kamin Tierkörperbeseitigungsanstalt
+18F802D026202 76227 Grötzingen, Alte Weingartener Straße, Kamin Tierkörperbeseitigungsanstalt
+196E030C26202 74918 Angelbachtal, an der B292, auf Futtersilo
+1997030C26202 76676 Graben-Neudorf, K3574, Schornstein Roxan GmbH
+1998030C26202 76676 Graben-Neudorf, K3574, Schornstein Roxan GmbH
+1A9102D026202 76199 KA-Rüppurr, Erlenweg, Altenwohnstift hinteres Gebäude
+1A9202D026202 76199 KA-Rüppurr, Erlenweg, Altenwohnstift hinteres Gebäude
+1A9302D026202 76199 KA-Rüppurr, Erlenweg, Altenwohnstift hinteres Gebäude
+1AAE02D026202 76831 Ingenheim, In der Kehl, Wirtschaftsgebäude, MMO-Mast
+23E602D026202 75223 Niefern-Öschelbronn, Raststätte an der A8, E+ Gittermast
+23F0030C26202 76761 Rülzheim, zw. Rülzheim u. Bellheim, nähe Wasserspeicher auf Futtersilo
+246902D026202 76547 Sinzheim, in Richtung Winden, neben dem Wasserbehälter
+246A02D026202 76547 Sinzheim, in Richtung Winden, neben dem Wasserbehälter
+24F402D026202 75417 Mühlacker, nähe Kreiskrankenhaus, auf dem Wasserturm
+271002D026202 76307 Langensteinbach, Guttmannstraße, Rehakrankenhaus hinteres Gebäude
+271A02D026202 75334 Conweiler, im Industriegebiet, Silo Fa. MBM
+272402D026202 75196 Wilferdingen, A8 bei Darmsbach, E+ Gittermast
+278802D026202 75181 Pforzheim-Würm, auf dem Berg (Straße heißt so), auf Fernsehumsetzer
+279202D026202 76359 Burbach, nördlich davon an der K3554, Betonturm der Telekom
+27B002D026202 76744 Büchelberg/Wörth, , Wasserspeicher
+28E7030C26202 76706 Liedolsheim, nördliche L602, Wasserspeicher
+28E8030C26202 76706 Liedolsheim, nördliche L602, Wasserspeicher
+298602D026202 76470 Ötigheim, Industriestraße, Industriegebiet auf der Kartbahn
+2A1302D026202 77833 Ottersweier-Zell, Zeller Str. 47, Gebäude Zeller Mühle Huber GmbH
+2A1402D026202 77833 Ottersweier-Zell, Zeller Str. 47, Gebäude Zeller Mühle Huber GmbH
+2ABC030C26202 75038 Flehingen, auf dem Reichenberg, E+ Gittermast
+2EF402D026202 75446 Wiernsheim-Serres, an der L1135, neben dem Wasserspeicher
+2F26030C26202 69190 Walldorf, Josef-Reiert-Straße, IKEA-Schild
+2F30030C26202 68789 St. Leon-Rot, An der Autobahn 17, Gelände Fa. Brenzinger
+2F4E02D026202 76456 Kuppenheim, Friedrichstraße 111, Kreisaltersheim
+2F5902D026202 76437 Plittersdorf, Riedstraße, neben der Altrheinhalle
+2F5A02D026202 76437 Plittersdorf, Riedstraße, neben der Altrheinhalle
+2F94030C26202 76646 Heidelsheim, Markgrafenstraße, Gebäude der Durst Malzfabrik
+3002030C26202 76707 Hambrücken, an der L556, an einem Hochspannungsmast
+3085030C26202 76661 Phillipsburg, im Gewann Lochwiesen, neben dem Sportplatz
+3086030C26202 76661 Phillipsburg, im Gewann Lochwiesen, neben dem Sportplatz
+3087030C26202 76661 Phillipsburg, im Gewann Lochwiesen, neben dem Sportplatz
+308E030C26202 76689 Karlsdorf, Xaver-Kögel-Str., Lußhardthof Silo
+309802D026202 76297 Blankenloch, Eggensteiner Straße 83, Silo der Fa. Amolsch+Nagel
+30A302D026202 75180 Pforzheim, Hohenstaufenstraße, Hotel Maritim/Goldene Pforte
+30A402D026202 75180 Pforzheim, Hohenstaufenstraße, Hotel Maritim/Goldene Pforte
+30A502D026202 75180 Pforzheim, Hohenstaufenstraße, Hotel Maritim/Goldene Pforte
+30F302D026202 77836 Rheinmünster-Söllingen, auf dem Flughafengelände, neben RADIO 96
+30F402D026202 77836 Rheinmünster-Söllingen, auf dem Flughafengelände, neben RADIO 96
+318802D026202 75417 Mühlacker-Lomersheim, Waldgebiet 'Tiefenweg', auf Fernsehumsetzer
+323D02D026202 76530 Baden-Baden, Hardstr. 2, auf dem Markgraf-Ludwig-Gymnasium
+323E02D026202 76530 Baden-Baden, Hardstr. 2, auf dem Markgraf-Ludwig-Gymnasium
+336902D026202 76133 KA-Südweststadt, Karlstraße 56, DAK-Gebäude
+336A02D026202 76133 KA-Südweststadt, Karlstraße 56, DAK-Gebäude
+336B02D026202 76133 KA-Südweststadt, Karlstraße 56, DAK-Gebäude
+337202D026202 76461 Muggensturm, Sofienstraße, Turm der freiwilligen Feuerwehr
+350302D026202 76474 Au am Rhein, Oberwaldstraße, Gelände Fa. Merkel+Czeschner
+350402D026202 76474 Au am Rhein, Oberwaldstraße, Gelände Fa. Merkel+Czeschner
+350C030C26202 75433 Maulbronn-Schützingen, nördlich des Orts, neben dem Wasserspeicher
+354902D026202 77855 Achern-Gamshurst, am Risisee 15, auf Halle der Fa. Z.F.E.
+354A02D026202 77855 Achern-Gamshurst, am Risisee 15, auf Halle der Fa. Z.F.E.
+354B02D026202 77855 Achern-Gamshurst, am Risisee 15, auf Halle der Fa. Z.F.E.
+3570030C26202 76646 Bruchsal-Obergrombach, Robert-Stolz-Str. 20, Antennenmast Telekom
+361B030C26202 76646 Bruchsal-Untergrombach, Gewann Allmenäcker, Betonturm am Waldrand
+361C030C26202 76646 Bruchsal-Untergrombach, Gewann Allmenäcker, Betonturm am Waldrand
+361D030C26202 76646 Bruchsal-Untergrombach, Gewann Allmenäcker, Betonturm am Waldrand
+362E030C26202 75031 Eppingen-Kleingartach, Leinburg, auf dem Höhenrestaurant
+36EC02D026202 76131 KA-Innenstadt Ost, Durlacher Tor, an einer Straßenlaterne
+36F602D026202 76133 KA-Innenstadt, Marktplatz, am Gebäude der Volksbank
+370002D026202 76133 KA-Innenstadt, Ettlinger-Tor-Platz, an einer Straßenlaterne
+370A02D026202 76131 KA-Innenstadt West, Reinhold-Frank-Str., am Mühlburger Tor an Straßenlaterne
+375B02D026202 77839 Lichtenau-Scherzheim, hinter Sieger Freizeitmöbel, neben dem Sportplatz
+375C02D026202 77840 Lichtenau-Scherzheim, hinter Sieger Freizeitmöbel, neben dem Sportplatz
+376502D026202 77833 Ottersweier, Industriestrasse 10, Gebäude Schwarzwälder Edelputzwerk
+376602D026202 77833 Ottersweier, Industriestrasse 10, Gebäude Schwarzwälder Edelputzwerk
+37A0030C26202 75015 Bretten, auf dem Löschberg, beim Wasserbehälter
+37F002D026202 75323 Bad Wildbad, Waldgebiet 'Sandsteigle', auf Stahlgittermast
+3822030C26202 75015 Bretten, Gölshausen an der K3503, auf dem Wasserspeicher
+389002D026202 75242 Neuhausen-Steinegg, an der L573, Betonmast beim Sportplatz
+394502D026202 76133 KA-Südstadt, Augartenstraße 1, auf dem MONA-Gebäude
+394602D026202 76133 KA-Südstadt, Augartenstraße 1, auf dem MONA-Gebäude
+394702D026202 76133 KA-Südstadt, Augartenstraße 1, auf dem MONA-Gebäude
+398A030C26202 76669 Bad Schönborn, Dr.-A.-Weckesser-Str., Gebäude Pfalzmöbel Möbelfabrik
+3EEF02D026202 76227 KA-Durlach, Pfaffstrasse 18, auf Wohnhochhaus
+3EF002D026202 76227 KA-Durlach, Pfaffstrasse 18, auf Wohnhochhaus
+3EF102D026202 76227 KA-Durlach, Pfaffstrasse 18, auf Wohnhochhaus
+3EF902D026202 76189 KA-Oberreut, Großoberfeld, HEINE Hochregallager
+3EFA02D026202 76189 KA-Oberreut, Großoberfeld, HEINE Hochregallager
+3EFB02D026202 76189 KA-Oberreut, Großoberfeld, HEINE Hochregallager
+402E030C26202 76751 Jockgrim, in den Grüben 5, Mühlheußer Fensterfabrik
+4074030C26202 76684 Östringen, J.-v.-Liebig-Straße, auf Zementsilo
+40EC030C26202 76703 Kraichtal-Oberöwisheim, beim Römerweg, neben dem Wasserspeicher
+416F02D026202 76131 KA-Oststadt, Badenwerkstraße, auf dem Badenwerkgebäude R II
+417002D026202 76131 KA-Oststadt, Badenwerkstraße, auf dem Badenwerkgebäude R II
+417102D026202 76131 KA-Oststadt, Badenwerkstraße, auf dem Badenwerkgebäude R II
+418302D026202 76275 Ettlingen-Schöllbronn, nordwestl. des Orts, auf dem Wasserspeicher
+418402D026202 76275 Ettlingen-Schöllbronn, nordwestl. des Orts, auf dem Wasserspeicher
+443402D026202 75335 Dobel, Höhenstrasse, am Wasserturm
+44AD02D026202 75181 Pforzheim, im Altgefäll, Gebäude Fa. KLINGEL
+44AE02D026202 75182 Pforzheim, im Altgefäll, Gebäude Fa. KLINGEL
+44AF02D026202 75183 Pforzheim, im Altgefäll, Gebäude Fa. KLINGEL
+452F02D026202 76275 Ettlingen, Mühlenstraße/Neuer Markt, Kaufhaus Breuninger
+453002D026202 76275 Ettlingen, Mühlenstraße/Neuer Markt, Kaufhaus Breuninger
+453102D026202 76275 Ettlingen, Mühlenstraße/Neuer Markt, Kaufhaus Breuninger
+454302D026202 76133 KA-Innenstadt, Kaiserstrasse 147, Kaufhaus Karstadt, Ecke Ritterstrasse
+454402D026202 76133 KA-Innenstadt, Kaiserstrasse 147, Kaufhaus Karstadt, Ecke Ritterstrasse
+454502D026202 76133 KA-Innenstadt, Kaiserstrasse 147, Kaufhaus Karstadt, Ecke Ritterstrasse
+46AA02D026202 71296 Heimsheim, am Flachter Pfad, Antennen- statt Flutlichtmast beim Sportplatz
+488A030C26202 74889 Waldangelloch, auf dem Bettelberg, neben dem Wasserbehälter
+48BD02D026202 76593 Gernsbach, auf dem Schwann, auf Fernsehumsetzer
+48BE02D026202 76593 Gernsbach, auf dem Schwann, auf Fernsehumsetzer
+48C6030C26202 76698 Zeutern, auf dem Kallenberg, neben dem Wasserspeicher
+493F02D026202 76437 Rastatt, Bahnhofstraße 2, Kaufhaus Schneider
+494002D026202 76437 Rastatt, Bahnhofstraße 2, Kaufhaus Schneider
+494102D026202 76437 Rastatt, Bahnhofstraße 2, Kaufhaus Schneider
+49FC030C26202 76676 Graben-Neudorf, , auf dem SEW-Gelände
+4A0602D026202 76327 Berghausen, Institutstrasse, hinter dem Wasserbehälter Hummelberg
+4BC902D026202 76133 KA-West, Erzbergerstr. 117-121, auf dem Gebäde der BA
+4BCA02D026202 76133 KA-West, Erzbergerstr. 117-121, auf dem Gebäde der BA
+4BCB02D026202 76133 KA-West, Erzbergerstr. 117-121, auf dem Gebäde der BA
+4BD302D026202 76189 KA-Grünwinkel, Rudolph-Freytag-Straße, Gebäude BADENIA-Druck
+4BD402D026202 76189 KA-Grünwinkel, Rudolph-Freytag-Straße, Gebäude BADENIA-Druck
+4BD502D026202 76189 KA-Grünwinkel, Rudolph-Freytag-Straße, Gebäude BADENIA-Druck
+4BF1030C26202 76707 Hambrücken, an der K3525, Hochspannungsmast an der Autobahn
+4BF2030C26202 76707 Hambrücken, an der K3525, Hochspannungsmast an der Autobahn
+4BF3030C26202 76707 Hambrücken, an der K3525, Hochspannungsmast an der Autobahn
+4F8902D026202 75172 Pforzheim, Poststr./Leopoldplatz, auf dem Industrieheaus
+4F8A02D026202 75172 Pforzheim, Poststr./Leopoldplatz, auf dem Industrieheaus
+4F8B02D026202 75172 Pforzheim, Poststr./Leopoldplatz, auf dem Industrieheaus
+512C030C26202 76297 Friedrichstal, Heinrich-Hertz-Straße 2, Gelände hagebaumarkt
+51C2030C26202 76863 Herxheim, beim alten Bahnhof, auf Raiffeisengebäude
+51F4030C26202 75015 Bretten, Virchowstrasse 15, auf dem Kreiskrankenhaus
+1240730426201 75217 Birkenfeld, Siemensstraße, auf Telekomgebäude
+1333731A26201 76437 Rastatt, Joseph-Loreye-Strasse 1, neben TELEKOM-Vermittlung
+1335731A26201 76437 Rastatt, Joseph-Loreye-Strasse 1, neben TELEKOM-Vermittlung
+1337731A26201 76437 Rastatt, Joseph-Loreye-Strasse 1, neben TELEKOM-Vermittlung
+1352731A26201 77836 Rheinmünster-Söllingen, , auf dem Flughafengelände
+1754730C26201 76187 KA Knielingen, Rheinstraße, auf Siemensgebäude
+1880730C26201 76135 KA Bahnhofsgelände, , auf Bundesbahnschule
+2118730226201 68753 Wiesental, an der B36, auf Antennenturm der Telekom
+2145730226201 76703 Kraichtal-Oberacker, Burgweg, bei der Sporthalle
+2244730C26201 76297 Blankenloch, Eggensteiner Straße 83, auf Silo der Fa. Amolsch+Nagel
+2370730C26201 76187 KA Knielingen, Rheinstraße, auf Siemensgebäude
+2690730C26201 76137 KA Südstadt, Rüppurrer Straße, Fernmeldeamt
+3246730226201 75447 Sternenfels, auf dem Stromberg, neben Wasserspeicher des ZBWV
+3822730426201 75449 Wurmberg, am nördlichen Ortsausgang, neben dem Wasserspeicher
+4310730C26201 76131 KA Oststadt, Am Fasanengarten, auf Bauigel-Gebäude der Uni
+4313730C26201 76131 KA Oststadt, Am Fasanengarten, auf Bauigel-Gebäude der Uni
+4591730C26201 76131 Karlsruhe, Goerdelerstraße, auf Wohnhaus
+4594730C26201 76131 Karlsruhe, Goerdelerstraße, auf Wohnhaus
+4597730C26201 76131 Karlsruhe, Goerdelerstraße, auf Wohnhaus
+5082730226201 76694 Forst, Heinrich-Hertz-Str.1, Eloxalwerk Streitz
+5453730C26201 76139 KA Waldstadt, Im Eichbäumle, Betonmast
+7277730C26201 76189 KA Daxlanden, Thomas-Mann-Straße, auf Wohnhaus
+7988730C26201 76131 KA Oststadt, Am Fasanengarten, auf Bauigel-Gebäude der Uni
+8183730C26201 76185 KA Mühlburg, Entenfang, auf dem Postamt
+0048731A26201 76437 Rastatt, im Industriegebiet, riesiger Betonturm
+00AC730426201 76228 Grünwettersbach, , auf dem Fernmeldeturm
+0110730426201 75177 Pforzheim, , auf dem Wartbergturm
+02A0731A26201 76532 Baden-Baden Oos, Ooser Bahnhofstr. 6, auf dem Postamt
+0368730426201 76359 Burbach, nördlich davon K3554, Waldgebiet auf Telekom-Betonmast
+03CC730226201 76356 Weingarten, , Betonmast auf dem Katzenberg
+0430730926201 76744 Wörth a. Rhein, J.-Strauß.Str., auf Antennenturm der Telekom
+0454730C26201 76139 KA Waldstadt, Im Eichbäumle, Betonmast
+0457730C26201 76137 KA Südstadt, Rüppurrer Straße, Fernmeldeamt
+0458730C26201 76137 KA Südstadt, Rüppurrer Straße, Fernmeldeamt
+04F8730226201 76646 Bruchsal, nördlich davon, Gelände des Golfclubs
+055C730C26201 76149 Neureut, Unterfeld/Holbeinstraße, Turm Fernmeldeamt
+05C0731A26201 76316 Malsch, im Industriegebiet, Instandsetzungszentrum Telekom
+0624730226201 75015 Bretten, B35, auf Betonturm der Telekom
+0688730426201 75210 Dietenhausen, Waldgebiet nordwestlich, Betonmast
+0750730226201 76703 Kraichtal-Tiefenbach, an der L552, auf Fernsehumsetzer
+07B4730C26201 76275 Ettlingen, L566, auf Antennenturm der Telekom
+08E0730226201 76646 Büchenau, A5 etwa bei KM613, Betonmast
+0944730226201 75045 Walzbachtal, an der B293, auf Betonturm der Telekom
+09A8730926201 76863 Herxheim, , 
+0A0C730926201 76773 Kuhardt, zwischen Kuhardt und Hördt, Betonmast
+0AD4730426201 75248 Ölbronn, nordöstlich, auf Antennenturm der Telekom
+0B20731A26201 76437 Rastatt, Augustastraße 1, auf dem Gebäude der Stadtwerke
+0C00730926201 76676 Graben-Neudorf, K3574/B36, auf Betonturm der Telekom
+0CC8731A26201 76448 Durmersheim, Am Rankrain, auf Telekomgebäude
+0D2C731A26201 76571 Gaggenau, August-Schneider-Str.26, auf Telekomgebäude
+0D90730C26201 76139 KA Hagsfeld/Rintheim, Elfmorgenbruchstraße, Betonmast
+0E55730C26201 76275 Ettlingen, L566, auf Antennenturm der Telekom
+0E82731A26201 76474 Au am Rhein, Oberwaldstraße, Gelände Fa. Merkel+Czeschner
+0E87730C26201 76275 Ettlingen-Schöllbronn, nordwestl. des Orts, auf dem Wasserspeicher
+0E89730426201 75172 Pforzheim, Museumsstraße, auf Telekomgebäude
+0E91730426201 75172 Pforzheim, Museumsstraße, auf Telekomgebäude
+0EA7730226201 76698 Ubstadt, Am Steinbruch, auf Telekom-Vermittlungsstelle
+0EBC730C26201 76327 Berghausen, Institutstrasse, hinter dem Wasserbehälter Hummelberg
+0FE8730C26201 76287 Rheinstetten Forcheim, Oberfeldstraße 4, Wohnhaus
+104C731A26201 76534 BAD-Lichtental, auf dem Schafberg, auf TELEKOM-Mast
+12A4730526201 76332 Bad Herrenalb, , 
+12F9731A26201 76532 Baden-Baden Oos, Ooser Bahnhofstr. 6, auf dem Postamt
+132E731A26201 76437 Rastatt, Augustastraße 1, auf dem Gebäude der Stadtwerke
+132F731A26201 76437 Rastatt, Augustastraße 1, auf dem Gebäude der Stadtwerke
+136C731A26201 76473 Iffezheim, Tullastraße 9, Stahlmast bei Telekom-Gebäude
+13EB731A26201 76593 Gernsbach, Blumenweg, auf Telekomgebäude
+13FA731A26201 76532 Baden-Baden Oos, Ooser Bahnhofstr. 6, auf dem Postamt
+14FC730C26201 76227 KA Durlach, Ernst-Friedrich-Str., auf dem Kamin der Fa. Pfaff
+1628730C26201 76135 KA Südweststadt, Kriegsstraße 242, auf Wohnhaus
+168C730426201 75172 Pforzheim, Museumsstraße, auf Telekomgebäude
+17B8730C26201 76135 KA Bahnhofsgelände, , auf Bundesbahnschule
+18E4730C26201 76135 KA Bahnhofsgelände, , auf Bundesbahnschule
+1B3C730C26201 76275 Ettlingen, Friedrichstraße, auf dem Postamt
+1BA0730426201 75180 Pforzheim, Walter-Rathenau-Str., auf Telekomgebäude
+1D30730C26201 76227 KA Durlach, Ernst-Friedrich-Str., auf dem Kamin der Fa. Pfaff
+1E2D730C26201 76275 Ettlingen, L566, auf Antennenturm der Telekom
+1EC0730926201 76870 Kandel, Zeppelinstraße 1, auf Antennenturm der Telekom
+1F24730226201 76646 Bruchsal, Hildastraße, auf dem Fernmeldeamt
+20B4730426201 75179 Pforzheim, Karlsruher Straße, neben FAMILA vorderes Antennenpaar
+217C730226201 68753 Wiesental, an der B36, auf Antennenturm der Telekom
+237D730C26201 76744 Büchelberg/Wörth, , Wasserspeicher
+23D4730C26201 76187 KA Knielingen, Rheinstraße, auf Siemensgebäude
+25C8730426201 75177 Pforzheim, , auf dem Wartbergturm
+262C730426201 75177 Pforzheim, , auf dem Wartbergturm
+26F4730226201 68753 Wiesental, an der B36, auf Antennenturm der Telekom
+2B3E730426201 75417 Mühlacker, , auf dem Kreiskrankenhaus
+2C3D730C26201 76131 Karlsruhe, Badenwerkstraße, auf dem Badenwerkgebäude R II
+2C3E730C26201 76131 Karlsruhe, Badenwerkstraße, auf dem Badenwerkgebäude R II
+2C3F730C26201 76131 Karlsruhe, Badenwerkstraße, auf dem Badenwerkgebäude R II
+2E10730926201 76831 Ingenheim, In der Kehl, Wirtschaftsgebäude, MMO-Mast
+31C9730C26201 76228 Wolfartsweier, Steinkreuzstraße, auf der Grundschule
+31CA730C26201 76228 Wolfartsweier, Steinkreuzstraße, auf der Grundschule
+31CB730C26201 76228 Wolfartsweier, Steinkreuzstraße, auf der Grundschule
+32D0730226201 76646 Büchenau, A5 etwa bei KM613, Betonmast
+32D1730226201 76646 Büchenau, A5 etwa bei KM613, Betonmast
+32D2730226201 76694 Forst, Heinrich-Hertz-Str.1, Eloxalwerk Streitz
+32DB730C26201 76189 KA Daxlanden, Thomas-Mann-Straße, auf Wohnhaus
+32E0730C26201 76189 KA Daxlanden, Thomas-Mann-Straße, auf Wohnhaus
+338D730C26201 76185 KA Mühlburg, Entenfang, auf dem Postamt
+338E730C26201 76185 KA Mühlburg, Entenfang, auf dem Postamt
+3D87731A26201 77836 Rheinmünster-Söllingen, , auf dem Flughafengelände
+42F1730C26201 76135 KA Südweststadt, Kriegsstraße 242, auf Wohnhaus
+42F2730C26201 76135 KA Südweststadt, Kriegsstraße 242, auf Wohnhaus
+42F3730C26201 76187 KA Nordweststadt, Eugen-Richter-Straße, auf Wohnhaus
+42F5730C26201 76187 KA Nordweststadt, Eugen-Richter-Straße, auf Wohnhaus
+5FB4730C26201 76189 KA Rheinhafen, Hansastr.20/22, auf Silo
+5FB5730C26201 76189 KA Rheinhafen, Hansastr.20/22, auf Silo
+5FB7730C26201 76189 KA Rheinhafen, Hansastr.20/22, auf Silo
+5FEC730C26201 76139 KA Waldstadt, Im Eichbäumle, Betonmast
+62DC730C26201 76187 KA Nordweststadt, Eugen-Richter-Straße, auf Wohnhaus
+6E0D730C26201 76131 Karlsruhe, Kaiserstraße, auf dem Hauptpostamt
+6E12730C26201 76131 Karlsruhe, Kaiserstraße, auf dem Hauptpostamt
+6E16730C26201 76131 Karlsruhe, Kaiserstraße, auf dem Hauptpostamt
+772A711826201 71296 Heimsheim, bei der JVA, Betonmast
+772C711826201 71296 Heimsheim, bei der JVA, Betonmast
+79C2711826201 71296 Heimsheim, bei der JVA, Betonmast
+80C3730C26201 76275 Ettlingen, Goethestr., auf Lagergebäude
+80CA730C26201 76275 Ettlingen, Goethestr., auf Lagergebäude
+80CC730C26201 76275 Ettlingen, Goethestr., auf Lagergebäude
+80FB730C26201 76133 Karlsruhe, Lammstr./Kaiserstr., auf dem techn. Rathaus
+80FF730C26201 76133 Karlsruhe, Lammstr./Kaiserstr., auf dem techn. Rathaus
+8102730C26201 76133 Karlsruhe, Lammstr./Kaiserstr., auf dem techn. Rathaus
+032B000326202 41751 Viersen, Ortsausfahrt zur A61, auf Wasserturm
+032C000326202 41751 Viersen, Ortsausfahrt zur A61, auf Wasserturm
+032D000326202 41751 Viersen, Ortsausfahrt zur A61, auf Wasserturm
+0A1F000326202 41334 Nettetal-Breyell, Paul-Therstappen-Straße, Wohnhaus
+0A20000326202 41334 Nettetal-Breyell, Paul-Therstappen-Straße, Wohnhaus
+0A21000326202 41334 Nettetal-Breyell, Paul-Therstappen-Straße, Wohnhaus
+10FF000326202 41334 Nettetal-Kaldenkirchen, Jan-van-Nooy-Straße 7, Wohnhaus
+1234000526202 59872 Meschede-Vellinghausen, , südl. des Ortes 51º18'33"N 8º17'21"O
+1ACD000526202 59439 Holzwickede, Hauptstr., Gegenüber von der Volksbank
+18C5000726202 27339 Riede, , Kreisstraße K20 S zwischen Riede und Donnerstedt
+099C000826202 21255 Tostedt, Poststraße 87, Raiffeisen Getreidesilo
+161D000826202 21244 Buchholz, Steinbecker Straße 44, Auf Krankenhaus
+161E000826202 21244 Buchholz, Steinbecker Straße 44, Auf Krankenhaus
+161F000826202 21244 Buchholz, Steinbecker Straße 44, Auf Krankenhaus
+17FD003326202 33098 Paderborn, Westernmauer, Hotel AROSA
+17FE003326202 33098 Paderborn, Westernmauer, Hotel AROSA
+17FF003326202 33098 Paderborn, Westernmauer, Hotel AROSA
+2B0C00D226202 56564 Neuwied, Museumstrasse, hohes Wohnhaus, hinter Feuerwehr/Sozialamt
+1B1300DB26202 40474 Düsseldorf-Golzheim, Tersteegenstraße 63, auf Dach des Wohnhauses
+1B1400DB26202 40474 Düsseldorf-Golzheim, Tersteegenstraße 63, auf Dach des Wohnhauses
+1B1500DB26202 40474 Düsseldorf-Golzheim, Tersteegenstraße 63, auf Dach des Wohnhauses
+01CD010526202 45131 Essen, Alfredstraße, IDUNA-Hochhaus
+01CE010526202 45131 Essen, Alfredstraße, IDUNA-Hochhaus
+01CF010526202 45131 Essen, Alfredstraße, IDUNA-Hochhaus
+09A7010526202 45127 Essen, Kettwiger Straße 24, auf dem Karstadtgebäude
+09A8010526202 45127 Essen, Kettwiger Straße 24, auf dem Karstadtgebäude
+09A9010526202 45127 Essen, Kettwiger Straße 24, auf dem Karstadtgebäude
+09B1010526202 45472 Mülheim-Heißen, Alexanderstraße, Kienzle-Haus
+09B2010526202 45472 Mülheim-Heißen, Alexanderstraße, Kienzle-Haus
+09B3010526202 45472 Mülheim-Heißen, Alexanderstraße, Kienzle-Haus
+16EF010526202 45479 Mülheim-Speldorf, Saarner Str. 347, Dach Wohnhaus
+16F0010526202 45479 Mülheim-Speldorf, Saarner Str. 347, Dach Wohnhaus
+16F1010526202 45479 Mülheim-Speldorf, Saarner Str. 347, Dach Wohnhaus
+0015011826202 45657 Recklinghausen, Dorstener Straße, Knappschaftskrankenhaus
+0016011826202 45657 Recklinghausen, Dorstener Straße, Knappschaftskrankenhaus
+0017011826202 45657 Recklinghausen, Dorstener Straße, Knappschaftskrankenhaus
+0ED9011826202 45663 Recklinghausen, Am Neumarkt 21, 
+0EDA011826202 45663 Recklinghausen, Am Neumarkt 21, 
+0EDB011826202 45663 Recklinghausen, Am Neumarkt 21, 
+19C9011826202 45664 Recklinghausen, , Karstadtgebäude
+19CA011826202 45664 Recklinghausen, , Karstadtgebäude
+19CB011826202 45664 Recklinghausen, , Karstadtgebäude
+19E7011826202 45665 Recklinghausen, Sachsen/Henrichenburger, 
+19E8011826202 45665 Recklinghausen, Sachsen/Henrichenburger, 
+19E9011826202 45665 Recklinghausen, Sachsen/Henrichenburger, 
+02F0011A26202 48155 Münster, , 
+0E11015926202 6108 Halle/Saale, Schülershof 1 nähe Markt, Auf Plattenbau-Hochhaus
+0E12015926202 6108 Halle/Saale, Schülershof 1 nähe Markt, Auf Plattenbau-Hochhaus
+0E13015926202 6108 Halle/Saale, Schülershof 1 nähe Markt, Auf Plattenbau-Hochhaus
+03FD016A26202 98646 Hildburghausen, "Krautberg", (Hügel im Süden)
+03FE016A26202 98646 Hildburghausen, "Krautberg", (Hügel im Süden)
+058C016A26202 98553 Schleusingen, (nähe Walchstraße), (freiw.Feuerwehr TA00)
+0619016A26202 98646 Gleichamberg, Großer Gleichberg, 
+061A016A26202 98646 Gleichamberg, Großer Gleichberg, 
+061B016A26202 98646 Gleichamberg, Großer Gleichberg, 
+0533016E26202 99734 Nordhausen, Straße der Genossenschaften, Auf dem Reemtsma-Gebäude
+0534016E26202 99734 Nordhausen, Straße der Genossenschaften, Auf dem Reemtsma-Gebäude
+0535016E26202 99734 Nordhausen, Straße der Genossenschaften, Auf dem Reemtsma-Gebäude
+06F5016E26202 99734 Nordhausen, Südstraße, Auf einem großen Getreidesilo
+06F6016E26202 99734 Nordhausen, Südstraße, Auf einem großen Getreidesilo
+06F7016E26202 99734 Nordhausen, Südstraße, Auf einem großen Getreidesilo
+2397016E26202 99734 Nordhausen, Hohekreuzstraße, Auf dem Feuerwehr-Gebäude
+2398016E26202 99734 Nordhausen, Hohekreuzstraße, Auf dem Feuerwehr-Gebäude
+2399016E26202 99734 Nordhausen, Hohekreuzstraße, Auf dem Feuerwehr-Gebäude
+056501AE26202 26506 Norden, Alleestraße, Wasserturm
+056601AE26202 26506 Norden, Alleestraße, Wasserturm
+056701AE26202 26506 Norden, Alleestraße, Wasserturm
+05D301FE26202 97424 Schweinfurt, Ernst-Sachs-Str. 62, Fichtel&Sachs, Werk 1
+05D401FE26202 97424 Schweinfurt, Ernst-Sachs-Str. 62, Fichtel&Sachs, Werk 1
+15E001FE26202 97631 Bad Königshofen, , 
+040701FF26202 31840 Hessisch-Oldendorf, Mast, neben Kompostierungsanlage
+040801FF26202 31840 Hessisch-Oldendorf, Mast, neben Kompostierungsanlage
+040901FF26202 31840 Hessisch-Oldendorf, Mast, neben Kompostierungsanlage
+041001FF26202 31785 Hameln, Ruthenstraße 22, Wesermühlen Hameln
+094301FF26202 31675 Bückeburg, , Ziegeleiweg am Ziegeleischornstein
+094401FF26202 31675 Bückeburg, , Ziegeleiweg am Ziegeleischornstein
+094501FF26202 31675 Bückeburg, , Ziegeleiweg am Ziegeleischornstein
+094D01FF26202 31737 Rinteln-Strücken, Weserberglandstr., auf Feuerwehrhaus Strücken
+0E7501FF26202 31812 Bad Pyrmont, , kleiner Mast nähe Wasserwerk
+0302020A26202 32457 Pta Westfalica (Eisbergen), Ahmserortstr., Mast Südhang Wesergebirge
+03D5020A26202 32547 Bad Oeynhausen, Alter Rehmer Weg 17, am Schornstein
+03D6020A26202 32547 Bad Oeynhausen, Alter Rehmer Weg 17, am Schornstein
+03D7020A26202 32547 Bad Oeynhausen, Alter Rehmer Weg 17, am Schornstein
+03DE020A26202 32602 Vlotho-Steinegge, Franzosenkuhle, Steinegge im Forst
+03F3020A26202 32107 Bad Salzuflen-Lockhausen, Biemserstr. 127a, auf Tischlerwerkstatt Wöhler
+04EC020A26202 32657 Lemgo, Biesterbergweg 37, Wohnhochhaus (Biesterberg)
+04F6020A26202 32791 Lage, Lange Str 42, auf Mühle Tierfutterkiste
+053D020A26202 32756 Detmold, , Mast im Militärflugplatz
+053E020A26202 32756 Detmold, , Mast im Militärflugplatz
+0547020A26202 32760 Detmold-Hiddesen, Maiweg, Mast nähe Wasserwerk
+0548020A26202 32760 Detmold-Hiddesen, Maiweg, Mast nähe Wasserwerk
+060E020A26202 32805 Horn-Bad Meinberg, nähe B1, Mast im Stadtwald/Kartoffelberg
+0AA0020A26202 32805 Horn-Bad Meinberg, Gebr.Künnemeyerstraße, Eckhochhaus
+0E75020A26202 32602 Vlotho-Uffeln, , Betonmast auf Berg Neuer Hau
+0E76020A26202 32602 Vlotho-Uffeln, , Betonmast auf Berg Neuer Hau
+0E7E020A26202 32689 Kalletal (Hohenhausen), auf Betonturm neben Bauernhof (verm. mit D1 u. E+), Römerweg 19
+0E7E020A26202 32657 Kalletal-Hohenhausen, Römerweg 19, Betonmast am Bauerhof
+0E93020A26202 32683 Barntrup, an der B1, Stahlmast im Barntruper Stadtwald
+0E94020A26202 32683 Barntrup, an der B1, Stahlmast im Barntruper Stadtwald
+0E95020A26202 32683 Barntrup, an der B1, Stahlmast im Barntruper Stadtwald
+0E9C020A26202 32825 Blomberg, Schmuckenberger Weg 8, Schornstein Ziegelei
+0EB1020A26202 32657 Lemgo, Mittelstraße 24 (Stadtzentrum), Karstadt
+0EB2020A26202 32657 Lemgo, Mittelstraße 24 (Stadtzentrum), Karstadt
+0EB3020A26202 32657 Lemgo, Mittelstraße 24 (Stadtzentrum), Karstadt
+10C3020A26202 32052 Herford, Fidelenstr. 5 (Stadtzentrum), Wohnhochhaus
+10C4020A26202 32052 Herford, Fidelenstr. 5 (Stadtzentrum), Wohnhochhaus
+10C5020A26202 32052 Herford, Fidelenstr. 5 (Stadtzentrum), Wohnhochhaus
+10CD020A26202 32105 Bad Salzuflen, Rudolph-Brandes-Alee 19, Rathaus
+10CE020A26202 32105 Bad Salzuflen, Rudolph-Brandes-Alee 19, Rathaus
+10CF020A26202 32105 Bad Salzuflen, Rudolph-Brandes-Alee 19, Rathaus
+13F6020A26202 32816 Schieder-Schwalenberg, , im Werk Schiedermöbel
+1400020A26202 32839 Steinheim/Westf., Sedanstr. 30, auf Getreidehaus BBAG Steinheim
+140A020A26202 33039 Nieheim, , Stahlmast neben Ort Klunsberg
+1415020A26202 32816 Schieder-Schwalenberg, an der B239, Stahlmast neben Schwalenberg
+1416020A26202 32816 Schieder-Schwalenberg, an der B239, Stahlmast neben Schwalenberg
+1875020A26202 33818 Leopoldshöhe, Schötmarsche Str., Rathaus Ortsmitte
+1876020A26202 33818 Leopoldshöhe, Schötmarsche Str., Rathaus Ortsmitte
+1877020A26202 33818 Leopoldshöhe, Schötmarsche Str., Rathaus Ortsmitte
+191E020A26202 32602 Vlotho-Exter, Zum Mergelbruch, Mast am Reitplatz
+1E6F020A26202 33813 Oerlinghausen, Tönsbergstr., Betonmast der Telekom
+1E70020A26202 33813 Oerlinghausen, Tönsbergstr., Betonmast der Telekom
+1E71020A26202 33813 Oerlinghausen, Tönsbergstr., Betonmast der Telekom
+1E79020A26202 32758 Detmold, Bielefelderstraße 503, Betonmast der Telekom
+1E7A020A26202 32758 Detmold, Bielefelderstraße 503, Betonmast der Telekom
+1E7B020A26202 32758 Detmold, Bielefelderstraße 503, Betonmast der Telekom
+1E82020A26202 32756 Detmold, Saganerstraße 31, Wohnhochhaus
+1EA1020A26202 33699 Bielefeld-Hillegossen, , Schornstein Stora-Feldmühle
+1EA2020A26202 33699 Bielefeld-Hillegossen, , Schornstein Stora-Feldmühle
+1EA3020A26202 33699 Bielefeld-Hillegossen, , Schornstein Stora-Feldmühle
+1F05020A26202 32105 Bad Salzuflen, Parkstraße 53, Maritim-Hotel
+1F06020A26202 32105 Bad Salzuflen, Parkstraße 53, Maritim-Hotel
+1F07020A26202 32105 Bad Salzuflen, Parkstraße 53, Maritim-Hotel
+1F23020A26202 32051 Herford, Oststraße, D2 - Betonmast (49) (Industriegeb.)
+1F24020A26202 32051 Herford, Oststraße, D2 - Betonmast (49) (Industriegeb.)
+1F25020A26202 32051 Herford, Oststraße, D2 - Betonmast (49) (Industriegeb.)
+1F4B020A26202 32107 Bad Salzuflen, Elverdisser Str. nähe A2, Betonmast Lockhausen
+1F4C020A26202 32107 Bad Salzuflen, Elverdisser Str. nähe A2, Betonmast Lockhausen
+1F4D020A26202 32107 Bad Salzuflen, Elverdisser Str. nähe A2, Betonmast Lockhausen
+20E5020A26202 32049 Herford, , Sender Schwarzenmoor
+20E6020A26202 32049 Herford, , Sender Schwarzenmoor
+20E7020A26202 32049 Herford, , Sender Schwarzenmoor
+2B21020A26202 33729 Bielefeld-Mielse, Mehlstraße 25, auf "Mielser Mühle"
+2B22020A26202 33729 Bielefeld-Mielse, Mehlstraße 25, auf "Mielser Mühle"
+2B23020A26202 33729 Bielefeld-Mielse, Mehlstraße 25, auf "Mielser Mühle"
+2B49020A26202 32676 Lügde, Stahlmast auf Osterberg, 
+2B4A020A26202 32676 Lügde, Stahlmast auf Osterberg, 
+2C39020A26202 32108 Bad Salzuflen, Halle Messezentrum B239 über Eingang, 
+2C3A020A26202 32108 Bad Salzuflen, Halle Messezentrum B239 über Eingang, 
+2C3B020A26202 32108 Bad Salzuflen, Halle Messezentrum B239 über Eingang, 
+2DC9020A26202 32699 Extertal-Linderhofe, Betonmast neben ehem. Radarstation, 
+2DCA020A26202 32699 Extertal-Linderhofe, Betonmast neben ehem. Radarstation, 
+2DCB020A26202 32699 Extertal-Linderhofe, Betonmast neben ehem. Radarstation, 
+062D02C626202 71226 Leonberg, Daimlerstraße 6, Gebäude Fa. MotoMeter
+062E02C626202 71226 Leonberg, Daimlerstraße 6, Gebäude Fa. MotoMeter
+062F02C626202 71226 Leonberg, Daimlerstraße 6, Gebäude Fa. MotoMeter
+197A02C626202 71394 Kernen/Stetten, verl. Albert Moser Straße, Fernsehumsetzer Stetten (48º47"49'N / 9º21"16'E)
+1B80032426202 02736 Oppach, Fuchsweg nähe B96 / B98, kleiner Stahlmast
+1B95032426202 01904 Neukirch/Lausitz, , Stahlmast am Valtenberg
+1B96032426202 01904 Neukirch/Lausitz, , Stahlmast am Valtenberg
+1D88032426202 02739 Eibau, Obercunnersdorferstr. 5a, Betonmast bei Fa. Schulz
+1DF6032426202 02730 Ebersbach/Sachsen, Hainbergstr. 28, Stahlmast Hotel am Hainberg
+226A032426202 02689 Sohland a.d. Spree, OppacherStr. 40, Gemeindeverwaltung Wehrsdorf
+0213032526202 10711 Berlin - Wilmersdorf, Heilbronner 9, Auf dem Dach des ehem. PSI Gebäudes
+1B9E032526202 01844 Neustadt/Sachsen, Stahlmastnähe Berghotel, Götzinger Höhe 263
+00DD032A26202 90443 Nürnberg, Bahnhofsplatz 2, oben auf dem VICTORIA-Gebäude
+00DE032A26202 90443 Nürnberg, Bahnhofsplatz 2, oben auf dem VICTORIA-Gebäude
+00DF032A26202 90443 Nürnberg, Bahnhofsplatz 2, oben auf dem VICTORIA-Gebäude
+00E7032A26202 90765 Fürth/Bayern, Hans-Vogel-Straße, auf Wohnblock
+00E8032A26202 90765 Fürth/Bayern, Hans-Vogel-Straße, auf Wohnblock
+00E9032A26202 90765 Fürth/Bayern, Hans-Vogel-Straße, auf Wohnblock
+503D032A26202 90443 Nürnberg, Bahnhofsplatz 2, Mikrozelle auf Vordach unten am VICTORIA-Gebäude
+5047032A26202 90402 Nürnberg, Kaufhofgebäude, Mikrozelle uber dem Ausgang Pfannenschmiedsgasse
+0137032B26202 90537 Feucht, Industriestraße, an der S-Bahn-Linie
+0141032B26202 90562 Heroldsberg, Adam-Kraft-Strasse, auf Wohnhaus
+02D1032B26202 90518 Altdorf, Marktplatz, auf der Kirche
+0E57032B26202 90592 Ochenbruck, Industriestraße 1, Betonturm Fa. DYWIDAG
+1E51032B26202 90530 Wendelstein, Wolfgang-Borchert-Str., 
+2923033526202 82166 Gräfelfing, Am Haag, Auf Hochspannungsmast Ecke Autobahnauffahrt
+2924033526202 82166 Gräfelfing, Am Haag, Auf Hochspannungsmast Ecke Autobahnauffahrt
+2925033526202 82166 Gräfelfing, Am Haag, Auf Hochspannungsmast Ecke Autobahnauffahrt
+294B033526202 81247 München-Fasanengarten, Fasanenstr. 138, Am S-Bahnhof Fasanengarten
+294C033526202 81247 München-Fasanengarten, Fasanenstr. 138, Am S-Bahnhof Fasanengarten
+294D033526202 81247 München-Fasanengarten, Fasanenstr. 138, Am S-Bahnhof Fasanengarten
+0655034026202 82347 Bernried, , 
+02E5035226202 92353 Dillberg, , Sendeanlage des Bayer. Rundfunks
+0E9D035326202 92287 Schmidmühlen/Ofen, , Scheunendach Hof Fam. Färber
+1AD7035326202 92286 Rieden, , Waldgebiet
+1AD8035326202 92286 Rieden, , Waldgebiet
+0848242626201 45478 Mülheim/Ruhr, Arthur-Brocke-Allee, Stadtwald, nähe A3 Kreuz Breitscheid
+30E8242C26201 45127 Essen, am Hauptbahnhof, auf dem Postbankgebäude
+1EC4430426201 26465 Langeoog, SW vom Ort, 
+2036530A26201 33098 Paderborn, Hathumarstrasse, auf der Sparkasse
+2037530A26201 33098 Paderborn, Hathumarstrasse, auf der Sparkasse
+2038530A26201 33098 Paderborn, Hathumarstrasse, auf der Sparkasse
+390C540926201 49525 Lengerich in Westfalen, Am Kleeberg, Kleeberg (oberhalb ev. Krankenhaus)
+0040600826201 35423 Lich-Eberstadt, D-Netz Container, Im Feld zwischen Lich-Eberstadt und Holzheim
+00A0600826201 61169 Friedberg-Ockstadt, , Funkturm Steinkopf
+0B30600826201 61231 Bad Nauheim, TV- Umsetzer Frauenwald, oberhalb Nieder-Mörlen im Wald
+0BF8600826201 61239 Ober-Mörlen, Raststätte Wetterau Ost, Brauner D-Netz Container
+0E50600826201 35510 Butzbach, Wetzlarer Str. 75, Stahlmast neben Telekom Vermittlungstelle
+83E0600826201 61169 Friedberg, Im Wasserturm Grüner Weg, Grüner Weg
+8444600826201 61169 Friedberg, Im Wasserturm Grüner Weg, Grüner Weg
+0680600926201 63691 Dauernheim, Stahlmast am Bieberbau, oberhalb von A45
+1170600926201 61200 Wölfersheim, Stahlmast Windmühlskopf, An der Straße nach Wohnbach
+2C60600926201 63683 Ortenberg, TV Umsetzer Ortenberg, 
+0AC8610126201 65451 Kelsterbach, , direkt am Bahnhof
+01CC620126201 63674 Altenstadt, Vogelsbergstraße 57, Vermittlungstelle Telekom
+2684620126201 63654 Büdingen, TV- Umsetzer, oberhalb von Büdingen neuer Stahlturm
+5050620126201 63654 Büdingen-Eckartshausen, Stahlmast bei A45, 
+5118620926201 64283 Darmstadt, Hügelstraße 22, Sparkasse
+2F1E630526201  Ludwigshafen, , Hauptpostamt
+0173710626201 70597 Stuttgart, Fernsehturm, 
+0BC2710626201 70372 Stuttgart, Hauptbahnhof, 
+249A711326201 72074 Tübingen, Gartenstraße, 
+2EC2711326201 72072 Derendingen, auf dem Sudhaus, 
+3A7A711326201 72770 Betzingen, BOSCH, 
+3ADE711326201 72810 Stockach, zw. Stockach und Gomaringen, 
+0178740226201 79410 Badenweiler-Oberw., , auf Innerberg
+2F2C740226201 79395 Neuenburg, , bei Berö-Leisinger
+73EC740226201 79379 Müllheim, , Telekomgebäude
+139B740426201 79211 Denzlingen, Postring, auf der Ortsvermittlungsstelle Denzlingen der DTAG
+3082740826201 79576 Weil am Rhein, Alte Straße 58, Atlas Hotel
+0114740826201 79576 Ötlingen, , Betonmast auf Hügel
+356C740826201 79618 Degerfelden, , 
+450C740826201 79400 Tannenkirch, , Betonmast auf Hügel
+87D8740826201 79576 Weil am Rhein, , Atlas-Hotel
+20B8740826201 79576 Weil am Rhein, , Atlas-Hotel
+9138740826201 79541 Lörrach, Lörracher Straße, Dach DTAG-Gebäude
+0112740B26201 72355 Schömberg, an der B27, 
+0176740B26201 72406 Zimmern, B27 Richtung Schömberg, 
+055E740B26201 72336 Balingen, B27 Richtung Hechingen, 
+01DA741526201 72379 Hechingen, Hechingen/B27, 
+0A72741526201 72379 Hechingen, Hechingen/BadSeb/B27, 
+7FD1810126201 82178 Puchheim, Adenauerstraße, großes, 16stöckiges Hochhaus
+3CDC810526201 85452 Moosinning, Richtung Eching, auf Wasserturm
+03DC830126201 82057 Icking, Höhenrainerstraße, Betonmast bei Raststätte Höhenrain an BAB 95
+1D38830126201 82319 Starnberg, Gautingerstr,Ecke Münchnerstr, Betonmast bei DTAG-Gebäude
+3334830126201 82327 Tutzing, Kirchenstr.6, Kleines Gebäude der Post
+238D830226201 82387 Antdorf, , 
+0187900926201 90607 Rückersdorf, , Stahlturm auf der Ludwigshöhe
+056F900926201 90562 Kleingeschaidt, , Betonsendemast mit einigen Richtfunktstrecken
+09BB900926201 91220 Schnaittach, , Betonturm an der Autobahn
+27CE900926201 91227 Leinburg, , auf dem Gelände der VST Leinburg
+3DAF900926201 91227 Diepersdorf, , an Kreuzung Autobahn / Schwaiger Straße
+3E13900926201 91227 Diepersdorf, , an Kreuzung Autobahn / Schwaiger Straße
+3EFF900926201 91227 Diepersdorf, , an Kreuzung Autobahn / Schwaiger Straße
+3CE7901126201 91282 Spies, Riegelstein, Fernmeldeturm auf Riegelstein
+3D4B901126201 91282 Spies, Riegelstein, Fernmeldeturm auf Riegelstein
+3EDB901126201 91282 Spies, Riegelstein, Fernmeldeturm auf Riegelstein
+0763901926201 93177 Altenthann, Verbindungsstraße Weinberg, Stahlmast mit Betriebsgebaeunde
+0A1F901926201 91217 Hersbruck, , alleinstehender Sendemast bei Kleinviehberg
+105F947326201 90482 Nürnberg, S-Bahn-Halt Laufamholz, auf Hochhaus
+144B947326201 90411 Nürnberg, Thurn-und-Taxis-Str. 10, Gelände Lucent Technologies
+2063947326201 90482 Nürnberg, Ostendstraße, Promarkt
+29C3947426201 90763 Fürth i.Bay., Flößaustraße, Sendemast in der ehem. Kaserne

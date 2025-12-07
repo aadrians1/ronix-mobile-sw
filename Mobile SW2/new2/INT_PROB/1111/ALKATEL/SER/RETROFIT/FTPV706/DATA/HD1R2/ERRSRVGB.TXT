@@ -1,0 +1,58 @@
+/* Table de messages d'erreurs */
+
+/* Attention : en cas de rajout de messages, modifier l'enum de ehpmsg.h */
+
+	"Succes",
+	
+	/* Messages Téléchargement */
+    /* Messages InitTeleFile */
+    "Configuration File reading...",
+    "Configuration File Ok",
+
+    /* Messages StartTeleFile */
+	"Download File reading...",
+	"Download File Ok",
+	"Data ready",
+
+    /* Messages ControlTeleFile */
+	"Initialization",
+	"Init Prg loading",
+	"Rec Prg loading",
+	"Run Rec Prg",
+	"Get flash",
+	"Flash Ok",
+	"LTE loading",
+	"Prg loading",
+	"Erasing",
+	"Download OK",
+
+	/* Erreurs Téléchargement */
+    /* Messages InitTeleFile */
+  	"Out of memory",
+	"Bad Config File",
+
+    /* Messages StartTeleFile */
+	"Error in File",
+
+    /* Messages ControlTeleFile */
+	"Timeout Send",
+	"Timeout Rec",
+	"Flash Unknown",
+	"Bad Checksum",
+	"Unknown response",
+	"Write KO",
+	"Read KO",
+	"Erase KO",
+	"Check KO",
+	"Functionnal Level KO",
+	"No Zone",
+	"File length KO",
+    "Download KO",
+
+	/* Messages Généraux */
+	"Parameters error ",
+    "Internal Error",
+
+
+/* inserer ici les nouveaux messages */
+
